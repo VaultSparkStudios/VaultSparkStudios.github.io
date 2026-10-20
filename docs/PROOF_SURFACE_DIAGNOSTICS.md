@@ -1,25 +1,25 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-10-20T20:24:05.985Z
-Receipt: `26121c6de21413b7ad97852c` · coverage 109/109
+Generated: 2026-10-20T20:55:12.739Z
+Receipt: `f23cea3dc55fd4afabf32568` · coverage 109/109
 
-Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 85.3s
+Latest: **108/109** passed · blocking 92/92 · advisory findings 1/17 · total 103.2s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 78 | blocking | 6.3s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
-| 49 | blocking | 3.2s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 35 | blocking | 2.7s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 11 | blocking | 2.2s | 0 | `node scripts/check-og-images.mjs` |
-| 88 | blocking | 1.9s | 0 | `node scripts/check-receipt-ordering.mjs` |
-| 22 | blocking | 1.8s | 0 | `node scripts/check-schema-coverage.mjs` |
-| 38 | blocking | 1.7s | 0 | `node scripts/generate-news-pages.mjs --check` |
-| 37 | blocking | 1.5s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 7 | blocking | 1.5s | 0 | `node scripts/build-status-proof.mjs --check --check-content` |
-| 40 | blocking | 1.3s | 0 | `node scripts/build-newsroom-run.mjs --check` |
+| 14 | blocking | 3.8s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 49 | blocking | 3.8s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 65 | blocking | 3.7s | 0 | `node scripts/check-content-coherence.mjs` |
+| 37 | blocking | 3.3s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 35 | blocking | 2.4s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 106 | advisory | 1.9s | 1 | `node scripts/generate-build-sha.mjs --check` |
+| 78 | blocking | 1.9s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
+| 38 | blocking | 1.8s | 0 | `node scripts/generate-news-pages.mjs --check` |
+| 7 | blocking | 1.8s | 0 | `node scripts/build-status-proof.mjs --check --check-content` |
+| 50 | blocking | 1.8s | 0 | `node scripts/check-trust-feed-freshness.mjs --self-test` |
 
 ## Failures
 
-- None.
+- Step 106 [advisory]: `node scripts/generate-build-sha.mjs --check` exited 1 — self/freshness

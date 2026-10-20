@@ -5,7 +5,7 @@
     "threadId": "01a15a69-1391-7741-84ce-7401d74e1360",
     "createdAt": 1792518208
   },
-  "state": "two-outcomes-and-current-runtime-proofs-verified-complete-suite-and-release-pending",
+  "state": "staging-accepted-exact-candidate-checks-and-production-pending",
   "releaseAccepted": false,
   "implementation": {
     "selected": 2,
@@ -45,8 +45,8 @@
       "total": 17
     },
     "fullSuite": {
-      "state": "pending-complete-run",
-      "coverageComplete": false,
+      "state": "passed",
+      "coverageComplete": true,
       "attempts": [
         {
           "scope": "complete attempt",
@@ -85,7 +85,16 @@
         "lastStep": 545,
         "coverageComplete": false,
         "log": ".cache/S393/remaining-preflight-274.log"
-      }
+      },
+      "passed": 545,
+      "failed": 0,
+      "startedAt": "2026-10-20T20:16:18.120Z",
+      "finishedAt": "2026-10-20T20:39:52.253Z",
+      "planFingerprint": "42f2e1d8c68107bb0723bf27",
+      "sourceFingerprint": "a0511cd2a1176ad91cfc7a79",
+      "log": ".cache/S393/autopilot-bound.log",
+      "completePassingRuns": 2,
+      "scope": "Two complete S393 runs; post-signal reconciliation passed. Subsequent automated feed merge changes no application source, test or touched page."
     },
     "premiseTiming": {
       "state": "nonpassing",
@@ -137,16 +146,99 @@
     }
   },
   "staging": {
-    "state": "not-accepted-for-S393"
+    "state": "passed",
+    "origin": "https://website.staging.vaultsparkstudios.com",
+    "receiptId": "232c9192d7b48232d6afe1a8",
+    "source": {
+      "commitSha": "38d4fabddc05738936f7a7f02cf3ce6afabe32aa",
+      "fingerprint": "a0511cd2a1176ad91cfc7a79"
+    },
+    "artifactRoot": "f47ad32c3dcf12ca0854d423036b9763023e2611d4269e9f8cf3a6b3c4b69ab8",
+    "leafCount": 66,
+    "archiveSha256": "ed57607cf8acd31581939ab3d3476da93b32990a46dc722097d7fe7d8c7c563b",
+    "fileCount": 12231,
+    "ceremony": {
+      "state": "passed",
+      "passed": 11,
+      "total": 11,
+      "generatedAt": "2026-10-20T20:52:45.684Z"
+    },
+    "browser": {
+      "schemaVersion": 1,
+      "generatedAt": "2026-10-20T20:51:30.450Z",
+      "publicSafe": true,
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "suite": "tests/staging-release.spec.js",
+      "state": "passed",
+      "expectedTests": 6,
+      "observedTests": 6,
+      "executedTests": 3,
+      "passed": 3,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0,
+      "held": 3,
+      "heldContracts": [
+        "anonymous Obelisk boundary is fail-closed and reaches the provider"
+      ],
+      "heldSurfaces": [
+        "identity",
+        "worker:identity"
+      ],
+      "reasons": [],
+      "failures": [],
+      "failureEvidence": {
+        "projects": [],
+        "tests": [],
+        "files": [],
+        "truncated": false
+      }
+    },
+    "attention": {
+      "schemaVersion": 1,
+      "generatedAt": "2026-10-20T20:52:44.702Z",
+      "generatedBy": "scripts/run-attention-release-gate.mjs",
+      "publicSafe": true,
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "suite": "tests/attention-surfaces.spec.js",
+      "state": "passed",
+      "expectedTests": 15,
+      "observedTests": 15,
+      "passed": 15,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0,
+      "reasons": [],
+      "failures": [],
+      "failureEvidence": {
+        "projects": [],
+        "tests": [],
+        "files": [],
+        "truncated": false
+      }
+    },
+    "criticalFiles": {
+      "checked": 66,
+      "passed": 66
+    },
+    "leaderboardArtifact": {
+      "checked": 6,
+      "passed": 6,
+      "origin": "https://website-origin.staging.vaultsparkstudios.com"
+    },
+    "leaderboardRouting": {
+      "checked": 6,
+      "passed": 6,
+      "contract": "Existing S147 edge301 consolidation retained; origin subpage fixes are not a new canonical route launch."
+    }
   },
   "production": {
     "state": "not-promoted-for-S393"
   },
   "remaining": [
-    "Complete current required local validation",
-    "Current staging artifact/configuration parity and runtime acceptance",
-    "Canonical closeout, sanitized direct main push and exact-candidate required hosted checks",
-    "Authorized full routine production promotion and production readback"
+    "Sanitized main push and required exact-candidate checks",
+    "Full Pages promotion and production readback",
+    "Final release follow-through"
   ],
   "closeout": {
     "state": "writeback-completed-validation-and-release-pending",
@@ -160,6 +252,70 @@
       "contentLaneHead": "2a2ccdd40fa872acb98796e42b811d6e15572dd2",
       "workflowRunId": "39455278286"
     },
-    "method": "Restore previous accepted Pages deployment using the established rollback path."
+    "method": "Restore previous accepted Pages deployment using the established rollback path.",
+    "observedAt": "2026-10-20T19:53:14.624Z",
+    "project": "vaultsparkstudios-website",
+    "canonical": {
+      "id": "46ff7f75-31ac-42e5-ac98-6af55bb7ac44",
+      "url": "https://46ff7f75.vaultsparkstudios-website.pages.dev",
+      "environment": "production",
+      "createdAt": "2026-10-20T18:37:06.317579Z",
+      "status": "success",
+      "commit": "9217cdadb0707fc9378f06f8eedb051d31845688"
+    },
+    "deployments": [
+      {
+        "id": "46ff7f75-31ac-42e5-ac98-6af55bb7ac44",
+        "url": "https://46ff7f75.vaultsparkstudios-website.pages.dev",
+        "environment": "production",
+        "createdAt": "2026-10-20T18:37:06.317579Z",
+        "status": "success",
+        "commit": "9217cdadb0707fc9378f06f8eedb051d31845688"
+      },
+      {
+        "id": "64634f07-b401-43d8-bb71-7b99c6062f80",
+        "url": "https://64634f07.vaultsparkstudios-website.pages.dev",
+        "environment": "production",
+        "createdAt": "2026-10-20T18:35:30.74267Z",
+        "status": "success",
+        "commit": "9217cdadb0707fc9378f06f8eedb051d31845688"
+      },
+      {
+        "id": "8827a261-ab1a-495e-990b-2385130642a3",
+        "url": "https://8827a261.vaultsparkstudios-website.pages.dev",
+        "environment": "production",
+        "createdAt": "2026-10-20T16:17:02.998247Z",
+        "status": "success",
+        "commit": "2a2ccdd40fa872acb98796e42b811d6e15572dd2"
+      },
+      {
+        "id": "edb3c93b-d0c4-4b40-829d-a96287da6c18",
+        "url": "https://edb3c93b.vaultsparkstudios-website.pages.dev",
+        "environment": "production",
+        "createdAt": "2026-10-20T16:14:05.412186Z",
+        "status": "success",
+        "commit": "2a2ccdd40fa872acb98796e42b811d6e15572dd2"
+      },
+      {
+        "id": "7a6ecdc9-e2be-4bf9-a813-e284e5397188",
+        "url": "https://7a6ecdc9.vaultsparkstudios-website.pages.dev",
+        "environment": "production",
+        "createdAt": "2026-10-20T12:39:20.92215Z",
+        "status": "success",
+        "commit": "3c77b973added33e27e0c3e59a75c765247e70f7"
+      }
+    ],
+    "originBuild": {
+      "schemaVersion": "1.1",
+      "generatedAt": "2026-10-20",
+      "sha": "ceeeb2de9f66d9fe239906f368991afe86c512f6",
+      "baselineSha": "ceeeb2de9f66d9fe239906f368991afe86c512f6",
+      "builtAt": "2026-10-20T18:35:15.000Z",
+      "deployedBy": "pages-deploy-content-lane",
+      "contentLaneHead": "9217cdadb0707fc9378f06f8eedb051d31845688",
+      "contentLanePaths": "181 paths",
+      "contentLanePathSetSha256": "fb881d101fff6dc86a7fb1b199c7ec8d852b35eb31015009289e42308ecebc50",
+      "workflowRunId": "39475668634"
+    }
   }
 }
