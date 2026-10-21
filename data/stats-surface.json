@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-21T06:52:51.705Z",
+  "generatedAt": "2026-10-21T07:01:02.904Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -74,10 +74,10 @@
     {
       "id": "human-page-loads-30d",
       "label": "Human page loads",
-      "value": 9000,
+      "value": 8000,
       "unitOrDenominator": "bot-excluded browser page loads",
       "period": "30 complete UTC days",
-      "computedAt": "2026-10-19T07:10:51.923Z",
+      "computedAt": "2026-10-21T07:01:02.862Z",
       "source": "/api/ecosystem-analytics.json",
       "sourceType": "cloudflare-web-analytics",
       "sourceDataset": "rumPageloadEventsAdaptiveGroups",
@@ -85,25 +85,25 @@
       "botPolicy": "excluded",
       "measurement": {
         "kind": "estimate",
-        "sampleInterval": 200,
+        "sampleInterval": 1000,
         "confidenceLevel": 0.95,
         "confidence": {
-          "estimate": 9000,
-          "lower": 3068,
-          "upper": 16110,
-          "sampleSize": 89
+          "estimate": 8000,
+          "lower": 0,
+          "upper": 19082,
+          "sampleSize": 8
         }
       },
-      "observedThrough": "2026-10-19",
-      "freshnessState": "stale",
+      "observedThrough": "2026-10-21",
+      "freshnessState": "fresh",
       "category": "audience",
       "format": "integer",
       "privacySafe": true,
       "available": true,
       "window": {
         "days": 30,
-        "start": "2026-09-19",
-        "endExclusive": "2026-10-19",
+        "start": "2026-09-21",
+        "endExclusive": "2026-10-21",
         "timezone": "UTC",
         "completeDaysOnly": true
       },
@@ -199,7 +199,7 @@
       "value": 0,
       "unitOrDenominator": "accepted anonymous route-performance observations",
       "period": "7 complete UTC days",
-      "computedAt": "2026-10-21T01:44:08.271Z",
+      "computedAt": "2026-10-21T07:01:02.904Z",
       "source": "/api/analytics-summary.json",
       "sourceType": "vaultspark-rum",
       "sourceDataset": "data/rum-history.ndjson",
@@ -292,16 +292,16 @@
       },
       {
         "day": "2026-09-30",
-        "samples": 5
+        "samples": 7
       }
     ],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-10-21T01:44:08.271Z",
+    "computedAt": "2026-10-21T07:01:02.904Z",
     "warning": "Performance samples are not an audience trend."
   },
   "reconciliation": {
     "source": "/api/ecosystem-analytics.json",
-    "computedAt": "2026-10-19T07:10:51.923Z",
+    "computedAt": "2026-10-21T07:01:02.862Z",
     "dimensions": [
       {
         "id": "human-page-loads",
