@@ -1724,3 +1724,10 @@ Fresh local mobile audit215/215 passes, zero P0/P1. Staging deployment f69300ddf
 S394 shell parity requires HTTP success and a nonempty expected shell, with complete CLI admission before IO. CLI 2/2, self-test 14/14 and independent review pass. Two complete 545/545 runs, mobile 215/215 and staging ceremony 11/11 pass. Normal full Pages release a6752c927e4566240763f040b6bfc75b9b75f592 (run 39535687085) is verified by provider identity, both public build stamps and tree-current served-byte comparison. Original premise timing remains nonpassing; existing identity and field-vitals holds remain unchanged. No measured conversion or performance gain is claimed.
 
 Earlier pending checkpoints retain their original historical state. Closing status publication is tracked separately in docs/RELEASE_S394.json.
+
+
+### S394 closing publication acceptance — 2026-10-21T04:48:53.207Z
+
+S394 complete: selected shell-parity acceptance is verified and released. Full product a6752c927e4566240763f040b6bfc75b9b75f592 (run 39535687085) passed the 1120-candidate source-byte sweep: 1110 identical, 10 configured redirects, zero differences/missing/unread. Closing normal full deployment 5244477a5f2fb04cd70e4f36f2a93741744c110a (run 39545371694) passed exact required CI, all current canonical nonstamp critical leaves and every changed served data file on both origins. This latter check reuses the verified full baseline and does not claim a second whole-tree network sweep. Original premise timing and missing initial trace instrumentation remain explicit. Score stays 935/1000; future SIL rows remain unselected.
+
+Impact cargo queued; transport does not prove recipient adoption. Both temporarily paused source-writing monitors were restored to active, with actual timing in the release receipt. No measured field performance or conversion gain is claimed.

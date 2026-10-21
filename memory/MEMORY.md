@@ -1,4 +1,4 @@
-- [S394 product release](S394.md): truthful shell parity verified and fully deployed; closing-publication evidence in docs/RELEASE_S394.json.
+- [S394 completed arc](S394.md): truthful shell parity and full closing publication verified; exact evidence in docs/RELEASE_S394.json.
 
 - [S393 active arc](S393.md): rank integrity accepted locally; provider recovered, complete build/live REST pass; full validation and release in progress.
 

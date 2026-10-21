@@ -5,7 +5,7 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Shell-parity verifier is verified and fully deployed.                                      ║
+║    Shell-parity reliability and full release are verified.                                    ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     ███████░░░   70/100                                                       ║
 ║  ECOSYSTEM IMPACT   ███░░░░░░░   30/100                                                       ║
@@ -20,12 +20,12 @@
          ── feedbackLoop ────────────────────────────────────────────────────────────────────
          Matching assets cannot turn an HTTP error into a successful route. Complete option
          admission prevents a diagnostic command from silently checking the wrong target.
-         → CLI 2/2, self-test 14/14, full suite 545/545 twice, mobile 215/215, staging 11/11, exact hosted CI and full production readback.
+         → CLI 2/2, self-test 14/14, complete 545-check receipts, mobile 215/215, staging 11/11, exact CI, normal full deployments and scoped live readback.
 
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Existing future SIL rows remain unselected.
+    • Two existing future SIL rows remain unselected.
 
   BLOCKERS
     (none)

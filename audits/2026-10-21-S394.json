@@ -31,8 +31,8 @@
     "5": 936.2
   },
   "topWin": "Actual CLI rejects matching-shell error responses and ambiguous inputs",
-  "topGap": "Original premise timing deviation and unchanged identity/field-vitals gaps",
-  "intentOutcome": "product-release-verified",
+  "topGap": "Original premise timing and initial trace instrumentation; existing disjoint identity/field-vitals gaps",
+  "intentOutcome": "complete",
   "improvementsShipped": 1,
   "improvementGroups": [
     "truthful-shell-parity"
@@ -152,6 +152,857 @@
       "expectedShellPresent": true,
       "missing": 0,
       "unexpected": 0
+    }
+  },
+  "closingPublication": {
+    "state": "verified",
+    "scope": "Normal full deployment; verified full product baseline plus exhaustive changed-data readback on both origins. Not a second whole-tree network sweep.",
+    "observedAt": "2026-10-21T04:47:55.938Z",
+    "candidate": "5244477a5f2fb04cd70e4f36f2a93741744c110a",
+    "workflowRun": 39545371694,
+    "provider": {
+      "id": "487a4323-9751-4977-9df2-1580dd420a12",
+      "url": "https://487a4323.vaultsparkstudios-website.pages.dev",
+      "environment": "production",
+      "status": "success",
+      "commit": "5244477a5f2fb04cd70e4f36f2a93741744c110a"
+    },
+    "builds": {
+      "https://vaultsparkstudios.com": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-21",
+        "sha": "5244477a5f2fb04cd70e4f36f2a93741744c110a",
+        "builtAt": "2026-10-21T04:44:34.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      },
+      "https://vaultsparkstudios-website.pages.dev": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-21",
+        "sha": "5244477a5f2fb04cd70e4f36f2a93741744c110a",
+        "builtAt": "2026-10-21T04:44:34.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    },
+    "requiredChecks": {
+      "ok": true,
+      "lane": "hosted-exact-sha",
+      "checks": [
+        {
+          "workflow": ".github/workflows/e2e.yml",
+          "state": "passed",
+          "runId": 39543602425
+        },
+        {
+          "workflow": ".github/workflows/lighthouse.yml",
+          "state": "passed",
+          "runId": 39543602395
+        },
+        {
+          "workflow": ".github/workflows/accessibility.yml",
+          "state": "passed",
+          "runId": 39543602388
+        }
+      ],
+      "findings": [],
+      "sourceCommit": "5244477a5f2fb04cd70e4f36f2a93741744c110a",
+      "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+      "checkedAt": "2026-10-21T04:40:53.301Z",
+      "independentProof": {
+        "ok": false,
+        "expectedSha": "5244477a5f2fb04cd70e4f36f2a93741744c110a"
+      }
+    },
+    "normalFullSteps": [
+      "Run canonical release ceremony",
+      "Build clean dist (git-tracked files only)",
+      "Stamp honest deployed SHA into build-sha.json",
+      "Deploy to Cloudflare Pages",
+      "Purge edge HTML cache",
+      "Post-purge edge liveness check"
+    ],
+    "rollback": {
+      "observedAt": "2026-10-21T04:40:50.947Z",
+      "provider": {
+        "id": "7ca4a29e-0fa3-4087-9b72-be2794be2d20",
+        "url": "https://7ca4a29e.vaultsparkstudios-website.pages.dev",
+        "environment": "production",
+        "status": "success",
+        "commit": "a6752c927e4566240763f040b6bfc75b9b75f592"
+      },
+      "builds": {
+        "https://vaultsparkstudios.com": {
+          "schemaVersion": "1.1",
+          "generatedAt": "2026-10-21",
+          "sha": "a6752c927e4566240763f040b6bfc75b9b75f592",
+          "builtAt": "2026-10-21T02:59:07.000Z",
+          "deployedBy": "pages-deploy",
+          "baselineSha": null,
+          "contentLaneHead": null,
+          "contentLanePaths": null,
+          "contentLanePathSetSha256": null,
+          "workflowRunId": null
+        },
+        "https://vaultsparkstudios-website.pages.dev": {
+          "schemaVersion": "1.1",
+          "generatedAt": "2026-10-21",
+          "sha": "a6752c927e4566240763f040b6bfc75b9b75f592",
+          "builtAt": "2026-10-21T02:59:07.000Z",
+          "deployedBy": "pages-deploy",
+          "baselineSha": null,
+          "contentLaneHead": null,
+          "contentLanePaths": null,
+          "contentLanePathSetSha256": null,
+          "workflowRunId": null
+        }
+      }
+    },
+    "baseline": {
+      "candidate": "a6752c927e4566240763f040b6bfc75b9b75f592",
+      "checked": 1120,
+      "proof": ".cache/S394/production-accepted.json",
+      "sha256": "e254d542743a9059af2c0f7761c0aeee485fad600d6e75773142887efa098172"
+    },
+    "servedDeltas": [
+      {
+        "schemaVersion": "S394-verified-full-base-and-complete-served-data-delta/v1",
+        "observedAt": "2026-10-21T04:47:23.251Z",
+        "candidate": "5244477a5f2fb04cd70e4f36f2a93741744c110a",
+        "origin": "https://vaultsparkstudios-website.pages.dev",
+        "baseline": "a6752c927e4566240763f040b6bfc75b9b75f592",
+        "baseProofSha256": "e254d542743a9059af2c0f7761c0aeee485fad600d6e75773142887efa098172",
+        "baseChecked": 1120,
+        "changedServed": 45,
+        "checked": 45,
+        "passed": 45,
+        "noAddedRemovedOrExecutablePaths": true,
+        "build": {
+          "schemaVersion": "1.1",
+          "generatedAt": "2026-10-21",
+          "sha": "5244477a5f2fb04cd70e4f36f2a93741744c110a",
+          "builtAt": "2026-10-21T04:44:34.000Z",
+          "deployedBy": "pages-deploy",
+          "baselineSha": null,
+          "contentLaneHead": null,
+          "contentLanePaths": null,
+          "contentLanePathSetSha256": null,
+          "workflowRunId": null
+        },
+        "results": [
+          {
+            "path": "api/ai-discovery-health.json",
+            "status": 200,
+            "expected": "fc0b0706496d70863562bb4f763232d587404f30111c0f37ddc774da5f049aaa",
+            "actual": "fc0b0706496d70863562bb4f763232d587404f30111c0f37ddc774da5f049aaa",
+            "match": true
+          },
+          {
+            "path": "api/build-check-diagnostics.json",
+            "status": 200,
+            "expected": "6b11c2ce7ce3536b9f665c71abbd9a42ebd59bb4921b5539a993f477144a56bd",
+            "actual": "6b11c2ce7ce3536b9f665c71abbd9a42ebd59bb4921b5539a993f477144a56bd",
+            "match": true
+          },
+          {
+            "path": "api/candidate-artifact-manifest.json",
+            "status": 200,
+            "expected": "f03081da16b55423a203669aae8a59f7dc59ae21d54abe267b4d7b84f063733e",
+            "actual": "f03081da16b55423a203669aae8a59f7dc59ae21d54abe267b4d7b84f063733e",
+            "match": true
+          },
+          {
+            "path": "api/canonical-destination-reachability.json",
+            "status": 200,
+            "expected": "b64272ac627bb2b758502ed3354de74da39164d5332483b9f23fe1a563625850",
+            "actual": "b64272ac627bb2b758502ed3354de74da39164d5332483b9f23fe1a563625850",
+            "match": true
+          },
+          {
+            "path": "api/ci-status.json",
+            "status": 200,
+            "expected": "2ce2f58444c422185c9521fed32634624a236d57bab5c37b9847aaa6b564cce0",
+            "actual": "2ce2f58444c422185c9521fed32634624a236d57bab5c37b9847aaa6b564cce0",
+            "match": true
+          },
+          {
+            "path": "api/citation.json",
+            "status": 200,
+            "expected": "18b34f6bfcbc45ba5ff27b2dd0c58a938a09914709f2c6fb26f98ae31d5e2827",
+            "actual": "18b34f6bfcbc45ba5ff27b2dd0c58a938a09914709f2c6fb26f98ae31d5e2827",
+            "match": true
+          },
+          {
+            "path": "api/commit-map.json",
+            "status": 200,
+            "expected": "993b6b11c1fc2c79a9ec46430966a73452b656a86d63526845d4ed08473d00e0",
+            "actual": "993b6b11c1fc2c79a9ec46430966a73452b656a86d63526845d4ed08473d00e0",
+            "match": true
+          },
+          {
+            "path": "api/deploy-currency.json",
+            "status": 200,
+            "expected": "29c2132d65bac2f6e51f2e54f000da62892ba3e4c338a02757db82d02a3b91f1",
+            "actual": "29c2132d65bac2f6e51f2e54f000da62892ba3e4c338a02757db82d02a3b91f1",
+            "match": true
+          },
+          {
+            "path": "api/geo-vitals.json",
+            "status": 200,
+            "expected": "26e3423622598f992a63e50da2bfe91cbf31d7a3c75ae5af0da34a4d1a05775d",
+            "actual": "26e3423622598f992a63e50da2bfe91cbf31d7a3c75ae5af0da34a4d1a05775d",
+            "match": true
+          },
+          {
+            "path": "api/heartbeat.json",
+            "status": 200,
+            "expected": "c7352e7c73aa088cbccef22c3c544c5deb0ae79554ee1a8e9f33cf95fda62541",
+            "actual": "c7352e7c73aa088cbccef22c3c544c5deb0ae79554ee1a8e9f33cf95fda62541",
+            "match": true
+          },
+          {
+            "path": "api/ignis-platform-status.json",
+            "status": 200,
+            "expected": "13e6bfa01796d7805701dc14914a305e063c72b9dba0b566a51e66079b34ee5b",
+            "actual": "13e6bfa01796d7805701dc14914a305e063c72b9dba0b566a51e66079b34ee5b",
+            "match": true
+          },
+          {
+            "path": "api/intelligence-budget.json",
+            "status": 200,
+            "expected": "cad06e025fe21bf0319617149d1e94114694b7b0280be3d0157d133e54ba5051",
+            "actual": "cad06e025fe21bf0319617149d1e94114694b7b0280be3d0157d133e54ba5051",
+            "match": true
+          },
+          {
+            "path": "api/intent-map.json",
+            "status": 200,
+            "expected": "182341f811f54face1e7e85666ad7b4690a54d8bf3a33b5169a92e9d3ea320dd",
+            "actual": "182341f811f54face1e7e85666ad7b4690a54d8bf3a33b5169a92e9d3ea320dd",
+            "match": true
+          },
+          {
+            "path": "api/nervous-system.json",
+            "status": 200,
+            "expected": "b761efb6fe466efddf9e2026205cab51b106436fb86f23ac59175fe7f77a047f",
+            "actual": "b761efb6fe466efddf9e2026205cab51b106436fb86f23ac59175fe7f77a047f",
+            "match": true
+          },
+          {
+            "path": "api/newsroom-run.json",
+            "status": 200,
+            "expected": "d13885fd081d3804c0b0a393c135cc8aba6d3b14f99568b7bba0e48041b4bd27",
+            "actual": "d13885fd081d3804c0b0a393c135cc8aba6d3b14f99568b7bba0e48041b4bd27",
+            "match": true
+          },
+          {
+            "path": "api/obelisk-redirect-readiness.json",
+            "status": 200,
+            "expected": "e678e0981dffac3fe09a4f5d9a195eb81d1e7b3fa8edb3a815229110f8e7d234",
+            "actual": "e678e0981dffac3fe09a4f5d9a195eb81d1e7b3fa8edb3a815229110f8e7d234",
+            "match": true
+          },
+          {
+            "path": "api/oracle-insights.json",
+            "status": 200,
+            "expected": "e4b814659787029b9077bbd827ae78629a6bd91100589acf689f39bae846b81c",
+            "actual": "e4b814659787029b9077bbd827ae78629a6bd91100589acf689f39bae846b81c",
+            "match": true
+          },
+          {
+            "path": "api/proof-aware-projects.json",
+            "status": 200,
+            "expected": "8984868ab59af03f4ba73cca66100e1a698d277462ac3b0cb401b10e416c56c1",
+            "actual": "8984868ab59af03f4ba73cca66100e1a698d277462ac3b0cb401b10e416c56c1",
+            "match": true
+          },
+          {
+            "path": "api/proof-surface-diagnostics.json",
+            "status": 200,
+            "expected": "e8c891f408badca205725b19d3a41116b2fead518318fcbdf5e7163882780eff",
+            "actual": "e8c891f408badca205725b19d3a41116b2fead518318fcbdf5e7163882780eff",
+            "match": true
+          },
+          {
+            "path": "api/public-intelligence.json",
+            "status": 200,
+            "expected": "7c15cc1fab4a0494efda99093b109a450ab3ae025fddd3f21f374617f6ffea40",
+            "actual": "7c15cc1fab4a0494efda99093b109a450ab3ae025fddd3f21f374617f6ffea40",
+            "match": true
+          },
+          {
+            "path": "api/public-status.json",
+            "status": 200,
+            "expected": "775b75158f5c7e2c70a6b478b276ca3fc3484e63588360887ac8a2faa67f86f0",
+            "actual": "775b75158f5c7e2c70a6b478b276ca3fc3484e63588360887ac8a2faa67f86f0",
+            "match": true
+          },
+          {
+            "path": "api/release-ceremony.json",
+            "status": 200,
+            "expected": "15940a6fce875e46c26f9041033e9468727806ae3b432bdfbb859e26569b7fb0",
+            "actual": "15940a6fce875e46c26f9041033e9468727806ae3b432bdfbb859e26569b7fb0",
+            "match": true
+          },
+          {
+            "path": "api/release-dependencies.json",
+            "status": 200,
+            "expected": "833f37370c81faab41caa7f1b56cdcc07357938f07034aa3c4d68d51bdd3e2c5",
+            "actual": "833f37370c81faab41caa7f1b56cdcc07357938f07034aa3c4d68d51bdd3e2c5",
+            "match": true
+          },
+          {
+            "path": "api/release-proof.json",
+            "status": 200,
+            "expected": "d657bf3bd875c35f152ca3c62c61a6d31544717c9eafd4a55687678fcbc9397b",
+            "actual": "d657bf3bd875c35f152ca3c62c61a6d31544717c9eafd4a55687678fcbc9397b",
+            "match": true
+          },
+          {
+            "path": "api/staging-attention-browser.json",
+            "status": 200,
+            "expected": "a8dd0ba443acfc887651ece25551aff78a58d364cd15d1c975f87ac0062ce1f2",
+            "actual": "a8dd0ba443acfc887651ece25551aff78a58d364cd15d1c975f87ac0062ce1f2",
+            "match": true
+          },
+          {
+            "path": "api/staging-deploy-continuity.json",
+            "status": 200,
+            "expected": "6744087d9849acb2f5cc0c46ed01f962740605908bf5ef9385fb4b329b345ff3",
+            "actual": "6744087d9849acb2f5cc0c46ed01f962740605908bf5ef9385fb4b329b345ff3",
+            "match": true
+          },
+          {
+            "path": "api/staging-deploy-receipt.json",
+            "status": 200,
+            "expected": "a7cce19e310f717ae52b8b7c5f13a676781243a96cfb714f7055f7bf81b7c52c",
+            "actual": "a7cce19e310f717ae52b8b7c5f13a676781243a96cfb714f7055f7bf81b7c52c",
+            "match": true
+          },
+          {
+            "path": "api/staging-health.json",
+            "status": 200,
+            "expected": "5a5a77ad0614e1399a58205b020f7121cd76badeef689a9c2ed9dccb89979d41",
+            "actual": "5a5a77ad0614e1399a58205b020f7121cd76badeef689a9c2ed9dccb89979d41",
+            "match": true
+          },
+          {
+            "path": "api/staging-release-browser.json",
+            "status": 200,
+            "expected": "b306eacb890c5f60421480bf2b15ee352367d39a229e48f765cbf98dc51203f8",
+            "actual": "b306eacb890c5f60421480bf2b15ee352367d39a229e48f765cbf98dc51203f8",
+            "match": true
+          },
+          {
+            "path": "api/status-proof.json",
+            "status": 200,
+            "expected": "a8351e73a37eb546d3b4751a95c3922ef42c51470c259dc960c4aeefb7c526e5",
+            "actual": "a8351e73a37eb546d3b4751a95c3922ef42c51470c259dc960c4aeefb7c526e5",
+            "match": true
+          },
+          {
+            "path": "api/studio-timeline.json",
+            "status": 200,
+            "expected": "e807be392c578e9a86b4e0083e4d359e91a7dfa4d396c0b96b9df3668243d301",
+            "actual": "e807be392c578e9a86b4e0083e4d359e91a7dfa4d396c0b96b9df3668243d301",
+            "match": true
+          },
+          {
+            "path": "api/tt-summary.json",
+            "status": 200,
+            "expected": "368535c9dbf0474700ec56ae763658ae55573aea98c33481bb59235949dfd029",
+            "actual": "368535c9dbf0474700ec56ae763658ae55573aea98c33481bb59235949dfd029",
+            "match": true
+          },
+          {
+            "path": "api/uptime.json",
+            "status": 200,
+            "expected": "65f71c17b030a8dd966c522487092ef253304cc70013dc59a44c184b95426145",
+            "actual": "65f71c17b030a8dd966c522487092ef253304cc70013dc59a44c184b95426145",
+            "match": true
+          },
+          {
+            "path": "api/ux-decision-ledger.json",
+            "status": 200,
+            "expected": "7f207613600667678bd08f69ecbcf371736655a418673dbe5c239a2888831c70",
+            "actual": "7f207613600667678bd08f69ecbcf371736655a418673dbe5c239a2888831c70",
+            "match": true
+          },
+          {
+            "path": "api/worker-route-provenance.json",
+            "status": 200,
+            "expected": "c1b4798873acd282fa37c9d56494bfeafc006fa89f58f5123dde5b98c462716f",
+            "actual": "c1b4798873acd282fa37c9d56494bfeafc006fa89f58f5123dde5b98c462716f",
+            "match": true
+          },
+          {
+            "path": "audits/2026-10-21-S394.json",
+            "status": 200,
+            "expected": "78778a1ec50701701a1d829efc45e4ecf1cb442429dfda134050b247ed879049",
+            "actual": "78778a1ec50701701a1d829efc45e4ecf1cb442429dfda134050b247ed879049",
+            "match": true
+          },
+          {
+            "path": "data/ignis-search-index.json",
+            "status": 200,
+            "expected": "d85cf87508960d4b5274d3a0c479e6ff2afe0c7af06339459cec3077f72fd08a",
+            "actual": "d85cf87508960d4b5274d3a0c479e6ff2afe0c7af06339459cec3077f72fd08a",
+            "match": true
+          },
+          {
+            "path": "data/staging-deploy-history.ndjson",
+            "status": 200,
+            "expected": "b868fc3f8bb61c112ee5fc2e688a59d069a0386fb3d713cbdde62b70d777f359",
+            "actual": "b868fc3f8bb61c112ee5fc2e688a59d069a0386fb3d713cbdde62b70d777f359",
+            "match": true
+          },
+          {
+            "path": "data/stats-surface.json",
+            "status": 200,
+            "expected": "be092de7baef8656c3629231aee000eb01fdde0c0c9d7b35825165366ec14d27",
+            "actual": "be092de7baef8656c3629231aee000eb01fdde0c0c9d7b35825165366ec14d27",
+            "match": true
+          },
+          {
+            "path": "data/uptime-history.ndjson",
+            "status": 200,
+            "expected": "486418f23175e171f31cb73f53cff1578470257d6c04c9cf2b4da16ab6e28077",
+            "actual": "486418f23175e171f31cb73f53cff1578470257d6c04c9cf2b4da16ab6e28077",
+            "match": true
+          },
+          {
+            "path": "feed/forge-ledger.json",
+            "status": 200,
+            "expected": "8dcb1bc405766ff454353bf14165136e3ef62bf221f1e6554c55913639e73d31",
+            "actual": "8dcb1bc405766ff454353bf14165136e3ef62bf221f1e6554c55913639e73d31",
+            "match": true
+          },
+          {
+            "path": "feed/forge-ledger.xml",
+            "status": 200,
+            "expected": "390036c0001746657c9079699d7fc89019905d6dc3f5b79c49f82f75b6385a84",
+            "actual": "390036c0001746657c9079699d7fc89019905d6dc3f5b79c49f82f75b6385a84",
+            "match": true
+          },
+          {
+            "path": "portfolio/compiled/FORECAST_LEDGER.json",
+            "status": 200,
+            "expected": "1c31f8bcf916d2954195730e1d516b5da89b748128ee22f224510ecb0e318941",
+            "actual": "1c31f8bcf916d2954195730e1d516b5da89b748128ee22f224510ecb0e318941",
+            "match": true
+          },
+          {
+            "path": "portfolio/ops/review-loop-receipts.ndjson",
+            "status": 200,
+            "expected": "28d8a58134801446c1e04241855c9fd03b694017ef61ca6ff071e56db0da9245",
+            "actual": "28d8a58134801446c1e04241855c9fd03b694017ef61ca6ff071e56db0da9245",
+            "match": true
+          },
+          {
+            "path": "stats.json",
+            "status": 200,
+            "expected": "be092de7baef8656c3629231aee000eb01fdde0c0c9d7b35825165366ec14d27",
+            "actual": "be092de7baef8656c3629231aee000eb01fdde0c0c9d7b35825165366ec14d27",
+            "match": true
+          }
+        ]
+      },
+      {
+        "schemaVersion": "S394-verified-full-base-and-complete-served-data-delta/v1",
+        "observedAt": "2026-10-21T04:47:23.395Z",
+        "candidate": "5244477a5f2fb04cd70e4f36f2a93741744c110a",
+        "origin": "https://vaultsparkstudios.com",
+        "baseline": "a6752c927e4566240763f040b6bfc75b9b75f592",
+        "baseProofSha256": "e254d542743a9059af2c0f7761c0aeee485fad600d6e75773142887efa098172",
+        "baseChecked": 1120,
+        "changedServed": 45,
+        "checked": 45,
+        "passed": 45,
+        "noAddedRemovedOrExecutablePaths": true,
+        "build": {
+          "schemaVersion": "1.1",
+          "generatedAt": "2026-10-21",
+          "sha": "5244477a5f2fb04cd70e4f36f2a93741744c110a",
+          "builtAt": "2026-10-21T04:44:34.000Z",
+          "deployedBy": "pages-deploy",
+          "baselineSha": null,
+          "contentLaneHead": null,
+          "contentLanePaths": null,
+          "contentLanePathSetSha256": null,
+          "workflowRunId": null
+        },
+        "results": [
+          {
+            "path": "api/ai-discovery-health.json",
+            "status": 200,
+            "expected": "fc0b0706496d70863562bb4f763232d587404f30111c0f37ddc774da5f049aaa",
+            "actual": "fc0b0706496d70863562bb4f763232d587404f30111c0f37ddc774da5f049aaa",
+            "match": true
+          },
+          {
+            "path": "api/build-check-diagnostics.json",
+            "status": 200,
+            "expected": "6b11c2ce7ce3536b9f665c71abbd9a42ebd59bb4921b5539a993f477144a56bd",
+            "actual": "6b11c2ce7ce3536b9f665c71abbd9a42ebd59bb4921b5539a993f477144a56bd",
+            "match": true
+          },
+          {
+            "path": "api/candidate-artifact-manifest.json",
+            "status": 200,
+            "expected": "f03081da16b55423a203669aae8a59f7dc59ae21d54abe267b4d7b84f063733e",
+            "actual": "f03081da16b55423a203669aae8a59f7dc59ae21d54abe267b4d7b84f063733e",
+            "match": true
+          },
+          {
+            "path": "api/canonical-destination-reachability.json",
+            "status": 200,
+            "expected": "b64272ac627bb2b758502ed3354de74da39164d5332483b9f23fe1a563625850",
+            "actual": "b64272ac627bb2b758502ed3354de74da39164d5332483b9f23fe1a563625850",
+            "match": true
+          },
+          {
+            "path": "api/ci-status.json",
+            "status": 200,
+            "expected": "2ce2f58444c422185c9521fed32634624a236d57bab5c37b9847aaa6b564cce0",
+            "actual": "2ce2f58444c422185c9521fed32634624a236d57bab5c37b9847aaa6b564cce0",
+            "match": true
+          },
+          {
+            "path": "api/citation.json",
+            "status": 200,
+            "expected": "18b34f6bfcbc45ba5ff27b2dd0c58a938a09914709f2c6fb26f98ae31d5e2827",
+            "actual": "18b34f6bfcbc45ba5ff27b2dd0c58a938a09914709f2c6fb26f98ae31d5e2827",
+            "match": true
+          },
+          {
+            "path": "api/commit-map.json",
+            "status": 200,
+            "expected": "993b6b11c1fc2c79a9ec46430966a73452b656a86d63526845d4ed08473d00e0",
+            "actual": "993b6b11c1fc2c79a9ec46430966a73452b656a86d63526845d4ed08473d00e0",
+            "match": true
+          },
+          {
+            "path": "api/deploy-currency.json",
+            "status": 200,
+            "expected": "29c2132d65bac2f6e51f2e54f000da62892ba3e4c338a02757db82d02a3b91f1",
+            "actual": "29c2132d65bac2f6e51f2e54f000da62892ba3e4c338a02757db82d02a3b91f1",
+            "match": true
+          },
+          {
+            "path": "api/geo-vitals.json",
+            "status": 200,
+            "expected": "26e3423622598f992a63e50da2bfe91cbf31d7a3c75ae5af0da34a4d1a05775d",
+            "actual": "26e3423622598f992a63e50da2bfe91cbf31d7a3c75ae5af0da34a4d1a05775d",
+            "match": true
+          },
+          {
+            "path": "api/heartbeat.json",
+            "status": 200,
+            "expected": "c7352e7c73aa088cbccef22c3c544c5deb0ae79554ee1a8e9f33cf95fda62541",
+            "actual": "c7352e7c73aa088cbccef22c3c544c5deb0ae79554ee1a8e9f33cf95fda62541",
+            "match": true
+          },
+          {
+            "path": "api/ignis-platform-status.json",
+            "status": 200,
+            "expected": "13e6bfa01796d7805701dc14914a305e063c72b9dba0b566a51e66079b34ee5b",
+            "actual": "13e6bfa01796d7805701dc14914a305e063c72b9dba0b566a51e66079b34ee5b",
+            "match": true
+          },
+          {
+            "path": "api/intelligence-budget.json",
+            "status": 200,
+            "expected": "cad06e025fe21bf0319617149d1e94114694b7b0280be3d0157d133e54ba5051",
+            "actual": "cad06e025fe21bf0319617149d1e94114694b7b0280be3d0157d133e54ba5051",
+            "match": true
+          },
+          {
+            "path": "api/intent-map.json",
+            "status": 200,
+            "expected": "182341f811f54face1e7e85666ad7b4690a54d8bf3a33b5169a92e9d3ea320dd",
+            "actual": "182341f811f54face1e7e85666ad7b4690a54d8bf3a33b5169a92e9d3ea320dd",
+            "match": true
+          },
+          {
+            "path": "api/nervous-system.json",
+            "status": 200,
+            "expected": "b761efb6fe466efddf9e2026205cab51b106436fb86f23ac59175fe7f77a047f",
+            "actual": "b761efb6fe466efddf9e2026205cab51b106436fb86f23ac59175fe7f77a047f",
+            "match": true
+          },
+          {
+            "path": "api/newsroom-run.json",
+            "status": 200,
+            "expected": "d13885fd081d3804c0b0a393c135cc8aba6d3b14f99568b7bba0e48041b4bd27",
+            "actual": "d13885fd081d3804c0b0a393c135cc8aba6d3b14f99568b7bba0e48041b4bd27",
+            "match": true
+          },
+          {
+            "path": "api/obelisk-redirect-readiness.json",
+            "status": 200,
+            "expected": "e678e0981dffac3fe09a4f5d9a195eb81d1e7b3fa8edb3a815229110f8e7d234",
+            "actual": "e678e0981dffac3fe09a4f5d9a195eb81d1e7b3fa8edb3a815229110f8e7d234",
+            "match": true
+          },
+          {
+            "path": "api/oracle-insights.json",
+            "status": 200,
+            "expected": "e4b814659787029b9077bbd827ae78629a6bd91100589acf689f39bae846b81c",
+            "actual": "e4b814659787029b9077bbd827ae78629a6bd91100589acf689f39bae846b81c",
+            "match": true
+          },
+          {
+            "path": "api/proof-aware-projects.json",
+            "status": 200,
+            "expected": "8984868ab59af03f4ba73cca66100e1a698d277462ac3b0cb401b10e416c56c1",
+            "actual": "8984868ab59af03f4ba73cca66100e1a698d277462ac3b0cb401b10e416c56c1",
+            "match": true
+          },
+          {
+            "path": "api/proof-surface-diagnostics.json",
+            "status": 200,
+            "expected": "e8c891f408badca205725b19d3a41116b2fead518318fcbdf5e7163882780eff",
+            "actual": "e8c891f408badca205725b19d3a41116b2fead518318fcbdf5e7163882780eff",
+            "match": true
+          },
+          {
+            "path": "api/public-intelligence.json",
+            "status": 200,
+            "expected": "7c15cc1fab4a0494efda99093b109a450ab3ae025fddd3f21f374617f6ffea40",
+            "actual": "7c15cc1fab4a0494efda99093b109a450ab3ae025fddd3f21f374617f6ffea40",
+            "match": true
+          },
+          {
+            "path": "api/public-status.json",
+            "status": 200,
+            "expected": "775b75158f5c7e2c70a6b478b276ca3fc3484e63588360887ac8a2faa67f86f0",
+            "actual": "775b75158f5c7e2c70a6b478b276ca3fc3484e63588360887ac8a2faa67f86f0",
+            "match": true
+          },
+          {
+            "path": "api/release-ceremony.json",
+            "status": 200,
+            "expected": "15940a6fce875e46c26f9041033e9468727806ae3b432bdfbb859e26569b7fb0",
+            "actual": "15940a6fce875e46c26f9041033e9468727806ae3b432bdfbb859e26569b7fb0",
+            "match": true
+          },
+          {
+            "path": "api/release-dependencies.json",
+            "status": 200,
+            "expected": "833f37370c81faab41caa7f1b56cdcc07357938f07034aa3c4d68d51bdd3e2c5",
+            "actual": "833f37370c81faab41caa7f1b56cdcc07357938f07034aa3c4d68d51bdd3e2c5",
+            "match": true
+          },
+          {
+            "path": "api/release-proof.json",
+            "status": 200,
+            "expected": "d657bf3bd875c35f152ca3c62c61a6d31544717c9eafd4a55687678fcbc9397b",
+            "actual": "d657bf3bd875c35f152ca3c62c61a6d31544717c9eafd4a55687678fcbc9397b",
+            "match": true
+          },
+          {
+            "path": "api/staging-attention-browser.json",
+            "status": 200,
+            "expected": "a8dd0ba443acfc887651ece25551aff78a58d364cd15d1c975f87ac0062ce1f2",
+            "actual": "a8dd0ba443acfc887651ece25551aff78a58d364cd15d1c975f87ac0062ce1f2",
+            "match": true
+          },
+          {
+            "path": "api/staging-deploy-continuity.json",
+            "status": 200,
+            "expected": "6744087d9849acb2f5cc0c46ed01f962740605908bf5ef9385fb4b329b345ff3",
+            "actual": "6744087d9849acb2f5cc0c46ed01f962740605908bf5ef9385fb4b329b345ff3",
+            "match": true
+          },
+          {
+            "path": "api/staging-deploy-receipt.json",
+            "status": 200,
+            "expected": "a7cce19e310f717ae52b8b7c5f13a676781243a96cfb714f7055f7bf81b7c52c",
+            "actual": "a7cce19e310f717ae52b8b7c5f13a676781243a96cfb714f7055f7bf81b7c52c",
+            "match": true
+          },
+          {
+            "path": "api/staging-health.json",
+            "status": 200,
+            "expected": "5a5a77ad0614e1399a58205b020f7121cd76badeef689a9c2ed9dccb89979d41",
+            "actual": "5a5a77ad0614e1399a58205b020f7121cd76badeef689a9c2ed9dccb89979d41",
+            "match": true
+          },
+          {
+            "path": "api/staging-release-browser.json",
+            "status": 200,
+            "expected": "b306eacb890c5f60421480bf2b15ee352367d39a229e48f765cbf98dc51203f8",
+            "actual": "b306eacb890c5f60421480bf2b15ee352367d39a229e48f765cbf98dc51203f8",
+            "match": true
+          },
+          {
+            "path": "api/status-proof.json",
+            "status": 200,
+            "expected": "a8351e73a37eb546d3b4751a95c3922ef42c51470c259dc960c4aeefb7c526e5",
+            "actual": "a8351e73a37eb546d3b4751a95c3922ef42c51470c259dc960c4aeefb7c526e5",
+            "match": true
+          },
+          {
+            "path": "api/studio-timeline.json",
+            "status": 200,
+            "expected": "e807be392c578e9a86b4e0083e4d359e91a7dfa4d396c0b96b9df3668243d301",
+            "actual": "e807be392c578e9a86b4e0083e4d359e91a7dfa4d396c0b96b9df3668243d301",
+            "match": true
+          },
+          {
+            "path": "api/tt-summary.json",
+            "status": 200,
+            "expected": "368535c9dbf0474700ec56ae763658ae55573aea98c33481bb59235949dfd029",
+            "actual": "368535c9dbf0474700ec56ae763658ae55573aea98c33481bb59235949dfd029",
+            "match": true
+          },
+          {
+            "path": "api/uptime.json",
+            "status": 200,
+            "expected": "65f71c17b030a8dd966c522487092ef253304cc70013dc59a44c184b95426145",
+            "actual": "65f71c17b030a8dd966c522487092ef253304cc70013dc59a44c184b95426145",
+            "match": true
+          },
+          {
+            "path": "api/ux-decision-ledger.json",
+            "status": 200,
+            "expected": "7f207613600667678bd08f69ecbcf371736655a418673dbe5c239a2888831c70",
+            "actual": "7f207613600667678bd08f69ecbcf371736655a418673dbe5c239a2888831c70",
+            "match": true
+          },
+          {
+            "path": "api/worker-route-provenance.json",
+            "status": 200,
+            "expected": "c1b4798873acd282fa37c9d56494bfeafc006fa89f58f5123dde5b98c462716f",
+            "actual": "c1b4798873acd282fa37c9d56494bfeafc006fa89f58f5123dde5b98c462716f",
+            "match": true
+          },
+          {
+            "path": "audits/2026-10-21-S394.json",
+            "status": 200,
+            "expected": "78778a1ec50701701a1d829efc45e4ecf1cb442429dfda134050b247ed879049",
+            "actual": "78778a1ec50701701a1d829efc45e4ecf1cb442429dfda134050b247ed879049",
+            "match": true
+          },
+          {
+            "path": "data/ignis-search-index.json",
+            "status": 200,
+            "expected": "d85cf87508960d4b5274d3a0c479e6ff2afe0c7af06339459cec3077f72fd08a",
+            "actual": "d85cf87508960d4b5274d3a0c479e6ff2afe0c7af06339459cec3077f72fd08a",
+            "match": true
+          },
+          {
+            "path": "data/staging-deploy-history.ndjson",
+            "status": 200,
+            "expected": "b868fc3f8bb61c112ee5fc2e688a59d069a0386fb3d713cbdde62b70d777f359",
+            "actual": "b868fc3f8bb61c112ee5fc2e688a59d069a0386fb3d713cbdde62b70d777f359",
+            "match": true
+          },
+          {
+            "path": "data/stats-surface.json",
+            "status": 200,
+            "expected": "be092de7baef8656c3629231aee000eb01fdde0c0c9d7b35825165366ec14d27",
+            "actual": "be092de7baef8656c3629231aee000eb01fdde0c0c9d7b35825165366ec14d27",
+            "match": true
+          },
+          {
+            "path": "data/uptime-history.ndjson",
+            "status": 200,
+            "expected": "486418f23175e171f31cb73f53cff1578470257d6c04c9cf2b4da16ab6e28077",
+            "actual": "486418f23175e171f31cb73f53cff1578470257d6c04c9cf2b4da16ab6e28077",
+            "match": true
+          },
+          {
+            "path": "feed/forge-ledger.json",
+            "status": 200,
+            "expected": "8dcb1bc405766ff454353bf14165136e3ef62bf221f1e6554c55913639e73d31",
+            "actual": "8dcb1bc405766ff454353bf14165136e3ef62bf221f1e6554c55913639e73d31",
+            "match": true
+          },
+          {
+            "path": "feed/forge-ledger.xml",
+            "status": 200,
+            "expected": "390036c0001746657c9079699d7fc89019905d6dc3f5b79c49f82f75b6385a84",
+            "actual": "390036c0001746657c9079699d7fc89019905d6dc3f5b79c49f82f75b6385a84",
+            "match": true
+          },
+          {
+            "path": "portfolio/compiled/FORECAST_LEDGER.json",
+            "status": 200,
+            "expected": "1c31f8bcf916d2954195730e1d516b5da89b748128ee22f224510ecb0e318941",
+            "actual": "1c31f8bcf916d2954195730e1d516b5da89b748128ee22f224510ecb0e318941",
+            "match": true
+          },
+          {
+            "path": "portfolio/ops/review-loop-receipts.ndjson",
+            "status": 200,
+            "expected": "28d8a58134801446c1e04241855c9fd03b694017ef61ca6ff071e56db0da9245",
+            "actual": "28d8a58134801446c1e04241855c9fd03b694017ef61ca6ff071e56db0da9245",
+            "match": true
+          },
+          {
+            "path": "stats.json",
+            "status": 200,
+            "expected": "be092de7baef8656c3629231aee000eb01fdde0c0c9d7b35825165366ec14d27",
+            "actual": "be092de7baef8656c3629231aee000eb01fdde0c0c9d7b35825165366ec14d27",
+            "match": true
+          }
+        ]
+      }
+    ],
+    "criticalLeaves": {
+      "root": "78e69e42b20b8d273fb6da1aaff628d4ea5223d4ecfee2d2723e04775ddaebd1",
+      "checked": 65,
+      "passed": 65,
+      "normalization": "Manifest-declared canonicalization; deployment stamp verified separately"
+    },
+    "shellParity": {
+      "ok": true,
+      "status": 200,
+      "missing": 0,
+      "unexpected": 0
+    },
+    "monitorCoordination": {
+      "at": "2026-10-21T04:12:07.914Z",
+      "reason": "Normal pre-push validation passed but concurrent uptime writer advanced main before ref update; bounded publication coordination",
+      "restoreRequired": false,
+      "workflows": [
+        {
+          "id": 290922328,
+          "path": "uptime-probe.yml",
+          "before": "active"
+        },
+        {
+          "id": 262469628,
+          "path": "ci-status-beacon.yml",
+          "before": "active"
+        }
+      ],
+      "requiredWorkflowsRemainEnabled": true,
+      "twin": "ASK/no-signal; reversible bounded deployment coordination under existing authorization",
+      "restoredAt": "2026-10-21T04:22:30.204Z",
+      "restored": [
+        {
+          "id": 262469628,
+          "name": "CI Status Beacon",
+          "path": ".github/workflows/ci-status-beacon.yml",
+          "state": "active"
+        },
+        {
+          "id": 290922328,
+          "name": "uptime-probe",
+          "path": ".github/workflows/uptime-probe.yml",
+          "state": "active"
+        }
+      ]
     }
   }
 }
