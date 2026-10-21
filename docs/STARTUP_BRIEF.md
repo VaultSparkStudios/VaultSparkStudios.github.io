@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S394) - WHAT SHIPPED ══════════════════════════╗
-║  S394 shell-parity acceptance now requires a successful HTTP re  ║
+║  S394 shell parity requires HTTP success and a nonempty expecte  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -63,7 +63,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 394 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    545/545 passing  ·  Deploy: pending                   ║
+║  Tests:    545/545 passing  ·  Deploy: verified                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -78,7 +78,7 @@
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   17d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  2d old                         ║
-║  ⛔  Truth         yellow — S394 verifier accepted locally;…      ║
+║  ⛔  Truth         yellow — public product release verified;…     ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.181  (healthy)                               ║
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Complete current whole-project validation,  ║
-║        Complete current whole-project validation, staging, sani  ║
-║                                                                  ║
-║   96  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
+║   99  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
 ║        Keep startup-generated genius-list drift distinguishable  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Assess cross-origin redirect handling in d  ║
+║   93  [PRODUCT]      Assess cross-origin redirect handling in d  ║
 ║        Assess cross-origin redirect handling in diagnostic HTTP  ║
 ║                                                                  ║
-║   90  [INTELLIGENCE]  Record strict premise acceptance before c  ║
+║   93  [INTELLIGENCE]  Record strict premise acceptance before c  ║
 ║        Record strict premise acceptance before creating any pla  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Measure and remove generated leaderboard m  ║
+║   87  [PRODUCT]      Measure and remove generated leaderboard m  ║
 ║        Measure and remove generated leaderboard metadata/whites  ║
+║                                                                  ║
+║   84  [PRODUCT]      Complete suite, exact-candidate publicatio  ║
+║        Complete suite, exact-candidate publication, production   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

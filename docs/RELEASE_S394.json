@@ -5,12 +5,12 @@
     "threadId": "01a15bd6-6f29-75c0-8bca-d1378ec53f3f",
     "createdAt": 1792542151
   },
-  "state": "local-implementation-verified-release-pending",
+  "state": "product-release-verified-closing-publication-pending",
   "releaseAccepted": false,
   "implementation": {
     "selected": 1,
     "verified": 1,
-    "released": 0,
+    "released": 1,
     "review": "independent round1 pass; zero findings",
     "scope": "Shell parity diagnostic HTTP acceptance and CLI admission; UI/identity/membership policies unchanged",
     "sourceCommit": "a40da4c31b"
@@ -165,10 +165,112 @@
     "finalCandidateRefresh": "Complete; final66-leaf root matches verified staging."
   },
   "production": {
-    "state": "pending"
+    "state": "verified",
+    "observedAt": "2026-10-21T03:10:32.621Z",
+    "sha": "a6752c927e4566240763f040b6bfc75b9b75f592",
+    "workflowRun": 39535687085,
+    "provider": {
+      "id": "7ca4a29e-0fa3-4087-9b72-be2794be2d20",
+      "url": "https://7ca4a29e.vaultsparkstudios-website.pages.dev",
+      "environment": "production",
+      "status": "success",
+      "commit": "a6752c927e4566240763f040b6bfc75b9b75f592"
+    },
+    "builds": {
+      "https://vaultsparkstudios.com": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-21",
+        "sha": "a6752c927e4566240763f040b6bfc75b9b75f592",
+        "builtAt": "2026-10-21T02:59:07.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      },
+      "https://vaultsparkstudios-website.pages.dev": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-21",
+        "sha": "a6752c927e4566240763f040b6bfc75b9b75f592",
+        "builtAt": "2026-10-21T02:59:07.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    },
+    "requiredChecks": {
+      "ok": true,
+      "lane": "hosted-exact-sha",
+      "checks": [
+        {
+          "workflow": ".github/workflows/e2e.yml",
+          "state": "passed",
+          "runId": 39534192434
+        },
+        {
+          "workflow": ".github/workflows/lighthouse.yml",
+          "state": "passed",
+          "runId": 39534192424
+        },
+        {
+          "workflow": ".github/workflows/accessibility.yml",
+          "state": "passed",
+          "runId": 39534192425
+        }
+      ],
+      "findings": [],
+      "sourceCommit": "a6752c927e4566240763f040b6bfc75b9b75f592",
+      "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+      "checkedAt": "2026-10-21T02:55:11.191Z",
+      "independentProof": {
+        "ok": false,
+        "expectedSha": "a6752c927e4566240763f040b6bfc75b9b75f592"
+      }
+    },
+    "servedParity": {
+      "state": "tree-current",
+      "checkedAt": "2026-10-21T03:09:52.453Z",
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "against": "a6752c927e4566240763f040b6bfc75b9b75f592",
+      "deployedBy": null,
+      "verdict": "tree-current",
+      "checked": 1120,
+      "identical": 1110,
+      "differ": 0,
+      "contentLag": [],
+      "fullPromotionOnly": [],
+      "redirected": 10,
+      "notServed": [],
+      "unread": 0
+    },
+    "criticalLeaves": {
+      "checked": 65,
+      "passed": 65,
+      "root": "0c64c794dd52453cef522d6bb2e020186ff7e1138db4d230451f1529d39f0ba3",
+      "deployStampExcluded": true
+    },
+    "apex": {
+      "rawMatched": 59,
+      "checked": 65,
+      "transportMatched": 6,
+      "transportTemplateSha256": "914444b766129766c94a709897e440460f2558801d39dab1ebe111268510865b",
+      "scope": "Exact inspected Cloudflare challenge template and nonce attributes only; raw differences retained"
+    },
+    "shellParity": {
+      "ok": true,
+      "status": 200,
+      "responseOk": true,
+      "expectedShellPresent": true,
+      "missing": 0,
+      "unexpected": 0
+    }
   },
   "closeout": {
-    "state": "canonical-local-closeout-passed-publication-and-production-pending",
+    "state": "product-release-writeback-complete-closing-publication-pending",
     "silScore": 935,
     "cdr": "reviewed; no new creative direction",
     "autopilot": {
@@ -183,10 +285,9 @@
     }
   },
   "remainingActions": [
-    "Publish accepted candidate to main after focused receipt/graph checks",
-    "Verify three required exact-candidate hosted workflows",
-    "Normal full production promotion and complete live readback",
-    "Final canonical status publication, Ark/boards and native completion audit"
+    "Verify and publish closing status surfaces",
+    "Deploy closing public projections and verify live readback",
+    "Ark impact receipt, final goal audit and native completion"
   ],
   "authorization": {
     "source": "Current native goal and founder instruction",
@@ -227,6 +328,45 @@
         "contentLanePathSetSha256": "f2fee75fc12b217a6c585715ec27b04f2daba869f387b4f07bdc097aa5092a26",
         "workflowRunId": "39510880608"
       }
+    }
+  },
+  "closingPublication": {
+    "state": "local-validation-passed-publication-pending",
+    "sourceInputsChanged": [
+      "context/TASK_BOARD.md"
+    ],
+    "attempts": [
+      {
+        "state": "failed",
+        "step": 168,
+        "scope": "Incomplete current closing-source 545-step run",
+        "reason": "Status-proof embedded a feed changed by the latest staging receipt; native status-proof and citation rebuilt.",
+        "evidence": ".cache/S394/closing-attempt1-diagnostics.json",
+        "log": ".cache/S394/closing-full-check.log"
+      },
+      {
+        "state": "failed",
+        "step": 432,
+        "scope": "Incomplete second closing-source 545-step run",
+        "reason": "Status-proof refresh changed its computedAt input to stats-surface; all three native dependency-closure owners now pass.",
+        "sourceFingerprint": "dc37244c706ad83f7bdf383e",
+        "evidence": ".cache/S394/closing-attempt2-diagnostics.json",
+        "log": ".cache/S394/closing-full-check-attempt2.log"
+      }
+    ],
+    "stagingReceipt": "43bcf18f6ce73a16b9f637b7",
+    "stagingCeremony": 11,
+    "fullSuite": {
+      "state": "passed",
+      "passed": 545,
+      "failed": 0,
+      "coverageComplete": true,
+      "sourceFingerprint": "dc37244c706ad83f7bdf383e",
+      "planFingerprint": "c0af5c4243e3681b952755f1",
+      "startedAt": "2026-10-21T03:36:00.906Z",
+      "finishedAt": "2026-10-21T03:54:44.426Z",
+      "evidence": ".cache/S394/closing-complete-diagnostics.json",
+      "log": ".cache/S394/closing-full-check-attempt3.log"
     }
   }
 }

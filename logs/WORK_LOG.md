@@ -1717,3 +1717,10 @@ Fresh nine-axis survey selected one bounded stabilization outcome. Both source p
 ### S394 acceptance checkpoint — 2026-10-21
 
 Fresh local mobile audit215/215 passes, zero P0/P1. Staging deployment f69300ddf3459d993732a587 verifies current artifacts and rollback; complete ceremony11/11 passes after the lineage prerequisite was refreshed. The original10/11 receipt is preserved. Current local doctor has0 blocking findings. The supported --ci ceremony path retains every browser check while avoiding a foreign-repo doctor refresh. Complete whole-project validation, main publication and normal full production release remain pending.
+
+
+### S394 product release acceptance — 2026-10-21T03:10:32.911Z
+
+S394 shell parity requires HTTP success and a nonempty expected shell, with complete CLI admission before IO. CLI 2/2, self-test 14/14 and independent review pass. Two complete 545/545 runs, mobile 215/215 and staging ceremony 11/11 pass. Normal full Pages release a6752c927e4566240763f040b6bfc75b9b75f592 (run 39535687085) is verified by provider identity, both public build stamps and tree-current served-byte comparison. Original premise timing remains nonpassing; existing identity and field-vitals holds remain unchanged. No measured conversion or performance gain is claimed.
+
+Earlier pending checkpoints retain their original historical state. Closing status publication is tracked separately in docs/RELEASE_S394.json.

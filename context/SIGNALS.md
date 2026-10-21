@@ -4,7 +4,7 @@
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   17d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  2d old                         ║
-║  ⛔  Truth         yellow — S394 verifier accepted locally;…      ║
+║  ⛔  Truth         yellow — public product release verified;…     ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.181  (healthy)                               ║

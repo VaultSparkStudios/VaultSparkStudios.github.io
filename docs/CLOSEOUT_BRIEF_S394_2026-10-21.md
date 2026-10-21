@@ -5,8 +5,7 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Parity verifier and current staging are verified; complete acceptance and production       ║
-║    are pending.                                                                               ║
+║    Shell-parity verifier is verified and fully deployed.                                      ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     ███████░░░   70/100                                                       ║
 ║  ECOSYSTEM IMPACT   ███░░░░░░░   30/100                                                       ║
@@ -21,12 +20,12 @@
          ── feedbackLoop ────────────────────────────────────────────────────────────────────
          Matching assets cannot turn an HTTP error into a successful route. Complete option
          admission prevents a diagnostic command from silently checking the wrong target.
-         → CLI2/2; self-test14/14; independent review; fresh mobile215/215; staging11/11. Current complete suite and production remain pending.
+         → CLI 2/2, self-test 14/14, full suite 545/545 twice, mobile 215/215, staging 11/11, exact hosted CI and full production readback.
 
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Complete current validation, staging, exact-candidate checks and full release/readback.
+    • Existing future SIL rows remain unselected.
 
   BLOCKERS
     (none)

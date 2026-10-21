@@ -31,19 +31,127 @@
     "5": 936.2
   },
   "topWin": "Actual CLI rejects matching-shell error responses and ambiguous inputs",
-  "topGap": "Current complete validation and deployment pending; timing deviation preserved",
-  "intentOutcome": "partial",
+  "topGap": "Original premise timing deviation and unchanged identity/field-vitals gaps",
+  "intentOutcome": "product-release-verified",
   "improvementsShipped": 1,
   "improvementGroups": [
     "truthful-shell-parity"
   ],
-  "deployStatus": "pending",
-  "testsTotal": null,
+  "deployStatus": "verified",
+  "testsTotal": 545,
   "testsByType": {
     "focused": 2,
-    "selfTest": 14
+    "selfTest": 14,
+    "completeSuite": 545,
+    "mobile": 215,
+    "stagingCeremony": 11
   },
   "testsDelta": null,
   "ignisFlags": [],
-  "ignisNote": "No foreign rescore or measured field gain claimed."
+  "ignisNote": "No foreign rescore or measured field gain claimed.",
+  "production": {
+    "state": "verified",
+    "observedAt": "2026-10-21T03:10:32.621Z",
+    "sha": "a6752c927e4566240763f040b6bfc75b9b75f592",
+    "workflowRun": 39535687085,
+    "provider": {
+      "id": "7ca4a29e-0fa3-4087-9b72-be2794be2d20",
+      "url": "https://7ca4a29e.vaultsparkstudios-website.pages.dev",
+      "environment": "production",
+      "status": "success",
+      "commit": "a6752c927e4566240763f040b6bfc75b9b75f592"
+    },
+    "builds": {
+      "https://vaultsparkstudios.com": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-21",
+        "sha": "a6752c927e4566240763f040b6bfc75b9b75f592",
+        "builtAt": "2026-10-21T02:59:07.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      },
+      "https://vaultsparkstudios-website.pages.dev": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-21",
+        "sha": "a6752c927e4566240763f040b6bfc75b9b75f592",
+        "builtAt": "2026-10-21T02:59:07.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    },
+    "requiredChecks": {
+      "ok": true,
+      "lane": "hosted-exact-sha",
+      "checks": [
+        {
+          "workflow": ".github/workflows/e2e.yml",
+          "state": "passed",
+          "runId": 39534192434
+        },
+        {
+          "workflow": ".github/workflows/lighthouse.yml",
+          "state": "passed",
+          "runId": 39534192424
+        },
+        {
+          "workflow": ".github/workflows/accessibility.yml",
+          "state": "passed",
+          "runId": 39534192425
+        }
+      ],
+      "findings": [],
+      "sourceCommit": "a6752c927e4566240763f040b6bfc75b9b75f592",
+      "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+      "checkedAt": "2026-10-21T02:55:11.191Z",
+      "independentProof": {
+        "ok": false,
+        "expectedSha": "a6752c927e4566240763f040b6bfc75b9b75f592"
+      }
+    },
+    "servedParity": {
+      "state": "tree-current",
+      "checkedAt": "2026-10-21T03:09:52.453Z",
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "against": "a6752c927e4566240763f040b6bfc75b9b75f592",
+      "deployedBy": null,
+      "verdict": "tree-current",
+      "checked": 1120,
+      "identical": 1110,
+      "differ": 0,
+      "contentLag": [],
+      "fullPromotionOnly": [],
+      "redirected": 10,
+      "notServed": [],
+      "unread": 0
+    },
+    "criticalLeaves": {
+      "checked": 65,
+      "passed": 65,
+      "root": "0c64c794dd52453cef522d6bb2e020186ff7e1138db4d230451f1529d39f0ba3",
+      "deployStampExcluded": true
+    },
+    "apex": {
+      "rawMatched": 59,
+      "checked": 65,
+      "transportMatched": 6,
+      "transportTemplateSha256": "914444b766129766c94a709897e440460f2558801d39dab1ebe111268510865b",
+      "scope": "Exact inspected Cloudflare challenge template and nonce attributes only; raw differences retained"
+    },
+    "shellParity": {
+      "ok": true,
+      "status": 200,
+      "responseOk": true,
+      "expectedShellPresent": true,
+      "missing": 0,
+      "unexpected": 0
+    }
+  }
 }

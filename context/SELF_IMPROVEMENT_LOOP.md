@@ -3095,3 +3095,35 @@ Product rubric,10 categories ×100. Total935/1000; unchanged. Velocity1 locally 
 S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending.
 
 No measured engagement, conversion or performance improvement is claimed. Timing is nonpassing; release acceptance is incomplete. Brainstorm: distinguish startup generation in the premise timing inventory; separately review cross-origin redirect handling. Both recorded as future [SIL][S394] tasks without scope expansion.
+
+
+### S394 full product release addendum
+
+S394 shell parity requires HTTP success and a nonempty expected shell, with complete CLI admission before IO. CLI 2/2, self-test 14/14 and independent review pass. Two complete 545/545 runs, mobile 215/215 and staging ceremony 11/11 pass. Normal full Pages release a6752c927e4566240763f040b6bfc75b9b75f592 (run 39535687085) is verified by provider identity, both public build stamps and tree-current served-byte comparison. Original premise timing remains nonpassing; existing identity and field-vitals holds remain unchanged. No measured conversion or performance gain is claimed.
+
+SIL remains 935/1000 across the same ten categories; velocity 1. The two existing future SIL rows remain unselected. Closing publication does not add another product outcome.
+
+
+## Session 394 — 2026-10-21 — S394 canonical scored closeout receipt
+
+The earlier S394 checkpoint retained its original text. Its unpunctuated total was not recognized by the shared score parser. This append-only receipt records the same ten scores in the canonical format; it does not start another session or change the score.
+
+**Total:** 935/1000
+**Velocity:** 1
+**Win:** Truthful shell-parity acceptance is verified and fully deployed.
+**Gap:** Original premise timing remains nonpassing; closing status publication is in progress.
+
+| Category | Score |
+|---|---:|
+| Dev Health | 93 |
+| Creative Alignment | 94 |
+| Momentum | 90 |
+| Engagement | 96 |
+| Process Quality | 88 |
+| Cross-Repo Coherence | 93 |
+| Security Posture | 97 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 98 |
+
+Acceptance: CLI 2/2, self-test 14/14, independent review, two complete product-source 545/545 runs, a complete closing-source 545/545 run, mobile 215/215, staging 11/11 and normal full product deployment/readback. Evidence: docs/RELEASE_S394.json. No measured engagement, conversion, performance or fleet-adoption gain is claimed. CDR reviewed: no new creative direction. The two previously recorded future S394 SIL tasks remain unselected.

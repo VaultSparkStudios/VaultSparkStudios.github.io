@@ -1,10 +1,8 @@
-## Where We Left Off (Session 394) — partial closeout; release in progress
+## Where We Left Off (Session 394) — full product release verified
 
-S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending.
+S394 shell parity requires HTTP success and a nonempty expected shell, with complete CLI admission before IO. CLI 2/2, self-test 14/14 and independent review pass. Two complete 545/545 runs, mobile 215/215 and staging ceremony 11/11 pass. Normal full Pages release a6752c927e4566240763f040b6bfc75b9b75f592 (run 39535687085) is verified by provider identity, both public build stamps and tree-current served-byte comparison. Original premise timing remains nonpassing; existing identity and field-vitals holds remain unchanged. No measured conversion or performance gain is claimed.
 
-Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy. Deploy: pending — complete local acceptance, current staging, exact-candidate checks and full production readback.
-
-Native goal01a15bd6-6f29-75c0-8bca-d1378ec53f3f createdAt1792542151 is bound to S394. Continue this audit; do not start another arc on automatic continuation. Actual handles and logs belong in .cache/S394/state.json. CDR reviewed: no new creative direction. S393 record recovery corrected its stale trailing pending paragraph and appended a post-anchor receipt addendum. Existing identity and field-vitals holds remain unchanged.
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy. Product source and production readback are verified. Closing publication evidence and remaining actions: docs/RELEASE_S394.json. Native goal 01a15bd6-6f29-75c0-8bca-d1378ec53f3f remains associated with S394 until final publication verification; automatic continuation never starts another arc. CDR reviewed: no new creative direction.
 
 ## Where We Left Off (Session 393) — verified full product release
 

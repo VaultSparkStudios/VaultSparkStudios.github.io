@@ -1,8 +1,8 @@
-## S394 — parity evidence verified locally; release in progress
+## S394 — full product release verified
 
-S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending.
+S394 shell parity requires HTTP success and a nonempty expected shell, with complete CLI admission before IO. CLI 2/2, self-test 14/14 and independent review pass. Two complete 545/545 runs, mobile 215/215 and staging ceremony 11/11 pass. Normal full Pages release a6752c927e4566240763f040b6bfc75b9b75f592 (run 39535687085) is verified by provider identity, both public build stamps and tree-current served-byte comparison. Original premise timing remains nonpassing; existing identity and field-vitals holds remain unchanged. No measured conversion or performance gain is claimed.
 
-Native goal01a15bd6-6f29-75c0-8bca-d1378ec53f3f createdAt1792542151 binds this arc. Resume its selected audit and remaining release; prior S393 completion is separate. Evidence: docs/RELEASE_S394.json.
+Closing status publication is recorded separately in docs/RELEASE_S394.json.
 
 ## S393 — full product release verified
 
