@@ -5,8 +5,7 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Complete served-coverage checks and staging pass; full-suite acceptance and production     ║
-║    remain pending.                                                                            ║
+║    Complete served-text coverage and full integrated/closing deployments are verified.        ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     ████████░░   80/100                                                       ║
 ║  ECOSYSTEM IMPACT   ███░░░░░░░   30/100                                                       ║
@@ -21,12 +20,12 @@
          ── feedbackLoop ────────────────────────────────────────────────────────────────────
          An absent page cannot certify deployment. Configured redirects are checked against
          the compared commit, and zero work remains unverified.
-         → Current fixtures3/3; self-test19/19; existing regressions9/9; review pass; fresh mobile215/215; staging11/11. Complete suite and production acceptance remain pending.
+         → Focused3/3, self-test19/19, existing9/9; integrated545/545 twice and complete closing545/545; original36-owner and current37-owner closure;126 manually reviewed current images and215 device probes; staging11/11; exact hosted checks/provider/build identity; separate full product and closing Pages text sweeps; closing1128 text candidates,66 closing critical leaves on Pages/apex,12 incoming image variants per origin and shell.
 
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Complete current acceptance, staging, exact-candidate checks and full production readback.
+    • Two future S395 SIL rows remain unselected. Original timing nonpass, original trace/context baseline unmeasured, and existing identity/field-vitals holds remain explicit.
 
   BLOCKERS
     (none)

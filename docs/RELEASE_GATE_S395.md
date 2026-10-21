@@ -7,3 +7,6 @@ S395 served-text parity requires complete nonempty exactly-once coverage, commit
 Critical manifest root:a7cb6e9d873840a9da533e9b26af56ac2edb25045f846e36971ba3799733bf2b. Integrated staging receipt:e51b811302744162f2c7b2ad; ceremony11/11. Incoming binary proof is limited to12 named news-image variants, not all binaries. Apex transport transformations have separate bounded proof; raw apex byte equality is not claimed.
 
 Closing status publication remains pending: final metadata verification/commit/push, public projection deployment/readback, Ark impact transport, owned-process cleanup and final native-goal audit.
+
+
+Closing full publication accepted: 14466ce38c0c0e6e1b33c6c6816a086e7b6e9085, workflow39678958995. Fresh complete text sweep1118/1128 identical with10 configured redirects; no differences/missing/unread. Current66 critical leaves, scoped apex transport,12 incoming image variants per origin and source-bound shell pass. Actual closing-source545/545 and staging11/11 retained. Original failures/unknown trace baseline remain explicit.

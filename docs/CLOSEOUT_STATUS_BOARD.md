@@ -1,21 +1,21 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-21 (Session 394 closeout) -->
+<!-- generated-at: 2026-10-21 (Session 395 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S394 ═══════╗
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S395 ═══════╗
 ║  Date: 2026-10-21  ·  SIL: 935/1000  ·  Velocity: 1 stable       ║
 ║  Mode: BUILDER  ·  Agent: codex                                  ║
-║  Autopilot: BYPASSED (S394) — no receipt; run node scripts/clos  ║
+║  Autopilot: BYPASSED (S395) — no receipt; run node scripts/clos  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
-║  ✓ chore(closeout): record restored S394 publication writers [s  ║
-║  ✓ chore(closeout): verify S394 full release and closing public  ║
-║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
-║  ✓ chore: update CI status beacon [skip ci]                      ║
-║  ✓ chore: refresh live data feeds [skip ci]                      ║
+║  ✓ perf(news): trim article CSS and verify closing release       ║
+║  ✓ Close S395 release labels and verify corrected closing sourc  ║
+║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
+║  ✓ chore(closeout): publish S395 verified product and closing c  ║
+║  ✓ chore(closeout): reconcile final release proof                ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 935/1000 ═══════════════════════════════════════╗
 ║    Dev Health         93   █████████░                            ║
@@ -30,19 +30,19 @@
 ║    Automation         98   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  · context/CURRENT_STATE.md                                      ║
+║  ✓ context/CURRENT_STATE.md                                      ║
 ║  · context/TASK_BOARD.md                                         ║
-║  · context/LATEST_HANDOFF.md                                     ║
-║  · logs/WORK_LOG.md                                              ║
+║  ✓ context/LATEST_HANDOFF.md                                     ║
+║  ✓ logs/WORK_LOG.md                                              ║
 ║  · context/DECISIONS.md                                          ║
-║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  · context/TRUTH_AUDIT.md                                        ║
-║  · context/PROJECT_STATUS.json                                   ║
+║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 0 files  ·  M:0 A:0 D:0 ?:0                            ║
+║  Changes: 12 files  ·  M:12 A:0 D:0 ?:0                          ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -55,7 +55,7 @@
 ║  Compliance:    —                                                ║
 ║  Tests:         545/545                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         2d ago                                           ║
+║  IGNIS:         3d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ║  shells:        unknown · missing/stale enumeration              ║

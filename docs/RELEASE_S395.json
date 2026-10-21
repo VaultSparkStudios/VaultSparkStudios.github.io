@@ -5,7 +5,7 @@
     "threadId": "01a15eb6-e304-7081-a71e-82d582edf91f",
     "createdAt": 1792590416
   },
-  "state": "product-release-verified-closing-publication-pending",
+  "state": "verified",
   "releaseAccepted": true,
   "implementation": {
     "selected": 1,
@@ -716,18 +716,210 @@
     }
   },
   "closeout": {
-    "state": "product-release-writeback-complete-closing-publication-pending",
+    "state": "verified",
     "silScore": 935,
     "cdr": "reviewed; no new creative direction",
-    "velocity": 1
+    "velocity": 1,
+    "completedOutcomes": 1,
+    "releasedOutcomes": 1,
+    "impactTransport": {
+      "state": "queued",
+      "at": "2026-10-21T22:12:18.689Z",
+      "artifactVersion": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+      "workflowRun": 39678958995,
+      "outputSha256": "b012a29a3c949e7f61bf68889751ff960c212c2cb8ed64c72777907392d83558",
+      "log": ".cache/S395/ark-impact.log",
+      "scope": "Transport receipt only; no recipient application claimed"
+    },
+    "writerCoordination": {
+      "at": "2026-10-21T17:50:57.989Z",
+      "session": 395,
+      "scope": "Temporary only observed main/content writer workflows; required release checks remain active",
+      "authorization": "Founder explicit direct-main/full-deployment authorization; twin ASK/no-signal, no DENY",
+      "restoreRequired": false,
+      "before": [
+        {
+          "id": 290922328,
+          "name": "uptime-probe",
+          "path": ".github/workflows/uptime-probe.yml",
+          "state": "active"
+        },
+        {
+          "id": 262469628,
+          "name": "CI Status Beacon",
+          "path": ".github/workflows/ci-status-beacon.yml",
+          "state": "active"
+        },
+        {
+          "id": 301109611,
+          "name": "Refresh Live Data",
+          "path": ".github/workflows/refresh-live-data.yml",
+          "state": "active"
+        },
+        {
+          "id": 336635533,
+          "name": "The Desk — Scheduled Publish",
+          "path": ".github/workflows/news-publish.yml",
+          "state": "active"
+        },
+        {
+          "id": 370760439,
+          "name": "The Desk — Staging-First Content Release",
+          "path": ".github/workflows/desk-content-release.yml",
+          "state": "active"
+        }
+      ],
+      "actions": [
+        {
+          "id": 290922328,
+          "state": "disabled_manually",
+          "at": "2026-10-21T17:51:01.683Z"
+        },
+        {
+          "id": 262469628,
+          "state": "disabled_manually",
+          "at": "2026-10-21T17:51:03.435Z"
+        },
+        {
+          "id": 301109611,
+          "state": "disabled_manually",
+          "at": "2026-10-21T17:51:05.602Z"
+        },
+        {
+          "id": 336635533,
+          "state": "disabled_manually",
+          "at": "2026-10-21T17:51:07.308Z"
+        },
+        {
+          "id": 370760439,
+          "state": "disabled_manually",
+          "at": "2026-10-21T17:51:09.317Z"
+        }
+      ],
+      "restoredAt": "2026-10-21T22:12:39.000Z",
+      "restorationActions": [
+        {
+          "id": 290922328,
+          "from": "disabled_manually",
+          "to": "active",
+          "at": "2026-10-21T22:12:30.277Z"
+        },
+        {
+          "id": 262469628,
+          "from": "disabled_manually",
+          "to": "active",
+          "at": "2026-10-21T22:12:31.412Z"
+        },
+        {
+          "id": 301109611,
+          "from": "disabled_manually",
+          "to": "active",
+          "at": "2026-10-21T22:12:33.397Z"
+        },
+        {
+          "id": 336635533,
+          "from": "disabled_manually",
+          "to": "active",
+          "at": "2026-10-21T22:12:34.993Z"
+        },
+        {
+          "id": 370760439,
+          "from": "disabled_manually",
+          "to": "active",
+          "at": "2026-10-21T22:12:37.362Z"
+        }
+      ],
+      "restored": [
+        {
+          "id": 290922328,
+          "path": ".github/workflows/uptime-probe.yml",
+          "state": "active",
+          "observedAt": "2026-10-21T22:12:30.644Z"
+        },
+        {
+          "id": 262469628,
+          "path": ".github/workflows/ci-status-beacon.yml",
+          "state": "active",
+          "observedAt": "2026-10-21T22:12:31.736Z"
+        },
+        {
+          "id": 301109611,
+          "path": ".github/workflows/refresh-live-data.yml",
+          "state": "active",
+          "observedAt": "2026-10-21T22:12:33.761Z"
+        },
+        {
+          "id": 336635533,
+          "path": ".github/workflows/news-publish.yml",
+          "state": "active",
+          "observedAt": "2026-10-21T22:12:35.796Z"
+        },
+        {
+          "id": 370760439,
+          "path": ".github/workflows/desk-content-release.yml",
+          "state": "active",
+          "observedAt": "2026-10-21T22:12:38.478Z"
+        }
+      ]
+    },
+    "ownedProcesses": {
+      "session": 395,
+      "state": "verified-terminal",
+      "enumeratedAt": "2026-10-21T22:13:02.2530773Z",
+      "method": "CIM process enumeration + explicit observed tool handles",
+      "running": 0,
+      "ownedHelpers": [],
+      "started": null,
+      "closed": null,
+      "observedTerminalHandles": [
+        88220,
+        34307,
+        84414,
+        58190,
+        1587,
+        7757,
+        50821,
+        10286,
+        96416,
+        19483,
+        66195,
+        80100,
+        92073,
+        65754,
+        45771,
+        2003,
+        34155,
+        80361,
+        36496,
+        24103,
+        36542,
+        6315,
+        21327,
+        7305,
+        74309,
+        76505,
+        2125,
+        7903,
+        15002,
+        90666,
+        91302,
+        67114,
+        55151
+      ],
+      "scope": "Actual observed terminal tool handles for correction, validation, staging, publication and full runtime verification, plus S395-specific CIM command-line enumeration excluding this short control command. Capture/mobile/diagnostic helpers recorded browser/server closure in finally. Historical session-wide started/closed totals remain unknown; no claim about unrelated machine processes."
+    },
+    "trace": {
+      "scope": "Late integrated-release and closing spans only; original arc/context baseline unmeasured",
+      "paths": [
+        ".cache/skill-trace/arc-395.json",
+        ".cache/skill-trace/studio-closeout-395.json"
+      ],
+      "originalArcInstrumentationUnmeasured": true,
+      "noOriginalDurationClaim": true,
+      "completion": "Actual trace finishing/publication is checked independently before native goal completion"
+    }
   },
-  "remainingActions": [
-    "Verify final current status/metadata and publish authorized closing commit to main",
-    "Deploy closing public projections and verify exact live readback",
-    "Retain actual late diagnostic trace outcomes without inventing an original baseline",
-    "Ark impact transport and owned-process cleanup",
-    "Final requirement-by-requirement native-goal audit and native completion"
-  ],
+  "remainingActions": [],
   "rollback": {
     "observedAt": "2026-10-21T13:54:19.841Z",
     "provider": {
@@ -1269,7 +1461,7 @@
     }
   },
   "closingPublication": {
-    "state": "staging-verified-source-publication-pending",
+    "state": "verified",
     "reason": "Product acceptance does not verify the subsequent metadata commit or public projection release.",
     "previousCandidate": {
       "candidate": "5f2798559c9468f1725576dca6223cb693c6eb5b",
@@ -1335,7 +1527,7 @@
       "scope": "Sealed current artifact root and tested source fingerprint; source.commitSha records the retained build-intent metadata, not a future publication SHA."
     },
     "releaseCorrection": {
-      "state": "local-source-and-rendered-validation-in-progress",
+      "state": "verified",
       "reason": "Closing b431 failed the unchanged Lighthouse90 floor twice on an older article; no third same-source retry.",
       "retiredCandidate": {
         "candidate": "b43154688bb58c37c7a632060edf675573774d6f",
@@ -1391,7 +1583,7 @@
         "after": 42,
         "refreshedNewsCaptures": 84,
         "currentManuallyReviewedCaptures": 126,
-        "refreshedNewsReview": ".cache/S395/css-refresh-pixel-review.json",
+        "refreshedNewsReview": "Actual independent84-image review passed;126 current captures hash-bound across four receipts",
         "state": "passed",
         "receipts": [
           "docs/visual-qa/LATEST.json",
@@ -1464,22 +1656,469 @@
         "artifactRoot": "e2dcafed9ff7bd3b2acbf305ce355126c3f919e5fd980b05424279bc73eca70e",
         "leafCount": 67
       },
-      "archive": {
-        "sha256": "b852f36df225c05d94daef71f78cbf38033f80446911d17ef0cc8e6a0a1bff99",
-        "bytes": 2724975689
-      },
-      "remoteVerification": {
-        "method": "atomic-install-and-byte-equality",
-        "verified": true
-      },
       "ceremony": {
         "state": "passed",
         "steps": 11,
-        "generatedAt": "2026-10-21T21:05:51.732Z",
-        "evidence": ".cache/S395/closing-staging-accepted-ceremony.json"
+        "generatedAt": "2026-10-21T21:05:51.732Z"
       },
-      "evidence": ".cache/S395/closing-staging-accepted-receipt.json",
-      "scope": "Sealed current artifact root and tested source fingerprint; source.commitSha records the retained build-intent metadata, not a future publication SHA."
+      "receipt": ".cache/S395/closing-staging-accepted-receipt.json",
+      "ceremonyReceipt": ".cache/S395/closing-staging-accepted-ceremony.json"
+    },
+    "observedAt": "2026-10-21T22:11:58.154Z",
+    "sha": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+    "workflowRun": 39678958995,
+    "workflowUrl": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39678958995",
+    "dispatchRef": {
+      "type": "tag",
+      "name": "s395-closing-css-20261021-14466ce3",
+      "sha": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+      "tagObject": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085"
+    },
+    "mainReachability": {
+      "status": "ahead",
+      "base": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+      "mergeBase": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/compare/14466ce38c0c0e6e1b33c6c6816a086e7b6e9085...main"
+    },
+    "fullNormalJob": 119496105041,
+    "provider": {
+      "id": "afecbb71-fcff-48b3-b7c3-1c03ffae3d7b",
+      "url": "https://afecbb71.vaultsparkstudios-website.pages.dev",
+      "environment": "production",
+      "status": "success",
+      "commit": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085"
+    },
+    "builds": {
+      "https://vaultsparkstudios.com": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-21",
+        "sha": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+        "builtAt": "2026-10-21T21:32:13.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      },
+      "https://vaultsparkstudios-website.pages.dev": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-21",
+        "sha": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+        "builtAt": "2026-10-21T21:32:13.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    },
+    "requiredChecks": {
+      "ok": true,
+      "lane": "hosted-exact-sha",
+      "checks": [
+        {
+          "workflow": ".github/workflows/e2e.yml",
+          "state": "passed",
+          "runId": 39676519137
+        },
+        {
+          "workflow": ".github/workflows/lighthouse.yml",
+          "state": "passed",
+          "runId": 39676519152
+        },
+        {
+          "workflow": ".github/workflows/accessibility.yml",
+          "state": "passed",
+          "runId": 39676519142
+        }
+      ],
+      "findings": [],
+      "sourceCommit": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+      "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+      "checkedAt": "2026-10-21T21:27:24.065Z",
+      "independentProof": {
+        "ok": false,
+        "expectedSha": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085"
+      }
+    },
+    "servedParity": {
+      "verdict": "tree-current",
+      "checked": 1128,
+      "identical": 1118,
+      "differ": 0,
+      "contentLag": [],
+      "fullPromotionOnly": [],
+      "redirected": 10,
+      "notServed": [],
+      "unread": 0,
+      "expected": 1128,
+      "coverageComplete": true
+    },
+    "criticalLeaves": {
+      "checked": 66,
+      "passed": 66,
+      "root": "e2dcafed9ff7bd3b2acbf305ce355126c3f919e5fd980b05424279bc73eca70e",
+      "deployStampExcluded": true,
+      "sourceCommit": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085"
+    },
+    "apex": {
+      "sourceCommit": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+      "root": "e2dcafed9ff7bd3b2acbf305ce355126c3f919e5fd980b05424279bc73eca70e",
+      "checked": 66,
+      "rawMatched": 60,
+      "nonceOnlyMatched": 0,
+      "transportMatched": 6,
+      "transportTemplateSha256": "914444b766129766c94a709897e440460f2558801d39dab1ebe111268510865b",
+      "scope": "Exact inspected Cloudflare challenge template and nonce attributes only; raw differences retained"
+    },
+    "incomingImages": {
+      "production": {
+        "checked": 12,
+        "passed": 12,
+        "origin": "https://vaultsparkstudios-website.pages.dev",
+        "sourceCommit": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+        "scope": "Twelve incoming assets/og/news image variants only"
+      },
+      "apex": {
+        "checked": 12,
+        "passed": 12,
+        "origin": "https://vaultsparkstudios.com",
+        "sourceCommit": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+        "scope": "Twelve incoming assets/og/news image variants only"
+      }
+    },
+    "shellParity": {
+      "observedAt": "2026-10-21T22:11:58.152Z",
+      "sourceCommit": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+      "expectedIndexSha256": "07caaa2849efe8b3c3ed58e3b86c6d31e0992b9abc80518a87aec66637819885",
+      "reportSha256": "af88154b9fa4365133bd76206ff4c427ea5dd3bd9d6fc452fa80b021d2f1e6dd",
+      "reportSource": "https://vaultsparkstudios.com/",
+      "url": "https://vaultsparkstudios.com/",
+      "status": 200,
+      "ok": true,
+      "expected": [
+        "assets/after-paint.shell-0392b76d45.js",
+        "assets/ambient-core.shell-29a2e1a95c.js",
+        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+        "assets/hero-ticker.shell-550971e267.js",
+        "assets/home-idle-loader.shell-7b976ad580.js",
+        "assets/nav-sheet.shell-c0fddc0c73.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/public-intelligence.shell-c86a6ecc39.js",
+        "assets/pwa-install.shell-30b48f0ae6.js",
+        "assets/pwa-nav.shell-5f63b6b75a.js",
+        "assets/schema-injector.shell-33115efcde.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/stats-surface.shell-b33242e1cc.js",
+        "assets/style.shell-dafcbbf695.css",
+        "assets/theme-toggle.shell-8221605898.js",
+        "assets/vault-door.shell-20bb2584bc.js"
+      ],
+      "actual": [
+        "assets/after-paint.shell-0392b76d45.js",
+        "assets/ambient-core.shell-29a2e1a95c.js",
+        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+        "assets/hero-ticker.shell-550971e267.js",
+        "assets/home-idle-loader.shell-7b976ad580.js",
+        "assets/nav-sheet.shell-c0fddc0c73.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/public-intelligence.shell-c86a6ecc39.js",
+        "assets/pwa-install.shell-30b48f0ae6.js",
+        "assets/pwa-nav.shell-5f63b6b75a.js",
+        "assets/schema-injector.shell-33115efcde.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/stats-surface.shell-b33242e1cc.js",
+        "assets/style.shell-dafcbbf695.css",
+        "assets/theme-toggle.shell-8221605898.js",
+        "assets/vault-door.shell-20bb2584bc.js"
+      ],
+      "missing": [],
+      "unexpected": []
+    },
+    "candidate": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+    "scope": "Independent fresh full closing runtime acceptance: complete served-text sweep, all66 current critical leaves and12 incoming image variants on Pages/apex, source-bound shell, exact hosted/provider/normal-full workflow/build stamps and current local/staging evidence. Product baseline retained separately; no data-delta reuse.",
+    "baseline": {
+      "candidate": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "receipt": ".cache/S395/production-accepted.json",
+      "sha256": "0c37359572111554bc95e8d3bc42878947aa3a477c7e6b3010b668d9f09ce752"
+    },
+    "closingValidation": {
+      "state": "passed",
+      "evidence": ".cache/S395/closing-complete-diagnostics.json",
+      "receiptId": "34b59fc57c5c0a05a35997a4",
+      "passed": 545,
+      "failed": 0,
+      "coverageComplete": true,
+      "sourceFingerprint": "88fba2449fbfa895ee22cc69",
+      "planFingerprint": "2d84802263c583d2dacc6b1b"
+    },
+    "productAudit": {
+      "observedAt": "2026-10-21T21:34:43.940Z",
+      "candidate": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+      "path": "audits/2026-10-21-S395.json",
+      "scope": "Directly served audit excluded by generic text-parity inventory; exact independent source-bound bytes on both origins",
+      "results": [
+        {
+          "url": "https://vaultsparkstudios.com/audits/2026-10-21-S395.json",
+          "observedUrl": "https://vaultsparkstudios.com/audits/2026-10-21-S395.json",
+          "status": 200,
+          "expected": "462b769b6cc6d64d6df32bc7c2f86fbbce8fce6d1fc0d9fda4567415680e49bc",
+          "actual": "462b769b6cc6d64d6df32bc7c2f86fbbce8fce6d1fc0d9fda4567415680e49bc",
+          "match": true
+        },
+        {
+          "url": "https://vaultsparkstudios-website.pages.dev/audits/2026-10-21-S395.json",
+          "observedUrl": "https://vaultsparkstudios-website.pages.dev/audits/2026-10-21-S395.json",
+          "status": 200,
+          "expected": "462b769b6cc6d64d6df32bc7c2f86fbbce8fce6d1fc0d9fda4567415680e49bc",
+          "actual": "462b769b6cc6d64d6df32bc7c2f86fbbce8fce6d1fc0d9fda4567415680e49bc",
+          "match": true
+        }
+      ]
+    },
+    "servedParityExecution": {
+      "mode": "native-comparator-with-batched-immutable-git-blobs",
+      "startedAt": "2026-10-21T22:09:19.825Z",
+      "nativeModule": "scripts/check-served-parity.mjs",
+      "nativeModuleSha256": "39ad84e1c6369e5fd38d3a190c0404939d19d2ccfd5efcecd730e19198aee5d6",
+      "nativeModuleGitOid": "e952dc012b335d3e7e1623e315103afe8de01b97",
+      "sourceReverifiedAfterHttp": true,
+      "gitObjectIdentityVerified": true,
+      "loadedBlobs": 1129,
+      "committedBytes": 35279395,
+      "concurrency": 4,
+      "httpReuse": false,
+      "baselineOrDeltaReuse": false,
+      "strictArgsAdmitted": true
+    },
+    "runtimeAttemptHistory": {
+      "initialNativeCli": {
+        "state": "unverified",
+        "checked": 1128,
+        "identical": 1109,
+        "redirected": 10,
+        "unread": 9,
+        "evidence": ".cache/S395/closing-served-parity-attempt1-unverified.json"
+      },
+      "serialNativeCliRetry": {
+        "candidate": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+        "state": "cancelled-owned-redundant-retry",
+        "observedAt": "2026-10-21T22:10:51.595Z",
+        "pid": 34320,
+        "startedAt": "2026-10-21T18:05:49.260386-04:00",
+        "toolHandle": 15002,
+        "observedTerminalExit": 1,
+        "resultClaimed": false,
+        "scope": "Precisely identified owned serial CLI retry was still active; cancelled after full fresh source-bound native-module sweep passed. No completed coverage or successful CLI result is claimed for this cancelled retry.",
+        "replacement": ".cache/S395/closing-served-parity-batched.json"
+      },
+      "accepted": {
+        "mode": "native-comparator-with-batched-immutable-git-blobs",
+        "evidence": ".cache/S395/closing-served-parity-batched.json",
+        "scope": "Fresh whole inventory fetched again using the exact native exported comparator/summary and committed redirect rules; batched immutable Git transport, no HTTP or baseline/delta reuse. This is native module execution, not a claimed full CLI pass."
+      }
+    },
+    "writerCoordination": {
+      "at": "2026-10-21T17:50:57.989Z",
+      "session": 395,
+      "scope": "Temporary only observed main/content writer workflows; required release checks remain active",
+      "authorization": "Founder explicit direct-main/full-deployment authorization; twin ASK/no-signal, no DENY",
+      "restoreRequired": false,
+      "before": [
+        {
+          "id": 290922328,
+          "name": "uptime-probe",
+          "path": ".github/workflows/uptime-probe.yml",
+          "state": "active"
+        },
+        {
+          "id": 262469628,
+          "name": "CI Status Beacon",
+          "path": ".github/workflows/ci-status-beacon.yml",
+          "state": "active"
+        },
+        {
+          "id": 301109611,
+          "name": "Refresh Live Data",
+          "path": ".github/workflows/refresh-live-data.yml",
+          "state": "active"
+        },
+        {
+          "id": 336635533,
+          "name": "The Desk — Scheduled Publish",
+          "path": ".github/workflows/news-publish.yml",
+          "state": "active"
+        },
+        {
+          "id": 370760439,
+          "name": "The Desk — Staging-First Content Release",
+          "path": ".github/workflows/desk-content-release.yml",
+          "state": "active"
+        }
+      ],
+      "actions": [
+        {
+          "id": 290922328,
+          "state": "disabled_manually",
+          "at": "2026-10-21T17:51:01.683Z"
+        },
+        {
+          "id": 262469628,
+          "state": "disabled_manually",
+          "at": "2026-10-21T17:51:03.435Z"
+        },
+        {
+          "id": 301109611,
+          "state": "disabled_manually",
+          "at": "2026-10-21T17:51:05.602Z"
+        },
+        {
+          "id": 336635533,
+          "state": "disabled_manually",
+          "at": "2026-10-21T17:51:07.308Z"
+        },
+        {
+          "id": 370760439,
+          "state": "disabled_manually",
+          "at": "2026-10-21T17:51:09.317Z"
+        }
+      ],
+      "restoredAt": "2026-10-21T22:12:39.000Z",
+      "restorationActions": [
+        {
+          "id": 290922328,
+          "from": "disabled_manually",
+          "to": "active",
+          "at": "2026-10-21T22:12:30.277Z"
+        },
+        {
+          "id": 262469628,
+          "from": "disabled_manually",
+          "to": "active",
+          "at": "2026-10-21T22:12:31.412Z"
+        },
+        {
+          "id": 301109611,
+          "from": "disabled_manually",
+          "to": "active",
+          "at": "2026-10-21T22:12:33.397Z"
+        },
+        {
+          "id": 336635533,
+          "from": "disabled_manually",
+          "to": "active",
+          "at": "2026-10-21T22:12:34.993Z"
+        },
+        {
+          "id": 370760439,
+          "from": "disabled_manually",
+          "to": "active",
+          "at": "2026-10-21T22:12:37.362Z"
+        }
+      ],
+      "restored": [
+        {
+          "id": 290922328,
+          "path": ".github/workflows/uptime-probe.yml",
+          "state": "active",
+          "observedAt": "2026-10-21T22:12:30.644Z"
+        },
+        {
+          "id": 262469628,
+          "path": ".github/workflows/ci-status-beacon.yml",
+          "state": "active",
+          "observedAt": "2026-10-21T22:12:31.736Z"
+        },
+        {
+          "id": 301109611,
+          "path": ".github/workflows/refresh-live-data.yml",
+          "state": "active",
+          "observedAt": "2026-10-21T22:12:33.761Z"
+        },
+        {
+          "id": 336635533,
+          "path": ".github/workflows/news-publish.yml",
+          "state": "active",
+          "observedAt": "2026-10-21T22:12:35.796Z"
+        },
+        {
+          "id": 370760439,
+          "path": ".github/workflows/desk-content-release.yml",
+          "state": "active",
+          "observedAt": "2026-10-21T22:12:38.478Z"
+        }
+      ]
+    },
+    "ownedProcessEvidence": ".cache/S395/owned-process-terminal.json",
+    "performanceAttempts": {
+      "retired": {
+        "candidate": "b43154688bb58c37c7a632060edf675573774d6f",
+        "state": "hosted-lighthouse-failed-before-production",
+        "e2e": 39661861742,
+        "accessibility": 39661861795,
+        "lighthouse": 39661861834,
+        "attempts": [
+          {
+            "attempt": 1,
+            "state": "failed",
+            "performance": 0.88,
+            "floor": 0.9,
+            "evidence": ".cache/S395/closing-lighthouse-attempt1-failed.log"
+          },
+          {
+            "attempt": 2,
+            "state": "failed",
+            "performance": 0.88,
+            "floor": 0.9,
+            "evidence": ".cache/S395/closing-lighthouse-attempt2-failed.log"
+          }
+        ]
+      },
+      "accepted": {
+        "ok": true,
+        "lane": "hosted-exact-sha",
+        "checks": [
+          {
+            "workflow": ".github/workflows/e2e.yml",
+            "state": "passed",
+            "runId": 39676519137
+          },
+          {
+            "workflow": ".github/workflows/lighthouse.yml",
+            "state": "passed",
+            "runId": 39676519152
+          },
+          {
+            "workflow": ".github/workflows/accessibility.yml",
+            "state": "passed",
+            "runId": 39676519142
+          }
+        ],
+        "findings": [],
+        "sourceCommit": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+        "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+        "checkedAt": "2026-10-21T21:27:24.065Z",
+        "independentProof": {
+          "ok": false,
+          "expectedSha": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085"
+        }
+      },
+      "scope": "Changed-source candidate passed exact hosted gates; no stable speed gain claimed"
     }
-  }
+  },
+  "currentServed": {
+    "candidate": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+    "fullProductBaseline": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+    "workflowRun": 39678958995,
+    "lane": "normal-full-pages",
+    "acceptance": "Independent full current Pages text sweep plus current66 critical leaves,12 incoming image variants on both origins and source-bound shell",
+    "receipt": ".cache/S395/closing-production-accepted.json"
+  },
+  "completedAt": "2026-10-21T22:13:05.489Z"
 }
