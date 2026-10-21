@@ -1,12 +1,8 @@
-## S395 integrated release checkpoint
+## S395 — integrated local acceptance; release pending
 
-S395 pre-integration source passed two complete545/545 runs and canonical commit-only closeout. Incoming337paths include151news HTML pages; all166art/source paths preserved exactly from remote4670619d469e9d3734cd1dd2828d7c5b635e9f03. Native closure36nodes and unmodeled checks pass. Integrated pixels, mobile, current full suite, staging and production remain pending. Original timing deviation remains nonpassing.
+S395 selected served-coverage fix passes focused3/3, self-test19/19 and existing9/9 regressions. The integrated source passes two complete545/545 runs, fresh215/215 automated device probes and84 manually inspected news images across7themes at1440/390px. All166 incoming artwork/source paths are preserved exactly;36 native owner builds and news checks pass. The earlier full npm build/postbuild26/26 and earlier staging11/11 are pre-integration evidence. Current integrated staging, exact hosted checks and full production/readback remain pending. Original premise timing remains nonpassing; original trace/context baseline is unmeasured. Existing identity/field-vitals holds remain separate; no measured visitor gain claimed.
 
-## S395 — served coverage stabilization; release in progress
-
-S395 complete served-coverage verification is accepted locally: fixtures3/3, self-test19/19, existing S3739/9, independent review pass, complete build/postbuild26/26, fresh mobile215/215 and current staging ceremony11/11. Complete canonical suite, main publication and full production acceptance remain pending. Original timing deviation and existing identity/field-vitals holds remain visible; no measured visitor gain claimed.
-
-Evidence: docs/RELEASE_S395.json. Prior S394 release does not complete this invocation.
+Native goal01a15eb6-e304-7081-a71e-82d582edf91f createdAt1792590416 remains bound to S395. Automatic continuation resumes this release; no new arc. Evidence: docs/RELEASE_S395.json. CDR reviewed with no new creative direction.
 
 ## S394 — full product release verified
 

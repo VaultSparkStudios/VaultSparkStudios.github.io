@@ -1765,3 +1765,8 @@ S395 pre-integration source passed two complete545/545 runs and canonical commit
 ### S395 integrated local acceptance
 
 S395 integrated incoming art/source retained exactly;36native owner closure and declared checks pass. Fresh215/215 device probes and84 manually inspected news captures across7themes at1440/390px pass, plus news disclosure/layout/claim parity. Current full suite, integrated staging and normal full production acceptance remain pending. Earlier545/545 twice belongs to pre-integration source; original premise timing remains nonpassing.
+
+
+### S395 integrated local closeout continuation — 2026-10-21T16:58:09.020Z
+
+S395 integrated local closeout checkpoint: commit-only closeout252317d3db and reconcile8311d7ac8a recorded pre-integration acceptance; merge closeoutaa0d569814 and reconcileb701d0a8ca preserve incoming art/source and updated generated public contracts. Current integrated source68ba13744e8c17cef727cc58 passed two complete545/545 runs; fresh84manual news images,215device probes,36-owner integration closure/news checks and independent currency review pass. No extra product outcome is claimed. Native goal01a15eb6-e304-7081-a71e-82d582edf91f remains active in the same S395 arc; staging, exact hosted checks, full production and closing verification remain pending. The native closeout cleared its lock, so this checkpoint records its subsequent reconciliation metadata without starting another session. SIL remains935/1000 and velocity1 across the same ten categories; original premise timing remains nonpassing and original trace/context baseline unmeasured.

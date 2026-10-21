@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **935/1000**
 - CI health: **check gh run list**
-- Current focus: S395 integrated pixels and mobile passed; current full release acceptance
+- Current focus: S395 integrated local acceptance verified; staging and full production acceptance in progress
 
 ## Strategic Read
 

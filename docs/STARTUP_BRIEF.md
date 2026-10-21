@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S395) - WHAT SHIPPED ══════════════════════════╗
-║  S395 integrated incoming art/source retained exactly;36native   ║
+║  S395 integrated source passed two complete545/545 runs, focuse  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝

@@ -1,20 +1,11 @@
-# S395 routine promotion gate — pending
+# S395 routine promotion gate — integrated staging/production pending
 
-Action: founder-authorized full production promotion of the supported website. No lifecycle, pricing, membership or identity-policy change.
+Founder-authorized normal full deployment; no lifecycle, pricing, identity or membership policy change.
 
-- Selected implementation: current process-level fixtures3/3, self-test19/19, existing S3739/9, independent final review pass with zero blockers. The30s harness timeout is preserved; final integration passed with a60s child deadline.
-- Build: complete npm build and all26 measured postbuild steps passed.21 persona formatting-only deltas were compared and discarded, preserving exact committed page bytes. Final visual checker reports no UI changes; existing84 manually inspected images validate unchanged bound sources. No new pixels or visitor gain claimed.
-- Doctor: current website blockingFailing0; advisory findings remain visible.
-- Canon:0 ABSOLUTE gaps. Existing STRONG identity and terminology gaps remain separate and unchanged under D-S395.2.
-- Security: settings sanitizer0 findings; supply-chain scan covered1 repository against3 incident definitions, no findings. Final staged secret scan required before push.
-- Rollback: current provider production deployment and both public build identities observed coherently in the current session. Exact rollback details are retained locally and summarized in RELEASE_S395.json.
-- Staging, mobile matrix, canonical full local suite, exact-candidate hosted checks, full production deployment and served-byte readback: pending. This is not a production GO verdict.
+S395 selected served-coverage fix passes focused3/3, self-test19/19 and existing9/9 regressions. The integrated source passes two complete545/545 runs, fresh215/215 automated device probes and84 manually inspected news images across7themes at1440/390px. All166 incoming artwork/source paths are preserved exactly;36 native owner builds and news checks pass. The earlier full npm build/postbuild26/26 and earlier staging11/11 are pre-integration evidence. Current integrated staging, exact hosted checks and full production/readback remain pending. Original premise timing remains nonpassing; original trace/context baseline is unmeasured. Existing identity/field-vitals holds remain separate; no measured visitor gain claimed.
 
-Original premise timing remains nonpassing because incoming pre-session routine commits follow the lock's pre-sync anchor. Strict gate verified3 source premises with zero dirty implementation paths before selected edits; original failure is retained. Context usage remains unmeasured.
+Current local evidence: two actual integrated545/545 receipts; manual84 news captures (56 target,14 listing,14 related),215 automated device probes and native36-owner integration closure. Historical earlier full npm/postbuild26/26, old leaderboard captures and earlier staging11/11 do not certify integrated release. Original167pass1fail/incomplete integrated attempt and native retention recovery are retained separately. Final staged secret scan, current doctor/conformance, current staging, exact hosted checks, rollback and full production acceptance remain required.
 
-Evidence: RELEASE_S395.json. Every accepted deployment must identify its exact source, current staging artifact, required checks, provider/build readback and complete served-text comparison. Existing disjoint identity holds and field-vitals gaps do not become blanket completion claims.
+Evidence: RELEASE_S395.json; no production GO or completion is claimed by this checkpoint.
 
-Current checkpoint: fresh mobile215/215, zero P0/P1; verified66-leaf staging root616bd548297c4832e4d7c431578a172c77363c097ab55af232c4f9922d41bdf0 and complete current ceremony11/11 pass. Full local suite, exact-candidate checks and production remain pending.
-
-
-Integrated local checkpoint: S395 integrated incoming art/source retained exactly;36native owner closure and declared checks pass. Fresh215/215 device probes and84 manually inspected news captures across7themes at1440/390px pass, plus news disclosure/layout/claim parity. Current full suite, integrated staging and normal full production acceptance remain pending. Earlier545/545 twice belongs to pre-integration source; original premise timing remains nonpassing.
+Fresh release checkpoint: doctor0blocking; canon0ABSOLUTE gaps with existing045/056STRONG gaps underD-S395.2. Raw055last-commit fallback finding retained; explicit invocation-range followthrough passes164surfacefiles. Explicit canonical-origin webhardening1/1reachable fullyhardened,6files/5headers/honest404; zero-origin filtered probe is not acceptance. Settings0findings and1repo/3incident supply-chain scan pass. Staging/production remain pending.

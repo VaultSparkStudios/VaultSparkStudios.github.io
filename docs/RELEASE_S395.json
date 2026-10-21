@@ -54,11 +54,12 @@
       "reason": "Propagated rescore shim resolves Studio Ops ownership; no foreign score or field gain claimed."
     },
     "build": {
-      "scope": "Complete npm run build and actual postbuild lifecycle",
+      "scope": "Historical pre-integration complete npm build and actual26-step postbuild. No second integrated full npm build is claimed.",
       "exitCode": 0,
       "state": "passed",
       "log": ".cache/S395/build.log",
-      "postbuildSteps": 26
+      "postbuildSteps": 26,
+      "phase": "pre-integration"
     },
     "visual": {
       "state": "passed",
@@ -85,12 +86,14 @@
       "state": "cancelled"
     },
     "doctor": {
+      "state": "passed",
+      "observedAt": "2026-10-21T16:57:19.872Z",
+      "blockingFailing": 0,
       "passing": 14,
       "total": 17,
-      "state": "passed",
+      "warning": 2,
       "advisoryFailing": 1,
-      "log": ".cache/S395/doctor-current.json",
-      "blockingFailing": 0
+      "evidence": ".cache/S395/integrated-doctor.json"
     },
     "mobile": {
       "state": "passed",
@@ -124,7 +127,135 @@
           "deletedCaptures": 0
         }
       }
-    ]
+    ],
+    "integratedOwnerClosure": {
+      "state": "passed",
+      "nodes": 36,
+      "unmodeledChecks": "passed",
+      "scope": "Fresh owning generators rebuilt the incoming artwork/news/data dependency closure; news disclosure/layout/claim checks passed. This is distinct from the earlier full npm build.",
+      "evidence": ".cache/S395/latest-closure-reconciliation.json"
+    },
+    "integratedCompleteRuns": [
+      {
+        "evidence": ".cache/S395/integrated-complete-run1-diagnostics.json",
+        "passed": 545,
+        "failed": 0,
+        "coverageComplete": true,
+        "sourceFingerprint": "68ba13744e8c17cef727cc58",
+        "planFingerprint": "0b6e70bfb68ce619c4577edc",
+        "startedAt": "2026-10-21T15:51:47.740Z",
+        "finishedAt": "2026-10-21T16:22:40.068Z"
+      },
+      {
+        "evidence": ".cache/S395/integrated-complete-run2-diagnostics.json",
+        "passed": 545,
+        "failed": 0,
+        "coverageComplete": true,
+        "sourceFingerprint": "68ba13744e8c17cef727cc58",
+        "planFingerprint": "0b6e70bfb68ce619c4577edc",
+        "startedAt": "2026-10-21T16:23:18.936Z",
+        "finishedAt": "2026-10-21T16:46:52.605Z"
+      }
+    ],
+    "prepublicationReview": {
+      "state": "passed",
+      "reviewer": "closeout-review",
+      "rounds": 2,
+      "originalFindings": 1,
+      "remainingFindings": 0,
+      "scope": "Code and documentary currency only; no future release certification"
+    },
+    "originalTrace": {
+      "state": "unmeasured",
+      "reason": "Original startup/implementation and initial closeout trace were absent; late observations cannot reconstruct that baseline."
+    },
+    "lateTraces": {
+      "state": "active",
+      "scope": "Late integrated release and closing only",
+      "paths": [
+        ".cache/skill-trace/arc-395.json",
+        ".cache/skill-trace/studio-closeout-395.json"
+      ],
+      "noOriginalDurationClaim": true
+    },
+    "canonConformance": {
+      "state": "assessed",
+      "observedAt": "2026-10-21T16:57:19.873Z",
+      "rawSummary": {
+        "project": "vaultsparkstudios-website",
+        "type": "app",
+        "audience": "public-live",
+        "vaultStatus": "SPARKED",
+        "applicable": 55,
+        "conformed": 14,
+        "referenced": 0,
+        "gap": 3,
+        "notReferenced": 0,
+        "absoluteGaps": 0,
+        "unmeasured": 0,
+        "manual": 17,
+        "doctorOwned": 18,
+        "portfolio": 3,
+        "deferredLive": 0,
+        "exempt": 0,
+        "error": 0,
+        "vectorVerdict": "green"
+      },
+      "rawEvidence": ".cache/S395/integrated-canon-conformance.json",
+      "knownStrongGaps": [
+        {
+          "id": "045",
+          "tier": "STRONG",
+          "detail": "pass=false",
+          "justification": "D-S395.2"
+        },
+        {
+          "id": "056",
+          "tier": "STRONG",
+          "detail": "2 CANON-056 finding(s): 2 bare-si",
+          "justification": "D-S395.2"
+        }
+      ],
+      "surfaceWindow": {
+        "rawGap": "055 last-commit-only fallback after native closeout cleared lock",
+        "assessment": "Actual invocation range passes; raw engine result retained without alteration",
+        "since": "d0546e043e712b5eec65663f97aa45cf3cb71996",
+        "status": "reached",
+        "surfaceFiles": 164,
+        "evidence": ".cache/S395/integrated-surface-followthrough.json"
+      }
+    },
+    "webHardening": {
+      "state": "passed",
+      "scope": "Explicit canonical live origin; registry-filtered zero-origin output is not used as proof",
+      "origins": 1,
+      "reachable": 1,
+      "fullyHardened": 1,
+      "pct": 100,
+      "files": 6,
+      "headers": 5,
+      "honest404": true,
+      "evidence": ".cache/S395/integrated-web-hardening.json"
+    },
+    "security": {
+      "settingsSanitizer": {
+        "state": "passed",
+        "findings": 0
+      },
+      "supplyChain": {
+        "state": "passed",
+        "repositoriesCovered": 1,
+        "incidentDefinitions": 3,
+        "evidence": ".cache/S395/integrated-supply-chain.txt"
+      },
+      "gateway": {
+        "state": "advisory-assessed",
+        "note": "Deployment capabilities ready; unrelated missing capabilities and previous action-probe failures are not claimed healthy."
+      },
+      "stagedScan": {
+        "state": "pending-before-publication"
+      }
+    }
   },
   "staging": {
     "state": "pending-integrated-candidate",
@@ -134,16 +265,15 @@
     "state": "pending"
   },
   "closeout": {
-    "state": "retention-report-repaired-current-full-suite-pending",
+    "state": "integrated-current-full-suite-passed-staging-production-pending",
     "silScore": 935,
     "cdr": "reviewed; no new creative direction"
   },
   "remainingActions": [
-    "Complete integrated artwork pixels and fresh mobile checks",
-    "Current full local suite and integrated staging ceremony",
-    "Sanitized direct-main publication and exact-candidate required checks",
-    "Normal full production deployment, served text/art readback",
-    "Final closing records, impact transport and native completion audit"
+    "Verify current integrated staging artifact and canonical ceremony",
+    "Sanitized direct-main publication and three exact-candidate hosted checks",
+    "Normal full production deployment and exhaustive served-text/critical/incoming-image readback",
+    "Final closing publication, impact transport, hygiene and native completion audit"
   ],
   "rollback": {
     "observedAt": "2026-10-21T13:54:19.841Z",
