@@ -2464,3 +2464,8 @@ Require complete nonempty served-text observations. Missing files and unexpected
 ## D-S395.2 — Keep session and verification boundaries honest (2026-10-21)
 
 S395 is a new native goal association. Prior release evidence cannot complete it. Record the nonpassing timing result caused by incoming automation after the pre-sync lock without rewriting history. Existing identity and terminology conformance gaps remain separate from this unchanged-policy stabilization; full release still needs current candidate acceptance.
+
+
+## D-S395.3 — Preserve concurrent source and verify the integrated release
+
+Incoming routine news artwork and generated pages are preserved as authored. Resolve only known generated report conflicts using owning builders and newest observation timestamps. Pre-integration acceptance remains historical; it does not certify the combined candidate. Fresh before/after pixels and current release checks are required. No extra product outcome or policy change is selected.

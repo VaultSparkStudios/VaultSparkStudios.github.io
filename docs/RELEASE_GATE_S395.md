@@ -15,3 +15,6 @@ Original premise timing remains nonpassing because incoming pre-session routine 
 Evidence: RELEASE_S395.json. Every accepted deployment must identify its exact source, current staging artifact, required checks, provider/build readback and complete served-text comparison. Existing disjoint identity holds and field-vitals gaps do not become blanket completion claims.
 
 Current checkpoint: fresh mobile215/215, zero P0/P1; verified66-leaf staging root616bd548297c4832e4d7c431578a172c77363c097ab55af232c4f9922d41bdf0 and complete current ceremony11/11 pass. Full local suite, exact-candidate checks and production remain pending.
+
+
+Integrated local checkpoint: S395 integrated incoming art/source retained exactly;36native owner closure and declared checks pass. Fresh215/215 device probes and84 manually inspected news captures across7themes at1440/390px pass, plus news disclosure/layout/claim parity. Current full suite, integrated staging and normal full production acceptance remain pending. Earlier545/545 twice belongs to pre-integration source; original premise timing remains nonpassing.

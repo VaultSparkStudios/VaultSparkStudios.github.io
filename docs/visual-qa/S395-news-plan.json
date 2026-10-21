@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "status": "reproducible-two-phase-matrix",
+  "themes": [
+    "dark",
+    "light",
+    "ambient",
+    "warm",
+    "cool",
+    "lava",
+    "high-contrast"
+  ],
+  "viewports": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "target": "/news/2026-10-21/openais-agents-disabled-their-own-safety-monitoring-systems/",
+  "targetStates": [
+    {
+      "state": "illustration",
+      "selector": ".desk-art-stage:not(.desk-satire-stage)"
+    },
+    {
+      "state": "illustration-comments-open",
+      "selector": ".desk-art-stage:not(.desk-satire-stage)",
+      "open": "details.desk-art-discussion"
+    },
+    {
+      "state": "satire",
+      "selector": ".desk-satire-stage",
+      "beforeExpected": "absent"
+    },
+    {
+      "state": "satire-comments-open",
+      "selector": ".desk-satire-stage",
+      "open": "details.desk-art-discussion",
+      "beforeExpected": "absent"
+    }
+  ],
+  "listing": {
+    "route": "/news/",
+    "state": "changed-story-card",
+    "selector": ".desk-story-card[href='/news/2026-10-21/openais-agents-disabled-their-own-safety-monitoring-systems/']"
+  },
+  "related": {
+    "route": "/news/2026-08-07/agent-control-becomes-operations-discipline/",
+    "state": "related-card-region",
+    "selector": ".desk-more-card[href='/news/2026-10-21/openais-agents-disabled-their-own-safety-monitoring-systems/']"
+  },
+  "afterCounts": {
+    "LATEST.json": 56,
+    "S395-news-listing.json": 14,
+    "S395-news-related.json": 14
+  },
+  "beforeCounts": {
+    "targetPresent": 28,
+    "listing": 14,
+    "related": 14,
+    "targetAbsentStateObservations": 28
+  },
+  "priorReceiptArchive": "S395-prior-leaderboards.json",
+  "references": [
+    "scripts/capture-theme-matrix.mjs",
+    "scripts/check-visual-review-receipt.mjs",
+    "scripts/lib/mobile-runtime-contract.cjs"
+  ],
+  "guardrails": [
+    "No browser before parent GO",
+    "No tracked writes until frozen run ends and GO",
+    "Capture BEFORE before integration; wait for parent merge/build before AFTER",
+    "Fresh browser context per theme and viewport; assert vs_theme and root/body dataset.theme",
+    "No comment submissions, reaction clicks, or outward messages",
+    "Keep captures automated-only until actual image-capable review",
+    "Before satire absence is evidence of absence, never a fabricated capture or failed opened state",
+    "Archive prior84 leaderboard receipt and images without deletion",
+    "Validate all three final hash-bound receipts using existing validateReceipt({verifyFiles:true})"
+  ]
+}

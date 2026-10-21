@@ -1755,3 +1755,13 @@ S395 complete served-coverage verification is accepted locally: fixtures3/3, sel
 ### S395 current staging and mobile acceptance
 
 S395 complete served-coverage verification is accepted locally: fixtures3/3, self-test19/19, existing regressions9/9, independent review pass, complete build/postbuild26/26, fresh mobile215/215 and current staging ceremony11/11. Complete canonical suite, main publication and full production acceptance remain pending. Original timing deviation and existing identity/field-vitals holds remain visible; no measured visitor gain claimed.
+
+
+### S395 incoming artwork integration
+
+S395 pre-integration source passed two complete545/545 runs and canonical commit-only closeout. Incoming337paths include151news HTML pages; all166art/source paths preserved exactly from remote4670619d469e9d3734cd1dd2828d7c5b635e9f03. Native closure36nodes and unmodeled checks pass. Integrated pixels, mobile, current full suite, staging and production remain pending. Original timing deviation remains nonpassing.
+
+
+### S395 integrated local acceptance
+
+S395 integrated incoming art/source retained exactly;36native owner closure and declared checks pass. Fresh215/215 device probes and84 manually inspected news captures across7themes at1440/390px pass, plus news disclosure/layout/claim parity. Current full suite, integrated staging and normal full production acceptance remain pending. Earlier545/545 twice belongs to pre-integration source; original premise timing remains nonpassing.
