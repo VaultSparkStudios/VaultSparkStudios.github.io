@@ -367,6 +367,30 @@
       "finishedAt": "2026-10-21T03:54:44.426Z",
       "evidence": ".cache/S394/closing-complete-diagnostics.json",
       "log": ".cache/S394/closing-full-check-attempt3.log"
+    },
+    "formatRepair": {
+      "state": "verified",
+      "reason": "Original S394 checkpoint total lacked the canonical colon, so the scored projection fell back to S393. Appended a canonical S394 score receipt without editing history or changing935/1000.",
+      "check": "node scripts/check-status-projection-coherence.mjs",
+      "sourceFingerprintUnchanged": true
+    },
+    "integration": {
+      "remote": "3ef257892d",
+      "remoteCommits": 7,
+      "scope": "Monitoring/CI observations and generated reports; application source unchanged",
+      "nativeReconciliation": ".cache/S394/latest-closure-reconciliation.json",
+      "sourceFingerprint": "dc37244c706ad83f7bdf383e",
+      "stagingCriticalRootUnchanged": true
+    },
+    "staging": {
+      "receiptId": "43bcf18f6ce73a16b9f637b7",
+      "criticalRoot": "78e69e42b20b8d273fb6da1aaff628d4ea5223d4ecfee2d2723e04775ddaebd1",
+      "ceremony": {
+        "state": "passed",
+        "generatedAt": "2026-10-21T04:04:26.825Z",
+        "steps": 11,
+        "log": ".cache/S394/closing-integrated-ceremony.log"
+      }
     }
   }
 }
