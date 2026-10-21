@@ -375,8 +375,8 @@
       "sourceFingerprintUnchanged": true
     },
     "integration": {
-      "remote": "3ef257892d",
-      "remoteCommits": 7,
+      "remote": "7854742c0b34336b8bb0bd3754464d057c7dcb81",
+      "remoteCommits": 8,
       "scope": "Monitoring/CI observations and generated reports; application source unchanged",
       "nativeReconciliation": ".cache/S394/latest-closure-reconciliation.json",
       "sourceFingerprint": "dc37244c706ad83f7bdf383e",
@@ -391,6 +391,25 @@
         "steps": 11,
         "log": ".cache/S394/closing-integrated-ceremony.log"
       }
+    },
+    "publicationAttempts": [
+      {
+        "candidate": "18ac2a0d57b46116f92acf34830a9557b5f2e57a",
+        "state": "remote-ref-race-after-normal-coherence-checks",
+        "remoteAdvancedTo": "7854742c0b34336b8bb0bd3754464d057c7dcb81",
+        "log": ".cache/S394/closing-push.log"
+      }
+    ],
+    "monitorCoordination": {
+      "state": "temporarily-paused-for-normal-main-publication",
+      "before": "both active",
+      "workflows": [
+        "uptime-probe.yml",
+        "ci-status-beacon.yml"
+      ],
+      "requiredReleaseChecks": "all three remain active",
+      "restoreRequired": true,
+      "receipt": ".cache/S394/monitor-pause.json"
     }
   }
 }
