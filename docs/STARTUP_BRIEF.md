@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S395) - WHAT SHIPPED ══════════════════════════╗
-║  S395 integrated local and staging acceptance pass: two complet  ║
+║  S395 served-text parity requires complete nonempty exactly-onc  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -63,7 +63,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 395 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    545/545 passing  ·  Deploy: pending                   ║
+║  Tests:    545/545 passing  ·  Deploy: verified                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -78,7 +78,7 @@
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   17d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  2d old                         ║
-║  ⛔  Truth         yellow — public product release verified;…     ║
+║  ⛔  Truth         yellow — scoped product release verified;…     ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.181  (healthy)                               ║
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Full build, canonical suite/closeout, curr  ║
-║        Full build, canonical suite/closeout, current staging, e  ║
-║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
-║   94  [VERIFY]       Separately assess served binary coverage a  ║
+║   97  [VERIFY]       Separately assess served binary coverage a  ║
 ║        Separately assess served binary coverage against real re  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Investigate timing classification of incom  ║
+║   96  [PRODUCT]      Investigate timing classification of incom  ║
 ║        Investigate timing classification of incoming pre-sessio  ║
 ║                                                                  ║
-║   90  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
+║   93  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
 ║        Keep startup-generated genius-list drift distinguishable  ║
+║                                                                  ║
+║   87  [PRODUCT]      Assess cross-origin redirect handling in d  ║
+║        Assess cross-origin redirect handling in diagnostic HTTP  ║
+║                                                                  ║
+║   87  [INTELLIGENCE]  Record strict premise acceptance before c  ║
+║        Record strict premise acceptance before creating any pla  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

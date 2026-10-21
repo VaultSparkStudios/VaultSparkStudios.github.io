@@ -1,4 +1,4 @@
-- [S395 active arc](S395.md): complete served coverage; acceptance and full release in progress.
+- [S395 product release](S395.md): integrated full product release verified; closing publication remains pending in docs/RELEASE_S395.json.
 
 - [S394 completed arc](S394.md): truthful shell parity and full closing publication verified; exact evidence in docs/RELEASE_S394.json.
 

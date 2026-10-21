@@ -5,12 +5,12 @@
     "threadId": "01a15eb6-e304-7081-a71e-82d582edf91f",
     "createdAt": 1792590416
   },
-  "state": "integrated-source-acceptance-pending",
-  "releaseAccepted": false,
+  "state": "product-release-verified-closing-publication-pending",
+  "releaseAccepted": true,
   "implementation": {
     "selected": 1,
     "verified": 1,
-    "released": 0,
+    "released": 1,
     "scope": "Served-text parity coverage, redirects and CLI admission; no UI/identity policy change",
     "review": "Independent final review pass; zero blockers, including shared parser and report-only404 fixture.",
     "sourceCommit": "54d2151d90"
@@ -133,28 +133,32 @@
       "nodes": 36,
       "unmodeledChecks": "passed",
       "scope": "Fresh owning generators rebuilt the incoming artwork/news/data dependency closure; news disclosure/layout/claim checks passed. This is distinct from the earlier full npm build.",
-      "evidence": ".cache/S395/latest-closure-reconciliation.json"
+      "evidence": ".cache/S395/integrated-closure.log",
+      "previousRollingEvidence": ".cache/S395/latest-closure-reconciliation.json",
+      "evidenceNote": "Historical immutable36-node completion log; rolling latest-closure JSON now describes later reconciliations."
     },
     "integratedCompleteRuns": [
       {
         "evidence": ".cache/S395/integrated-complete-run1-diagnostics.json",
+        "receiptId": "4d0c14afbc162640e10832a6",
         "passed": 545,
         "failed": 0,
         "coverageComplete": true,
-        "sourceFingerprint": "68ba13744e8c17cef727cc58",
-        "planFingerprint": "0b6e70bfb68ce619c4577edc",
         "startedAt": "2026-10-21T15:51:47.740Z",
-        "finishedAt": "2026-10-21T16:22:40.068Z"
+        "finishedAt": "2026-10-21T16:22:40.068Z",
+        "sourceFingerprint": "68ba13744e8c17cef727cc58",
+        "planFingerprint": "0b6e70bfb68ce619c4577edc"
       },
       {
         "evidence": ".cache/S395/integrated-complete-run2-diagnostics.json",
+        "receiptId": "574f8d52d0b8c1190f864bc5",
         "passed": 545,
         "failed": 0,
         "coverageComplete": true,
-        "sourceFingerprint": "68ba13744e8c17cef727cc58",
-        "planFingerprint": "0b6e70bfb68ce619c4577edc",
         "startedAt": "2026-10-21T16:23:18.936Z",
-        "finishedAt": "2026-10-21T16:46:52.605Z"
+        "finishedAt": "2026-10-21T16:46:52.605Z",
+        "sourceFingerprint": "68ba13744e8c17cef727cc58",
+        "planFingerprint": "0b6e70bfb68ce619c4577edc"
       }
     ],
     "prepublicationReview": {
@@ -167,7 +171,7 @@
     },
     "originalTrace": {
       "state": "unmeasured",
-      "reason": "Original startup/implementation and initial closeout trace were absent; late observations cannot reconstruct that baseline."
+      "reason": "Original trace was absent; late traces cannot establish the original baseline or reconstruct original context usage."
     },
     "lateTraces": {
       "state": "active",
@@ -328,7 +332,7 @@
       "candidate": "16f6938faf0dc21216ca3bf56dbada223f5a7d55",
       "workflowRun": 39645065917,
       "step": 168,
-      "state": "failed-corrected-new-candidate-required",
+      "state": "historical-failure-correction-validated-on-accepted-candidate",
       "reason": "Three nonrendered screenshot recipes had CRLF working bytes while Git stores LF under existing attributes.",
       "correction": "Normalized three recipes to existing Git blob bytes and updated visual source/raw/recipe/annex hashes only. Original images, capture/review dates and candidate preserved.",
       "sourceFingerprint": "68ba13744e8c17cef727cc58",
@@ -357,7 +361,155 @@
           "onlyEol": true
         }
       ],
-      "pixelsUnchanged": true
+      "pixelsUnchanged": true,
+      "historicalFailureState": "failed",
+      "priorCorrectionState": "failed-corrected-new-candidate-required",
+      "finalAcceptedCandidate": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "correctionValidatedBy": {
+        "ok": true,
+        "lane": "hosted-exact-sha",
+        "checks": [
+          {
+            "workflow": ".github/workflows/e2e.yml",
+            "state": "passed",
+            "runId": 39647701206
+          },
+          {
+            "workflow": ".github/workflows/lighthouse.yml",
+            "state": "passed",
+            "runId": 39647701101
+          },
+          {
+            "workflow": ".github/workflows/accessibility.yml",
+            "state": "passed",
+            "runId": 39647701321
+          }
+        ],
+        "findings": [],
+        "sourceCommit": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+        "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+        "checkedAt": "2026-10-21T18:08:40.283Z",
+        "independentProof": {
+          "ok": false,
+          "expectedSha": "c931cc736f70b524509378c1e35e1a69e8b3927d"
+        }
+      },
+      "interpretation": "Original16f hosted recipe-binding failure remains historical failure. Recipe-only EOL/hash metadata correction is validated by the actual accepted replacement candidate; this does not change16f Lighthouseattempt1failed/attempt2cancelled history."
+    },
+    "hostedPriorFailure": {
+      "state": "failed-retired-candidate",
+      "candidate": "8442f8f4b3d12aec6fe3e44f4777db5f3f3adfae",
+      "scope": "Hosted compliance",
+      "step": 143,
+      "reason": "logs/WORK_LOG.md was reported251KB against the250KB cap",
+      "evidence": ".cache/S395/hosted-compliance-job.log",
+      "evidenceSha256": "29e5c68ff354321e735c7c684f4d06ce8fd4f629d788cacac05a54e204181790",
+      "nativeRotation": {
+        "moved": 0,
+        "reason": "Existing ledger headings are session-first; native dated rotation recognizes date-first headings"
+      },
+      "repair": {
+        "state": "verbatim-archive-applied",
+        "correctedCandidate": "16f6938faf0dc21216ca3bf56dbada223f5a7d55",
+        "archive": "context/archive/WORK_LOG_through_S382_S395.md",
+        "archiveSha256": "d6ba4d26df931796d06eefec14adc8e54674bd574f064bb07d91d415ae2f1c4f",
+        "proof": ".cache/S395/ledger-archive-proof.json",
+        "verbatimReconstruction": true,
+        "beforeBytes": 257266,
+        "historicalBytes": 215751,
+        "retainedBytes": 41515,
+        "intermediateCandidate": "16f6938faf0dc21216ca3bf56dbada223f5a7d55",
+        "finalAcceptedCandidate": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+        "correctionValidatedBy": {
+          "ok": true,
+          "lane": "hosted-exact-sha",
+          "checks": [
+            {
+              "workflow": ".github/workflows/e2e.yml",
+              "state": "passed",
+              "runId": 39647701206
+            },
+            {
+              "workflow": ".github/workflows/lighthouse.yml",
+              "state": "passed",
+              "runId": 39647701101
+            },
+            {
+              "workflow": ".github/workflows/accessibility.yml",
+              "state": "passed",
+              "runId": 39647701321
+            }
+          ],
+          "findings": [],
+          "sourceCommit": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+          "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+          "checkedAt": "2026-10-21T18:08:40.283Z",
+          "independentProof": {
+            "ok": false,
+            "expectedSha": "c931cc736f70b524509378c1e35e1a69e8b3927d"
+          }
+        }
+      },
+      "outcomeAccounting": "Existing release hygiene correction only; no new selected outcome or SIL score increase",
+      "finalAcceptedCandidate": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "correctionValidatedBy": {
+        "ok": true,
+        "lane": "hosted-exact-sha",
+        "checks": [
+          {
+            "workflow": ".github/workflows/e2e.yml",
+            "state": "passed",
+            "runId": 39647701206
+          },
+          {
+            "workflow": ".github/workflows/lighthouse.yml",
+            "state": "passed",
+            "runId": 39647701101
+          },
+          {
+            "workflow": ".github/workflows/accessibility.yml",
+            "state": "passed",
+            "runId": 39647701321
+          }
+        ],
+        "findings": [],
+        "sourceCommit": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+        "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+        "checkedAt": "2026-10-21T18:08:40.283Z",
+        "independentProof": {
+          "ok": false,
+          "expectedSha": "c931cc736f70b524509378c1e35e1a69e8b3927d"
+        }
+      },
+      "interpretation": "Retired8442 ledger failure remains failed;16f records the intermediate archive correction, and the actual accepted product supplies final exact-candidate validation"
+    },
+    "hostedPerformanceAttempts": {
+      "candidate": "16f6938faf0dc21216ca3bf56dbada223f5a7d55",
+      "workflowRun": 39645066060,
+      "attempts": [
+        {
+          "attempt": 1,
+          "state": "failed",
+          "route": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
+          "metric": "performance",
+          "observed": 0.88,
+          "required": 0.9,
+          "evidence": ".cache/S395/hosted16-lighthouse-failure.log",
+          "evidenceSha256": "51a3531251f36842176fbf649195edebcbc61003ab2ccb52995977704b47d742"
+        },
+        {
+          "attempt": 2,
+          "state": "cancelled",
+          "scope": "Actual rerun cancelled when16f became obsolete after recipe EOL receipt correction; no success or flakiness claim"
+        }
+      ],
+      "priorCandidateEvidence": {
+        "candidate": "8442f8f4b3d12aec6fe3e44f4777db5f3f3adfae",
+        "workflowRun": 39643339096,
+        "state": "passed",
+        "scope": "Prior candidate Lighthouse local/staging checks; historical evidence only, does not satisfy current candidate"
+      },
+      "interpretation": "Observed route-tier performance failure retained; no flakiness diagnosis, UI repair or rerun success is inferred"
     }
   },
   "staging": {
@@ -376,44 +528,205 @@
       "sha256": "2a751108abba977a05e03fb71dec0e2593d800c28201012cd190c8926577730a",
       "bytes": 2665384145
     },
-    "critical": {
-      "checked": 65,
-      "passed": 65,
-      "sourceCommit": "6f28b672c124ecb956317341ebccc76b4d510b7a",
-      "root": "a7cb6e9d873840a9da533e9b26af56ac2edb25045f846e36971ba3799733bf2b",
-      "coverageComplete": true
-    },
-    "incomingImages": {
-      "checked": 12,
-      "passed": 12,
-      "sourceCommit": "6f28b672c124ecb956317341ebccc76b4d510b7a",
-      "coverageComplete": true
-    },
     "ceremony": {
       "state": "passed",
       "steps": 11,
       "generatedAt": "2026-10-21T17:07:27.228Z",
       "evidence": ".cache/S395/integrated-staging-accepted-ceremony.json"
     },
-    "retainedCeremonyCheck": {
-      "state": "passed",
-      "evidence": ".cache/S395/prepublication-staging-ceremony-check.log",
-      "scope": "Same verified source fingerprint and critical root after routine observation merge; canonical receipt revalidated."
-    }
+    "evidence": ".cache/S395/integrated-staging-accepted-receipt.json"
   },
   "production": {
-    "state": "pending"
+    "state": "verified",
+    "observedAt": "2026-10-21T18:26:19.904Z",
+    "sha": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+    "workflowRun": 39650067973,
+    "workflowUrl": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39650067973",
+    "dispatchRef": {
+      "type": "tag",
+      "name": "s395-product-20261021-c931cc73",
+      "sha": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "tagObject": "c931cc736f70b524509378c1e35e1a69e8b3927d"
+    },
+    "mainReachability": {
+      "status": "ahead",
+      "base": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "mergeBase": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/compare/c931cc736f70b524509378c1e35e1a69e8b3927d...main"
+    },
+    "fullNormalJob": 119395764106,
+    "provider": {
+      "id": "5315092c-fabb-4191-8c2c-e07a6e475e0a",
+      "url": "https://5315092c.vaultsparkstudios-website.pages.dev",
+      "environment": "production",
+      "status": "success",
+      "commit": "c931cc736f70b524509378c1e35e1a69e8b3927d"
+    },
+    "builds": {
+      "https://vaultsparkstudios.com": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-21",
+        "sha": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+        "builtAt": "2026-10-21T18:13:28.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      },
+      "https://vaultsparkstudios-website.pages.dev": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-21",
+        "sha": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+        "builtAt": "2026-10-21T18:13:28.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    },
+    "requiredChecks": {
+      "ok": true,
+      "lane": "hosted-exact-sha",
+      "checks": [
+        {
+          "workflow": ".github/workflows/e2e.yml",
+          "state": "passed",
+          "runId": 39647701206
+        },
+        {
+          "workflow": ".github/workflows/lighthouse.yml",
+          "state": "passed",
+          "runId": 39647701101
+        },
+        {
+          "workflow": ".github/workflows/accessibility.yml",
+          "state": "passed",
+          "runId": 39647701321
+        }
+      ],
+      "findings": [],
+      "sourceCommit": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+      "checkedAt": "2026-10-21T18:08:40.283Z",
+      "independentProof": {
+        "ok": false,
+        "expectedSha": "c931cc736f70b524509378c1e35e1a69e8b3927d"
+      }
+    },
+    "servedParity": {
+      "verdict": "tree-current",
+      "checked": 1126,
+      "identical": 1116,
+      "differ": 0,
+      "contentLag": [],
+      "fullPromotionOnly": [],
+      "redirected": 10,
+      "notServed": [],
+      "unread": 0,
+      "expected": 1126,
+      "coverageComplete": true
+    },
+    "criticalLeaves": {
+      "checked": 65,
+      "passed": 65,
+      "root": "a7cb6e9d873840a9da533e9b26af56ac2edb25045f846e36971ba3799733bf2b",
+      "deployStampExcluded": true
+    },
+    "apex": {
+      "sourceCommit": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "root": "a7cb6e9d873840a9da533e9b26af56ac2edb25045f846e36971ba3799733bf2b",
+      "checked": 65,
+      "rawMatched": 59,
+      "nonceOnlyMatched": 0,
+      "transportMatched": 6,
+      "transportTemplateSha256": "914444b766129766c94a709897e440460f2558801d39dab1ebe111268510865b",
+      "scope": "Exact inspected Cloudflare challenge template and nonce attributes only; raw differences retained"
+    },
+    "incomingImages": {
+      "production": {
+        "checked": 12,
+        "passed": 12,
+        "origin": "https://vaultsparkstudios-website.pages.dev",
+        "sourceCommit": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+        "scope": "Twelve incoming assets/og/news image variants only"
+      },
+      "apex": {
+        "checked": 12,
+        "passed": 12,
+        "origin": "https://vaultsparkstudios.com",
+        "sourceCommit": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+        "scope": "Twelve incoming assets/og/news image variants only"
+      }
+    },
+    "shellParity": {
+      "observedAt": "2026-10-21T18:26:19.903Z",
+      "sourceCommit": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "expectedIndexSha256": "07caaa2849efe8b3c3ed58e3b86c6d31e0992b9abc80518a87aec66637819885",
+      "reportSha256": "c70f89c7ec73785be4e451fe1ab67525603d891ade6da85e8652c335dd6bcb5d",
+      "reportSource": "https://vaultsparkstudios.com/",
+      "url": "https://vaultsparkstudios.com/",
+      "status": 200,
+      "ok": true,
+      "expected": [
+        "assets/after-paint.shell-0392b76d45.js",
+        "assets/ambient-core.shell-29a2e1a95c.js",
+        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+        "assets/hero-ticker.shell-550971e267.js",
+        "assets/home-idle-loader.shell-7b976ad580.js",
+        "assets/nav-sheet.shell-c0fddc0c73.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/public-intelligence.shell-c86a6ecc39.js",
+        "assets/pwa-install.shell-30b48f0ae6.js",
+        "assets/pwa-nav.shell-5f63b6b75a.js",
+        "assets/schema-injector.shell-33115efcde.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/stats-surface.shell-b33242e1cc.js",
+        "assets/style.shell-dafcbbf695.css",
+        "assets/theme-toggle.shell-8221605898.js",
+        "assets/vault-door.shell-20bb2584bc.js"
+      ],
+      "actual": [
+        "assets/after-paint.shell-0392b76d45.js",
+        "assets/ambient-core.shell-29a2e1a95c.js",
+        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+        "assets/hero-ticker.shell-550971e267.js",
+        "assets/home-idle-loader.shell-7b976ad580.js",
+        "assets/nav-sheet.shell-c0fddc0c73.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/public-intelligence.shell-c86a6ecc39.js",
+        "assets/pwa-install.shell-30b48f0ae6.js",
+        "assets/pwa-nav.shell-5f63b6b75a.js",
+        "assets/schema-injector.shell-33115efcde.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/stats-surface.shell-b33242e1cc.js",
+        "assets/style.shell-dafcbbf695.css",
+        "assets/theme-toggle.shell-8221605898.js",
+        "assets/vault-door.shell-20bb2584bc.js"
+      ],
+      "missing": [],
+      "unexpected": []
+    }
   },
   "closeout": {
-    "state": "current-integrated-local-staging-passed-publication-production-pending",
+    "state": "product-release-writeback-complete-closing-publication-pending",
     "silScore": 935,
-    "cdr": "reviewed; no new creative direction"
+    "cdr": "reviewed; no new creative direction",
+    "velocity": 1
   },
   "remainingActions": [
-    "Preserve newer remote observations, sanitize and publish exact main candidate",
-    "Three required exact-candidate hosted checks",
-    "Normal full production deployment and complete readback",
-    "Final closing publication, impact transport, hygiene and native completion audit"
+    "Verify final current status/metadata and publish authorized closing commit to main",
+    "Deploy closing public projections and verify exact live readback",
+    "Retain actual late diagnostic trace outcomes without inventing an original baseline",
+    "Ark impact transport and owned-process cleanup",
+    "Final requirement-by-requirement native-goal audit and native completion"
   ],
   "rollback": {
     "observedAt": "2026-10-21T13:54:19.841Z",
@@ -519,7 +832,7 @@
     }
   },
   "integration": {
-    "state": "source-reconciled-current-acceptance-pending",
+    "state": "verified-product-released",
     "base": "d0546e043e712b5eec65663f97aa45cf3cb71996",
     "remote": "4670619d469e9d3734cd1dd2828d7c5b635e9f03",
     "files": [
@@ -953,6 +1266,52 @@
       "criticalRootUnchanged": true,
       "stagingRoot": "a7cb6e9d873840a9da533e9b26af56ac2edb25045f846e36971ba3799733bf2b",
       "coverageEvidence": ".cache/S395/publication-merge-coverage.json"
+    }
+  },
+  "closingPublication": {
+    "state": "staging-verified-source-publication-pending",
+    "reason": "Product acceptance does not verify the subsequent metadata commit or public projection release.",
+    "fullSuite": {
+      "state": "passed",
+      "passed": 545,
+      "failed": 0,
+      "coverageComplete": true,
+      "receiptId": "bf9ddd7de7eaf6eb6ddc1cf4",
+      "sourceFingerprint": "9d381f74aa30f780d77394a4",
+      "planFingerprint": "0b6e70bfb68ce619c4577edc",
+      "startedAt": "2026-10-21T18:31:10.950Z",
+      "finishedAt": "2026-10-21T18:40:08.717Z",
+      "evidence": ".cache/S395/closing-complete-diagnostics.json",
+      "log": ".cache/S395/closing-build-check.log"
+    },
+    "staging": {
+      "state": "passed",
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "receiptId": "e9c43f94a601b39032fdb89e",
+      "source": {
+        "commitSha": "8311d7ac8aa458d9bfc2ac9394955caf8532e899",
+        "fingerprint": "9d381f74aa30f780d77394a4"
+      },
+      "candidate": {
+        "artifactRoot": "c26fadde30a607b4c761543faf9fadaa7e8e1ae0eb09167fd7ebcb9c04f24265",
+        "leafCount": 66
+      },
+      "archive": {
+        "sha256": "935cdb35e17eb6ad246aed8a58d3c3836350b8ae8e37b9df7279f4dd3b9d3506",
+        "bytes": 2665403338
+      },
+      "remoteVerification": {
+        "method": "atomic-install-and-byte-equality",
+        "verified": true
+      },
+      "ceremony": {
+        "state": "passed",
+        "steps": 11,
+        "generatedAt": "2026-10-21T18:50:14.015Z",
+        "evidence": ".cache/S395/closing-staging-accepted-ceremony.json"
+      },
+      "evidence": ".cache/S395/closing-staging-accepted-receipt.json",
+      "scope": "Sealed current artifact root and tested source fingerprint; source.commitSha records the retained build-intent metadata, not a future publication SHA."
     }
   }
 }

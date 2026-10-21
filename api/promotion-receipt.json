@@ -4,19 +4,19 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "54d2151d907c424a487948d692230e9ce4f708f3",
+    "sha": "8311d7ac8aa458d9bfc2ac9394955caf8532e899",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "5244477a5f2fb04cd70e4f36f2a93741744c110a",
-    "contentLaneHead": "224725f20d1d0b203f13f6343fccf0e225925548",
+    "sha": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+    "contentLaneHead": null,
     "reachable": true,
-    "reconciliation": "behind",
+    "reconciliation": "ahead",
     "shellParity": {
       "state": "matched",
-      "observedAt": "2026-10-21T15:02:46.381Z",
-      "ageHours": 0.8,
+      "observedAt": "2026-10-21T18:28:38.173Z",
+      "ageHours": 0,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -89,21 +89,21 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "the repo has advanced past the last promotion: production serves 5244477a, repo build-sha is 54d2151d — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
+    "production serves c931cc73, newer than the recorded promoted 8311d7ac (benign — a later rebuild moved on)",
     "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-10-21T15:51:30.798Z",
+  "generatedAt": "2026-10-21T18:28:57.120Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 1,
     "reconciledPct": 5,
     "lastStrandedAt": "2026-10-21T15:51:30.798Z",
-    "currentBehindStreak": 5,
-    "newestGradableAt": "2026-10-21T15:51:30.798Z",
+    "currentBehindStreak": 0,
+    "newestGradableAt": "2026-10-21T18:28:57.120Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,
-    "strandedAlert": true
+    "strandedAlert": false
   }
 }

@@ -25,9 +25,197 @@
   "velocity": 1,
   "protocolVelocity": 0,
   "debt": "stable",
-  "topWin": "False served-coverage acceptance repaired",
-  "topGap": "Complete current validation and release pending",
-  "intentOutcome": "partial",
+  "topWin": "Complete served-text evidence verified on integrated source and fully deployed",
+  "topGap": "Original premise timing nonpassing; original trace unmeasured; existing identity/field-vitals gaps",
+  "intentOutcome": "product-release-verified-closing-publication-pending",
   "improvementsShipped": 1,
-  "deployStatus": "pending"
+  "deployStatus": "verified",
+  "testsTotal": 545,
+  "testsByType": {
+    "completeSuite": 545,
+    "completeRuns": 2,
+    "manualNewsCaptures": 84,
+    "mobile": 215,
+    "stagingCeremony": 11,
+    "incomingBinaryVariants": 12
+  },
+  "production": {
+    "state": "verified",
+    "observedAt": "2026-10-21T18:26:19.904Z",
+    "sha": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+    "workflowRun": 39650067973,
+    "workflowUrl": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39650067973",
+    "dispatchRef": {
+      "type": "tag",
+      "name": "s395-product-20261021-c931cc73",
+      "sha": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "tagObject": "c931cc736f70b524509378c1e35e1a69e8b3927d"
+    },
+    "mainReachability": {
+      "status": "ahead",
+      "base": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "mergeBase": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/compare/c931cc736f70b524509378c1e35e1a69e8b3927d...main"
+    },
+    "fullNormalJob": 119395764106,
+    "provider": {
+      "id": "5315092c-fabb-4191-8c2c-e07a6e475e0a",
+      "url": "https://5315092c.vaultsparkstudios-website.pages.dev",
+      "environment": "production",
+      "status": "success",
+      "commit": "c931cc736f70b524509378c1e35e1a69e8b3927d"
+    },
+    "builds": {
+      "https://vaultsparkstudios.com": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-21",
+        "sha": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+        "builtAt": "2026-10-21T18:13:28.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      },
+      "https://vaultsparkstudios-website.pages.dev": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-21",
+        "sha": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+        "builtAt": "2026-10-21T18:13:28.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    },
+    "requiredChecks": {
+      "ok": true,
+      "lane": "hosted-exact-sha",
+      "checks": [
+        {
+          "workflow": ".github/workflows/e2e.yml",
+          "state": "passed",
+          "runId": 39647701206
+        },
+        {
+          "workflow": ".github/workflows/lighthouse.yml",
+          "state": "passed",
+          "runId": 39647701101
+        },
+        {
+          "workflow": ".github/workflows/accessibility.yml",
+          "state": "passed",
+          "runId": 39647701321
+        }
+      ],
+      "findings": [],
+      "sourceCommit": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+      "checkedAt": "2026-10-21T18:08:40.283Z",
+      "independentProof": {
+        "ok": false,
+        "expectedSha": "c931cc736f70b524509378c1e35e1a69e8b3927d"
+      }
+    },
+    "servedParity": {
+      "verdict": "tree-current",
+      "checked": 1126,
+      "identical": 1116,
+      "differ": 0,
+      "contentLag": [],
+      "fullPromotionOnly": [],
+      "redirected": 10,
+      "notServed": [],
+      "unread": 0,
+      "expected": 1126,
+      "coverageComplete": true
+    },
+    "criticalLeaves": {
+      "checked": 65,
+      "passed": 65,
+      "root": "a7cb6e9d873840a9da533e9b26af56ac2edb25045f846e36971ba3799733bf2b",
+      "deployStampExcluded": true
+    },
+    "apex": {
+      "sourceCommit": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "root": "a7cb6e9d873840a9da533e9b26af56ac2edb25045f846e36971ba3799733bf2b",
+      "checked": 65,
+      "rawMatched": 59,
+      "nonceOnlyMatched": 0,
+      "transportMatched": 6,
+      "transportTemplateSha256": "914444b766129766c94a709897e440460f2558801d39dab1ebe111268510865b",
+      "scope": "Exact inspected Cloudflare challenge template and nonce attributes only; raw differences retained"
+    },
+    "incomingImages": {
+      "production": {
+        "checked": 12,
+        "passed": 12,
+        "origin": "https://vaultsparkstudios-website.pages.dev",
+        "sourceCommit": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+        "scope": "Twelve incoming assets/og/news image variants only"
+      },
+      "apex": {
+        "checked": 12,
+        "passed": 12,
+        "origin": "https://vaultsparkstudios.com",
+        "sourceCommit": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+        "scope": "Twelve incoming assets/og/news image variants only"
+      }
+    },
+    "shellParity": {
+      "observedAt": "2026-10-21T18:26:19.903Z",
+      "sourceCommit": "c931cc736f70b524509378c1e35e1a69e8b3927d",
+      "expectedIndexSha256": "07caaa2849efe8b3c3ed58e3b86c6d31e0992b9abc80518a87aec66637819885",
+      "reportSha256": "c70f89c7ec73785be4e451fe1ab67525603d891ade6da85e8652c335dd6bcb5d",
+      "reportSource": "https://vaultsparkstudios.com/",
+      "url": "https://vaultsparkstudios.com/",
+      "status": 200,
+      "ok": true,
+      "expected": [
+        "assets/after-paint.shell-0392b76d45.js",
+        "assets/ambient-core.shell-29a2e1a95c.js",
+        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+        "assets/hero-ticker.shell-550971e267.js",
+        "assets/home-idle-loader.shell-7b976ad580.js",
+        "assets/nav-sheet.shell-c0fddc0c73.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/public-intelligence.shell-c86a6ecc39.js",
+        "assets/pwa-install.shell-30b48f0ae6.js",
+        "assets/pwa-nav.shell-5f63b6b75a.js",
+        "assets/schema-injector.shell-33115efcde.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/stats-surface.shell-b33242e1cc.js",
+        "assets/style.shell-dafcbbf695.css",
+        "assets/theme-toggle.shell-8221605898.js",
+        "assets/vault-door.shell-20bb2584bc.js"
+      ],
+      "actual": [
+        "assets/after-paint.shell-0392b76d45.js",
+        "assets/ambient-core.shell-29a2e1a95c.js",
+        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+        "assets/hero-ticker.shell-550971e267.js",
+        "assets/home-idle-loader.shell-7b976ad580.js",
+        "assets/nav-sheet.shell-c0fddc0c73.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/public-intelligence.shell-c86a6ecc39.js",
+        "assets/pwa-install.shell-30b48f0ae6.js",
+        "assets/pwa-nav.shell-5f63b6b75a.js",
+        "assets/schema-injector.shell-33115efcde.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/stats-surface.shell-b33242e1cc.js",
+        "assets/style.shell-dafcbbf695.css",
+        "assets/theme-toggle.shell-8221605898.js",
+        "assets/vault-door.shell-20bb2584bc.js"
+      ],
+      "missing": [],
+      "unexpected": []
+    }
+  }
 }
