@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-21T02:53:00.976Z",
+  "generatedAt": "2026-10-21T02:56:21.313Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": false,
-  "verifiedBrowserHeadSha": null,
+  "browserGatesGreen": true,
+  "verifiedBrowserHeadSha": "a6752c927e4566240763f040b6bfc75b9b75f592",
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "unknown",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 2 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 2 consecutive receipts. CI gate status is unknown.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -57,10 +57,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-21T02:46:29Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-10-21T02:54:51Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39534192424",
       "headSha": "a6752c927e4566240763f040b6bfc75b9b75f592",
       "event": "push"
@@ -109,7 +109,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.28,
+      "ageHours": 3.33,
       "staleAfterHours": 48
     },
     {
@@ -188,7 +188,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.7,
+      "ageHours": 1.75,
       "staleAfterHours": 48
     },
     {
@@ -212,7 +212,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.82,
+      "ageHours": 1.88,
       "staleAfterHours": 48
     },
     {
@@ -238,7 +238,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.13,
+      "ageHours": 0.18,
       "staleAfterHours": 48
     },
     {
