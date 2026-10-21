@@ -84,7 +84,7 @@
       "scope": "Actual new checker against canonical staging origin"
     },
     "fullSuite": {
-      "state": "pending",
+      "state": "passed",
       "attempts": [
         {
           "state": "failed",
@@ -94,30 +94,49 @@
           "diagnostics": ".cache/S394/attempt1-diagnostics.json",
           "log": ".cache/S394/autopilot-attempt1.log"
         }
-      ]
+      ],
+      "coverageComplete": true,
+      "passed": 545,
+      "failed": 0,
+      "completePassingRuns": 2,
+      "sourceFingerprint": "df1b99241c8db4e20c74e877",
+      "planFingerprint": "c0af5c4243e3681b952755f1",
+      "runs": [
+        {
+          "startedAt": "2026-10-21T01:31:10.495Z",
+          "finishedAt": "2026-10-21T01:44:03.152Z",
+          "evidence": ".cache/S394/complete-run1-diagnostics.json"
+        },
+        {
+          "startedAt": "2026-10-21T01:44:13.156Z",
+          "finishedAt": "2026-10-21T01:57:47.604Z",
+          "evidence": ".cache/S394/complete-run2-diagnostics.json"
+        }
+      ],
+      "log": ".cache/S394/autopilot-attempt2.log"
     }
   },
   "staging": {
     "state": "passed",
     "origin": "https://website.staging.vaultsparkstudios.com",
-    "receiptId": "f69300ddf3459d993732a587",
+    "receiptId": "9dc01e5b0f672af511fd14b0",
     "source": {
-      "commitSha": "34f46b4030ed579af9ce422a0934b4e0f6cf1ab1",
+      "commitSha": "a40da4c31b76f68d7f3bfe142c1cabfaee05a15c",
       "fingerprint": "df1b99241c8db4e20c74e877"
     },
     "candidate": {
-      "artifactRoot": "901dc0b63931c24bdbb0d9c79eb09045a5d3724d5f928545ee41535eb6547da2",
+      "artifactRoot": "c312bed818a8338961cc6e07f12428027545fa12203d663386e89de816edb8e4",
       "leafCount": 66
     },
     "archive": {
-      "sha256": "3dc4cde5053e8f086496421e190912bc148786821d52c1a60e7c02093d1e3fe8",
-      "bytes": 2622264074
+      "sha256": "cbbf5b751438275a75d2fe67621ce701ebdd5e5ea1c125fc11bcf1434a70cf43",
+      "bytes": 2622264613
     },
     "ceremony": {
       "state": "passed",
-      "generatedAt": "2026-10-21T01:09:32.052Z",
+      "generatedAt": "2026-10-21T02:06:27.928Z",
       "steps": 11,
-      "log": ".cache/S394/staging-ceremony-final.log"
+      "log": ".cache/S394/final-staging-ceremony.log"
     },
     "attempts": [
       {
@@ -136,22 +155,31 @@
         "total": 11
       }
     ],
-    "finalCandidateRefresh": "Initial11/11 acceptance retained; one generated public-intelligence leaf changed during closeout. Refresh staging after complete local validation, before remote publication/promotion."
+    "finalCandidateRefresh": "Complete; final66-leaf root matches verified staging."
   },
   "production": {
     "state": "pending"
   },
   "closeout": {
-    "state": "writeback-complete-full-validation-and-production-pending",
+    "state": "canonical-local-closeout-passed-publication-and-production-pending",
     "silScore": 935,
-    "cdr": "reviewed; no new creative direction"
+    "cdr": "reviewed; no new creative direction",
+    "autopilot": {
+      "state": "passed",
+      "exitCode": 0,
+      "completePassingRuns": 2,
+      "stepsPerRun": 545,
+      "pushSkipped": true,
+      "commit": "7d49132157",
+      "reconciliationCommit": "9d4ae19105",
+      "log": ".cache/S394/autopilot-attempt2.log"
+    }
   },
   "remainingActions": [
-    "Complete canonical local validation and commit without pushing",
-    "Refresh staging for the stable final candidate, verify ceremony, then push main",
-    "Verify required exact-candidate hosted workflows",
+    "Publish accepted candidate to main after focused receipt/graph checks",
+    "Verify three required exact-candidate hosted workflows",
     "Normal full production promotion and complete live readback",
-    "Final nonserved receipts and native completion audit"
+    "Final canonical status publication, Ark/boards and native completion audit"
   ],
   "authorization": {
     "source": "Current native goal and founder instruction",
