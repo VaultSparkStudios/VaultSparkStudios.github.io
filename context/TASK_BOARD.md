@@ -3,11 +3,11 @@
 Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
 
 - [x] [S395 #1] Verify complete served coverage, committed redirects and strict CLI admission at L2; fixtures3/3, self-test19/19, S3739/9 and independent review pass.
-- [x] [S395 RELEASE] Earlier full build26/26 plus fresh integrated36-node closure/news checks, complete suite/staging, main publication, exact hosted checks, normal full production and served readback verified; evidence docs/RELEASE_S395.json. Closing status publication remains pending.
+- [x] [S395 RELEASE] Earlier full build26/26 plus fresh integrated36-node closure/news checks, complete suite/staging, main publication, exact hosted checks, normal full production and served readback verified; evidence docs/RELEASE_S395.json. Closing acceptance is recorded in docs/RELEASE_S395.json.
 - [ ] [SIL][S395][PROTOCOL/P2] Investigate timing classification of incoming pre-session same-identity automation after a pre-sync lock; preserve original failure. Future selection only.
 - [ ] [SIL][S395][VERIFY/P2] Separately assess served binary coverage against real release risk; current verifier explicitly measures tracked served text. Future selection only.
 
-Waves1–3 product outcomes verified. Closing status publication remains pending in docs/RELEASE_S395.json. Existing future SIL rows remain unselected.
+Waves1–3 product outcomes verified. Closing acceptance is recorded in docs/RELEASE_S395.json. Existing future SIL rows remain unselected.
 
 ## S394 — truthful shell parity and full release
 

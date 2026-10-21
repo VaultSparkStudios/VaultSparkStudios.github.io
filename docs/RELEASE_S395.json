@@ -1276,29 +1276,29 @@
       "passed": 545,
       "failed": 0,
       "coverageComplete": true,
-      "receiptId": "bf9ddd7de7eaf6eb6ddc1cf4",
-      "sourceFingerprint": "9d381f74aa30f780d77394a4",
+      "receiptId": "a86606585cb0aad0279fa97a",
+      "sourceFingerprint": "e57c50e9e4442ce532517cc7",
       "planFingerprint": "0b6e70bfb68ce619c4577edc",
-      "startedAt": "2026-10-21T18:31:10.950Z",
-      "finishedAt": "2026-10-21T18:40:08.717Z",
+      "startedAt": "2026-10-21T19:06:26.470Z",
+      "finishedAt": "2026-10-21T19:15:45.832Z",
       "evidence": ".cache/S395/closing-complete-diagnostics.json",
       "log": ".cache/S395/closing-build-check.log"
     },
     "staging": {
       "state": "passed",
       "origin": "https://website.staging.vaultsparkstudios.com",
-      "receiptId": "e9c43f94a601b39032fdb89e",
+      "receiptId": "ee9d16287e806280f2790915",
       "source": {
         "commitSha": "8311d7ac8aa458d9bfc2ac9394955caf8532e899",
-        "fingerprint": "9d381f74aa30f780d77394a4"
+        "fingerprint": "e57c50e9e4442ce532517cc7"
       },
       "candidate": {
         "artifactRoot": "c26fadde30a607b4c761543faf9fadaa7e8e1ae0eb09167fd7ebcb9c04f24265",
         "leafCount": 66
       },
       "archive": {
-        "sha256": "935cdb35e17eb6ad246aed8a58d3c3836350b8ae8e37b9df7279f4dd3b9d3506",
-        "bytes": 2665403338
+        "sha256": "aa06420ddb27aefbb1c4021c10b6b57806051aeacb049eecce68512b21280145",
+        "bytes": 2665403852
       },
       "remoteVerification": {
         "method": "atomic-install-and-byte-equality",
@@ -1307,11 +1307,32 @@
       "ceremony": {
         "state": "passed",
         "steps": 11,
-        "generatedAt": "2026-10-21T18:50:14.015Z",
+        "generatedAt": "2026-10-21T19:25:51.369Z",
         "evidence": ".cache/S395/closing-staging-accepted-ceremony.json"
       },
       "evidence": ".cache/S395/closing-staging-accepted-receipt.json",
       "scope": "Sealed current artifact root and tested source fingerprint; source.commitSha records the retained build-intent metadata, not a future publication SHA."
+    },
+    "previousCandidate": {
+      "candidate": "5f2798559c9468f1725576dca6223cb693c6eb5b",
+      "state": "superseded-before-production",
+      "reason": "Neutral current labels and immutable served product audit checkpoint; prior complete545/staging11 retained as historical evidence",
+      "evidence": ".cache/S395/superseded-closing-5f"
+    },
+    "ceremonyAttempts": {
+      "initial": {
+        "state": "rejected",
+        "passed": 10,
+        "total": 11,
+        "reason": "Continuity summary had not yet been refreshed after staging deployment",
+        "evidence": ".cache/S395/closing-ceremony-attempt1-rejected.json"
+      },
+      "recovery": {
+        "state": "passed",
+        "steps": 11,
+        "evidence": ".cache/S395/closing-staging-accepted-ceremony.json",
+        "remoteLineage": "Verified receipt and ledger bytes after native continuity owner refresh"
+      }
     }
   }
 }

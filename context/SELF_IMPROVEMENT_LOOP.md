@@ -12,7 +12,7 @@ Sparkline (last5 available totals):936 →935 →935 →935 →935
 Avgs (available rolling totals) —3:935 |5:935.2 |10:unmeasured |25:unmeasured |all:unmeasured
 Velocity trend:→ |Protocol velocity:→ |Debt:→
 Last session: 2026-10-21 | Session395 | Total:935/1000 | Velocity:1
-  └ Served coverage stabilization; complete release acceptance pending.
+  └ Served coverage stabilization; release evidence: docs/RELEASE_S395.json.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -3178,4 +3178,4 @@ S395 post-merge local closeout: c2546329d8 preserves the28path observation updat
 
 S395 served-text parity requires complete nonempty exactly-once coverage, committed redirect status/destination and strict CLI admission. Focused fixtures3/3, self-test19/19, existing regressions9/9 and independent review pass. The earlier actual npm full build/postbuild26/26 is retained as preintegration evidence. Fresh integrated36-node native-owner closure, declared news checks and two complete 545/545 runs plus current staging11/11 pass;84 manually inspected news captures across7themes at1440/390px and215 automated device probes retain their stated limits. Retired8442f8f4 failed hosted compliance atstep143 because WORK_LOG measured251KB against the250KB cap; native rotation moved0 for session-first headings, so older history was archived verbatim before corrected candidate16f6938f. Normal full production candidate c931cc736f70b524509378c1e35e1a69e8b3927d (run 39650067973) is verified by hosted checks, provider identity, both build stamps, complete served text,65 critical leaves on Pages/apex and exactly12 incoming news-image variants on both origins. This does not certify all binary assets. Original premise timing remains nonpassing; original baseline trace/context usage is unmeasured. Existing identity and field-vitals holds remain separate; no measured visitor or performance gain is claimed.
 
-SIL remains935/1000 across the same ten categories; velocity1. Two future S395 SIL rows remain unselected. Original trace/context baseline remains unmeasured; late traces, if retained, are additional observations only. Closing status publication remains pending: final metadata verification/commit/push, public projection deployment/readback, Ark impact transport, owned-process cleanup and final native-goal audit.
+SIL remains935/1000 across the same ten categories; velocity1. Two future S395 SIL rows remain unselected. Original trace/context baseline remains unmeasured; late traces, if retained, are additional observations only. At this product-acceptance checkpoint, closing publication and final native-goal audit were pending. Final closing evidence is recorded in docs/RELEASE_S395.json.
