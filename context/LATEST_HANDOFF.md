@@ -16,6 +16,6 @@ Native goal01a159cf-3925-7480-959e-0dd6caa69447 createdAt1792508182 remains boun
 
 
 
-### S393 current runtime evidence
+### S393 final release receipt
 
-Fresh215/215 local mobile cells and84 inspected final theme captures pass. Both receipts bind the current candidate; all109 proof-surface checks pass (92 blocking, zero advisory findings). Partial remainder274–545 passes; it is diagnostic coverage, not a complete whole-project acceptance receipt. Canonical closeout filename/cache and obsolete capture-tool orphan exemption are corrected. Full545-step acceptance, current staging, sanitized main push, required exact-candidate hosted checks and normal full production readback remain pending.
+The earlier partial runtime paragraph is superseded by the complete S393 record in docs/RELEASE_S393.json: two545-step runs, current staging, required exact-candidate checks and full product deployment/readback passed. The final full baseline and restored approved Desk overlay are recorded there. This historical release does not satisfy S394.

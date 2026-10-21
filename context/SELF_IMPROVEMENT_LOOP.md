@@ -3068,3 +3068,8 @@ Velocity2: rank integrity plus the observed generated-theme release dependency a
 ### S393 product release evidence addendum
 
 Full product release c0488e184f is verified by exact-candidate hosted checks, staging11/11 and1118-file production comparison. SIL remains935/1000 across the existing ten categories; velocity2. No performance/conversion gain is claimed. The original premise timing deviation remains nonpassing. The two existing S393 future SIL rows remain the only queued follow-ups; status receipt details live in docs/RELEASE_S393.json.
+
+
+### 2026-10-21 — Session 393 addendum | receipt-only recovery by S394
+
+The two post-anchor publication commits391fed59 and2246b1bb recorded the completed S393 release and protocol receipts. They introduced no new product outcome. All canonical S393 write-back surfaces already carry S393; the stale trailing pending-runtime handoff paragraph is corrected. docs/RELEASE_S393.json remains its release evidence, including exact full deployment, restored approved Desk overlay, original nonpassing premise timing and completed closeout. No score or test count is increased. S394 is a separate native invocation and must complete its own full arc.
