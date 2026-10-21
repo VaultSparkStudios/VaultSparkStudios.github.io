@@ -9,6 +9,8 @@ Session Intent: /arc then I authorize a direct push/commit to main/remote and fu
 
 Waves1–3 product outcomes verified. Closing acceptance is recorded in docs/RELEASE_S395.json. Existing future SIL rows remain unselected.
 
+The closing release also carries the article stylesheet correction. Its acceptance and retained prior hosted failures are recorded in docs/RELEASE_S395.json.
+
 ## S394 — truthful shell parity and full release
 
 Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.

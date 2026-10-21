@@ -41,7 +41,22 @@ for (const p of PRELOADS) {
   if (!asset) continue;
   lines.push(`  Link: </${asset.path.replace(/\\/g, '/')}>; rel=preload; as=${p.as}`);
 }
-lines.push('/news/*', '  Link: </assets/news-desk.css>; rel=preload; as=style');
+const articleStyle=manifest.assets.newsArticleStyle;
+if(!articleStyle)throw Error('Build the article stylesheet before early hints');
+lines.push('/news/20*',`  Link: </${articleStyle.path}>; rel=preload; as=style`);
+// Nonarticle pages keep their complete Desk sheet. Exact paths prevent the
+// full profile/search stylesheet from also being preloaded by every article.
+function nonarticleRoutes(dir,relative='news'){
+  const routes=[];
+  for(const entry of fs.readdirSync(dir,{withFileTypes:true})){
+    if(entry.isDirectory()&&!/^\d{4}-\d{2}-\d{2}$/.test(entry.name))routes.push(...nonarticleRoutes(path.join(dir,entry.name),relative+'/'+entry.name));
+    else if(entry.isFile()&&entry.name==='index.html')routes.push('/'+relative+'/');
+  }
+  return routes;
+}
+const nonarticles=nonarticleRoutes(path.join(ROOT,'news')).sort();
+if(nonarticles.length+2>100)throw Error('Early-hints rules exceed the Pages100-rule limit');
+for(const route of nonarticles)lines.push(route,'  Link: </assets/news-desk.css>; rel=preload; as=style');
 const content = lines.join('\n') + '\n';
 
 if (CHECK) {

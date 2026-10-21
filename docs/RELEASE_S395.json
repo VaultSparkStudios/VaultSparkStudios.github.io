@@ -1271,7 +1271,28 @@
   "closingPublication": {
     "state": "staging-verified-source-publication-pending",
     "reason": "Product acceptance does not verify the subsequent metadata commit or public projection release.",
-    "fullSuite": {
+    "previousCandidate": {
+      "candidate": "5f2798559c9468f1725576dca6223cb693c6eb5b",
+      "state": "superseded-before-production",
+      "reason": "Neutral current labels and immutable served product audit checkpoint; prior complete545/staging11 retained as historical evidence",
+      "evidence": ".cache/S395/superseded-closing-5f"
+    },
+    "ceremonyAttempts": {
+      "initial": {
+        "state": "rejected",
+        "passed": 10,
+        "total": 11,
+        "reason": "Continuity summary had not yet been refreshed after staging deployment",
+        "evidence": ".cache/S395/closing-ceremony-attempt1-rejected.json"
+      },
+      "recovery": {
+        "state": "passed",
+        "steps": 11,
+        "evidence": ".cache/S395/closing-staging-accepted-ceremony.json",
+        "remoteLineage": "Verified receipt and ledger bytes after native continuity owner refresh"
+      }
+    },
+    "previousFullSuite": {
       "state": "passed",
       "passed": 545,
       "failed": 0,
@@ -1281,10 +1302,10 @@
       "planFingerprint": "0b6e70bfb68ce619c4577edc",
       "startedAt": "2026-10-21T19:06:26.470Z",
       "finishedAt": "2026-10-21T19:15:45.832Z",
-      "evidence": ".cache/S395/closing-complete-diagnostics.json",
+      "evidence": ".cache/S395/superseded-closing-b431/closing-complete-diagnostics.json",
       "log": ".cache/S395/closing-build-check.log"
     },
-    "staging": {
+    "previousStaging": {
       "state": "passed",
       "origin": "https://website.staging.vaultsparkstudios.com",
       "receiptId": "ee9d16287e806280f2790915",
@@ -1308,31 +1329,157 @@
         "state": "passed",
         "steps": 11,
         "generatedAt": "2026-10-21T19:25:51.369Z",
+        "evidence": ".cache/S395/superseded-closing-b431/closing-staging-accepted-ceremony.json"
+      },
+      "evidence": ".cache/S395/superseded-closing-b431/closing-staging-accepted-receipt.json",
+      "scope": "Sealed current artifact root and tested source fingerprint; source.commitSha records the retained build-intent metadata, not a future publication SHA."
+    },
+    "releaseCorrection": {
+      "state": "local-source-and-rendered-validation-in-progress",
+      "reason": "Closing b431 failed the unchanged Lighthouse90 floor twice on an older article; no third same-source retry.",
+      "retiredCandidate": {
+        "candidate": "b43154688bb58c37c7a632060edf675573774d6f",
+        "state": "hosted-lighthouse-failed-before-production",
+        "e2e": 39661861742,
+        "accessibility": 39661861795,
+        "lighthouse": 39661861834,
+        "attempts": [
+          {
+            "attempt": 1,
+            "state": "failed",
+            "performance": 0.88,
+            "floor": 0.9,
+            "evidence": ".cache/S395/closing-lighthouse-attempt1-failed.log"
+          },
+          {
+            "attempt": 2,
+            "state": "failed",
+            "performance": 0.88,
+            "floor": 0.9,
+            "evidence": ".cache/S395/closing-lighthouse-attempt2-failed.log"
+          }
+        ]
+      },
+      "implementation": "Retain the shared blocking stylesheet; dated articles load a complete compact content-addressed article sheet excluding a marked profile/finder-only region. Native class-loss guard checks every generated dated article. Preload rules distinguish dated articles from exact nonarticle routes.",
+      "focusedTests": {
+        "passed": 2,
+        "total": 2,
+        "scope": "Actual CSS cascade/omission/class-loss assertions and real preview HTTP header responses including nonoverlapping wildcard matching"
+      },
+      "payload": {
+        "fullDeskGzipBytes": 16052,
+        "articleGzipBytes": 10207,
+        "source": "Node gzip diagnostics, not a field-performance measurement"
+      },
+      "localLighthouse": {
+        "version": "11.4.0",
+        "scores": [
+          0.94,
+          0.94,
+          0.94
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "evidence": ".cache/S395/perf-article-sheet-summary.json",
+        "scope": "Local Windows diagnostic only; hosted exact-candidate acceptance required; no stable speed gain claimed"
+      },
+      "renderedEvidence": {
+        "before": 42,
+        "after": 42,
+        "refreshedNewsCaptures": 84,
+        "currentManuallyReviewedCaptures": 126,
+        "refreshedNewsReview": ".cache/S395/css-refresh-pixel-review.json",
+        "state": "passed",
+        "receipts": [
+          "docs/visual-qa/LATEST.json",
+          "docs/visual-qa/S395-news-listing.json",
+          "docs/visual-qa/S395-news-related.json",
+          "docs/visual-qa/S395-css-correction.json"
+        ],
+        "scope": "Actual pixel inspection across seven themes and desktop/mobile; historical before images preserved; no numeric contrast or stable performance gain claimed."
+      },
+      "experiments": {
+        "footerContainment": "Rejected and reverted; no reliable local gain",
+        "combinedSharedAndDeskSheet": "Rejected and reverted; higher local blocking time"
+      },
+      "selection": "Necessary release correction within the existing selected outcome; SIL935/1000 and velocity1 retained; two existing future SIL rows remain unselected."
+    },
+    "fullSuite": {
+      "state": "passed",
+      "passed": 545,
+      "failed": 0,
+      "coverageComplete": true,
+      "receiptId": "34b59fc57c5c0a05a35997a4",
+      "sourceFingerprint": "88fba2449fbfa895ee22cc69",
+      "planFingerprint": "2d84802263c583d2dacc6b1b",
+      "startedAt": "2026-10-21T20:46:34.585Z",
+      "finishedAt": "2026-10-21T20:55:43.757Z",
+      "evidence": ".cache/S395/closing-complete-diagnostics.json",
+      "log": ".cache/S395/closing-build-check.log"
+    },
+    "localVerificationAttempts": {
+      "incomplete": [
+        {
+          "state": "failed",
+          "passed": 125,
+          "failed": 1,
+          "coverageComplete": false,
+          "evidence": ".cache/S395/css-complete-attempt1-untracked-test-diagnostics.json"
+        },
+        {
+          "state": "failed",
+          "passed": 167,
+          "failed": 1,
+          "coverageComplete": false,
+          "evidence": ".cache/S395/css-complete-attempt2-stale-news-visual-diagnostics.json"
+        },
+        {
+          "state": "failed",
+          "passed": 291,
+          "failed": 1,
+          "coverageComplete": false,
+          "evidence": ".cache/S395/css-complete-attempt3-reviewed-contract-diagnostics.json"
+        }
+      ],
+      "recovery": "Staged new unit test; rebuilt native news visual/critique receipts after dated article HTML changed; re-read exact early-hints byte-comparison contract and refreshed its changed-source binding; complete rerun required.",
+      "accepted": {
+        "state": "passed",
+        "receiptId": "34b59fc57c5c0a05a35997a4",
+        "passed": 545,
+        "coverageComplete": true
+      }
+    },
+    "staging": {
+      "state": "passed",
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "receiptId": "777b712ca5f7222ec1e1df75",
+      "source": {
+        "commitSha": "8311d7ac8aa458d9bfc2ac9394955caf8532e899",
+        "fingerprint": "88fba2449fbfa895ee22cc69"
+      },
+      "candidate": {
+        "artifactRoot": "e2dcafed9ff7bd3b2acbf305ce355126c3f919e5fd980b05424279bc73eca70e",
+        "leafCount": 67
+      },
+      "archive": {
+        "sha256": "b852f36df225c05d94daef71f78cbf38033f80446911d17ef0cc8e6a0a1bff99",
+        "bytes": 2724975689
+      },
+      "remoteVerification": {
+        "method": "atomic-install-and-byte-equality",
+        "verified": true
+      },
+      "ceremony": {
+        "state": "passed",
+        "steps": 11,
+        "generatedAt": "2026-10-21T21:05:51.732Z",
         "evidence": ".cache/S395/closing-staging-accepted-ceremony.json"
       },
       "evidence": ".cache/S395/closing-staging-accepted-receipt.json",
       "scope": "Sealed current artifact root and tested source fingerprint; source.commitSha records the retained build-intent metadata, not a future publication SHA."
-    },
-    "previousCandidate": {
-      "candidate": "5f2798559c9468f1725576dca6223cb693c6eb5b",
-      "state": "superseded-before-production",
-      "reason": "Neutral current labels and immutable served product audit checkpoint; prior complete545/staging11 retained as historical evidence",
-      "evidence": ".cache/S395/superseded-closing-5f"
-    },
-    "ceremonyAttempts": {
-      "initial": {
-        "state": "rejected",
-        "passed": 10,
-        "total": 11,
-        "reason": "Continuity summary had not yet been refreshed after staging deployment",
-        "evidence": ".cache/S395/closing-ceremony-attempt1-rejected.json"
-      },
-      "recovery": {
-        "state": "passed",
-        "steps": 11,
-        "evidence": ".cache/S395/closing-staging-accepted-ceremony.json",
-        "remoteLineage": "Verified receipt and ledger bytes after native continuity owner refresh"
-      }
     }
   }
 }

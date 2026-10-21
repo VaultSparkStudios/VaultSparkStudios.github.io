@@ -375,6 +375,7 @@ flowchart LR
   n_llms_full_txt --> n_data_ignis_search_index_json
   n_membership_index_html --> n_api_candidate_artifact_manifest_json
   n_membership_index_html --> n_data_ignis_search_index_json
+  n_news_ --> n__headers
   n_news_ --> n_api_news_visual_receipts_json
   n_news_ --> n_sitemap_xml
   n_oracle_ --> n_data_ignis_search_index_json
@@ -393,6 +394,7 @@ flowchart LR
   n_scripts_ --> n_api_staging_deploy_receipt_json
   n_scripts_ --> n_assets_ambient_core_bundle_js
   n_scripts_ --> n_assets_membership_access_js
+  n_scripts_ --> n_assets_shell_manifest_json
   n_scripts_ --> n_config_cache_evidence_classification_json
   n_scripts_ --> n_context_ambient_ledger_json
   n_scripts_ --> n_dispatch_index_html
@@ -626,7 +628,7 @@ flowchart LR
 - `ignis/` → `public-ecosystem`
 - `journal/` → `evidence-hub`, `pathways-pages`
 - `llms-full.txt` → `ignis-search-index`
-- `news/` → `news-visual-receipts`, `sitemap`
+- `news/` → `early-hints-headers`, `news-visual-receipts`, `sitemap`
 - `oracle/` → `ignis-search-index`
 - `package.json` → `security-posture`
 - `portfolio/` → `studio-timeline`
@@ -634,7 +636,7 @@ flowchart LR
 - `projects/` → `ai-canonical-pages`, `ai-discovery-health`
 - `repo-structure:public-project-routes` → `agents-json`, `llms-full-shards`, `spark-manifest`
 - `rights/` → `ignis-search-index`
-- `scripts/` → `ambient-bundles`, `ambient-ledger`, `cache-evidence-classification`, `dispatch-desk-panel`, `field-win-proof`, `membership-access`, `oracle-answers`, `rank-climbers`, `spark-manifest`, `staging-deploy-receipt`, `visual-qa-retention`
+- `scripts/` → `ambient-bundles`, `ambient-ledger`, `cache-evidence-classification`, `dispatch-desk-panel`, `field-win-proof`, `membership-access`, `oracle-answers`, `rank-climbers`, `shell-assets`, `spark-manifest`, `staging-deploy-receipt`, `visual-qa-retention`
 - `status/` → `candidate-artifact-manifest`
 - `studio-hub/` → `studio-timeline`
 - `studio-pulse/` → `candidate-artifact-manifest`

@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { compactCssTransport } from './lib/css-transport.mjs';
+import { newsArticleCss, assertArticleCssCoverage } from './lib/news-article-css.mjs';
 
 const root = process.cwd();
 const checkMode = process.argv.includes('--check');
@@ -12,6 +13,7 @@ const SHELL_ASSETS = [
   { key: 'sparkStyle', source: 'assets/spark-compass.css', stem: 'spark-compass.shell', attribute: 'href' },
   { key: 'pwaInstall', source: 'assets/pwa-install.js', stem: 'pwa-install.shell', attribute: 'src' },
   { key: 'style', source: 'assets/style.css', stem: 'style.shell', attribute: 'href' },
+  { key: 'newsArticleStyle', source: 'assets/news-article.css', stem: 'news-article.shell', attribute: 'href' },
   { key: 'themeToggle', source: 'assets/theme-toggle.js', stem: 'theme-toggle.shell', attribute: 'src' },
   { key: 'navToggle', source: 'assets/nav-toggle.js', stem: 'nav-toggle.shell', attribute: 'src' },
   { key: 'shellHealth', source: 'assets/shell-health.js', stem: 'shell-health.shell', attribute: 'src' },
@@ -501,6 +503,9 @@ function checkBufferContent(filePath, expected) {
 }
 
 function main() {
+  const articlePath=path.join(root,'assets/news-article.css'),articleContent=newsArticleCss(root);
+  if(checkMode&&!checkFileContent(articlePath,articleContent))throw Error('Article CSS source drift; run build-shell-assets');
+  if(!checkMode)writeIfChanged(articlePath,articleContent);
   const manifest = buildManifest();
   const manifestOutput = JSON.stringify({
     schemaVersion: manifest.schemaVersion,
@@ -520,6 +525,7 @@ function main() {
     const relativeHtmlPath = path.relative(root, htmlPath).replace(/\\/g, '/');
     if (REDIRECT_STUB_PATHS.has(relativeHtmlPath)) continue;
     const current = read(htmlPath);
+    if(/^news\/\d{4}-\d{2}-\d{2}\/[^/]+\/index\.html$/.test(relativeHtmlPath))assertArticleCssCoverage(current,read(path.join(root,'assets/news-desk.css')));
     const next = updateHtmlReferences(current, manifest, relativeHtmlPath);
     if (next !== current) {
       htmlChanges.push({ path: htmlPath, next });

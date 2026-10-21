@@ -5,6 +5,9 @@ S395 served-text parity requires complete nonempty exactly-once coverage, commit
 Closing status publication remains pending: final metadata verification/commit/push, public projection deployment/readback, Ark impact transport, owned-process cleanup and final native-goal audit.
 Evidence: docs/RELEASE_S395.json.
 
+
+Closing correction checkpoint: b431 failed the older article Lighthouse90 floor in both attempts. A smaller complete blocking article sheet is being verified; actual local2/2 tests and Lighthouse94/94/94 with CLS0 are diagnostic evidence only. Productc931 remains the verified live baseline. Final closing acceptance is recorded separately in docs/RELEASE_S395.json.
+
 ## S394 — full product release verified
 
 S394 shell parity requires HTTP success and a nonempty expected shell, with complete CLI admission before IO. CLI 2/2, self-test 14/14 and independent review pass. Two complete 545/545 runs, mobile 215/215 and staging ceremony 11/11 pass. Normal full Pages release a6752c927e4566240763f040b6bfc75b9b75f592 (run 39535687085) is verified by provider identity, both public build stamps and tree-current served-byte comparison. Original premise timing remains nonpassing; existing identity and field-vitals holds remain unchanged. No measured conversion or performance gain is claimed.
