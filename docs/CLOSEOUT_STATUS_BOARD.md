@@ -11,11 +11,11 @@
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
-║  ✓ chore(closeout): recover S393 publication record              ║
+║  ✓ chore(closeout): record restored S394 publication writers [s  ║
+║  ✓ chore(closeout): verify S394 full release and closing public  ║
 ║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
-║  ✓ chore(proof): record Desk art routine maintenance [skip ci]   ║
-║  ✓ chore(routine-desk-art): reseal derived outputs after auto a  ║
-║  ✓ chore(routine-desk-art): auto-reviewed art for 2 image(s)     ║
+║  ✓ chore: update CI status beacon [skip ci]                      ║
+║  ✓ chore: refresh live data feeds [skip ci]                      ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 935/1000 ═══════════════════════════════════════╗
 ║    Dev Health         93   █████████░                            ║
@@ -30,20 +30,20 @@
 ║    Automation         98   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  ✓ context/CURRENT_STATE.md                                      ║
-║  ✓ context/TASK_BOARD.md                                         ║
-║  ✓ context/LATEST_HANDOFF.md                                     ║
-║  ✓ logs/WORK_LOG.md                                              ║
-║  ✓ context/DECISIONS.md                                          ║
-║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  · context/CURRENT_STATE.md                                      ║
+║  · context/TASK_BOARD.md                                         ║
+║  · context/LATEST_HANDOFF.md                                     ║
+║  · logs/WORK_LOG.md                                              ║
+║  · context/DECISIONS.md                                          ║
+║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  ✓ context/TRUTH_AUDIT.md                                        ║
-║  ✓ context/PROJECT_STATUS.json                                   ║
+║  · context/TRUTH_AUDIT.md                                        ║
+║  · context/PROJECT_STATUS.json                                   ║
 ║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 239 files  ·  M:225 A:0 D:2 ?:12                       ║
-║  Ahead: 1  ·  Behind: 0                                          ║
+║  Changes: 0 files  ·  M:0 A:0 D:0 ?:0                            ║
+║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
@@ -51,7 +51,7 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        13/17                                            ║
+║  Doctor:        14/17                                            ║
 ║  Compliance:    —                                                ║
 ║  Tests:         545/545                                          ║
 ║  Validation:    full-fresh                                       ║
