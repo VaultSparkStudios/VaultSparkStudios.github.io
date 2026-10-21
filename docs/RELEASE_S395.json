@@ -323,6 +323,41 @@
       },
       "evidence": ".cache/S395/integrated-receipt-ordering.log",
       "originalCaptureReviewDatesPreserved": true
+    },
+    "hostedRecipeCorrection": {
+      "candidate": "16f6938faf0dc21216ca3bf56dbada223f5a7d55",
+      "workflowRun": 39645065917,
+      "step": 168,
+      "state": "failed-corrected-new-candidate-required",
+      "reason": "Three nonrendered screenshot recipes had CRLF working bytes while Git stores LF under existing attributes.",
+      "correction": "Normalized three recipes to existing Git blob bytes and updated visual source/raw/recipe/annex hashes only. Original images, capture/review dates and candidate preserved.",
+      "sourceFingerprint": "68ba13744e8c17cef727cc58",
+      "sourceSha256": "70e4033052e5a5b8bd437659864da155888788e2fea3a950fcdad637798b86d0",
+      "rawSourceSha256": "e8c021eef7cb7a1f787ecbce40cf0966d1a65facd89eff22c5f6341b7602f7ef",
+      "recipes": [
+        {
+          "path": "docs/visual-qa/S395-news-capture.mjs",
+          "beforeSha256": "c9d068d79bd9bded0c634e6ecbf5cbe3822ed7984407887e828176215d36dabd",
+          "sha256": "dab239a05c727116ed373b4aa5afc30f4c20d8316bfa9eaf7c9d3ed791a9647c",
+          "gitBlobSha256": "dab239a05c727116ed373b4aa5afc30f4c20d8316bfa9eaf7c9d3ed791a9647c",
+          "onlyEol": true
+        },
+        {
+          "path": "docs/visual-qa/S395-news-plan.json",
+          "beforeSha256": "d2677dc2639d3b6eb2ce769cbda1cfcfe113c22b6a367e3cd8b71cd7f5db6e7d",
+          "sha256": "654c686856522eb166603a90f1d599825b899c6246b8f087a93e8e46d139e159",
+          "gitBlobSha256": "654c686856522eb166603a90f1d599825b899c6246b8f087a93e8e46d139e159",
+          "onlyEol": true
+        },
+        {
+          "path": "docs/visual-qa/S395-news-recipe.txt",
+          "beforeSha256": "d67c284e6dc179d978695d8bdc819da0dde20f7c091d02cb1c592aaaf60c543a",
+          "sha256": "594cdeb2423dfc332b7d75387ef98ef64e066048e302b824cc66f41d5c3fab7e",
+          "gitBlobSha256": "594cdeb2423dfc332b7d75387ef98ef64e066048e302b824cc66f41d5c3fab7e",
+          "onlyEol": true
+        }
+      ],
+      "pixelsUnchanged": true
     }
   },
   "staging": {
@@ -855,7 +890,7 @@
         "docs/visual-qa/S395-news-listing.json",
         "docs/visual-qa/S395-news-related.json"
       ],
-      "sourceSha256": "c59cbb527692ee27799e2b32e54de65dc1b019ccaaaa21e52919cbe5c1818cdc",
+      "sourceSha256": "70e4033052e5a5b8bd437659864da155888788e2fea3a950fcdad637798b86d0",
       "limitations": "Local-only GET/HEAD fixture blocks external requests and submissions. Unavailable reader/comment messages do not assert production availability. Focused panel crops verify readable rendered panels; live submission, unrestricted viewport overlays and numeric contrast ratios are outside these captures. Original BEFORE locator crops retain documented sticky-header/Spark overlap; AFTER deep panels use full-page document clips, related cards remain in view to avoid content-visibility skipping."
     },
     "newsChecks": {
