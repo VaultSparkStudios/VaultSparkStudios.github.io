@@ -1,3 +1,14 @@
+## S394 — truthful shell parity and full release
+
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
+
+- [x] [S394 #1] Require HTTP success and actual expected shell; reject ambiguous CLI input before IO. CLI2/2, self-test14/14, independent review pass.
+- [ ] [S394 RELEASE] Complete current whole-project validation, staging, sanitized direct-main publication, required exact-candidate checks, normal full deployment and readback.
+- [ ] [SIL][S394][PROTOCOL/P2] Keep startup-generated genius-list drift distinguishable from selected implementation in premise timing; preserve the original nonpassing receipt. Future selection only.
+- [ ] [SIL][S394][RELIABILITY/P2] Assess cross-origin redirect handling in diagnostic HTTP commands with measured caller compatibility. Future selection only.
+
+Wave 1 startup/recovery and Wave 2 fresh audit complete. Wave 3 local implementation/review complete; whole-project checks pending. Wave 4 closeout/release in progress. Future SIL items are unselected.
+
 
 
 ## S393 — rank-report integrity and authorized full release

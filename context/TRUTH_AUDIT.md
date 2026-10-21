@@ -1,3 +1,11 @@
+## S394 — 2026-10-21 — parity acceptance scope
+
+Overall status: yellow — S394 verifier accepted locally; current validation and full release pending.
+
+S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending.
+
+The prior checker accepted matching-shell HTTP errors and vacuous empty shell sets. Real CLI fixtures now reject those cases. Existing status/asset mismatch details remain explicit. Original strict timing receipt remains nonpassing solely for startup-generated genius-list drift. S393 receipt-only recovery is separate; no old suite or deployment is borrowed as current acceptance.
+
 ## S393 — verified full product release, 2026-10-20
 
 Overall status: yellow — scoped public product release verified; existing identity holds unchanged.

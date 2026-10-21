@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "1.0",
+  "session": 394,
+  "nativeGoal": {
+    "threadId": "01a15bd6-6f29-75c0-8bca-d1378ec53f3f",
+    "createdAt": 1792542151
+  },
+  "state": "local-implementation-verified-release-pending",
+  "releaseAccepted": false,
+  "implementation": {
+    "selected": 1,
+    "verified": 1,
+    "released": 0,
+    "review": "independent round1 pass; zero findings",
+    "scope": "Shell parity diagnostic HTTP acceptance and CLI admission; UI/identity/membership policies unchanged",
+    "sourceCommit": "a40da4c31b"
+  },
+  "verification": {
+    "focused": {
+      "state": "passed",
+      "tests": 2,
+      "selfTests": 14
+    },
+    "premiseTiming": {
+      "state": "nonpassing",
+      "reason": "Startup-generated docs/GENIUS_LIST.md preceded the recorded checkpoint; selected source edits followed verified premises."
+    },
+    "build": {
+      "state": "passed",
+      "postbuildSteps": 26,
+      "log": ".cache/S394/build.log",
+      "scope": "Complete npm run build including actual postbuild lifecycle; terminal7070 exit0"
+    },
+    "ignis": {
+      "state": "not-project-evidence",
+      "reason": "Propagated shim targets Studio Ops, not the website; no local score accepted."
+    },
+    "reconciliation": {
+      "state": "passed",
+      "rebuilt": 61,
+      "scope": "Modeled dependency rebuild only; full validation remains separate",
+      "log": ".cache/S394/resync-working-tree.log"
+    },
+    "mobile": {
+      "state": "passed",
+      "cells": 215,
+      "p0": 0,
+      "p1": 0,
+      "origin": "http://127.0.0.1:4387",
+      "receipt": "docs/mobile-audit/receipt.json",
+      "log": ".cache/S394/mobile.log",
+      "scope": "Fresh complete S394 local-preview215-cell audit; runner rebuilt the candidate before observing it."
+    },
+    "visual": {
+      "state": "existing-bound-receipt-valid",
+      "captures": 84,
+      "scope": "No UI implementation selected. Existing manual captures validate unchanged bound sources; not claimed as new S394 captures.",
+      "rebinding": {
+        "state": "validated",
+        "note": "Only candidate metadata rebound; original source inventory, all84 image hashes and capture/review times preserved. Receipt ordering, visual validation and fresh215-cell mobile contract pass."
+      }
+    },
+    "doctor": {
+      "state": "passed",
+      "blockingFailing": 0,
+      "passing": 14,
+      "warning": 2,
+      "advisoryFailing": 1,
+      "total": 17,
+      "log": ".cache/S394/doctor-current.json"
+    },
+    "supplyChain": {
+      "state": "passed",
+      "repositories": 1,
+      "incidentDefinitions": 3,
+      "hits": 0,
+      "log": ".cache/S394/supply-chain-coverage.txt"
+    },
+    "stagingShellParity": {
+      "state": "passed",
+      "status": 200,
+      "missing": 0,
+      "unexpected": 0,
+      "scope": "Actual new checker against canonical staging origin"
+    },
+    "fullSuite": {
+      "state": "pending",
+      "attempts": [
+        {
+          "state": "failed",
+          "step": 168,
+          "scope": "Incomplete first545-step run",
+          "reason": "Visual candidate identifier differed from regenerated manifest; original bound source and all84 capture hashes unchanged.",
+          "diagnostics": ".cache/S394/attempt1-diagnostics.json",
+          "log": ".cache/S394/autopilot-attempt1.log"
+        }
+      ]
+    }
+  },
+  "staging": {
+    "state": "passed",
+    "origin": "https://website.staging.vaultsparkstudios.com",
+    "receiptId": "f69300ddf3459d993732a587",
+    "source": {
+      "commitSha": "34f46b4030ed579af9ce422a0934b4e0f6cf1ab1",
+      "fingerprint": "df1b99241c8db4e20c74e877"
+    },
+    "candidate": {
+      "artifactRoot": "901dc0b63931c24bdbb0d9c79eb09045a5d3724d5f928545ee41535eb6547da2",
+      "leafCount": 66
+    },
+    "archive": {
+      "sha256": "3dc4cde5053e8f086496421e190912bc148786821d52c1a60e7c02093d1e3fe8",
+      "bytes": 2622264074
+    },
+    "ceremony": {
+      "state": "passed",
+      "generatedAt": "2026-10-21T01:09:32.052Z",
+      "steps": 11,
+      "log": ".cache/S394/staging-ceremony-final.log"
+    },
+    "attempts": [
+      {
+        "state": "interrupted",
+        "reason": "Default local ceremony would refresh the foreign Studio Ops doctor; retained fresh local website doctor and used supported --ci mode with the same browser checks."
+      },
+      {
+        "state": "rejected",
+        "passed": 10,
+        "total": 11,
+        "reason": "Lineage evaluated before the new continuity record was regenerated; the direct lineage check then passed. Failed receipt retained."
+      },
+      {
+        "state": "passed",
+        "passed": 11,
+        "total": 11
+      }
+    ],
+    "finalCandidateRefresh": "Initial11/11 acceptance retained; one generated public-intelligence leaf changed during closeout. Refresh staging after complete local validation, before remote publication/promotion."
+  },
+  "production": {
+    "state": "pending"
+  },
+  "closeout": {
+    "state": "writeback-complete-full-validation-and-production-pending",
+    "silScore": 935,
+    "cdr": "reviewed; no new creative direction"
+  },
+  "remainingActions": [
+    "Complete canonical local validation and commit without pushing",
+    "Refresh staging for the stable final candidate, verify ceremony, then push main",
+    "Verify required exact-candidate hosted workflows",
+    "Normal full production promotion and complete live readback",
+    "Final nonserved receipts and native completion audit"
+  ],
+  "authorization": {
+    "source": "Current native goal and founder instruction",
+    "scope": "Direct commit/push to main and full deployment, including required staging; no force-push, spending or identity-policy change",
+    "stagingTwinPreflight": "ASK/no-signal observed; existing explicit founder deployment authorization already covers this bounded staging command."
+  },
+  "rollback": {
+    "observedAt": "2026-10-21T01:00:23.672Z",
+    "provider": {
+      "id": "ec2c1006-160c-47cb-b848-d1ca94cb4575",
+      "url": "https://ec2c1006.vaultsparkstudios-website.pages.dev",
+      "environment": "production",
+      "status": "success",
+      "commit": "69e5e99ae67ff0a85d8c7051d82921c483e948a3"
+    },
+    "builds": {
+      "https://vaultsparkstudios.com": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-20",
+        "sha": "ae7e2f99e9097996f6eeeff19b50a1795e06f39f",
+        "baselineSha": "ae7e2f99e9097996f6eeeff19b50a1795e06f39f",
+        "builtAt": "2026-10-20T22:52:48.000Z",
+        "deployedBy": "pages-deploy-content-lane",
+        "contentLaneHead": "69e5e99ae67ff0a85d8c7051d82921c483e948a3",
+        "contentLanePaths": "170 paths",
+        "contentLanePathSetSha256": "f2fee75fc12b217a6c585715ec27b04f2daba869f387b4f07bdc097aa5092a26",
+        "workflowRunId": "39510880608"
+      },
+      "https://vaultsparkstudios-website.pages.dev": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-20",
+        "sha": "ae7e2f99e9097996f6eeeff19b50a1795e06f39f",
+        "baselineSha": "ae7e2f99e9097996f6eeeff19b50a1795e06f39f",
+        "builtAt": "2026-10-20T22:52:48.000Z",
+        "deployedBy": "pages-deploy-content-lane",
+        "contentLaneHead": "69e5e99ae67ff0a85d8c7051d82921c483e948a3",
+        "contentLanePaths": "170 paths",
+        "contentLanePathSetSha256": "f2fee75fc12b217a6c585715ec27b04f2daba869f387b4f07bdc097aa5092a26",
+        "workflowRunId": "39510880608"
+      }
+    }
+  }
+}

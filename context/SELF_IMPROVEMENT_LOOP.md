@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 available totals): 935 → 940 → 936 → 935 → 935
-Avgs (available rolling totals) —3:935.3 |5:936.2 |10:unmeasured |25:unmeasured |all:unmeasured
+Sparkline (last5 available totals):940 →936 →935 →935 →935
+Avgs (available rolling totals) —3:935 |5:936.2 |10:unmeasured |25:unmeasured |all:unmeasured
 Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session: 2026-10-20 | Session393 | Total:935/1000 | Velocity:2
-  └ Rank integrity and generated themes locally verified; full validation and release remain in progress.
+Last session: 2026-10-21 | Session394 | Total:935/1000 | Velocity:1
+  └ Parity evidence locally verified; current validation and full release pending.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -3073,3 +3073,25 @@ Full product release c0488e184f is verified by exact-candidate hosted checks, st
 ### 2026-10-21 — Session 393 addendum | receipt-only recovery by S394
 
 The two post-anchor publication commits391fed59 and2246b1bb recorded the completed S393 release and protocol receipts. They introduced no new product outcome. All canonical S393 write-back surfaces already carry S393; the stale trailing pending-runtime handoff paragraph is corrected. docs/RELEASE_S393.json remains its release evidence, including exact full deployment, restored approved Desk overlay, original nonpassing premise timing and completed closeout. No score or test count is increased. S394 is a separate native invocation and must complete its own full arc.
+
+
+## Session 394 — 2026-10-21 — local parity verification accepted; release pending
+
+Product rubric,10 categories ×100. Total935/1000; unchanged. Velocity1 locally verified outcome.
+
+| Category | Score |
+|---|---:|
+| devHealth | 93 |
+| creativeAlignment | 94 |
+| momentum | 90 |
+| engagement | 96 |
+| processQuality | 88 |
+| crossRepoCoherence | 93 |
+| securityPosture | 97 |
+| ecosystemIntegration | 91 |
+| capitalEfficiency | 95 |
+| automationCoverage | 98 |
+
+S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending.
+
+No measured engagement, conversion or performance improvement is claimed. Timing is nonpassing; release acceptance is incomplete. Brainstorm: distinguish startup generation in the premise timing inventory; separately review cross-origin redirect handling. Both recorded as future [SIL][S394] tasks without scope expansion.

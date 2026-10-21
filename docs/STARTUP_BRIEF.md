@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-20 (Session 393 closeout) -->
-<!-- semantic-freshness: hash=a2bbc8fb85c8a7cc next=394 silSession=393 silScore=935 handoff=393 tests=- -->
+<!-- generated-at: 2026-10-21 (Session 394 closeout) -->
+<!-- semantic-freshness: hash=b83f4ab67c1e0eed next=395 silSession=394 silScore=935 handoff=394 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 393 closeout · 2026-10-20.
+> **Fast-boot brief** — generated at Session 394 closeout · 2026-10-21.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 394 · 2026-10-20 · FOUNDER MODE                         ║
+║  Session 395 · 2026-10-21 · BUILDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S393) - WHAT SHIPPED ══════════════════════════╗
-║  S393 validated canonical rank reports and restored actual seve  ║
+╔══ LAST SESSION (S394) - WHAT SHIPPED ══════════════════════════╗
+║  S394 shell-parity acceptance now requires a successful HTTP re  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -61,14 +61,14 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 393 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 394 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    545/545 passing  ·  Deploy: verified                  ║
+║  Tests:    545/545 passing  ·  Deploy: pending                   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -76,27 +76,27 @@
 ║  ✓  Tests         545/545 passing (2026-10-20)                   ║
 ║  ⚠  Velocity      1 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⛔  Context age   16d                                            ║
-║  ✓  IGNIS         45412 FORGE  ·  1d old                         ║
-║  ⛔  Truth         yellow — scoped public product release…        ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
+║  ⛔  Context age   17d                                            ║
+║  ✓  IGNIS         45412 FORGE  ·  2d old                         ║
+║  ⛔  Truth         yellow — S394 verifier accepted locally;…      ║
+║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.181  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ⚠  Revenue sig.  7d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
+║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    58d · Authorize or decline immutable warm-origin migrati      ║
-║    58d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
+║    59d · Authorize or decline immutable warm-origin migrati      ║
+║    59d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   99  [INTELLIGENCE]  Record strict premise acceptance before c  ║
+║   96  [PRODUCT]      Complete current whole-project validation,  ║
+║        Complete current whole-project validation, staging, sani  ║
+║                                                                  ║
+║   96  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
+║        Keep startup-generated genius-list drift distinguishable  ║
+║                                                                  ║
+║   90  [PRODUCT]      Assess cross-origin redirect handling in d  ║
+║        Assess cross-origin redirect handling in diagnostic HTTP  ║
+║                                                                  ║
+║   90  [INTELLIGENCE]  Record strict premise acceptance before c  ║
 ║        Record strict premise acceptance before creating any pla  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
-║   93  [PRODUCT]      Measure and remove generated leaderboard m  ║
+║   84  [PRODUCT]      Measure and remove generated leaderboard m  ║
 ║        Measure and remove generated leaderboard metadata/whites  ║
-║                                                                  ║
-║   90  [PRODUCT]      Complete suite, exact-candidate publicatio  ║
-║        Complete suite, exact-candidate publication, production   ║
-║                                                                  ║
-║   87  [PRODUCT]      Require the strict premise checkpoint befo  ║
-║        Require the strict premise checkpoint before delegated e  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 393 closeout · 2026-10-20*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 394 closeout · 2026-10-21*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

@@ -2446,3 +2446,12 @@ Use the master stylesheet and shared theme controller, and execute the existing 
 ### D-S393.4 — Immutable full product release and bounded status publication
 
 Promote the checked c0488e184f tag through the normal full Pages path, then verify served source, provider identity and retained edge routing. The deployment-stamped build identity is checked separately; the pre-stamp staging Merkle root is not claimed byte-identical after stamping. Publish durable closing-status wording once using existing scoped gates and readback. Keep receipt-only additions separate from deployed payload generation. Existing identity holds and S147 canonical redirects are unchanged; the failed Lighthouse attempt is retained.
+
+
+## D-S394.1 — Separate response acceptance from shell equality (2026-10-21)
+
+Matching asset names do not make an HTTP error a working route. Require2xx and a nonempty expected fingerprint set, while preserving missing/unexpected diagnostics. Reuse strict argv admission; constrain base to an HTTP(S) origin and route to a site path before IO. Existing redirect following remains unchanged; future policy review is unselected. Rollback: revert the checker and its registered fixture tests.
+
+## D-S394.2 — Preserve scoped release and process evidence (2026-10-21)
+
+Original premise timing remains nonpassing because startup generated the genius list before the checkpoint. Selected source changes followed verified premises. Existing STRONG CANON-045 identity and CANON-056 terminology gaps remain separate from this routine verifier stabilization: no identity/trust or public terminology policy changes selected. No ABSOLUTE conformance gap observed. S393 release evidence cannot complete this fresh S394 invocation.

@@ -1,3 +1,5 @@
+- [S394 active arc](S394.md): truthful shell parity locally verified; full validation and release pending.
+
 - [S393 active arc](S393.md): rank integrity accepted locally; provider recovered, complete build/live REST pass; full validation and release in progress.
 
 - [S392 partial checkpoint](S392.md): two input-boundary fixes verified; complete validation, recovery approval, publication and deployment remain pending. Resume the bound S392 goal.

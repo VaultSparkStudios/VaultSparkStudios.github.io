@@ -2334,3 +2334,21 @@ Native goal01a157cd-72fc-7c72-88e1-90d3e0c93ba9 remains bound to S391. Resume th
 ### S393 current validation addendum
 
 S393 theme release dependency accepted locally: Final build/postbuild26 pass; generated-page theme tests9/9 including42 route/theme combinations, receipt rejection1/1, independent source review round2 pass. All84 final desktop/mobile captures inspected in seven theme contact sheets; actual root/body/stored theme matches; CANON053 hash-bound receipt passes. Pre-existing dismissible mobile Spark overlap is disclosed. Whole-project suite, current staging, sanitized main push, required exact-candidate CI and full production readback remain pending.
+
+
+---
+<!-- archived: 2026-10-21 -->
+
+## Where We Left Off (Session 392) — partial closeout
+
+Two operator-input boundaries are implemented and independently reviewed. Both complete545-step validation runs passed; the second verifies regenerated test-signal outputs. The real local mobile audit passed215/215 with zero P0/P1. Local checkpoint commits c6c9d8ff9a and a4a0a4520d are recorded. The full site build failed at Supabase rank-climbers; provider database/REST/auth remain UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push, current staging acceptance or production deployment is claimed.
+
+Session Intent: /arc, direct main commit/push and full deployment. Status: partial. Deploy: pending — provider recovery, complete local/hosted checks and current staging runtime acceptance are required.
+
+Native goal01a159cf-3925-7480-959e-0dd6caa69447 createdAt1792508182 remains bound to S392. Continue this audit and its unfinished release; a continuation never starts another arc. Inspect .cache/S392/state.json for live handles. The pending restart question has not been answered; do not retry it through another route. Existing deployment authorization persists once its required gates pass. CDR reviewed — no new creative direction.
+
+
+
+### S393 final release receipt
+
+The earlier partial runtime paragraph is superseded by the complete S393 record in docs/RELEASE_S393.json: two545-step runs, current staging, required exact-candidate checks and full product deployment/readback passed. The final full baseline and restored approved Desk overlay are recorded there. This historical release does not satisfy S394.

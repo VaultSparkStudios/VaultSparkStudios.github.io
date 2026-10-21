@@ -1703,3 +1703,17 @@ Release tag: s393-production-20261020. The first Lighthouse attempt failed.88 ag
 ### S393 recovery receipt — 2026-10-21 (S394 startup)
 
 Reconciled post-anchor release documentation against docs/RELEASE_S393.json and its committed release checks. Corrected a stale trailing handoff paragraph; appended the missing SIL receipt addendum. Product work and the prior release were already recorded. No reimplementation, provider restart or borrowed S394 acceptance.
+
+
+## Session 394 — 2026-10-21 — parity verifier reliability
+
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
+
+S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending.
+
+Fresh nine-axis survey selected one bounded stabilization outcome. Both source premises verified before source edits. Startup-generated docs/GENIUS_LIST.md preceded the checkpoint; timing remains nonpassing and is not retroactively corrected. No visual interface or identity policy changed. Full release remains pending.
+
+
+### S394 acceptance checkpoint — 2026-10-21
+
+Fresh local mobile audit215/215 passes, zero P0/P1. Staging deployment f69300ddf3459d993732a587 verifies current artifacts and rollback; complete ceremony11/11 passes after the lineage prerequisite was refreshed. The original10/11 receipt is preserved. Current local doctor has0 blocking findings. The supported --ci ceremony path retains every browser check while avoiding a foreign-repo doctor refresh. Complete whole-project validation, main publication and normal full production release remain pending.
