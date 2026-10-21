@@ -1,3 +1,5 @@
+- [S395 active arc](S395.md): complete served coverage; acceptance and full release in progress.
+
 - [S394 completed arc](S394.md): truthful shell parity and full closing publication verified; exact evidence in docs/RELEASE_S394.json.
 
 - [S393 active arc](S393.md): rank integrity accepted locally; provider recovered, complete build/live REST pass; full validation and release in progress.

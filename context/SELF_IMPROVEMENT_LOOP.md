@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 available totals):940 →936 →935 →935 →935
-Avgs (available rolling totals) —3:935 |5:936.2 |10:unmeasured |25:unmeasured |all:unmeasured
+Sparkline (last5 available totals):936 →935 →935 →935 →935
+Avgs (available rolling totals) —3:935 |5:935.2 |10:unmeasured |25:unmeasured |all:unmeasured
 Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session: 2026-10-21 | Session394 | Total:935/1000 | Velocity:1
-  └ Parity evidence locally verified; current validation and full release pending.
+Last session: 2026-10-21 | Session395 | Total:935/1000 | Velocity:1
+  └ Served coverage stabilization; complete release acceptance pending.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -3127,3 +3127,28 @@ The earlier S394 checkpoint retained its original text. Its unpunctuated total w
 | Automation Coverage | 98 |
 
 Acceptance: CLI 2/2, self-test 14/14, independent review, two complete product-source 545/545 runs, a complete closing-source 545/545 run, mobile 215/215, staging 11/11 and normal full product deployment/readback. Evidence: docs/RELEASE_S394.json. No measured engagement, conversion, performance or fleet-adoption gain is claimed. CDR reviewed: no new creative direction. The two previously recorded future S394 SIL tasks remain unselected.
+
+
+## Session 395 — 2026-10-21 — served coverage stabilization
+
+**Total:** 935/1000
+**Velocity:** 1
+**Win:** False served-coverage acceptance paths identified and repaired; complete acceptance pending.
+**Gap:** Current release remains pending; original timing receipt nonpassing.
+
+Product rubric, ten categories ×100. Scores unchanged; no measured visitor gain claimed.
+
+| Category | Score |
+|---|---:|
+| Dev Health | 93 |
+| Creative Alignment | 94 |
+| Momentum | 90 |
+| Engagement | 96 |
+| Process Quality | 88 |
+| Cross-Repo Coherence | 93 |
+| Security Posture | 97 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 98 |
+
+Brainstorm: distinguish pre-session incoming automation in timing checks; assess binary served coverage separately. Both committed to TASK_BOARD as future unselected SIL items. CDR reviewed: no new creative direction.

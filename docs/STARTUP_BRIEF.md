@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-21 (Session 394 closeout) -->
-<!-- semantic-freshness: hash=b83f4ab67c1e0eed next=395 silSession=394 silScore=935 handoff=394 tests=- -->
+<!-- generated-at: 2026-10-21 (Session 395 closeout) -->
+<!-- semantic-freshness: hash=61ef726e8afa2655 next=396 silSession=395 silScore=935 handoff=395 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 394 closeout · 2026-10-21.
+> **Fast-boot brief** — generated at Session 395 closeout · 2026-10-21.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 395 · 2026-10-21 · BUILDER MODE                         ║
+║  Session 396 · 2026-10-21 · BUILDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S394) - WHAT SHIPPED ══════════════════════════╗
-║  S394 shell parity requires HTTP success and a nonempty expecte  ║
+╔══ LAST SESSION (S395) - WHAT SHIPPED ══════════════════════════╗
+║  S395 complete served-coverage verification is accepted locally  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -61,14 +61,14 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 394 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 395 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    545/545 passing  ·  Deploy: verified                  ║
+║  Tests:    545/545 passing  ·  Deploy: pending                   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -79,16 +79,16 @@
 ║  ⛔  Context age   17d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  2d old                         ║
 ║  ⛔  Truth         yellow — public product release verified;…     ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
+║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.181  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ⚠  Revenue sig.  8d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
+║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   99  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
+║   96  [PRODUCT]      Full build, canonical suite/closeout, curr  ║
+║        Full build, canonical suite/closeout, current staging, e  ║
+║                                                                  ║
+║   94  [VERIFY]       Separately assess served binary coverage a  ║
+║        Separately assess served binary coverage against real re  ║
+║                                                                  ║
+║   93  [PRODUCT]      Investigate timing classification of incom  ║
+║        Investigate timing classification of incoming pre-sessio  ║
+║                                                                  ║
+║   90  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
 ║        Keep startup-generated genius-list drift distinguishable  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Assess cross-origin redirect handling in d  ║
+║   84  [PRODUCT]      Assess cross-origin redirect handling in d  ║
 ║        Assess cross-origin redirect handling in diagnostic HTTP  ║
-║                                                                  ║
-║   93  [INTELLIGENCE]  Record strict premise acceptance before c  ║
-║        Record strict premise acceptance before creating any pla  ║
-║                                                                  ║
-║   87  [PRODUCT]      Measure and remove generated leaderboard m  ║
-║        Measure and remove generated leaderboard metadata/whites  ║
-║                                                                  ║
-║   84  [PRODUCT]      Complete suite, exact-candidate publicatio  ║
-║        Complete suite, exact-candidate publication, production   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 394 closeout · 2026-10-21*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 395 closeout · 2026-10-21*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

@@ -1,25 +1,25 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-10-21T03:44:00.886Z
-Receipt: `187792737f3f5ea329398e8d` · coverage 109/109
+Generated: 2026-10-21T15:03:05.562Z
+Receipt: `fb5faa98434064be33b3e009` · coverage 109/109
 
-Latest: **108/109** passed · blocking 92/92 · advisory findings 1/17 · total 78.9s
+Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 158.9s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 106 | advisory | 2.5s | 1 | `node scripts/generate-build-sha.mjs --check` |
-| 50 | blocking | 1.9s | 0 | `node scripts/check-trust-feed-freshness.mjs --self-test` |
-| 49 | blocking | 1.7s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 24 | blocking | 1.6s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 38 | blocking | 1.4s | 0 | `node scripts/generate-news-pages.mjs --check` |
-| 14 | blocking | 1.4s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 25 | blocking | 1.4s | 0 | `node scripts/check-hero-spotlight-coherence.mjs --self-test` |
-| 52 | blocking | 1.4s | 0 | `node scripts/check-feed-publisher-manifest.mjs --self-test` |
-| 16 | blocking | 1.4s | 0 | `node scripts/inject-collection-jsonld.mjs --check` |
-| 37 | blocking | 1.3s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 24 | blocking | 4.9s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 22 | blocking | 4.2s | 0 | `node scripts/check-schema-coverage.mjs` |
+| 49 | blocking | 3.5s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 52 | blocking | 3.1s | 0 | `node scripts/check-feed-publisher-manifest.mjs --self-test` |
+| 7 | blocking | 3.1s | 0 | `node scripts/build-status-proof.mjs --check --check-content` |
+| 14 | blocking | 3.0s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 38 | blocking | 2.9s | 0 | `node scripts/generate-news-pages.mjs --check` |
+| 65 | blocking | 2.6s | 0 | `node scripts/check-content-coherence.mjs` |
+| 106 | advisory | 2.5s | 0 | `node scripts/generate-build-sha.mjs --check` |
+| 37 | blocking | 2.5s | 0 | `node scripts/build-news-desk.mjs --check` |
 
 ## Failures
 
-- Step 106 [advisory]: `node scripts/generate-build-sha.mjs --check` exited 1 — self/freshness
+- None.

@@ -1,3 +1,9 @@
+## S395 — 2026-10-21 — served-byte coverage scope
+
+S395 complete served-coverage verification is accepted locally: fixtures3/3, self-test19/19, existing S3739/9, independent review pass, complete build/postbuild26/26, fresh mobile215/215 and current staging ceremony11/11. Complete canonical suite, main publication and full production acceptance remain pending. Original timing deviation and existing identity/field-vitals holds remain visible; no measured visitor gain claimed.
+
+An absent page or arbitrary redirect previously passed tree-current; invalid concurrency produced zero work. Selected source premises passed before edits. Original timing failure counts incoming pre-session routine commits from a pre-sync lock anchor; preserve it as nonpassing. Context usage is unmeasured. Current release acceptance is pending.
+
 ## S394 — verified scoped product release
 
 Overall status: yellow — public product release verified; existing identity and field-vitals holds unchanged.

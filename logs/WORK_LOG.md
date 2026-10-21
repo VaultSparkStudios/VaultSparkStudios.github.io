@@ -1731,3 +1731,27 @@ Earlier pending checkpoints retain their original historical state. Closing stat
 S394 complete: selected shell-parity acceptance is verified and released. Full product a6752c927e4566240763f040b6bfc75b9b75f592 (run 39535687085) passed the 1120-candidate source-byte sweep: 1110 identical, 10 configured redirects, zero differences/missing/unread. Closing normal full deployment 5244477a5f2fb04cd70e4f36f2a93741744c110a (run 39545371694) passed exact required CI, all current canonical nonstamp critical leaves and every changed served data file on both origins. This latter check reuses the verified full baseline and does not claim a second whole-tree network sweep. Original premise timing and missing initial trace instrumentation remain explicit. Score stays 935/1000; future SIL rows remain unselected.
 
 Impact cargo queued; transport does not prove recipient adoption. Both temporarily paused source-writing monitors were restored to active, with actual timing in the release receipt. No measured field performance or conversion gain is claimed.
+
+
+## Session 395 — 2026-10-21 — served coverage reliability
+
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
+
+S395 served-byte verification now requires complete nonempty coverage and verified configured redirect status/destination from the compared commit. Missing files, arbitrary redirects and malformed concurrency cannot certify tree-current. Current focused review, full project acceptance, staging and production completion are tracked separately; no conversion or performance gain is claimed.
+
+Fresh nine-axis survey selected one L2 outcome. Three source premises verified before selected source edits, zero implementation paths dirty at checkpoint. Timing checker counts incoming pre-session automation after pre-sync lock anchor; original failure retained. No UI or identity-policy change selected.
+
+
+### S395 current staging and mobile acceptance
+
+S395 complete served-coverage verification is accepted locally: fixtures3/3, self-test19/19, existing S3739/9, independent review pass, complete build/postbuild26/26, fresh mobile215/215 and current staging ceremony11/11. Complete canonical suite, main publication and full production acceptance remain pending. Original timing deviation and existing identity/field-vitals holds remain visible; no measured visitor gain claimed.
+
+
+### S395 current staging and mobile acceptance
+
+S395 complete served-coverage verification is accepted locally: fixtures3/3, self-test19/19, existing S373 regressions9/9, independent review pass, complete build/postbuild26/26, fresh mobile215/215 and current staging ceremony11/11. Complete canonical suite, main publication and full production acceptance remain pending. Original timing deviation and existing identity/field-vitals holds remain visible; no measured visitor gain claimed.
+
+
+### S395 current staging and mobile acceptance
+
+S395 complete served-coverage verification is accepted locally: fixtures3/3, self-test19/19, existing regressions9/9, independent review pass, complete build/postbuild26/26, fresh mobile215/215 and current staging ceremony11/11. Complete canonical suite, main publication and full production acceptance remain pending. Original timing deviation and existing identity/field-vitals holds remain visible; no measured visitor gain claimed.

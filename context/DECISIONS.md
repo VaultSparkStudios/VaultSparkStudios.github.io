@@ -2455,3 +2455,12 @@ Matching asset names do not make an HTTP error a working route. Require2xx and a
 ## D-S394.2 — Preserve scoped release and process evidence (2026-10-21)
 
 Original premise timing remains nonpassing because startup generated the genius list before the checkpoint. Selected source changes followed verified premises. Existing STRONG CANON-045 identity and CANON-056 terminology gaps remain separate from this routine verifier stabilization: no identity/trust or public terminology policy changes selected. No ABSOLUTE conformance gap observed. S393 release evidence cannot complete this fresh S394 invocation.
+
+
+## D-S395.1 — Absence cannot certify deployed parity (2026-10-21)
+
+Require complete nonempty served-text observations. Missing files and unexpected responses are unverified. Configured redirects must match status and resolved Location from the compared git tree; reuse shared Pages semantics. Strict CLI admission precedes operational IO. Report-only scheduling remains report-only. Rollback: revert bounded checker/tests and redeploy last accepted production version.
+
+## D-S395.2 — Keep session and verification boundaries honest (2026-10-21)
+
+S395 is a new native goal association. Prior release evidence cannot complete it. Record the nonpassing timing result caused by incoming automation after the pre-sync lock without rewriting history. Existing identity and terminology conformance gaps remain separate from this unchanged-policy stabilization; full release still needs current candidate acceptance.

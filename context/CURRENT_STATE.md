@@ -1,3 +1,9 @@
+## S395 — served coverage stabilization; release in progress
+
+S395 complete served-coverage verification is accepted locally: fixtures3/3, self-test19/19, existing S3739/9, independent review pass, complete build/postbuild26/26, fresh mobile215/215 and current staging ceremony11/11. Complete canonical suite, main publication and full production acceptance remain pending. Original timing deviation and existing identity/field-vitals holds remain visible; no measured visitor gain claimed.
+
+Evidence: docs/RELEASE_S395.json. Prior S394 release does not complete this invocation.
+
 ## S394 — full product release verified
 
 S394 shell parity requires HTTP success and a nonempty expected shell, with complete CLI admission before IO. CLI 2/2, self-test 14/14 and independent review pass. Two complete 545/545 runs, mobile 215/215 and staging ceremony 11/11 pass. Normal full Pages release a6752c927e4566240763f040b6bfc75b9b75f592 (run 39535687085) is verified by provider identity, both public build stamps and tree-current served-byte comparison. Original premise timing remains nonpassing; existing identity and field-vitals holds remain unchanged. No measured conversion or performance gain is claimed.
