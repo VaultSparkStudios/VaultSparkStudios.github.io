@@ -299,7 +299,92 @@
         ".cache/skill-trace/studio-closeout-394.json"
       ],
       "noOriginalDurationClaim": true
-    }
+    },
+    "finalRecordPublication": {
+      "state": "published",
+      "commit": "871fa1ded2134c31aef9471ec7bcb24cee305c44",
+      "log": ".cache/S394/final-record-push.log"
+    },
+    "publicationCoordination": [
+      {
+        "at": "2026-10-21T04:12:07.914Z",
+        "reason": "Normal pre-push validation passed but concurrent uptime writer advanced main before ref update; bounded publication coordination",
+        "restoreRequired": false,
+        "workflows": [
+          {
+            "id": 290922328,
+            "path": "uptime-probe.yml",
+            "before": "active"
+          },
+          {
+            "id": 262469628,
+            "path": "ci-status-beacon.yml",
+            "before": "active"
+          }
+        ],
+        "requiredWorkflowsRemainEnabled": true,
+        "twin": "ASK/no-signal; reversible bounded deployment coordination under existing authorization",
+        "restoredAt": "2026-10-21T04:22:30.204Z",
+        "restored": [
+          {
+            "id": 262469628,
+            "name": "CI Status Beacon",
+            "path": ".github/workflows/ci-status-beacon.yml",
+            "state": "active"
+          },
+          {
+            "id": 290922328,
+            "name": "uptime-probe",
+            "path": ".github/workflows/uptime-probe.yml",
+            "state": "active"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-21T04:53:23.942Z",
+        "reason": "Bounded normal-hook final nonserved receipt publication; preserve concurrent monitoring commits",
+        "restoreRequired": false,
+        "workflows": [
+          {
+            "id": 290922328,
+            "path": "uptime-probe.yml",
+            "before": "active"
+          },
+          {
+            "id": 262469628,
+            "path": "ci-status-beacon.yml",
+            "before": "active"
+          },
+          {
+            "id": 301109611,
+            "path": "refresh-live-data.yml",
+            "before": "active"
+          }
+        ],
+        "requiredReleaseWorkflowsRemainEnabled": true,
+        "restoredAt": "2026-10-21T04:57:04.905Z",
+        "restored": [
+          {
+            "id": 262469628,
+            "name": "CI Status Beacon",
+            "path": ".github/workflows/ci-status-beacon.yml",
+            "state": "active"
+          },
+          {
+            "id": 301109611,
+            "name": "Refresh Live Data",
+            "path": ".github/workflows/refresh-live-data.yml",
+            "state": "active"
+          },
+          {
+            "id": 290922328,
+            "name": "uptime-probe",
+            "path": ".github/workflows/uptime-probe.yml",
+            "state": "active"
+          }
+        ]
+      }
+    ]
   },
   "remainingActions": [],
   "authorization": {
