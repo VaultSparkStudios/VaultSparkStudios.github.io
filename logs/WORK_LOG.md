@@ -1780,3 +1780,8 @@ Current integrated staging is accepted: verified full installation12452files,66-
 ### S395 publication merge checkpoint — 2026-10-21T17:18:21.610Z
 
 S395 integrated local and staging acceptance pass: two complete545/545 source runs, focused3/3/self19/existing9,36-owner integration closure,84manual news images,215device probes, full staging12452files,65critical/12incoming-image directreadbacks and canonical ceremony11/11. A newer28path routine observation merge is preserved and covered by41native owners; source68ba13744e8c17cef727cc58 and staged critical root are unchanged. Exact hosted checks, main publication, normal full production and closing acceptance remain pending. Original timing remains nonpassing; no visitor gain claimed. SIL remains935/1000,velocity1; no new outcome.
+
+
+### S395 post-merge local closeout checkpoint — 2026-10-21T17:22:30.432Z
+
+S395 post-merge local closeout: c2546329d8 preserves the28path observation update through41native owners with no missing nodes; source68ba13744e8c17cef727cc58 and staged critical roota7cb6e9d873840a9da533e9b26af56ac2edb25045f846e36971ba3799733bf2b remain unchanged. Two integrated545/545 runs,215device probes,84manual news images and currentstaging11/11/65critical/12incoming-image evidence remain accepted. Candidate metadata in visual/mobile receipts was rebound only after all captured source/raw-source/image hashes matched; original capture/review dates retained, ordering nowpasses. Native writeback history could not measure merge-only filelists; this normal post-merge ledger commit records the actual continuation. Production publication/readback and closing acceptance remain pending. SIL935/1000,velocity1; no new session, outcome or measured visitor gain.
