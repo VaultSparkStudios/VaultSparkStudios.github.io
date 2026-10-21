@@ -123,9 +123,6 @@
 ║   99  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
 ║        Keep startup-generated genius-list drift distinguishable  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      Assess cross-origin redirect handling in d  ║
 ║        Assess cross-origin redirect handling in diagnostic HTTP  ║
 ║                                                                  ║
@@ -134,6 +131,9 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Measure and remove generated leaderboard m  ║
 ║        Measure and remove generated leaderboard metadata/whites  ║
+║                                                                  ║
+║   84  [PRODUCT]      Complete suite, exact-candidate publicatio  ║
+║        Complete suite, exact-candidate publication, production   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
