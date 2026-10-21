@@ -1,10 +1,11 @@
-# S393 implementation plan
+# S394 implementation plan
 
-Session intent: full fresh arc, direct main push and full routine deployment.
-Native goal: 01a15a69-1391-7741-84ce-7401d74e1360 (createdAt 1792518208).
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
 
-- Wave 1: startup, publisher preservation merge and fresh nine-axis audit. Complete.
-- Wave 2: rank-report integrity L2 and release-dependent generated leaderboard themes L2. Source review and focused tests pass; current complete build/postbuild passes. Actual seven-theme desktop/mobile image inspection is in progress.
-- Wave 3: canonical closeout, whole-project checks, current staging acceptance, sanitized main push, exact-candidate checks and full production promotion/readback. Pending.
+Wave 1 — Startup and prior-release record recovery. S393 release receipt is complete; correct its contradictory trailing handoff paragraph and append an evidence-scoped addendum.
 
-Provider recovery was observed without a restart. Original plan-before-premise-checkpoint timing remains nonpassing; selected theme repair premises were verified before its source edits. Historical S392 acceptance does not prove S393 completion.
+Wave 2 — Fresh audit. Both parity premises verified before selected source edits. Startup-generated GENIUS_LIST drift makes the timing receipt nonpassing; retain it.
+
+Wave 3 — Implement truthful-shell-parity at L2. Require HTTP success plus real expected shell, strict argv and origin/path validation before IO. Real CLI fixtures and independent review are the done condition. No UI, identity or membership policy change.
+
+Wave 4 — Full build, complete local acceptance, current staging and applicable access/browser gates; canonical closeout; sanitized direct-main push; required exact-candidate checks; normal full deployment and production readback. Rollback to the previously accepted production deployment. All release acceptance remains pending until measured.
