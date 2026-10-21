@@ -253,26 +253,97 @@
         "note": "Deployment capabilities ready; unrelated missing capabilities and previous action-probe failures are not claimed healthy."
       },
       "stagedScan": {
-        "state": "pending-before-publication"
+        "state": "passed",
+        "findings": 0,
+        "files": 39,
+        "scope": "Pre-staging metadata commit; final publication hook rescans later staged changes"
+      }
+    },
+    "rollback": {
+      "observedAt": "2026-10-21T17:06:13.408Z",
+      "provider": {
+        "id": "d60f0fd2-0268-40d3-ab56-8e1f336c68b7",
+        "url": "https://d60f0fd2.vaultsparkstudios-website.pages.dev",
+        "environment": "production",
+        "status": "success",
+        "commit": "224725f20d1d0b203f13f6343fccf0e225925548"
+      },
+      "builds": {
+        "https://vaultsparkstudios.com": {
+          "schemaVersion": "1.1",
+          "generatedAt": "2026-10-21",
+          "sha": "5244477a5f2fb04cd70e4f36f2a93741744c110a",
+          "baselineSha": "5244477a5f2fb04cd70e4f36f2a93741744c110a",
+          "builtAt": "2026-10-21T14:29:47.000Z",
+          "deployedBy": "pages-deploy-content-lane",
+          "contentLaneHead": "224725f20d1d0b203f13f6343fccf0e225925548",
+          "contentLanePaths": "194 paths",
+          "contentLanePathSetSha256": "464034d19e19cbf784202fc34e344c0bb5e410c7e9e3121fffc52a9f5c63a8d4",
+          "workflowRunId": "39616912825"
+        },
+        "https://vaultsparkstudios-website.pages.dev": {
+          "schemaVersion": "1.1",
+          "generatedAt": "2026-10-21",
+          "sha": "5244477a5f2fb04cd70e4f36f2a93741744c110a",
+          "baselineSha": "5244477a5f2fb04cd70e4f36f2a93741744c110a",
+          "builtAt": "2026-10-21T14:29:47.000Z",
+          "deployedBy": "pages-deploy-content-lane",
+          "contentLaneHead": "224725f20d1d0b203f13f6343fccf0e225925548",
+          "contentLanePaths": "194 paths",
+          "contentLanePathSetSha256": "464034d19e19cbf784202fc34e344c0bb5e410c7e9e3121fffc52a9f5c63a8d4",
+          "workflowRunId": "39616912825"
+        }
       }
     }
   },
   "staging": {
-    "state": "pending-integrated-candidate",
-    "priorEvidence": "preIntegration.staging"
+    "state": "passed",
+    "origin": "https://website.staging.vaultsparkstudios.com",
+    "receiptId": "e51b811302744162f2c7b2ad",
+    "source": {
+      "commitSha": "8311d7ac8aa458d9bfc2ac9394955caf8532e899",
+      "fingerprint": "68ba13744e8c17cef727cc58"
+    },
+    "candidate": {
+      "artifactRoot": "a7cb6e9d873840a9da533e9b26af56ac2edb25045f846e36971ba3799733bf2b",
+      "leafCount": 66
+    },
+    "archive": {
+      "sha256": "2a751108abba977a05e03fb71dec0e2593d800c28201012cd190c8926577730a",
+      "bytes": 2665384145
+    },
+    "critical": {
+      "checked": 65,
+      "passed": 65,
+      "sourceCommit": "6f28b672c124ecb956317341ebccc76b4d510b7a",
+      "root": "a7cb6e9d873840a9da533e9b26af56ac2edb25045f846e36971ba3799733bf2b",
+      "coverageComplete": true
+    },
+    "incomingImages": {
+      "checked": 12,
+      "passed": 12,
+      "sourceCommit": "6f28b672c124ecb956317341ebccc76b4d510b7a",
+      "coverageComplete": true
+    },
+    "ceremony": {
+      "state": "passed",
+      "steps": 11,
+      "generatedAt": "2026-10-21T17:07:27.228Z",
+      "evidence": ".cache/S395/integrated-staging-accepted-ceremony.json"
+    }
   },
   "production": {
     "state": "pending"
   },
   "closeout": {
-    "state": "integrated-current-full-suite-passed-staging-production-pending",
+    "state": "current-integrated-local-staging-passed-publication-production-pending",
     "silScore": 935,
     "cdr": "reviewed; no new creative direction"
   },
   "remainingActions": [
-    "Verify current integrated staging artifact and canonical ceremony",
-    "Sanitized direct-main publication and three exact-candidate hosted checks",
-    "Normal full production deployment and exhaustive served-text/critical/incoming-image readback",
+    "Preserve newer remote observations, sanitize and publish exact main candidate",
+    "Three required exact-candidate hosted checks",
+    "Normal full production deployment and complete readback",
     "Final closing publication, impact transport, hygiene and native completion audit"
   ],
   "rollback": {
