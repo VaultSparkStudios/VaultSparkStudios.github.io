@@ -1,16 +1,16 @@
-# Genius Hit List — Session 390
+# Genius Hit List — Session 394
 
-Generated: 2026-10-20
+Generated: 2026-10-21
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **77/100**
+- Overall opportunity pressure: **80/100**
 - Health: **yellow**
-- Current SIL: **940/1000**
+- Current SIL: **935/1000**
 - CI health: **check gh run list**
-- Current focus: S390 public data contracts: production-rejected queries repaired behind a live-verified gate
+- Current focus: S394 verifier and current staging11/11 verified; complete local acceptance and authorized production release pending
 
 ## Strategic Read
 
@@ -22,73 +22,75 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Rank orb never renders for members.
+#### 1. [PRODUCT] Complete current whole-project validation, staging, sanitized direct-…
 Final score: **96**
-[S390][UX/P2] Rank orb never renders for members.
-Why it matters: Rank orb never renders for members. is open, local, and unblocked — can ship this session.
+[S394 RELEASE] Complete current whole-project validation, staging, sanitized direct-main publication, required exact-candidate checks, normal full deployment and readback.
+Why it matters: Complete current whole-project validation, staging, sanitized direct-m is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Member achievements schema/display.
-Final score: **93**
-[S390][DATA/P2] Member achievements schema/display.
-Why it matters: Member achievements schema/display. is open, local, and unblocked — can ship this session.
+#### 2. [INTELLIGENCE] Keep startup-generated genius-list drift distinguishable from selecte…
+Final score: **96**
+[SIL][S394][PROTOCOL/P2] Keep startup-generated genius-list drift distinguishable from selected implementation in premise timing; preserve the original nonpassing receipt. Future selection only.
+Why it matters: Keep startup-generated genius-list drift distinguishable from selected keeps the ranked audit current so later sessions don't iterate on stale signal.
 
-#### 3. [PRODUCT] event_rsvps exposes user_id to anon.
+First command: `node scripts/generate-genius-list.mjs`
+
+#### 3. [PRODUCT] Assess cross-origin redirect handling in diagnostic HTTP commands wit…
 Final score: **90**
-[S390][SEC/P2] event_rsvps exposes user_id to anon.
-Why it matters: event_rsvps exposes user_id to anon. is open, local, and unblocked — can ship this session.
+[SIL][S394][RELIABILITY/P2] Assess cross-origin redirect handling in diagnostic HTTP commands with measured caller compatibility. Future selection only.
+Why it matters: Assess cross-origin redirect handling in diagnostic HTTP commands with is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Inventory remaining outward CLIs.
-Final score: **87**
-[SIL][S390] Inventory remaining outward CLIs.
-Why it matters: Inventory remaining outward CLIs. is open, local, and unblocked — can ship this session.
+#### 4. [INTELLIGENCE] Record strict premise acceptance before creating any plan artifact in…
+Final score: **90**
+[SIL][S393][PROTOCOL/P2] Record strict premise acceptance before creating any plan artifact in the next selected audit.
+Why it matters: Record strict premise acceptance before creating any plan artifact in  keeps the ranked audit current so later sessions don't iterate on stale signal.
+
+First command: `node scripts/generate-genius-list.mjs`
 
 ### NEXT
 
-#### 1. [PRODUCT] Schedule weekly live REST probe.
+#### 1. [PRODUCT] Measure and remove generated leaderboard metadata/whitespace churn at…
 Final score: **84**
-[SIL][S390] Schedule weekly live REST probe.
-Why it matters: Schedule weekly live REST probe. is open, local, and unblocked — can ship this session.
+[SIL][S393][BUILD/P2] Measure and remove generated leaderboard metadata/whitespace churn at its existing builder boundaries; preserve canonical social previews and rendered evidence. Future selection only.
+Why it matters: Measure and remove generated leaderboard metadata/whitespace churn at  is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Re-read the current 30-day TT cohort after production promotion; no-d…
-Final score: **75**
-[SIL][S387][OBS/P2] Re-read the current 30-day TT cohort after production promotion; no-data or incomplete evidence never authorizes enforcement.
-Why it matters: Re-read the current 30-day TT cohort after production promotion; no-da is open, local, and unblocked — can ship this session.
+#### 2. [PRODUCT] Complete suite, exact-candidate publication, production promotion/rea…
+Final score: **81**
+[S391 RELEASE] Complete suite, exact-candidate publication, production promotion/readback (docs/RELEASE_S391.json).
+Why it matters: Complete suite, exact-candidate publication, production promotion/read is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telem…
+#### 3. [PRODUCT] Require the strict premise checkpoint before delegated edits.
+Final score: **78**
+[SIL][S391] Require the strict premise checkpoint before delegated edits.
+Why it matters: Require the strict premise checkpoint before delegated edits. is open, local, and unblocked — can ship this session.
+
+#### 4. [INTELLIGENCE] Assess the existing mobile Spark overlap with article prose in a futu…
+Final score: **78**
+[UI follow-up][S391] Assess the existing mobile Spark overlap with article prose in a future UI audit.
+Why it matters: Assess the existing mobile Spark overlap with article prose in a futur keeps the ranked audit current so later sessions don't iterate on stale signal.
+
+First command: `node scripts/generate-genius-list.mjs`
+
+#### 5. [PRODUCT] Rank orb never renders for members.
 Final score: **72**
-[P0][S386] KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telemetry writes.
-Why it matters: KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut teleme is open, local, and unblocked — can ship this session.
-
-#### 4. [PRODUCT] Observe real post-release CSP collection and shared KV usage before c…
-Final score: **69**
-[SIL][S388][OBS/P2] Observe real post-release CSP collection and shared KV usage before claiming account-wide quota isolation.
-Why it matters: Observe real post-release CSP collection and shared KV usage before cl is open, local, and unblocked — can ship this session.
-
-#### 5. [PRODUCT] Persona page/N 404s: lane allowlist + Hetzner rules together.
-Final score: **69**
-[S386] Persona page/N 404s: lane allowlist + Hetzner rules together.
-Why it matters: Persona page/N 404s: lane allowlist + Hetzner rules together. is open, local, and unblocked — can ship this session.
+[S390][UX/P2] Rank orb never renders for members.
+Why it matters: Rank orb never renders for members. is open, local, and unblocked — can ship this session.
 
 ### LATER
 
-#### 1. [PRODUCT] Disabled-workflow 422 = deferred; idle 30-min ingest scan.
+#### 1. [PRODUCT] Member achievements schema/display.
+Final score: **69**
+[S390][DATA/P2] Member achievements schema/display.
+Why it matters: Member achievements schema/display. is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] event_rsvps exposes user_id to anon.
 Final score: **66**
-[SIL][S386] Disabled-workflow 422 = deferred; idle 30-min ingest scan.
-Why it matters: Disabled-workflow 422 = deferred; idle 30-min ingest scan. is open, local, and unblocked — can ship this session.
+[S390][SEC/P2] event_rsvps exposes user_id to anon.
+Why it matters: event_rsvps exposes user_id to anon. is open, local, and unblocked — can ship this session.
 
-#### 2. [VERIFY] Attribute remaining shared KV writers (CSP reports, rate counters and…
-Final score: **63**
-[SIL][S387][RELIABILITY/P1] Attribute remaining shared KV writers (CSP reports, rate counters and other account namespaces); verify real daily usage before claiming the account-wide outage risk eliminated.
-Why it matters: Attribute remaining shared KV writers (CSP reports, rate counters and  was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
-
-First command: `npm run build:check`
-
-#### 3. [COHESION] Reproduce remaining stats/Oracle/community contract failures against …
-Final score: **62**
-[SIL][S384] Reproduce remaining stats/Oracle/community contract failures against controlled current fixtures; preserve actual rank/privacy semantics.
-Why it matters: Reproduce remaining stats/Oracle/community contract failures against c is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
-
-First command: `node scripts/generate-public-intelligence.mjs`
+#### 3. [PRODUCT] Re-read the current 30-day TT cohort after production promotion; no-d…
+Final score: **57**
+[SIL][S387][OBS/P2] Re-read the current 30-day TT cohort after production promotion; no-data or incomplete evidence never authorizes enforcement.
+Why it matters: Re-read the current 30-day TT cohort after production promotion; no-da is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -134,18 +136,18 @@ Why it matters: Owned by another repo or already moved through Ark cargo.
 
 ## Recommended Build Order
 
-1. Rank orb never renders for members.
-2. Member achievements schema/display.
-3. event_rsvps exposes user_id to anon.
-4. Inventory remaining outward CLIs.
-5. Schedule weekly live REST probe.
-6. Re-read the current 30-day TT cohort after production promotion; no-d…
-7. KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telem…
-8. Observe real post-release CSP collection and shared KV usage before c…
-9. Persona page/N 404s: lane allowlist + Hetzner rules together.
-10. Disabled-workflow 422 = deferred; idle 30-min ingest scan.
-11. Attribute remaining shared KV writers (CSP reports, rate counters and…
-12. Reproduce remaining stats/Oracle/community contract failures against …
+1. Complete current whole-project validation, staging, sanitized direct-…
+2. Keep startup-generated genius-list drift distinguishable from selecte…
+3. Assess cross-origin redirect handling in diagnostic HTTP commands wit…
+4. Record strict premise acceptance before creating any plan artifact in…
+5. Measure and remove generated leaderboard metadata/whitespace churn at…
+6. Complete suite, exact-candidate publication, production promotion/rea…
+7. Require the strict premise checkpoint before delegated edits.
+8. Assess the existing mobile Spark overlap with article prose in a futu…
+9. Rank orb never renders for members.
+10. Member achievements schema/display.
+11. event_rsvps exposes user_id to anon.
+12. Re-read the current 30-day TT cohort after production promotion; no-d…
 
 ## Best Immediate Move
 

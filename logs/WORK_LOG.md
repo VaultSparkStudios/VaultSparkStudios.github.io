@@ -1648,3 +1648,72 @@ S389 release verification: S389 verifies five repairs: deployment argument admis
 S390 (2026-10-19, Claude Code, founder-authorized direct main push + full deploy): audit found ten browser PostgREST queries rejected by production (event_rsvps.id, public_leaderboard.vault_points, leaderboard embeds, weekly rank, members table, vault_challenges, portal point_events/challenges columns, investor game_sessions) hidden behind any-select mocks; repaired, plus orphan membership-stats.js removed. New check-public-rest-contract gate (offline in build:check, --live refresh) with 125 verified queries and 7 noted deferrals. /changelog/#stories CLS 0.1154 → <0.01 (push slot reserved with static ship-feed fallback, summary min-height, themes placeholder). notify-subscribers, notify-changelog-subscribers, push-dispatch and send-regression-alert admit argv strictly. compact-handoff --measure: 31/80 versions omit, 2/80 cut newest; cap kept. Visual QA 84 reviewed / 40 retained. Release pending at write time.
 
 S390 release verification: required exact-SHA checks (e2e, lighthouse, accessibility) passed at ceeeb2de9f; staging served the sealed candidate (release spec 6/6, 0 Supabase 4xx); confirmed Pages run 39359262188 promoted tag s390-production-20261020; production serves ceeeb2de9f with byte parity tree-current (1105/1115 identical, 0 differ, 10 redirected), 0 Supabase 4xx (was 11), /changelog/#stories CLS ≤0.0017. Worker unchanged since S389. The closeout autopilot had swept ~2,500 untracked scratch files into its commit; recovered locally before any push.
+
+
+## Session 391 — 2026-10-20 — operational reliability checkpoint
+
+Fresh goal-bound arc: startup, nine-axis premise-checked audit and implementation of six outward CLI guards plus a read-only weekly/manual REST canary. Actual CLI tripwires and canary fixtures pass; independent review passes. Full validation reached76/77 and stopped on two startup findings; both repaired. Generated contracts49/49 pass. Initial staging deployment12149 files and served receipt/ledger verified; applicable browser3passed/3identityheld; attention15/15. Production remains ceeeb2de9f. All125 REST probes failed during provider degradation; management capability is READY, service-health and SQL probes attempted, one bounded restart approval pending. No restart executed. Full current-source suite, exact-candidate publication and full production readback remain pending in docs/RELEASE_S391.json. CDR reviewed, no new creative direction. Premise timing deviation retained as nonpassing.
+
+
+### S391 closeout verification — 2026-10-20
+
+Six operational CLI argument boundaries verified under IO tripwires. Weekly read-only REST canary passed locally and in hosted run39383473357 at eaf846da50 (125 queries,7 existing deferrals). Provider recovered without intervention; no restart occurred. Full closing suite and exact-candidate staging/production acceptance remain pending. Premise timing remains nonpassing and unchanged identity holds remain explicit. Source checkpoint eaf846da50 pushed; no production deployment claimed from that push. All53 regenerated artifact checks passed after preserving queued publisher updates.
+
+## S391 release follow-through — 2026-10-20
+
+Six operational CLI guards and the weekly read-only REST canary are implemented. The canary previously passed hosted125/7. The bounded Spark collision repair removes offscreen forced layouts;42 browser tests,215 mobile probes,28 reviewed visual captures and the complete545/545 suite pass. Full staging payload12183 files is verified at source ca9cba1d10ba7a057f94491e. Current Supabase database/REST/auth are UNHEALTHY; all125 live queries fail and staging ceremony rejects10/11 on504/CORS. One restart awaits approval; none performed. Production remains ceeeb2de9f. Premise timing remains nonpassing; existing identity holds remain unaccepted. Evidence: docs/RELEASE_S391.json.
+
+Complete receipt 0b8668eb3491ff08b5f522b3; prior partial runs exposed and then repaired dependent News provenance/critique and Stats drift. Hosted3bc93 E2E/accessibility passed, Lighthouse failed0.88 against0.90 twice before the bounded repair; its new hosted acceptance is still required. No production promotion or recovery restart claimed.
+
+
+### S392 generated reconciliation checkpoint — 2026-10-20
+
+S392 two operator-admission fixes independently reviewed and verified. Final-source admission and deployment argument tests pass. Full candidate attempt stopped at22 on taskboard history; lossless archive fixed it. Diagnostic continuation stopped at34 on identity receipt drift; repaired. Dependency rebuild generated62 artifacts; its startup-brief and shell verification failures repaired without claiming full suite acceptance. Full build remains blocked on Supabase timeout; no restart or production promotion. This is an active-arc checkpoint, not closeout or release acceptance.
+
+
+### S392 partial closeout — 2026-10-20
+
+Two operator-input boundaries are implemented and independently reviewed: moderation validates command-specific options before credentials; the REST checker rejects malformed modes before filesystem/network access. Final-source argument suites pass. The latest complete attempt passed125 checks and stopped126 because the new test was not staged; staging it repaired unit parity (45/45). Complete current-source validation remains unproven. The full site build timed out at Supabase rank-climbers; database/REST/auth health is UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push or production deployment is claimed. Generated drift was reconciled through declared dependency checks;43/43 targeted checks pass. Source publication and full production acceptance remain open. No hook bypass, dependency addition, identity-policy change or paid service was used.
+
+S392 validation checkpoint: Complete545/545 suite passed twice and real mobile215/215 passed. Canonical local closeout commits c6c9d8ff9a and a4a0a4520d are acknowledged. No push/deployment/restart. Provider db/rest/auth still UNHEALTHY; restart approval pending. Release evidence: docs/RELEASE_S392.json.
+
+
+
+## S393 — 2026-10-20 — rank integrity and release preparation
+
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
+
+S393 validates rank-report timestamps, schema/counts and member rows before publication and offline acceptance. Final focused tests3/3 and independent review pass. Supabase recovered without a restart; the complete site build/postbuild and125 live REST queries pass (7 existing deferrals). Whole-project validation, current staging, hosted exact-candidate checks and full production readback remain pending.
+
+Publisher updates and S392 local work are preserved by merge e11228271c. The strict premise checkpoint verified both claims before source edits, but the plan artifact preceded it; timing remains nonpassing and its original receipt is retained. No source-publication, current staging acceptance or production promotion is claimed at this write-back boundary.
+
+
+### S393 current validation addendum
+
+S393 theme release dependency accepted locally: Final build/postbuild26 pass; generated-page theme tests9/9 including42 route/theme combinations, receipt rejection1/1, independent source review round2 pass. All84 final desktop/mobile captures inspected in seven theme contact sheets; actual root/body/stored theme matches; CANON053 hash-bound receipt passes. Pre-existing dismissible mobile Spark overlap is disclosed. Whole-project suite, current staging, sanitized main push, required exact-candidate CI and full production readback remain pending.
+
+
+### S393_PRODUCT_RELEASE_VERIFIED — 2026-10-20
+
+S393 validates canonical rank-report timestamps, schema/counts and provider rows before publication, preserving the prior report on invalid provider data. Generated leaderboard shells load the actual shared theme controller after the body exists; capture contexts isolate all seven themes and reject false observed-theme receipts. Normal full Pages release c0488e184ff5839a09aabe11447e6c8ab28d90e3 (run39501117343) is verified: 1108/1118 served-text candidates identical,10 configured redirects, zero differences/missing/unread;65 nonstamp critical leaves and6 origin artifacts match. All6 S147 canonical301 redirects remain. Local545/545 passed twice; required exact-candidate E2E, Lighthouse and accessibility pass; mobile215/215 and84 inspected captures pass. Original premise timing remains nonpassing,7 REST deferrals and the disjoint identity holds remain unchanged. No provider restart or measured performance gain is claimed.
+
+Release tag: s393-production-20261020. The first Lighthouse attempt failed.88 against.90; one unchanged-SHA workflow rerun passed.91 locally and its staging job passed. No floor changed. A bounded closing-status publication is tracked in docs/RELEASE_S393.json.
+
+
+### S393 recovery receipt — 2026-10-21 (S394 startup)
+
+Reconciled post-anchor release documentation against docs/RELEASE_S393.json and its committed release checks. Corrected a stale trailing handoff paragraph; appended the missing SIL receipt addendum. Product work and the prior release were already recorded. No reimplementation, provider restart or borrowed S394 acceptance.
+
+
+## Session 394 — 2026-10-21 — parity verifier reliability
+
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
+
+S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending.
+
+Fresh nine-axis survey selected one bounded stabilization outcome. Both source premises verified before source edits. Startup-generated docs/GENIUS_LIST.md preceded the checkpoint; timing remains nonpassing and is not retroactively corrected. No visual interface or identity policy changed. Full release remains pending.
+
+
+### S394 acceptance checkpoint — 2026-10-21
+
+Fresh local mobile audit215/215 passes, zero P0/P1. Staging deployment f69300ddf3459d993732a587 verifies current artifacts and rollback; complete ceremony11/11 passes after the lineage prerequisite was refreshed. The original10/11 receipt is preserved. Current local doctor has0 blocking findings. The supported --ci ceremony path retains every browser check while avoiding a foreign-repo doctor refresh. Complete whole-project validation, main publication and normal full production release remain pending.

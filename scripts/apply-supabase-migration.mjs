@@ -36,9 +36,15 @@ const MANAGEMENT_BASE = 'https://api.supabase.com/v1';
 const PROJECT_REF = 'fjnpzjjyhnpmunfoycrp'; // pinned: part of the public project contract
 const TIMEOUT_MS = 30_000;
 
+import { admitCommand } from './lib/deploy-argv.mjs';
+const admission = admitCommand({ name: 'apply-supabase-migration', boolFlags: ['--apply', '--self-test'], valueFlags: ['--migration', '--probe'], modes: ['--apply', '--self-test'], usage: '--migration <path> [--dry-run | --apply] [--probe <name>] | --probe <name> | --self-test' });
 const args = process.argv.slice(2);
+if (admission.dry && (args.includes('--apply') || ['--dry', '-n', '--check'].some(flag => args.includes(flag)))) {
+  console.log('apply-supabase-migration: preview only; no operational IO');
+  process.exit(0);
+}
 const flag = (name) => args.includes(name);
-const opt = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : null; };
+const opt = (name) => admission.values[name] ?? null;
 
 /* ------------------------------------------------------------------ *
  * Pure helpers — self-tested.
@@ -339,6 +345,11 @@ async function main() {
   if (!migrationRel && !probeName) {
     console.error('usage: --migration <path> (--dry-run | --apply) [--probe <name>] | --probe <name> | --self-test');
     process.exit(2);
+  }
+  if (probeName && !Object.hasOwn(PROBES, probeName)) {
+    console.error('apply-supabase-migration: unknown probe: ' + probeName);
+    process.exitCode = 2;
+    return;
   }
   const token = await managementToken();
   const client = makeClient(token, PROJECT_REF);

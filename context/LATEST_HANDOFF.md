@@ -1,10 +1,16 @@
-## Where We Left Off (Session 390) — public data contracts
+## Where We Left Off (Session 394) — partial closeout; release in progress
 
-S390 repairs ten public queries production rejected and adds a live-verified REST contract gate (125 queries; 7 deferred with notes), removes the /changelog/#stories layout shift (0.1154 → <0.01), makes four send commands admit argv strictly, and keeps the handoff extract cap on measured evidence. Deploy: fully deployed and verified — production serves ceeeb2de9f (Pages run 39359262188, tag s390-production-20261020), byte parity tree-current 1105/1115 identical, 0 Supabase 4xx (was 11); Worker unchanged since S389. Evidence: docs/RELEASE_S390.json. Founder review: vault-sdk member fetch (changes consumer gating) and event_rsvps exposing user_id to anon. Goal association: Claude Code /goal in session 02f984f7-d3e8-4932-b23b-e88b50a20643 (no native Codex binding); this release belongs to that invocation.
+S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending.
 
-## Where We Left Off (Session 389) — release verified
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy. Deploy: pending — complete local acceptance, current staging, exact-candidate checks and full production readback.
 
-S389 verifies five repairs: deployment argument admission, deterministic handoff extraction, archive sitemap discovery, Oracle answer ordering, and field-proof publication ordering. Complete local validation passed542/542 twice; post-event closure109/109; mobile215/215 with zero P0/P1;28 sitemap captures inspected. Exact-candidate staging, hosted checks, full Pages and Worker deployment and strict production readback verified for c86109ee05dff52ad0fe134ed34a060b97bcbe4f. No measured performance improvement or authenticated identity acceptance is claimed. Release evidence: docs/RELEASE_S389.json.
+Native goal01a15bd6-6f29-75c0-8bca-d1378ec53f3f createdAt1792542151 is bound to S394. Continue this audit; do not start another arc on automatic continuation. Actual handles and logs belong in .cache/S394/state.json. CDR reviewed: no new creative direction. S393 record recovery corrected its stale trailing pending paragraph and appended a post-anchor receipt addendum. Existing identity and field-vitals holds remain unchanged.
 
-Continue with the two queued S389 SIL observations. Native goal01a1557e-9d32-7d13-b5cf-3e802fd6616d createdAt1792435752 is bound to S389; this release belongs to that invocation. Final publication, restoration and cleanup evidence is recorded in docs/RELEASE_S389.json.
+## Where We Left Off (Session 393) — verified full product release
+
+S393 validates canonical rank-report timestamps, schema/counts and provider rows before publication, preserving the prior report on invalid provider data. Generated leaderboard shells load the actual shared theme controller after the body exists; capture contexts isolate all seven themes and reject false observed-theme receipts. Normal full Pages release c0488e184ff5839a09aabe11447e6c8ab28d90e3 (run39501117343) is verified: 1108/1118 served-text candidates identical,10 configured redirects, zero differences/missing/unread;65 nonstamp critical leaves and6 origin artifacts match. All6 S147 canonical301 redirects remain. Local545/545 passed twice; required exact-candidate E2E, Lighthouse and accessibility pass; mobile215/215 and84 inspected captures pass. Original premise timing remains nonpassing,7 REST deferrals and the disjoint identity holds remain unchanged. No provider restart or measured performance gain is claimed.
+
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy. Product source and deployment are verified. Current publication successor and any remaining actions are in docs/RELEASE_S393.json.
+
+Native goal01a15a69-1391-7741-84ce-7401d74e1360 createdAt1792518208 stays associated with S393. A continuation resumes its recorded remaining actions; it never starts another arc. CDR reviewed: no new creative direction.
 

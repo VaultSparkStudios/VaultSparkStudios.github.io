@@ -2397,3 +2397,61 @@ Measured over 80 committed handoff versions: 31 omitted content (median 2,432 ch
 ## D-S390.3 — Reserve late-filled space instead of collapsing it (2026-10-19)
 
 /journal/ redirects to /changelog/#stories, so late content above the anchor moved what readers were looking at (CLS 0.1154). The push slot reserves its height and ships a static ship-feed fallback; the empty themes grid keeps a one-line state instead of display:none; the summary reserves its settled height at narrow widths.
+
+
+## D-S391.1 — Preserve operational modes while refusing ambiguous intent (2026-10-20)
+
+Reuse strict argv admission before operational imports in six outward tools. Preserve documented no-argument callers. Provisioner --check remains an operational read-only audit; migration --dry-run remains a pre-image operation. Other preview aliases and mixed apply/preview requests are inert. Unknown migration probe names reject before credentials or SQL. No database policy, identity flow or membership logic changes.
+
+## D-S391.2 — Detect live REST drift without rewriting accepted evidence (2026-10-20)
+
+The weekly/manual canary uses anonymous limit=0 probes, three concurrent requests, ten-second request bounds and a ten-minute read-only hosted job. Existing deferrals carry only when rejection status and detail match; transport failures and new permission denials remain failures. CI never rewrites the manifest. Existing STRONG identity and terminology gaps remain outside this routine operational release; no ABSOLUTE gap was observed. Founder authorization covers direct main publication and full routine deployment after relevant gates.
+
+## D-S391.3 — Keep the procedural deviation visible (2026-10-20)
+
+The final passing strict premise checkpoint followed two delegated implementation edits; synced routine/propagation commits also appear after start_head. Retain the original nonpassing timing evidence. Baseline source inspection/replay supports the premises but cannot turn a late checkpoint into a timely one. Future delegation must wait for the passing recorded checkpoint.
+
+## D-S391.4 — Keep offscreen layout deferred during Spark collision checks (2026-10-20)
+
+Two exact-candidate hosted Lighthouse runs failed the unchanged News performance floor at 0.88. Chrome 155 traces identified Spark measuring controls inside skipped content-visibility subtrees. Feature-detect checkVisibility before measuring those controls; visible controls and unsupported browsers retain the existing collision path. A controlled trace comparison removed the inner loop's 10–11 forced layouts (about 20 ms); Lighthouse medians remained effectively unchanged, so this is not evidence of a score improvement. Require browser collision checks, rendered visual evidence, fresh staging and exact-candidate hosted acceptance before promotion.
+
+
+## D-S392.1 — Reject ambiguous operator input before access (2026-10-20)
+
+Moderation list filters and mutation actions have distinct grammars. Missing, duplicate, unknown and cross-command options reject before credential access. REST --write requires --live even with help/preview. Existing valid request construction remains unchanged. No authentication policy or membership-tier change.
+
+## D-S392.2 — A partial record is not release acceptance (2026-10-20)
+
+Use an explicitly active handoff heading before durable closeout; the completed-session heading had prematurely advanced generated public session counts. Preserve failed complete and partial test attempts. The premise timing verifier remains nonpassing because a startup-generated control-plane receipt preceded the strict checkpoint; selected source edits followed the checkpoint, but no clean timing pass is claimed. Existing STRONG identity and terminology gaps remain unchanged; no ABSOLUTE gap was observed.
+
+## D-S392.3 — Preserve the recovery approval boundary (2026-10-20)
+
+The exact guarded one-project Supabase restart received Founder-Twin ASK with reason no signal — defer to founder. The explicit approval question remains unanswered. Do not attempt the restart through another surface, change the helper name, or disable the gate. Observe healthy recovery non-mutatingly; production remains pending current acceptance.
+
+
+## D-S393.1 — Validate rank evidence at both boundaries (2026-10-20)
+
+Require canonical ISO timestamps, no future claims, the existing48h freshness window, consistent schema/counts and ranks derived from finite qualifying points. Reject malformed provider rows before writing; valid empty results remain valid. Keep public-profile filtering, rank thresholds, credential targeting and membership policy unchanged. Rollback: revert the bounded rank validation change and its registered tests; retain the last accepted report bytes.
+
+## D-S393.2 — Keep release and process evidence scoped (2026-10-20)
+
+Retain the original nonpassing premise-timing receipt: the plan existed before the checkpoint, while the selected source remained clean. Current provider recovery is observed, not attributed to a restart. Existing STRONG CANON-045 identity and CANON-056 terminology gaps remain outside this routine stabilization; held identity surfaces and policy choices are preserved, and no new identity/trust flow or public promise is introduced. Deployment still requires current staging, applicable access regressions, exact-candidate CI and production readback.
+
+
+## D-S393.3 — Generated shell and visual evidence repair (2026-10-20)
+
+Use the master stylesheet and shared theme controller, and execute the existing bootstrap after body opens. Each captured theme owns a new browser context; root/body/storage must match the request, including receipt-only acceptance. Real before images exposed the defect;84 after images now show seven palettes. Preserve12 actual dark baseline images and disclose the pre-existing dismissible mobile Spark overlap. No membership, identity or pricing policy changes.
+
+
+### D-S393.4 — Immutable full product release and bounded status publication
+
+Promote the checked c0488e184f tag through the normal full Pages path, then verify served source, provider identity and retained edge routing. The deployment-stamped build identity is checked separately; the pre-stamp staging Merkle root is not claimed byte-identical after stamping. Publish durable closing-status wording once using existing scoped gates and readback. Keep receipt-only additions separate from deployed payload generation. Existing identity holds and S147 canonical redirects are unchanged; the failed Lighthouse attempt is retained.
+
+
+## D-S394.1 — Separate response acceptance from shell equality (2026-10-21)
+
+Matching asset names do not make an HTTP error a working route. Require2xx and a nonempty expected fingerprint set, while preserving missing/unexpected diagnostics. Reuse strict argv admission; constrain base to an HTTP(S) origin and route to a site path before IO. Existing redirect following remains unchanged; future policy review is unselected. Rollback: revert the checker and its registered fixture tests.
+
+## D-S394.2 — Preserve scoped release and process evidence (2026-10-21)
+
+Original premise timing remains nonpassing because startup generated the genius list before the checkpoint. Selected source changes followed verified premises. Existing STRONG CANON-045 identity and CANON-056 terminology gaps remain separate from this routine verifier stabilization: no identity/trust or public terminology policy changes selected. No ABSOLUTE conformance gap observed. S393 release evidence cannot complete this fresh S394 invocation.

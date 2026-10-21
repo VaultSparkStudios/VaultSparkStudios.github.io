@@ -56,6 +56,8 @@ const selfTest = args.includes('--self-test');
 // ── Allowlist: modules legitimately imported-by-nothing, with rationale ───────
 // Keep this SMALL and JUSTIFIED. A growing allowlist is itself a smell.
 const ALLOWLIST = {
+  'medium-quality-gates.mjs':
+    'Standalone CLI used directly by /implement for the per-medium outcome gate; exports also support future sprint consumers. CLI is active without a code importer.',
   // obelisk-broker.mjs removed S220: it was byte-identical to the canonical
   // ../vaultspark-studio-ops/scripts/lib/obelisk-broker.mjs (its real home — it
   // imports ./secrets.mjs + references portfolio/, both studio-ops paths). Handed

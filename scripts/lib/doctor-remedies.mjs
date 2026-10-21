@@ -133,7 +133,9 @@ export function isSelfRemediable(id, { healMap = HEAL_MAP, remedies = REMEDIES, 
 // blocking:true means a HARD FAIL of this probe blocks closeout (self-clears for
 // warn/pass/skip — see run-doctor.mjs).
 export const DRIFT_META = {
+  'cpx-memory-census': { driftClass: 'local-stale', blocking: false },
   manifest:              { driftClass: 'local-broken', blocking: true },
+  'supabase-rls-exposure': { driftClass: 'local-broken', blocking: true },
   // S288 [audit item 2] — studio-ops genuinely owns the CPX51 disk healer, so
   // the provenance-derived default would make this blocking. Explicitly NOT:
   // this probe DIAGNOSES the already-blocking cpx-capacity-admission fault by

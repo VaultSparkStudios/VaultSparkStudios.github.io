@@ -1,3 +1,37 @@
+## S394 — truthful shell parity and full release
+
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
+
+- [x] [S394 #1] Require HTTP success and actual expected shell; reject ambiguous CLI input before IO. CLI2/2, self-test14/14, independent review pass.
+- [ ] [S394 RELEASE] Complete current whole-project validation, staging, sanitized direct-main publication, required exact-candidate checks, normal full deployment and readback.
+- [ ] [SIL][S394][PROTOCOL/P2] Keep startup-generated genius-list drift distinguishable from selected implementation in premise timing; preserve the original nonpassing receipt. Future selection only.
+- [ ] [SIL][S394][RELIABILITY/P2] Assess cross-origin redirect handling in diagnostic HTTP commands with measured caller compatibility. Future selection only.
+
+Wave 1 startup/recovery and Wave 2 fresh audit complete. Wave 3 local implementation/review complete; whole-project checks pending. Wave 4 closeout/release in progress. Future SIL items are unselected.
+
+
+
+## S393 — rank-report integrity and authorized full release
+
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
+
+- [x] [S393 #1] Validate canonical timestamps, future/stale dates, report schema/counts and member rows; verify actual CLI/provider failure preservation. Focused3/3 and independent review round2 pass.
+- [x] [S393 #2] Restore all seven generated leaderboard themes, isolate capture contexts, reject false observed-theme receipt reuse, and inspect84 actual theme captures.
+- [x] [S393 RELEASE] Complete545/545 twice, current staging11/11, direct-main publication, all3 required exact-candidate workflows, normal full Pages production promotion and strict readback for c0488e184f. Final publication evidence: docs/RELEASE_S393.json.
+- [ ] [SIL][S393][PROTOCOL/P2] Record strict premise acceptance before creating any plan artifact in the next selected audit.
+- [ ] [SIL][S393][BUILD/P2] Measure and remove generated leaderboard metadata/whitespace churn at its existing builder boundaries; preserve canonical social previews and rendered evidence. Future selection only.
+
+Waves1–3 implemented and verified for the full product release. Closing status/publication receipts are maintained in docs/RELEASE_S393.json; the two future SIL rows remain unselected.
+## S391 — operational reliability
+
+- [x] [S391 #1] Six CLI guards verified; semantic migration probe admission included.
+- [x] [S391 #2] REST canary verified locally and hosted125/7; receipt in docs/RELEASE_S391.json.
+- [ ] [S391 RELEASE] Complete suite, exact-candidate publication, production promotion/readback (docs/RELEASE_S391.json).
+- [x] [SIL][S391] Moderation options verified in S392.
+- [ ] [SIL][S391] Require the strict premise checkpoint before delegated edits.
+- [ ] [UI follow-up][S391] Assess the existing mobile Spark overlap with article prose in a future UI audit.
+
+Waves1–2 implemented; Wave3 release pending. Goal association: LATEST_HANDOFF.md.
 ## S390 — public data contracts
 
 - [x] [S390 #1] Public data queries repaired.
@@ -9,28 +43,14 @@
 - [ ] [S390][UX/P2] Rank orb never renders for members.
 - [ ] [S390][DATA/P2] Member achievements schema/display.
 - [ ] [S390][SEC/P2] event_rsvps exposes user_id to anon.
-- [ ] [SIL][S390] Inventory remaining outward CLIs.
-- [ ] [SIL][S390] Schedule weekly live REST probe.
-
-## S389
-
-- [x] [S389 #1] Deploy argv guards.
-- [x] [S389 #2] Deterministic handoffs.
-- [x] [S389 #3] Human sitemap links and five-publisher cascade.
-- [x] [S389 #4] Oracle answer dependency and build order.
-- [x] [S389 #5] Field-proof publication order.
-- [x] [SIL][S389] Audit other outward CLIs. (S390 #3)
-- [x] [SIL][S389] Measure extract omissions. (S390 #4)
-
-Waves1–3 verified; release evidence: docs/RELEASE_S389.json.
-
+- [x] [SIL][S390] Inventory remaining outward CLIs. (S391: six guards + documented remaining scope.)
+- [x] [SIL][S390] Schedule weekly live REST probe. (S391 hosted run39383473357 passed125/7.)
 ## S388 — release follow-through
 
 - [ ] [SIL][S388][OBS/P2] Observe real post-release CSP collection and shared KV usage before claiming account-wide quota isolation.
 - [x] [SIL][S388][OPS/P2] Resolved by S389 #1/#2.
 
 Waves1–3 verified; release evidence: docs/RELEASE_S388.json.
-
 ## S387 — reliability follow-through
 
 - [x] Implement TT diagnostic isolation, complete legacy/R2 evidence reading, private retention and isolated staging round-trip acceptance. Full release acceptance is recorded separately in docs/RELEASE_S387.json.
@@ -38,21 +58,18 @@ Waves1–3 verified; release evidence: docs/RELEASE_S388.json.
 - [ ] [SIL][S387][OBS/P2] Re-read the current 30-day TT cohort after production promotion; no-data or incomplete evidence never authorizes enforcement.
 
 Wave 1 · trace diagnostic quota coupling and audit: complete. Wave 2 · isolate intake and preserve evidence: implementation/staging verified. Wave 3 · exact-candidate release and closeout: acceptance source docs/RELEASE_S387.json.
-
 ## S386 — Desk art review contract
 
 - [x] Art reviewer sees the generator brief; daily critique re-roll; newest-story contract. docs/RELEASE_S386.json
 - [ ] [P0][S386] KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telemetry writes.
 - [ ] [S386] Persona page/N 404s: lane allowlist + Hetzner rules together.
 - [ ] [SIL][S386] Disabled-workflow 422 = deferred; idle 30-min ingest scan.
-
 ## S385 — public data contracts
 
 - [x] S385 community earned-rank and ecosystem coverage contracts (15/15 across 3 engines, 3 mutations); blank-handle directory defect fixed.
 S385 release acceptance: docs/RELEASE_S385.json (verified).
 - [ ] [SIL][S385] Investigate remaining Oracle canonical-route and feed assertions against actual source; preserve privacy and current navigation.
 - [ ] [SIL][S385] Inspect retained pixel diagnostic failures against original route/theme/viewport before proposing baseline changes.
-
 ## S384 — returning-visitor reliability
 
 - [x] Fresh full startup and nine-axis audit; correct returning-visitor acceptance, require it in CI, preserve diagnostic artifact reporters/paths; 18/18 and three negative mutations verified.
@@ -60,14 +77,12 @@ S385 release acceptance: docs/RELEASE_S385.json (verified).
 - S384 release acceptance is tracked in docs/RELEASE_S384.json and the Wave3 implementation plan.
 - [ ] [SIL][S384] Reproduce remaining stats/Oracle/community contract failures against controlled current fixtures; preserve actual rank/privacy semantics.
 - [ ] [SIL][S384] Inspect original pixel differences by route/theme/viewport before proposing baselines.
-
 ## S383 — homepage engagement acceptance
 
 - [x] Fresh full startup and nine-axis audit; repair three reproduced homepage checks, require the seven-test suite in CI, and verify targeted negative mutations.
 - S383 release acceptance and remaining gates: docs/RELEASE_S383.json is authoritative; completion requires accepted:true and no remaining gates.
 - [ ] [SIL][S383] Reproduce remaining optional behavioral diagnostics against the current candidate before changes.
 - [ ] [SIL][S383] Inspect original pixel differences by route/theme/viewport before proposing baselines.
-
 ## S382 — Spark browser acceptance
 
 - [x] Replace five retired palette assertions with real Spark behavior and verify19 focused cases plus broken-load detection.
@@ -75,38 +90,32 @@ S385 release acceptance: docs/RELEASE_S385.json (verified).
 S382 release acceptance and remaining phases: `docs/RELEASE_S382.json`. Implementation complete; full release unproven until that receipt passes.
 - [ ] [SIL][S382] Investigate the eight unresolved behavior assertions from E2E_DIAGNOSTICS_S382.json; reproduce runtime before changing tests.
 - [ ] [SIL][S382] Inspect24 pixel differences against exact route/theme/viewport before any baseline proposal.
-
 ## S381 — selected candidate verification
 
 - [x] Repair navigation and visual origin selection; preserve manual override and verify actual-source regressions.
 Release acceptance and remaining gates: `docs/RELEASE_S381.json`. This ledger remains nonpassing until hosted checks and production readback are verified.
 - [ ] [SIL][S381] Classify the remaining broad E2E failures against the candidate now that target association is corrected; do not refresh visual baselines to conceal differences.
 - [ ] [SIL][S381] Assess candidate-origin contracts for other browser API probes in a future bounded audit; keep explicit external integration checks distinct.
-
 ## S380 — browser discovery release
 
 Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S384 lossless excerpt).
 - [ ] [SIL][S380] Evaluate the existing Node schema-lite TODO with focused schema fixtures in a future authorized scope.
 - [ ] [SIL][S380] Separate optional authenticated runtime coverage from public browser failures using measured current results; discovery is now mandatory.
-
 ## S379 — accepted implementation and release
 
 Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S384 lossless excerpt).
 - [ ] [SIL][S379][OPS/P2] Reduce staging archive overhead through the existing production public-surface policy; prove advertised routes and rollback before changing the manifest.
 - [ ] [SIL][S379][QA/P2] Give staging theme captures a session-specific output directory so runtime gates preserve pre-existing operator screenshots.
-
 ## S378 arc — Spark clears reader controls
 
 Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S385 lossless excerpt).
 - [ ] [SIL/P3 · S378] Keep attribute-only interaction regressions synchronized with selector membership when companion controls evolve.
 - [ ] [SIL/P3 · S378] Inspect hidden-opener focus return after future placement changes; preserve header fallback.
-
 ## S377 arc — homepage Recent Ships
 
 Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S385 lossless excerpt).
 - [ ] [SIL/P3 · S377] Census deferred homepage modules before enabling home-intelligence; preserve dormant member-query scope until its own review.
 - [ ] [SIL/P3 · S377] Keep generated receipt repairs in dependency order: status-proof before stats-surface; verify current candidate after rebases.
-
 ## S376 arc — reader feedback on Desk articles
 
 - [x] Wave1: sync, triage (not cut off), /start, canon sync.
@@ -494,37 +503,12 @@ Last updated: 2026-10-08 UTC (S370 requested closeout)
 - [x] **[S320][RELEASE/P0] Give route-provenance a vantage CI can actually use — PREMISE DISPROVEN S321, re-scoped above (D-S321.5).** The committed approach was to probe the `pages.dev` origin as a corroborating second vantage. Measured directly in S321, `pages.dev` returns 404 for `/_health` and `/api/auth/me` and 405 for `OPTIONS /v/rum`: it is the Pages origin *behind* the Worker, and the Worker owns the `vaultsparkstudios.com/*` route, so it can never observe Worker route provenance. Implementing it as written would have been worse than leaving the gap open — `isMissingRoute` treats a 404 beside a clear control as a fact about the deployment, so this vantage could have produced a false `routes-absent-from-deployed-worker` verdict. Re-scoped to the staging `workers_dev` binding (see the S321 item above). The underlying gap remains open; only this approach is closed.
 - [x] **[S320][SIL][OBS/P1] Promote `contractLive` to a hard assertion in the `/v/rum` ingest probe.** SHIPPED S321 — the tolerance existed only for the Worker rollout window (D-S320.4) and the code said so ("Tighten once contractLive holds"). Verified live `202 {"ok":true,"synthetic":true}`, so `summarize()` now treats `contractLive === false` as `edge-degraded`. Both directions self-tested (a healthy contract must not page, or the assertion gets muted). probe-uptime 40/40.
 - [x] **[S320][VERIFY/P1] Confirm sign-in recovers at the 00:00 UTC KV reset.** VERIFIED S321 — `GET /login` returns **302** to `obeliskgate.com/auth/authorize` carrying a complete S256 PKCE challenge. The 503 cleared. Verifying it also surfaced that the recovery was never retracted from the public status surface, and that the S319 crash fix covered only the start leg; both fixed this session.
-## Previous Now (Session 314 — audit saturated and live)
-
-- [x] **[S314][ANALYTICA/P0] Public Stats surface.** /stats/ and /stats.json publish eight source-dated, privacy-safe metrics with denominators, honest small-sample language, homepage showcase cards, seven-theme accessibility, and agent discovery.
-- [x] **[S314][NEWS/P0] Relationship-aware story/art parity.** Authored subject/action/object relationships bind scene, alt text, caption, satire setup/payoff, and evidence anchors; contradictory mutations fail before publication.
-- [x] **[S314][UX/P0] Modal mobile navigation contract.** The sheet now focuses on open, traps Tab/Shift+Tab, inerts present and late-added background nodes, locks scroll, and restores the hamburger for Escape/backdrop/close.
-- [x] **[S314][FEEDBACK/P0] Honest reaction delivery.** Selections are remembered only after accepted/already-counted responses; failed and unavailable submissions expose retryable aria-live states.
-- [x] **[S314][MEASURE/P1] Hero-choice denominators.** Viewport-qualified hero/portfolio impressions and named CTA clicks now make Play/Join/Map choice rates measurable without fabricated conversion claims.
-- [x] **[S314][VISUAL/P1] Per-capture visual review receipts.** Forty-two hash-bound captures distinguish manual review from automated-only coverage across seven themes, desktop/mobile, page/nav/showcase/report states.
-- [x] **[S314][RELEASE/P0] Lane-aware durable content receipt.** Content releases carry baseline/head/path-set/manifest/discovery/workflow provenance and append-only continuity; final live receipt cc5d67845b37…, chain depth 6.
-- [x] **[S314][DISCOVERY/P1] Exact-path discovery micro-lane.** Sitemap, robots, agents manifest, and llms.txt can promote only through validated exact paths with content-type/link/coherence checks.
-- [x] **[S314][SECURITY/P0] Positive served-surface manifest.** Deploy artifacts are generated from declared public roots and fail on unclassified survivors or missing advertised routes.
-- [x] **[S314][EFFICIENCY/P1] Proof-gate process compression.** Eight logical proof commands run through importable in-process executors while retaining 84/84 receipt coverage; measured wall time fell from 101.8s to about 9.7s.
 ## Next (future runway)
 
 - [x] **[S348][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet — DONE.** Every Desk story now links to a deterministic `critique.json` argument map joining stable fact receipts, stances, predictions, and hash-bound visual evidence. Unsupported claims stay explicitly `unlinked`; orphan cross-references fail closed; no runtime model call is made.
-## Previous runway (Session 293 — carried forward)
-
-- [x] **[S293→S295][SIL][OBS/P1] Incident-close verification instrumentation — DONE S295.** Exact-once/all-route closure, frozen duration, recurrence, and the healthy `/status/` branch are enforced. The distinct live receipt remains correctly waiting above until production really recovers.
-- [x] **[S293→S294][DEPLOY/P0] Production staleness diagnosis — DONE S294.** The fail-closed promotion interlock is working as designed; this is not a broken deploy path. `api/deploy-currency.json` measures the intentionally held production state continuously.
-- [x] **[S293→S295][OBS/P1] Wire `verify:deploy-parity` into a gate — DONE S295.** The scheduled deploy-currency receipt now runs real route-local production shell parity; a structural contract forbids `--local` production evidence.
-- [x] **[S293→S295][SIL][OBS/P1] Onset corroboration beyond one coarse probe — DONE S295.** RUM supplies the labelled last-healthy lower window, uptime the coarse upper bound, route history its own observation, and unrelated promotion history is explicitly excluded.
-## Previous runway (Session 292 — both items shipped in S293)
-
-- [x] **[S292→NEXT][SIL][OBS/P1] Route-provenance history and incident duration.** Append only semantic changes; retain no response bodies. **Shipped S293** — see the S293 outcome block above.
-- [x] **[S292→NEXT][SIL][AUTOMATION/P1] Evidence-graph human/agent projection.** Render one compact diagram and agent relation view from the validated source. **Shipped S293** — see the S293 outcome block above.
-
-
 ## Next (historical)
 
 - [x] **[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261.** Analyzer emits `.cache/tt-active-local-sinks.json`; guard consumes it and proves active-local unresolved rows are 0.
-
 ## Historical Runway (Session 249)
 
 - [~] **[SIL:2⛔][PERF/P1] INP root-fix when CLEAN field data lands** — PARTIAL S262: clean R2 pull named `/games/vaultspark-football-gm/` as the dominant route (91 phase samples, presentation-heavy pointer hover); shipped page-level paint/compositing mitigation. Needs post-deploy field soak before closing.
@@ -728,15 +712,19 @@ Eight older completed technical tasks are preserved in context/archive/TASK_BOAR
 
 - [ ] **[UX/P2 · separate scope]** Stabilize initial browser Find positioning during article expansion. S371 production diagnostics reproduced the offscreen selected title with both current CSS and the appended optimization removed; script blocking preserved visibility. Evidence: `docs/S371_PRODUCTION_ACCEPTANCE.json`.
 
-
 ### S378 record recovery — 2026-10-14
 
 Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+## S392 checkpoint + remaining release
+
+- [x] [S392] Two command-admission outcomes verified; independent review passed.
+- [ ] [S392] Finish full validation, staging, push and production readback. Supabase unhealthy; one restart approval pending. Evidence: docs/RELEASE_S392.json.
+- [ ] [SIL][S392] Run tracked-test parity and generated-data preflight before the full suite.
+- [ ] [SIL][S392] Keep active handoff headings distinct from completed-session evidence.
+
+Wave 1 ✔ fresh audit. Wave 2 ✔ two input-boundary fixes. Wave 3 ◻ release gates and deployment carried forward. Phase tally:3 phases,2 done,1 open.
+
+### S393 release-dependent theme outcome
 
 
-## S388 authorized arc
-
-- [x] [S388 #1] CSP isolation deployed; full541, exact staging/hosted checks and production readback verified. docs/RELEASE_S388.json.
-
-
-Completed S254/S260/S289 carries preserved verbatim in context/archive/TASK_BOARD_ARCHIVE.md (S389 archival).
+Both selected local outcomes are accepted. Whole-project and release checks remain pending; no prior-session acceptance is borrowed.

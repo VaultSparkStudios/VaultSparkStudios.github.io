@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 totals): 935 → 935 → 935 → 935 → 940
-Avgs (available audit totals) —3:936.7 |5:936.0 |10:934.5 |25:943.2 |all:unmeasured (archived history excluded)
-Velocity trend:→ |Protocol velocity:→ |Debt:↓
-Last session: 2026-10-19 | Session390 | Total:940/1000 | Velocity:5
-  └ Ten production-rejected public queries repaired behind a live-verified contract gate; release evidence in docs/RELEASE_S390.json.
+Sparkline (last5 available totals):940 →936 →935 →935 →935
+Avgs (available rolling totals) —3:935 |5:936.2 |10:unmeasured |25:unmeasured |all:unmeasured
+Velocity trend:→ |Protocol velocity:→ |Debt:→
+Last session: 2026-10-21 | Session394 | Total:935/1000 | Velocity:1
+  └ Parity evidence locally verified; current validation and full release pending.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2968,3 +2968,130 @@ Brainstorm:
 Committed to TASK_BOARD: [SIL][S390] Inventory remaining outward CLIs · [SIL][S390] Schedule weekly live REST probe.
 
 S390 release verification: production serves ceeeb2de9f (Pages run 39359262188), byte parity tree-current 1105/1115, 0 Supabase 4xx (was 11), staging spec 6/6, required exact-SHA checks passed. Score 940/1000 unchanged. Lesson recorded: the closeout autopilot commits untracked scratch; local excludes added and recovery done before push.
+
+
+## Session 390 addendum — 2026-10-20
+
+Post-closeout correction01294dee reconciled derived feeds after merging routine publishers. This was verified during S391 startup; it changes no S390 score or release claim.
+
+## Session 391 — 2026-10-20 — operational reliability, verification checkpoint
+
+Product rubric, ten categories ×100. Total:936/1000. Velocity:1. Protocol velocity:1. Debt:→. This is a partial checkpoint, not verified deployment or native-goal completion.
+
+| Category | Score |
+|---|---:|
+| Development Health |93|
+| Creative Alignment |94|
+| Momentum |91|
+| Engagement |96|
+| Process Quality |89|
+| Cross-Repo Coherence |93|
+| Security Posture |96|
+| Ecosystem Integration |91|
+| Capital Efficiency |95|
+| Automation Coverage |98|
+
+Six outward CLI guards preserve documented operational modes while refusing ambiguous input before IO; unknown migration probes reject before credential/pre-image/SQL work. The weekly/manual read-only REST canary has bounded concurrency/timeouts and refuses newly changed failures. Tripwire tests and focused fixtures pass; independent review finds no outstanding defect. Initial staging parity and applicable browser/attention checks pass. Complete local validation, hosted checks, source publication and full production readback remain pending. Live125/125 queries failed during observed provider degradation; no healthy acceptance is claimed.
+
+Score rationale: Development Health−3 for the observed data-plane outage; Process Quality−2 for delegating two edits before the final passing premise checkpoint; Security Posture+1 for measured six-command admission. Other categories unchanged. The original timing receipt remains nonpassing; source replay cannot prove timely execution. No engagement or performance improvement is claimed.
+
+Brainstorm: (1) validate recognized moderation options per mutation/list subcommand; (2) require a passing recorded premise checkpoint before delegation; (3) add a separate provider-health summary to canary failures so operational and schema failures are easier to distinguish. Committed to TASK_BOARD: first two [SIL][S391] observations for a future selected audit.
+
+
+### S391 verification addendum — 2026-10-20
+
+Hosted canary39383473357 executed and passed125 queries with7 existing deferrals. Provider recovered without a restart. Both selected outcomes verified; release acceptance remains separate. Score remains936/1000 (940→936,−4); no retrospective timing cure, performance gain or identity acceptance is claimed. Existing two SIL commitments remain on TASK_BOARD. Complete closing suite and production readback are required before native completion.
+
+### S391 current-source acceptance and provider hold — 2026-10-20
+
+Complete545/545 receipt 0b8668eb3491ff08b5f522b3 at sourceca9cba1d10ba7a057f94491e; Spark42, mobile215 and visual28 pass. Controlled Chrome155 traces eliminate the collision loop forced layouts, but Lighthouse median improvement is unproven. Current provider outage fails125/125 live reads and the staging runtime ceremony; no restart or production promotion performed. Score remains936/1000; the two committed SIL observations stay unchanged. Premise timing remains nonpassing. Brainstorm: shared runtime hash changes must rebuild dependent page-provenance and critique packets before the full acceptance freeze.
+
+S391 safe handoff: local repair committed as13123f55fd; remote main and production unchanged by this repair. All12 temporarily paused workflows restored and independently verified. Ark impact cargo01K5CAF19T90B68DFE230AE7A2 sent; delivery is not application. Actual local autopilot execution is supported by its log and website commits, but the local canonical receipt ledger is missing the row; foreign studio-ops S391 receipts are not borrowed. Provider restart approval remains pending.
+
+
+## Session 392 — 2026-10-20 — partial closeout, release pending
+
+Product rubric, ten categories ×100. Total:935/1000. Velocity:2 locally verified outcomes; released outcomes:0. Debt:→. This is not native-goal completion or deployment acceptance.
+
+| Category | Score |
+|---|---:|
+| Dev Health |93|
+| Creative Alignment |94|
+| Momentum |90|
+| Engagement |96|
+| Process Quality |88|
+| Cross-Repo Coherence |93|
+| Security Posture |97|
+| Ecosystem Integration |91|
+| Capital Efficiency |95|
+| Automation Coverage |98|
+
+Two operator-input boundaries are implemented and independently reviewed: moderation validates command-specific options before credentials; the REST checker rejects malformed modes before filesystem/network access. Final-source argument suites pass. The latest complete attempt passed125 checks and stopped126 because the new test was not staged; staging it repaired unit parity (45/45). Complete current-source validation remains unproven. The full site build timed out at Supabase rank-climbers; database/REST/auth health is UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push or production deployment is claimed.
+
+Score rationale versus936: Momentum−1 for incomplete publication/release; Process Quality−1 for avoidable handoff-label and tracked-test preparation errors; Security Posture+1 for two measured input boundaries before IO. No conversion, engagement, performance, provider recovery or fleet adoption gain is claimed.
+
+Brainstorm: (1) cheap parity/generated-data preflight before an expensive suite; (2) explicit active-versus-completed session headings; (3) preserve source-bound partial receipts without treating them as complete proof. Committed to TASK_BOARD: first two [SIL][S392] follow-ups; they are future work, not automatic scope expansion.
+
+Verification addendum (S392): Both complete545/545 runs passed, including post-signal reconciliation; real mobile215/215 passed. Local commits c6c9d8ff9a and a4a0a4520d are recorded; score935 unchanged. Full site build/provider recovery, current staging, remote publication and production readback remain pending. Evidence: docs/RELEASE_S392.json.
+
+
+
+## Session 393 — 2026-10-20 — implementation verified, release in progress
+
+Product rubric, ten categories ×100. Total:935/1000. Velocity:1 locally verified outcome; release acceptance remains pending.
+
+| Category | Score |
+|---|---:|
+| Dev Health |93|
+| Creative Alignment |94|
+| Momentum |90|
+| Engagement |96|
+| Process Quality |88|
+| Cross-Repo Coherence |93|
+| Security Posture |97|
+| Ecosystem Integration |91|
+| Capital Efficiency |95|
+| Automation Coverage |98|
+
+S393 validates rank-report timestamps, schema/counts and member rows before publication and offline acceptance. Final focused tests3/3 and independent review pass. Supabase recovered without a restart; the complete site build/postbuild and125 live REST queries pass (7 existing deferrals). Whole-project validation, current staging, hosted exact-candidate checks and full production readback remain pending.
+
+Score unchanged from S392: no measured conversion, engagement, field-performance or ecosystem-adoption gain is claimed. The source boundary is tested and independently reviewed; process timing remains nonpassing and release is unfinished.
+
+Brainstorm: (1) record the premise gate before creating plan artifacts; (2) remove generated leaderboard metadata/whitespace churn at its source after a measured, separately selected audit; (3) preserve provider recovery observations separately from operational interventions. First two committed as future [SIL][S393] TASK_BOARD items; no automatic scope expansion.
+
+
+### S393 selected-outcome addendum — 2026-10-20
+
+Velocity2: rank integrity plus the observed generated-theme release dependency are locally accepted. Final full build and84 real theme images pass. Score remains935/1000; no measured conversion or field performance gain. The original timing deviation remains nonpassing. Current full-suite and production acceptance are pending.
+
+
+### S393 product release evidence addendum
+
+Full product release c0488e184f is verified by exact-candidate hosted checks, staging11/11 and1118-file production comparison. SIL remains935/1000 across the existing ten categories; velocity2. No performance/conversion gain is claimed. The original premise timing deviation remains nonpassing. The two existing S393 future SIL rows remain the only queued follow-ups; status receipt details live in docs/RELEASE_S393.json.
+
+
+### 2026-10-21 — Session 393 addendum | receipt-only recovery by S394
+
+The two post-anchor publication commits391fed59 and2246b1bb recorded the completed S393 release and protocol receipts. They introduced no new product outcome. All canonical S393 write-back surfaces already carry S393; the stale trailing pending-runtime handoff paragraph is corrected. docs/RELEASE_S393.json remains its release evidence, including exact full deployment, restored approved Desk overlay, original nonpassing premise timing and completed closeout. No score or test count is increased. S394 is a separate native invocation and must complete its own full arc.
+
+
+## Session 394 — 2026-10-21 — local parity verification accepted; release pending
+
+Product rubric,10 categories ×100. Total935/1000; unchanged. Velocity1 locally verified outcome.
+
+| Category | Score |
+|---|---:|
+| devHealth | 93 |
+| creativeAlignment | 94 |
+| momentum | 90 |
+| engagement | 96 |
+| processQuality | 88 |
+| crossRepoCoherence | 93 |
+| securityPosture | 97 |
+| ecosystemIntegration | 91 |
+| capitalEfficiency | 95 |
+| automationCoverage | 98 |
+
+S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending.
+
+No measured engagement, conversion or performance improvement is claimed. Timing is nonpassing; release acceptance is incomplete. Brainstorm: distinguish startup generation in the premise timing inventory; separately review cross-origin redirect handling. Both recorded as future [SIL][S394] tasks without scope expansion.

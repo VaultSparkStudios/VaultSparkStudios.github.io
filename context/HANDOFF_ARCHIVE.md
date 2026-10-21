@@ -2298,3 +2298,57 @@ Continue the bound S388 goal; do not start another arc. Canonical closeout compl
 
 Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed.
 
+
+
+---
+<!-- archived: 2026-10-20 -->
+
+## Where We Left Off (Session 389) — release verified
+
+S389 verifies five repairs: deployment argument admission, deterministic handoff extraction, archive sitemap discovery, Oracle answer ordering, and field-proof publication ordering. Complete local validation passed542/542 twice; post-event closure109/109; mobile215/215 with zero P0/P1;28 sitemap captures inspected. Exact-candidate staging, hosted checks, full Pages and Worker deployment and strict production readback verified for c86109ee05dff52ad0fe134ed34a060b97bcbe4f. No measured performance improvement or authenticated identity acceptance is claimed. Release evidence: docs/RELEASE_S389.json.
+
+Continue with the two queued S389 SIL observations. Native goal01a1557e-9d32-7d13-b5cf-3e802fd6616d createdAt1792435752 is bound to S389; this release belongs to that invocation. Final publication, restoration and cleanup evidence is recorded in docs/RELEASE_S389.json.
+
+
+
+---
+<!-- archived: 2026-10-20 -->
+
+## Where We Left Off (Session 390) — public data contracts
+
+S390 repairs ten public queries production rejected and adds a live-verified REST contract gate (125 queries; 7 deferred with notes), removes the /changelog/#stories layout shift (0.1154 → <0.01), makes four send commands admit argv strictly, and keeps the handoff extract cap on measured evidence. Deploy: fully deployed and verified — production serves ceeeb2de9f (Pages run 39359262188, tag s390-production-20261020), byte parity tree-current 1105/1115 identical, 0 Supabase 4xx (was 11); Worker unchanged since S389. Evidence: docs/RELEASE_S390.json. Founder review: vault-sdk member fetch (changes consumer gating) and event_rsvps exposing user_id to anon. Goal association: Claude Code /goal in session 02f984f7-d3e8-4932-b23b-e88b50a20643 (no native Codex binding); this release belongs to that invocation.
+
+
+
+---
+<!-- archived: 2026-10-20 -->
+
+## Where We Left Off (Session 391) — provider recovery required
+
+Six operational CLI guards and the weekly read-only REST canary are implemented. The canary previously passed hosted125/7. The bounded Spark collision repair removes offscreen forced layouts;42 browser tests,215 mobile probes,28 reviewed visual captures and the complete545/545 suite pass. Full staging payload12183 files is verified at source ca9cba1d10ba7a057f94491e. Current Supabase database/REST/auth are UNHEALTHY; all125 live queries fail and staging ceremony rejects10/11 on504/CORS. One restart awaits approval; none performed. Production remains ceeeb2de9f. Premise timing remains nonpassing; existing identity holds remain unaccepted. Evidence: docs/RELEASE_S391.json.
+
+Native goal01a157cd-72fc-7c72-88e1-90d3e0c93ba9 remains bound to S391. Resume this arc and its release verification; do not start another arc or mark native completion.
+
+
+
+### S393 current validation addendum
+
+S393 theme release dependency accepted locally: Final build/postbuild26 pass; generated-page theme tests9/9 including42 route/theme combinations, receipt rejection1/1, independent source review round2 pass. All84 final desktop/mobile captures inspected in seven theme contact sheets; actual root/body/stored theme matches; CANON053 hash-bound receipt passes. Pre-existing dismissible mobile Spark overlap is disclosed. Whole-project suite, current staging, sanitized main push, required exact-candidate CI and full production readback remain pending.
+
+
+---
+<!-- archived: 2026-10-21 -->
+
+## Where We Left Off (Session 392) — partial closeout
+
+Two operator-input boundaries are implemented and independently reviewed. Both complete545-step validation runs passed; the second verifies regenerated test-signal outputs. The real local mobile audit passed215/215 with zero P0/P1. Local checkpoint commits c6c9d8ff9a and a4a0a4520d are recorded. The full site build failed at Supabase rank-climbers; provider database/REST/auth remain UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push, current staging acceptance or production deployment is claimed.
+
+Session Intent: /arc, direct main commit/push and full deployment. Status: partial. Deploy: pending — provider recovery, complete local/hosted checks and current staging runtime acceptance are required.
+
+Native goal01a159cf-3925-7480-959e-0dd6caa69447 createdAt1792508182 remains bound to S392. Continue this audit and its unfinished release; a continuation never starts another arc. Inspect .cache/S392/state.json for live handles. The pending restart question has not been answered; do not retry it through another route. Existing deployment authorization persists once its required gates pass. CDR reviewed — no new creative direction.
+
+
+
+### S393 final release receipt
+
+The earlier partial runtime paragraph is superseded by the complete S393 record in docs/RELEASE_S393.json: two545-step runs, current staging, required exact-candidate checks and full product deployment/readback passed. The final full baseline and restored approved Desk overlay are recorded there. This historical release does not satisfy S394.

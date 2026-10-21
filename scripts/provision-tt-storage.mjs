@@ -2,7 +2,15 @@
 // Bounded TT and CSP diagnostic storage. Preserves unrelated lifecycle rules.
 import fs from 'node:fs';
 import { isDeepStrictEqual } from 'node:util';
-import { getSecret, redact } from './lib/secrets.mjs';
+
+
+import { admitCommand } from './lib/deploy-argv.mjs';
+const admission = admitCommand({ name: 'provision-tt-storage', boolFlags: ['--self-test', '--check', '--apply'], modes: ['--self-test', '--check', '--apply'], usage: '--self-test | --check | --apply' });
+// --check is the existing operational read-only audit; other previews are inert.
+if (['--dry-run', '--dry', '-n'].some(flag => process.argv.includes(flag))) {
+  console.log('provision-tt-storage: preview only; no operational IO');
+  process.exit(0);
+}
 
 export const TT_RETENTION_RULE = {
   id: 'tt-diagnostics-30d', enabled: true, conditions: { prefix: 'tt/raw/' },
@@ -37,6 +45,7 @@ if (process.argv.includes('--self-test')) {
   if (!sameRetentionRules([...both].reverse(), both) || sameRetentionRules(both.slice(1), both)) throw new Error('API rule-order normalization failed');
   console.log('provision-tt-storage: 2 API order checks passed');
 } else if (process.argv.includes('--check') || process.argv.includes('--apply')) {
+  const { getSecret, redact } = await import('./lib/secrets.mjs');
   try {
     const apply = process.argv.includes('--apply');
     const account = getSecret('CLOUDFLARE_ACCOUNT_ID', 'cloudflare.deploy');

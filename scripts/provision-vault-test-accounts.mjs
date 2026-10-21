@@ -1,6 +1,9 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { admitDeployment } from './lib/deploy-argv.mjs';
+
+admitDeployment({ name: 'provision-vault-test-accounts', usage: 'node scripts/provision-vault-test-accounts.mjs [--dry-run]' });
 
 const PROJECT_REF = 'fjnpzjjyhnpmunfoycrp';
 const DEFAULT_SUPABASE_URL = `https://${PROJECT_REF}.supabase.co`;

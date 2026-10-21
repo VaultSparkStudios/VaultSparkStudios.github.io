@@ -1,0 +1,278 @@
+{
+  "session": 391,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S391 arc; stabilize operational admission and public REST drift detection; direct main push and full deployment authorized.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "mode": "supported-release",
+    "health": "yellow",
+    "audience": "public-live",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "investigation": {
+    "reuse": "Existing argv-guard/deploy-argv, deployment-admission IO tripwires, public REST extractor/verdict manifest and GitHub workflow patterns. No dependency or paid service.",
+    "canon": "Current canon sync and radar passed. No ABSOLUTE gaps. Existing identity and terminology gaps remain explicit; routine release protocol applies.",
+    "measurement": "Actual CLI executions under network/credential/write/subprocess tripwires; existing self-tests; live anon limit=0 queries; first hosted workflow dispatch.",
+    "timingDeviation": {
+      "state": "nonpassing",
+      "reason": "The final passing strict gate followed two delegated edits. Synced automation/propagation also appears after the original start_head. The original receipt is preserved; a pre-edit source replay proves both premises but cannot prove timely execution.",
+      "replay": ".cache/S391/premise-replay.json"
+    },
+    "liveProvider": {
+      "state": "recovered",
+      "queriesTested": 125,
+      "failures": 0,
+      "deferred": 7,
+      "observed": "2026-10-20T06:26:27.371Z",
+      "managementHealth": "db/rest/auth ACTIVE_HEALTHY",
+      "recovery": "Provider recovered without intervention; no restart executed; obsolete restart approval unnecessary."
+    }
+  },
+  "candidates": {
+    "featureDepth": [
+      [
+        "Restore rank orb",
+        "Deferred: member journey needs rendered-state investigation and consumer-gating review."
+      ],
+      [
+        "Repair achievements",
+        "Deferred: public member-data policy remains undecided."
+      ]
+    ],
+    "innovativeFeatures": [
+      [
+        "Admission coverage map",
+        "Selected within item 1: distinguish inert previews from operational read-only modes."
+      ],
+      [
+        "Query provenance health trend",
+        "Not selected: no runtime consumer requirement established."
+      ]
+    ],
+    "ux": [
+      [
+        "Redesign community",
+        "No measured need."
+      ],
+      [
+        "Repair rank orb",
+        "Queued separately; not assumed solved by S390 strip repair."
+      ]
+    ],
+    "feedbackLoop": [
+      [
+        "Weekly live REST canary",
+        "Selected: no workflow invokes the live checker."
+      ],
+      [
+        "New feedback widget",
+        "Existing feedback exists; no defect proved."
+      ]
+    ],
+    "gamification": [
+      [
+        "Achievement rendering",
+        "Policy/schema dependency remains."
+      ],
+      [
+        "New rank rewards",
+        "Tier logic requires founder review; no selected change."
+      ]
+    ],
+    "ai": [
+      [
+        "Use model to classify schema drift",
+        "Deterministic verdicts already suffice."
+      ],
+      [
+        "Novel query provenance graph",
+        "Not needed for selected canary."
+      ]
+    ],
+    "security": [
+      [
+        "Remaining outward CLI admission",
+        "Selected: purge ignores all unknown argv; provisioners allow apply plus unknown flags."
+      ],
+      [
+        "RSVP public identifiers",
+        "Existing founder-review item; no RLS change authorized here."
+      ]
+    ],
+    "speed": [
+      [
+        "Bound live REST network requests",
+        "Selected within item 2: fetch has no timeout and network errors abort without query-specific result."
+      ],
+      [
+        "Homepage optimization",
+        "Previous 20-run evidence stable; no new regression proved."
+      ]
+    ],
+    "tokenCost": [
+      [
+        "Automated drift report eliminates repeated whole-codebase diagnosis",
+        "Selected weekly canary uses existing deterministic extraction."
+      ],
+      [
+        "Change compactor cap",
+        "Prior measurement supports current cap; no new evidence."
+      ]
+    ]
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "operational-cli-admission",
+      "title": "Close remaining cache/storage/origin CLI admission gaps",
+      "axis": "security",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 1.5,
+      "priority": 17.71,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Purge CLI falls through to operational main for unknown/help/dry input; provision-tt-storage accepts apply alongside ignored input.",
+      "userOutcome": "Operators can inspect commands without accidentally changing the site; visitors retain a reliable production cache and staging origin.",
+      "acceptance": "Unknown/malformed/duplicate arguments exit 2; help and dry aliases perform no operational IO; existing self-tests and explicit read-only --check modes remain valid; inventory names unmodified commands and actual semantics.",
+      "premises": [
+        {
+          "claim": "Purge CLI falls through to operational main for unknown/help/dry input; provision-tt-storage accepts apply alongside ignored input.",
+          "adapter": "file-content",
+          "target": "scripts/purge-promoted-urls.mjs",
+          "pattern": "else await main();",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Document verified findings."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Inventory outward entrypoints, reuse strict deploy argv admission before credential imports; guard purge, diagnostic storage and staging-origin provisioners; extend IO-tripwire test coverage without invoking real mutations. Include migration, header sync and test-account provisioning; preserve actual read-only modes and never run mutations during tests."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Extend the inventory to every remaining outward CLI with explicit operational-read semantics and caller-preservation proof."
+        }
+      },
+      "recipe": "Inventory outward entrypoints, reuse strict deploy argv admission before credential imports; guard purge, diagnostic storage and staging-origin provisioners; extend IO-tripwire test coverage without invoking real mutations. Include migration, header sync and test-account provisioning; preserve actual read-only modes and never run mutations during tests.",
+      "executionLog": [
+        {
+          "at": "2026-10-20T05:55:28.653Z",
+          "state": "implemented",
+          "evidence": "Expanded six-CLI IO-tripwire suite passed independently; full build run step1 passed 5/5 tests; review passes, zero findings. No real mutation was used for testing."
+        },
+        {
+          "at": "2026-10-20T07:00:15.500Z",
+          "state": "shipped",
+          "evidence": "Six actual CLI IO-tripwire tests and independent review pass; grammar preserves operational modes.",
+          "status": "shipped",
+          "note": "Six actual CLI IO-tripwire tests and independent review pass; grammar preserves operational modes."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "scheduled-public-rest-canary",
+      "title": "Detect live public REST drift between releases",
+      "axis": "feedbackLoop",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 5,
+      "effortHours": 1,
+      "priority": 25.24,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Live REST probing exists only as a manual mode and fetch has no timeout.",
+      "userOutcome": "Visitors get valid public data queries, with live schema drift detected between releases.",
+      "acceptance": "Offline contract and extraction tests pass; network failures become explicit nonpassing query verdicts; scheduled/manual read-only workflow has bounded runtime and contents:read; live check passes with declared deferrals; first hosted dispatch verified.",
+      "premises": [
+        {
+          "claim": "Live REST probing exists only as a manual mode and fetch has no timeout.",
+          "adapter": "file-content",
+          "target": "scripts/check-public-rest-contract.mjs",
+          "pattern": "const LIVE = args.includes",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Run the existing live read-only checker manually and record current failures without rewriting the manifest."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Add bounded request signals and safe transport-error classification, test with injected fetch, and wire a weekly/manual GitHub workflow running --live without --write or secrets."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Publish a source-bound failure artifact with query provenance and a separate provider-health snapshot, preserving failure classification and read-only permissions."
+        }
+      },
+      "recipe": "Add bounded request signals and safe transport-error classification, test with injected fetch, and wire a weekly/manual GitHub workflow running --live without --write or secrets.",
+      "executionLog": [
+        {
+          "at": "2026-10-20T05:55:28.654Z",
+          "state": "implemented",
+          "evidence": "Four focused canary tests and ten extraction/evaluation self-tests pass. Live run correctly fails all 125 currently unreachable queries; hosted dispatch and healthy live acceptance remain pending."
+        },
+        {
+          "at": "2026-10-20T07:00:15.500Z",
+          "state": "shipped",
+          "evidence": "Local and hosted run39383473357 passed125 queries/7 existing deferrals; actual probe step executed successfully at eaf846da50.",
+          "status": "shipped",
+          "note": "Local and hosted run39383473357 passed125 queries/7 existing deferrals; actual probe step executed successfully at eaf846da50."
+        }
+      ]
+    }
+  ],
+  "executionLog": [
+    {
+      "at": "2026-10-20T05:55:28.654Z",
+      "state": "verification-in-progress",
+      "evidence": "Full build run reached step77 and stopped: stale startup-revenue-agreement and orphan standalone medium-quality-gates CLI. Regenerate current brief and document actual standalone CLI use; no gate bypass."
+    },
+    {
+      "at": "2026-10-20T07:00:15.500Z",
+      "state": "selected-outcomes-verified",
+      "evidence": "Two implementation outcomes verified. Full closing validation and production delivery remain required."
+    }
+  ],
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-20T05:38:20.971Z",
+    "head": "1eb2770fd405b2e6b22b8f3bc884ee0cabb3b341",
+    "sidecar": "docs/AUDIT_2026-10-20-S391.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "cff2d9bb50d8db8e011a21280fcb6012fbd26ff70f8511614ad1715e24e0b796",
+    "implementationDirty": [
+      "scripts/provision-vault-test-accounts.mjs",
+      "scripts/sync-staging-headers.mjs"
+    ]
+  },
+  "totals": {
+    "count": 2,
+    "priority": 42.95,
+    "top3": [
+      1,
+      2
+    ]
+  }
+}

@@ -1,3 +1,35 @@
+## S394 — 2026-10-21 — parity acceptance scope
+
+Overall status: yellow — S394 verifier accepted locally; current validation and full release pending.
+
+S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending.
+
+The prior checker accepted matching-shell HTTP errors and vacuous empty shell sets. Real CLI fixtures now reject those cases. Existing status/asset mismatch details remain explicit. Original strict timing receipt remains nonpassing solely for startup-generated genius-list drift. S393 receipt-only recovery is separate; no old suite or deployment is borrowed as current acceptance.
+
+## S393 — verified full product release, 2026-10-20
+
+Overall status: yellow — scoped public product release verified; existing identity holds unchanged.
+
+S393 validates canonical rank-report timestamps, schema/counts and provider rows before publication, preserving the prior report on invalid provider data. Generated leaderboard shells load the actual shared theme controller after the body exists; capture contexts isolate all seven themes and reject false observed-theme receipts. Normal full Pages release c0488e184ff5839a09aabe11447e6c8ab28d90e3 (run39501117343) is verified: 1108/1118 served-text candidates identical,10 configured redirects, zero differences/missing/unread;65 nonstamp critical leaves and6 origin artifacts match. All6 S147 canonical301 redirects remain. Local545/545 passed twice; required exact-candidate E2E, Lighthouse and accessibility pass; mobile215/215 and84 inspected captures pass. Original premise timing remains nonpassing,7 REST deferrals and the disjoint identity holds remain unchanged. No provider restart or measured performance gain is claimed.
+
+The provider recovered without a restart. The complete site build and actual26-step postbuild passed;125 live REST queries passed with7 explicit existing deferrals. See docs/RELEASE_S393.json for exact source, deployment and closing-publication evidence.
+
+## S392 — partial release record (2026-10-20)
+
+Overall status: yellow — source outcomes verified, release unaccepted.
+
+Two operator-input boundaries are implemented and independently reviewed. Both complete545-step validation runs passed; the second verifies regenerated test-signal outputs. The real local mobile audit passed215/215 with zero P0/P1. Local checkpoint commits c6c9d8ff9a and a4a0a4520d are recorded. The full site build failed at Supabase rank-climbers; provider database/REST/auth remain UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push, current staging acceptance or production deployment is claimed.
+
+Original failed receipts remain in ignored verification logs. Historical S391 full545/545 and S390 production evidence cannot satisfy this goal. IGNIS touched-score shim resolves the control plane; only a dry-run was used and no foreign score is borrowed. CDR unchanged; no new creative direction.
+
+## S391 — current acceptance evidence (2026-10-20)
+
+Overall status: yellow — local acceptance complete, live release held.
+
+Six operational CLI guards and the weekly read-only REST canary are implemented. The canary previously passed hosted125/7. The bounded Spark collision repair removes offscreen forced layouts;42 browser tests,215 mobile probes,28 reviewed visual captures and the complete545/545 suite pass. Full staging payload12183 files is verified at source ca9cba1d10ba7a057f94491e. Current Supabase database/REST/auth are UNHEALTHY; all125 live queries fail and staging ceremony rejects10/11 on504/CORS. One restart awaits approval; none performed. Production remains ceeeb2de9f. Premise timing remains nonpassing; existing identity holds remain unaccepted. Evidence: docs/RELEASE_S391.json.
+
+Earlier healthy provider observations are historical; they do not describe the current outage. Receipt 0b8668eb3491ff08b5f522b3 proves the full local suite; diagnostics beginning after step1 never substitute for it. Native goal01a157cd-72fc-7c72-88e1-90d3e0c93ba9 remains bound to S391. Resume this arc and its release verification; do not start another arc or mark native completion.
+
 ## S387 — 2026-10-18 — report storage and release truth
 
 TT intake no longer depends on auth KV. Staging R2 report round trip and unchanged Obelisk redirect are observed. Both buckets are private with 30-day prefix retention. Independent review passed after fixing malformed HTTP-200 XML being treated as complete evidence. Source implementation is distinct from full deployment; acceptance is exclusively docs/RELEASE_S387.json. Other KV writers, existing identity holds, the unit TODO and unmeasured field-vitals remain visible.
@@ -1654,3 +1686,13 @@ S389 local closeout: S389 locally verifies five repairs: strict deployment argum
 
 
 S389 release verification: S389 verifies five repairs: deployment argument admission, deterministic handoff extraction, archive sitemap discovery, Oracle answer ordering, and field-proof publication ordering. Complete local validation passed542/542 twice; post-event closure109/109; mobile215/215 with zero P0/P1;28 sitemap captures inspected. Exact-candidate staging, hosted checks, full Pages and Worker deployment and strict production readback verified for c86109ee05dff52ad0fe134ed34a060b97bcbe4f. No measured performance improvement or authenticated identity acceptance is claimed. Release evidence: docs/RELEASE_S389.json. Score935/1000; velocity5. Existing historical partial attempts remain recorded; they are not counted as passing runs.
+
+
+### S393 current validation addendum
+
+S393 theme release dependency accepted locally: Final build/postbuild26 pass; generated-page theme tests9/9 including42 route/theme combinations, receipt rejection1/1, independent source review round2 pass. All84 final desktop/mobile captures inspected in seven theme contact sheets; actual root/body/stored theme matches; CANON053 hash-bound receipt passes. Pre-existing dismissible mobile Spark overlap is disclosed. Whole-project suite, current staging, sanitized main push, required exact-candidate CI and full production readback remain pending.
+
+
+### S393 current runtime evidence
+
+Fresh215/215 local mobile cells and84 inspected final theme captures pass. Both receipts bind the current candidate; all109 proof-surface checks pass (92 blocking, zero advisory findings). Partial remainder274–545 passes; it is diagnostic coverage, not a complete whole-project acceptance receipt. Canonical closeout filename/cache and obsolete capture-tool orphan exemption are corrected. Full545-step acceptance, current staging, sanitized main push, required exact-candidate hosted checks and normal full production readback remain pending.

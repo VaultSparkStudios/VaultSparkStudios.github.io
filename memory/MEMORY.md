@@ -1,3 +1,9 @@
+- [S394 active arc](S394.md): truthful shell parity locally verified; full validation and release pending.
+
+- [S393 active arc](S393.md): rank integrity accepted locally; provider recovered, complete build/live REST pass; full validation and release in progress.
+
+- [S392 partial checkpoint](S392.md): two input-boundary fixes verified; complete validation, recovery approval, publication and deployment remain pending. Resume the bound S392 goal.
+- [S391 active arc](S391.md): six CLI guards, REST canary and pending release/provider recovery evidence.
 - [S385 public data contracts](S385.md): ranks, coverage denominators and neutral directory cards.
 - [S384 return-visit browser evidence](S384.md): baseline lifecycle and diagnostic artifact retention.
 - [S383 homepage browser truth](S383.md): interaction loaders, deterministic feed and exact assertions.
@@ -11,7 +17,7 @@
 
 # Project memory
 
-Current S370 acceptance: production `ee8db4f7f`, Pages `37807641227`; see [S370 follow-through](S370-followthrough.md). Earlier release pointers below are historical.
+Historical S370 acceptance: production `ee8db4f7f`, Pages `37807641227`; see [S370 follow-through](S370-followthrough.md). Earlier release pointers below are historical.
 
 - [S370 publication evidence](S370-publication.md): immutable release/run binding and served byte proof; hosted/live acceptance in docs/S370_RELEASE_2026-10-07.md.
 

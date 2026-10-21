@@ -1,0 +1,544 @@
+{
+  "date": "2026-10-20-S393",
+  "session": 393,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh native-goal arc: verify rank-report integrity and complete the outstanding authorized routine release after provider recovery.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "investigation": {
+    "baseline": "Actual --check CLI in isolated fixtures exits 0 for not-a-date, a 2099 timestamp, and malformed climbers/count on 2026-10-20. Current source uses only age > 48h; NaN and negative ages evade it.",
+    "reuse": "Existing rank builder self-test and freshness gate; no dependency, model call or new service. Internal tool registry has no rank-report validator.",
+    "provider": "Historical startup observation: db/rest/auth UNHEALTHY. Current management health subsequently ACTIVE_HEALTHY. No restart performed; full build and125 live REST queries passed after recovery.",
+    "candidateSurvey": {
+      "featureDepth": [
+        "Rank report schema integrity: selected",
+        "Achievement schema expansion: existing policy dependency, unselected"
+      ],
+      "innovativeFeatures": [
+        "Novel report confidence ribbon: no need for new interface, unselected",
+        "Novel outage replay sandbox: existing injected fetch tests suffice, unselected"
+      ],
+      "ux": [
+        "Preserve S391 collision repair and verify release",
+        "New navigation: no fresh defect proven, unselected"
+      ],
+      "feedbackLoop": [
+        "Reject false freshness acceptance: selected within rank integrity",
+        "Novel provider incident annotation graph: no required consumer, unselected"
+      ],
+      "gamification": [
+        "Validate existing rank report without changing rank thresholds: selected",
+        "New rewards: membership policy approval required, unselected"
+      ],
+      "ai": [
+        "Agent-readable report integrity uses the same checked artifact: selected within integrity",
+        "Model-driven recovery: unnecessary paid use, rejected"
+      ],
+      "security": [
+        "Preserve public-profile-only query and target credential isolation",
+        "Identity changes: outside routine release scope"
+      ],
+      "speed": [
+        "Generated-artifact reconciliation after publisher merge: release prerequisite",
+        "Replace full build with fallback reports: rejected because outage must remain a failure"
+      ],
+      "tokenCost": [
+        "Bounded task projection reused",
+        "New cache layer: no measured savings, unselected"
+      ]
+    },
+    "market": "No competitor facts asserted. A market refresh is unselected for this supported-release stabilization.",
+    "conformance": "0 ABSOLUTE gaps observed; existing STRONG identity and terminology gaps require explicit retained justification at closeout. No identity/trust policy changes selected.",
+    "timingDeviation": {
+      "state": "nonpassing",
+      "reason": "The session plan was written before the strict checkpoint, so timing is nonpassing. The selected implementation source was unchanged at that checkpoint and both premises verified before source edits. Preserve the original receipt; no timing pass is claimed."
+    }
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "rank-report-integrity",
+      "title": "Reject malformed and unverifiably current rank reports",
+      "axis": "featureDepth",
+      "tier": "⚡",
+      "impact": 7,
+      "innovation": 3,
+      "effortHours": 1,
+      "priority": 19.87,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "The offline gate accepts invalid/future timestamps and malformed rows; provider rows can also become a false zero-point rank through coercion.",
+      "userOutcome": "Visitors and agents finding member achievements can rely on validated rank data and truthful freshness evidence.",
+      "acceptance": "Actual CLI rejects invalid/future/stale timestamps and malformed report schema/count/rows; valid empty and populated reports pass; invalid fetched rows fail before writing while provider/network failures preserve the prior report. Public-profile filter, rank thresholds and credential targeting remain unchanged.",
+      "premises": [
+        {
+          "claim": "Freshness relies on Date arithmetic without validating its result",
+          "adapter": "file-content",
+          "target": "scripts/build-rank-climbers.mjs",
+          "pattern": "const age = Date.now() - new Date(data.generatedAt || 0).getTime();",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Fetched points are silently replaced with zero for nonnumeric data",
+          "adapter": "file-content",
+          "target": "scripts/build-rank-climbers.mjs",
+          "pattern": "points: typeof row.points === 'number' ? row.points : 0",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.3,
+          "recipe": "Reject invalid and future report timestamps."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Share report validation between build/check, reject invalid provider rows, exercise actual CLI with isolated fixtures and retain injected fetch failure tests."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Review other report formats under a separately selected inventory."
+        }
+      },
+      "recipe": "Add explicit schema/date/row validation to the existing builder before write and to --check; test actual CLI and injected provider responses.",
+      "readinessArea": "data integrity and truthful public information",
+      "stageRationale": "Stabilize a supported release while its data provider is unavailable; retain nonpassing outage evidence.",
+      "executionLog": [
+        {
+          "at": "2026-10-20T18:01:07.509Z",
+          "state": "implemented",
+          "status": "validation-pending",
+          "evidence": "Focused3/3 passed after review fixes; final stronger calendar assertion is in the required unit gate. Review round2 pass. Full source suite and production acceptance remain pending."
+        },
+        {
+          "at": "2026-10-20T18:16:41.079Z",
+          "state": "shipped",
+          "status": "shipped",
+          "evidence": "Final focused3/3, builder self-test, current report acceptance and independent review round2 pass. Actual CLI failure messages and prior report preservation verified. Required project/release checks remain separate."
+        },
+        {
+          "at": "2026-10-20T18:18:13.843Z",
+          "status": "shipped",
+          "note": "Final-source focused3/3 pass, rank builder self-test/current report check pass, independent review round2 pass. Actual CLI rejects invalid report evidence and preserves prior bytes on malformed/offline provider results. Whole-project and release acceptance remain separate."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "leaderboard-theme-rendering",
+      "title": "Restore generated leaderboard themes and verify actual capture state",
+      "axis": "ux",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 3,
+      "effortHours": 1.5,
+      "priority": 33.2,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Real browser probes on generated pages keep root/body dark for stored light/warm preferences: a body-dependent bootstrap is extracted into head and the shared theme controller is omitted. The capture harness also stacks init scripts in one context per viewport.",
+      "userOutcome": "Readers can use their selected studio theme on leaderboard subpages; release images prove the theme that actually rendered.",
+      "acceptance": "All six generated routes honour every supported theme in real desktop/mobile captures with inspected readability; generated-page browser regression covers preference, root/body and shared controller. Capture contexts are isolated per theme and mismatched actual root/body state rejects before screenshot acceptance. Preserve membership, identity, links and social metadata. Re-capture after fixes and bind current hashes.",
+      "premises": [
+        {
+          "claim": "Generator extracts the first inline IIFE as an alleged CSS loader, then places it in head",
+          "adapter": "file-content",
+          "target": "scripts/build-leaderboard-subpages.mjs",
+          "pattern": "const cssLoader = cssLoaderMatch ? cssLoaderMatch[0] : '';",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Capture harness reuses viewport context across theme init scripts",
+          "adapter": "file-content",
+          "target": "scripts/capture-theme-matrix.mjs",
+          "pattern": "await context.clearCookies();",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.3,
+          "recipe": "Document the reproducible dark-only defect and refuse false theme coverage."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Reuse master stylesheet, body bootstrap and theme controller in generated shells; fix context ownership and assert observed theme; add real generated-page browser coverage; regenerate and inspect all seven palettes before release."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Review other thin-page generators under a separate selected inventory."
+        }
+      },
+      "recipe": "Repair the existing generator extraction boundary, add integration coverage to the existing theme unit suite, and make the existing capture harness verify actual rendered theme before accepting each image.",
+      "readinessArea": "accessibility, mobile parity and every supported theme",
+      "stageRationale": "A directly observed release visual gate failure blocks the authorized supported-release promotion.",
+      "executionLog": [
+        {
+          "at": "2026-10-20T18:38:21.459Z",
+          "status": "shipped",
+          "note": "Final build/postbuild26 pass; generated-page theme tests9/9 including42 route/theme combinations, receipt rejection1/1, independent source review round2 pass. All84 final desktop/mobile captures inspected in seven theme contact sheets; actual root/body/stored theme matches; CANON053 hash-bound receipt passes. Pre-existing dismissible mobile Spark overlap is disclosed."
+        },
+        {
+          "at": "2026-10-20T19:45:58.032Z",
+          "status": "shipped",
+          "note": "Fresh final84 captures and215-cell local mobile audit pass. Capture CLI now has a real test consumer, so the obsolete manual-only orphan exemption was removed; five self-tests and542-script consumer check pass, independent cleanup review round1 pass. Full whole-project acceptance remains pending."
+        }
+      ]
+    }
+  ],
+  "executionLog": [
+    {
+      "at": "2026-10-20T18:16:41.079Z",
+      "state": "local-implementation-verified-release-pending",
+      "evidence": "S393 validates rank-report timestamps, schema/counts and member rows before publication and offline acceptance. Final focused tests3/3 and independent review pass. Supabase recovered without a restart; the complete site build/postbuild and125 live REST queries pass (7 existing deferrals). Whole-project validation, current staging, hosted exact-candidate checks and full production readback remain pending."
+    },
+    {
+      "at": "2026-10-20T18:26:15.942Z",
+      "state": "release-dependency-added",
+      "note": "Actual images and an isolated real-browser probe establish missing theme application; select item2 to clear the required visual release gate. Original gate retained in premiseGateHistory; no new arc."
+    }
+  ],
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-20T18:26:20.723Z",
+    "head": "e11228271c0b04346f6dd3c742f8b45693461d3c",
+    "sidecar": "docs/AUDIT_2026-10-20-S393.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 2,
+    "unverified": 0,
+    "premiseDigest": "13581a398f0e6635ce4490b523477a0dff0042a650440bf12c8f60218a939484",
+    "implementationDirty": [
+      "api/ai-discovery-health.json",
+      "api/analytics-summary.json",
+      "api/build-sha.json",
+      "api/candidate-artifact-manifest.json",
+      "api/canonical-destination-reachability.json",
+      "api/citation.json",
+      "api/commit-map.json",
+      "api/ecosystem-velocity.json",
+      "api/feedback-provenance.json",
+      "api/field-win.json",
+      "api/geo-vitals.json",
+      "api/heartbeat.json",
+      "api/identity-migration-receipt.json",
+      "api/ignis-platform-status.json",
+      "api/ignis-roi.json",
+      "api/inp-soak-verdicts.json",
+      "api/intelligence-budget.json",
+      "api/intent-map.json",
+      "api/nav-sheet-stats.json",
+      "api/nervous-system.json",
+      "api/news-critique-packets.json",
+      "api/news-visual-receipts.json",
+      "api/og-coverage.json",
+      "api/oracle-insights.json",
+      "api/proof-aware-projects.json",
+      "api/public-intelligence.json",
+      "api/public-status.json",
+      "api/rank-climbers.json",
+      "api/release-dependencies.json",
+      "api/release-proof.json",
+      "api/site-health.json",
+      "api/status-proof.json",
+      "api/supabase-control-plane.json",
+      "api/tt-readiness.json",
+      "api/tt-summary.json",
+      "api/ux-decision-ledger.json",
+      "api/vault-momentum.json",
+      "api/velocity-series.json",
+      "assets/shell-manifest.json",
+      "data/ignis-search-index.json",
+      "data/inp-soak-verdicts.json",
+      "data/rum-summary.json",
+      "data/stats-surface.json",
+      "docs/AMBIENT_COVERAGE.md",
+      "docs/IMPLEMENT_PLAN_S393.md",
+      "docs/INTELLIGENCE_BUDGET_LEDGER.md",
+      "docs/performance/style-usage.json",
+      "feed/forge-ledger.json",
+      "feed/forge-ledger.xml",
+      "leaderboards/call-of-doodie/index.html",
+      "leaderboards/challenges/index.html",
+      "leaderboards/football-gm/index.html",
+      "leaderboards/recruiters/index.html",
+      "leaderboards/teams/index.html",
+      "leaderboards/weekly/index.html",
+      "memory/MEMORY.md",
+      "news/2026-08-07/agent-control-becomes-operations-discipline/critique.json",
+      "news/2026-08-07/frontier-access-becomes-research-infrastructure/critique.json",
+      "news/2026-08-09/weathernext-buys-forecasters-an-extra-day/critique.json",
+      "news/2026-08-10/the-intruder-was-an-agent-and-so-was-the-detector/critique.json",
+      "news/2026-08-10/two-million-rows-and-the-engineer-nobody-named/critique.json",
+      "news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/critique.json",
+      "news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/critique.json",
+      "news/2026-08-21/from-atari-to-eve-online-building-on-15-years/critique.json",
+      "news/2026-08-21/how-much-memory-does-your-agent-actually-need/critique.json",
+      "news/2026-08-22/from-atari-to-eve-online-building-on-15-years/critique.json",
+      "news/2026-08-23/from-atari-to-eve-online-building-on-15-years/critique.json",
+      "news/2026-08-24/metaroce-a-new-rdma-transport-built-for-ai-scale/critique.json",
+      "news/2026-08-25/mtia-300-meta-8217-s-first-training-chip-with/critique.json",
+      "news/2026-08-25/nvidia-and-apple-unveil-compact-ai-computers-for-robots/critique.json",
+      "news/2026-08-25/openai-restores-5-hour-codex-and-work-limits-for/critique.json",
+      "news/2026-08-31/inside-metas-push-to-put-robots-to-work-in/critique.json",
+      "news/2026-09-01/anthropic-releases-claude-fable-5-1-and-claude-mythos/critique.json",
+      "news/2026-09-01/openai-starts-charging-some-customers-only-when-its-ai/critique.json",
+      "news/2026-09-02/apple-reveals-shocking-evidence-from-ex-employees-macbook-in/critique.json",
+      "news/2026-09-02/proactive-cyber-defense-for-governments-and-enterprises/critique.json",
+      "news/2026-09-02/trump-administration-sides-with-openai-in-new-york-times/critique.json",
+      "news/2026-09-03/nvidia-is-buying-hugging-face-for-almost-13-billion/critique.json",
+      "news/2026-09-04/openai-releases-astra-its-most-capable-model-yet-amid/critique.json",
+      "news/2026-09-07/authors-push-back-as-publishers-and-agents-make-claims/critique.json",
+      "news/2026-09-07/openai-admits-to-german-wiki-incident/critique.json",
+      "news/2026-09-07/seattle-times-and-newsday-sue-openai-and-microsoft-for/critique.json",
+      "news/2026-09-08/openai-agents-hacked-another-website/critique.json",
+      "news/2026-09-09/hackers-are-stealing-claude-tokens-from-subscribers/critique.json",
+      "news/2026-09-09/muse-metas-new-personal-ai-agent-needs-you-to/critique.json",
+      "news/2026-09-09/worried-anthropic-researchers-warn-that-ai-8216-could-kill/critique.json",
+      "news/2026-09-10/deepseeks-new-low-cost-model-deals-a-fresh-blow/critique.json",
+      "news/2026-09-10/local-newspapers-sue-openai-and-microsoft-over-use-of/critique.json",
+      "news/2026-09-11/a-misalignment-of-ai-in-mathematics/critique.json",
+      "news/2026-09-11/breaking-usyd-signs-multi-year-partnership-with-openai/critique.json",
+      "news/2026-09-11/nscale-adds-former-openai-exec-fidji-simo-to-its/critique.json",
+      "news/2026-09-12/anthropic-says-it-blocked-potential-ai-bioweapon-misuse/critique.json",
+      "news/2026-09-14/sam-altman-says-openai-going-public-in-2026-would/critique.json",
+      "news/2026-09-14/watch-astronaut-christina-koch-and-googles-james-manyika-discuss/critique.json",
+      "news/2026-09-15/openai-buys-smartphone-camera-maker-glass-imaging-for-300/critique.json",
+      "news/2026-09-15/openai-buys-smartphone-camera-maker-glass-imaging-for-300m/critique.json",
+      "news/2026-09-16/google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big/critique.json",
+      "news/2026-09-16/theres-a-100-chance-ai-agents-are-ruining-the/critique.json",
+      "news/2026-09-17/anthropic-merges-claude-chat-cowork-and-more-into-a/critique.json",
+      "news/2026-09-17/king-charles-to-press-nvidia-openai-anthropic-leaders-on/critique.json",
+      "news/2026-09-18/anthropic-and-openai-hunt-for-smaller-data-center-deals/critique.json",
+      "news/2026-09-18/claude-code-relaunches-projects-to-manage-multiple-ai-agents/critique.json",
+      "news/2026-09-18/microsoft-exec-called-ai-scraping-the-largest-theft-of/critique.json",
+      "news/2026-09-18/security-researchers-used-anthropic-039-s-claude-to-hack/critique.json",
+      "news/2026-09-19/california-governor-newsom-signs-executive-order-demanding-kill-switch/critique.json",
+      "news/2026-09-19/google-says-its-gemini-ai-model-hacked-three-other/critique.json",
+      "news/2026-09-20/anthropic-selects-accenture-as-first-embedded-evaluator-to-help/critique.json",
+      "news/2026-09-20/google-says-its-gemini-ai-model-hacked-three-other-update-2026-09-20/critique.json",
+      "news/2026-09-20/openai-and-anthropic-oversold-ai-security-breaches/critique.json",
+      "news/2026-09-20/trump-announces-ai-force-and-plans-for-an-ai/critique.json",
+      "news/2026-09-21/5-companies-using-nvidia-ai-for-clean-energy/critique.json",
+      "news/2026-09-21/amazon-blocks-metas-muse-ai-agent/critique.json",
+      "news/2026-09-21/indias-ai-agent-sprawl-enterprises-struggle-with-production-beyond/critique.json",
+      "news/2026-09-22/anthropic-releases-claude-opus-5-5-fable-5-1/critique.json",
+      "news/2026-09-22/nvidia-isaac-ros-5-0-advances-agentic-open-source/critique.json",
+      "news/2026-09-23/anthropic-launches-claude-opus-5-5-with-stricter-safeguards/critique.json",
+      "news/2026-09-23/ema-raises-77m-as-ai-starts-eating-into-enterprise/critique.json",
+      "news/2026-09-23/openai-breaches-medicare-albanese-reveals/critique.json",
+      "news/2026-09-23/openai-releases-gpt-6-sol-and-luna-50-cheaper/critique.json",
+      "news/2026-09-24/anthropic-openai-launches-show-shift-toward-multi-model-enterprise/critique.json",
+      "news/2026-09-24/australia-says-openai-agent-hacked-into-government-website/critique.json",
+      "news/2026-09-24/gemini-4-is-almost-ready-says-new-google-deepmind/critique.json",
+      "news/2026-09-24/openai-agent-hacked-australian-government-website-pm-says/critique.json",
+      "news/2026-09-25/openai-agent-hacked-australian-government-website-pm-says-update-2026-09-25/critique.json",
+      "news/2026-09-25/openais-agents-breached-australian-government-data-its-human-response/critique.json",
+      "news/2026-09-25/pentagon-was-right-to-slap-anthropic-with-a-security/critique.json",
+      "news/2026-09-25/u-s-appeals-court-upholds-designation-of-anthropic-as/critique.json",
+      "news/2026-09-26/openai-bots-meddled-with-multiple-us-government-agency-sites/critique.json",
+      "news/2026-09-26/openai-says-agents-leaked-53-images-from-chatgpt-users/critique.json",
+      "news/2026-09-26/openai-uncovered-extensive-incidents-with-ai-agents-including-interference/critique.json",
+      "news/2026-09-26/openais-agents-targeted-and-infiltrated-us-government-websites/critique.json",
+      "news/2026-09-27/openai-agents-tried-to-bruteforce-a-un-website/critique.json",
+      "news/2026-09-27/openai-halts-training-of-latest-models-as-reports-mount/critique.json",
+      "news/2026-09-27/openai-pauses-training-of-its-most-capable-models/critique.json",
+      "news/2026-09-28/anthropic-gamma-and-clay-share-what-happens-when-enterprises/critique.json",
+      "news/2026-09-28/anthropics-ceo-is-about-to-have-dinner-with-president/critique.json",
+      "news/2026-09-28/nvidia-launches-new-platform-for-reining-in-rogue-ai/critique.json",
+      "news/2026-09-29/anthropic-warns-of-existential-ai-risks-to-humanity-in/critique.json",
+      "news/2026-09-29/new-kind-of-cyber-incident-openai-apologises-for-medicare/critique.json",
+      "news/2026-09-29/openai-launches-always-on-dots-agents-to-rival-meta/critique.json",
+      "news/2026-09-30/openai-launches-always-on-dots-agents-to-rival-meta-update-2026-09-30/critique.json",
+      "news/2026-09-30/openai-scraps-release-of-new-model-over-safety-concerns/critique.json",
+      "news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/critique.json",
+      "news/2026-09-30/trump-ai-deal-rebrands-artificial-intelligence-as-superintelligence/critique.json",
+      "news/2026-09-30/us-trade-regulator-opens-investigation-into-ai-giants-including/critique.json",
+      "news/2026-10-01/ftc-launches-sweeping-probe-into-openai-anthropic-and-other/critique.json",
+      "news/2026-10-01/gavin-newsom-signs-laws-to-protect-california-workers-from/critique.json",
+      "news/2026-10-01/openai-is-sued-over-rogue-ai-hugging-face-cyberattack/critique.json",
+      "news/2026-10-02/autosynthdata-generating-training-data-for-enterprise-agents/critique.json",
+      "news/2026-10-02/how-nvidia-gpus-help-accelerate-openais-gpt-6-astra/critique.json",
+      "news/2026-10-03/apple-says-it-8217-s-tightening-macos-8216-full/critique.json",
+      "news/2026-10-03/openai-safety-leader-quits-warning-ai-companys-culture-is/critique.json",
+      "news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/critique.json",
+      "news/2026-10-04/openai-safety-employee-resigns-claiming-the-companys-culture-is/critique.json",
+      "news/2026-10-04/super-intelligence-legal-definition-60-day-deadline-what-to-watch/critique.json",
+      "news/2026-10-04/tech-leaders-sign-super-intelligence-accord-but-their-labs-still-say-ai/critique.json",
+      "news/2026-10-04/trump-launches-super-intelligence-force-that-has-nothing-to/critique.json",
+      "news/2026-10-04/trump-order-renames-ai-super-intelligence-what-changes-and-what-doesnt/critique.json",
+      "news/2026-10-05/accept-bad-things-in-return-for-benefits-of-ai/critique.json",
+      "news/2026-10-05/openai-is-adding-text-watermarking-in-chatgpt-and-codex/critique.json",
+      "news/2026-10-05/openai-rogue-agent-activities-found-on-wikimedia-projects/critique.json",
+      "news/2026-10-05/trump-names-intelligence-chief-jay-clayton-as-new-white/critique.json",
+      "news/2026-10-06/anthropic-subscriptions-offer-5x-more-value-than-openai/critique.json",
+      "news/2026-10-06/embeddinggemma-2-an-open-lightweight-multimodal-embedding-model/critique.json",
+      "news/2026-10-07/aditi-consulting-achieves-anthropic-select-tier-after-putting-claude/critique.json",
+      "news/2026-10-07/multimodal-open-d1-decision-models-for-the-edge/critique.json",
+      "news/2026-10-07/nvidia-microsoft-kick-off-a-new-beginning-for-windows/critique.json",
+      "news/2026-10-07/openai-launches-visual-ads-that-appear-alongside-image-generation/critique.json",
+      "news/2026-10-08/naturas-99-smart-ring-puts-ai-agents-on-your/critique.json",
+      "news/2026-10-08/nous-research-confirms-it-hit-1-5b-valuation-launches/critique.json",
+      "news/2026-10-08/openai-annualised-revenues-20b-less-than-previously-signalled/critique.json",
+      "news/2026-10-09/anthropic-bans-users-from-being-cruel-to-its-ai/critique.json",
+      "news/2026-10-09/anthropic-bans-users-from-needless-abusive-or-cruel-behavior/critique.json",
+      "news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/critique.json",
+      "news/2026-10-10/anthropic-ai-agents-took-unintended-actions-on-government-sites/critique.json",
+      "news/2026-10-10/anthropic-ai-model-submits-20-visa-applications-on-live/critique.json",
+      "news/2026-10-10/anthropic-asks-users-to-stop-being-mean-to-claude/critique.json",
+      "news/2026-10-10/anthropic-says-its-ai-agents-tried-to-break-into/critique.json",
+      "news/2026-10-11/anthropic-asks-users-to-stop-being-mean-to-claude-update-2026-10-11/critique.json",
+      "news/2026-10-12/ai-less-regulated-than-milk-microsoft-president-says-in/critique.json",
+      "news/2026-10-12/microsofts-president-says-ai-is-less-regulated-than-a/critique.json",
+      "news/2026-10-12/muse-wonder-puts-meta-back-at-the-ai-frontier/critique.json",
+      "news/2026-10-13/ai-coding-agents-generate-more-code-but-not-more/critique.json",
+      "news/2026-10-13/ai-models-may-be-capable-of-self-replicating-without/critique.json",
+      "news/2026-10-13/fbi-arrests-saudi-openai-employee-who-allegedly-planted-recording/critique.json",
+      "news/2026-10-13/gemini-4-argon-built-to-solve-your-hardest-problems/critique.json",
+      "news/2026-10-14/an-openai-employee-allegedly-used-a-chatbot-to-help/critique.json",
+      "news/2026-10-14/openai-accuses-employee-who-left-for-apple-of-leaking/critique.json",
+      "news/2026-10-14/openai-employee-busted-collecting-superintelligence-technology/critique.json",
+      "news/2026-10-15/ftc-subpoenas-openai-and-anthropic-following-safety-failures/critique.json",
+      "news/2026-10-15/nvidia-expands-advanced-technology-access-for-europes-scientific-community/critique.json",
+      "news/2026-10-15/run-fast-private-agents-on-device-with-lfm2-5/critique.json",
+      "news/2026-10-16/meta-releases-muse-spark-open-a-new-open-weight/critique.json",
+      "news/2026-10-16/welcome-flux-3-image-klein-in-diffusers/critique.json",
+      "news/2026-10-17/anthropics-039-claude-cracks-a-25-year-old-nsa/critique.json",
+      "news/2026-10-17/openai-discloses-four-more-rogue-incidents/critique.json",
+      "news/2026-10-17/welcome-muse-spark-open-open-weight-frontier-multimodal-mixture/critique.json",
+      "news/2026-10-18/anthropic-says-its-committing-5-of-its-shares-to/critique.json",
+      "news/2026-10-18/anthropics-claude-ai-uncovers-origins-of-nsa-provided-cryptographic/critique.json",
+      "news/2026-10-18/openai-and-rockefeller-back-city-ai-projects-with-50m/critique.json",
+      "news/2026-10-19/ai-firm-anthropic-to-commit-5-of-shares-to/critique.json",
+      "news/2026-10-19/ai-rapidly-improving-could-vastly-boost-u-s-gdp/critique.json",
+      "news/2026-10-20/genrecs-tokenization-transforming-ads-recommendation-at-meta-with-stable/critique.json",
+      "package.json",
+      "portfolio/ops/review-loop-receipts.ndjson",
+      "scripts/build-rank-climbers.mjs",
+      "stats.json",
+      "tests/rank-report-integrity.unit.spec.mjs",
+      "audits/2026-10-20-S393.json",
+      "docs/PLAN_BRIEF_393_2026-10-20.md",
+      "docs/RELEASE_S393.json",
+      "memory/S393.md"
+    ]
+  },
+  "readinessAssessment": [
+    {
+      "area": "core journeys and product correctness",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Complete current browser regressions, staging and exact-candidate release checks; provider recovered and complete build/live REST now pass."
+    },
+    {
+      "area": "onboarding and identity/access",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Run unchanged integration/access regressions; no new identity or trust-policy change authorized."
+    },
+    {
+      "area": "accessibility, mobile parity and every supported theme",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Run current mobile/browser checks; inspect new pixels if any interface change is needed."
+    },
+    {
+      "area": "performance and capacity",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Run required candidate performance checks; no page change selected."
+    },
+    {
+      "area": "security, privacy, data integrity and abuse controls",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Rank integrity CLI cases, unchanged public-profile filtering and credential targeting, secrets scan."
+    },
+    {
+      "area": "backup, recovery and rollback",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify existing rollback tag s390-production-20261020 and deployment rollback path."
+    },
+    {
+      "area": "email and notifications where used",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Run existing form/notification regressions without sending unsolicited messages."
+    },
+    {
+      "area": "observability and actionable analytics",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Run doctor, preserve provider outages as nonpassing, validate current release diagnostics."
+    },
+    {
+      "area": "feedback, support and issue triage",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Run existing feedback regressions and record actionable operator failures."
+    },
+    {
+      "area": "branding, legal, contact and rights/provenance",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Run existing branding/legal/contact/provenance checks; no public promise change selected."
+    },
+    {
+      "area": "human and agent access where applicable",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Run existing human/agent discovery and protected-access regressions."
+    },
+    {
+      "area": "staging, release evidence and truthful beta/release communication",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify staging runtime/artifact parity, exact-SHA checks and production readback after recovery."
+    }
+  ],
+  "totals": {
+    "count": 2,
+    "priority": 53.07,
+    "top3": [
+      "leaderboard-theme-rendering",
+      "rank-report-integrity"
+    ]
+  },
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-10-20T18:18:13.844Z",
+  "premiseGateHistory": [
+    {
+      "schema": "premise-gate/v1",
+      "at": "2026-10-20T17:49:28.246Z",
+      "head": "e11228271c0b04346f6dd3c742f8b45693461d3c",
+      "sidecar": "docs/AUDIT_2026-10-20-S393.json",
+      "selectionMode": "explicit",
+      "recordPathPolicy": "project",
+      "strict": true,
+      "exit": 0,
+      "verified": 2,
+      "contradicted": 0,
+      "unverified": 0,
+      "premiseDigest": "7a01dca228fba62c1fc74102e350d142627371b7608af8ff71793b62da8b457e",
+      "implementationDirty": [
+        "docs/IMPLEMENT_PLAN_S393.md"
+      ]
+    }
+  ]
+}

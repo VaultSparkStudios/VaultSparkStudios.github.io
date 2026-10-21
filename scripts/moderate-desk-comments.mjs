@@ -54,17 +54,42 @@ export const ACTIONS = Object.freeze({
 
 export function parseArgs(argv) {
   const out = { command: null, ids: [], status: null, slug: null, limit: 50, json: false, selfTest: false, help: false };
+  const seen = new Set();
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
+    if (arg.startsWith('-')) {
+      const flag = arg === '-h' ? '--help' : arg;
+      if (seen.has(flag)) throw new Error(`duplicate option ${flag}`);
+      seen.add(flag);
+      if (['--status', '--slug', '--limit'].includes(arg)
+          && (!argv[i + 1] || argv[i + 1].startsWith('-'))) throw new Error(`${arg} requires a value`);
+    }
     if (arg === '--self-test') out.selfTest = true;
     else if (arg === '--json') out.json = true;
     else if (arg === '--help' || arg === '-h') out.help = true;
     else if (arg === '--status') out.status = argv[++i] || null;
     else if (arg === '--slug') out.slug = argv[++i] || null;
     else if (arg === '--limit') out.limit = Number(argv[++i]);
-    else if (arg.startsWith('--')) out.help = true;
+    else if (arg.startsWith('-')) throw new Error(`unknown option ${arg}`);
     else if (!out.command) out.command = arg;
     else out.ids.push(arg);
+  }
+  if (out.selfTest && argv.length !== 1) throw new Error('--self-test must be used alone');
+  if (out.help) {
+    if (seen.size !== 1 || out.ids.length || (out.command && out.command !== 'list' && !Object.hasOwn(ACTIONS, out.command))) {
+      throw new Error('--help cannot be combined with operational arguments');
+    }
+    return out;
+  }
+  if (!out.command && !out.selfTest) throw new Error('a command is required');
+  if (out.command === 'list') {
+    if (out.ids.length) throw new Error('list does not accept comment ids');
+    if (out.status !== null && !STATUSES.includes(out.status)) throw new Error('unknown --status');
+    if (out.slug !== null && !SLUG_RE.test(out.slug)) throw new Error('--slug must look like 2026-09-14/a-story');
+    if (!Number.isSafeInteger(out.limit) || out.limit < 1 || out.limit > 500) throw new Error('--limit must be an integer from 1 to 500');
+  } else if (out.command) {
+    if (!Object.hasOwn(ACTIONS, out.command)) throw new Error(`unknown command ${out.command}`);
+    if (['--status', '--slug', '--limit', '--json'].some(flag => seen.has(flag))) throw new Error('list options cannot be used with moderation actions');
   }
   return out;
 }
@@ -218,11 +243,13 @@ const USAGE = `usage:
   moderate-desk-comments.mjs --self-test`;
 
 async function main() {
-  const args = parseArgs(process.argv.slice(2));
+  let args;
+  try { args = parseArgs(process.argv.slice(2)); }
+  catch (error) { console.error(`${error.message}\n${USAGE}`); process.exit(2); }
   if (args.selfTest) return await selfTest();
   if (args.help || !args.command) {
     console.log(USAGE);
-    process.exit(args.command ? 0 : 2);
+    process.exit(0);
   }
 
   if (args.command === 'list') {

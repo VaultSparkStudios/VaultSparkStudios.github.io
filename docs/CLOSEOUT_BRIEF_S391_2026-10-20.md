@@ -1,0 +1,47 @@
+```
+╔═════════════════════════════════════════════════════════════════════════════════════════════╗
+║  STUDIO OPS · CLOSEOUT IMPACT BRIEF                                                           ║
+║  Session S391 · 2026-10-20 · agent: codex · repo: VaultSparkStudios.github.io                 ║
+╠═════════════════════════════════════════════════════════════════════════════════════════════╣
+║                                                                                               ║
+║  HEADLINE                                                                                     ║
+║    Six CLI guards and REST canary verified; current-source545/545 passes, live promotion      ║
+║    held by provider outage.                                                                   ║
+║                                                                                               ║
+║  PROJECT IMPACT     ███████▌░░   75/100                                                       ║
+║  ECOSYSTEM IMPACT   ███░░░░░░░   30/100                                                       ║
+║  SIL DELTA          940 → 936  (-4)                                                           ║
+║                                                                                               ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════╝
+
+  ITEMS                                                       (sorted: left × right)
+  ───────────────────────────────────────────────────────────────────────────────────────────
+
+  [#2]  scheduled-public-rest-canary                              PROJ 8  ·  ECOS 3
+         ── feedbackLoop ────────────────────────────────────────────────────────────────────
+         Weekly read-only probes use bounded requests and fail on new errors; first hosted
+         run passed125 queries with7 declared deferrals.
+         → GitHub run39383473357
+
+  [#1]  operational-cli-admission                                 PROJ 7  ·  ECOS 3
+         ── security ────────────────────────────────────────────────────────────────────────
+         Help and preview requests stop before operational work. Documented audit and
+         migration pre-image modes remain available, and unknown probe names reject before
+         SQL.
+         → tests/operational-admission.unit.spec.mjs
+
+  ───────────────────────────────────────────────────────────────────────────────────────────
+
+  FOLLOW-UPS
+    • Validate moderation options per subcommand in a future audit.
+    • Require a passing recorded premise checkpoint before delegation.
+
+  BLOCKERS
+    (none)
+
+  ACTION GATE
+    Verified local changes; production held for provider recovery. Restart approval pending.
+
+```
+
+Generated with the canonical closeout renderer; existing commit authorization retained. Production is not accepted.

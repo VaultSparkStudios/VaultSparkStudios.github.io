@@ -1249,3 +1249,58 @@ Full original S379/S380 blocks retained below; their unchecked rows remain verba
 
 - [x] **[S254][PROCESS/P3] GENERATOR-HEAD-CONTRACT-AUDIT - DONE S255; stale carry closed S257.** `scripts/check-generator-head-contracts.mjs` exists with self-test and live page-generator contract scan and is wired into `build:check:steps`; no duplicate gate needed.
 - [x] **[S254][PROCESS/P2] ROTATE-TASKBOARD-CLOSEOUT-HOOK - DONE S255; stale carry closed S257.** `prompts/closeout.md` now runs `node scripts/rotate-taskboard.mjs --apply`; `rotate-taskboard.mjs` also includes S254 stale session-tagged heading consolidation.
+
+<!-- rotated 2026-10-20 · sessions < 389 · 1 block(s) -->
+
+## S388 authorized arc
+
+- [x] [S388 #1] CSP isolation deployed; full541, exact staging/hosted checks and production readback verified. docs/RELEASE_S388.json.
+
+
+Completed S254/S260/S289 carries preserved verbatim in context/archive/TASK_BOARD_ARCHIVE.md (S389 archival).
+
+
+<!-- rotated 2026-10-20 · sessions < 390 · 1 block(s) -->
+
+## S389
+
+- [x] [S389 #1] Deploy argv guards.
+- [x] [S389 #2] Deterministic handoffs.
+- [x] [S389 #3] Human sitemap links and five-publisher cascade.
+- [x] [S389 #4] Oracle answer dependency and build order.
+- [x] [S389 #5] Field-proof publication order.
+- [x] [SIL][S389] Audit other outward CLIs. (S390 #3)
+- [x] [SIL][S389] Measure extract omissions. (S390 #4)
+
+Waves1–3 verified; release evidence: docs/RELEASE_S389.json.
+
+
+<!-- rotated 2026-10-20 · sessions < 391 · 2 block(s) -->
+
+## Previous (Session 293 — carried forward)
+
+- [x] **[S293→S295][SIL][OBS/P1] Incident-close verification instrumentation — DONE S295.** Exact-once/all-route closure, frozen duration, recurrence, and the healthy `/status/` branch are enforced. The distinct live receipt remains correctly waiting above until production really recovers.
+- [x] **[S293→S294][DEPLOY/P0] Production staleness diagnosis — DONE S294.** The fail-closed promotion interlock is working as designed; this is not a broken deploy path. `api/deploy-currency.json` measures the intentionally held production state continuously.
+- [x] **[S293→S295][OBS/P1] Wire `verify:deploy-parity` into a gate — DONE S295.** The scheduled deploy-currency receipt now runs real route-local production shell parity; a structural contract forbids `--local` production evidence.
+- [x] **[S293→S295][SIL][OBS/P1] Onset corroboration beyond one coarse probe — DONE S295.** RUM supplies the labelled last-healthy lower window, uptime the coarse upper bound, route history its own observation, and unrelated promotion history is explicitly excluded.
+
+## Previous (Session 292 — both items shipped in S293)
+
+- [x] **[S292→NEXT][SIL][OBS/P1] Route-provenance history and incident duration.** Append only semantic changes; retain no response bodies. **Shipped S293** — see the S293 outcome block above.
+- [x] **[S292→NEXT][SIL][AUTOMATION/P1] Evidence-graph human/agent projection.** Render one compact diagram and agent relation view from the validated source. **Shipped S293** — see the S293 outcome block above.
+
+
+<!-- rotated 2026-10-20 · sessions < 391 · 1 block(s) -->
+
+## Previous (Session 314 — audit saturated and live)
+
+- [x] **[S314][ANALYTICA/P0] Public Stats surface.** /stats/ and /stats.json publish eight source-dated, privacy-safe metrics with denominators, honest small-sample language, homepage showcase cards, seven-theme accessibility, and agent discovery.
+- [x] **[S314][NEWS/P0] Relationship-aware story/art parity.** Authored subject/action/object relationships bind scene, alt text, caption, satire setup/payoff, and evidence anchors; contradictory mutations fail before publication.
+- [x] **[S314][UX/P0] Modal mobile navigation contract.** The sheet now focuses on open, traps Tab/Shift+Tab, inerts present and late-added background nodes, locks scroll, and restores the hamburger for Escape/backdrop/close.
+- [x] **[S314][FEEDBACK/P0] Honest reaction delivery.** Selections are remembered only after accepted/already-counted responses; failed and unavailable submissions expose retryable aria-live states.
+- [x] **[S314][MEASURE/P1] Hero-choice denominators.** Viewport-qualified hero/portfolio impressions and named CTA clicks now make Play/Join/Map choice rates measurable without fabricated conversion claims.
+- [x] **[S314][VISUAL/P1] Per-capture visual review receipts.** Forty-two hash-bound captures distinguish manual review from automated-only coverage across seven themes, desktop/mobile, page/nav/showcase/report states.
+- [x] **[S314][RELEASE/P0] Lane-aware durable content receipt.** Content releases carry baseline/head/path-set/manifest/discovery/workflow provenance and append-only continuity; final live receipt cc5d67845b37…, chain depth 6.
+- [x] **[S314][DISCOVERY/P1] Exact-path discovery micro-lane.** Sitemap, robots, agents manifest, and llms.txt can promote only through validated exact paths with content-type/link/coherence checks.
+- [x] **[S314][SECURITY/P0] Positive served-surface manifest.** Deploy artifacts are generated from declared public roots and fail on unclassified survivors or missing advertised routes.
+- [x] **[S314][EFFICIENCY/P1] Proof-gate process compression.** Eight logical proof commands run through importable in-process executors while retaining 84/84 receipt coverage; measured wall time fell from 101.8s to about 9.7s.

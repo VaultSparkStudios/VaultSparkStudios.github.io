@@ -1,3 +1,27 @@
+## S394 — parity evidence verified locally; release in progress
+
+S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending.
+
+Native goal01a15bd6-6f29-75c0-8bca-d1378ec53f3f createdAt1792542151 binds this arc. Resume its selected audit and remaining release; prior S393 completion is separate. Evidence: docs/RELEASE_S394.json.
+
+## S393 — full product release verified
+
+S393 validates canonical rank-report timestamps, schema/counts and provider rows before publication, preserving the prior report on invalid provider data. Generated leaderboard shells load the actual shared theme controller after the body exists; capture contexts isolate all seven themes and reject false observed-theme receipts. Normal full Pages release c0488e184ff5839a09aabe11447e6c8ab28d90e3 (run39501117343) is verified: 1108/1118 served-text candidates identical,10 configured redirects, zero differences/missing/unread;65 nonstamp critical leaves and6 origin artifacts match. All6 S147 canonical301 redirects remain. Local545/545 passed twice; required exact-candidate E2E, Lighthouse and accessibility pass; mobile215/215 and84 inspected captures pass. Original premise timing remains nonpassing,7 REST deferrals and the disjoint identity holds remain unchanged. No provider restart or measured performance gain is claimed.
+
+Current publication successor, remaining actions and final acceptance are maintained in docs/RELEASE_S393.json. Earlier pre-release addenda below retain their original historical state.
+
+## S392 — partial closeout; release acceptance pending
+
+Two operator-input boundaries are implemented and independently reviewed. Both complete545-step validation runs passed; the second verifies regenerated test-signal outputs. The real local mobile audit passed215/215 with zero P0/P1. Local checkpoint commits c6c9d8ff9a and a4a0a4520d are recorded. The full site build failed at Supabase rank-climbers; provider database/REST/auth remain UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push, current staging acceptance or production deployment is claimed.
+
+Evidence: docs/RELEASE_S392.json. Resume native goal01a159cf-3925-7480-959e-0dd6caa69447, bound to S392; remaining phases are provider recovery, full site build, staging, publication and production readback.
+
+## S391 — local acceptance complete, live release held
+
+Six operational CLI guards and the weekly read-only REST canary are implemented. The canary previously passed hosted125/7. The bounded Spark collision repair removes offscreen forced layouts;42 browser tests,215 mobile probes,28 reviewed visual captures and the complete545/545 suite pass. Full staging payload12183 files is verified at source ca9cba1d10ba7a057f94491e. Current Supabase database/REST/auth are UNHEALTHY; all125 live queries fail and staging ceremony rejects10/11 on504/CORS. One restart awaits approval; none performed. Production remains ceeeb2de9f. Premise timing remains nonpassing; existing identity holds remain unaccepted. Evidence: docs/RELEASE_S391.json.
+
+Native goal01a157cd-72fc-7c72-88e1-90d3e0c93ba9 remains bound to S391. Resume this arc and its release verification; do not start another arc or mark native completion.
+
 ## Session 390 — public data contract repair (2026-10-19)
 
 S390 repairs public data queries that production rejected: Community RSVP counts, the members directory, the leaderboard game, challenge and weekly tables, the signed-in /membership/ rank strip, three member-portal dashboard widgets and the investor KPI session series. A new offline gate (`scripts/check-public-rest-contract.mjs`, in build:check) requires every browser REST query, including filter and order columns, to match a live-verified manifest: 125 queries recorded, 7 deferred with notes (vault-sdk member fetch, rank orb, challenge streaks, member achievements, investor messages, studio-hub feedback). /changelog/#stories (the /journal/ redirect target) no longer shifts: CLS 0.1154 → below 0.01 at four widths, local Lighthouse 0.0017. Four member-facing send commands admit argv strictly; the handoff extract keeps its 6000-character cap on measured evidence (2/80 versions cut the newest session). Visual QA: 56 hash-bound captures (84 reviewed). Released: production serves ceeeb2de9f, byte parity tree-current, 0 Supabase 4xx; docs/RELEASE_S390.json.
@@ -597,3 +621,13 @@ S385 final implementation evidence:15/15 focused cases across three engines; thr
 
 
 S389 field-proof repair: RUM grading now precedes field-win and public consumers; both build profiles and affected publisher staging enforce that dependency. Build-order41/41, cascade35/35 and independent review pass. Measured verdict logic unchanged; full validation and release remain pending.
+
+
+### S393 current validation addendum
+
+S393 theme release dependency accepted locally: Final build/postbuild26 pass; generated-page theme tests9/9 including42 route/theme combinations, receipt rejection1/1, independent source review round2 pass. All84 final desktop/mobile captures inspected in seven theme contact sheets; actual root/body/stored theme matches; CANON053 hash-bound receipt passes. Pre-existing dismissible mobile Spark overlap is disclosed. Whole-project suite, current staging, sanitized main push, required exact-candidate CI and full production readback remain pending.
+
+
+### S393 current runtime evidence
+
+Fresh215/215 local mobile cells and84 inspected final theme captures pass. Both receipts bind the current candidate; all109 proof-surface checks pass (92 blocking, zero advisory findings). Partial remainder274–545 passes; it is diagnostic coverage, not a complete whole-project acceptance receipt. Canonical closeout filename/cache and obsolete capture-tool orphan exemption are corrected. Full545-step acceptance, current staging, sanitized main push, required exact-candidate hosted checks and normal full production readback remain pending.

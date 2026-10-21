@@ -91,13 +91,16 @@ const leaderboardsHTML = fs.readFileSync(leaderboardsIndexPath, 'utf8');
 const criticalCSSMatch = leaderboardsHTML.match(/<style data-vs-critical-shell>([\s\S]*?)<\/style>/);
 const criticalCSS = criticalCSSMatch ? criticalCSSMatch[0] : '';
 
-// Extract the CSS async loader script
-const cssLoaderMatch = leaderboardsHTML.match(/<script>!function\(\).*?<\/script>/);
-const cssLoader = cssLoaderMatch ? cssLoaderMatch[0] : '';
-
-// Extract the shell CSS link
-const shellCSSMatch = leaderboardsHTML.match(/<link rel="preload" href="[^"]*style\.shell[^"]*"[^>]*>[\s\S]*?<noscript>.*?<\/noscript>/);
-const shellCSSBlock = shellCSSMatch ? shellCSSMatch[0] : '';
+// Reuse the master's current shell contracts. Its first inline IIFE is a
+// body-dependent theme bootstrap, not a CSS loader: putting it in <head>
+// throws before a preference can reach either the root or body.
+const shellCSSBlock = leaderboardsHTML.match(/<link\b(?=[^>]*rel="stylesheet")(?=[^>]*href="\/assets\/style(?:\.shell-[a-f0-9]+)?\.css")[^>]*>/)?.[0];
+const themeController = leaderboardsHTML.match(/<script\b[^>]*src="\/assets\/theme-toggle(?:\.shell-[a-f0-9]+)?\.js"[^>]*>\s*<\/script>/)?.[0];
+const themeBootstrap = [...leaderboardsHTML.matchAll(/<script>!function\(\)[\s\S]*?<\/script>/g)]
+  .map(match => match[0]).find(script => /localStorage\.getItem\(['"]vs_theme['"]\)/.test(script));
+if (!shellCSSBlock || !themeController || !themeBootstrap) {
+  throw new Error('Leaderboard master is missing stylesheet or theme contracts; no subpages generated');
+}
 
 // Extract nav HTML (from <header class="site-header"> to </header>)
 const navMatch = leaderboardsHTML.match(/<header class="site-header"[\s\S]*?<\/header>/);
@@ -158,8 +161,7 @@ ${faqLD}
   <link rel="icon" type="image/png" href="/assets/icon-32.png" />
   ${criticalCSS}
   ${shellCSSBlock}
-  ${cssLoader}
-  <noscript><link rel="stylesheet" href="/assets/style.shell-920ea9c5cc.css" /></noscript>
+  ${themeController}
 <style>
   .lb-sub-hero { padding: 5rem 0 3rem; position: relative; text-align: center; }
   .lb-sub-hero::before { content:""; position:absolute; inset:0; pointer-events:none; background: radial-gradient(circle at 30% 40%, rgba(255,196,0,0.10), transparent 35%), radial-gradient(circle at 70% 40%, rgba(31,162,255,0.08), transparent 35%); }
@@ -173,6 +175,7 @@ ${faqLD}
 </style>
 </head>
 <body class="dark-mode" data-theme="dark">
+${themeBootstrap}
 ${navHTML}
 <main id="main-content">
   <section class="lb-sub-hero">
@@ -224,6 +227,9 @@ if (isSelfTest) {
       [html.includes('View Full Leaderboard'), `${page.slug}: CTA link`],
       [html.includes('"@type":"BreadcrumbList"') || html.includes('"@type": "BreadcrumbList"'), `${page.slug}: BreadcrumbList JSON-LD`],
       [html.includes('"@type":"FAQPage"') || html.includes('"@type": "FAQPage"'), `${page.slug}: FAQPage JSON-LD`],
+      [(html.match(/<link\b[^>]*rel="stylesheet"[^>]*>/g) || []).length === 1, `${page.slug}: one current shared stylesheet`],
+      [html.slice(0, html.indexOf('</head>')).includes(themeController), `${page.slug}: shared theme controller in head`],
+      [html.indexOf(themeBootstrap) > html.indexOf('<body') && html.indexOf(themeBootstrap) < html.indexOf('<main'), `${page.slug}: theme bootstrap runs after body exists and before content`],
     ];
     for (const [ok, label] of checks) {
       if (ok) { pass++; } else { fail++; console.error(`FAIL: ${label}`); }

@@ -15,10 +15,11 @@
 import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, relative, resolve } from 'node:path';
-import { PAGE_CSP } from '../config/csp-policy.mjs';
-import { renderCaddyRoutePolicies, staticCspForHtml } from './lib/static-csp.mjs';
+import { admitDeployment } from './lib/deploy-argv.mjs';
 
-const DRY = process.argv.includes('--dry-run');
+admitDeployment({ name: 'sync-staging-headers', usage: 'node scripts/sync-staging-headers.mjs [--dry-run]' });
+const { PAGE_CSP } = await import('../config/csp-policy.mjs');
+const { renderCaddyRoutePolicies, staticCspForHtml } = await import('./lib/static-csp.mjs');
 const PROD = 'https://vaultsparkstudios.com/';
 const SNIPPET_PATH = '/etc/caddy/vaultspark-staging-headers.caddy';
 const CADDYFILE = '/etc/caddy/Caddyfile';
@@ -71,11 +72,6 @@ header {
 ${routePolicies}
 `;
 
-if (DRY) {
-  console.log(snippet);
-}
-
-if (!DRY) {
 const { spawnSync } = await import('./lib/safe-spawn.mjs');
 const { getSecret, redact } = await import('./lib/secrets.mjs');
 
@@ -140,4 +136,3 @@ try {
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log(`sync-staging-headers: ${pages.length} route-scoped CSP policies + transport headers · Caddy reloaded`);
-}

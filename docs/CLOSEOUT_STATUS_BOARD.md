@@ -1,69 +1,68 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-19 (Session 389 closeout) -->
+<!-- generated-at: 2026-10-21 (Session 394 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S389 ═══════╗
-║  Date: 2026-10-19  ·  SIL: 935/1000  ·  Velocity: 5 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S394 ═══════╗
+║  Date: 2026-10-21  ·  SIL: 935/1000  ·  Velocity: 1 stable       ║
 ║  Mode: BUILDER  ·  Agent: codex                                  ║
-║  Autopilot: proven (S389)                                        ║
+║  Autopilot: BYPASSED (S394) — no receipt; run node scripts/clos  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
-║ Strict deploy arguments; deterministic handoff extraction.     ║
-║ Archive sitemap discovery; Oracle and field-proof ordering.    ║
-║ Five selected outcomes verified; no extra session credited.    ║
+║  ✓ chore(closeout): recover S393 publication record              ║
+║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
+║  ✓ chore(proof): record Desk art routine maintenance [skip ci]   ║
+║  ✓ chore(routine-desk-art): reseal derived outputs after auto a  ║
+║  ✓ chore(routine-desk-art): auto-reviewed art for 2 image(s)     ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 935/1000 ═══════════════════════════════════════╗
-║    Dev Health         95   ██████████                            ║
+║    Dev Health         93   █████████░                            ║
 ║    Alignment          94   █████████░                            ║
 ║    Momentum           90   █████████░                            ║
-║    Engagement         95   ██████████                            ║
-║    Process Qual       91   █████████░                            ║
-║    Coherence          92   █████████░                            ║
-║    Security           94   █████████░                            ║
+║    Engagement         96   ██████████                            ║
+║    Process Qual       88   █████████░                            ║
+║    Coherence          93   █████████░                            ║
+║    Security           97   ██████████                            ║
 ║    Ecosystem          91   █████████░                            ║
 ║    Capital            95   ██████████                            ║
 ║    Automation         98   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  · context/CURRENT_STATE.md                                      ║
-║  · context/TASK_BOARD.md                                         ║
-║  · context/LATEST_HANDOFF.md                                     ║
-║  · logs/WORK_LOG.md                                              ║
-║  · context/DECISIONS.md                                          ║
-║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  ✓ context/CURRENT_STATE.md                                      ║
+║  ✓ context/TASK_BOARD.md                                         ║
+║  ✓ context/LATEST_HANDOFF.md                                     ║
+║  ✓ logs/WORK_LOG.md                                              ║
+║  ✓ context/DECISIONS.md                                          ║
+║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  · context/TRUTH_AUDIT.md                                        ║
-║  · context/PROJECT_STATUS.json                                   ║
+║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 1453 files  ·  M:30 A:0 D:0 ?:1423                     ║
-║  Ahead: 0  ·  Behind: 0                                          ║
+║  Changes: 239 files  ·  M:225 A:0 D:2 ?:12                       ║
+║  Ahead: 1  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
-║ Staging: exact status25/25; full baseline c861 verified.       ║
-║ Live: Pages39326784514 + Worker39326087269 verified.           ║
-║ Status overlay39329492923:75 hash checks passed.               ║
+║  Staging:  https://website.staging.vaultsparkstudios.com  ·  he  ║
+║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║ Doctor: canonical16/17;0 blocking;0 advisory.                  ║
-║ Tests: core542/542 twice; final status109/109.                 ║
-║ Visual:28 inspected captures; mobile215/215.                   ║
-║ IGNIS: prior score retained; no sibling rescore claimed.       ║
-║ Truth: existing identity/field-data holds preserved.           ║
-║ Sanitization: clean; staged secrets scan0 findings.            ║
-║ Shells: historic totals unmeasured; owned active0.             ║
+║  Doctor:        13/17                                            ║
+║  Compliance:    —                                                ║
+║  Tests:         545/545                                          ║
+║  Validation:    full-fresh                                       ║
+║  IGNIS:         2d ago                                           ║
+║  Truth:         yellow                                           ║
+║  Sanitization:  —                                                ║
+║  shells:        unknown · missing/stale enumeration              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
-║ Observe outward CLI admission and handoff omissions.           ║
-║ Existing identity/field-data holds remain explicit.            ║
+║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║
 ╚════════════════════════════════════════════════════════════════╝
 ```
 
 *Generated by `scripts/render-closeout-board.mjs v1.1`*
-
-S389 release evidence: docs/RELEASE_S389.json. The board uses the canonical renderer; release-specific rows are bound to the accepted receipt. Historical shell totals are unmeasured; final owned native process inventory found0 active. Pre-existing unrelated operator residue is preserved.

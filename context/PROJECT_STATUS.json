@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S390 public data contracts: production-rejected queries repaired behind a live-verified gate",
+  "currentFocus": "S394 verifier and current staging11/11 verified; complete local acceptance and authorized production release pending",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Schedule the weekly live REST probe and resolve the founder-review vault-sdk deferral",
+  "nextMilestone": "Complete canonical validation/main push, exact-candidate hosted checks and normal full production readback",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -26,29 +26,29 @@
     "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action.",
     "Shared account KV write budget remains a risk from other writers. S387 isolates Trusted Types diagnostics; actual release and usage evidence is in docs/RELEASE_S387.json."
   ],
-  "lastUpdated": "2026-10-20",
-  "currentSession": 390,
+  "lastUpdated": "2026-10-21",
+  "currentSession": 394,
   "truthAuditStatus": "yellow",
-  "truthAuditLastRun": "2026-10-13",
-  "silScore": 940,
-  "silAvg3": 936.7,
-  "silVelocity": 5,
-  "silDebt": "down",
-  "silLastSession": 390,
+  "truthAuditLastRun": "2026-10-21",
+  "silScore": 935,
+  "silAvg3": 935,
+  "silVelocity": 1,
+  "silDebt": "stable",
+  "silLastSession": 394,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
     {
       "url": "https://vaultsparkstudios.com/",
       "type": "production",
-      "status": "green",
-      "note": "S381 complete: browser release checks follow their selected candidate, and pull-request visual checks audit the checked-out preview. Actual-spec negative fixtures and independent review passed. Complete local validation passed 537/537, focused contracts 5/5 and real local navigation 1/1. Candidate 5bf58495904c passed required exact-SHA hosted checks and was fully deployed by confirmed Pages run 38787970210. Staging critical leaves passed 65/65 and release ceremony 11/11; production immutable and primary readback verified. All five publisher states restored and owned processes closed. Existing identity and field-vitals limitations and optional broad E2E diagnostics remain separate. Exact evidence: docs/RELEASE_S381.json."
+      "status": "yellow",
+      "note": "S394 current staging/production acceptance pending; historical release evidence remains separate."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
       "type": "staging",
-      "status": "green",
-      "note": "S381 candidate 5bf58495904c; critical65/65, ceremony11/11, browser3passed/3identityheld; docs/RELEASE_S381.json."
+      "status": "yellow",
+      "note": "S394 current staging/production acceptance pending; historical release evidence remains separate."
     },
     {
       "url": "https://vaultsparkstudios.com/?nav=sheet",
@@ -63,20 +63,20 @@
     {
       "command": "npm run verify:local",
       "type": "local",
-      "status": "green",
-      "note": "S381 complete537/537; focused5/5; docs/RELEASE_S381.json."
+      "status": "yellow",
+      "note": "S394 focused CLI2/2 and self-test14/14 pass; complete build/postbuild pass. Current complete suite and release acceptance remain pending."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/status/",
       "type": "staging",
-      "status": "green",
-      "note": "S381 candidate 5bf58495904c; critical65/65, ceremony11/11, browser3passed/3identityheld; docs/RELEASE_S381.json."
+      "status": "yellow",
+      "note": "S394 current staging/production acceptance pending; historical release evidence remains separate."
     },
     {
       "command": "npm run build:check",
       "type": "tests",
-      "status": "green",
-      "note": "S381 complete537/537; focused5/5; docs/RELEASE_S381.json."
+      "status": "yellow",
+      "note": "S394 focused CLI2/2 and self-test14/14 pass; complete build/postbuild pass. Current complete suite and release acceptance remain pending."
     }
   ],
   "vaultStatus": "SPARKED",
@@ -84,35 +84,35 @@
   "ignisScoreDelta": 0,
   "ignisGrade": "FORGE",
   "ignisLastComputed": "2026-10-18T17:20:11.563Z",
-  "entropyScore": 0.206,
-  "entropyLastComputed": "2026-10-19",
-  "sessionMode": "founder",
+  "entropyScore": 0.181,
+  "entropyLastComputed": "2026-10-20",
+  "sessionMode": "BUILDER",
   "sessionModeAutoShiftedAt": "2026-10-19T22:10:28.054Z",
   "silRubricVersion": "3.0",
   "silMax": 1000,
   "silCategoriesV3": {
-    "devHealth": 96,
+    "devHealth": 93,
     "creativeAlignment": 94,
-    "momentum": 91,
+    "momentum": 90,
     "engagement": 96,
-    "processQuality": 91,
+    "processQuality": 88,
     "crossRepoCoherence": 93,
-    "securityPosture": 95,
+    "securityPosture": 97,
     "ecosystemIntegration": 91,
     "capitalEfficiency": 95,
     "automationCoverage": 98
   },
-  "silCategoriesUpdatedSession": 390,
+  "silCategoriesUpdatedSession": 394,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-10-20",
-    "passing": 16,
-    "warning": 1,
-    "failing": 0,
+    "date": "2026-10-21",
+    "passing": 14,
+    "warning": 2,
+    "failing": 1,
     "blockingFailing": 0,
-    "advisoryFailing": 0,
+    "advisoryFailing": 1,
     "total": 17,
-    "score": 94,
+    "score": 82,
     "checks": [
       {
         "id": "manifest",
@@ -172,7 +172,7 @@
       },
       {
         "id": "revenue",
-        "pass": true,
+        "pass": false,
         "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
@@ -214,7 +214,7 @@
       },
       {
         "id": "sched-staleness",
-        "pass": true,
+        "pass": false,
         "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
@@ -242,9 +242,9 @@
   "modelPlanModeSlash": null,
   "silScoreReconciledAt": "2026-05-18",
   "silScoreReconciledFrom": 978,
-  "testsTotal": 544,
-  "testsPassing": 544,
-  "testsLastRun": "2026-10-20",
+  "testsTotal": 545,
+  "testsPassing": 545,
+  "testsLastRun": "2026-10-21",
   "testsLabel": "measured build:check steps",
   "publicNextStep": "Monitor article performance while identity remains held; retain staging-first verification for the next scoped release.",
   "doctorBlockingFailing": 0,
@@ -261,42 +261,33 @@
   "truthGenome": "23/25",
   "testsFailed": 0,
   "testsEvidence": "api/build-check-diagnostics.json",
-  "testsPlanFingerprint": "f21b7f992f59351952c2c189",
-  "testsSourceFingerprint": "6cca325771d6fa49efc959f6",
-  "lastSessionSummary": "S390 public data contracts: production-rejected queries repaired behind a live-verified gate",
+  "testsPlanFingerprint": "c0af5c4243e3681b952755f1",
+  "testsSourceFingerprint": "df1b99241c8db4e20c74e877",
+  "lastSessionSummary": "S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
-    "session": 385,
-    "enumeratedAt": "2026-10-16T19:10:25.766Z",
+    "session": 393,
+    "enumeratedAt": "2026-10-20T23:00:55.7023852Z",
+    "started": null,
+    "closed": null,
     "running": 0,
-    "ownedWorktreesRemoved": 1,
-    "previewPort4173Closed": true,
-    "reconfirmation": {
-      "ownedNodes": 1,
-      "previewListeners": 0
-    },
-    "scope": "Actual inventory found only this synchronous recording runner; it closes on return. Historical command totals are unmeasured. Earlier retained asynchronous handles are terminal; no total historical shell count is invented. Unrelated host processes and preexisting operator work remain preserved."
+    "ownedHelpers": [],
+    "scope": "All recorded S393 verification and workflow-watch handles observed terminal; strict S393-directory helper reconfirmation. Historical started/closed totals unmeasured. Unattributed flat-log tails with no matching file in this repository excluded; no foreign process stopped."
   },
   "closeoutFollowthrough": {
-    "session": 380,
-    "date": "2026-10-15",
-    "agent": "codex",
-    "releasedContentSha": "4ce367580b22c2a2541ff56af269d0fbca800074",
-    "pagesRunId": 38763989597,
-    "requestedOutcomes": 1,
+    "session": 394,
+    "state": "in-progress",
     "completedOutcomes": 1,
-    "sourcePublication": "Normal main push and immutable tag verified",
-    "deployment": "Confirmed full production; exact immutable and primary readback verified",
-    "validation": "Full537/537; mobile215/215; collection689/619/619; isolation2/2; streamed archive17/17; visual112 inspected; critical65; browser3passed/3held; attention15; ceremony11",
-    "closeoutVerification": "Canonical autopilot0; independent reviews passed; original publisher states restored; own shell/worktree cleanup verified"
+    "releasedOutcomes": 0,
+    "validation": "S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending."
   },
-  "lastSession": 390,
+  "lastSession": 394,
   "sessionState": {
     "version": 1,
-    "durableSession": 390,
-    "currentFocus": "S390 public data contracts: production-rejected queries repaired behind a live-verified gate",
-    "nextMilestone": "Schedule the weekly live REST probe and resolve the founder-review vault-sdk deferral",
-    "lastSessionSummary": "S390 public data contracts: production-rejected queries repaired behind a live-verified gate"
+    "durableSession": 394,
+    "currentFocus": "S394 verifier and current staging11/11 verified; complete local acceptance and authorized production release pending",
+    "nextMilestone": "Complete canonical validation/main push, exact-candidate hosted checks and normal full production readback",
+    "lastSessionSummary": "S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending."
   },
   "s378RecordRecovery": {
     "date": "2026-10-14",
@@ -308,20 +299,38 @@
     "behaviorChanged": false
   },
   "activeArc": {
-    "session": 390,
-    "phase": "complete",
-    "goal": "claude-code:02f984f7-d3e8-4932-b23b-e88b50a20643",
-    "audit": "docs/AUDIT_2026-10-19-S390.json"
+    "session": 394,
+    "goalId": "01a15bd6-6f29-75c0-8bca-d1378ec53f3f",
+    "goalCreatedAt": 1792542151,
+    "phase": "closeout-validation-and-release-in-progress",
+    "audit": "docs/AUDIT_2026-10-21.json",
+    "releaseEvidence": "docs/RELEASE_S394.json"
   },
-  "testsSession": 385,
+  "testsSession": 393,
   "currentBuildState": "passed",
-  "currentBuildNote": "S385 current source complete537/537; receipt6f93630b73630ef28cd356f9; source98af2b44764a9508bba8caf4",
-  "lastDeploySession": 390,
-  "lastDeployStatus": "full production verified (ceeeb2de9f; run 39359262188)",
-  "silAvg5": 934.2,
+  "currentBuildNote": "S394 complete npm build and actual26-step postbuild passed; current complete validation and release remain pending.",
+  "lastDeploySession": 394,
+  "lastDeployStatus": "pending",
+  "silAvg5": 936.2,
   "lastReleaseAcceptance": {
-    "session": 388,
-    "candidate": "98538ff5b98aa464655fb1b2fed0c2148b049967",
-    "receipt": "docs/RELEASE_S388.json"
+    "session": 393,
+    "candidate": "c0488e184ff5839a09aabe11447e6c8ab28d90e3",
+    "receipt": "docs/RELEASE_S393.json",
+    "workflowRun": 39501117343
+  },
+  "truthAuditSummary": "S394 shell-parity acceptance now requires a successful HTTP response and nonempty expected fingerprinted shell. Full argument and destination admission precedes file/network access. Actual CLI fixtures pass2/2 and the expanded self-test14/14; independent review passes with zero findings. Current whole-project acceptance, staging, publication and full deployment remain pending.",
+  "currentVerification": {
+    "session": 394,
+    "state": "focused-mobile-and-staging-passed-full-suite-production-pending",
+    "source": "docs/RELEASE_S394.json",
+    "lastCompleteTestsSession": 393,
+    "note": "Fresh215/215 mobile cells, current staging11/11 and doctor0 blocking; complete current suite and production acceptance pending."
+  },
+  "metadataPublication": {
+    "session": 393,
+    "candidate": "ae7e2f99e9097996f6eeeff19b50a1795e06f39f",
+    "workflowRun": 39509380736,
+    "state": "verified",
+    "receipt": "docs/RELEASE_S393.json"
   }
 }
