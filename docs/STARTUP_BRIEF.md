@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S395) - WHAT SHIPPED ══════════════════════════╗
-║  S395 integrated source passed two complete545/545 runs, focuse  ║
+║  S395 integrated local and staging acceptance pass: two complet  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝

@@ -3162,3 +3162,8 @@ S395 integrated local closeout checkpoint: commit-only closeout252317d3db and re
 ### S395 current integrated staging checkpoint — 2026-10-21T17:09:26.553Z
 
 Current integrated staging is accepted: verified full installation12452files,66-leaf roota7cb6e9d873840a9da533e9b26af56ac2edb25045f846e36971ba3799733bf2b,65/65direct critical files,12/12incoming images and canonical ceremony11/11. Source fingerprint68ba13744e8c17cef727cc58 matches both545/545 integrated runs. Main publication, required hosted checks, normal full production and closing acceptance remain pending. Protected identity holds remain scoped; no positive authenticated journey or visitor gain is claimed. SIL remains935/1000,velocity1; no new outcome selected.
+
+
+### S395 publication merge checkpoint — 2026-10-21T17:18:21.610Z
+
+S395 integrated local and staging acceptance pass: two complete545/545 source runs, focused3/3/self19/existing9,36-owner integration closure,84manual news images,215device probes, full staging12452files,65critical/12incoming-image directreadbacks and canonical ceremony11/11. A newer28path routine observation merge is preserved and covered by41native owners; source68ba13744e8c17cef727cc58 and staged critical root are unchanged. Exact hosted checks, main publication, normal full production and closing acceptance remain pending. Original timing remains nonpassing; no visitor gain claimed. SIL remains935/1000,velocity1; no new outcome.

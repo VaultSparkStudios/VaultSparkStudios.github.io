@@ -294,6 +294,35 @@
           "workflowRunId": "39616912825"
         }
       }
+    },
+    "receiptOrdering": {
+      "state": "passed",
+      "initialAttempt": {
+        "state": "failed",
+        "findings": [
+          "visual candidateSha stale",
+          "mobile candidateSha stale"
+        ],
+        "scope": "Candidate metadata; captured source and image hashes were unchanged"
+      },
+      "recovery": {
+        "at": "2026-10-21T17:16:28.971Z",
+        "state": "verified-metadata-only",
+        "candidate": {
+          "manifest": "api/candidate-artifact-manifest.json",
+          "manifestSha256": "f3d49feafaf314025b56ec56e32fce0bec220ff61d58368fe4ddef825dfb5ebe",
+          "candidateSha": "8311d7ac8aa458d9bfc2ac9394955caf8532e899",
+          "root": "a7cb6e9d873840a9da533e9b26af56ac2edb25045f846e36971ba3799733bf2b"
+        },
+        "visualCaptures": 84,
+        "mobileScreenshots": 175,
+        "mobileProbes": 215,
+        "originalDatesPreserved": true,
+        "sourceAndRawAndImageHashesUnchanged": true,
+        "backup": ".cache/S395/evidence-before-rebind-1792602988968"
+      },
+      "evidence": ".cache/S395/integrated-receipt-ordering.log",
+      "originalCaptureReviewDatesPreserved": true
     }
   },
   "staging": {
@@ -330,6 +359,11 @@
       "steps": 11,
       "generatedAt": "2026-10-21T17:07:27.228Z",
       "evidence": ".cache/S395/integrated-staging-accepted-ceremony.json"
+    },
+    "retainedCeremonyCheck": {
+      "state": "passed",
+      "evidence": ".cache/S395/prepublication-staging-ceremony-check.log",
+      "scope": "Same verified source fingerprint and critical root after routine observation merge; canonical receipt revalidated."
     }
   },
   "production": {
@@ -841,6 +875,49 @@
           "result": "Corpus, claims feed, factRefs and article receipts exact"
         }
       ]
+    },
+    "publicationMerge": {
+      "state": "preserved-and-verified",
+      "base": "4670619d469e9d3734cd1dd2828d7c5b635e9f03",
+      "remote": "7ef254b930378dee811a7fae0177f65f0c67ccd9",
+      "files": [
+        "api/ai-discovery-health.json",
+        "api/candidate-artifact-manifest.json",
+        "api/canonical-destination-reachability.json",
+        "api/commit-map.json",
+        "api/deploy-currency.json",
+        "api/feedback-provenance.json",
+        "api/field-win.json",
+        "api/geo-vitals.json",
+        "api/intelligence-budget.json",
+        "api/intent-map.json",
+        "api/nervous-system.json",
+        "api/oracle-insights.json",
+        "api/proof-aware-projects.json",
+        "api/public-intelligence.json",
+        "api/public-status.json",
+        "api/release-dependencies.json",
+        "api/release-proof.json",
+        "api/staging-health.json",
+        "api/status-proof.json",
+        "api/studio-timeline.json",
+        "api/uptime.json",
+        "api/worker-route-provenance.json",
+        "data/ignis-search-index.json",
+        "data/stats-surface.json",
+        "data/uptime-history.ndjson",
+        "feed/forge-ledger.json",
+        "feed/forge-ledger.xml",
+        "stats.json"
+      ],
+      "count": 28,
+      "sourceUiChanges": 0,
+      "nativeOwners": 41,
+      "missingNativeNodes": 0,
+      "sourceFingerprint": "68ba13744e8c17cef727cc58",
+      "criticalRootUnchanged": true,
+      "stagingRoot": "a7cb6e9d873840a9da533e9b26af56ac2edb25045f846e36971ba3799733bf2b",
+      "coverageEvidence": ".cache/S395/publication-merge-coverage.json"
     }
   }
 }
