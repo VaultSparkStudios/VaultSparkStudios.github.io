@@ -309,3 +309,7 @@ Claude Code /arc. Not cut off; synced over 7 routine commits. The fresh nine-axi
 2. service-worker-install.spec.js adds the adapter-online/origin-down regression: stable fallback, one recovery. It passed in repeated runs and failed against the pre-S397 code.
 
 Release: build:check 547/547 · mobile 215/215 · 28 reviewed captures · staging spec 6/6 and parity green · hosted exact-SHA 3/3 · full pages-deploy at 418d250656 (tag release-s398-418d250656, run 39858675909) · Pages origin tree-current, 1125 identical, 10 redirects, 0 differ. Publisher races and a denied writer pause are recorded in docs/RELEASE_S398.json.
+
+### S398 closing publication
+
+Closeout 10c6728c3c, then generated-only re-seals 9155e45a (Desk edition, mobile 215/215) and 5fda28d1 (uptime). No behaviour change; production stays at 418d250656.
