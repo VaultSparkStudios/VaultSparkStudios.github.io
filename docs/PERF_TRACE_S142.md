@@ -1,21 +1,15 @@
 # Performance Trace — S142
 
-Generated: 2026-08-27T06:11:11.628Z
-Base URL: http://127.0.0.1:4850
+Generated: 2026-10-21T23:32:18.705Z
+Base URL: http://127.0.0.1:4883
 
 | Route | Status | LCP | LCP Budget | INP | INP Budget | FCP | CLS | DCL | Load | TTFB |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| / | 200 | 1424ms | 1800ms | 40ms | 300ms | 1424ms | 0 | 319ms | 340ms | 27ms |
-| /oracle/ | 200 | 292ms | 1800ms | 64ms | 300ms | 292ms | 0.0079 | 325ms | 330ms | 10ms |
-| /membership/ | 200 | 416ms | 1800ms | 248ms | 300ms | 416ms | 0 | 344ms | 350ms | 11ms |
-| /vaultsparked/ | 200 | 456ms | 1800ms | 48ms | 300ms | 456ms | 0.0012 | 371ms | 380ms | 9ms |
-| /community/ | 200 | 348ms | 1800ms | 0ms | 300ms | 348ms | 0 | 334ms | 336ms | 12ms |
-| /games/ | 200 | 284ms | 1800ms | 72ms | 300ms | 284ms | 0 | 291ms | 297ms | 11ms |
+| /investor-portal/apply/ | 200 | 152ms | 1800ms | 0ms | 300ms | 152ms | 0 | 145ms | 146ms | 17ms |
+| /investor-portal/login/ | 200 | 80ms | 1800ms | 0ms | 300ms | 80ms | 0 | 74ms | 77ms | 8ms |
+| /news/subscribed/ | 200 | 244ms | 1800ms | 0ms | 300ms | 244ms | 0 | 185ms | 189ms | 6ms |
 
 ## Stylesheet Shell
-- /: OK
-- /oracle/: OK
-- /membership/: OK
-- /vaultsparked/: FAIL: 1
-- /community/: OK
-- /games/: OK
+- /investor-portal/apply/: OK
+- /investor-portal/login/: OK
+- /news/subscribed/: OK

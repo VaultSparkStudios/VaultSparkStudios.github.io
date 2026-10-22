@@ -1,10 +1,10 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         545/545 passing (2026-10-21)                   ║
-║  ⚠  Velocity      1 →  ·  Debt: →                                ║
+║  ✓  Velocity      3 ↑  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⛔  Context age   17d                                            ║
-║  ✓  IGNIS         45412 FORGE  ·  2d old                         ║
-║  ⛔  Truth         yellow — scoped product release verified;…     ║
+║  ⛔  Context age   18d                                            ║
+║  ✓  IGNIS         45412 FORGE  ·  3d old                         ║
+║  ⛔  Truth         yellow — selected release verified;…           ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.181  (healthy)                               ║

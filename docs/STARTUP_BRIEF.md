@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-21 (Session 395 closeout) -->
-<!-- semantic-freshness: hash=61ef726e8afa2655 next=396 silSession=395 silScore=935 handoff=395 tests=- -->
+<!-- generated-at: 2026-10-22 (Session 396 closeout) -->
+<!-- semantic-freshness: hash=77e575914eb24d13 next=397 silSession=396 silScore=939 handoff=396 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 395 closeout · 2026-10-21.
+> **Fast-boot brief** — generated at Session 396 closeout · 2026-10-22.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 396 · 2026-10-21 · BUILDER MODE                         ║
+║  Session 397 · 2026-10-22 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S395) - WHAT SHIPPED ══════════════════════════╗
-║  S395 served-text parity requires complete nonempty exactly-onc  ║
+╔══ LAST SESSION (S396) - WHAT SHIPPED ══════════════════════════╗
+║  S396: /news/subscribed/ persona link repointed to /news/#ancho  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -41,18 +41,18 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    935/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 1→                          ║
-║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
-║    Trend  ▄▂▄▆▄  →  (last 5 sessions)                            ║
+║    939/1000   ██████████████████████░░   94%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 3↑                          ║
+║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
+║    Trend  ▄▂▄▆▄  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        93    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Dev Health        94    █████████░  ▇▇▇▇▇▇▇▇ →                ║
 ║    Alignment         94    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum          90    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Momentum          92    █████████░  ▇▇▇▇▇▇▇▇ →                ║
 ║    Engagement        96    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual      88    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Process Qual      89    █████████░  ▇▇▇▇▇▇▇▇ →                ║
 ║    Coherence         93    █████████░  ········ →                ║
 ║    Security          97    ██████████  ········ →                ║
 ║    Ecosystem         91    █████████░  ········ →                ║
@@ -61,7 +61,7 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 395 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 396 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    545/545 passing  ·  Deploy: verified                  ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -74,11 +74,11 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         545/545 passing (2026-10-21)                   ║
-║  ⚠  Velocity      1 →  ·  Debt: →                                ║
+║  ✓  Velocity      3 ↑  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⛔  Context age   17d                                            ║
-║  ✓  IGNIS         45412 FORGE  ·  2d old                         ║
-║  ⛔  Truth         yellow — scoped product release verified;…     ║
+║  ⛔  Context age   18d                                            ║
+║  ✓  IGNIS         45412 FORGE  ·  3d old                         ║
+║  ⛔  Truth         yellow — selected release verified;…           ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.181  (healthy)                               ║
@@ -95,8 +95,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    59d · Authorize or decline immutable warm-origin migrati      ║
-║    59d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
+║    60d · Authorize or decline immutable warm-origin migrati      ║
+║    60d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -108,32 +108,32 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▂▄▆▄  1→  (last 5 sessions)                        ║
+║  Velocity:   ▄▂▄▆▄  3↑  (last 5 sessions)                        ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  931/1000  (↓4 vs current 935)                       ║
-║  At-risk:    Momentum Δ-3                                        ║
-║  Calibration: MAE 4.4 over last 10 forecasts                     ║
+║  Projected:  941/1000  (↑2 vs current 939)                       ║
+║  All categories forecast stable or rising.                       ║
+║  Calibration: MAE 4.8 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   97  [VERIFY]       Separately assess served binary coverage a  ║
-║        Separately assess served binary coverage against real re  ║
+║   96  [PRODUCT]      Staging, main, production readback: docs/R  ║
+║        Staging, main, production readback: docs/RELEASE_S396.js  ║
 ║                                                                  ║
-║   96  [PRODUCT]      Investigate timing classification of incom  ║
+║   93  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
+║        Gate srcset, CSS url(), redirect targets. Future only. i  ║
+║                                                                  ║
+║   90  [PRODUCT]      Investigate timing classification of incom  ║
 ║        Investigate timing classification of incoming pre-sessio  ║
 ║                                                                  ║
-║   93  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
+║   89  [VERIFY]       Separately assess served binary coverage a  ║
+║        Separately assess served binary coverage against real re  ║
+║                                                                  ║
+║   87  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
 ║        Keep startup-generated genius-list drift distinguishable  ║
-║                                                                  ║
-║   87  [PRODUCT]      Assess cross-origin redirect handling in d  ║
-║        Assess cross-origin redirect handling in diagnostic HTTP  ║
-║                                                                  ║
-║   87  [INTELLIGENCE]  Record strict premise acceptance before c  ║
-║        Record strict premise acceptance before creating any pla  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 395 closeout · 2026-10-21*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 396 closeout · 2026-10-22*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

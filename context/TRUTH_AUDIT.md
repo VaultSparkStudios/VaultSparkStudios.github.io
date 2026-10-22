@@ -1704,3 +1704,8 @@ S393 theme release dependency accepted locally: Final build/postbuild26 pass; ge
 ### S393 current runtime evidence
 
 Fresh215/215 local mobile cells and84 inspected final theme captures pass. Both receipts bind the current candidate; all109 proof-surface checks pass (92 blocking, zero advisory findings). Partial remainder274–545 passes; it is diagnostic coverage, not a complete whole-project acceptance receipt. Canonical closeout filename/cache and obsolete capture-tool orphan exemption are corrected. Full545-step acceptance, current staging, sanitized main push, required exact-candidate hosted checks and normal full production readback remain pending.
+
+
+## S396 — internal reference truth (2026-10-21)
+
+Source-of-truth change: whether a public page's internal links and assets exist is now measured, not assumed. `scripts/check-local-references.mjs` runs in build:check; before S396 no gate resolved ordinary href/src, so two live 404s were invisible to every green suite. Known limits stay declared, not passed: `srcset`, CSS `url()`, JSON feeds and redirect destinations are unmeasured. The investor portal's missing theme system is a recorded CANON-047 gap.

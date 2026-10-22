@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 available totals):936 →935 →935 →935 →935
-Avgs (available rolling totals) —3:935 |5:935.2 |10:unmeasured |25:unmeasured |all:unmeasured
-Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session: 2026-10-21 | Session395 | Total:935/1000 | Velocity:1
-  └ Served coverage stabilization; release evidence: docs/RELEASE_S395.json.
+Sparkline (last5 available totals):935 →935 →935 →935 →939
+Avgs (available rolling totals) —3:936.3 |5:935.8 |10:unmeasured |25:unmeasured |all:unmeasured
+Velocity trend:↑ |Protocol velocity:→ |Debt:→
+Last session: 2026-10-21 | Session396 | Total:939/1000 | Velocity:3
+  └ Dead internal references fixed + reference-integrity gate; release evidence: docs/RELEASE_S396.json.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -3186,3 +3186,27 @@ SIL remains935/1000 across the same ten categories; velocity1. Two future S395 S
 S395 complete: one selected served-text coverage outcome is verified and released. Productc931cc736f70b524509378c1e35e1a69e8b3927d (run39650067973) and closing14466ce38c0c0e6e1b33c6c6816a086e7b6e9085 (run39678958995) each passed their own complete nonempty served-text sweep, exact hosted checks/provider identity/full-normal steps/both build stamps,65 product critical leaves and66 closing critical leaves on Pages/apex,12 incoming image variants per origin and source-bound shell readback. Closing source passed actual545/545 and current staging11/11. This is fresh whole-text closing evidence, not a baseline-plus-delta substitute. Binary scope remains12 incoming variants, and apex critical transport normalization remains narrowly declared. Original timing failure, absent original instrumentation, retired failed candidates and actual performance-attempt history remain retained. SIL935/1000 and velocity1 are unchanged; two future SIL rows remain unselected.
 
 Impact cargo queued: transport only, not recipient acceptance/application. Five temporarily paused writers are restored to their original states. Actual owned-process evidence reports none remaining. Late integrated/closing traces retain their real separate scope; original arc/context baseline remains unmeasured.
+
+## Session 396 — 2026-10-21 — dead internal references fixed and gated
+
+**Total:** 939/1000
+**Velocity:** 3
+**Win:** Two live 404s on public journeys (post-subscribe persona link; investor-portal brand mark on 8 pages) fixed at source, and the defect class now fails build:check.
+**Gap:** The first gate draft silently skipped `<script src>`; only the independent review caught it. Self-tests written by the same hand share its blind spots.
+
+Product rubric, ten categories ×100. No measured visitor gain claimed; outcome is removal of proven 404s.
+
+| Category | Score |
+|---|---:|
+| Dev Health | 94 |
+| Creative Alignment | 94 |
+| Momentum | 92 |
+| Engagement | 96 |
+| Process Quality | 89 |
+| Cross-Repo Coherence | 93 |
+| Security Posture | 97 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 98 |
+
+Brainstorm: (1) extend the reference gate to `srcset`, CSS `url()` and `_redirects` destinations (a redirect to a 404 currently counts as resolved); (2) a /news/personas/ roster index so the persona path itself answers; (3) give the investor portal the shared theme system (CANON-047). Committed to TASK_BOARD: (1) as a [SIL] item. (2) and (3) are kept in LATEST_HANDOFF and D-S396.1, because the startup context budget (42k) left no board room: pre-session headroom was 82 tokens. CDR reviewed: no new creative direction.

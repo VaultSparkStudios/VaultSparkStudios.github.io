@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-21T21:06:02.434Z",
+  "generatedAt": "2026-10-22T00:19:30.805Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 395,
-    "lastUpdated": "2026-10-21",
-    "currentFocus": "S395 complete served-text coverage is verified and fully deployed on integrated source",
-    "nextMilestone": "Select the next bounded task from the existing task board",
+    "currentSession": 396,
+    "lastUpdated": "2026-10-22",
+    "currentFocus": "S396 fixes two live 404s on public journeys and gates the defect class in build:check",
+    "nextMilestone": "Full production deployment and live readback of S396 (docs/RELEASE_S396.json)",
     "blockers": [
       "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
       "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -51,7 +51,11 @@
       "next": [
         "[S348][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet — DONE. Every Desk story now links to a deterministic `critique.json` argument map joining stable fact receipts, stances, predictions, and hash-bound visual evidence. Unsupported claims stay explicitly `unlinked`; orphan cross-references fail closed; no runtime model call is made."
       ],
-      "shipped": []
+      "shipped": [
+        "Shipped: 3 items across 2 groups. Broken journeys: the post-subscribe persona link now goes to /news/#anchors, and the investor-portal brand mark is restored on 8 pages. Release verification: new `check-local-references` build:check gate, self-test 18/18, live 334 pages / 28,929 refs.",
+        "Tests: build:check full suite, recorded in docs/RELEASE_S396.json. Gate self-test 18/18; independent review returned \"fix\" (`<script src>` was unchecked), which is fixed together with template and exact-case notes.",
+        "Deploy: staging → main → full production; outcome and live readback in docs/RELEASE_S396.json."
+      ]
     },
     "ignis": {
       "score": 45412,

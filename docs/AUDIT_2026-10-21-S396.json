@@ -1,0 +1,350 @@
+{
+  "schemaVersion": "1.0",
+  "date": "2026-10-21",
+  "generatedAt": "2026-10-21T23:20:00Z",
+  "session": 396,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S396 supported-release audit: dead internal references on live public journeys, plus the missing gate that let them ship. Authorized direct push to main and full deployment.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5
+  },
+  "investigation": {
+    "surveyMethod": "Live production smoke (6/6), full local route crawl (336 routes, 0 failures), a scratch internal href/src resolution scan over 335 tracked HTML pages, then live curl of every unresolved target. Bounded task projection, doctor (blockingFailing 0) and existing link tooling (audit-site-links, check-base-href-resolution, crawl-all-pages) read to locate the gate gap.",
+    "candidateSurvey": {
+      "featureDepth": [
+        "Post-subscribe persona link is a live 404: selected",
+        "Standalone /news/personas/ roster page: L3 only — new public page needs its own theme-matrix cycle"
+      ],
+      "innovativeFeatures": [
+        "Repo-wide reference integrity gate covering href and src: selected",
+        "Live-crawl link graph published as a stats surface: no demonstrated consumer, unselected"
+      ],
+      "ux": [
+        "Investor portal brand mark renders as a broken image on 8 pages: selected",
+        "Six game pages still say Coming soon/TBD: founder copy decision (TASK_BOARD S356), unselected"
+      ],
+      "feedbackLoop": [
+        "Dead references fail build:check instead of reaching production: selected (same as gate)",
+        "Read link-failure receipts in the startup brief: existing reader suffices"
+      ],
+      "gamification": [
+        "Season 1 defaults await founder confirmation: unselected",
+        "No defect found in rank surfaces this survey: none"
+      ],
+      "ai": [
+        "Agents following llms.txt links hit the same dead targets: covered by the gate",
+        "Model-scored link triage: deterministic resolution is sufficient, rejected"
+      ],
+      "security": [
+        "No new security surface touched; investor login/apply flows unchanged except the image path",
+        "Trusted Types enforce flip remains a separate soak decision: unselected"
+      ],
+      "speed": [
+        "Broken image requests cost a 404 round trip per investor page view: removed by fix",
+        "Disproved perf items (S334) not re-raised"
+      ],
+      "tokenCost": [
+        "Gate is a pure filesystem resolver — zero network, zero paid inference",
+        "No measured token lever in this scope: none selected"
+      ]
+    },
+    "market": "No market artifact consulted; no competitor facts asserted.",
+    "reuse": "Reuses the route/skip conventions of scripts/crawl-all-pages.mjs and the self-test pattern of scripts/check-base-href-resolution.mjs. Existing brand assets (assets/icon-128.webp, assets/vaultspark-icon-nav.webp) and the existing #anchors section on /news/. No new dependency.",
+    "recovery": "writeback-currency clean after sync; S395 closed with verified release. Not a cut-off."
+  },
+  "totals": {
+    "count": 3,
+    "priority": 51.6,
+    "top3": [
+      "local-reference-integrity-gate",
+      "desk-welcome-persona-link",
+      "investor-portal-brand-mark"
+    ]
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "local-reference-integrity-gate",
+      "title": "Fail build:check when any tracked HTML page references an internal file that does not exist",
+      "axis": "innovativeFeatures",
+      "tier": "⚡",
+      "effortHours": 1.5,
+      "impact": 8,
+      "innovation": 6,
+      "priority": 26.6,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Both defects shipped past 545 build:check steps: crawl-all-pages checks only route status, audit-site-links only anchors to project slugs, and check-base-href-resolution only pages carrying a <base>. No gate resolves every internal href/src.",
+      "userOutcome": "Info-finding and conversion: visitors and agents stop meeting dead internal links and broken images, because the next one fails the build instead of reaching production.",
+      "acceptance": "scripts/check-local-references.mjs --self-test passes; live run passes on the fixed tree and fails on the pre-fix tree; registered in build:check:steps; full build:check green.",
+      "premises": [
+        {
+          "claim": "Base-href checker is scoped to pages that declare a base",
+          "adapter": "file-content",
+          "target": "scripts/check-base-href-resolution.mjs",
+          "pattern": "for each HTML file carrying a <base href>",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "No reference-integrity checker exists yet",
+          "adapter": "file-exists",
+          "target": "scripts/check-local-references.mjs",
+          "operator": "eq",
+          "expected": false
+        }
+      ],
+      "recipe": "Walk tracked HTML (git ls-files), strip script/template/style bodies, resolve root-absolute and relative href/src (honoring <base>) against tracked files, directory index.html and Pages _redirects sources; report and exit 1. Self-test with fixtures. Register one build:check step.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "One-off scan (done in audit)."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Deterministic gate with self-test registered in build:check."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Also resolve srcset, CSS url() and JSON feeds; not selected."
+        }
+      },
+      "readinessArea": "release verification",
+      "stageRationale": "Prevents recurrence of proven broken-journey regressions without changing public policy.",
+      "executionLog": [
+        {
+          "at": "2026-10-21T23:40:21.914Z",
+          "status": "shipped",
+          "evidence": "Self-test 18/18; live 334 pages / 28,929 refs pass; pre-fix tree fails naming exactly /assets/logo.png (8 pages) and /news/personas/. Independent review: fix (script src unchecked) applied, plus template contents and exact-case matching; 1.8s runtime. Registered once in build:check:steps.",
+          "note": "Self-test 18/18; live 334 pages / 28,929 refs pass; pre-fix tree fails naming exactly /assets/logo.png (8 pages) and /news/personas/. Independent review: fix (script src unchecked) applied, plus template contents and exact-case matching; 1.8s runtime. Registered once in build:check:steps."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "desk-welcome-persona-link",
+      "title": "Repoint the post-subscribe \"Meet your AI news desk\" link to the live anchors roster",
+      "axis": "featureDepth",
+      "tier": "🔥",
+      "effortHours": 0.5,
+      "impact": 7,
+      "innovation": 3,
+      "priority": 15.9,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Every confirmed Desk Dispatch subscriber lands on /news/subscribed/, whose secondary call to action points at /news/personas/ — a path with per-persona pages but no index, which answers 404 on production.",
+      "userOutcome": "Info-finding: a newly confirmed subscriber who clicks \"Meet your AI news desk\" reaches the eight AI anchors instead of a 404.",
+      "acceptance": "Generator emits /news/#anchors; rebuilt news/subscribed/index.html carries it; the reference gate passes; production /news/subscribed/ serves the new href after deploy.",
+      "premises": [
+        {
+          "claim": "Subscribed page generator links to the index-less personas path",
+          "adapter": "file-content",
+          "target": "scripts/generate-news-pages.mjs",
+          "pattern": "href=\"/news/personas/\">Meet your AI news desk",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "The Desk index already exposes an anchors roster section",
+          "adapter": "file-content",
+          "target": "news/index.html",
+          "pattern": "id=\"anchors\"",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "recipe": "Change the generator href to /news/#anchors, rebuild through npm run build, confirm the emitted page.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.2,
+          "recipe": "Hand-edit the emitted page only (rejected — generator would revert it)."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "Fix at the generator and regenerate through the full build."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Build a /news/personas/ roster index page with theme-matrix receipts; not selected."
+        }
+      },
+      "readinessArea": "broken public journey",
+      "stageRationale": "Supported release prioritizes broken journeys; no copy, policy or identity change.",
+      "executionLog": [
+        {
+          "at": "2026-10-21T23:40:21.914Z",
+          "status": "shipped",
+          "evidence": "Generator emits /news/#anchors; npm run build regenerated news/subscribed/index.html; anchors section exists; 14 hash-bound captures across 7 themes manually reviewed (docs/visual-qa/LATEST.json, CANON-053 PASS). Independent review: claim holds.",
+          "note": "Generator emits /news/#anchors; npm run build regenerated news/subscribed/index.html; anchors section exists; 14 hash-bound captures across 7 themes manually reviewed (docs/visual-qa/LATEST.json, CANON-053 PASS). Independent review: claim holds."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "investor-portal-brand-mark",
+      "title": "Restore the investor-portal brand mark (8 pages reference a non-existent assets/logo.png)",
+      "axis": "ux",
+      "tier": "🔥",
+      "effortHours": 0.5,
+      "impact": 6,
+      "innovation": 2,
+      "priority": 9.1,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Every investor-portal page, including the public login and investor-interest form, requests ../assets/logo.png, which does not exist; production answers 404 and the brand block renders a broken image (alt text on login/apply).",
+      "userOutcome": "Conversion: a prospective investor opening the interest form or login sees the VaultSpark mark rather than a broken image, protecting trust at the point of submission (CANON-006 branding).",
+      "acceptance": "No investor-portal page references assets/logo.png; replacements resolve to existing assets; gate passes; production pages serve the new src after deploy.",
+      "premises": [
+        {
+          "claim": "Investor interest form references the missing logo",
+          "adapter": "file-content",
+          "target": "investor-portal/apply/index.html",
+          "pattern": "../../assets/logo.png",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "The referenced logo file does not exist",
+          "adapter": "file-exists",
+          "target": "assets/logo.png",
+          "operator": "eq",
+          "expected": false
+        },
+        {
+          "claim": "A small existing brand icon is available",
+          "adapter": "file-exists",
+          "target": "assets/icon-128.webp",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "recipe": "Use assets/icon-128.webp for the 32–36px login/apply marks and assets/vaultspark-icon-nav.webp for the 22px nav marks, with explicit width/height.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.2,
+          "recipe": "Swap the src only."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "Swap to size-appropriate existing assets with intrinsic dimensions to avoid layout shift."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Bring the investor portal onto the shared site chrome; not selected."
+        }
+      },
+      "readinessArea": "broken public journey",
+      "stageRationale": "Visual defect on a conversion surface; no auth or flow change.",
+      "executionLog": [
+        {
+          "at": "2026-10-21T23:40:21.914Z",
+          "status": "shipped",
+          "evidence": "8 pages use existing icon-128.webp / vaultspark-icon-nav.webp with sizes matching their CSS; 4 dark captures reviewed (docs/visual-qa/S396-investor-portal.json; portal is dark-only, pre-existing). Local LCP 80-152ms, CLS 0 (Lighthouse mobile runs in CI). Independent review: claim holds.",
+          "note": "8 pages use existing icon-128.webp / vaultspark-icon-nav.webp with sizes matching their CSS; 4 dark captures reviewed (docs/visual-qa/S396-investor-portal.json; portal is dark-only, pre-existing). Local LCP 80-152ms, CLS 0 (Lighthouse mobile runs in CI). Independent review: claim holds."
+        }
+      ]
+    }
+  ],
+  "readinessAssessment": [
+    {
+      "area": "core journeys and product correctness",
+      "status": "fail",
+      "owner": "website",
+      "nextAcceptanceCheck": "Two proven live 404s on public journeys (post-subscribe persona link, investor brand mark); fix, gate, deploy and read back production."
+    },
+    {
+      "area": "onboarding and identity/access",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "No identity change selected; run unchanged build:check access regressions."
+    },
+    {
+      "area": "accessibility, mobile parity and every supported theme",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Image swap keeps alt text and adds intrinsic dimensions; capture investor login/apply and Desk welcome at desktop and mobile per CANON-053."
+    },
+    {
+      "area": "performance and capacity",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Removes one 404 request per investor page view; no other page change."
+    },
+    {
+      "area": "security, privacy, data integrity and abuse controls",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "No auth/flow change; secrets scan and sanitization before push."
+    },
+    {
+      "area": "backup, recovery and rollback",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Record production build identity before promotion; revert commit is the rollback."
+    },
+    {
+      "area": "email and notifications where used",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Dispatch confirmation landing link changes only; no message sent."
+    },
+    {
+      "area": "observability and actionable analytics",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Doctor blockingFailing 0; new gate reports every unresolved reference with source page."
+    },
+    {
+      "area": "feedback, support and issue triage",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Existing regressions in build:check."
+    },
+    {
+      "area": "branding, legal, contact and rights/provenance",
+      "status": "fail",
+      "owner": "website",
+      "nextAcceptanceCheck": "Investor portal brand mark missing on 8 pages (CANON-006); restore with existing assets."
+    },
+    {
+      "area": "human and agent access where applicable",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Gate covers every tracked HTML reference that agents also follow."
+    },
+    {
+      "area": "staging, release evidence and truthful beta/release communication",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Deploy staging, verify, push main, confirm full production deployment and live readback for this S396 candidate."
+    }
+  ],
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-21T23:12:41.692Z",
+    "head": "18781e84ec9c2586ceb825826242faa8593bd2a7",
+    "sidecar": "docs/AUDIT_2026-10-21-S396.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 7,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "b87367932ca07e327e809ebe1095728c39b28a2d55ca6af371f128427de9075f",
+    "implementationDirty": []
+  }
+}

@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-10-21T21:06:02.437Z",
+  "generatedAt": "2026-10-22T00:19:30.807Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 395,
-    "lastUpdated": "2026-10-21",
-    "currentFocus": "S395 complete served-text coverage is verified and fully deployed on integrated source",
-    "nextMilestone": "Select the next bounded task from the existing task board",
+    "currentSession": 396,
+    "lastUpdated": "2026-10-22",
+    "currentFocus": "S396 fixes two live 404s on public journeys and gates the defect class in build:check",
+    "nextMilestone": "Full production deployment and live readback of S396 (docs/RELEASE_S396.json)",
     "ignis": {
       "score": 45412,
       "grade": "FORGE",
@@ -20,7 +20,11 @@
   "pulse": {
     "now": [],
     "next": [],
-    "shipped": []
+    "shipped": [
+      "Shipped: 3 items across 2 groups. Broken journeys: the post-subscribe persona link now goes to /news/#anchors, and the investor-portal brand mark is restored on 8 pages. Release verification: new `check-local-references` build:check gate, self-test 18/18, live 334 pages / 28,929 refs.",
+      "Tests: build:check full suite, recorded in docs/RELEASE_S396.json. Gate self-test 18/18; independent review returned \"fix\" (`<script src>` was unchecked), which is fixed together with template and exact-case notes.",
+      "Deploy: staging → main → full production; outcome and live readback in docs/RELEASE_S396.json."
+    ]
   },
   "consumerChangelog": [
     {
@@ -134,7 +138,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 395,
+    "sessionsCompleted": 396,
     "liveProjects": 3,
     "projectsInForge": 17,
     "activeEdgeFunctions": 16,
@@ -149,18 +153,18 @@
     "forge": 17,
     "vaulted": 1,
     "silCategories": {
-      "devHealth": 93,
+      "devHealth": 94,
       "alignment": 94,
-      "momentum": 90,
+      "momentum": 92,
       "engagement": 96,
-      "process": 88,
+      "process": 89,
       "coherence": 93,
       "security": 97,
       "ecosystem": 91,
       "capital": 95,
       "automation": 98,
-      "total": 935,
-      "updatedSession": 395
+      "total": 939,
+      "updatedSession": 396
     },
     "sealedNextRevealAt": null
   },
@@ -834,7 +838,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "CI gate status is unknown.",
-    "checkedAt": "2026-10-21T18:30:01.835Z",
+    "checkedAt": "2026-10-21T22:32:13.131Z",
     "workflows": [
       {
         "name": "E2E Test Suite",

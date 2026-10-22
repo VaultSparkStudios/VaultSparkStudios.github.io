@@ -1,16 +1,16 @@
-# Genius Hit List — Session 395
+# Genius Hit List — Session 396
 
-Generated: 2026-10-21
+Generated: 2026-10-22
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **81/100**
+- Overall opportunity pressure: **80/100**
 - Health: **yellow**
-- Current SIL: **935/1000**
+- Current SIL: **939/1000**
 - CI health: **check gh run list**
-- Current focus: S395 complete served-text coverage is verified and fully deployed on integrated source
+- Current focus: S396 fixes two live 404s on public journeys and gates the defect class in build:check
 
 ## Strategic Read
 
@@ -22,77 +22,77 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] Separately assess served binary coverage against real release risk; c…
-Final score: **97**
+#### 1. [PRODUCT] Staging, main, production readback: docs/RELEASE_S396.json.
+Final score: **96**
+[S396 RELEASE] Staging, main, production readback: docs/RELEASE_S396.json.
+Why it matters: Staging, main, production readback: docs/RELEASE_S396.json. is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Gate srcset, CSS url(), redirect targets. Future only.
+Final score: **93**
+[SIL][S396] Gate srcset, CSS url(), redirect targets. Future only.
+Why it matters: Gate srcset, CSS url(), redirect targets. Future only. is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Investigate timing classification of incoming pre-session same-identi…
+Final score: **90**
+[SIL][S395][PROTOCOL/P2] Investigate timing classification of incoming pre-session same-identity automation after a pre-sync lock; preserve original failure. Future selection only.
+Why it matters: Investigate timing classification of incoming pre-session same-identit is open, local, and unblocked — can ship this session.
+
+#### 4. [VERIFY] Separately assess served binary coverage against real release risk; c…
+Final score: **89**
 [SIL][S395][VERIFY/P2] Separately assess served binary coverage against real release risk; current verifier explicitly measures tracked served text. Future selection only.
 Why it matters: Separately assess served binary coverage against real release risk; cu shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 2. [PRODUCT] Investigate timing classification of incoming pre-session same-identi…
-Final score: **96**
-[SIL][S395][PROTOCOL/P2] Investigate timing classification of incoming pre-session same-identity automation after a pre-sync lock; preserve original failure. Future selection only.
-Why it matters: Investigate timing classification of incoming pre-session same-identit is open, local, and unblocked — can ship this session.
+### NEXT
 
-#### 3. [INTELLIGENCE] Keep startup-generated genius-list drift distinguishable from selecte…
-Final score: **93**
+#### 1. [INTELLIGENCE] Keep startup-generated genius-list drift distinguishable from selecte…
+Final score: **87**
 [SIL][S394][PROTOCOL/P2] Keep startup-generated genius-list drift distinguishable from selected implementation in premise timing; preserve the original nonpassing receipt. Future selection only.
 Why it matters: Keep startup-generated genius-list drift distinguishable from selected keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 4. [PRODUCT] Assess cross-origin redirect handling in diagnostic HTTP commands wit…
-Final score: **87**
+#### 2. [PRODUCT] Assess cross-origin redirect handling in diagnostic HTTP commands wit…
+Final score: **81**
 [SIL][S394][RELIABILITY/P2] Assess cross-origin redirect handling in diagnostic HTTP commands with measured caller compatibility. Future selection only.
 Why it matters: Assess cross-origin redirect handling in diagnostic HTTP commands with is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [INTELLIGENCE] Record strict premise acceptance before creating any plan artifact in…
-Final score: **87**
+#### 3. [INTELLIGENCE] Record strict premise acceptance before creating any plan artifact in…
+Final score: **81**
 [SIL][S393][PROTOCOL/P2] Record strict premise acceptance before creating any plan artifact in the next selected audit.
 Why it matters: Record strict premise acceptance before creating any plan artifact in  keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 2. [PRODUCT] Measure and remove generated leaderboard metadata/whitespace churn at…
-Final score: **81**
+#### 4. [PRODUCT] Measure and remove generated leaderboard metadata/whitespace churn at…
+Final score: **75**
 [SIL][S393][BUILD/P2] Measure and remove generated leaderboard metadata/whitespace churn at its existing builder boundaries; preserve canonical social previews and rendered evidence. Future selection only.
 Why it matters: Measure and remove generated leaderboard metadata/whitespace churn at  is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Complete suite, exact-candidate publication, production promotion/rea…
-Final score: **78**
-[S391 RELEASE] Complete suite, exact-candidate publication, production promotion/readback (docs/RELEASE_S391.json).
-Why it matters: Complete suite, exact-candidate publication, production promotion/read is open, local, and unblocked — can ship this session.
-
-#### 4. [PRODUCT] Require the strict premise checkpoint before delegated edits.
-Final score: **75**
+#### 5. [PRODUCT] Require the strict premise checkpoint before delegated edits.
+Final score: **72**
 [SIL][S391] Require the strict premise checkpoint before delegated edits.
 Why it matters: Require the strict premise checkpoint before delegated edits. is open, local, and unblocked — can ship this session.
 
-#### 5. [INTELLIGENCE] Assess the existing mobile Spark overlap with article prose in a futu…
-Final score: **75**
+### LATER
+
+#### 1. [INTELLIGENCE] Assess the existing mobile Spark overlap with article prose in a futu…
+Final score: **72**
 [UI follow-up][S391] Assess the existing mobile Spark overlap with article prose in a future UI audit.
 Why it matters: Assess the existing mobile Spark overlap with article prose in a futur keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-### LATER
-
-#### 1. [PRODUCT] Rank orb never renders for members.
-Final score: **69**
+#### 2. [PRODUCT] Rank orb never renders for members.
+Final score: **66**
 [S390][UX/P2] Rank orb never renders for members.
 Why it matters: Rank orb never renders for members. is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Member achievements schema/display.
-Final score: **66**
+#### 3. [PRODUCT] Member achievements schema/display.
+Final score: **63**
 [S390][DATA/P2] Member achievements schema/display.
 Why it matters: Member achievements schema/display. is open, local, and unblocked — can ship this session.
-
-#### 3. [PRODUCT] event_rsvps exposes user_id to anon.
-Final score: **63**
-[S390][SEC/P2] event_rsvps exposes user_id to anon.
-Why it matters: event_rsvps exposes user_id to anon. is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -138,18 +138,18 @@ Why it matters: Owned by another repo or already moved through Ark cargo.
 
 ## Recommended Build Order
 
-1. Separately assess served binary coverage against real release risk; c…
-2. Investigate timing classification of incoming pre-session same-identi…
-3. Keep startup-generated genius-list drift distinguishable from selecte…
-4. Assess cross-origin redirect handling in diagnostic HTTP commands wit…
-5. Record strict premise acceptance before creating any plan artifact in…
-6. Measure and remove generated leaderboard metadata/whitespace churn at…
-7. Complete suite, exact-candidate publication, production promotion/rea…
-8. Require the strict premise checkpoint before delegated edits.
-9. Assess the existing mobile Spark overlap with article prose in a futu…
-10. Rank orb never renders for members.
-11. Member achievements schema/display.
-12. event_rsvps exposes user_id to anon.
+1. Staging, main, production readback: docs/RELEASE_S396.json.
+2. Gate srcset, CSS url(), redirect targets. Future only.
+3. Investigate timing classification of incoming pre-session same-identi…
+4. Separately assess served binary coverage against real release risk; c…
+5. Keep startup-generated genius-list drift distinguishable from selecte…
+6. Assess cross-origin redirect handling in diagnostic HTTP commands wit…
+7. Record strict premise acceptance before creating any plan artifact in…
+8. Measure and remove generated leaderboard metadata/whitespace churn at…
+9. Require the strict premise checkpoint before delegated edits.
+10. Assess the existing mobile Spark overlap with article prose in a futu…
+11. Rank orb never renders for members.
+12. Member achievements schema/display.
 
 ## Best Immediate Move
 

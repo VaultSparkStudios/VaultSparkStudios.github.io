@@ -1,3 +1,9 @@
+## S396 — dead internal references fixed and gated
+
+- [x] [S396 #1-3] Reference gate; two live 404s fixed. docs/AUDIT_2026-10-21-S396.md.
+- [ ] [S396 RELEASE] Staging, main, production readback: docs/RELEASE_S396.json.
+- [ ] [SIL][S396] Gate srcset, CSS url(), redirect targets. Future only.
+
 ## S395 — complete served coverage and full deployment
 
 Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
@@ -39,7 +45,7 @@ Waves1–3 implemented and verified for the full product release. Closing status
 
 - [x] [S391 #1] Six CLI guards verified; semantic migration probe admission included.
 - [x] [S391 #2] REST canary verified locally and hosted125/7; receipt in docs/RELEASE_S391.json.
-- [ ] [S391 RELEASE] Complete suite, exact-candidate publication, production promotion/readback (docs/RELEASE_S391.json).
+- [x] [S391 RELEASE] Shipped via S395 production 14466ce38c (ancestry checked S396).
 - [x] [SIL][S391] Moderation options verified in S392.
 - [ ] [SIL][S391] Require the strict premise checkpoint before delegated edits.
 - [ ] [UI follow-up][S391] Assess the existing mobile Spark overlap with article prose in a future UI audit.
