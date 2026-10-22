@@ -79,16 +79,16 @@
 ║  ⛔  Context age   18d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  3d old                         ║
 ║  ⛔  Truth         yellow — selected release verified;…           ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
+║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.181  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ⚠  Revenue sig.  9d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
+║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Staging, main, production readback: docs/R  ║
-║        Staging, main, production readback: docs/RELEASE_S396.js  ║
-║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
-║   93  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
+║   96  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
 ║        Gate srcset, CSS url(), redirect targets. Future only. i  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Investigate timing classification of incom  ║
+║   93  [PRODUCT]      Investigate timing classification of incom  ║
 ║        Investigate timing classification of incoming pre-sessio  ║
 ║                                                                  ║
-║   89  [VERIFY]       Separately assess served binary coverage a  ║
+║   92  [VERIFY]       Separately assess served binary coverage a  ║
 ║        Separately assess served binary coverage against real re  ║
+║                                                                  ║
+║   90  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
+║        Keep startup-generated genius-list drift distinguishable  ║
+║                                                                  ║
+║   84  [PRODUCT]      Assess cross-origin redirect handling in d  ║
+║        Assess cross-origin redirect handling in diagnostic HTTP  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

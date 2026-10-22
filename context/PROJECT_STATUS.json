@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S396 fixes two live 404s on public journeys and gates the defect class in build:check",
+  "currentFocus": "S396 complete: two live 404s fixed, reference-integrity gate added, fully deployed",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Full production deployment and live readback of S396 (docs/RELEASE_S396.json)",
+  "nextMilestone": "Select the next bounded task from the existing task board",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -288,8 +288,8 @@
   "sessionState": {
     "version": 1,
     "durableSession": 396,
-    "currentFocus": "S396 fixes two live 404s on public journeys and gates the defect class in build:check",
-    "nextMilestone": "Full production deployment and live readback of S396 (docs/RELEASE_S396.json)",
+    "currentFocus": "S396 complete: two live 404s fixed, reference-integrity gate added, fully deployed",
+    "nextMilestone": "Select the next bounded task from the existing task board",
     "lastSessionSummary": "S396: /news/subscribed/ persona link repointed to /news/#anchors and the investor-portal brand mark restored on 8 pages (both were live 404s). New build:check gate check-local-references resolves every internal href/src on 334 public pages (self-test 18/18; fails the pre-fix tree on exactly these defects). Independent review fix applied. CANON-053 receipts reviewed."
   },
   "s378RecordRecovery": {
@@ -301,66 +301,38 @@
     "evidence": "docs/RELEASE_S378.json",
     "behaviorChanged": false
   },
-  "testsSession": 395,
-  "currentBuildState": "pending",
-  "currentBuildNote": "S396 source: full build passed; build:check, staging and production pending at write-back time; final state in docs/RELEASE_S396.json.",
-  "lastDeploySession": 395,
+  "testsSession": 396,
+  "currentBuildState": "passed",
+  "currentBuildNote": "S396 build:check 547/547 on session source; hosted E2E/compliance/Lighthouse/a11y pass on release commit c6fb0ac27a.",
+  "lastDeploySession": 396,
   "lastDeployStatus": "verified",
   "silAvg5": 935.8,
   "lastReleaseAcceptance": {
-    "session": 395,
-    "candidate": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
-    "receipt": "docs/RELEASE_S395.json",
-    "workflowRun": 39678958995,
-    "productBaseline": "c931cc736f70b524509378c1e35e1a69e8b3927d"
+    "session": 396,
+    "candidate": "c6fb0ac27acf41ae198ee931012fa2a086654100",
+    "receipt": "docs/RELEASE_S396.json",
+    "workflowRun": 39722337148
   },
   "truthAuditSummary": "S395 served-text parity requires complete nonempty exactly-once coverage, committed redirect status/destination and strict CLI admission. Focused fixtures3/3, self-test19/19, existing regressions9/9 and independent review pass. The earlier actual npm full build/postbuild26/26 is retained as preintegration evidence. Fresh integrated36-node native-owner closure, declared news checks and two complete 545/545 runs plus current staging11/11 pass;84 manually inspected news captures across7themes at1440/390px and215 automated device probes retain their stated limits. Retired8442f8f4 failed hosted compliance atstep143 because WORK_LOG measured251KB against the250KB cap; native rotation moved0 for session-first headings, so older history was archived verbatim before corrected candidate16f6938f. Normal full production candidate c931cc736f70b524509378c1e35e1a69e8b3927d (run 39650067973) is verified by hosted checks, provider identity, both build stamps, complete served text,65 critical leaves on Pages/apex and exactly12 incoming news-image variants on both origins. This does not certify all binary assets. Original premise timing remains nonpassing; original baseline trace/context usage is unmeasured. Existing identity and field-vitals holds remain separate; no measured visitor or performance gain is claimed.",
   "currentVerification": {
-    "session": 395,
+    "session": 396,
     "state": "release-verified",
-    "source": "docs/RELEASE_S395.json",
-    "lastCompleteTestsSession": 395,
-    "note": "S395 served-text parity requires complete nonempty exactly-once coverage, committed redirect status/destination and strict CLI admission. Focused fixtures3/3, self-test19/19, existing regressions9/9 and independent review pass. The earlier actual npm full build/postbuild26/26 is retained as preintegration evidence. Fresh integrated36-node native-owner closure, declared news checks and two complete 545/545 runs plus current staging11/11 pass;84 manually inspected news captures across7themes at1440/390px and215 automated device probes retain their stated limits. Retired8442f8f4 failed hosted compliance atstep143 because WORK_LOG measured251KB against the250KB cap; native rotation moved0 for session-first headings, so older history was archived verbatim before corrected candidate16f6938f. Normal full production candidate c931cc736f70b524509378c1e35e1a69e8b3927d (run 39650067973) is verified by hosted checks, provider identity, both build stamps, complete served text,65 critical leaves on Pages/apex and exactly12 incoming news-image variants on both origins. This does not certify all binary assets. Original premise timing remains nonpassing; original baseline trace/context usage is unmeasured. Existing identity and field-vitals holds remain separate; no measured visitor or performance gain is claimed.",
-    "currentClosingSourceFingerprint": "88fba2449fbfa895ee22cc69",
-    "currentClosingChecks": "Actual current closing-source545/545; exact hosted checks and independent fresh complete closing-runtime acceptance.",
-    "previousClosingStaging": {
-      "state": "passed",
-      "receiptId": "ee9d16287e806280f2790915",
-      "sourceFingerprint": "e57c50e9e4442ce532517cc7",
-      "artifactRoot": "c26fadde30a607b4c761543faf9fadaa7e8e1ae0eb09167fd7ebcb9c04f24265",
-      "ceremony": 11
-    },
-    "releaseCorrection": {
-      "state": "verified",
-      "receipt": "docs/RELEASE_S395.json"
-    },
-    "closingStaging": {
-      "state": "passed",
-      "receiptId": "777b712ca5f7222ec1e1df75",
-      "sourceFingerprint": "88fba2449fbfa895ee22cc69",
-      "artifactRoot": "e2dcafed9ff7bd3b2acbf305ce355126c3f919e5fd980b05424279bc73eca70e",
-      "ceremony": 11
-    },
-    "scope": "Released candidate and immutable acceptance; later routine observations remain separate."
+    "source": "docs/RELEASE_S396.json",
+    "lastCompleteTestsSession": 396
   },
   "metadataPublication": {
-    "session": 395,
-    "candidate": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
-    "workflowRun": 39678958995,
+    "session": 396,
+    "candidate": "c6fb0ac27acf41ae198ee931012fa2a086654100",
+    "workflowRun": 39722337148,
     "state": "verified",
-    "receipt": "docs/RELEASE_S395.json"
+    "receipt": "docs/RELEASE_S396.json"
   },
   "lastCompletedArc": {
-    "session": 395,
-    "goalId": "01a15eb6-e304-7081-a71e-82d582edf91f",
-    "goalCreatedAt": 1792590416,
+    "session": 396,
     "phase": "release-verified",
-    "audit": "docs/AUDIT_2026-10-21-S395.json",
-    "releaseEvidence": "docs/RELEASE_S395.json",
-    "releaseVerifiedAt": "2026-10-21T22:13:05.489Z",
-    "candidate": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
-    "productCandidate": "c931cc736f70b524509378c1e35e1a69e8b3927d",
-    "productEvidence": ".cache/S395/production-accepted.json",
-    "closingEvidence": ".cache/S395/closing-production-accepted.json"
+    "audit": "docs/AUDIT_2026-10-21-S396.json",
+    "releaseEvidence": "docs/RELEASE_S396.json",
+    "candidate": "c6fb0ac27acf41ae198ee931012fa2a086654100",
+    "releaseVerifiedAt": "2026-10-22T05:15:54.007Z"
   }
 }

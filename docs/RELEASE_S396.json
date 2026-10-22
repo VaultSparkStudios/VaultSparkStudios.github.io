@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "session": 396,
+  "state": "release-verified",
+  "releaseAccepted": true,
+  "implementation": {
+    "audit": "docs/AUDIT_2026-10-21-S396.json",
+    "items": [
+      "local-reference-integrity-gate",
+      "desk-welcome-persona-link",
+      "investor-portal-brand-mark"
+    ],
+    "sourceCommit": "f4bc1f2bc3",
+    "independentReview": {
+      "verdict": "fix",
+      "findings": 6,
+      "fixed": 3,
+      "note": "<script src> unchecked in first draft; fixed with template contents and exact-case matching"
+    }
+  },
+  "verification": {
+    "buildCheck": {
+      "passed": 547,
+      "total": 547,
+      "note": "local full run on S396 source after write-back; a later integrated rerun hit a load-induced 15s spawn timeout in tests/theme-capture-receipt.unit.spec.mjs (passes 1/1 in isolation, ~9s); hosted E2E/compliance on the release commit passed"
+    },
+    "gateSelfTest": "18/18",
+    "gateLive": "334 pages, 28,929 internal references",
+    "mobile": "215/215",
+    "visualQa": {
+      "latest": "docs/visual-qa/LATEST.json (14 captures, 7 themes, all manually reviewed)",
+      "investor": "docs/visual-qa/S396-investor-portal.json (4 dark captures; portal has no theme system)"
+    }
+  },
+  "staging": {
+    "origin": "https://website.staging.vaultsparkstudios.com",
+    "deployedCommit": "f4bc1f2bc3",
+    "receiptId": "8f356a068747c588f7bf955e",
+    "files": 12639,
+    "ceremony": "passed 11/11 (local, e529cb0e7c lineage)"
+  },
+  "integration": {
+    "note": "Hourly [skip ci] publishers raced the push; their generated-only commits were merged (generated conflicts resolved to incoming, then full rebuild / evidence-graph repair / receipt rebind). First pushed merge b7db1e283d failed hosted compliance at step 45 (public-intelligence drift); corrected by full rebuild on integrated main.",
+    "failedCandidate": {
+      "sha": "b7db1e283d",
+      "failure": "compliance step 45 generated drift"
+    }
+  },
+  "production": {
+    "state": "verified",
+    "sha": "c6fb0ac27acf41ae198ee931012fa2a086654100",
+    "dispatchRef": {
+      "type": "tag",
+      "name": "s396-product-20261022-c6fb0ac2"
+    },
+    "workflowRun": 39722337148,
+    "job": 119638424277,
+    "promotionGate": "allowed=true; mode=scoped; state=hold (identity, disjoint)",
+    "ceremony": "passed 11/11 (hosted)",
+    "hostedChecks": {
+      "e2e": "success",
+      "compliance": "success",
+      "lighthouse": "success",
+      "lighthouseStaging": "success",
+      "accessibility": "success",
+      "secretLint": "success"
+    },
+    "readback": {
+      "origins": [
+        "https://vaultsparkstudios.com",
+        "https://vaultsparkstudios-website.pages.dev"
+      ],
+      "buildSha": "c6fb0ac27a",
+      "deployedBy": "pages-deploy",
+      "newsSubscribedHref": "/news/#anchors",
+      "investorApplyIcon": "../../assets/icon-128.webp (200)",
+      "newsIndex": 200
+    },
+    "servedParity": {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "against": "c6fb0ac27acf41ae198ee931012fa2a086654100",
+      "checked": 1128,
+      "identical": 1118,
+      "redirected": 10,
+      "differ": 0,
+      "notServed": 0,
+      "note": "Bulk run read 1109 identical with 9 unread on load-induced fetch timeouts; those 9 were re-fetched individually and are byte-identical to the commit."
+    }
+  },
+  "rollback": {
+    "sha": "14466ce38c0c0e6e1b33c6c6816a086e7b6e9085",
+    "deployedBy": "pages-deploy",
+    "note": "production identity before S396 promotion"
+  },
+  "remaining": [
+    "Future only: extend reference gate to srcset/CSS url()/redirect targets; /news/personas/ index; investor-portal theme system (CANON-047)"
+  ],
+  "completedAt": "2026-10-22T05:15:53.997Z"
+}

@@ -1,7 +1,7 @@
 ## S396 — dead internal references fixed and gated
 
 - [x] [S396 #1-3] Reference gate; two live 404s fixed. docs/AUDIT_2026-10-21-S396.md.
-- [ ] [S396 RELEASE] Staging, main, production readback: docs/RELEASE_S396.json.
+- [x] [S396 RELEASE] Staging, main, production readback: docs/RELEASE_S396.json.
 - [ ] [SIL][S396] Gate srcset, CSS url(), redirect targets. Future only.
 
 ## S395 — complete served coverage and full deployment

@@ -2,9 +2,9 @@
 
 - Shipped: 3 items across 2 groups. Broken journeys: the post-subscribe persona link now goes to /news/#anchors, and the investor-portal brand mark is restored on 8 pages. Release verification: new `check-local-references` build:check gate, self-test 18/18, live 334 pages / 28,929 refs.
 - Tests: build:check full suite, recorded in docs/RELEASE_S396.json. Gate self-test 18/18; independent review returned "fix" (`<script src>` was unchecked), which is fixed together with template and exact-case notes.
-- Deploy: staging → main → full production; outcome and live readback in docs/RELEASE_S396.json.
+- Deploy: fully deployed. Production c6fb0ac27a (pages-deploy run 39722337148, scoped promotion, hosted ceremony 11/11) serves both fixes on apex and Pages; whole-tree parity 1118 identical / 10 redirects / 0 differ. Evidence: docs/RELEASE_S396.json.
 
-Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy. Intent: achieved when RELEASE_S396.json records production readback. Audit: docs/AUDIT_2026-10-21-S396.md (3 items, priority 51.6, premise gate 7/7 before edits). CDR reviewed: no new creative direction. Next: optional /news/personas/ roster index page; investor portal theme system (CANON-047 gap, pre-existing). Both are future selections only. Startup context budget: TASK_BOARD+brief is at ~41,983/42,000 tokens after closing the superseded [S391 RELEASE] item (its commits are ancestors of S395 production 14466ce38c). The next session must close or archive items before adding any.
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy. Intent: achieved. Audit: docs/AUDIT_2026-10-21-S396.md (3 items, priority 51.6, premise gate 7/7 before edits). CDR reviewed: no new creative direction. Next: optional /news/personas/ roster index page; investor portal theme system (CANON-047 gap, pre-existing). Both are future selections only. Startup context budget: TASK_BOARD+brief is at ~41,983/42,000 tokens after closing the superseded [S391 RELEASE] item (its commits are ancestors of S395 production 14466ce38c). The next session must close or archive items before adding any.
 
 ## Where We Left Off (Session 395) — full release and closing publication verified
 
