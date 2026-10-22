@@ -3170,3 +3170,5 @@ Score unchanged: demonstrated local reliability repair, no measured field improv
 | Automation Coverage | 97 |
 
 Brainstorm: (1) the Spark buddy overlapping Desk text at 390px (committed [SIL]); (2) a founder-approved release-window mechanism, or a data-tolerant staging lineage, so publishers stop forcing re-converges (committed [SIL]); (3) add the SI entity to JSON-LD knowsAbout (audit L3, unselected). CDR reviewed: no new creative direction.
+
+**Closing publication for existing S398 entry:** Closeout commit 10c6728c3c was followed by two generated-only re-seals over incoming publishers: 9155e45a (new Desk edition; fresh mobile audit 215/215) and 5fda28d1 (uptime data). Receipt ordering and proof surface 92/92 passed on each; CI build:check is the full verdict for the pushed tree. Score 939/1000 and velocity 2 are unchanged. Production remains 418d250656.
