@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-22T06:56:45.490Z",
+  "generatedAt": "2026-10-22T06:59:56.994Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -74,10 +74,10 @@
     {
       "id": "human-page-loads-30d",
       "label": "Human page loads",
-      "value": 8000,
+      "value": 7530,
       "unitOrDenominator": "bot-excluded browser page loads",
       "period": "30 complete UTC days",
-      "computedAt": "2026-10-21T07:01:02.862Z",
+      "computedAt": "2026-10-22T06:59:56.949Z",
       "source": "/api/ecosystem-analytics.json",
       "sourceType": "cloudflare-web-analytics",
       "sourceDataset": "rumPageloadEventsAdaptiveGroups",
@@ -85,16 +85,16 @@
       "botPolicy": "excluded",
       "measurement": {
         "kind": "estimate",
-        "sampleInterval": 1000,
+        "sampleInterval": 20,
         "confidenceLevel": 0.95,
         "confidence": {
-          "estimate": 8000,
-          "lower": 0,
-          "upper": 19082,
-          "sampleSize": 8
+          "estimate": 7530,
+          "lower": 5455,
+          "upper": 9664,
+          "sampleSize": 734
         }
       },
-      "observedThrough": "2026-10-21",
+      "observedThrough": "2026-10-22",
       "freshnessState": "fresh",
       "category": "audience",
       "format": "integer",
@@ -102,8 +102,8 @@
       "available": true,
       "window": {
         "days": 30,
-        "start": "2026-09-21",
-        "endExclusive": "2026-10-21",
+        "start": "2026-09-22",
+        "endExclusive": "2026-10-22",
         "timezone": "UTC",
         "completeDaysOnly": true
       },
@@ -199,7 +199,7 @@
       "value": 0,
       "unitOrDenominator": "accepted anonymous route-performance observations",
       "period": "7 complete UTC days",
-      "computedAt": "2026-10-22T03:12:49.762Z",
+      "computedAt": "2026-10-22T06:59:56.994Z",
       "source": "/api/analytics-summary.json",
       "sourceType": "vaultspark-rum",
       "sourceDataset": "data/rum-history.ndjson",
@@ -288,16 +288,16 @@
       },
       {
         "day": "2026-09-30",
-        "samples": 7
+        "samples": 8
       }
     ],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-10-22T03:12:49.762Z",
+    "computedAt": "2026-10-22T06:59:56.994Z",
     "warning": "Performance samples are not an audience trend."
   },
   "reconciliation": {
     "source": "/api/ecosystem-analytics.json",
-    "computedAt": "2026-10-21T07:01:02.862Z",
+    "computedAt": "2026-10-22T06:59:56.949Z",
     "dimensions": [
       {
         "id": "human-page-loads",

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "cloudflare-analytics-snapshot/v1",
-  "generatedAt": "2026-10-21T07:01:02.862Z",
-  "observedThrough": "2026-10-21",
+  "generatedAt": "2026-10-22T06:59:56.949Z",
+  "observedThrough": "2026-10-22",
   "publicSafe": true,
   "source": {
     "provider": "Cloudflare",
@@ -13,15 +13,15 @@
   "windows": {
     "seven": {
       "days": 7,
-      "start": "2026-10-14",
-      "endExclusive": "2026-10-21",
+      "start": "2026-10-15",
+      "endExclusive": "2026-10-22",
       "timezone": "UTC",
       "completeDaysOnly": true
     },
     "thirty": {
       "days": 30,
-      "start": "2026-09-21",
-      "endExclusive": "2026-10-21",
+      "start": "2026-09-22",
+      "endExclusive": "2026-10-22",
       "timezone": "UTC",
       "completeDaysOnly": true
     }
@@ -36,11 +36,13 @@
   "coverage": {
     "zonesRegistered": 31,
     "zonesMeasured30": 27,
-    "productionHostsMeasured30": 2,
-    "projectsWithAudience30": 2,
+    "productionHostsMeasured30": 12,
+    "projectsWithAudience30": 10,
     "projectsWithEdge30": 19,
-    "excludedHosts30": 2,
-    "unmappedHosts30": [],
+    "excludedHosts30": 8,
+    "unmappedHosts30": [
+      "app-social-dashboard.vaultsparkstudios.com"
+    ],
     "activeZonesAccessible": 31,
     "registryComplete": true
   },
@@ -49,44 +51,44 @@
       "audience": {
         "human": {
           "pageLoads": {
-            "estimate": 2000,
-            "lower": 0,
-            "upper": 5918,
-            "sampleSize": 2
+            "estimate": 1340,
+            "lower": 562,
+            "upper": 2235,
+            "sampleSize": 134
           },
           "visits": {
             "estimate": 1000,
-            "lower": 0,
-            "upper": 2959,
-            "sampleSize": 1
+            "lower": 379,
+            "upper": 1724,
+            "sampleSize": 100
           },
-          "sampleIntervalMax": 1000,
+          "sampleIntervalMax": 10,
           "sampled": true
         },
         "bots": {
           "pageLoads": {
-            "estimate": 1000,
-            "lower": 0,
-            "upper": 2959,
-            "sampleSize": 1
+            "estimate": 1200,
+            "lower": 434,
+            "upper": 2025,
+            "sampleSize": 120
           },
           "visits": {
-            "estimate": 1000,
-            "lower": 0,
-            "upper": 2959,
-            "sampleSize": 1
+            "estimate": 1140,
+            "lower": 394,
+            "upper": 1948,
+            "sampleSize": 114
           },
-          "sampleIntervalMax": 1000,
+          "sampleIntervalMax": 10,
           "sampled": true
         },
-        "productionHostsMeasured": 1
+        "productionHostsMeasured": 9
       },
       "infrastructure": {
-        "edgeRequests": 1039430,
-        "htmlPageViews": 169576,
-        "cachedRequests": 286232,
-        "bytes": 12904463266,
-        "threats": 11006,
+        "edgeRequests": 1129426,
+        "htmlPageViews": 176683,
+        "cachedRequests": 323348,
+        "bytes": 14004768557,
+        "threats": 13626,
         "zonesMeasured": 27
       }
     },
@@ -94,44 +96,44 @@
       "audience": {
         "human": {
           "pageLoads": {
-            "estimate": 13000,
-            "lower": 0,
-            "upper": 33877,
-            "sampleSize": 13
+            "estimate": 11160,
+            "lower": 6624,
+            "upper": 16179,
+            "sampleSize": 1079
           },
           "visits": {
-            "estimate": 10000,
-            "lower": 0,
-            "upper": 25000,
-            "sampleSize": 10
+            "estimate": 8760,
+            "lower": 5584,
+            "upper": 12340,
+            "sampleSize": 863
           },
-          "sampleIntervalMax": 1000,
+          "sampleIntervalMax": 20,
           "sampled": true
         },
         "bots": {
           "pageLoads": {
-            "estimate": 5000,
-            "lower": 0,
-            "upper": 14797,
-            "sampleSize": 3
+            "estimate": 5880,
+            "lower": 2319,
+            "upper": 9652,
+            "sampleSize": 494
           },
           "visits": {
-            "estimate": 2000,
-            "lower": 0,
-            "upper": 5918,
-            "sampleSize": 2
+            "estimate": 5270,
+            "lower": 2005,
+            "upper": 8736,
+            "sampleSize": 460
           },
-          "sampleIntervalMax": 3000,
+          "sampleIntervalMax": 25.294117647058822,
           "sampled": true
         },
-        "productionHostsMeasured": 2
+        "productionHostsMeasured": 12
       },
       "infrastructure": {
-        "edgeRequests": 3682905,
-        "htmlPageViews": 587843,
-        "cachedRequests": 915264,
-        "bytes": 46475770343,
-        "threats": 50765,
+        "edgeRequests": 3787882,
+        "htmlPageViews": 599867,
+        "cachedRequests": 957241,
+        "bytes": 47809543833,
+        "threats": 53180,
         "zonesMeasured": 27
       }
     }
@@ -152,51 +154,90 @@
     "windows": {
       "seven": {
         "audience": {
-          "available": false,
-          "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+          "pageLoads": {
+            "estimate": 700,
+            "lower": 381,
+            "upper": 1026,
+            "sampleSize": 70
+          },
+          "visits": {
+            "estimate": 580,
+            "lower": 311,
+            "upper": 862,
+            "sampleSize": 58
+          },
+          "sampleIntervalMax": 10,
+          "sampled": true,
+          "available": true
         },
         "bots": {
-          "available": false,
-          "reason": "No bot-attributed Web Analytics rows observed."
+          "pageLoads": {
+            "estimate": 110,
+            "lower": 14,
+            "upper": 227,
+            "sampleSize": 11
+          },
+          "visits": {
+            "estimate": 110,
+            "lower": 14,
+            "upper": 227,
+            "sampleSize": 11
+          },
+          "sampleIntervalMax": 10,
+          "sampled": true,
+          "available": true
         },
         "infrastructure": {
           "available": true,
-          "edgeRequests": 214873,
-          "htmlPageViews": 38855,
-          "cachedRequests": 10250,
-          "bytes": 3617501109,
-          "threats": 3091
+          "edgeRequests": 233675,
+          "htmlPageViews": 38281,
+          "cachedRequests": 9969,
+          "bytes": 3663553614,
+          "threats": 5690
         }
       },
       "thirty": {
         "audience": {
           "pageLoads": {
-            "estimate": 8000,
-            "lower": 0,
-            "upper": 19082,
-            "sampleSize": 8
+            "estimate": 7530,
+            "lower": 5455,
+            "upper": 9664,
+            "sampleSize": 734
           },
           "visits": {
-            "estimate": 8000,
-            "lower": 0,
-            "upper": 19082,
-            "sampleSize": 8
+            "estimate": 7030,
+            "lower": 5247,
+            "upper": 8869,
+            "sampleSize": 694
           },
-          "sampleIntervalMax": 1000,
+          "sampleIntervalMax": 20,
           "sampled": true,
           "available": true
         },
         "bots": {
-          "available": false,
-          "reason": "No bot-attributed Web Analytics rows observed."
+          "pageLoads": {
+            "estimate": 500,
+            "lower": 94,
+            "upper": 978,
+            "sampleSize": 48
+          },
+          "visits": {
+            "estimate": 480,
+            "lower": 92,
+            "upper": 947,
+            "sampleSize": 46
+          },
+          "sampleIntervalMax": 11.25,
+          "sampled": true,
+          "available": true
         },
         "infrastructure": {
           "available": true,
-          "edgeRequests": 888499,
-          "htmlPageViews": 139742,
-          "cachedRequests": 37174,
-          "bytes": 16038805449,
-          "threats": 16551
+          "edgeRequests": 910827,
+          "htmlPageViews": 141148,
+          "cachedRequests": 37387,
+          "bytes": 16153271498,
+          "threats": 18766
         }
       }
     }
@@ -208,46 +249,101 @@
       "zones": [
         "atlasaipaths.com"
       ],
-      "hostsMeasured": [],
+      "hostsMeasured": [
+        "atlasaipaths.com",
+        "www.atlasaipaths.com"
+      ],
       "zoneRoles": [
         "canonical"
       ],
-      "measurementState": "edge-only",
+      "measurementState": "audience-and-edge",
       "windows": {
         "seven": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+            "pageLoads": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "visits": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "bots": {
-            "available": false,
-            "reason": "No bot-attributed Web Analytics rows observed."
+            "pageLoads": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "visits": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 8605,
-            "htmlPageViews": 3073,
-            "cachedRequests": 31,
-            "bytes": 34387852,
-            "threats": 84
+            "edgeRequests": 8027,
+            "htmlPageViews": 3178,
+            "cachedRequests": 70,
+            "bytes": 35537767,
+            "threats": 85
           }
         },
         "thirty": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+            "pageLoads": {
+              "estimate": 50,
+              "lower": 0,
+              "upper": 132,
+              "sampleSize": 5
+            },
+            "visits": {
+              "estimate": 50,
+              "lower": 0,
+              "upper": 132,
+              "sampleSize": 5
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "bots": {
-            "available": false,
-            "reason": "No bot-attributed Web Analytics rows observed."
+            "pageLoads": {
+              "estimate": 230,
+              "lower": 74,
+              "upper": 395,
+              "sampleSize": 17
+            },
+            "visits": {
+              "estimate": 230,
+              "lower": 74,
+              "upper": 395,
+              "sampleSize": 17
+            },
+            "sampleIntervalMax": 16,
+            "sampled": true,
+            "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 28638,
-            "htmlPageViews": 8998,
-            "cachedRequests": 938,
-            "bytes": 140113157,
-            "threats": 212
+            "edgeRequests": 29388,
+            "htmlPageViews": 9474,
+            "cachedRequests": 985,
+            "bytes": 145687487,
+            "threats": 216
           }
         }
       }
@@ -259,41 +355,21 @@
         "callofdoodie.wtf",
         "playcallofdoodie.com"
       ],
-      "hostsMeasured": [],
+      "hostsMeasured": [
+        "callofdoodie.wtf"
+      ],
       "zoneRoles": [
         "alias",
         "canonical"
       ],
-      "measurementState": "edge-only",
+      "measurementState": "audience-and-edge",
       "windows": {
         "seven": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
-          },
-          "bots": {
-            "available": false,
-            "reason": "No bot-attributed Web Analytics rows observed."
-          },
-          "infrastructure": {
-            "available": true,
-            "edgeRequests": 24001,
-            "htmlPageViews": 8501,
-            "cachedRequests": 2,
-            "bytes": 310799511,
-            "threats": 143
-          }
-        },
-        "thirty": {
-          "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
-          },
-          "bots": {
             "pageLoads": {
-              "estimate": 3000,
+              "estimate": 10,
               "lower": 0,
-              "upper": 8879,
+              "upper": 29,
               "sampleSize": 1
             },
             "visits": {
@@ -302,17 +378,78 @@
               "upper": 0,
               "sampleSize": null
             },
-            "sampleIntervalMax": 3000,
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
+          },
+          "bots": {
+            "pageLoads": {
+              "estimate": 180,
+              "lower": 40,
+              "upper": 329,
+              "sampleSize": 18
+            },
+            "visits": {
+              "estimate": 180,
+              "lower": 40,
+              "upper": 329,
+              "sampleSize": 18
+            },
+            "sampleIntervalMax": 10,
             "sampled": true,
             "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 93013,
-            "htmlPageViews": 32728,
-            "cachedRequests": 28,
-            "bytes": 932774288,
-            "threats": 1368
+            "edgeRequests": 28436,
+            "htmlPageViews": 8785,
+            "cachedRequests": 7,
+            "bytes": 360722620,
+            "threats": 179
+          }
+        },
+        "thirty": {
+          "audience": {
+            "pageLoads": {
+              "estimate": 190,
+              "lower": 0,
+              "upper": 474,
+              "sampleSize": 19
+            },
+            "visits": {
+              "estimate": 130,
+              "lower": 0,
+              "upper": 350,
+              "sampleSize": 13
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
+          },
+          "bots": {
+            "pageLoads": {
+              "estimate": 1120,
+              "lower": 485,
+              "upper": 1766,
+              "sampleSize": 80
+            },
+            "visits": {
+              "estimate": 980,
+              "lower": 401,
+              "upper": 1570,
+              "sampleSize": 72
+            },
+            "sampleIntervalMax": 25.294117647058822,
+            "sampled": true,
+            "available": true
+          },
+          "infrastructure": {
+            "available": true,
+            "edgeRequests": 94332,
+            "htmlPageViews": 32338,
+            "cachedRequests": 34,
+            "bytes": 978827253,
+            "threats": 1195
           }
         }
       }
@@ -323,46 +460,100 @@
       "zones": [
         "whatsyourcanon.com"
       ],
-      "hostsMeasured": [],
+      "hostsMeasured": [
+        "whatsyourcanon.com"
+      ],
       "zoneRoles": [
         "canonical"
       ],
-      "measurementState": "edge-only",
+      "measurementState": "audience-and-edge",
       "windows": {
         "seven": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+            "pageLoads": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "visits": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "bots": {
-            "available": false,
-            "reason": "No bot-attributed Web Analytics rows observed."
+            "pageLoads": {
+              "estimate": 200,
+              "lower": 57,
+              "upper": 343,
+              "sampleSize": 20
+            },
+            "visits": {
+              "estimate": 200,
+              "lower": 57,
+              "upper": 343,
+              "sampleSize": 20
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 18374,
-            "htmlPageViews": 3883,
-            "cachedRequests": 3171,
-            "bytes": 184850482,
-            "threats": 2547
+            "edgeRequests": 19544,
+            "htmlPageViews": 3970,
+            "cachedRequests": 4047,
+            "bytes": 202336041,
+            "threats": 2425
           }
         },
         "thirty": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+            "pageLoads": {
+              "estimate": 30,
+              "lower": 0,
+              "upper": 86,
+              "sampleSize": 3
+            },
+            "visits": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "bots": {
-            "available": false,
-            "reason": "No bot-attributed Web Analytics rows observed."
+            "pageLoads": {
+              "estimate": 650,
+              "lower": 211,
+              "upper": 1089,
+              "sampleSize": 62
+            },
+            "visits": {
+              "estimate": 650,
+              "lower": 211,
+              "upper": 1089,
+              "sampleSize": 62
+            },
+            "sampleIntervalMax": 13.75,
+            "sampled": true,
+            "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 77305,
-            "htmlPageViews": 13487,
-            "cachedRequests": 13295,
-            "bytes": 678858644,
-            "threats": 11966
+            "edgeRequests": 78723,
+            "htmlPageViews": 13796,
+            "cachedRequests": 14113,
+            "bytes": 703898327,
+            "threats": 12257
           }
         }
       }
@@ -392,11 +583,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 16315,
-            "htmlPageViews": 5884,
-            "cachedRequests": 9076,
-            "bytes": 169217185,
-            "threats": 83
+            "edgeRequests": 19166,
+            "htmlPageViews": 6306,
+            "cachedRequests": 10190,
+            "bytes": 188982602,
+            "threats": 85
           }
         },
         "thirty": {
@@ -410,11 +601,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 48692,
-            "htmlPageViews": 17400,
-            "cachedRequests": 32821,
-            "bytes": 606319663,
-            "threats": 355
+            "edgeRequests": 52871,
+            "htmlPageViews": 18550,
+            "cachedRequests": 35094,
+            "bytes": 647347774,
+            "threats": 360
           }
         }
       }
@@ -425,16 +616,32 @@
       "zones": [
         "playfranchisearchitect.com"
       ],
-      "hostsMeasured": [],
+      "hostsMeasured": [
+        "playfranchisearchitect.com",
+        "www.playfranchisearchitect.com"
+      ],
       "zoneRoles": [
         "canonical"
       ],
-      "measurementState": "edge-only",
+      "measurementState": "audience-and-edge",
       "windows": {
         "seven": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+            "pageLoads": {
+              "estimate": 80,
+              "lower": 0,
+              "upper": 207,
+              "sampleSize": 8
+            },
+            "visits": {
+              "estimate": 70,
+              "lower": 0,
+              "upper": 178,
+              "sampleSize": 7
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "bots": {
             "available": false,
@@ -442,29 +649,55 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 20432,
-            "htmlPageViews": 3442,
-            "cachedRequests": 68,
-            "bytes": 121409424,
-            "threats": 55
+            "edgeRequests": 22781,
+            "htmlPageViews": 3486,
+            "cachedRequests": 76,
+            "bytes": 135102003,
+            "threats": 50
           }
         },
         "thirty": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+            "pageLoads": {
+              "estimate": 210,
+              "lower": 0,
+              "upper": 546,
+              "sampleSize": 21
+            },
+            "visits": {
+              "estimate": 150,
+              "lower": 0,
+              "upper": 385,
+              "sampleSize": 15
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "bots": {
-            "available": false,
-            "reason": "No bot-attributed Web Analytics rows observed."
+            "pageLoads": {
+              "estimate": 70,
+              "lower": 0,
+              "upper": 155,
+              "sampleSize": 7
+            },
+            "visits": {
+              "estimate": 70,
+              "lower": 0,
+              "upper": 155,
+              "sampleSize": 7
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 118504,
-            "htmlPageViews": 11890,
-            "cachedRequests": 723,
-            "bytes": 751094019,
-            "threats": 280
+            "edgeRequests": 120215,
+            "htmlPageViews": 12207,
+            "cachedRequests": 727,
+            "bytes": 764103404,
+            "threats": 272
           }
         }
       }
@@ -492,11 +725,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 28196,
-            "htmlPageViews": 3517,
-            "cachedRequests": 263,
-            "bytes": 134824119,
-            "threats": 2471
+            "edgeRequests": 19956,
+            "htmlPageViews": 3556,
+            "cachedRequests": 319,
+            "bytes": 110462453,
+            "threats": 2366
           }
         },
         "thirty": {
@@ -510,11 +743,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 85495,
-            "htmlPageViews": 11322,
-            "cachedRequests": 1699,
-            "bytes": 535520703,
-            "threats": 12690
+            "edgeRequests": 85192,
+            "htmlPageViews": 11599,
+            "cachedRequests": 1723,
+            "bytes": 538250707,
+            "threats": 12871
           }
         }
       }
@@ -579,76 +812,89 @@
         "seven": {
           "audience": {
             "pageLoads": {
-              "estimate": 2000,
-              "lower": 0,
-              "upper": 5918,
-              "sampleSize": 2
+              "estimate": 500,
+              "lower": 182,
+              "upper": 831,
+              "sampleSize": 50
             },
             "visits": {
-              "estimate": 1000,
-              "lower": 0,
-              "upper": 2959,
-              "sampleSize": 1
+              "estimate": 310,
+              "lower": 68,
+              "upper": 569,
+              "sampleSize": 31
             },
-            "sampleIntervalMax": 1000,
+            "sampleIntervalMax": 10,
             "sampled": true,
             "available": true
           },
           "bots": {
-            "available": false,
-            "reason": "No bot-attributed Web Analytics rows observed."
+            "pageLoads": {
+              "estimate": 180,
+              "lower": 101,
+              "upper": 259,
+              "sampleSize": 18
+            },
+            "visits": {
+              "estimate": 180,
+              "lower": 101,
+              "upper": 259,
+              "sampleSize": 18
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 507791,
-            "htmlPageViews": 40165,
-            "cachedRequests": 239020,
-            "bytes": 7020316045,
-            "threats": 563
+            "edgeRequests": 574533,
+            "htmlPageViews": 44808,
+            "cachedRequests": 274035,
+            "bytes": 7953796103,
+            "threats": 579
           }
         },
         "thirty": {
           "audience": {
             "pageLoads": {
-              "estimate": 5000,
-              "lower": 0,
-              "upper": 14795,
-              "sampleSize": 5
+              "estimate": 2840,
+              "lower": 1146,
+              "upper": 4556,
+              "sampleSize": 270
             },
             "visits": {
-              "estimate": 2000,
-              "lower": 0,
-              "upper": 5918,
-              "sampleSize": 2
+              "estimate": 1260,
+              "lower": 336,
+              "upper": 2250,
+              "sampleSize": 122
             },
-            "sampleIntervalMax": 1000,
+            "sampleIntervalMax": 13.333333333333334,
             "sampled": true,
             "available": true
           },
           "bots": {
             "pageLoads": {
-              "estimate": 1000,
-              "lower": 0,
-              "upper": 2959,
-              "sampleSize": 1
+              "estimate": 1500,
+              "lower": 915,
+              "upper": 2105,
+              "sampleSize": 147
             },
             "visits": {
-              "estimate": 1000,
-              "lower": 0,
-              "upper": 2959,
-              "sampleSize": 1
+              "estimate": 1500,
+              "lower": 915,
+              "upper": 2105,
+              "sampleSize": 147
             },
-            "sampleIntervalMax": 1000,
+            "sampleIntervalMax": 11.5,
             "sampled": true,
             "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 1575985,
-            "htmlPageViews": 135958,
-            "cachedRequests": 750007,
-            "bytes": 21976461201,
-            "threats": 1621
+            "edgeRequests": 1644425,
+            "htmlPageViews": 140614,
+            "cachedRequests": 786182,
+            "bytes": 22960742183,
+            "threats": 1439
           }
         }
       }
@@ -676,10 +922,10 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 9116,
-            "htmlPageViews": 2067,
-            "cachedRequests": 54,
-            "bytes": 57979601,
+            "edgeRequests": 9559,
+            "htmlPageViews": 2181,
+            "cachedRequests": 56,
+            "bytes": 60935718,
             "threats": 11
           }
         },
@@ -694,10 +940,10 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 31545,
-            "htmlPageViews": 7492,
-            "cachedRequests": 260,
-            "bytes": 230021912,
+            "edgeRequests": 31898,
+            "htmlPageViews": 7601,
+            "cachedRequests": 263,
+            "bytes": 232834383,
             "threats": 29
           }
         }
@@ -710,47 +956,101 @@
         "promogrind.app",
         "promogrind.bet"
       ],
-      "hostsMeasured": [],
+      "hostsMeasured": [
+        "promogrind.bet"
+      ],
       "zoneRoles": [
         "alias",
         "canonical"
       ],
-      "measurementState": "edge-only",
+      "measurementState": "audience-and-edge",
       "windows": {
         "seven": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+            "pageLoads": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "visits": {
+              "estimate": 0,
+              "lower": 0,
+              "upper": 0,
+              "sampleSize": null
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "bots": {
-            "available": false,
-            "reason": "No bot-attributed Web Analytics rows observed."
+            "pageLoads": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "visits": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 16379,
-            "htmlPageViews": 9374,
-            "cachedRequests": 279,
-            "bytes": 91269382,
-            "threats": 136
+            "edgeRequests": 15529,
+            "htmlPageViews": 8479,
+            "cachedRequests": 305,
+            "bytes": 80637059,
+            "threats": 129
           }
         },
         "thirty": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+            "pageLoads": {
+              "estimate": 250,
+              "lower": 23,
+              "upper": 549,
+              "sampleSize": 22
+            },
+            "visits": {
+              "estimate": 90,
+              "lower": 0,
+              "upper": 210,
+              "sampleSize": 9
+            },
+            "sampleIntervalMax": 20,
+            "sampled": true,
+            "available": true
           },
           "bots": {
-            "available": false,
-            "reason": "No bot-attributed Web Analytics rows observed."
+            "pageLoads": {
+              "estimate": 340,
+              "lower": 101,
+              "upper": 588,
+              "sampleSize": 16
+            },
+            "visits": {
+              "estimate": 230,
+              "lower": 35,
+              "upper": 433,
+              "sampleSize": 12
+            },
+            "sampleIntervalMax": 24.545454545454547,
+            "sampled": true,
+            "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 88347,
-            "htmlPageViews": 39384,
-            "cachedRequests": 4103,
-            "bytes": 529204475,
-            "threats": 361
+            "edgeRequests": 88091,
+            "htmlPageViews": 39639,
+            "cachedRequests": 4119,
+            "bytes": 530602490,
+            "threats": 369
           }
         }
       }
@@ -778,11 +1078,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 24743,
-            "htmlPageViews": 11323,
-            "cachedRequests": 4437,
-            "bytes": 270128679,
-            "threats": 282
+            "edgeRequests": 29686,
+            "htmlPageViews": 12564,
+            "cachedRequests": 4744,
+            "bytes": 303434627,
+            "threats": 319
           }
         },
         "thirty": {
@@ -796,11 +1096,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 83493,
-            "htmlPageViews": 37772,
-            "cachedRequests": 14567,
-            "bytes": 832527449,
-            "threats": 915
+            "edgeRequests": 90021,
+            "htmlPageViews": 38968,
+            "cachedRequests": 14971,
+            "bytes": 882735967,
+            "threats": 961
           }
         }
       }
@@ -830,11 +1130,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 16736,
-            "htmlPageViews": 6288,
-            "cachedRequests": 6760,
-            "bytes": 64736942,
-            "threats": 149
+            "edgeRequests": 15219,
+            "htmlPageViews": 6354,
+            "cachedRequests": 6716,
+            "bytes": 51897006,
+            "threats": 162
           }
         },
         "thirty": {
@@ -848,11 +1148,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 55578,
-            "htmlPageViews": 19985,
-            "cachedRequests": 21117,
-            "bytes": 173425439,
-            "threats": 382
+            "edgeRequests": 54765,
+            "htmlPageViews": 20557,
+            "cachedRequests": 21683,
+            "bytes": 173694551,
+            "threats": 368
           }
         }
       }
@@ -882,10 +1182,10 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 7257,
+            "edgeRequests": 4727,
             "htmlPageViews": 0,
             "cachedRequests": 1,
-            "bytes": 9144203,
+            "bytes": 7694042,
             "threats": 57
           }
         },
@@ -900,11 +1200,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 22430,
+            "edgeRequests": 22080,
             "htmlPageViews": 0,
             "cachedRequests": 1,
-            "bytes": 41512108,
-            "threats": 156
+            "bytes": 41827847,
+            "threats": 152
           }
         }
       }
@@ -916,17 +1216,32 @@
         "syntha.music",
         "synthamusic.com"
       ],
-      "hostsMeasured": [],
+      "hostsMeasured": [
+        "syntha.music"
+      ],
       "zoneRoles": [
         "alias",
         "canonical"
       ],
-      "measurementState": "edge-only",
+      "measurementState": "audience-and-edge",
       "windows": {
         "seven": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+            "pageLoads": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "visits": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "bots": {
             "available": false,
@@ -934,29 +1249,55 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 25242,
-            "htmlPageViews": 5830,
-            "cachedRequests": 585,
-            "bytes": 107120798,
-            "threats": 168
+            "edgeRequests": 25703,
+            "htmlPageViews": 5557,
+            "cachedRequests": 576,
+            "bytes": 104855591,
+            "threats": 233
           }
         },
         "thirty": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+            "pageLoads": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "visits": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "bots": {
-            "available": false,
-            "reason": "No bot-attributed Web Analytics rows observed."
+            "pageLoads": {
+              "estimate": 40,
+              "lower": 3,
+              "upper": 77,
+              "sampleSize": 4
+            },
+            "visits": {
+              "estimate": 40,
+              "lower": 3,
+              "upper": 77,
+              "sampleSize": 4
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 79719,
-            "htmlPageViews": 22189,
-            "cachedRequests": 1913,
-            "bytes": 393994313,
-            "threats": 477
+            "edgeRequests": 81144,
+            "htmlPageViews": 21477,
+            "cachedRequests": 1929,
+            "bytes": 388231578,
+            "threats": 521
           }
         }
       }
@@ -967,11 +1308,13 @@
       "zones": [
         "thelivingprotocol.life"
       ],
-      "hostsMeasured": [],
+      "hostsMeasured": [
+        "thelivingprotocol.life"
+      ],
       "zoneRoles": [
         "canonical"
       ],
-      "measurementState": "edge-only",
+      "measurementState": "audience-and-edge",
       "windows": {
         "seven": {
           "audience": {
@@ -980,59 +1323,72 @@
           },
           "bots": {
             "pageLoads": {
-              "estimate": 1000,
-              "lower": 0,
-              "upper": 2959,
-              "sampleSize": 1
+              "estimate": 510,
+              "lower": 222,
+              "upper": 810,
+              "sampleSize": 51
             },
             "visits": {
-              "estimate": 1000,
-              "lower": 0,
-              "upper": 2959,
-              "sampleSize": 1
+              "estimate": 450,
+              "lower": 182,
+              "upper": 733,
+              "sampleSize": 45
             },
-            "sampleIntervalMax": 1000,
+            "sampleIntervalMax": 10,
             "sampled": true,
             "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 19973,
-            "htmlPageViews": 3612,
-            "cachedRequests": 3260,
-            "bytes": 216736274,
-            "threats": 339
+            "edgeRequests": 22129,
+            "htmlPageViews": 3783,
+            "cachedRequests": 3963,
+            "bytes": 231242131,
+            "threats": 401
           }
         },
         "thirty": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
-          },
-          "bots": {
             "pageLoads": {
-              "estimate": 1000,
+              "estimate": 10,
               "lower": 0,
-              "upper": 2959,
+              "upper": 29,
               "sampleSize": 1
             },
             "visits": {
-              "estimate": 1000,
+              "estimate": 10,
               "lower": 0,
-              "upper": 2959,
+              "upper": 29,
               "sampleSize": 1
             },
-            "sampleIntervalMax": 1000,
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
+          },
+          "bots": {
+            "pageLoads": {
+              "estimate": 1430,
+              "lower": 436,
+              "upper": 2500,
+              "sampleSize": 113
+            },
+            "visits": {
+              "estimate": 1090,
+              "lower": 274,
+              "upper": 1966,
+              "sampleSize": 93
+            },
+            "sampleIntervalMax": 25,
             "sampled": true,
             "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 73559,
-            "htmlPageViews": 12018,
-            "cachedRequests": 9337,
-            "bytes": 714183813,
-            "threats": 865
+            "edgeRequests": 75861,
+            "htmlPageViews": 12448,
+            "cachedRequests": 10044,
+            "bytes": 745358239,
+            "threats": 925
           }
         }
       }
@@ -1060,11 +1416,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 7098,
-            "htmlPageViews": 1146,
-            "cachedRequests": 46,
-            "bytes": 30741829,
-            "threats": 135
+            "edgeRequests": 6195,
+            "htmlPageViews": 1310,
+            "cachedRequests": 38,
+            "bytes": 25647805,
+            "threats": 132
           }
         },
         "thirty": {
@@ -1078,11 +1434,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 33537,
-            "htmlPageViews": 3496,
-            "cachedRequests": 5783,
-            "bytes": 274428949,
-            "threats": 264
+            "edgeRequests": 33471,
+            "htmlPageViews": 3664,
+            "cachedRequests": 5781,
+            "bytes": 275560944,
+            "threats": 267
           }
         }
       }
@@ -1103,51 +1459,90 @@
       "windows": {
         "seven": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+            "pageLoads": {
+              "estimate": 700,
+              "lower": 381,
+              "upper": 1026,
+              "sampleSize": 70
+            },
+            "visits": {
+              "estimate": 580,
+              "lower": 311,
+              "upper": 862,
+              "sampleSize": 58
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "bots": {
-            "available": false,
-            "reason": "No bot-attributed Web Analytics rows observed."
+            "pageLoads": {
+              "estimate": 110,
+              "lower": 14,
+              "upper": 227,
+              "sampleSize": 11
+            },
+            "visits": {
+              "estimate": 110,
+              "lower": 14,
+              "upper": 227,
+              "sampleSize": 11
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 214873,
-            "htmlPageViews": 38855,
-            "cachedRequests": 10250,
-            "bytes": 3617501109,
-            "threats": 3091
+            "edgeRequests": 233675,
+            "htmlPageViews": 38281,
+            "cachedRequests": 9969,
+            "bytes": 3663553614,
+            "threats": 5690
           }
         },
         "thirty": {
           "audience": {
             "pageLoads": {
-              "estimate": 8000,
-              "lower": 0,
-              "upper": 19082,
-              "sampleSize": 8
+              "estimate": 7530,
+              "lower": 5455,
+              "upper": 9664,
+              "sampleSize": 734
             },
             "visits": {
-              "estimate": 8000,
-              "lower": 0,
-              "upper": 19082,
-              "sampleSize": 8
+              "estimate": 7030,
+              "lower": 5247,
+              "upper": 8869,
+              "sampleSize": 694
             },
-            "sampleIntervalMax": 1000,
+            "sampleIntervalMax": 20,
             "sampled": true,
             "available": true
           },
           "bots": {
-            "available": false,
-            "reason": "No bot-attributed Web Analytics rows observed."
+            "pageLoads": {
+              "estimate": 500,
+              "lower": 94,
+              "upper": 978,
+              "sampleSize": 48
+            },
+            "visits": {
+              "estimate": 480,
+              "lower": 92,
+              "upper": 947,
+              "sampleSize": 46
+            },
+            "sampleIntervalMax": 11.25,
+            "sampled": true,
+            "available": true
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 888499,
-            "htmlPageViews": 139742,
-            "cachedRequests": 37174,
-            "bytes": 16038805449,
-            "threats": 16551
+            "edgeRequests": 910827,
+            "htmlPageViews": 141148,
+            "cachedRequests": 37387,
+            "bytes": 16153271498,
+            "threats": 18766
           }
         }
       }
@@ -1177,11 +1572,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 38761,
-            "htmlPageViews": 13626,
-            "cachedRequests": 2970,
-            "bytes": 379681354,
-            "threats": 360
+            "edgeRequests": 40786,
+            "htmlPageViews": 15262,
+            "cachedRequests": 3023,
+            "bytes": 410654874,
+            "threats": 365
           }
         },
         "thirty": {
@@ -1195,11 +1590,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 167960,
-            "htmlPageViews": 47347,
-            "cachedRequests": 4554,
-            "bytes": 1352065344,
-            "threats": 1310
+            "edgeRequests": 164539,
+            "htmlPageViews": 48517,
+            "cachedRequests": 4951,
+            "bytes": 1369055920,
+            "threats": 1260
           }
         }
       }
@@ -1210,16 +1605,31 @@
       "zones": [
         "velaxis.markets"
       ],
-      "hostsMeasured": [],
+      "hostsMeasured": [
+        "velaxis.markets"
+      ],
       "zoneRoles": [
         "canonical"
       ],
-      "measurementState": "edge-only",
+      "measurementState": "audience-and-edge",
       "windows": {
         "seven": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+            "pageLoads": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "visits": {
+              "estimate": 10,
+              "lower": 0,
+              "upper": 29,
+              "sampleSize": 1
+            },
+            "sampleIntervalMax": 10,
+            "sampled": true,
+            "available": true
           },
           "bots": {
             "available": false,
@@ -1227,17 +1637,30 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 5210,
-            "htmlPageViews": 4327,
-            "cachedRequests": 39,
-            "bytes": 14223652,
-            "threats": 12
+            "edgeRequests": 5553,
+            "htmlPageViews": 4639,
+            "cachedRequests": 41,
+            "bytes": 15082545,
+            "threats": 23
           }
         },
         "thirty": {
           "audience": {
-            "available": false,
-            "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+            "pageLoads": {
+              "estimate": 40,
+              "lower": 0,
+              "upper": 115,
+              "sampleSize": 3
+            },
+            "visits": {
+              "estimate": 20,
+              "lower": 0,
+              "upper": 57,
+              "sampleSize": 2
+            },
+            "sampleIntervalMax": 20,
+            "sampled": true,
+            "available": true
           },
           "bots": {
             "available": false,
@@ -1245,11 +1668,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 18592,
-            "htmlPageViews": 13769,
-            "cachedRequests": 1179,
-            "bytes": 57592903,
-            "threats": 95
+            "edgeRequests": 19003,
+            "htmlPageViews": 14085,
+            "cachedRequests": 1178,
+            "bytes": 58808827,
+            "threats": 103
           }
         }
       }
@@ -1280,11 +1703,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 30328,
-            "htmlPageViews": 4663,
-            "cachedRequests": 5920,
-            "bytes": 69394825,
-            "threats": 320
+            "edgeRequests": 28222,
+            "htmlPageViews": 4184,
+            "cachedRequests": 5172,
+            "bytes": 62193956,
+            "threats": 335
           }
         },
         "thirty": {
@@ -1298,11 +1721,11 @@
           },
           "infrastructure": {
             "available": true,
-            "edgeRequests": 112014,
-            "htmlPageViews": 12866,
-            "cachedRequests": 15765,
-            "bytes": 216866514,
-            "threats": 868
+            "edgeRequests": 111036,
+            "htmlPageViews": 13185,
+            "cachedRequests": 16076,
+            "bytes": 218704454,
+            "threats": 849
           }
         }
       }
@@ -1353,36 +1776,124 @@
   "history": {
     "humanPageLoadsDaily": [
       {
+        "date": "2026-09-22",
+        "estimate": 160
+      },
+      {
+        "date": "2026-09-23",
+        "estimate": 760
+      },
+      {
+        "date": "2026-09-24",
+        "estimate": 400
+      },
+      {
+        "date": "2026-09-25",
+        "estimate": 100
+      },
+      {
+        "date": "2026-09-26",
+        "estimate": 50
+      },
+      {
         "date": "2026-09-27",
-        "estimate": 2000
+        "estimate": 550
+      },
+      {
+        "date": "2026-09-28",
+        "estimate": 70
       },
       {
         "date": "2026-09-29",
-        "estimate": 3000
+        "estimate": 1240
       },
       {
         "date": "2026-09-30",
-        "estimate": 2000
+        "estimate": 2270
+      },
+      {
+        "date": "2026-10-01",
+        "estimate": 1500
       },
       {
         "date": "2026-10-02",
-        "estimate": 1000
+        "estimate": 340
+      },
+      {
+        "date": "2026-10-03",
+        "estimate": 190
+      },
+      {
+        "date": "2026-10-04",
+        "estimate": 300
+      },
+      {
+        "date": "2026-10-05",
+        "estimate": 120
+      },
+      {
+        "date": "2026-10-06",
+        "estimate": 190
+      },
+      {
+        "date": "2026-10-07",
+        "estimate": 140
       },
       {
         "date": "2026-10-08",
-        "estimate": 2000
+        "estimate": 210
+      },
+      {
+        "date": "2026-10-09",
+        "estimate": 230
+      },
+      {
+        "date": "2026-10-10",
+        "estimate": 210
+      },
+      {
+        "date": "2026-10-11",
+        "estimate": 60
+      },
+      {
+        "date": "2026-10-12",
+        "estimate": 230
       },
       {
         "date": "2026-10-13",
-        "estimate": 1000
+        "estimate": 350
       },
       {
         "date": "2026-10-14",
-        "estimate": 1000
+        "estimate": 150
+      },
+      {
+        "date": "2026-10-15",
+        "estimate": 640
+      },
+      {
+        "date": "2026-10-16",
+        "estimate": 140
+      },
+      {
+        "date": "2026-10-17",
+        "estimate": 130
+      },
+      {
+        "date": "2026-10-18",
+        "estimate": 130
+      },
+      {
+        "date": "2026-10-19",
+        "estimate": 110
       },
       {
         "date": "2026-10-20",
-        "estimate": 1000
+        "estimate": 100
+      },
+      {
+        "date": "2026-10-21",
+        "estimate": 90
       }
     ]
   },
@@ -1392,5 +1903,5 @@
     "edgeRequests": "All request traffic through the registered zones, including assets and automated traffic.",
     "performanceSamples": "VaultSpark RUM observations accepted for performance analysis. These are not page views."
   },
-  "receiptId": "da8417ef10b8e8b04047fe26"
+  "receiptId": "f2f992ccb66842fd13203170"
 }
