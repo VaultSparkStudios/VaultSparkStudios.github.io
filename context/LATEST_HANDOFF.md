@@ -20,3 +20,7 @@ S397 release operations: six previously active scheduled writers are temporarily
 S397 acceptance checkpoint: fresh local mobile215/215 passes; visual56/56 current captures plus nonpassing historical before observations retained. Partial diagnostic from234 through547 passes314 steps; it is not full-suite acceptance. Earlier suffix failures (old mobile binding at168 and closeout brief/cache naming at234) were corrected. Both complete acceptance attempts remain failed at126/143, retained in RELEASE_S397.json. Full canonical acceptance, staging, main push, exact hosted checks and production remain required.
 
 S397 acceptance checkpoint: two complete 547/547 passes succeeded. Autopilot then stopped at intentional plan/latest-snapshot shrinkage; previous exact versions archived. Manual reviewed commit continues the same closeout. Remote six automation commits still require integration and current-candidate acceptance.
+
+S397 staging checkpoint: merge51ce1f43ea preserves six incoming automation commits. Staging12746 files,receipt707399e78c346980a3434e4a,rollback20261022152743. Canonical ceremony11/11 passed after regenerating continuity. First integrated check failed stale retention inventory; native report repaired, next complete check pending.
+
+S397 integrated acceptance: complete547/547 run passed after current staging receipt + derived closure. Current staging ceremony11/11 and hash-bound local visual/mobile evidence pass. Source remains unchanged. Main publication and exact hosted checks next.

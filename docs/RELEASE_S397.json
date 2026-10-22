@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 397,
-  "state": "local-verification",
+  "state": "candidate-publication",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a163bb-366b-76e2-a307-f44951863f39",
@@ -28,12 +28,10 @@
   },
   "rollback": "Revert selected offline behavior changes and redeploy last accepted production candidate.",
   "remaining": [
-    "complete build/checks",
-    "staging",
-    "main push",
-    "exact hosted checks",
-    "full production/readback",
-    "closeout"
+    "main publication",
+    "exact hosted required checks",
+    "normal production deployment/readback",
+    "final closeout/Ark/restore writers"
   ],
   "failedLocalAttempts": [
     {
@@ -54,6 +52,16 @@
     {
       "attempt": 4,
       "reason": "Both complete 547/547 suites passed. Commit guard then classified intentional implementation-plan and latest visual snapshot replacements as shrinkage. Prior versions preserved in docs/archive/IMPLEMENT_PLAN_before_S397.md and docs/visual-qa/S396_PREVIOUS_LATEST.json. Reviewed commit proceeds manually with no test bypass."
+    },
+    {
+      "attempt": "integrated1",
+      "step": 168,
+      "reason": "Archived prior visual receipt changed retention inventory; report regenerated with2464 bound,1626 archival candidates,zero deleted."
+    },
+    {
+      "attempt": "integrated2",
+      "state": "canceled-incomplete",
+      "reason": "Read-only preflight after staging proved release-proof drift. Stopped only owned verification process tree, cleared verified stale own lock, ran complete derived-owner closure, rechecked manifest/release/status/staging lineage and receipts. No acceptance pass claimed for canceled run."
     }
   ],
   "productionBaseline": {
@@ -97,12 +105,213 @@
       "executed": 314,
       "exit": 0,
       "scope": "suffix diagnostic only; not full acceptance"
+    },
+    {
+      "command": "check-news-visual-proof.mjs --check",
+      "state": "nonpassing",
+      "reason": "Optional historical helper hard-codes August11 headlines on rolling current news index. No acceptance pass claimed. Current visual receipt generator and critique packets pass152/152."
+    },
+    {
+      "command": "check-news-art-assets.mjs --check",
+      "state": "not-executed",
+      "reason": "No such script; corrected to existing build-news-visual-receipts --check, which passed152 stories."
     }
   ],
   "localAcceptance": {
     "fullPasses": 2,
     "stepsEach": 547,
     "log": ".cache/S397-closeout-attempt4.log",
-    "integratedCandidatePending": true
-  }
+    "integratedCandidatePending": true,
+    "integrated": {
+      "passed": 547,
+      "total": 547,
+      "exit": 0,
+      "sourceFingerprint": "b2b35daab9906d5e1812a4ea",
+      "log": ".cache/S397-integrated-build-check3.log"
+    }
+  },
+  "staging": {
+    "receipt": {
+      "schemaVersion": "1.0",
+      "generatedAt": "2026-10-22T15:32:51.232Z",
+      "generatedBy": "scripts/deploy-staging.mjs",
+      "publicSafe": true,
+      "state": "verified",
+      "source": {
+        "commitSha": "d620d10a5a77ede502c499e051d10d8d4ef4febc",
+        "fingerprint": "b2b35daab9906d5e1812a4ea"
+      },
+      "candidate": {
+        "artifactRoot": "a31207b2cf1a676722c7a5afc2399cee49a3f11fc0b64a6741e663f6a26397e6",
+        "leafCount": 67
+      },
+      "archive": {
+        "sha256": "edea9abaca515c7dd38577a37bd7444dea531ddfe1c66cb85541d4fd438c331f",
+        "bytes": 2761442542
+      },
+      "deploy": {
+        "id": "20261022152743",
+        "manifestFileCount": 12746,
+        "remoteFileCount": 12746,
+        "remoteRoot": "/opt/studio/staging/website",
+        "rollbackPath": "/opt/studio/staging/website/.rollback/20261022152743"
+      },
+      "parity": {
+        "generatedAt": "2026-10-22T15:32:51.148Z",
+        "candidateReady": true,
+        "findings": [],
+        "candidateBuildSha": "d620d10a5a77ede502c499e051d10d8d4ef4febc",
+        "stagingBuildSha": "d620d10a5a77ede502c499e051d10d8d4ef4febc",
+        "candidateRoot": "a31207b2cf1a676722c7a5afc2399cee49a3f11fc0b64a6741e663f6a26397e6",
+        "stagingRoot": "a31207b2cf1a676722c7a5afc2399cee49a3f11fc0b64a6741e663f6a26397e6",
+        "matched": true
+      },
+      "remoteVerification": {
+        "method": "atomic-install-and-byte-equality",
+        "verified": true
+      },
+      "receiptId": "707399e78c346980a3434e4a"
+    },
+    "ceremony": {
+      "schemaVersion": 1,
+      "generatedAt": "2026-10-22T15:37:37.818Z",
+      "generatedBy": "scripts/run-release-ceremony.mjs",
+      "publicSafe": true,
+      "state": "passed",
+      "stagingOrigin": "https://website.staging.vaultsparkstudios.com",
+      "steps": [
+        {
+          "id": "redirect-readiness-probe",
+          "state": "passed",
+          "exitCode": 0,
+          "durationMs": 530
+        },
+        {
+          "id": "redirect-readiness",
+          "state": "passed",
+          "exitCode": 0,
+          "durationMs": 113,
+          "verdict": "passed",
+          "contractSha256": "da9c26ea5590217ea599164d5f2b315fd6910af1d0bd3f0365b0766dd6f4fe80"
+        },
+        {
+          "id": "staging-deploy-lineage",
+          "state": "passed",
+          "exitCode": 0,
+          "durationMs": 343
+        },
+        {
+          "id": "lane-held-asset-drift",
+          "state": "passed",
+          "exitCode": 0,
+          "durationMs": 1943
+        },
+        {
+          "id": "staging-browser",
+          "state": "passed",
+          "exitCode": 0,
+          "durationMs": 42064
+        },
+        {
+          "id": "staging-browser-receipt",
+          "state": "passed",
+          "exitCode": 0,
+          "durationMs": 1,
+          "passed": 3,
+          "expected": 6,
+          "skipped": 0,
+          "held": 3,
+          "heldContracts": [
+            "anonymous Obelisk boundary is fail-closed and reaches the provider"
+          ],
+          "heldSurfaces": [
+            "identity",
+            "worker:identity"
+          ]
+        },
+        {
+          "id": "attention-browser",
+          "state": "passed",
+          "exitCode": 0,
+          "durationMs": 36945
+        },
+        {
+          "id": "attention-browser-receipt",
+          "state": "passed",
+          "exitCode": 0,
+          "durationMs": 1,
+          "passed": 15,
+          "expected": 15,
+          "skipped": 0,
+          "failed": 0,
+          "flaky": 0
+        },
+        {
+          "id": "promotion-contract",
+          "state": "passed",
+          "exitCode": 0,
+          "durationMs": 540
+        },
+        {
+          "id": "promotion-ready",
+          "state": "passed",
+          "exitCode": 0,
+          "durationMs": 1,
+          "releaseState": "hold",
+          "reasonCodes": [
+            "real-provider-e2e-pending",
+            "supabase-control-plane-partial"
+          ],
+          "promotionMode": "scoped",
+          "scopeReason": "scoped-disjoint",
+          "heldSurfaces": [
+            "auth/**",
+            "identity",
+            "worker:identity"
+          ],
+          "blockedLeaves": [],
+          "unclassifiedLeaves": []
+        },
+        {
+          "id": "doctor",
+          "state": "passed",
+          "exitCode": 0,
+          "durationMs": 2590,
+          "blockingFailing": 0,
+          "exemptedBlocking": 0,
+          "observedDate": "2026-10-21"
+        }
+      ],
+      "evidenceSha256": "d49e7ad0113c36dd95ed9e22bd8424b8970487324c755493270b25611d040b66",
+      "contractSha256": "c3eb0abf77afc414837705d29312eeba13262463d7ad6935f12f8b594a73bf01",
+      "chain": {
+        "previousReceiptSha256": "48fc9dcae81c3ef552e5b39cdbfd22def14feecce92938909fc38ee7994c9e4e"
+      },
+      "privacy": {
+        "stdoutRetained": false,
+        "stderrRetained": false,
+        "responseBodiesRetained": false
+      }
+    }
+  },
+  "integratedCandidate": "51ce1f43ea",
+  "integration": {
+    "incomingTip": "cdcca550f03fb331d2df48be0ce434bc86a1a4a5",
+    "method": "normal merge, preserve incoming art/data; regenerate19 conflicts with owners;57/57 rebuilt artifact checks pass",
+    "independentReview": "PASS: selected implementation/incoming art bytes preserved; both receipts source-valid. Earlier visual manifest root is observation metadata accepted by contract."
+  },
+  "stagingAttempts": [
+    {
+      "attempt": 1,
+      "passed": 10,
+      "total": 11,
+      "reason": "Continuity summary stale after new deploy receipt; native owner rebuilt it."
+    },
+    {
+      "attempt": 2,
+      "passed": 11,
+      "total": 11,
+      "state": "passed"
+    }
+  ]
 }
