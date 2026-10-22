@@ -3210,3 +3210,7 @@ Product rubric, ten categories ×100. No measured visitor gain claimed; outcome 
 | Automation Coverage | 98 |
 
 Brainstorm: (1) extend the reference gate to `srcset`, CSS `url()` and `_redirects` destinations (a redirect to a 404 currently counts as resolved); (2) a /news/personas/ roster index so the persona path itself answers; (3) give the investor portal the shared theme system (CANON-047). Committed to TASK_BOARD: (1) as a [SIL] item. (2) and (3) are kept in LATEST_HANDOFF and D-S396.1, because the startup context budget (42k) left no board room: pre-session headroom was 82 tokens. CDR reviewed: no new creative direction.
+
+### S396 closing evidence reconciliation — 2026-10-22
+
+The later d7555cf4d9 closing publication recorded the verified production c6fb0ac27a and full parity in docs/RELEASE_S396.json. This is an evidence-only continuation of S396, with no new product outcome or score: 939/1000 and velocity 3 remain unchanged. CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF and PROJECT_STATUS already describe the implemented fixes; WORK_LOG now also names the final deployment. DECISIONS and CDR require no additional change: no policy or creative decision was made in that closing commit. Fresh goal 01a163bb-366b-76e2-a307-f44951863f39 belongs to S397 and cannot borrow S396 acceptance.

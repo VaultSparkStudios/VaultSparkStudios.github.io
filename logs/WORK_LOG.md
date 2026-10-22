@@ -283,3 +283,7 @@ Impact cargo queued: transport only, not recipient acceptance/application. Five 
 ## S396 — dead internal references fixed and gated
 
 Fresh /arc. Triage: S395 closed cleanly (writeback-currency clean); tree 5 behind origin (routine), synced. Audit surveyed live production (smoke 6/6), all 336 local routes (0 failures) and every internal href/src on 335 tracked pages; two live 404s confirmed by curl: /news/personas/ (post-subscribe CTA) and /assets/logo.png (8 investor-portal pages). Premise gate 7/7 recorded before edits. Shipped: generator link → /news/#anchors; investor brand mark → existing icon assets with CSS-matched sizes; new build:check gate `scripts/check-local-references.mjs` (self-test 18/18; pre-fix tree fails on exactly the two defects; 1.8s). Independent review verdict "fix" — `<script src>` tags were stripped before matching — fixed along with template contents and exact-case matching. CANON-053: 14 + 4 captures manually reviewed. Release evidence: docs/RELEASE_S396.json.
+
+### S396 closing publication recovery — 2026-10-22
+
+Evidence-only closing commit d7555cf4d9 is reconciled with the SIL anchor. Existing docs/RELEASE_S396.json records production c6fb0ac27a, run 39722337148 and 1118 identical / 10 redirects / zero differing served files. No additional implementation or session score is claimed; S397 remains a separate fresh arc.
