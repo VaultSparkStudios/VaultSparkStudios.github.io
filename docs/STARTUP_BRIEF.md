@@ -119,22 +119,8 @@
 ║  Calibration: MAE 4.4 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Spark buddy overlaps Desk text at 390px.    ║
-║        Spark buddy overlaps Desk text at 390px. is open, local,  ║
-║                                                                  ║
-║   93  [PRODUCT]      Staging lineage tolerant of publisher data  ║
-║        Staging lineage tolerant of publisher data drift. is ope  ║
-║                                                                  ║
-║   90  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
-║        Gate srcset, CSS url(), redirect targets. Future only. i  ║
-║                                                                  ║
-║   87  [PRODUCT]      Investigate timing classification of incom  ║
-║        Investigate timing classification of incoming pre-sessio  ║
-║                                                                  ║
-║   84  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
-║        Keep startup-generated genius-list drift distinguishable  ║
-║                                                                  ║
+╔══ GENIUS HIT LIST ═════════════════════════════════════════════╗
+║  Run `node scripts/ops.mjs genius-list` to generate fresh…       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ```
