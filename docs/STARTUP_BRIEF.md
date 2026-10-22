@@ -63,7 +63,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 397 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    545/545 passing  ·  Deploy: verified                  ║
+║  Tests:    547/547 passing  ·  Deploy: verified                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -73,7 +73,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         545/545 passing (2026-10-21)                   ║
+║  ✓  Tests         547/547 passing (2026-10-22)                   ║
 ║  ✓  Velocity      2 ↓  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   18d                                            ║
