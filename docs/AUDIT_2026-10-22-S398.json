@@ -1,0 +1,264 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-10-22-S398",
+  "generatedAt": "2026-10-22T19:20:00.000Z",
+  "session": 398,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S398 full arc: supported-release, health yellow from external holds. Two outcomes selected at L2; direct main push and full deployment authorized.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 1,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "game-page-placeholder-copy",
+          "premise": "Replace Coming soon / TBD copy on six game pages (TASK_BOARD L284)",
+          "evidence": "Live grep finds only games/project-unknown (title 'Coming Soon', one TBD); five of six already resolved. That page is a deliberate sealed teaser and the board names it a founder copy decision (AGENTS.md: public promises escalate)."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "offline-page-redesign",
+          "premise": "Redesign offline fallback",
+          "evidence": "S397 shipped and verified origin-confirmed recovery with 56 reviewed captures; no new reproduced defect."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "desk-reading-streaks",
+          "premise": "Add Desk reading streaks",
+          "evidence": "Returning-visitor digest and rank surfaces already exist; no retention evidence names a missing loop."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [
+        "si-first-use-expansion"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "si-mass-rename",
+          "premise": "Replace AI with SI site-wide",
+          "evidence": "CANON-056 rule 2 forbids replacement; only the two first-use defects found by check-si-terminology are real."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "auth-cache-policy",
+          "premise": "Change identity caching",
+          "evidence": "Identity changes are Obelisk-owned and escalation-gated; no new defect found. Doctor blockingFailing 0."
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "lighthouse-flake",
+          "premise": "Stabilize Lighthouse article score",
+          "evidence": "Latest Lighthouse CI on 420c15a9 succeeded; the known simulated-graph flake has no current failing run to target."
+        }
+      ]
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "desk-model-routing",
+          "premise": "Re-route Desk models for cost",
+          "evidence": "No measured spend regression; Desk lanes are green on today's runs."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "health-yellow-recompute",
+          "premise": "Recompute yellow health",
+          "evidence": "Yellow is honestly derived from external holds (Obelisk invite-only, cron slot, credential owner); no fix available inside this repo."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [
+        "offline-origin-down-browser-regression"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "srcset-css-reference-gate",
+          "premise": "Gate srcset/CSS url()/redirect targets",
+          "evidence": "S396 reference gate passes; no reproduced broken srcset/CSS reference. Stays a future SIL item."
+        }
+      ]
+    }
+  },
+  "investigation": {
+    "survey": "Startup brief, doctor (blockingFailing 0), canon conformance (2 STRONG gaps: CANON-045 known identity hold, CANON-056 two bare-SI findings), recent CI (all green), bounded TASK_BOARD projection, service-worker test wiring, Desk copy-quality gate.",
+    "reuse": "Existing check-si-terminology (studio-ops), check-news-copy-quality rule set, generate-news-pages, service-worker-install.spec.js in e2e.yml and run-local-browser-verify. No new dependency.",
+    "novelCandidates": [
+      "Story-order first-use rule in the Desk copy gate so future headlines cannot ship bare SI",
+      "Origin-down (adapter online) browser regression using context routing of service-worker traffic",
+      "Headline correction through the Desk source of truth with slug preserved"
+    ],
+    "market": "docs/market/MARKET.json absent; no competitor claims made."
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "si-first-use-expansion",
+      "axis": "ai-intelligence",
+      "title": "Expand SI on first use on /ai-vs-si/ and the Desk explainer, and gate future Desk copy",
+      "tier": "🔥",
+      "effortHours": 1.5,
+      "impact": 6,
+      "innovation": 5,
+      "priority": 15,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "The title and H1 of the two pages most likely to be found for 'AI vs SI' open with bare SI, which collides with Swarm Intelligence, SI units and System Integration (CANON-056 STRONG gap).",
+      "userOutcome": "Info-finding: a reader or AI search engine sees what SI means in the page title itself, on both pages that rank for the query.",
+      "recipe": "Rewrite /ai-vs-si/ title, H1 and social titles to expand Super Intelligence (SI); correct the Desk headline in data/news-desk/days/2026-10-04.json (slug unchanged) and regenerate with the canonical generators; add a story-order bare-si rule to check-news-copy-quality with self-tests.",
+      "acceptance": "check-si-terminology reports conform; Desk copy gate passes the corpus and its self-test rejects a bare-SI headline; regenerated article and feeds carry the new headline at the same URL.",
+      "readinessArea": "content truth / discoverability",
+      "stageRationale": "Supported release: close a live STRONG canon gap on public pages without new breadth.",
+      "premises": [
+        {
+          "claim": "/ai-vs-si/ title opens with bare SI",
+          "adapter": "file-content",
+          "target": "ai-vs-si/index.html",
+          "pattern": "<title>AI vs. SI:",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Desk explainer headline opens with bare SI",
+          "adapter": "file-content",
+          "target": "data/news-desk/days/2026-10-04.json",
+          "pattern": "\"headline\": \"AI vs. SI: What the Super Intelligence Rename",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Fix the /ai-vs-si/ title only."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Fix both pages through their sources and add a Desk copy-gate rule."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Add SI entity knowsAbout across JSON-LD and llms.txt studio-wide; unselected."
+        }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 2,
+      "slug": "offline-origin-down-browser-regression",
+      "axis": "sil-debt",
+      "title": "Durable real-browser origin-down regression for the offline recovery path",
+      "tier": "⚡",
+      "effortHours": 2,
+      "impact": 6,
+      "innovation": 5,
+      "priority": 15,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "S397's origin-confirmed recovery was proven once by hand; no running gate exercises the adapter-online/origin-down case, so a regression back to the reload loop would go unseen (S397 committed [SIL] item).",
+      "userOutcome": "Conversion protection: a visitor whose network is up but our origin is down sees a stable offline page and returns automatically once the origin answers, instead of a reload loop.",
+      "recipe": "Extend tests/service-worker-install.spec.js: after activation, route origin traffic (including service-worker fetches) to abort, navigate to an uncached public route, assert offline fallback renders and does not reload; restore routing, trigger retry, assert exactly one recovery to the requested page. Runs in the existing e2e.yml and verify:local core tier.",
+      "acceptance": "New test passes against local preview; fails when error-pages.js reverts to unconditional reload (mutation check); existing install test still passes.",
+      "readinessArea": "offline reliability",
+      "stageRationale": "Supported release: protect a just-shipped reliability fix with a running gate.",
+      "premises": [
+        {
+          "claim": "The service-worker spec has no origin-down coverage",
+          "adapter": "grep-count",
+          "target": "tests/service-worker-install.spec.js",
+          "pattern": "offline\\.html",
+          "operator": "eq",
+          "expected": 0
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Assert offline fallback renders only."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Assert no reload while down and exactly one recovery after the origin returns, with a mutation check."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Cross-engine flapping-connectivity matrix; unselected."
+        }
+      },
+      "executionLog": []
+    }
+  ],
+  "totals": {
+    "count": 2,
+    "priority": 30,
+    "top3": [
+      "si-first-use-expansion",
+      "offline-origin-down-browser-regression"
+    ]
+  },
+  "skipped": [
+    {
+      "slug": "studio-market",
+      "reason": "docs/market/MARKET.json absent; market work stays a separate future strategy selection."
+    }
+  ],
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-22T19:02:39.538Z",
+    "head": "880a3bd42c464e283744ba6352937985a541c033",
+    "sidecar": "docs/AUDIT_2026-10-22-S398.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 3,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "e316666e9bc697717dbfb4ee3f527a269f8f80b81521e317bdcd9894b487ac95",
+    "implementationDirty": []
+  }
+}

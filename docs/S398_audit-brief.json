@@ -1,0 +1,30 @@
+{
+  "kind": "audit",
+  "session": 398,
+  "date": "2026-10-22",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Name SI plainly where people search for it, and lock in the offline recovery fix.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "si-first-use-expansion",
+      "title": "Expand SI on first use on /ai-vs-si/ and the Desk explainer, and gate future Desk copy",
+      "axis": "ai-intelligence",
+      "leftScore": 7,
+      "rightScore": 6,
+      "insight": "Searchers and AI engines see which SI the page means in its title. Future Desk headlines cannot reopen the gap.",
+      "evidence": "ai-vs-si/index.html"
+    },
+    {
+      "id": 2,
+      "slug": "offline-origin-down-browser-regression",
+      "title": "Durable real-browser origin-down regression for the offline recovery path",
+      "axis": "sil-debt",
+      "leftScore": 7,
+      "rightScore": 6,
+      "insight": "A return of the offline reload loop now fails CI. Visitors keep a stable fallback while the origin is down.",
+      "evidence": "tests/service-worker-install.spec.js"
+    }
+  ]
+}

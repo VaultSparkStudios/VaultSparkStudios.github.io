@@ -469,6 +469,27 @@ export function sourceChromeReason(text) {
   return null;
 }
 
+/* CANON-056 first-use rule (S398). "SI" alone collides with Swarm Intelligence,
+ * SI units and System Integration, so a story must expand it before it uses it
+ * bare. Unlike the rules above this needs story ORDER — the headline renders
+ * first, and the page <title> is built from it — so it runs per story, not per
+ * text. Patterns mirror studio-ops check-si-terminology.mjs. */
+const SI_EXPANSION_RE = /(Synthetic|Super)[ -]?Intelligence\s*\(SI\)/gi;
+const BARE_SI_RE = /\bSI\b(?!\s*(units?|prefix(es)?|system of units|base units?|derived units?)\b)/g;
+
+/** Pure: the first reader-facing field that uses bare SI before any expansion, or null. */
+export function bareSiBeforeExpansion(story) {
+  for (const { field, text } of readerFacingFields(story)) {
+    const expansions = [...text.matchAll(SI_EXPANSION_RE)];
+    const firstExpansion = expansions.length ? expansions[0].index : Infinity;
+    const bare = [...text.matchAll(BARE_SI_RE)]
+      .find((m) => !expansions.some((e) => m.index >= e.index && m.index < e.index + e[0].length));
+    if (bare && bare.index < firstExpansion) return { field, text };
+    if (expansions.length) return null;
+  }
+  return null;
+}
+
 /** Pure: days → findings, each located by file + story + field. */
 export function evaluateCorpus(days) {
   const findings = [];
@@ -498,6 +519,16 @@ export function evaluateCorpus(days) {
           });
         }
       }
+      const bareSi = bareSiBeforeExpansion(story);
+      if (bareSi) findings.push({
+        file: `data/news-desk/days/${day.date}.json`,
+        date: day.date,
+        story: story.slug || '?',
+        field: bareSi.field,
+        rule: 'bare-si',
+        detail: 'SI used before "Super Intelligence (SI)" or "Synthetic Intelligence (SI)" in this story (CANON-056)',
+        text: bareSi.text,
+      });
     }
   }
   return findings;
@@ -621,6 +652,25 @@ function selfTest() {
           stances: [{ personaId: 'vera', position: 'The scale of this abuse proves that defense is about infrastructure resilience.' }],
         }],
       }]).length === 0],
+    // ── CANON-056 bare-si (S398): the live 2026-10-04 headline opened with bare SI ──
+    ['THE LIVE CASE: a headline that opens with bare SI is caught in the headline field',
+      () => {
+        const found = evaluateCorpus([{ date: '2026-10-04', stories: [{
+          slug: 'ai-vs-si',
+          headline: 'AI vs. SI: What the Super Intelligence Rename Means for Businesses and Builders',
+          hook: 'Federal paperwork now says Super Intelligence (SI).',
+        }] }]);
+        return found.length === 1 && found[0].rule === 'bare-si' && found[0].field === 'headline';
+      }],
+    ['an expanded headline passes, and later bare SI follows it',
+      () => bareSiBeforeExpansion({
+        headline: 'AI vs. Super Intelligence (SI): What the Rename Means',
+        hook: 'Your contracts say AI; the agency form says SI.',
+      }) === null],
+    ['an expansion in the hook licenses SI in the tldr',
+      () => bareSiBeforeExpansion({ headline: 'The Rename Arrives', hook: 'Agencies now say Synthetic Intelligence (SI).', tldr: 'SI is the new word.' }) === null],
+    ['SI units are not the SI acronym', () => bareSiBeforeExpansion({ headline: 'Lab Reports Results in SI units' }) === null],
+    ['lowercase "si" is not the acronym', () => bareSiBeforeExpansion({ headline: 'Sí, si, the band returns' }) === null],
     ['simulated days are exempt',
       () => evaluateCorpus([{ date: '2026-01-01', simulated: true, stories: [{ slug: 's', hook: 'A biowepon.' }] }]).length === 0],
 

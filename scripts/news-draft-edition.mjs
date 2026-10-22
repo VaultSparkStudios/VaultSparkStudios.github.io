@@ -892,6 +892,7 @@ export function buildDraft(topic, { date, edition, standing, sources, followUp =
         'A stance citing a URL outside this draft\'s ingested sources.',
         'A stance with no citation at all.',
         'A prediction with neither a date nor a measurable quantity — it could never be graded, which makes the track record unfalsifiable.',
+        'Bare "SI" before the story spells out "Super Intelligence (SI)" or "Synthetic Intelligence (SI)" — the headline renders first, so expand it there or avoid SI in it (CANON-056; check-news-copy-quality blocks release).',
       ],
       editorWillSpike: [
         'An edition where the desk agrees with itself (heat 0) — there is no argument to publish.',

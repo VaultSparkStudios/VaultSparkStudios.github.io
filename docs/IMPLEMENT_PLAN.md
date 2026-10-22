@@ -1,13 +1,11 @@
-# Session 397 implementation plan
+# Session 398 implementation plan
 
-Source: docs/AUDIT_2026-10-22-S397.json
+Source: docs/AUDIT_2026-10-22-S398.json
 
 Session intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
 
-Wave 1 complete: fresh goal bound to S397; synchronized; prior S396 closing evidence reconciled separately. Startup canon sync and radar pass; context usage remains unmeasured.
+Wave 1 complete: fresh Claude Code invocation (conversation a4b9ea35) is bound to S398. The repo was synchronized and was not cut off. Startup canon sync and the frontier radar pass. Doctor reports blockingFailing 0. The audit premise gate passed strict 3/3 before any behavior edits.
 
-Wave 2 complete: both reproduced offline reliability outcomes selected at L2, cache fallback foundation first then origin-confirmed recovery. Acceptance is the per-item matrix in the audit; independent review passed and browser acceptance verified. UI state capture at desktop/mobile and all themes before/after.
+Wave 2: two L2 outcomes. First, si-first-use-expansion: the /ai-vs-si/ title, H1 and social titles; the Desk headline source plus canonical regeneration; and a story-order copy-gate rule. Second, offline-origin-down-browser-regression, a Playwright origin-down test with a mutation check. Acceptance is the per-item matrix in the audit. UI changes are text-only, captured at desktop/mobile in every theme.
 
-Wave 3 complete: full required checks, current staging, sanitized direct push, exact hosted candidate checks, complete production deployment/readback and canonical closeout. Rollback: bounded revert of the two behavior fixes and test registration, then redeploy the last accepted candidate. No lifecycle change selected.
-
-Release evidence: docs/RELEASE_S397.json. Runtime63641742e5 is fully deployed and read back; final closing edits are internal evidence only.
+Wave 3: full required checks, then staging, sanitized direct push and the exact hosted candidate checks. After that, production deployment with readback, then canonical closeout. Rollback is a bounded revert of the title/headline/gate/test commit and a redeploy of the last accepted candidate. No lifecycle change is selected.

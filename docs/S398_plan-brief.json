@@ -1,0 +1,30 @@
+{
+  "kind": "plan",
+  "session": 398,
+  "date": "2026-10-22",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Name SI plainly where people search for it, and lock in the offline recovery fix.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "si-first-use-expansion",
+      "title": "Expand SI on first use on /ai-vs-si/ and the Desk explainer, and gate future Desk copy",
+      "axis": "ai-intelligence",
+      "leftScore": 8,
+      "rightScore": 7,
+      "insight": "Source edits plus canonical regeneration keep every Desk surface consistent. The copy gate stops recurrence.",
+      "evidence": "data/news-desk/days/2026-10-04.json"
+    },
+    {
+      "id": 2,
+      "slug": "offline-origin-down-browser-regression",
+      "title": "Durable real-browser origin-down regression for the offline recovery path",
+      "axis": "sil-debt",
+      "leftScore": 7,
+      "rightScore": 6,
+      "insight": "The test runs in the existing e2e and local verify lanes. A mutation check proves it catches the reload loop.",
+      "evidence": "tests/service-worker-install.spec.js"
+    }
+  ]
+}

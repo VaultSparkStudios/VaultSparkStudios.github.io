@@ -235,7 +235,7 @@ export function buildManifest(state) {
       // agent that quotes the studio should resolve it from these pages.
       explainers: [
         { title: 'Synthetic Intelligence (SI): Beyond Traditional AI', url: `${SITE}/synthetic-intelligence/` },
-        { title: 'AI vs. SI: Artificial, Synthetic & Super Intelligence Explained', url: `${SITE}/ai-vs-si/` },
+        { title: 'AI vs. Super Intelligence (SI) vs. Synthetic Intelligence, Explained', url: `${SITE}/ai-vs-si/` },
       ],
       news: {
         hub: `${SITE}/news/`,
