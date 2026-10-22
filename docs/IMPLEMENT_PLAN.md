@@ -8,4 +8,6 @@ Wave 1 complete: fresh goal bound to S397; synchronized; prior S396 closing evid
 
 Wave 2 complete: both reproduced offline reliability outcomes selected at L2, cache fallback foundation first then origin-confirmed recovery. Acceptance is the per-item matrix in the audit; independent review passed and browser acceptance verified. UI state capture at desktop/mobile and all themes before/after.
 
-Wave 3 open: full required checks, current staging, sanitized direct push, exact hosted candidate checks, complete production deployment/readback and canonical closeout. Rollback: bounded revert of the two behavior fixes and test registration, then redeploy the last accepted candidate. No lifecycle change selected.
+Wave 3 complete: full required checks, current staging, sanitized direct push, exact hosted candidate checks, complete production deployment/readback and canonical closeout. Rollback: bounded revert of the two behavior fixes and test registration, then redeploy the last accepted candidate. No lifecycle change selected.
+
+Release evidence: docs/RELEASE_S397.json. Runtime63641742e5 is fully deployed and read back; final closing edits are internal evidence only.

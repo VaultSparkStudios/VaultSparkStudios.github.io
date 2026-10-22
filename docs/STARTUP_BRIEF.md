@@ -1,6 +1,6 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
 <!-- generated-at: 2026-10-22 (Session 397 closeout) -->
-<!-- semantic-freshness: hash=c56a2489f7bc103c next=398 silSession=397 silScore=939 handoff=397 tests=- -->
+<!-- semantic-freshness: hash=181eba1ab56ebaff next=398 silSession=397 silScore=939 handoff=- tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Full checks, staging, main push and produc  ║
-║        Full checks, staging, main push and production; docs/REL  ║
-║                                                                  ║
-║   93  [PRODUCT]      Add durable real-browser origin-down cover  ║
+║   96  [PRODUCT]      Add durable real-browser origin-down cover  ║
 ║        Add durable real-browser origin-down coverage to the exi  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
+║   93  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
 ║        Gate srcset, CSS url(), redirect targets. Future only. i  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Investigate timing classification of incom  ║
+║   90  [PRODUCT]      Investigate timing classification of incom  ║
 ║        Investigate timing classification of incoming pre-sessio  ║
 ║                                                                  ║
-║   84  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
+║   87  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
 ║        Keep startup-generated genius-list drift distinguishable  ║
+║                                                                  ║
+║   84  [VERIFY]       Separately assess served binary coverage a  ║
+║        Separately assess served binary coverage against real re  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

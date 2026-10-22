@@ -4,7 +4,7 @@
   "date": "2026-10-22",
   "agent": "codex",
   "repo": "vaultsparkstudios-website",
-  "headline": "Offline recovery is verified locally; full release follow-through is pending.",
+  "headline": "Origin-confirmed offline recovery and public precache navigation are fully deployed and verified.",
   "items": [
     {
       "id": 1,
@@ -13,8 +13,8 @@
       "axis": "ui-ux-feedback",
       "leftScore": 8,
       "rightScore": 2,
-      "insight": "Offline navigation now has a concrete acceptance target. Failed origin requests must leave the fallback usable, while precached public pages remain available.",
-      "evidence": "assets/error-pages.js"
+      "insight": "An online network adapter no longer triggers a reload until the original route actually answers. Failed or timed-out probes leave the fallback and retry action usable.",
+      "evidence": "16 focused cases; real origin-down browser proof; production63641742e5"
     },
     {
       "id": 2,
@@ -23,8 +23,8 @@
       "axis": "features-depth",
       "leftScore": 8,
       "rightScore": 3,
-      "insight": "Offline navigation now has a concrete acceptance target. Failed origin requests must leave the fallback usable, while precached public pages remain available.",
-      "evidence": "sw.js"
+      "insight": "A failed public navigation can use its exact page in the current declared precache. Existing runtime freshness and private/member boundaries remain intact.",
+      "evidence": "Service-worker install;1133-path complete production readback; docs/RELEASE_S397.json"
     }
   ],
   "silDelta": {
@@ -32,6 +32,6 @@
     "previous": 939
   },
   "followUps": [
-    "Full build/checks, staging, exact hosted checks and complete production readback remain required."
+    "Observe the released offline experience; durable origin-down browser coverage and Pages-observer broker reuse remain future selections."
   ]
 }

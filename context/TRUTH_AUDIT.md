@@ -1,8 +1,10 @@
-## S397 — local offline outcomes verified; production unproven
+## S397 — selected outcomes and full production verified
 
-S397 repairs online-adapter/offline-origin reload loops and makes current public precache pages available on failed navigation. Recovery scripts are precached; the fallback reuses the existing saved-theme controller. Focused 16/16 plus existing shell/theme checks 38/38 and Chromium install 1/1 pass; real server-down browser recovery/manual retry and 56 rendered images across seven themes/two viewports and four states are verified.
+S397 repairs origin-confirmed offline recovery and failed public navigation through the current declared precache. The fallback uses cached recovery handlers and the existing saved-theme controller. Both selected L2 outcomes are verified and fully deployed in normal production release 63641742e50c6b61a8e041663966f9852748bfbf.
 
-No prior session evidence substitutes for this goal. Original timing checker failure retained; source behavior edits followed passing 2/2 gate and admission. Context usage unmeasured. Pre-fix light-theme mismatch repaired with existing controller. Production remains unproven until docs/RELEASE_S397.json records actual current staging, checks and readback.
+Evidence: complete local547/547 and hosted547/547; fresh mobile215/215;56 reviewed captures across seven themes/two viewports/four states; fresh staging ceremony11/11; provider and both build stamps; full1133-path served sweep (1123 identical,10 redirects,0 differ/unread);34 focused comparisons (33 raw exact,1 narrowly normalized apex HTML);153 news pages/1675 assets exact; edge2/2 andfeeds101/101. docs/RELEASE_S397.json records the local normal-lane transport and retained hosted failures/cancellation.
+
+Overall status remains yellow for existing identity/field-evidence holds. Original timing verifier remains nonpassing; passing strict2/2 premises and admission preceded behavior edits. Context usage remains unmeasured.
 
 ## S395 — complete scoped release and closing publication verified
 

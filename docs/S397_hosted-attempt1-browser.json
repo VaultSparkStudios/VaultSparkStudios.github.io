@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-22T16:16:41.523Z",
+  "publicSafe": true,
+  "origin": "https://website.staging.vaultsparkstudios.com",
+  "suite": "tests/staging-release.spec.js",
+  "state": "rejected",
+  "expectedTests": 6,
+  "observedTests": 6,
+  "executedTests": 3,
+  "passed": 2,
+  "failed": 0,
+  "flaky": 1,
+  "skipped": 0,
+  "held": 3,
+  "heldContracts": [
+    "anonymous Obelisk boundary is fail-closed and reaches the provider"
+  ],
+  "heldSurfaces": [
+    "identity",
+    "worker:identity"
+  ],
+  "reasons": [
+    "flaky-1"
+  ],
+  "failures": [
+    {
+      "title": "mobile drawer and every theme are readable",
+      "project": "chromium",
+      "message": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  -  1\n+ Received  + 10\n\n- Array []\n+ Array [\n+   \"Failed to load resource: the server responded with a status of 502 ()\",\n+   \"Failed to load resource: the server responded with a status of 502 ()\",\n+   \"Failed to load resource: the server responded with a status of 502 ()\",\n+   \"Failed to load resource: the server responded with a status of 502 ()\",\n+   \"Failed to load resource: the server responded with a status of 502 ()\",",
+      "files": [
+        "tests/staging-release.spec.js"
+      ],
+      "evidenceTruncated": false
+    }
+  ],
+  "failureEvidence": {
+    "projects": [
+      "chromium"
+    ],
+    "tests": [
+      "mobile drawer and every theme are readable"
+    ],
+    "files": [
+      "tests/staging-release.spec.js"
+    ],
+    "truncated": false
+  }
+}

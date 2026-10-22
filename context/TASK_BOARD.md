@@ -1,10 +1,12 @@
 ## S397 — offline reliability
 
-Wave 1 complete: startup and fresh audit. Wave 2 complete: both selected L2 outcomes verified. Wave 3 active: release and canonical closeout.
+Wave 1 complete: startup and fresh audit. Wave 2 complete: both selected L2 outcomes verified. Wave 3 complete: exact release and canonical closeout evidence verified.
 
 - [x] [S397 #1-2] Origin-confirmed recovery and public precache navigation; docs/AUDIT_2026-10-22-S397.md.
-- [ ] [S397 RELEASE] Full checks, staging, main push and production; docs/RELEASE_S397.json.
+- [x] [S397 RELEASE] Normal full production63641742e5, exact hosted3/3, staging11/11, whole served tree verified; docs/RELEASE_S397.json.
 - [ ] [SIL][S397] Add durable real-browser origin-down coverage to the existing service-worker install test. Future selection only.
+
+- [ ] [SIL][S397] Reuse the canonical Pages broker in deploy-currency provider observations; the current Worker-token Pages probe returns403. Future selection only.
 
 ## S396 — dead internal references fixed and gated
 

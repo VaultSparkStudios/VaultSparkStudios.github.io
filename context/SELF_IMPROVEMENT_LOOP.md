@@ -3145,3 +3145,6 @@ The later d7555cf4d9 closing publication recorded the verified production c6fb0a
 | Automation Coverage | 98 |
 
 Score unchanged: demonstrated local reliability repair, no measured field improvement, and retained process gaps. Brainstorm: (1) durable real-browser origin-down acceptance in existing install spec, committed as a future SIL row; (2) measure navigation recovery latency during real outages before adding automatic polling. CDR reviewed: no new creative direction. Release follow-through remains pending in docs/RELEASE_S397.json.
+
+
+**Release evidence for existing S397 entry:** Full normal production63641742e5 is verified by exact hosted3/3, fresh11/11 staging ceremony, provider/both build stamps and complete1133-path served proof. The failed hosted attempt was not hidden: local fallback reused the canonical Pages broker and the unchanged artifact recipe. Scores939/1000 and velocity2 remain unchanged. Future selections only: durable origin-down browser coverage; reuse canonical Pages broker in provider observations instead of the Worker-only token.

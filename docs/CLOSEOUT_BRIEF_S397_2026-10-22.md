@@ -5,7 +5,8 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Offline recovery is verified locally; full release follow-through is pending.              ║
+║    Origin-confirmed offline recovery and public precache navigation are fully deployed and    ║
+║    verified.                                                                                  ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     ████████░░   80/100                                                       ║
 ║  ECOSYSTEM IMPACT   ██▌░░░░░░░   25/100                                                       ║
@@ -18,20 +19,21 @@
 
   [2]  offline-precache-navigation                                PROJ 8  ·  ECOS 3
          ── features-depth ──────────────────────────────────────────────────────────────────
-         Offline navigation now has a concrete acceptance target. Failed origin requests must
-         leave the fallback usable, while precached public pages remain available.
-         → sw.js
+         A failed public navigation can use its exact page in the current declared precache.
+         Existing runtime freshness and private/member boundaries remain intact.
+         → Service-worker install;1133-path complete production readback; docs/RELEASE_S397.json
 
   [1]  offline-origin-recovery                                    PROJ 8  ·  ECOS 2
          ── ui-ux-feedback ──────────────────────────────────────────────────────────────────
-         Offline navigation now has a concrete acceptance target. Failed origin requests must
-         leave the fallback usable, while precached public pages remain available.
-         → assets/error-pages.js
+         An online network adapter no longer triggers a reload until the original route
+         actually answers. Failed or timed-out probes leave the fallback and retry action
+         usable.
+         → 16 focused cases; real origin-down browser proof; production63641742e5
 
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Full build/checks, staging, exact hosted checks and complete production readback remain required.
+    • Observe the released offline experience; durable origin-down browser coverage and Pages-observer broker reuse remain future selections.
 
   BLOCKERS
     (none)

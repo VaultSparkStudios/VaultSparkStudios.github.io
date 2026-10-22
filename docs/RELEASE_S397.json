@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "session": 397,
-  "state": "candidate-publication",
-  "releaseAccepted": false,
+  "state": "production-verified",
+  "releaseAccepted": true,
   "goal": {
     "threadId": "01a163bb-366b-76e2-a307-f44951863f39",
     "createdAt": 1792674589
@@ -27,12 +27,7 @@
     "beforeTheme": "Pre-fix light theme capture failed; controller reuse repaired affected fallback theme persistence."
   },
   "rollback": "Revert selected offline behavior changes and redeploy last accepted production candidate.",
-  "remaining": [
-    "main publication",
-    "exact hosted required checks",
-    "normal production deployment/readback",
-    "final closeout/Ark/restore writers"
-  ],
+  "remaining": [],
   "failedLocalAttempts": [
     {
       "reason": "New unit tests were not yet staged, so tracked-test registration gate failed. Staging both specs corrected registration; isolated parity now 52 declared = 52 executed = 52 tracked.",
@@ -86,7 +81,9 @@
       "cloudflare-analytics-pull.yml"
     ],
     "originalState": "all active",
-    "restoreRequired": true
+    "restoreRequired": false,
+    "restoredAt": "2026-10-22T17:03:43.189Z",
+    "verifiedStates": "All six active"
   },
   "diagnosticAttempts": [
     {
@@ -121,7 +118,7 @@
     "fullPasses": 2,
     "stepsEach": 547,
     "log": ".cache/S397-closeout-attempt4.log",
-    "integratedCandidatePending": true,
+    "integratedCandidatePending": false,
     "integrated": {
       "passed": 547,
       "total": 547,
@@ -313,5 +310,152 @@
       "total": 11,
       "state": "passed"
     }
-  ]
+  ],
+  "releaseSha": "63641742e50c6b61a8e041663966f9852748bfbf",
+  "production": {
+    "lane": "normal-full",
+    "transport": "Local execution of the existing git-archive/native-prune/normal-stamp Pages recipe, using canonical withPagesDeployEnv broker",
+    "tag": "release-s397-63641742e5",
+    "provider": {
+      "observedAt": "2026-10-22T16:43:42.622Z",
+      "state": "verified",
+      "expectedSha": "63641742e50c6b61a8e041663966f9852748bfbf",
+      "credentialPlane": "cloudflare.studio",
+      "deployment": {
+        "id": "ddfcd0a5-ef8f-48da-9254-49497f52dd72",
+        "environment": "production",
+        "createdAt": "2026-10-22T16:41:31.971428Z",
+        "state": "success",
+        "sha": "63641742e50c6b61a8e041663966f9852748bfbf",
+        "url": "https://ddfcd0a5.vaultsparkstudios-website.pages.dev"
+      }
+    },
+    "artifactRoot": "a31207b2cf1a676722c7a5afc2399cee49a3f11fc0b64a6741e663f6a26397e6",
+    "buildStamps": "Both Pages origin and public apex report exact release SHA, deployedBy pages-deploy; baseline/content-lane fields null.",
+    "rollback": {
+      "id": "2683b5da-a92e-4bec-be59-f0f07eb18262",
+      "sha": "cdcca550f03fb331d2df48be0ce434bc86a1a4a5",
+      "createdAt": "2026-10-22T14:05:54.315572Z",
+      "state": "success"
+    },
+    "cachePurge": "docs/S397_cache-purge.json"
+  },
+  "productionWorkflow": {
+    "runId": 39812145055,
+    "sourceSha": "63641742e50c6b61a8e041663966f9852748bfbf",
+    "attempts": [
+      {
+        "attempt": 1,
+        "state": "rejected-before-deploy",
+        "reason": "One Chromium test passed on retry after HTTP502 resources. Strict ceremony rejected flaky1; actual deploy step skipped.",
+        "evidence": "docs/S397_hosted-attempt1-browser.json"
+      },
+      {
+        "attempt": 2,
+        "state": "canceled-before-ceremony-and-deploy",
+        "reason": "Browser dependency setup stalled; completed execution archive proves cancellation and runner cleanup. GitHub status endpoint remained stale in-progress; cancellation endpoints returned completed/not-in-progress.",
+        "evidence": "docs/S397_hosted-cancellation.json"
+      }
+    ]
+  },
+  "requiredChecks": {
+    "ok": true,
+    "lane": "hosted-exact-sha",
+    "checks": [
+      {
+        "workflow": ".github/workflows/e2e.yml",
+        "state": "passed",
+        "runId": 39809279693
+      },
+      {
+        "workflow": ".github/workflows/lighthouse.yml",
+        "state": "passed",
+        "runId": 39809279677
+      },
+      {
+        "workflow": ".github/workflows/accessibility.yml",
+        "state": "passed",
+        "runId": 39809279934
+      }
+    ],
+    "findings": [],
+    "sourceCommit": "63641742e50c6b61a8e041663966f9852748bfbf",
+    "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+    "checkedAt": "2026-10-22T16:13:18.001Z",
+    "independentProof": {
+      "ok": false,
+      "expectedSha": "63641742e50c6b61a8e041663966f9852748bfbf"
+    }
+  },
+  "readback": {
+    "servedText": {
+      "path": "docs/S397_served-parity.json",
+      "expected": 1133,
+      "checked": 1133,
+      "identical": 1123,
+      "redirected": 10,
+      "differ": 0,
+      "unread": 0,
+      "coverageComplete": true,
+      "method": "Native compare/summarize and redirect logic with all pinned Git source blobs verified in one batch. Slower original per-file process stopped after equivalent complete proof passed; no partial CLI pass claimed."
+    },
+    "focused": {
+      "path": "docs/S397_critical-readback.json",
+      "checks": 34,
+      "rawExact": 33,
+      "edgeNormalizedHtml": 1,
+      "buildStamps": 2,
+      "binaryScope": "12 incoming art variants at each origin",
+      "normalization": "Only eight Worker CSP nonce attributes, one CSP-nonce meta and one exact Cloudflare detection script removed; all remaining offline HTML bytes equal pinned source. Raw mismatch retained separately."
+    },
+    "news": {
+      "path": "docs/S397_news-readback.json",
+      "pages": 153,
+      "assets": 1675,
+      "allExact": true,
+      "edge": "reachable"
+    },
+    "postDeploy": {
+      "observedAt": "2026-10-22T16:49:56.794Z",
+      "checks": [
+        {
+          "name": "edge",
+          "exitCode": 0,
+          "summary": "smoke-live PASSED: 2/2 signals healthy"
+        },
+        {
+          "name": "feeds",
+          "exitCode": 0,
+          "summary": "served-feed-content-type: ok · 101/101 feed(s) serve JSON"
+        }
+      ]
+    }
+  },
+  "fallbackPreparation": {
+    "freshCeremony": "docs/S397_final-ceremony.json:11/11 passed",
+    "providerAuthentication": "Initial Worker-only token probe returned403, as scoped. Existing cf-deploy/withPagesDeployEnv broker selected ready Pages studio plane; no new credentials or policy changes.",
+    "transportEvidence": "docs/S397_production-transport.json"
+  },
+  "closeout": {
+    "status": "complete; normal internal commit/push publication follows",
+    "runtimeReleaseSha": "63641742e50c6b61a8e041663966f9852748bfbf",
+    "closingScope": "Internal documentation and operator bookkeeping only; no public served-path change permitted.",
+    "ark": {
+      "status": "shipped; no recipient application claimed",
+      "id": "01K5I91TV68173A4B6FE8FEEC8"
+    },
+    "beacon": {
+      "status": "unconfigured",
+      "reason": "BEACON_GIST_ID missing; native release command returned unconfigured"
+    },
+    "sessionLock": "Owned S397 lock cleared",
+    "workflows": "All six restored and verified active"
+  },
+  "proofHashes": {
+    "docs/S397_final-ceremony.json": "b2830c52436c5153d1118d1dc8ae89ce1952beeed8d8dc94b7372cbe0274578a",
+    "docs/S397_served-parity.json": "20fb2accdb1fb22fd5351ee1499556e4c59ba5640e5456f47417e2b778facbe1",
+    "docs/S397_critical-readback.json": "7c9d5ce2cc038031144a872da11fd4579033be019b8be70a4343e5314f004ef4",
+    "docs/S397_news-readback.json": "cb91043e931073a1e7359b933cd045dbad4de862cb173b2b068dc23045d2649a",
+    "docs/S397_provider-readback.json": "e4e51344afe1be61c756a0f2cc1652d0dce9e1a6dbbfe2238467ea39ea293401"
+  }
 }

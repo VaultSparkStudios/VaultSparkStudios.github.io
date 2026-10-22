@@ -1,66 +1,10 @@
+<!-- Earlier decision blocks preserved verbatim in context/archive/DECISIONS_before_S397_closeout.md. -->
 ## 2026-10-06 — S369 audit scope and conformance posture
 
 Accepted creative direction: **Spark** is the living-sphere companion; **Vault Compass** is its on-demand navigation experience. Gold core, colorful regions and orbital rings animate within the opened experience; controls remain stationary. Founder explicitly requires retirement of the bottom-left constellation resume guide and bottom-right route tutorial. Implementation is pending. No automatic expansion or replacement corner prompts; existing auth and membership contracts remain separate.
 
 Audit/proposal only: public discovery behavior, auth, membership promises and terminology are unchanged. Existing strong conformance findings for staging/identity checker parsing and stats/surface/terminology coverage do not justify unrelated changes during this review; they must be rechecked for a future release. Proposed Compass reuses public intent and palette infrastructure, remains optional, and does not authorize deployment or change D-S368.8.
 
-## D-S258.1 — CTA registry owns rollup family metadata
-
-- **Date:** 2026-07-04
-- **Decision:** Tracked CTA funnel family definitions now live in `scripts/lib/cta-contract-registry.mjs`, including rollup `parts`, `rate`, `label`, and optional `epoch`. `scripts/rollup-rum-ux.mjs` derives tracked CTA families from the registry; checker scripts must accept registry-backed rollup ownership instead of requiring duplicated literal family entries.
-- **Reason:** CTA denominator honesty should have one source of truth. Duplicating family/epoch config in the rollup and checker makes future conversion surfaces drift-prone and can break gates when a legitimate registry refactor removes hardcoded literals.
-- **Scope:** Website repo only. Non-CTA UX families (`oracle-chip`, `ignis-hint`, `oracle-answer`, terminal conversions) remain local to `rollup-rum-ux.mjs` until they get equivalent contract registries.
-
-## D-S259.1 — Obelisk Passport bridge is real integration; full provider truth stays gated until RP/session contract exists
-
-- **Date:** 2026-07-05
-- **Decision:** The website can honestly ship a Phase 1 Obelisk Passport bridge now: browser identity state is normalized through `assets/identity.js`, callbacks persist verified `/api/obelisk-verify` payloads, and the Worker verifier remains fail-closed. It must not claim a full Obelisk data-plane or default-provider migration until `obelisk.identity.verify` has relying-party config (`OBELISK_RP_ID`, `OBELISK_RP_NAME`, `OBELISK_RP_ORIGIN`) and a Supabase JWT/RLS bridge is implemented and soaked.
-- **Reason:** CANON-031 observability honesty applies to auth posture. A visible Passport bridge is valuable and testable, but replacing Supabase/session truth without the RP contract would be a fabricated readiness claim.
-
-## D-S259.2 — TT enforcement decisions rank by current activity before 30-day volume
-
-- **Date:** 2026-07-05
-- **Decision:** Trusted Types burndown now reports freshness buckets and a freshness-ranked table before the volume-ranked table. Active/warm clusters are the remediation priority; stale 30-day volume remains useful context but cannot dominate enforcement readiness.
-- **Reason:** The old burndown repeatedly let pre-deploy or already-fixed high-volume clusters outrank currently active sinks. Enforcement gates need current-risk ordering first, long-window cleanup second.
-
-## D-S259.3 — Fingerprinted shell hashes must normalize text before hashing
-
-- **Date:** 2026-07-06
-- **Decision:** `scripts/build-shell-assets.mjs` hashes and writes text shell assets after LF normalization instead of hashing raw working-tree bytes.
-- **Reason:** Git checkout line endings differ between local Windows and GitHub Ubuntu. Raw-byte hashes made CI regenerate a different shell stylesheet and rewrite every page even when source semantics were identical. Fingerprinted public assets must be content-semantic and platform-stable.
-- **Scope:** Website shell assets only; binary assets still hash raw bytes.
-
-## D-S260.1 — Active Trusted Types burn-down must pair DOM fixes with a regression guard
-
-- **Date:** 2026-07-06
-- **Decision:** Freshness-ranked local Trusted Types sinks are not complete when the visible renderer is merely changed; the same session must add a narrow regression gate for the active sink class. `scripts/check-active-tt-sinks.mjs` now guards the S260 local rows and is wired into `npm run build:check` after the Trusted Types analyzer.
-- **Reason:** The burndown report can contain stale live evidence next to still-active local code. S260 verified each premise against source, rejected the already-fixed `home-dynamic-hero` row, fixed the still-active hero ticker/Gridiron/leaderboard rows, and made the current-risk set self-checking so future sessions do not re-open the same class from memory.
-- **Scope:** Website repo only. Cross-repo Trusted Types rows still move by Ark/owning repo, not sibling-tree edits.
-**D-S261.2 -- Lighthouse trend warnings are advisory; only error-level trend drops or floor failures hard-fail CI.** The S261 recovery push proved the old `--check` behavior was too brittle: a single `/leaderboards/` performance warning at `0.89` vs rolling baseline `0.94` failed CI even though the absolute floor gate stayed green and local reruns showed no sustained regression. Decision: `check-lighthouse-trend.mjs --check` still prints warning-level deltas (`>=0.05`) but exits nonzero only for error-level deltas (`>=0.10`). Sustained low performance remains guarded by `check-lighthouse-floor.mjs`.
-
-## D-S291.1 — Cascade-resync belongs in the publisher, not a looser gate (2026-07-25)
-
-`[skip ci]` publisher crons that commit a base feed MUST regenerate + stage every byte-checked artifact derived from it. Root-fixed four live strandings (uptime-probe → release-proof/citation; refresh-live-data → changelog SSR; vault-narrative → citation) inside the workflows, and made `build-ship-receipts.mjs` write a content-stable `generatedAt` so unchanged corpora produce no diff. Rejected the alternative of loosening the affected `--check`s to tolerate volatile fields: `candidateBuildSha` byte-binding is S290 security work and the SSR/citation values are public trust surfaces — weakening their checks would let a real stale value pass. Pinned by a new structural gate (`check-publish-cascade-coverage.mjs`) in `build:check`.
-
-## D-S291.2 — The 47.6% uptime is honest; the Worker redeploy is founder-gated (2026-07-25)
-
-The public uptime figure is low because the S275 probe correctly detects that the production Worker (clobbered out-of-band 2026-07-03) is missing `/v/rum`, so RUM ingest has been dark since 2026-07-02. The low number is a deliberate forcing function and was NOT massaged to look healthy — doing so would hide a real 23-day telemetry outage. The fix (redeploy the security/auth Worker) is held by the fail-closed production promotion gate (Supabase/identity reasons); overriding an explicit founder production hold on an auth/security surface is out of scope for autonomous action (CANON-019 human-gate + "escalate before changing: auth/security"). Recorded as a loud founder-action item with the exact restore command rather than forced.
-
-## D-S292.1 — Availability is a vector, not a repaired headline number (2026-07-25)
-
-Keep `upPct` as the strict full-stack invariant and publish origin-content, edge-liveness, and Worker-ingest as separately denominated dimensions. Legacy rows may prove origin content because they recorded `down`, but must never be backfilled as evidence for probes that did not yet exist.
-
-## D-S292.2 — Exact-SHA staging also requires exact-artifact identity (2026-07-25)
-
-Candidate readiness requires both the deployed build beacon and the 24-leaf critical-artifact Merkle root to match local source. The construction is deterministic, domain-separated, path-sorted, and duplicate-last; any leaf drift keeps readiness dark.
-
-## D-S292.3 — Evidence dependencies have one declarative owner (2026-07-25)
-
-`config/evidence-graph.json` replaces hand-maintained maps across build order, publisher checks, and pre-push logic. It must validate acyclic/unique, every builder/check must exist, and every consumer derives transitive closure from it.
-
-## D-S292.4 — Production stays held despite a green static candidate (2026-07-25)
-
-Canonical static staging is exact and browser-green, but production Worker route semantics are 0/5 and Supabase/provider gates remain incomplete. Staging success does not override the physical promotion interlock; no production deployment was attempted.
 ## D-S334.1 — A splat redirect is only safe when the destination mirrors the source
 
 `_redirects` carried `/solara/* -> /games/solara/:splat` and
@@ -2495,3 +2439,8 @@ Adapter online status is advisory. The offline fallback now probes the requested
 ### S397 offline fallback performance measurement scope
 
 The affected offline document automatically exits after confirmed recovery. An ordinary online Lighthouse visit therefore measures the reopened route, so no offline-fallback Lighthouse score is claimed. The existing hosted Lighthouse candidate checks still apply; the offline failure/recovery states are accepted through actual browser/server-down behavior and the 42-image theme/device/state matrix. This is the recorded page-measurement exception permitted by the website implementation overlay, not a claimed performance improvement.
+
+
+## D-S397.2 — Preserve full release gates across a transport fallback
+
+The pinned S397 release used the existing normal Pages artifact recipe locally through the canonical Pages broker after the hosted attempt encountered a flaky502 and its retry stalled in dependency setup. Exact hosted required checks3/3 and a fresh canonical staging ceremony11/11 passed before upload; no gate, held identity contract or credential policy was relaxed. Provider identity, both build stamps, full1133-path served parity and bounded binary/HTML readback verify the actual result. The hosted attempt is not claimed as a successful deployment.
