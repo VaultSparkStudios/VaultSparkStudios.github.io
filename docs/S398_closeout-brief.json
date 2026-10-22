@@ -1,0 +1,37 @@
+{
+  "kind": "closeout",
+  "session": "S398",
+  "date": "2026-10-22",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios-website",
+  "headline": "SI is spelled out where people search for it, and the offline recovery fix is held by a real-browser gate. Both are fully deployed.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "si-first-use-expansion",
+      "title": "Expand SI on first use on /ai-vs-si/ and the Desk explainer, and gate future Desk copy",
+      "axis": "ai-intelligence",
+      "leftScore": 7,
+      "rightScore": 5,
+      "insight": "Readers and AI search see which SI the page means in its title. Future Desk headlines cannot reopen the gap.",
+      "evidence": "check-si-terminology conform 339 files; copy gate self-test 54/54; production 418d250656"
+    },
+    {
+      "id": 2,
+      "slug": "offline-origin-down-browser-regression",
+      "title": "Durable real-browser origin-down regression for the offline recovery path",
+      "axis": "sil-debt",
+      "leftScore": 7,
+      "rightScore": 4,
+      "insight": "A return of the offline reload loop now fails CI. The test is proven to fail against the pre-S397 code.",
+      "evidence": "service-worker-install.spec.js repeat-clean and mutation-checked; Pages origin tree-current 1125/1135"
+    }
+  ],
+  "silDelta": {
+    "current": 939,
+    "previous": 939
+  },
+  "followUps": [
+    "Spark buddy overlap on Desk text at 390px, and a release-window mechanism for publisher races, are future SIL selections."
+  ]
+}

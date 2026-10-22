@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "session": 398,
+  "state": "production-verified",
+  "releaseAccepted": true,
+  "goal": {
+    "agent": "claude-code",
+    "conversation": "a4b9ea35-8b96-427d-ac8e-9d1823b3761a",
+    "binding": "arc-goal-binding.mjs is Codex-only; association recorded in LATEST_HANDOFF. No prior completion evidence reused."
+  },
+  "audit": "docs/AUDIT_2026-10-22-S398.json",
+  "implementation": {
+    "items": ["si-first-use-expansion", "offline-origin-down-browser-regression"],
+    "siTerminology": "check-si-terminology: conform, 339 public files, 0 CANON-056 findings",
+    "copyGate": "check-news-copy-quality --self-test 54/54; corpus ok; restoring the old headline fails the bare-si rule",
+    "serviceWorkerSpec": "2 tests; repeat-each 3 (6/6) and repeat-each 2 after tightening (4/4); origin-down test fails against pre-S397 assets/error-pages.js (mutation check)",
+    "review": "Independent fresh-context review PASS; 5 notes, 1 applied (navigation count asserted from listener start)",
+    "visual": "docs/visual-qa/LATEST.json: 28 manually reviewed captures, 2 routes x 7 themes x desktop/mobile",
+    "mobile": "Fresh local 215/215 (receipt was stale because incoming Desk content changed index.html after S397)"
+  },
+  "localAcceptance": {
+    "attempts": [
+      { "attempt": 1, "state": "failed", "step": 168, "reason": "check-receipt-ordering: mobile receipt predated index.html from incoming Desk edition; rebind refused; fresh 215/215 audit replaced it." },
+      { "attempt": 2, "state": "passed", "steps": "547/547" },
+      { "attempt": 3, "state": "passed", "steps": "547/547", "note": "After rebase over routine Desk art and staging deploy" }
+    ],
+    "finalConverge": "After two later data-publisher rebases: npm run build, resync-derived --sweep-repair, receipt rebinds (pixel hashes unchanged), repair-evidence-graph coherent, check-receipt-ordering, check-proof-surface 92/92, staging parity green. Hosted build lanes and required checks then ran at the exact pushed SHA."
+  },
+  "staging": {
+    "deploys": [
+      { "id": "20261022202715", "source": "3a997f2b2f", "note": "superseded by publisher drift" },
+      { "id": "20261022210440", "receipt": "56548fcbe243b40fecac7556", "files": 12810, "rollbackPath": "/opt/studio/staging/website/.rollback/20261022210440" }
+    ],
+    "releaseBrowser": "tests/staging-release.spec.js 6/6 (3 engines)",
+    "parity": "check-staging-parity --check production-parity green"
+  },
+  "publisherRaces": "Three [skip ci] publisher batches landed during release. Each was rebased by taking the remote side of generated conflicts, then regenerated. A temporary pause of the six writer workflows was denied by the permission classifier as a CI bypass and was not used.",
+  "releaseSha": "418d250656f09d36ad2d4fcc29cd1910c8b0f23b",
+  "requiredChecks": {
+    "ok": true,
+    "lane": "hosted-exact-sha",
+    "checks": [
+      { "workflow": ".github/workflows/e2e.yml", "state": "passed", "runId": 39855319323 },
+      { "workflow": ".github/workflows/lighthouse.yml", "state": "passed", "runId": 39855319426 },
+      { "workflow": ".github/workflows/accessibility.yml", "state": "passed", "runId": 39855319566 }
+    ],
+    "honestyNote": "A first checker call used a mistyped full SHA and returned missing; the exact SHA was rechecked and passed."
+  },
+  "production": {
+    "tag": "release-s398-418d250656",
+    "workflow": ".github/workflows/pages-deploy.yml",
+    "runId": 39858675909,
+    "promotionScope": "promotable=true · scoped-disjoint (held: auth/**, identity, worker:identity)",
+    "steps": "Canonical release ceremony success; Build clean dist success; Deploy to Cloudflare Pages success; Purge edge HTML cache success; Promotion held step skipped",
+    "buildStamps": "Pages origin and apex both report 418d250656 deployedBy pages-deploy, builtAt 2026-10-22T21:40:17Z"
+  },
+  "readback": {
+    "pagesOrigin": { "path": "docs/S398_served-parity.json", "verdict": "tree-current", "expected": 1135, "identical": 1125, "redirected": 10, "differ": 0, "unread": 0 },
+    "apex": { "verdict": "unverified (diagnostic)", "identical": 707, "differ": 313, "unread": 105, "reason": "All 313 differ rows are HTML rewritten by the Worker (CSP nonces) plus the Cloudflare-injected detection script; sampled /ai-vs-si/ and /privacy/ equal source after removing both. Unread rows are auth 302s and timeouts behind the Worker." },
+    "titles": "Both origins serve the expanded /ai-vs-si/ and Desk explainer titles"
+  },
+  "rollback": "Revert 15b90dff9e (SI + gate + test) and redeploy the last accepted candidate 63641742e5 via pages-deploy on its release tag.",
+  "remaining": []
+}

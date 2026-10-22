@@ -1,3 +1,11 @@
+## S398 — SI spelled out on first use; offline recovery held by a browser gate; fully deployed
+
+S398 closes the live CANON-056 gap. `/ai-vs-si/` (title, H1, social titles, JSON-LD) and the Desk explainer headline now spell out "Super Intelligence (SI)" before any bare SI. The Desk fix went through its source (`data/news-desk/days/2026-10-04.json`) and `news:publish`, with the slug unchanged. `check-news-copy-quality` has a story-order `bare-si` rule, and the Desk author brief states it. `tests/service-worker-install.spec.js` now also proves the adapter-online/origin-down path: a stable fallback, no reload, and exactly one recovery. That test runs in e2e.yml and verify:local, and is mutation-checked against the pre-S397 loop.
+
+Evidence: production `418d250656` (tag `release-s398-418d250656`, run 39858675909: ceremony and the Pages deploy step ran). Hosted exact-SHA e2e, Lighthouse and accessibility passed. Pages origin is tree-current, 1125/1135 identical with 10 redirects and 0 differ. Local build:check passed 547/547; the mobile audit passed 215/215; 28 captures across 7 themes × 2 viewports were reviewed. Staging release spec passed 6/6 and staging parity was green. Details: docs/RELEASE_S398.json.
+
+No measured search or field gain is claimed. Existing identity and field-evidence holds are unchanged.
+
 ## S397 — offline reliability fully deployed
 
 S397 repairs origin-confirmed offline recovery and failed public navigation through the current declared precache. The fallback uses cached recovery handlers and the existing saved-theme controller. Both selected L2 outcomes are verified and fully deployed in normal production release 63641742e50c6b61a8e041663966f9852748bfbf.

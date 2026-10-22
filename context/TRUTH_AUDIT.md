@@ -1717,3 +1717,7 @@ Fresh215/215 local mobile cells and84 inspected final theme captures pass. Both 
 ## S396 — internal reference truth (2026-10-21)
 
 Source-of-truth change: whether a public page's internal links and assets exist is now measured, not assumed. `scripts/check-local-references.mjs` runs in build:check; before S396 no gate resolved ordinary href/src, so two live 404s were invisible to every green suite. Known limits stay declared, not passed: `srcset`, CSS `url()`, JSON feeds and redirect destinations are unmeasured. The investor portal's missing theme system is a recorded CANON-047 gap.
+
+## S398 — SI terminology truth (2026-10-22)
+
+Source-of-truth change: first-use SI expansion on public pages is now measured in two places. Studio Ops `check-si-terminology` reports conform across 339 files. The Desk's `check-news-copy-quality` blocks a story whose first bare SI precedes its expansion, in render order. The Desk explainer headline was corrected in `data/news-desk/days/2026-10-04.json` and every derived surface was regenerated; no derived file was hand-edited. Release byte truth: the Pages origin is tree-current at 418d250656, while the apex remains a diagnostic vantage because of Worker HTML rewriting.

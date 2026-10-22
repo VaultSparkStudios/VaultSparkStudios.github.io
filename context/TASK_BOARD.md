@@ -1,10 +1,16 @@
+## S398 — SI, offline gate
+
+- [x] [S398] SI, bare-si gate, offline test; docs/RELEASE_S398.json.
+- [ ] [SIL][S398] Spark buddy overlaps Desk text at 390px.
+- [ ] [SIL][S398] Staging lineage tolerant of publisher data drift.
+
 ## S397 — offline reliability
 
 Wave 1 complete: startup and fresh audit. Wave 2 complete: both selected L2 outcomes verified. Wave 3 complete: exact release and canonical closeout evidence verified.
 
 - [x] [S397 #1-2] Origin-confirmed recovery and public precache navigation; docs/AUDIT_2026-10-22-S397.md.
 - [x] [S397 RELEASE] Normal full production63641742e5, exact hosted3/3, staging11/11, whole served tree verified; docs/RELEASE_S397.json.
-- [ ] [SIL][S397] Add durable real-browser origin-down coverage to the existing service-worker install test. Future selection only.
+- [x] [SIL][S397] Origin-down test, S398.
 
 - [ ] [SIL][S397] Reuse the canonical Pages broker in deploy-currency provider observations; the current Worker-token Pages probe returns403. Future selection only.
 

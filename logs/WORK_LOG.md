@@ -299,3 +299,13 @@ Fresh native invocation bound to S397; synchronized and recovered S396 evidence 
 ### S397 final release receipt
 
 Implementation9fbf401026; incoming automation preserved by merge51ce1f43ea; exact production63641742e5 (tagrelease-s397-63641742e5), providerddfcd0a5-ef8f-48da-9254-49497f52dd72. Evidence: complete local547/547 and hosted547/547; fresh mobile215/215;56 reviewed captures across seven themes/two viewports/four states; fresh staging ceremony11/11; provider and both build stamps; full1133-path served sweep (1123 identical,10 redirects,0 differ/unread);34 focused comparisons (33 raw exact,1 narrowly normalized apex HTML);153 news pages/1675 assets exact; edge2/2 andfeeds101/101. docs/RELEASE_S397.json records the local normal-lane transport and retained hosted failures/cancellation. Runtime is the full normal artifact, not a content overlay. Closing publication is confined to nonserved internal evidence. Original timing failure, failed/incomplete local checks, hosted flaky502 and canceled dependency-stalled retry remain classified in the release receipt.
+
+
+## S398 — 2026-10-22 — SI first use and origin-down browser gate
+
+Claude Code /arc. Not cut off; synced over 7 routine commits. The fresh nine-axis audit selected two L2 outcomes (strict premises 3/3 and admission ran before edits).
+
+1. CANON-056: /ai-vs-si/ and the Desk explainer now spell out Super Intelligence (SI) before bare SI. The Desk fix went through its source and news:publish, with the slug unchanged. check-news-copy-quality gains a story-order bare-si rule (self-test 54/54, mutation-checked), and the author brief states it.
+2. service-worker-install.spec.js adds the adapter-online/origin-down regression: stable fallback, one recovery. It passed in repeated runs and failed against the pre-S397 code.
+
+Release: build:check 547/547 · mobile 215/215 · 28 reviewed captures · staging spec 6/6 and parity green · hosted exact-SHA 3/3 · full pages-deploy at 418d250656 (tag release-s398-418d250656, run 39858675909) · Pages origin tree-current, 1125 identical, 10 redirects, 0 differ. Publisher races and a denied writer pause are recorded in docs/RELEASE_S398.json.

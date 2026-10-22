@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-22 (Session 397 closeout) -->
-<!-- semantic-freshness: hash=181eba1ab56ebaff next=398 silSession=397 silScore=939 handoff=- tests=- -->
+<!-- generated-at: 2026-10-22 (Session 398 closeout) -->
+<!-- semantic-freshness: hash=acde37313d139e2c next=399 silSession=398 silScore=939 handoff=- tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 397 closeout · 2026-10-22.
+> **Fast-boot brief** — generated at Session 398 closeout · 2026-10-22.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 398 · 2026-10-22 · FOUNDER MODE                         ║
+║  Session 399 · 2026-10-22 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S397) - WHAT SHIPPED ══════════════════════════╗
-║  S397 repairs online-adapter/offline-origin reload loops and ma  ║
+╔══ LAST SESSION (S398) - WHAT SHIPPED ══════════════════════════╗
+║  S398 spells out Super Intelligence (SI) before bare SI on /ai-  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -42,26 +42,26 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2↓                          ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2→                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
-║    Trend  ▂▂▂▄  ↓  (last 4 sessions)                             ║
+║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        94    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Dev Health        95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
 ║    Alignment         94    █████████░  ▇▇▇▇▇▇▇▇ →                ║
 ║    Momentum          92    █████████░  ▇▇▇▇▇▇▇▇ →                ║
 ║    Engagement        96    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual      89    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Coherence         93    █████████░  ········ →                ║
+║    Process Qual      88    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Coherence         94    █████████░  ········ →                ║
 ║    Security          97    ██████████  ········ →                ║
 ║    Ecosystem         91    █████████░  ········ →                ║
 ║    Capital           95    ██████████  ········ →                ║
-║    Automation        98    ██████████  ········ →                ║
+║    Automation        97    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 397 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 398 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    547/547 passing  ·  Deploy: verified                  ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -74,21 +74,21 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         547/547 passing (2026-10-22)                   ║
-║  ✓  Velocity      2 ↓  ·  Debt: →                                ║
+║  ✓  Velocity      2 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   18d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  3d old                         ║
 ║  ⛔  Truth         yellow — selected release verified;…           ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
+║  ⛔  Compliance   31/38 (82%) ↓ ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.192  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ⚠  Revenue sig.  9d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
+║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -108,7 +108,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▂▂▂▄  2↓  (last 5 sessions)                         ║
+║  Velocity:   ▂▂▂▄  2→  (last 5 sessions)                         ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -116,24 +116,24 @@
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
 ║  Projected:  935/1000  (↓4 vs current 939)                       ║
 ║  At-risk:    Momentum Δ-3                                        ║
-║  Calibration: MAE 4.6 over last 10 forecasts                     ║
+║  Calibration: MAE 4.4 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Add durable real-browser origin-down cover  ║
-║        Add durable real-browser origin-down coverage to the exi  ║
+║   96  [PRODUCT]      Spark buddy overlaps Desk text at 390px.    ║
+║        Spark buddy overlaps Desk text at 390px. is open, local,  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
+║   93  [PRODUCT]      Staging lineage tolerant of publisher data  ║
+║        Staging lineage tolerant of publisher data drift. is ope  ║
+║                                                                  ║
+║   90  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
 ║        Gate srcset, CSS url(), redirect targets. Future only. i  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Investigate timing classification of incom  ║
+║   87  [PRODUCT]      Investigate timing classification of incom  ║
 ║        Investigate timing classification of incoming pre-sessio  ║
 ║                                                                  ║
-║   87  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
+║   84  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
 ║        Keep startup-generated genius-list drift distinguishable  ║
-║                                                                  ║
-║   84  [VERIFY]       Separately assess served binary coverage a  ║
-║        Separately assess served binary coverage against real re  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 397 closeout · 2026-10-22*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 398 closeout · 2026-10-22*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

@@ -2444,3 +2444,11 @@ The affected offline document automatically exits after confirmed recovery. An o
 ## D-S397.2 — Preserve full release gates across a transport fallback
 
 The pinned S397 release used the existing normal Pages artifact recipe locally through the canonical Pages broker after the hosted attempt encountered a flaky502 and its retry stalled in dependency setup. Exact hosted required checks3/3 and a fresh canonical staging ceremony11/11 passed before upload; no gate, held identity contract or credential policy was relaxed. Provider identity, both build stamps, full1133-path served parity and bounded binary/HTML readback verify the actual result. The hosted attempt is not claimed as a successful deployment.
+
+## D-S398.1 — SI first use is a Desk copy gate, enforced in story render order
+
+The Desk's copy-quality gate blocks a story whose first bare "SI" precedes "Super Intelligence (SI)" or "Synthetic Intelligence (SI)". Fields are walked in render order (headline first), because the page title is built from the headline. Published headlines are corrected in data/news-desk/days and regenerated, and slugs never change. The author brief states the rule so the generator writes to the gate rather than discovering it at release.
+
+## D-S398.2 — Pin production to a release tag when publishers move main
+
+When [skip ci] data publishers land after the candidate's required checks pass, production is dispatched against a release-s<n>-<sha> tag of the verified candidate, not against main. Pausing the writer workflows needs founder-level approval (denied in S398 as a CI bypass), so it is not part of the routine path.

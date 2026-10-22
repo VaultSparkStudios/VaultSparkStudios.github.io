@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 available totals):935 →935 →935 →939 →939
-Avgs (available rolling totals) —3:937.7 |5:936.6 |10:unmeasured |25:unmeasured |all:unmeasured
-Velocity trend:↓ |Protocol velocity:→ |Debt:→
-Last session: 2026-10-22 | Session397 | Total:939/1000 | Velocity:2
-  └ Offline reliability locally verified; release acceptance: docs/RELEASE_S397.json.
+Sparkline (last5 available totals):935 →935 →939 →939 →939
+Avgs (available rolling totals) —3:939.0 |5:937.4 |10:unmeasured |25:unmeasured |all:unmeasured
+Velocity trend:→ |Protocol velocity:→ |Debt:→
+Last session: 2026-10-22 | Session398 | Total:939/1000 | Velocity:2
+  └ SI first use + origin-down browser gate fully deployed; release acceptance: docs/RELEASE_S398.json.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -3148,3 +3148,25 @@ Score unchanged: demonstrated local reliability repair, no measured field improv
 
 
 **Release evidence for existing S397 entry:** Full normal production63641742e5 is verified by exact hosted3/3, fresh11/11 staging ceremony, provider/both build stamps and complete1133-path served proof. The failed hosted attempt was not hidden: local fallback reused the canonical Pages broker and the unchanged artifact recipe. Scores939/1000 and velocity2 remain unchanged. Future selections only: durable origin-down browser coverage; reuse canonical Pages broker in provider observations instead of the Worker-only token.
+
+## Session 398 — 2026-10-22 — SI first use and origin-down browser gate
+
+**Total:** 939/1000
+**Velocity:** 2
+**Win:** A live STRONG canon gap was closed at its source and gated against recurrence, and S397's committed SIL item became a mutation-checked browser test. Both went to full production at a pinned, tree-current SHA.
+**Gap:** The first build:check was read as green from the wrapper exit until the log showed rc=1. Three publisher races cost re-converges. A mistyped SHA briefly produced a false "missing checks" reading before the exact SHA was rechecked.
+
+| Category | Score |
+|---|---:|
+| Dev Health | 95 |
+| Creative Alignment | 94 |
+| Momentum | 92 |
+| Engagement | 96 |
+| Process Quality | 88 |
+| Cross-Repo Coherence | 94 |
+| Security Posture | 97 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 97 |
+
+Brainstorm: (1) the Spark buddy overlapping Desk text at 390px (committed [SIL]); (2) a founder-approved release-window mechanism, or a data-tolerant staging lineage, so publishers stop forcing re-converges (committed [SIL]); (3) add the SI entity to JSON-LD knowsAbout (audit L3, unselected). CDR reviewed: no new creative direction.
