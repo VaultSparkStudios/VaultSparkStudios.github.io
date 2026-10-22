@@ -287,3 +287,10 @@ Fresh /arc. Triage: S395 closed cleanly (writeback-currency clean); tree 5 behin
 ### S396 closing publication recovery — 2026-10-22
 
 Evidence-only closing commit d7555cf4d9 is reconciled with the SIL anchor. Existing docs/RELEASE_S396.json records production c6fb0ac27a, run 39722337148 and 1118 identical / 10 redirects / zero differing served files. No additional implementation or session score is claimed; S397 remains a separate fresh arc.
+
+
+## S397 — 2026-10-22 — offline reliability
+
+S397 repairs online-adapter/offline-origin reload loops and makes current public precache pages available on failed navigation. Recovery scripts are precached; the fallback reuses the existing saved-theme controller. Focused 16/16 plus existing shell/theme checks 38/38 and Chromium install 1/1 pass; real server-down browser recovery/manual retry and 56 rendered images across seven themes/two viewports and four states are verified.
+
+Fresh native invocation bound to S397; synchronized and recovered S396 evidence anchor in its own commit. Nine-axis fresh audit and 2/2 strict premises/admission before behavior edits. Independent review caught direct offline-document recovery looping and missing cached recovery dependencies; fixed. Pre-fix light capture failed; existing theme controller repaired persistence. Full release acceptance remains pending in docs/RELEASE_S397.json.

@@ -1,0 +1,37 @@
+{
+  "kind": "closeout",
+  "session": "S397",
+  "date": "2026-10-22",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Offline recovery is verified locally; full release follow-through is pending.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "offline-origin-recovery",
+      "title": "Confirm origin reachability before reopening the offline page",
+      "axis": "ui-ux-feedback",
+      "leftScore": 8,
+      "rightScore": 2,
+      "insight": "Offline navigation now has a concrete acceptance target. Failed origin requests must leave the fallback usable, while precached public pages remain available.",
+      "evidence": "assets/error-pages.js"
+    },
+    {
+      "id": 2,
+      "slug": "offline-precache-navigation",
+      "title": "Use the existing public precache for failed offline navigation",
+      "axis": "features-depth",
+      "leftScore": 8,
+      "rightScore": 3,
+      "insight": "Offline navigation now has a concrete acceptance target. Failed origin requests must leave the fallback usable, while precached public pages remain available.",
+      "evidence": "sw.js"
+    }
+  ],
+  "silDelta": {
+    "current": 939,
+    "previous": 939
+  },
+  "followUps": [
+    "Full build/checks, staging, exact hosted checks and complete production readback remain required."
+  ]
+}

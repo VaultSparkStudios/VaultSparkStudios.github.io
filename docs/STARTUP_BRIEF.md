@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-22 (Session 396 closeout) -->
-<!-- semantic-freshness: hash=77e575914eb24d13 next=397 silSession=396 silScore=939 handoff=396 tests=- -->
+<!-- generated-at: 2026-10-22 (Session 397 closeout) -->
+<!-- semantic-freshness: hash=c56a2489f7bc103c next=398 silSession=397 silScore=939 handoff=397 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 396 closeout · 2026-10-22.
+> **Fast-boot brief** — generated at Session 397 closeout · 2026-10-22.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 397 · 2026-10-22 · FOUNDER MODE                         ║
+║  Session 398 · 2026-10-22 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S396) - WHAT SHIPPED ══════════════════════════╗
-║  S396: /news/subscribed/ persona link repointed to /news/#ancho  ║
+╔══ LAST SESSION (S397) - WHAT SHIPPED ══════════════════════════╗
+║  S397 repairs online-adapter/offline-origin reload loops and ma  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -42,9 +42,9 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 3↑                          ║
-║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
-║    Trend  ▄▂▄▆▄  ↑  (last 5 sessions)                            ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2↓                          ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
+║    Trend  ▂▂▂▄  ↓  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -61,27 +61,27 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 396 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 397 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    545/545 passing  ·  Deploy: verified                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         545/545 passing (2026-10-21)                   ║
-║  ✓  Velocity      3 ↑  ·  Debt: →                                ║
+║  ✓  Velocity      2 ↓  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   18d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  3d old                         ║
 ║  ⛔  Truth         yellow — selected release verified;…           ║
-║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
+║  ⛔  Compliance   31/38 (82%) ↓ ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.181  (healthy)                               ║
+║  ✓  Entropy       0.192  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
@@ -108,32 +108,32 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▂▄▆▄  3↑  (last 5 sessions)                        ║
+║  Velocity:   ▂▂▂▄  2↓  (last 5 sessions)                         ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  941/1000  (↑2 vs current 939)                       ║
-║  All categories forecast stable or rising.                       ║
-║  Calibration: MAE 4.8 over last 10 forecasts                     ║
+║  Projected:  935/1000  (↓4 vs current 939)                       ║
+║  At-risk:    Momentum Δ-3                                        ║
+║  Calibration: MAE 4.6 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
+║   96  [PRODUCT]      Full checks, staging, main push and produc  ║
+║        Full checks, staging, main push and production; docs/REL  ║
+║                                                                  ║
+║   93  [PRODUCT]      Add durable real-browser origin-down cover  ║
+║        Add durable real-browser origin-down coverage to the exi  ║
+║                                                                  ║
+║   90  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
 ║        Gate srcset, CSS url(), redirect targets. Future only. i  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Investigate timing classification of incom  ║
+║   87  [PRODUCT]      Investigate timing classification of incom  ║
 ║        Investigate timing classification of incoming pre-sessio  ║
 ║                                                                  ║
-║   92  [VERIFY]       Separately assess served binary coverage a  ║
-║        Separately assess served binary coverage against real re  ║
-║                                                                  ║
-║   90  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
+║   84  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
 ║        Keep startup-generated genius-list drift distinguishable  ║
-║                                                                  ║
-║   84  [PRODUCT]      Assess cross-origin redirect handling in d  ║
-║        Assess cross-origin redirect handling in diagnostic HTTP  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 396 closeout · 2026-10-22*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 397 closeout · 2026-10-22*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

@@ -1,0 +1,318 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-10-22-S397",
+  "generatedAt": "2026-10-22T13:14:43.425Z",
+  "session": 397,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S397 full arc: supported-release offline reliability, both reproduced failures selected at L2; direct main push and full deployment authorized.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 1,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [
+        "offline-precache-navigation"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "features-depth-alternate",
+          "premise": "Add an offline content manager",
+          "evidence": "Existing STATIC_ASSETS and page LRU already own storage; repair their proven navigation defect first."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [
+        "offline-origin-recovery"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "ui-ux-feedback-alternate",
+          "premise": "Redesign the offline page",
+          "evidence": "offline.html already has a live status region and explicit retry; functional recovery is the demonstrated failure."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "gamification-immersion-alternate",
+          "premise": "Add an offline mini-game",
+          "evidence": "No retention evidence supports a new game; current rank and challenge logic is load-bearing per SOUL."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "ai-intelligence-alternate",
+          "premise": "Model-based connectivity diagnosis",
+          "evidence": "assets/error-pages.js can prove origin recovery with a deterministic request; paid/model inference adds no necessary capability."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "security-alternate",
+          "premise": "Change identity caching policy",
+          "evidence": "The new public-precache lookup excludes /vault-member/ and Authorization requests. Existing runtime navigation caching has no blanket auth bypass and remains unchanged; changing that security policy is outside this selected repair."
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "speed-organization-efficiency-alternate",
+          "premise": "Increase cache capacity",
+          "evidence": "MAX_PAGE_ENTRIES=60 with separate precache already exists; missing lookup, not capacity, causes the observed failure."
+        }
+      ]
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "token-cost-alternate",
+          "premise": "Use AI for offline routing",
+          "evidence": "No inference is used by either affected path; deterministic repair has no token spend to reduce."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "observability-honesty-alternate",
+          "premise": "Add a public outage dashboard",
+          "evidence": "Existing status/uptime surfaces own availability; local online indicator must first stop claiming unproven recovery."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "sil-debt-alternate",
+          "premise": "Extend all reference formats this session",
+          "evidence": "S396 reference gate passes 336 pages/28,987 refs; srcset/CSS coverage is future scope and has no reproduced user failure in this survey."
+        }
+      ]
+    }
+  },
+  "investigation": {
+    "survey": "Independent 16-file source sample plus VM reproductions; local references pass 336 pages / 28,987 refs. Existing service-worker install test, public handler, cache guards and offline markup reviewed.",
+    "reuse": "Existing service-worker caches, native fetch/AbortController and offline status region. INTERNAL_TOOLS registry reviewed; no new tool or dependency required.",
+    "novelCandidates": [
+      "Origin proof tied to the requested route",
+      "Offline cache-path admission against explicit public precache",
+      "Recovery generation cancellation across flapping connectivity"
+    ],
+    "market": "No competitor claims. Missing market work is an unselected strategy candidate; this release selects reproduced reliability failures.",
+    "followupSurvey": {
+      "at": "2026-10-22T14:06:08.898Z",
+      "scope": "Continued source survey during the same fresh S397 audit; supports existing two selected outcomes without adding implementation scope.",
+      "candidates": {
+        "features-depth": [
+          "Selected public-precache navigation repair: installed /games/ entry was ignored by network-failure fallback (sw.js VM reproduction).",
+          "Offline content manager rejected: existing STATIC_ASSETS and separate PAGE_CACHE already own storage; no missing capacity was demonstrated."
+        ],
+        "ui-ux-feedback": [
+          "Selected confirmed-origin recovery, including checking/waiting/restored state readability (error-pages.js and actual captures).",
+          "Broader offline-page redesign rejected: offline.html already provides status live region, explicit retry and home navigation."
+        ],
+        "gamification-immersion": [
+          "Offline mini-game rejected: no retention evidence supports a separate game on a failure surface; SOUL prioritizes coherent membership.",
+          "Local challenge-progress queue rejected: existing member state belongs to the authenticated server contract; no selected offline mutation contract exists (SOUL and portal challenge source)."
+        ],
+        "ai-intelligence": [
+          "AI outage diagnosis rejected: deterministic request success/failure proves the required fact (error-pages.js).",
+          "Offline agent-discovery cache rejected: agents.json already serves the network discovery contract; no offline browser consumer was demonstrated."
+        ],
+        "security": [
+          "Broader auth-cache policy change unselected: new lookup only excludes member pages and Authorization; existing runtime behavior is deliberately preserved (sw.js).",
+          "New offline identity recovery flow rejected: session/auth delegation already belongs to Obelisk, and changing it requires separate authorization under AGENTS.md."
+        ],
+        "speed-organization-efficiency": [
+          "Bigger page cache rejected: separate precache and MAX_PAGE_ENTRIES=60 already exist; missing lookup caused the reproduced failure.",
+          "Automatic frequent polling unselected: current event/manual retry can prove recovery without a new repeated network workload; no latency evidence warrants polling."
+        ],
+        "token-cost": [
+          "Model routing for network diagnosis rejected: affected path has zero inference calls (error-pages.js).",
+          "New offline asset bundler unselected: existing cached shell and native asset pipeline already own delivery; no measured bundle-size problem was demonstrated."
+        ],
+        "observability-honesty": [
+          "Adapter-only restored label repaired under the selected UX outcome: actual request success is now required.",
+          "Separate public outage dashboard rejected: existing api/uptime.json and status surfaces own aggregate availability; no new consumer justified duplication."
+        ],
+        "sil-debt": [
+          "Reference-format expansion unselected: existing reference gate passes current href/src tree; no new demonstrated broken journey in that survey.",
+          "Durable first-offline browser regression recorded as one future SIL selection: actual current browser proof exists; selected VM regressions are registered in both unit entrypoints."
+        ]
+      }
+    }
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "offline-origin-recovery",
+      "axis": "ui-ux-feedback",
+      "title": "Confirm origin reachability before reopening the offline page",
+      "tier": "🔥",
+      "effortHours": 1.5,
+      "impact": 8,
+      "innovation": 4,
+      "priority": 44.3,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "why": "Offline fallback reloads repeatedly while the adapter is online and the origin is unavailable.",
+      "userOutcome": "Offline fallback reloads repeatedly while the adapter is online and the origin is unavailable.",
+      "recipe": "Probe the original URL with a bounded no-store HEAD request; announce recovery and reload only after a successful response. Deduplicate probes and cancel on offline events.",
+      "acceptance": "Failure, timeout, HTTP failure and redirected recovery must not reload; success reloads once; offline cancellation prevents delayed reload. Manual retry remains available.",
+      "readinessArea": "offline reliability",
+      "stageRationale": "Repair reproduced failures on the supported live release.",
+      "premises": [
+        {
+          "claim": "Offline fallback reloads repeatedly while the adapter is online and the origin is unavailable.",
+          "adapter": "file-content",
+          "target": "assets/error-pages.js",
+          "pattern": "setTimeout(function () { window.location.reload(); }, 900);",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Reproduce the defect without shipping a partial workaround."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Probe the original URL with a bounded no-store HEAD request; announce recovery and reload only after a successful response. Deduplicate probes and cancel on offline events."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Broader offline product redesign and richer availability controls; unselected."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-22T13:28:14.541Z",
+          "status": "shipped",
+          "note": "Independent final review PASS; focused 16/16, combined shell/theme 38/38, Chromium install 1/1; actual server-down recovery proof and 42 manually inspected theme/device/state captures. Full deployment tracked separately in RELEASE_S397.json."
+        },
+        {
+          "at": "2026-10-22T14:06:08.899Z",
+          "status": "shipped",
+          "note": "Supplemental checking-state inspection exposed a transient light-mode secondary-label fade. Removed color interpolation, recaptured all56 theme/device/state images and obtained independent supplemental review PASS. Full release remains pending."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "offline-precache-navigation",
+      "axis": "features-depth",
+      "title": "Use the existing public precache for failed offline navigation",
+      "tier": "🔥",
+      "effortHours": 1.5,
+      "impact": 8,
+      "innovation": 4,
+      "priority": 17.7,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "why": "The service worker ignores explicitly precached public pages when navigation fails.",
+      "userOutcome": "The service worker ignores explicitly precached public pages when navigation fails.",
+      "recipe": "After fresh PAGE_CACHE lookup, check only the current shell cache for the exact explicitly precached public navigation path, then return the current offline fallback. Preserve page TTL and request bypass rules.",
+      "acceptance": "Fresh installed public /games/ opens offline; query variants use the public pathname; uncached/protected routes stay isolated; expired runtime pages are evicted; fresh runtime pages and successful network responses still win.",
+      "readinessArea": "offline reliability",
+      "stageRationale": "Repair reproduced failures on the supported live release.",
+      "premises": [
+        {
+          "claim": "The service worker ignores explicitly precached public pages when navigation fails.",
+          "adapter": "file-content",
+          "target": "sw.js",
+          "pattern": "return caches.match('/offline.html');",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Reproduce the defect without shipping a partial workaround."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "After fresh PAGE_CACHE lookup, check only the current shell cache for the exact explicitly precached public navigation path, then return the current offline fallback. Preserve page TTL and request bypass rules."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Broader offline product redesign and richer availability controls; unselected."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-22T13:28:14.541Z",
+          "status": "shipped",
+          "note": "Independent final review PASS; focused 16/16, combined shell/theme 38/38, Chromium install 1/1; actual server-down recovery proof and 42 manually inspected theme/device/state captures. Full deployment tracked separately in RELEASE_S397.json."
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "count": 2,
+    "priority": 62.0,
+    "top3": [
+      "offline-origin-recovery",
+      "offline-precache-navigation"
+    ]
+  },
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-22T13:15:31.934Z",
+    "head": "eea95a20af1ee4429f1e972c7b4b4ae77b42f466",
+    "sidecar": "docs/AUDIT_2026-10-22-S397.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "555bb12ccabc34439a1f8254f13aa4f031c953de6be1c457b98e4edadd459157",
+    "implementationDirty": [
+      "docs/S397_audit-brief.json",
+      "docs/S397_plan-brief.json"
+    ]
+  },
+  "skipped": [
+    {
+      "reason": "docs/market/MARKET.json absent; market research remains a separate future strategy selection. This supported-release arc prioritizes the two reproduced reliability failures and asserts no competitor facts.",
+      "slug": "studio-market"
+    }
+  ]
+}

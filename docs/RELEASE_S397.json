@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "session": 397,
+  "state": "local-verification",
+  "releaseAccepted": false,
+  "goal": {
+    "threadId": "01a163bb-366b-76e2-a307-f44951863f39",
+    "createdAt": 1792674589
+  },
+  "audit": "docs/AUDIT_2026-10-22-S397.json",
+  "implementation": {
+    "items": [
+      "offline-origin-recovery",
+      "offline-precache-navigation"
+    ],
+    "focusedTests": "16/16",
+    "serviceWorkerInstall": "1/1 Chromium local",
+    "browserProof": "docs/S397_browser-proof.json",
+    "visual": "docs/visual-qa/LATEST.json: 56 manually reviewed captures, seven themes, desktop/mobile, page/checking/waiting/restored",
+    "supplementalReview": "PASS: secondary action color-transition removal and56 current source-bound captures",
+    "mobile": "Fresh current-local215/215; source-preserving metadata rebind and final receipt ordering pass",
+    "beforeVisual": "docs/visual-qa/S397_BEFORE_OBSERVATIONS.json: retained observations, exact old source provenance unmeasured; not passing source-bound evidence"
+  },
+  "honesty": {
+    "contextUsage": "unmeasured",
+    "premiseTiming": "Original verifier nonpassing: pre-sync lock includes incoming routine commits and two pre-implementation metadata edits; passing strict 2/2 gate and admission preceded both behavior edits. Original failure retained; no timing pass claimed.",
+    "beforeTheme": "Pre-fix light theme capture failed; controller reuse repaired affected fallback theme persistence."
+  },
+  "rollback": "Revert selected offline behavior changes and redeploy last accepted production candidate.",
+  "remaining": [
+    "complete build/checks",
+    "staging",
+    "main push",
+    "exact hosted checks",
+    "full production/readback",
+    "closeout"
+  ],
+  "failedLocalAttempts": [
+    {
+      "reason": "New unit tests were not yet staged, so tracked-test registration gate failed. Staging both specs corrected registration; isolated parity now 52 declared = 52 executed = 52 tracked.",
+      "attempt": 1,
+      "step": 126
+    },
+    {
+      "attempt": 2,
+      "step": 143,
+      "reason": "SIL crossed 300KB cap. Native rotate-ledger --apply archived four older blocks; all size caps now pass."
+    },
+    {
+      "attempt": 3,
+      "step": 45,
+      "reason": "An event aged out of the rolling seven-day heartbeat window during verification. Inputs unchanged; regenerated current aggregate. Next cutoff was more than three hours later."
+    },
+    {
+      "attempt": 4,
+      "reason": "Both complete 547/547 suites passed. Commit guard then classified intentional implementation-plan and latest visual snapshot replacements as shrinkage. Prior versions preserved in docs/archive/IMPLEMENT_PLAN_before_S397.md and docs/visual-qa/S396_PREVIOUS_LATEST.json. Reviewed commit proceeds manually with no test bypass."
+    }
+  ],
+  "productionBaseline": {
+    "schemaVersion": "1.1",
+    "generatedAt": "2026-10-22",
+    "sha": "c6fb0ac27acf41ae198ee931012fa2a086654100",
+    "baselineSha": "c6fb0ac27acf41ae198ee931012fa2a086654100",
+    "builtAt": "2026-10-22T12:38:03Z",
+    "deployedBy": "pages-deploy-content-lane",
+    "contentLaneHead": "35b36e2742362e2050a4f897374f29f7ee4e8d20",
+    "contentLanePaths": "190 paths",
+    "contentLanePathSetSha256": "4ef23e50683113d49afc1849892eb7e6a1391ef80238ac95e33e626d7968bd4b",
+    "workflowRunId": "39779725502"
+  },
+  "temporaryWriterPause": {
+    "workflows": [
+      "refresh-live-data.yml",
+      "uptime-probe.yml",
+      "ci-status-beacon.yml",
+      "news-publish.yml",
+      "rum-pull.yml",
+      "cloudflare-analytics-pull.yml"
+    ],
+    "originalState": "all active",
+    "restoreRequired": true
+  },
+  "diagnosticAttempts": [
+    {
+      "from": 144,
+      "failedAt": 168,
+      "reason": "Nested proof-surface gate rejected old mobile source/candidate binding. Actual current-local 215-probe mobile audit launched; no suffix/full pass claimed."
+    },
+    {
+      "from": 168,
+      "failedAt": 234,
+      "reason": "Closeout renderer input used numeric397, while boundary contract requires S397 filename and cache input. Corrected by actual cache input and re-render; boundary passes."
+    },
+    {
+      "from": 234,
+      "through": 547,
+      "executed": 314,
+      "exit": 0,
+      "scope": "suffix diagnostic only; not full acceptance"
+    }
+  ],
+  "localAcceptance": {
+    "fullPasses": 2,
+    "stepsEach": 547,
+    "log": ".cache/S397-closeout-attempt4.log",
+    "integratedCandidatePending": true
+  }
+}

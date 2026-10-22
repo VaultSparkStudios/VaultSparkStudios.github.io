@@ -1,3 +1,9 @@
+## S397 — local offline outcomes verified; production unproven
+
+S397 repairs online-adapter/offline-origin reload loops and makes current public precache pages available on failed navigation. Recovery scripts are precached; the fallback reuses the existing saved-theme controller. Focused 16/16 plus existing shell/theme checks 38/38 and Chromium install 1/1 pass; real server-down browser recovery/manual retry and 56 rendered images across seven themes/two viewports and four states are verified.
+
+No prior session evidence substitutes for this goal. Original timing checker failure retained; source behavior edits followed passing 2/2 gate and admission. Context usage unmeasured. Pre-fix light-theme mismatch repaired with existing controller. Production remains unproven until docs/RELEASE_S397.json records actual current staging, checks and readback.
+
 ## S395 — complete scoped release and closing publication verified
 
 Overall status: yellow — selected release verified; existing identity/field-vitals holds remain separate.

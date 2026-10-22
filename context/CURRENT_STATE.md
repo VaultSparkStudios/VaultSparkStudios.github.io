@@ -1,3 +1,9 @@
+## S397 — offline reliability implementation verified; release pending
+
+S397 repairs online-adapter/offline-origin reload loops and makes current public precache pages available on failed navigation. Recovery scripts are precached; the fallback reuses the existing saved-theme controller. Focused 16/16 plus existing shell/theme checks 38/38 and Chromium install 1/1 pass; real server-down browser recovery/manual retry and 56 rendered images across seven themes/two viewports and four states are verified.
+
+Full build/checks, staging, direct-main publication, exact hosted checks and production readback remain pending in docs/RELEASE_S397.json. No field reliability or conversion gain is claimed.
+
 ## S396 — dead internal references fixed, reference-integrity gate added
 
 Two live production 404s on public journeys are fixed at source. Confirmed Desk Dispatch subscribers' "Meet your AI news desk" link on /news/subscribed/ now goes to the /news/#anchors roster; it pointed at /news/personas/, which has per-persona pages but no index. The 8 investor-portal pages now show the VaultSpark mark from existing assets; they referenced assets/logo.png, which never existed, so the login page and interest form rendered a broken image. A new build:check gate, `scripts/check-local-references.mjs`, resolves every internal href/src (including `<script src>` and parked `<template>` tags, exact-case, honouring `<base>`, `_redirects` and Worker runtime routes) on 334 tracked public pages, 28,929 references. Self-test 18/18; it fails the pre-fix tree on exactly these two defects. CANON-053 receipt: 14 manually reviewed captures across 7 themes (docs/visual-qa/LATEST.json) plus 4 dark-only investor captures (docs/visual-qa/S396-investor-portal.json). Release evidence: docs/RELEASE_S396.json.

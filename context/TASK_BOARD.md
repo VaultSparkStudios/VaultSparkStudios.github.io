@@ -1,3 +1,11 @@
+## S397 — offline reliability
+
+Wave 1 complete: startup and fresh audit. Wave 2 complete: both selected L2 outcomes verified. Wave 3 active: release and canonical closeout.
+
+- [x] [S397 #1-2] Origin-confirmed recovery and public precache navigation; docs/AUDIT_2026-10-22-S397.md.
+- [ ] [S397 RELEASE] Full checks, staging, main push and production; docs/RELEASE_S397.json.
+- [ ] [SIL][S397] Add durable real-browser origin-down coverage to the existing service-worker install test. Future selection only.
+
 ## S396 — dead internal references fixed and gated
 
 - [x] [S396 #1-3] Reference gate; two live 404s fixed. docs/AUDIT_2026-10-21-S396.md.
@@ -8,8 +16,8 @@
 
 Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
 
-- [x] [S395 #1] Verify complete served coverage, committed redirects and strict CLI admission at L2; fixtures3/3, self-test19/19, S3739/9 and independent review pass.
-- [x] [S395 RELEASE] Earlier full build26/26 plus fresh integrated36-node closure/news checks, complete suite/staging, main publication, exact hosted checks, normal full production and served readback verified; evidence docs/RELEASE_S395.json. Closing acceptance is recorded in docs/RELEASE_S395.json.
+
+
 - [ ] [SIL][S395][PROTOCOL/P2] Investigate timing classification of incoming pre-session same-identity automation after a pre-sync lock; preserve original failure. Future selection only.
 - [ ] [SIL][S395][VERIFY/P2] Separately assess served binary coverage against real release risk; current verifier explicitly measures tracked served text. Future selection only.
 
@@ -21,8 +29,8 @@ The closing release also carries the article stylesheet correction. Its acceptan
 
 Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
 
-- [x] [S394 #1] Require HTTP success and actual expected shell; reject ambiguous CLI input before IO. CLI2/2, self-test14/14, independent review pass.
-- [x] [S394 RELEASE] Complete validation, staging, direct-main publication, required exact-candidate checks and normal full product deployment/readback. Verified evidence: docs/RELEASE_S394.json.
+
+
 - [ ] [SIL][S394][PROTOCOL/P2] Keep startup-generated genius-list drift distinguishable from selected implementation in premise timing; preserve the original nonpassing receipt. Future selection only.
 - [ ] [SIL][S394][RELIABILITY/P2] Assess cross-origin redirect handling in diagnostic HTTP commands with measured caller compatibility. Future selection only.
 

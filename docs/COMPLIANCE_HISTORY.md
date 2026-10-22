@@ -4,10 +4,11 @@ Generated: 2026-10-22
 
 Tracks Studio OS compliance validation pass rate so drift is visible before it becomes a hard blocker.
 
-Latest: **32/38** passed · **84%** · trend → · ▄▄▄▄▄▄▄▄
+Latest: **31/38** passed · **82%** · trend ↓ · ▄▄▄▄▄▄▄▄
 
 ## Current Failing Projects
 
+- **Franchise Architect: Football** — TRUTH_AUDIT.md missing Overall status line
 - **The Living Protocol** — start.md not at v3.3 (is vunknown, behind canonical template); closeout.md not at v3.3 (is vunknown, behind canonical template)
 - **SparkFunnel** — TRUTH_AUDIT.md missing Overall status line
 - **VEILOS** — TRUTH_AUDIT.md missing v1.1 header; TRUTH_AUDIT.md missing Overall status line; TRUTH_AUDIT.md missing Last reviewed date
@@ -17,7 +18,7 @@ Latest: **32/38** passed · **84%** · trend → · ▄▄▄▄▄▄▄▄
 
 | Date | Passed | Failed | Skipped | Issues | Score |
 |---|---:|---:|---:|---:|---:|
-| 2026-10-22 | 32 | 6 | 0 | 11 | 84% |
+| 2026-10-22 | 31 | 7 | 0 | 12 | 82% |
 | 2026-10-21 | 32 | 6 | 0 | 11 | 84% |
 | 2026-10-20 | 32 | 6 | 0 | 11 | 84% |
 | 2026-10-19 | 32 | 6 | 0 | 11 | 84% |

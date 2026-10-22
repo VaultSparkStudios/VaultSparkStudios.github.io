@@ -176,6 +176,8 @@ const STATIC_ASSETS = [
   '/vault-member/portal-share.js',
   '/vault-member/portal.css',
   '/offline.html',
+  '/assets/error-pages.js',
+  '/assets/public-page-handlers.js',
   '/404.html',
   '/games/',
   '/vault-member/',
@@ -234,6 +236,13 @@ const STATIC_ASSETS = [
 ];
 
 // ── Install: cache static assets ──────────────────────────────────────────
+// Only declared public documents can be used as navigation fallbacks. Member
+// documents keep their existing runtime-cache behavior; never normalize an
+// arbitrary route (or authenticated request) into a public precache lookup.
+const PUBLIC_PRECACHE_PAGES = new Set(STATIC_ASSETS.filter((path) =>
+  (path.endsWith('/') || path.endsWith('.html')) && !path.startsWith('/vault-member/')
+));
+
 // S360: Cache.addAll() REJECTS the whole batch on a duplicate request, and a
 // rejected install makes the worker redundant. Three entries were listed twice
 // (since at least 2026-06-03), so this worker never installed in production:
@@ -373,11 +382,17 @@ self.addEventListener('fetch', (e) => {
             const cachedAt = cached.headers.get('x-cached-at');
             if (cachedAt && Date.now() - Number(cachedAt) > PAGE_TTL_MS) {
               await cache.delete(request);
-              return caches.match('/offline.html');
+            } else {
+              return cached;
             }
-            return cached;
           }
-          return caches.match('/offline.html');
+          const precache = await caches.open(CACHE_NAME);
+          if (request.method === 'GET' && !request.headers.get('authorization') &&
+              PUBLIC_PRECACHE_PAGES.has(url.pathname)) {
+            const publicPage = await precache.match(url.pathname);
+            if (publicPage && publicPage.ok) return publicPage;
+          }
+          return precache.match('/offline.html');
         })
     );
   }

@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 available totals):935 →935 →935 →935 →939
-Avgs (available rolling totals) —3:936.3 |5:935.8 |10:unmeasured |25:unmeasured |all:unmeasured
-Velocity trend:↑ |Protocol velocity:→ |Debt:→
-Last session: 2026-10-21 | Session396 | Total:939/1000 | Velocity:3
-  └ Dead internal references fixed + reference-integrity gate; release evidence: docs/RELEASE_S396.json.
+Sparkline (last5 available totals):935 →935 →935 →939 →939
+Avgs (available rolling totals) —3:937.7 |5:936.6 |10:unmeasured |25:unmeasured |all:unmeasured
+Velocity trend:↓ |Protocol velocity:→ |Debt:→
+Last session: 2026-10-22 | Session397 | Total:939/1000 | Velocity:2
+  └ Offline reliability locally verified; release acceptance: docs/RELEASE_S397.json.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2366,23 +2366,6 @@ Canonical closeout completed with two full 531-step passes. Corrected native pro
 
 The owner's original dirty checkout, local backups and private evidence are preserved. Retained temporary preview, capture and verification handles completed, and port 4175 no longer listens. Field performance and conversion remain unmeasured.
 
-## 2026-10-09 UTC — Session 372 (assurance and redirect repair) | Total: 904/1000 (v3.0) | Velocity: 4 | Debt: →
-
-| Category | Score | Evidence |
-|---|---:|---|
-| Dev Health | 88 | Daily assurance restored (live matrix 247/0, edge 2/2, Chromium 15/15); unit 388/0; clean-checkout build:check 532/532; E2E needed four CI cycles to go green. |
-| Creative Alignment | 94 | No creative change; Desk art, Spark and accepted public behavior preserved. |
-| Momentum | 88 | Three audit outcomes plus the S363 memory-index item shipped; Worker promotion completed through the canonical lane. |
-| Engagement | 90 | Visitors and crawlers reach retired routes in one hop; field conversion unmeasured. |
-| Process Quality | 78 | Overwrote S371's same-date audit (restored from git), and a quoted skip-ci token silently skipped CI; both caught and recorded as memories. Four receipt defects surfaced one CI cycle at a time until a clean-worktree run was used. |
-| Cross-Repo Coherence | 92 | Visual-QA misclassification routed to studio-ops via Ark (01K4H9AK…); no sibling tree edits. |
-| Security Posture | 94 | Worker change disjoint from the identity hold (SCOPED promotion); staging first; secrets via gateway. |
-| Ecosystem Integration | 90 | Reused existing capture, rebind, repair and ceremony tooling; no new dependencies. |
-| Capital Efficiency | 94 | No paid API or install; extra CI minutes from repeated E2E cycles. |
-| Automation Coverage | 96 | Three new structural guards: retired-route self-test, redirect-chain unit spec, platform-independent retention report. |
-
-Brainstorm (committed to TASK_BOARD as [SIL]): (1) routine Desk lanes must not strand tracked receipts; (2) receipt bindings should hash committed blobs so a CRLF working copy cannot produce a non-portable receipt. Also queued: verify receipt-bearing changes in a clean worktree before pushing, since that run caught what four CI cycles otherwise found one at a time.
-
 ## S372 closing follow-through — 2026-10-10
 
 Unscored addendum; S372 remains 904/1000. Main tip b0895dbe6 passed E2E 38010338300, accessibility 38010338297 and, on re-run, Lighthouse 38010338287 (first attempt: one article at performance 0.88 against a 0.90 floor). Production content was promoted through the confirmed content lane (run 38011991378) after a fresh Hetzner staging overlay (20261010005651) and green parity. Production serves contentLaneHead b1d27aee6 and Worker 9c7c29f1. A third art-driven receipt invalidation and a missing satire 640 AVIF were repaired on the way; both lane gaps are on the task board.
@@ -2397,81 +2380,6 @@ Identity hold re-probed (try-first, CANON-019): `verify-provider-journey --watch
 
 Founder confirmed the S372 deploy scope as complete with the identity hold kept (D-S372.6). Both hold reasons were re-probed and stay open in their own scope.
 
-
-## 2026-10-10 UTC — Session 373 (S372 follow-ups, guards and test coverage) | Total: 923/1000 (v3.0) | Velocity: 8 | Debt: ↓
-
-| Category | Score | Evidence |
-|---|---:|---|
-| Dev Health | 91 | Unit 408/0 (up 20); local build:check passes all 534 steps; three new specs each with a failing control. |
-| Creative Alignment | 94 | Desk card changes follow the existing design; no creative direction changed. |
-| Momentum | 92 | Eight of ten S372 follow-ups closed in one session, plus guards for each S372 mistake. |
-| Engagement | 91 | Mobile readers see whole thumbnails and load 128w/640w art; conversion unmeasured. |
-| Process Quality | 86 | Every fix verified against real behaviour (production redirects measured before emulating them). One slip: after a blocked edit, a second edit left a module briefly inconsistent; reverted at once. |
-| Cross-Repo Coherence | 92 | No sibling edits; the stale local audit-sidecar copy was fixed narrowly rather than overwritten. |
-| Security Posture | 94 | Release allowlist widened only by its own stated rule with a machine check; staging flag asserted absent from production. |
-| Ecosystem Integration | 91 | Reused the content-lane classifier in the parity reporter; one definition of "promotable". |
-| Capital Efficiency | 95 | No paid services, no installs. |
-| Automation Coverage | 97 | Five new mechanical guards replace steps S372 did by hand. |
-
-Brainstorm (committed to TASK_BOARD): (1) decide the routine-content receipt binding (D-S373.3); (2) confirm the Lighthouse hypothesis by loading below-the-fold Desk scripts after paint.
-
-S373 addendum (unscored): at pushed tip 5a8beccc5, E2E 38027265657 and accessibility 38027265617 passed first time; Lighthouse 38027265643 failed on the pre-existing floor flake (homepage 0.75, one article 0.89). CI result files show observed FCP equal to observed LCP with ten scripts finishing before it, steady simulated FCP and swinging simulated LCP. Recorded on the task board and in the handoff; thresholds unchanged.
-
-S373 addendum (unscored): the founder approved the receipt change and asked for no downside. Shipped as hashed-or-proven (D-S373.6): the routine block is set aside only when the generator proves the page, its digest is recorded and drift is reported. A real art publication (366d2c88e) changed both reviewed articles during the work and the receipt stayed valid with two notes. Nine of ten S372 follow-ups are now closed.
-
-S373 addendum 2 (unscored): the clean-checkout verifier stopped the promotion twice before push. Once for derived feeds I had discarded as churn, and once for a real defect on main: a depth-1 scheduled publisher had rewritten 59 days of the public commit-velocity feed as zero (D-S373.7). Both Git-history builders now refuse to write in a shallow clone.
-
-S373 addendum 3 (unscored): the approved promotion did not reach production. Everything except Lighthouse was green at 2b001af82; Lighthouse failed twice on two different pages whose scripts and styles had not changed. One re-run was used and no threshold was touched. The remaining S372 follow-up (the Lighthouse fix) is now the release blocker, with a sharper measurement: the score follows whether the last script finishes before first paint.
-
-S373 addendum 4 (unscored): promoted. The commit after the twice-failed candidate passed all three required checks first time with no JS or CSS change, and production now serves it (tree-current at a2c339580, Worker ed6ca127). A gate that fails twice and then passes on unchanged pages is not telling releases apart; fixing the script loading is the next piece of work.
-
-## 2026-10-11 UTC — Session 374 (scripts after first paint, SI first use) | Total: 923/1000 (v3.0) | Velocity: 4 | Debt: →
-
-| Category | Score | Evidence |
-|---|---:|---|
-| Dev Health | 92 | New unit spec 10/10 and browser spec 3/3 on real pages in three engines; layout shift measured equal before and after; the article layout test now refuses a parked script with no activator. |
-| Creative Alignment | 94 | One menu label and one FAQ question changed, both for canon terminology; checked in seven themes on desktop and mobile. |
-| Momentum | 90 | Four audit items shipped; the release blocker carried since S370 has a root fix on both page types. |
-| Engagement | 91 | Fewer requests compete with first content; reactions, comments and the newsletter client still mount. Conversion remains unmeasured. |
-| Process Quality | 88 | Premises verified before work; a planned `/stats/` rebuild dropped when history showed the route was retired on purpose; consent banner returned to eager after reading its attention contract. Independent review of the loader: no must-fix, six should-fix points applied, Desk presence returned to eager. |
-| Cross-Repo Coherence | 92 | No sibling edits; three studio-ops tooling defects reported through the Ark with evidence. |
-| Security Posture | 94 | No Worker or CSP change; the new Trusted Types policy passes same-origin `/assets/` paths only and ignores anything else. |
-| Ecosystem Integration | 91 | Canon posture recorded from checker output, with justifications for the two accepted gaps. |
-| Capital Efficiency | 95 | No paid services, no installs. |
-| Automation Coverage | 96 | Request-timing assertion in a real browser replaces reading Lighthouse artifacts by hand. |
-
-Brainstorm (committed to TASK_BOARD): (1) establish whether the CI `e2e` job runs the four specs that fail locally against production; (2) find which derived contract the last records commit left behind at build:check step 37.
-
----
-
-S374 addendum (unscored): pushed as be218812c8 and promoted (run 38191069141; production tree-current at 8b29b2f6c1, 0 differing files). All three required checks passed first time. Lighthouse: homepage 0.81, 0.95, 0.98 (floor 0.76; previously 0.75 to 0.78) and the article 0.98, 0.99, 0.99 (floor 0.90; previously 0.82 to 0.92). One commit is not proof of stability, and the homepage now shows blocking time after first paint (106 to 665 ms across runs) that it did not show before. Convergence cost three rounds: two date-derived homepage values rolled at 00:00Z and one push lost the publisher race.
-
----
-
-S374 addendum 2 (unscored, correction): the previous addendum and the task board called the Lighthouse item done after one green run. The next commit, with the same page bytes, failed on the article and passed on one re-run. Three Lighthouse runs on the same page bytes after the change: be218812c8 passed first time (homepage 0.81, 0.95, 0.98; article 0.98, 0.99, 0.99); the records commit 1f29cc7bf9 failed its first attempt on the article (0.88, 0.88, 0.96 against 0.90; homepage 0.66, 0.82, 0.83) and passed on one re-run (article 0.95, 0.96, 0.95; homepage 0.81, 0.82, 0.85), run 38193011995. Both pages score higher than before (homepage medians 0.82 to 0.95, was 0.75 to 0.78; article medians 0.88 to 0.99, was 0.82 to 0.92), and the article still fell below its floor once in three. In the failing runs the load event came before the first paint and 24 to 25 requests had finished by then, including data fetches made by scripts that stayed eager (Desk presence, the ambient bundle); in the first passing run 13 to 14 had. That is a correlation from three runs, not a proven cause. The task is reopened with that evidence. Process note: a stability claim needs more than one run before it is written down as closed.
-
----
-
-## 2026-10-12 UTC — Session 375 (satire cartoon below the illustration) | Total: 925/1000 (v3.0) | Velocity: 2 | Debt: →
-
-| Category | Score | Evidence |
-|---|---:|---|
-| Dev Health | 92 | Layout test passes on 123 regenerated articles with the new order; a sideways-scroll defect on every Desk page was found by capture and fixed at its cause. |
-| Creative Alignment | 95 | Direct founder direction applied as asked on every article with a cartoon; satire labelling and persona credit unchanged. |
-| Momentum | 89 | Two items shipped; three hit-list items assessed and left for a later session. |
-| Engagement | 92 | The cartoon can now be reacted to where it sits. Totals are collected, not yet reported. |
-| Process Quality | 89 | A capture artifact was reproduced and traced to a real cause before any receipt was written; a hover outline was checked against stored state before being ruled out as a vote leak. |
-| Cross-Repo Coherence | 92 | No sibling edits. |
-| Security Posture | 94 | No Worker, CSP or allowlist change; the new reaction key passes the existing slug filter. |
-| Ecosystem Integration | 91 | Feed consumers get the cartoon reaction key as an additive field. |
-| Capital Efficiency | 95 | No paid services, no installs. |
-| Automation Coverage | 96 | The layout test and contract check now assert cartoon placement, scope uniqueness and thread attachment on every article. |
-
-Brainstorm (committed to TASK_BOARD): (1) report cartoon reaction totals in the public reactions snapshot; (2) check the empty image thread controls against the live comment service.
-
----
-
-S375 addendum (unscored): pushed as c8635d986e and promoted (run 38212109944; production tree-current at be976158c8, 0 differing files). All three required checks passed first time; the measured article scored 0.94 against its 0.90 floor in that one run, which is one more data point for the open stability task and not a conclusion. Process note: a spec that assumed a single image reaction panel was not updated with the generator and was caught on staging rather than before the first gate run; search the tests for a selector before changing how many elements match it.
 
 ## 2026-10-12 UTC — Session 376 (reader feedback on Desk articles) | Total: 927/1000 (v3.0) | Velocity: 3 | Debt: →
 
@@ -3214,3 +3122,26 @@ Brainstorm: (1) extend the reference gate to `srcset`, CSS `url()` and `_redirec
 ### S396 closing evidence reconciliation — 2026-10-22
 
 The later d7555cf4d9 closing publication recorded the verified production c6fb0ac27a and full parity in docs/RELEASE_S396.json. This is an evidence-only continuation of S396, with no new product outcome or score: 939/1000 and velocity 3 remain unchanged. CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF and PROJECT_STATUS already describe the implemented fixes; WORK_LOG now also names the final deployment. DECISIONS and CDR require no additional change: no policy or creative decision was made in that closing commit. Fresh goal 01a163bb-366b-76e2-a307-f44951863f39 belongs to S397 and cannot borrow S396 acceptance.
+
+
+## Session 397 — 2026-10-22 — offline reliability
+
+**Total:** 939/1000
+**Velocity:** 2
+**Win:** Two independently reproduced offline defects fixed and tested through real server-down recovery.
+**Gap:** Startup lock preceded sync; original premise timing remains nonpassing. Independent review caught a direct-document loop and missing offline dependencies.
+
+| Category | Score |
+|---|---:|
+| Dev Health | 94 |
+| Creative Alignment | 94 |
+| Momentum | 92 |
+| Engagement | 96 |
+| Process Quality | 89 |
+| Cross-Repo Coherence | 93 |
+| Security Posture | 97 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 98 |
+
+Score unchanged: demonstrated local reliability repair, no measured field improvement, and retained process gaps. Brainstorm: (1) durable real-browser origin-down acceptance in existing install spec, committed as a future SIL row; (2) measure navigation recovery latency during real outages before adding automatic polling. CDR reviewed: no new creative direction. Release follow-through remains pending in docs/RELEASE_S397.json.
