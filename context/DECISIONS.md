@@ -2482,3 +2482,8 @@ CANON-045 STRONG gap remains justified under the existing scoped promotion contr
 ## D-S400.3 — Recover the actual metadata smoke failure
 
 The full suite stopped after117 passing steps because an optional paragraph capture was undefined. The backfill helper now skips empty/short paragraphs, selects the first meaningful paragraph without joining later ones, and excludes internal cache/test/docs/Lighthouse trees. Imports are read-only. Four regressions and native smoke pass; no public metadata backfill was applied. Original failed measurement remains retained; current full acceptance must be rerun.
+
+
+## D-S400.4 — Heartbeat checks replay the published snapshot clock
+
+Hosted compliance reproduced elapsed-window drift: the same event ledger yielded website pulses7d14 at the artifact timestamp and13 after an event crossed seven days. Verification now reconstructs at a canonical, nonfuture artifact generatedAt; live generation retains current time. This establishes source/snapshot consistency only; it does not establish freshness. Missing or invalid clocks, changed sources and tampered counters remain failures. Four focused regressions include a real read-only CLI check. This is an acceptance repair for the two selected S400 outcomes, with no new public promise or identity change. Failed candidate/run evidence remains in docs/S400_hosted-compliance-attempt1.json.

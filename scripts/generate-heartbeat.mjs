@@ -26,11 +26,11 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { pathToFileURL, fileURLToPath } from 'node:url';
 import { readPortfolioEvents } from './lib/public-activity.mjs';
 import { deriveProjectPulse } from './lib/project-activity.mjs';
 
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), '..');
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'api', 'heartbeat.json');
 const CHECK = process.argv.includes('--check');
 
@@ -62,12 +62,17 @@ function tierOf(p) {
   return 'forge';
 }
 
-function main() {
-  const now = Date.now();
-  const events = readPortfolioEvents(ROOT);
+export function heartbeatCheckTime(current, now = Date.now()) {
+  const value = current?.generatedAt;
+  const timestamp = typeof value === 'string' ? Date.parse(value) : NaN;
+  if (!Number.isFinite(timestamp) || new Date(timestamp).toISOString() !== value) {
+    throw new Error('heartbeat check requires a canonical ISO generatedAt timestamp');
+  }
+  if (timestamp > now) throw new Error('heartbeat generatedAt is in the future');
+  return timestamp;
+}
 
-  return (async () => {
-    const registry = await loadRegistry();
+export function heartbeatSnapshot(registry, events, now) {
     const projects = registry.map((p) => {
       // Shared derivation (scripts/lib/project-activity.mjs) — all event types,
       // windowed lastActivity; the public-intelligence catalog reuses the same code.
@@ -83,30 +88,43 @@ function main() {
       };
     }).sort((a, b) => (b.pulses7d - a.pulses7d) || (b.pulses30d - a.pulses30d));
 
-    const out = {
+    return {
       generatedAt: new Date(now).toISOString(),
       windowDays: WINDOW_DAYS,
       projects,
     };
 
-    const serialized = JSON.stringify(out, null, 2) + '\n';
+}
+
+export function checkHeartbeatSnapshot(current, registry, events, now = Date.now()) {
+  const asOf = heartbeatCheckTime(current, now);
+  return JSON.stringify(current) === JSON.stringify(heartbeatSnapshot(registry, events, asOf));
+}
+
+async function main() {
+    const events = readPortfolioEvents(ROOT);
+    const registry = await loadRegistry();
 
     if (CHECK) {
-      const current = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
-      // Compare everything except generatedAt so the check isn't time-sensitive.
-      const normalise = (s) => s.replace(/"generatedAt":\s*"[^"]+"/, '"generatedAt":"*"');
-      if (normalise(current) !== normalise(serialized)) {
+      const current = JSON.parse(fs.readFileSync(OUT, 'utf8'));
+      // Windowed counters are a snapshot at generatedAt. Replaying them against
+      // the current clock turns an unchanged source into drift at every boundary.
+      // This verifies source consistency; freshness is a separate observation.
+      if (!checkHeartbeatSnapshot(current, registry, events)) {
         console.error('heartbeat drift — run: node scripts/generate-heartbeat.mjs');
         process.exit(1);
       }
-      console.log('heartbeat.json up to date');
+      console.log(`heartbeat source snapshot matches as of ${current.generatedAt}; freshness not evaluated`);
       return;
     }
 
+    const out = heartbeatSnapshot(registry, events, Date.now());
+    const serialized = JSON.stringify(out, null, 2) + '\n';
     fs.mkdirSync(path.dirname(OUT), { recursive: true });
     fs.writeFileSync(OUT, serialized, 'utf8');
-    console.log(`Wrote ${path.relative(ROOT, OUT)}  ·  ${projects.length} projects  ·  ${projects.reduce((a, p) => a + p.pulses30d, 0)} total pulses / ${WINDOW_DAYS}d`);
-  })();
+    console.log(`Wrote ${path.relative(ROOT, OUT)}  ·  ${out.projects.length} projects  ·  ${out.projects.reduce((a, p) => a + p.pulses30d, 0)} total pulses / ${WINDOW_DAYS}d`);
 }
 
-main();
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch(error => { console.error(error.message); process.exitCode = 1; });
+}

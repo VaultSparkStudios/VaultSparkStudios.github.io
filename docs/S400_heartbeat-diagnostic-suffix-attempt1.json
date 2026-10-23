@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "2.0",
+  "generatedAt": "2026-10-23T18:39:39.716Z",
+  "publicSafe": true,
+  "source": "scripts/run-build-check.mjs",
+  "commandCount": 1,
+  "plannedCommandCount": 547,
+  "firstStep": 168,
+  "coverageComplete": false,
+  "planFingerprint": "e19ea5ddb711be500dc7ac2b",
+  "sourceFingerprint": "1391cdc65bbfc53df70d1e5d",
+  "passed": 0,
+  "failed": 1,
+  "totalDurationMs": 48145,
+  "startedAt": "2026-10-23T18:38:50.852Z",
+  "finishedAt": "2026-10-23T18:39:39.716Z",
+  "slowest": [
+    {
+      "step": 168,
+      "command": "node scripts/check-proof-surface.mjs",
+      "status": 1,
+      "durationMs": 48145,
+      "error": null
+    }
+  ],
+  "concentration": {
+    "maxStepShare": 0.3,
+    "minActionableStepMs": 45000,
+    "dominantStep": 168,
+    "dominantCommand": "node scripts/check-proof-surface.mjs",
+    "dominantDurationMs": 48145,
+    "dominantShare": 1,
+    "breached": true
+  },
+  "failures": [
+    {
+      "step": 168,
+      "command": "node scripts/check-proof-surface.mjs",
+      "status": 1,
+      "durationMs": 48145,
+      "error": null
+    }
+  ],
+  "steps": [
+    {
+      "step": 168,
+      "command": "node scripts/check-proof-surface.mjs",
+      "status": 1,
+      "durationMs": 48145,
+      "error": null
+    }
+  ],
+  "note": "Public-safe build gate timing, plan identity, coverage, and direct exit-code summary. Command output is intentionally excluded.",
+  "receiptId": "ef0fd0bde5ab487b5808e714"
+}

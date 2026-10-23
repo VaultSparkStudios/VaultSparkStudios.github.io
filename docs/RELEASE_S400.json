@@ -33,7 +33,7 @@
     {
       "id": 3,
       "state": "in-progress",
-      "outcome": "Current staging and11/11 ceremony verified; full suite,push,exact hosted checks and production readback pending"
+      "outcome": "Source published and first candidate staged; hosted acceptance found a heartbeat clock bug. Repair independently reviewed; new complete source verification and candidate promotion pending."
     },
     {
       "id": 4,
@@ -97,6 +97,16 @@
         "coverageComplete": false,
         "evidence": "docs/S400_build-check-attempt3.json",
         "reason": "Required local closeout brief cache missing; restored prepared contract and re-rendered with canonical renderer. Boundary check now passes."
+      },
+      {
+        "attempt": "heartbeat-1",
+        "passed": 167,
+        "failed": 1,
+        "executed": 168,
+        "planned": 547,
+        "coverageComplete": false,
+        "evidence": "docs/S400_heartbeat-full-suite-attempt1.json",
+        "reason": "Visual/mobile receipts retained prior candidate SHA after regenerated manifest. All bound source and pixels unchanged; canonical metadata-only rebind paths used, preserving original observation timestamps and actual review."
       }
     ],
     "diagnosticSuffixAttempts": [
@@ -108,6 +118,10 @@
       {
         "evidence": "docs/S400_diagnostic-suffix-attempt2.json",
         "scope": "Partial diagnostic294..547, all passed; never full acceptance"
+      },
+      {
+        "evidence": "docs/S400_heartbeat-diagnostic-suffix-attempt1.json",
+        "scope": "Partial diagnostic168 only failed same visual candidate metadata; not full acceptance"
       }
     ],
     "evidenceContractReview": {
@@ -133,7 +147,7 @@
       "coverageComplete": true,
       "sourceFingerprint": "73e6277283999a110c2fb558",
       "receiptId": "daef4605ea9f58ffd79328ff",
-      "evidence": "api/build-check-diagnostics.json",
+      "evidence": "docs/S400_integrated-preheartbeat-full-suite.json",
       "secondFullRun": true
     }
   },
@@ -349,7 +363,25 @@
     "units": "4/4",
     "smoke": "all S98 smoke checks pass",
     "independentReview": "PASS",
-    "siteMetadataApplied": false
+    "siteMetadataApplied": false,
+    "heartbeat": {
+      "cause": "Check excluded the generatedAt field but recomputed rolling counters against the current clock. Source events were unchanged.",
+      "scope": "Acceptance repair required by hosted compliance; no additional product outcome selected",
+      "evidence": "docs/S400_hosted-compliance-attempt1.json",
+      "regressions": "Four focused tests cover both rolling-window boundaries, added/deleted events, tampered counters, invalid/future timestamps, and real CLI byte preservation.",
+      "state": "Independent code review PASS; four regressions, native snapshot check,54-unit parity and six-sample drift preflight pass; fresh full verification pending",
+      "review": {
+        "reviewer": "/root/studio_reviewer",
+        "verdict": "PASS",
+        "evidence": "Independent four regressions and CLI byte preservation; registry-name mutation also fails consistency; live generation retains current clock."
+      },
+      "receiptBindingRemedy": {
+        "mobile": "scripts/rebind-mobile-receipt.mjs verified unchanged bound source and capture hashes;215 original results retained",
+        "visual": "Canonical sourceBinding digest and all112 actual PNG hashes unchanged; only candidate metadata rebound; capturedAt and manual inspection preserved",
+        "checks": "check-receipt-ordering,check-visual-review-receipt and check-mobile-runtime-contract pass",
+        "freshCaptureClaim": false
+      }
+    }
   },
   "localCommit": {
     "sha": "ed7154a378ebe5108b91835788457c8364033306",
@@ -403,5 +435,26 @@
       ],
       "scope": "Generated live-feed update preserved in history; derived conflicts regenerated from combined inputs. Shell manifest differs only in volatile generatedAt, restored verified bytes. Complete source receipt revalidated."
     }
-  }
+  },
+  "hostedAttempts": [
+    {
+      "candidate": "3a78f946639e2eb77359eb43f8d5dbf2f80f1244",
+      "required": {
+        "e2e": {
+          "run": 40001585780,
+          "state": "executed-compliance-failure; overall workflow may still be running"
+        },
+        "lighthouse": {
+          "run": 40001585713,
+          "state": "pending at observation"
+        },
+        "accessibility": {
+          "run": 40001585637,
+          "state": "success"
+        }
+      },
+      "accepted": false,
+      "evidence": "docs/S400_hosted-compliance-attempt1.json"
+    }
+  ]
 }
