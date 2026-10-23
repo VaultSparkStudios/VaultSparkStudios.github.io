@@ -1,13 +1,13 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         547/547 passing (2026-10-23)                   ║
+║  ⚠  Tests         ?/? passing                                    ║
 ║  ✓  Velocity      2 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   19d                                            ║
-║  ✓  IGNIS         44776 FORGE  ·  -1d old                        ║
-║  ⛔  Truth         yellow — selected release verified;…           ║
+║  ✓  IGNIS         45051 FORGE  ·  -1d old                        ║
+║  ⛔  Truth         yellow — S400 implementation verified;…        ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.171  (healthy)                               ║
+║  ✓  Entropy       0.176  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║

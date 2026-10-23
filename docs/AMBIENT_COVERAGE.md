@@ -10,14 +10,14 @@
 
 - Sources: **16**  ·  Total: **96.4 KB** (raw)
 - Guarded (conditional): **13** modules · **72.5 KB** — split candidates
-- Always-on: **3** modules · **23.8 KB**
+- Always-on: **3** modules · **23.9 KB**
 
 ## By size (split candidates flagged)
 
 | Source | Size | Shape | Why conditional |
 |---|--:|:-:|---|
 | `ambient-loader.js` | 26.6 KB | 🔶 guarded | session gated |
-| `command-palette-loader.js` | 16.3 KB | always | — |
+| `command-palette-loader.js` | 16.4 KB | always | — |
 | `page-sigil.js` | 7.9 KB | 🔶 guarded | — |
 | `signed-in-state.js` | 6.6 KB | 🔶 guarded | session gated |
 | `adaptive-speculation.js` | 5.5 KB | 🔶 guarded | — |

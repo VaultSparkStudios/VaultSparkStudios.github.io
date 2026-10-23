@@ -16,6 +16,17 @@ const swBefore = fs.readFileSync(SW, 'utf8');
 const { predicatesMissingShellAsset, findHtmlFiles, updateHtmlReferences } = await import('../scripts/build-shell-assets.mjs');
 const bundle = (entries) => `const CONTENT_ADDRESSED_PREDICATE_SRCS = [\n${entries}\n];`;
 
+test('Desk stylesheet updates reach a new cache key in page and service-worker references', () => {
+  const manifest = JSON.parse(before);
+  const asset = manifest.assets.newsDeskStyle;
+  manifest.generatedFiles = [{ outputRelPath: manifest.assets.ambientCore.path, content: fs.readFileSync(path.join(ROOT, manifest.assets.ambientCore.path)) }];
+  assert.match(asset.path, /^assets\/news-desk\.shell-[a-f0-9]{10}\.css$/);
+  const fixture = '<link rel="stylesheet" href="/assets/news-desk.css">';
+  assert.ok(updateHtmlReferences(fixture, manifest).includes('/' + asset.path));
+  assert.ok(swBefore.includes("'/" + asset.path + "'"), 'the fingerprinted sheet is part of the shell cache');
+  assert.ok(swBefore.includes("'/assets/news-desk.css'"), 'mutable source remains explicitly non-cacheable');
+});
+
 test('proof screenshots and raw art never enter the client placeholder map', async () => {
   const mapPath = path.join(ROOT, 'data/lqip-map.json');
   const priorMap = fs.readFileSync(mapPath, 'utf8');

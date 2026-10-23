@@ -1,3 +1,7 @@
+## S400 — implementation verified; release acceptance pending
+
+Browser-faithful local reference validation and readable persona/disclosure surfaces. Reference49/49, Chromium differential16/16; readability23/23 including16 rendered-background contrast cases (minimum6.04:1), shell14/14 and SW100/100. Final112 persona captures and separate28 disclosure states were actually inspected; CANON-053 passes. Current production acceptance is authoritative in docs/RELEASE_S400.json; it remains pending. Existing identity, field-vitals and account-capacity holds remain unchanged.
+
 ## S399 — reading clearance and responsive image integrity, fully deployed
 
 Closing release 59f1f49d36 (full Pages run39930730781) is verified: exact required3/3, production5/5, both producer stamps,1137 served files with0 differ/unread. Canonical closeout and four session waves are complete. Evidence: docs/RELEASE_S399.json.

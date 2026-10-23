@@ -13,6 +13,7 @@ const SHELL_ASSETS = [
   { key: 'sparkStyle', source: 'assets/spark-compass.css', stem: 'spark-compass.shell', attribute: 'href' },
   { key: 'pwaInstall', source: 'assets/pwa-install.js', stem: 'pwa-install.shell', attribute: 'src' },
   { key: 'style', source: 'assets/style.css', stem: 'style.shell', attribute: 'href' },
+  { key: 'newsDeskStyle', source: 'assets/news-desk.css', stem: 'news-desk.shell', attribute: 'href' },
   { key: 'newsArticleStyle', source: 'assets/news-article.css', stem: 'news-article.shell', attribute: 'href' },
   { key: 'themeToggle', source: 'assets/theme-toggle.js', stem: 'theme-toggle.shell', attribute: 'src' },
   { key: 'navToggle', source: 'assets/nav-toggle.js', stem: 'nav-toggle.shell', attribute: 'src' },

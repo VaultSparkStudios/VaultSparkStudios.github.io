@@ -12,8 +12,9 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), '..');
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DRY = process.argv.includes('--dry-run');
 
 const SKIP_PATH_PATTERNS = [
@@ -29,9 +30,10 @@ const SKIP_PATH_PATTERNS = [
   /\/offline\.html$/i,
 ];
 
-function walk(dir, base = dir, acc = []) {
+const INTERNAL_DIRS = new Set(['node_modules','playwright-report','test-results','lighthouse-results','.git','.claude','.cache','docs','context','logs','scripts','tests','supabase','cloudflare']);
+export function walk(dir, base = dir, acc = []) {
   for (const entry of fs.readdirSync(dir)) {
-    if (['node_modules', 'playwright-report', 'test-results', '.git', '.claude'].includes(entry)) continue;
+    if (INTERNAL_DIRS.has(entry)) continue;
     const full = path.join(dir, entry);
     const rel = path.relative(base, full).replace(/\\/g, '/');
     if (fs.statSync(full).isDirectory()) walk(full, base, acc);
@@ -46,12 +48,14 @@ function extractTitle(html) {
   return m[1].replace(/\s*[—|·]\s*VaultSpark Studios.*$/i, '').trim();
 }
 
-function extractFirstParagraph(html) {
+export function extractFirstParagraph(html) {
   // Strip the nav + header region first.
   const body = html.replace(/<header[\s\S]*?<\/header>/i, '');
-  const m = body.match(/<p[^>]*>([\s\S]{40,})?<\/p>/i);
-  if (!m) return null;
-  return m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 160);
+  for (const m of body.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)) {
+    const text = m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    if (text.length >= 40) return text.slice(0, 160);
+  }
+  return null;
 }
 
 function buildDescription(rel, html) {
@@ -78,6 +82,7 @@ function injectDescription(html, desc) {
   return html; // can't safely inject
 }
 
+function main() {
 let written = 0, already = 0, skipped = 0, failed = 0;
 for (const { full, rel } of walk(ROOT)) {
   if (SKIP_PATH_PATTERNS.some((p) => p.test(rel))) { skipped++; continue; }
@@ -91,3 +96,5 @@ for (const { full, rel } of walk(ROOT)) {
   written++;
 }
 console.log(`\nDone. Wrote: ${written}  ·  Already had: ${already}  ·  Skipped (portal): ${skipped}  ·  Failed: ${failed}`);
+}
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();

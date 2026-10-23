@@ -56,7 +56,9 @@ function nonarticleRoutes(dir,relative='news'){
 }
 const nonarticles=nonarticleRoutes(path.join(ROOT,'news')).sort();
 if(nonarticles.length+2>100)throw Error('Early-hints rules exceed the Pages100-rule limit');
-for(const route of nonarticles)lines.push(route,'  Link: </assets/news-desk.css>; rel=preload; as=style');
+const deskStyle=manifest.assets.newsDeskStyle;
+if(!deskStyle)throw Error('Build the Desk stylesheet before early hints');
+for(const route of nonarticles)lines.push(route,`  Link: </${deskStyle.path}>; rel=preload; as=style`);
 const content = lines.join('\n') + '\n';
 
 if (CHECK) {

@@ -1,0 +1,101 @@
+{
+  "session": 400,
+  "initialFailure": ".cache/S400-build-readability.log",
+  "resumeFrom": "node scripts/build-intelligence-budget.mjs",
+  "completedSteps": [
+    {
+      "command": "node scripts/build-intelligence-budget.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-llms-full-shards.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/generate-build-sha.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-worker-route-provenance.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-worker-route-history.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-deploy-currency.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-evidence-projection.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-identity-migration-receipt.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-og-coverage.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-public-status.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-launch-age.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-security-posture.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-velocity-series.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-vault-momentum.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/check-dead-ctas.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-cta-state.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-oracle-feedback-themes.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-oracle-velocity-public.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-intent-map.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-agents-json.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-ai-discovery-health.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-staging-deploy-continuity.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/generate-push-config.mjs",
+      "exit": 0
+    }
+  ],
+  "postbuildExit": 0,
+  "scope": "Initial preceding steps completed; failed generator and every remaining build step rerun, followed by full postbuild. Not an independent repeat of preceding build steps."
+}

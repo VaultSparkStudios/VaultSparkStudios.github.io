@@ -1,0 +1,104 @@
+{
+  "session": 400,
+  "checkedAt": "2026-10-23T13:26:56.869Z",
+  "passed": 16,
+  "failed": 0,
+  "results": [
+    {
+      "head": "<base href=\"../assets/\">",
+      "computed": "/news/assets/icon.png",
+      "browser": "/news/assets/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<base href=\"../assets/base.html\">",
+      "computed": "/news/assets/icon.png",
+      "browser": "/news/assets/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<base href=\"?v=2\">",
+      "computed": "/news/story/icon.png",
+      "browser": "/news/story/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<base href=\"\">",
+      "computed": "/news/story/icon.png",
+      "browser": "/news/story/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<base href=\"%2e%2e/assets/\">",
+      "computed": "/news/assets/icon.png",
+      "browser": "/news/assets/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<base data-href=\"/wrong/\" href=\"/real/\">",
+      "computed": "/real/icon.png",
+      "browser": "/real/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<base title=\"href='/wrong/'\" href=\"/real/\">",
+      "computed": "/real/icon.png",
+      "browser": "/real/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<base href=../assets/&#x61;/>",
+      "computed": "/news/assets/a/icon.png",
+      "browser": "/news/assets/a/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<!-- <base href=\"/wrong/\"> --><base href=\"/real/\">",
+      "computed": "/real/icon.png",
+      "browser": "/real/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<base target=\"_blank\"><base href=\"\"><base href=\"/wrong/\">",
+      "computed": "/news/story/icon.png",
+      "browser": "/news/story/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<base-fake href=\"/wrong/\"><base href=\"/real/\">",
+      "computed": "/real/icon.png",
+      "browser": "/real/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<div title=\"<base href='/wrong/'>\"></div><base href=\"/real/\">",
+      "computed": "/real/icon.png",
+      "browser": "/real/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<template><template><base href=\"/wrong/\"></template><base href=\"/wrong2/\"></template><base href=\"/real/\">",
+      "computed": "/real/icon.png",
+      "browser": "/real/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<textarea><base href=\"/wrong/\"></textarea><title><base href=\"/wrong2/\"></title><base href=\"/real/\">",
+      "computed": "/real/icon.png",
+      "browser": "/real/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<noscript><base href=\"/wrong/\"></noscript><base href=\"/real/\">",
+      "computed": "/real/icon.png",
+      "browser": "/real/icon.png",
+      "pass": true
+    },
+    {
+      "head": "<div title=\"<textarea>\"><base href=\"/real/\"><span title=\"</textarea>\"></span></div>",
+      "computed": "/real/icon.png",
+      "browser": "/real/icon.png",
+      "pass": true
+    }
+  ]
+}

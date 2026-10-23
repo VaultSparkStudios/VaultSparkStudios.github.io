@@ -103,7 +103,7 @@
       if(controlBlocked)return true;
       // Text occupies glyph rectangles, not the whole width of its container.
       // Yield on actual reading lines while leaving empty margins available.
-      if(!reading)reading=Array.from(document.querySelectorAll('main p,main h1,main h2,main h3,main h4,main h5,main h6,main li,main dt,main dd,main blockquote,main figcaption')).filter(function(n){return !dock.contains(n)&&!n.closest('#spark-compass');});
+      if(!reading)reading=Array.from(document.querySelectorAll('main p,main h1,main h2,main h3,main h4,main h5,main h6,main li,main dt,main dd,main blockquote,main figcaption,main [role=note],main aside')).filter(function(n){return !dock.contains(n)&&!n.closest('#spark-compass');});
       function intersects(rect){return rect.width>0&&rect.height>0&&rect.bottom>bounds.top-12&&rect.top<bounds.bottom+12&&rect.right>bounds.left-12&&rect.left<bounds.right+12;}
       return reading.some(function(n){
         if(n.checkVisibility&&!n.checkVisibility({contentVisibilityAuto:true,visibilityProperty:true}))return false;

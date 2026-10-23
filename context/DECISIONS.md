@@ -2466,3 +2466,19 @@ The premise timing classifier treats required plan briefs as implementation path
 ## D-S399.3 — Assert arrivals and conditional companion states
 
 Route-progress checks observe each destination arrival ID instead of using corner-buddy visibility as a loading proxy. Companion checks explicitly prove reading yield and header recall, then isolate a clear corner for animation, nonmodal behavior and persisted preferences. All original behavioral assertions remain; local and staging 24/24 and revised exact-candidate hosted checks support the repair.
+
+
+## D-S400.1 — Match browser bases and preserve readable persona copy
+
+Reuse native URL resolution and exact active base attribute selection in the local-reference gate. Reuse the existing light persona-copy token and range-based Spark clearance; semantic notes/asides are reading content too. Decorative persona colors remain distinct from text colors. The repaired Desk sheet joins the existing fingerprinted shell pipeline so week-cached plain CSS cannot delay the fix. No dependency was added.
+
+## D-S400.2 — Keep evidence scoped and retain failed attempts
+
+Actual before/after images, rendered-background contrast samples and isolated note causality checks establish the bounded repair. Persona-page and disclosure-side states use separate complete capture matrices. Keep the transient staging omission, Windows write failure and nonpassing premise-timing classifications visible. No source-timing pass or field outcome is inferred.
+
+CANON-045 STRONG gap remains justified under the existing scoped promotion contract: identity/provider migration is unchanged, and current public UI repairs do not alter identity/session/trust policy. Existing holds remain explicit; routine promotion is not an identity or lifecycle launch.
+
+
+## D-S400.3 — Recover the actual metadata smoke failure
+
+The full suite stopped after117 passing steps because an optional paragraph capture was undefined. The backfill helper now skips empty/short paragraphs, selects the first meaningful paragraph without joining later ones, and excludes internal cache/test/docs/Lighthouse trees. Imports are read-only. Four regressions and native smoke pass; no public metadata backfill was applied. Original failed measurement remains retained; current full acceptance must be rerun.

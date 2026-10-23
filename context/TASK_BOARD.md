@@ -1,3 +1,18 @@
+## S400 — reference integrity and persona readability
+
+Wave 1 · Startup and fresh audits — complete.
+Wave 2 · Both selected L2 outcomes — locally verified; Reference49/49, Chromium differential16/16; readability23/23 including16 rendered-background contrast cases (minimum6.04:1), shell14/14 and SW100/100. Final112 persona captures and separate28 disclosure states were actually inspected; CANON-053 passes.
+Wave 3 · Staging, full suite, push and production readback — authoritative state: docs/RELEASE_S400.json, waves[2].
+Wave 4 · Canonical closeout and final native audit — authoritative state: docs/RELEASE_S400.json, waves[3].
+
+- [x] [S400] Browser-faithful references: docs/AUDIT_2026-10-23-S400.json.
+- [x] [S400] Persona readability: docs/AUDIT_2026-10-23-S400-readability.json.
+
+Release and closeout are complete only when the corresponding ledger waves are complete and releaseAccepted is true; local verification alone does not establish deployment.
+
+- [ ] [SIL][S400] Add pre-upload archive membership verification after the transient omitted404 staging attempt; preserve the original failure. Future selection only.
+- [ ] [SIL][S400] Coordinate an evidence-backed distinction between formatting-only source writes and actual pixel changes in visual freshness; existing mandatory gate remains enforced. Future selection only.
+
 ## S399
 
 Wave 1 · Spark reading clearance — done.

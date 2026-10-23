@@ -51,8 +51,32 @@ export function stripDynamicBodies(html) {
 }
 
 export function extractBase(html) {
-  const m = html.match(/<base\b[^>]*\bhref\s*=\s*["']([^"']+)["']/i);
-  return m ? m[1] : null;
+  let templateDepth = 0;
+  // Consume whole tags before selecting base: markup-looking text inside a
+  // quoted attribute belongs to its containing tag. Template content is inert.
+  const tags = /<!--[\s\S]*?(?:-->|$)|<\/?([a-z][a-z0-9:-]*)(?=[\s/>])(?:[^>"']|"[^"]*"|'[^']*')*>/gi;
+  let tag;
+  while ((tag = tags.exec(html))) {
+    if (!tag[1]) continue;
+    const closing = tag[0].startsWith('</');
+    const name = tag[1].toLowerCase();
+    if (!closing && name === 'plaintext') break;
+    if (!closing && /^(script|style|title|textarea|xmp|iframe|noembed|noframes|noscript)$/.test(name)) {
+      // Enter raw-text state only after a real opening tag. Pre-stripping these
+      // bodies would mistake tag-shaped attribute text for an opening element.
+      const end = new RegExp(`</${name}\\s*>`, 'gi');
+      end.lastIndex = tags.lastIndex;
+      if (!end.exec(html)) break;
+      tags.lastIndex = end.lastIndex;
+      continue;
+    }
+    if (name === 'template') { templateDepth = Math.max(0, templateDepth + (closing ? -1 : 1)); continue; }
+    if (closing || templateDepth || name !== 'base') continue;
+    for (const attr of tag[0].matchAll(/\s([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g)) {
+      if (attr[1].toLowerCase() === 'href') return decodeAttribute(attr[2] ?? attr[3] ?? attr[4] ?? '').trim();
+    }
+  }
+  return null;
 }
 
 /** Internal references only: no scheme, no protocol-relative, no bare fragment/query, no templating. */
@@ -100,7 +124,7 @@ export function extractReferences(html) {
     if (clean) found.add(clean);
   };
   const cleanHtml = stripDynamicBodies(html);
-  const base = extractBase(cleanHtml);
+  const base = extractBase(html);
   const externalBase = base && /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(base);
   if (externalBase) return [];
   for (const tag of cleanHtml.matchAll(/<(?!base\b)[a-z][a-z0-9-]*\b(?:[^>"']|"[^"]*"|'[^']*')*>/gi)) {
@@ -120,10 +144,11 @@ export function extractReferences(html) {
 
 /** Repo-relative URL path (leading slash kept) for a ref on the page at `rel`. */
 export function resolveReference(rel, ref, base = null) {
-  if (ref.startsWith('/')) return path.posix.normalize(ref);
-  const from = base && base.startsWith('/') ? base : `/${rel}`;
-  const dir = from.endsWith('/') ? from : from.slice(0, from.lastIndexOf('/') + 1);
-  return path.posix.normalize(path.posix.join(dir, ref));
+  const documentUrl = new URL(`/${rel}`, 'https://local-reference.invalid');
+  // A relative base is itself relative to the document URL, not to the repo.
+  // URL also matches browser handling of dot segments, queries and backslashes.
+  const baseUrl = base === null ? documentUrl : new URL(base, documentUrl);
+  return new URL(ref, baseUrl).pathname;
 }
 
 export function referenceResolves(urlPath, { exists, redirects = [] }) {
@@ -179,6 +204,24 @@ function selfTest() {
     ['a runtime Worker route resolves', ok('index.html', '/login')],
     ['a <base> repoints relative refs', ok('a/b/index.html', './styles.css', '/games/x/')],
     ['a wrong <base> fails', !ok('a/b/index.html', './styles.css', '/games/y/')],
+    ['a relative base resolves against the document URL', resolveReference('news/story/index.html', 'icon.png', '../assets/') === '/news/assets/icon.png'],
+    ['a relative base with a filename uses its directory', resolveReference('news/story/index.html', 'icon.png', '../assets/base.html') === '/news/assets/icon.png'],
+    ['a query-only base preserves the document directory', resolveReference('news/story/index.html', 'icon.png', '?version=2') === '/news/story/icon.png'],
+    ['an empty base preserves the document directory', resolveReference('news/story/index.html', 'icon.png', '') === '/news/story/icon.png'],
+    ['encoded dot segments follow browser normalization', resolveReference('news/story/index.html', 'icon.png', '%2e%2e/assets/') === '/news/assets/icon.png'],
+    ['a missing browser target fails despite a valid former target', !referenceResolves(resolveReference('news/story/index.html', 'icon.png', '../assets/'), {exists: p => p === 'news/story/icon.png'})],
+    ['base data-href never masks the real href', extractBase('<base data-href="/wrong/" href="/real/">') === '/real/'],
+    ['custom base-like tags are not base elements', extractBase('<base-fake href="/wrong/"><base href="/real/">') === '/real/'],
+    ['base-looking text in another tag attribute is ignored', extractBase('<div title="<base href=\'/wrong/\'>"></div><base href="/real/">') === '/real/'],
+    ['nested template bases are inert', extractBase('<template><template><base href="/wrong/"></template><base href="/wrong2/"></template><base href="/real/">') === '/real/'],
+    ['raw text base markup is ignored', extractBase('<textarea><base href="/wrong/"></textarea><title><base href="/wrong2/"></title><base href="/real/">') === '/real/'],
+    ['scripting-enabled noscript base markup is ignored', extractBase('<noscript><base href="/wrong/"></noscript><base href="/real/">') === '/real/'],
+    ['raw-text-looking attributes never hide an active base', extractBase('<div title="<textarea>"><base href="/real/"><span title="</textarea>"></span></div>') === '/real/'],
+    ['href-like quoted text is not a base attribute', extractBase('<base title="href=\'/wrong/\'" href="/real/">') === '/real/'],
+    ['unquoted base attributes and entities are decoded', extractBase('<base href=../assets/&#x61;/>') === '../assets/a/'],
+    ['comment and script bases do not affect resolution', extractBase('<!-- <base href="/wrong/"> --><script>"<base href=\'/wrong/\'>"</script><base href="/real/">') === '/real/'],
+    ['the first base href wins, including an empty value', extractBase('<base target="_blank"><base href=""><base href="/wrong/">') === ''],
+    ['encoded external bases are classified after decoding', extractReferences('<base href="https&#58;//cdn.test/"><img src="image.png">').length === 0],
     ['the root path resolves to index.html', ok('news/index.html', '/')],
     ['external, protocol-relative, mailto, fragment and query refs are ignored',
       extractReferences('<a href="https://x.dev/a"></a><img src="//cdn/x.png"><a href="mailto:a@b"></a><a href="#top"></a><a href="?p=2"></a>').length === 0],

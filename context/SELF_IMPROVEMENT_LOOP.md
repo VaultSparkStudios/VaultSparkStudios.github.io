@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 available totals):935 →939 →939 →939 →939
-Avgs (available rolling totals) —3:939.0 |5:938.2 |10:unmeasured |25:unmeasured |all:unmeasured
+Sparkline (last5 available totals):939 →939 →939 →939 →939
+Avgs (available rolling totals) —3:939.0 |5:939.0 |10:unmeasured |25:unmeasured |all:unmeasured
 Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session: 2026-10-23 | Session399 | Total:939/1000 | Velocity:2
-  └ Reading clearance and responsive image gate fully deployed; docs/RELEASE_S399.json.
+Last session:2026-10-23 | Session400 | Total:939/1000 | Velocity:2
+  └ Two local outcomes verified; release acceptance authoritative in docs/RELEASE_S400.json.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -3199,3 +3199,26 @@ Brainstorm: (1) the Spark buddy overlapping Desk text at 390px (committed [SIL])
 Scores unchanged: no measured field benefit is claimed. Website evidence lens within the canonical ten categories: Core Web Vitals has no new field measurement; exact-candidate Lighthouse passed. Conversion remains unmeasured. No editorial changes were selected; existing stale feeds remain reported. Polish is supported by production clearance 5/5, local/staging full Spark 24/24 and 28 reviewed theme/viewport/state captures. Brainstorm: follow through the planning-artifact timing reproduction with its control-plane owner (committed future SIL row); CSS/redirect reference coverage remains the existing S396 future selection. CDR reviewed — no new creative direction. Full production 066a768716 (run 39907784576); exact-candidate required checks 3/3; historical implementation build:check 547/547 plus two fresh closeout-tree 547/547 passes after the Spark test repair, mobile 215/215, clearance 5/5 and full Spark contract 24/24 on local and staging, 28 reviewed theme/viewport/state captures, staging ceremony 11/11 and whole served-text tree-current readback. Evidence: docs/RELEASE_S399.json.
 
 **S399 final release:** 59f1f49d36, full Pages39930730781, exact hosted3/3, production5/5 and complete1137-file readback. Fresh42 closing captures reviewed; original28 retained. Closing feed drift, visual binding failures and one readback timeout remain recorded in docs/RELEASE_S399.json. SIL939 unchanged.
+
+
+## Session 400 — 2026-10-23 — reference integrity and persona readability
+
+**Total:**939/1000
+**Velocity:**2
+**Win:**Reference49/49, Chromium differential16/16; readability23/23 including16 rendered-background contrast cases (minimum6.04:1), shell14/14 and SW100/100. Final112 persona captures and separate28 disclosure states were actually inspected; CANON-053 passes.
+**Gap:**Transient archive omission and Windows file-write failure retained. Strict premise checks preceded their respective behavior edits; global timing classification remains nonpassing. Full release acceptance is still pending in docs/RELEASE_S400.json.
+
+| Category | Score |
+|---|---:|
+| Dev Health |95|
+| Creative Alignment |94|
+| Momentum |92|
+| Engagement |96|
+| Process Quality |88|
+| Cross-Repo Coherence |94|
+| Security Posture |97|
+| Ecosystem Integration |91|
+| Capital Efficiency |95|
+| Automation Coverage |97|
+
+Scores unchanged; no field or conversion gain claimed. Brainstorm committed as future SIL rows: verify archive membership before upload, and coordinate a truthful formatting-only visual freshness classification while retaining the current gate. CDR reviewed: no new creative direction. Existing identity and field-evidence holds remain unchanged. Final release receipt and closeout evidence will be appended when actually accepted.

@@ -328,3 +328,8 @@ Full production 066a768716 (run 39907784576); exact-candidate required checks 3/
 Startup budget repair preserved 85 completed rows in the archive and all remaining open work. Original failed checks remain visible. No new creative direction or lifecycle change. SIL 939/1000; velocity 2.
 
 **S399 final release:** 59f1f49d36, full Pages39930730781, exact hosted3/3, production5/5 and complete1137-file readback. Fresh42 closing captures reviewed; original28 retained. Closing feed drift, visual binding failures and one readback timeout remain recorded in docs/RELEASE_S399.json. SIL939 unchanged.
+
+
+## Session 400 — 2026-10-23
+
+Browser-faithful local reference validation and readable persona/disclosure surfaces. Reference49/49, Chromium differential16/16; readability23/23 including16 rendered-background contrast cases (minimum6.04:1), shell14/14 and SW100/100. Final112 persona captures and separate28 disclosure states were actually inspected; CANON-053 passes. Release remains in progress; actual final acceptance is maintained in docs/RELEASE_S400.json. No new identity, pricing, membership, canon or lifecycle policy was selected.

@@ -1,5 +1,17 @@
 const {test,expect}=require('@playwright/test');
 const article='/news/2026-10-06/anthropic-subscriptions-offer-5x-more-value-than-openai/';
+
+for(const side of ['left','right'])test(`Spark leaves the actual persona disclosure readable in the ${side} corner`,async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.addInitScript(side=>{localStorage.setItem('vs_cookie_consent','declined');localStorage.setItem('vs_spark_v1',JSON.stringify({version:1,side,motion:'still'}));},side);
+  await page.goto('/news/personas/dot/');
+  const dock=page.locator('.spark-buddy');await dock.waitFor({state:'attached'});
+  const disclosure=page.getByRole('note').filter({hasText:'Written by AI.'});
+  await disclosure.evaluate(n=>{const r=n.getBoundingClientRect();window.scrollTo({top:r.top+scrollY-innerHeight+110,behavior:'instant'});});
+  await expect(dock).toHaveAttribute('data-yield','true');await expect(dock).toBeHidden();
+  await page.getByRole('button',{name:'Open Spark navigation'}).click();
+  await expect(page.locator('#spark-compass')).toBeVisible();
+});
 test.beforeEach(async({page})=>{
   await page.addInitScript(()=>{localStorage.setItem('vs_cookie_consent','declined');});
   await page.route('**/v/desk-comments?*',r=>r.fulfill({json:{ok:true,slug:new URL(r.request().url()).searchParams.get('slug'),count:0,comments:[]}}));

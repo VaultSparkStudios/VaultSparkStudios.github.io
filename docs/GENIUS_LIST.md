@@ -1,4 +1,4 @@
-# Genius Hit List — Session 399
+# Genius Hit List — Session 400
 
 Generated: 2026-10-23
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **83/100**
+- Overall opportunity pressure: **82/100**
 - Health: **yellow**
 - Current SIL: **939/1000**
 - CI health: **check gh run list**
-- Current focus: S399 reading clearance and responsive-image integrity fully deployed
+- Current focus: S400 reference integrity and persona readability
 
 ## Strategic Read
 
@@ -22,12 +22,10 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] Verify Studio Ops acceptance of the planning-artifact timing classifi…
-Final score: **100**
-[SIL][S399] Verify Studio Ops acceptance of the planning-artifact timing classification reproduction; delivered cargo does not prove an applied fix. Future only.
-Why it matters: Verify Studio Ops acceptance of the planning-artifact timing classific shipped last session — confirm it works in production before piling new work on top.
-
-First command: `npm run build:check`
+#### 1. [PRODUCT] Add pre-upload archive membership verification after the transient om…
+Final score: **96**
+[SIL][S400] Add pre-upload archive membership verification after the transient omitted404 staging attempt; preserve the original failure. Future selection only.
+Why it matters: Add pre-upload archive membership verification after the transient omi is open, local, and unblocked — can ship this session.
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -36,67 +34,67 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Staging lineage tolerant of publisher data drift.
+#### 3. [PRODUCT] Coordinate an evidence-backed distinction between formatting-only sou…
 Final score: **93**
-[SIL][S398] Staging lineage tolerant of publisher data drift.
-Why it matters: Staging lineage tolerant of publisher data drift. is open, local, and unblocked — can ship this session.
+[SIL][S400] Coordinate an evidence-backed distinction between formatting-only source writes and actual pixel changes in visual freshness; existing mandatory gate remains enforced. Future selection only.
+Why it matters: Coordinate an evidence-backed distinction between formatting-only sour is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Gate srcset, CSS url(), redirect targets. Future only.
-Final score: **90**
-[SIL][S396] Gate srcset, CSS url(), redirect targets. Future only.
-Why it matters: Gate srcset, CSS url(), redirect targets. Future only. is open, local, and unblocked — can ship this session.
+#### 4. [VERIFY] Verify Studio Ops acceptance of the planning-artifact timing classifi…
+Final score: **92**
+[SIL][S399] Verify Studio Ops acceptance of the planning-artifact timing classification reproduction; delivered cargo does not prove an applied fix. Future only.
+Why it matters: Verify Studio Ops acceptance of the planning-artifact timing classific shipped last session — confirm it works in production before piling new work on top.
+
+First command: `npm run build:check`
 
 ### NEXT
 
-#### 1. [PRODUCT] Investigate timing classification of incoming pre-session same-identi…
+#### 1. [PRODUCT] Staging lineage tolerant of publisher data drift.
 Final score: **87**
+[SIL][S398] Staging lineage tolerant of publisher data drift.
+Why it matters: Staging lineage tolerant of publisher data drift. is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Gate srcset, CSS url(), redirect targets. Future only.
+Final score: **84**
+[SIL][S396] Gate srcset, CSS url(), redirect targets. Future only.
+Why it matters: Gate srcset, CSS url(), redirect targets. Future only. is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Investigate timing classification of incoming pre-session same-identi…
+Final score: **81**
 [SIL][S395][PROTOCOL/P2] Investigate timing classification of incoming pre-session same-identity automation after a pre-sync lock; preserve original failure. Future selection only.
 Why it matters: Investigate timing classification of incoming pre-session same-identit is open, local, and unblocked — can ship this session.
 
-#### 2. [INTELLIGENCE] Keep startup-generated genius-list drift distinguishable from selecte…
-Final score: **84**
+#### 4. [INTELLIGENCE] Keep startup-generated genius-list drift distinguishable from selecte…
+Final score: **78**
 [SIL][S394][PROTOCOL/P2] Keep startup-generated genius-list drift distinguishable from selected implementation in premise timing; preserve the original nonpassing receipt. Future selection only.
 Why it matters: Keep startup-generated genius-list drift distinguishable from selected keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 3. [PRODUCT] Assess cross-origin redirect handling in diagnostic HTTP commands wit…
-Final score: **78**
+#### 5. [PRODUCT] Assess cross-origin redirect handling in diagnostic HTTP commands wit…
+Final score: **72**
 [SIL][S394][RELIABILITY/P2] Assess cross-origin redirect handling in diagnostic HTTP commands with measured caller compatibility. Future selection only.
 Why it matters: Assess cross-origin redirect handling in diagnostic HTTP commands with is open, local, and unblocked — can ship this session.
 
-#### 4. [INTELLIGENCE] Record strict premise acceptance before creating any plan artifact in…
-Final score: **78**
+### LATER
+
+#### 1. [INTELLIGENCE] Record strict premise acceptance before creating any plan artifact in…
+Final score: **72**
 [SIL][S393][PROTOCOL/P2] Record strict premise acceptance before creating any plan artifact in the next selected audit.
 Why it matters: Record strict premise acceptance before creating any plan artifact in  keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 5. [VERIFY] Separately assess served binary coverage against real release risk; c…
-Final score: **74**
+#### 2. [VERIFY] Separately assess served binary coverage against real release risk; c…
+Final score: **68**
 [SIL][S395][VERIFY/P2] Separately assess served binary coverage against real release risk; current verifier explicitly measures tracked served text. Future selection only.
-Why it matters: Separately assess served binary coverage against real release risk; cu is a 4-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Separately assess served binary coverage against real release risk; cu is a 5-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-### LATER
-
-#### 1. [PRODUCT] Measure and remove generated leaderboard metadata/whitespace churn at…
-Final score: **72**
+#### 3. [PRODUCT] Measure and remove generated leaderboard metadata/whitespace churn at…
+Final score: **66**
 [SIL][S393][BUILD/P2] Measure and remove generated leaderboard metadata/whitespace churn at its existing builder boundaries; preserve canonical social previews and rendered evidence. Future selection only.
 Why it matters: Measure and remove generated leaderboard metadata/whitespace churn at  is open, local, and unblocked — can ship this session.
-
-#### 2. [PRODUCT] Require the strict premise checkpoint before delegated edits.
-Final score: **69**
-[SIL][S391] Require the strict premise checkpoint before delegated edits.
-Why it matters: Require the strict premise checkpoint before delegated edits. is open, local, and unblocked — can ship this session.
-
-#### 3. [INTELLIGENCE] Assess the existing mobile Spark overlap with article prose in a futu…
-Final score: **69**
-[UI follow-up][S391] Assess the existing mobile Spark overlap with article prose in a future UI audit.
-Why it matters: Assess the existing mobile Spark overlap with article prose in a futur keeps the ranked audit current so later sessions don't iterate on stale signal.
-
-First command: `node scripts/generate-genius-list.mjs`
 
 ### DEFERRED / GATED
 
@@ -142,18 +140,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Verify Studio Ops acceptance of the planning-artifact timing classifi…
+1. Add pre-upload archive membership verification after the transient om…
 2. Post-push CI confirmation
-3. Staging lineage tolerant of publisher data drift.
-4. Gate srcset, CSS url(), redirect targets. Future only.
-5. Investigate timing classification of incoming pre-session same-identi…
-6. Keep startup-generated genius-list drift distinguishable from selecte…
-7. Assess cross-origin redirect handling in diagnostic HTTP commands wit…
-8. Record strict premise acceptance before creating any plan artifact in…
-9. Separately assess served binary coverage against real release risk; c…
-10. Measure and remove generated leaderboard metadata/whitespace churn at…
-11. Require the strict premise checkpoint before delegated edits.
-12. Assess the existing mobile Spark overlap with article prose in a futu…
+3. Coordinate an evidence-backed distinction between formatting-only sou…
+4. Verify Studio Ops acceptance of the planning-artifact timing classifi…
+5. Staging lineage tolerant of publisher data drift.
+6. Gate srcset, CSS url(), redirect targets. Future only.
+7. Investigate timing classification of incoming pre-session same-identi…
+8. Keep startup-generated genius-list drift distinguishable from selecte…
+9. Assess cross-origin redirect handling in diagnostic HTTP commands wit…
+10. Record strict premise acceptance before creating any plan artifact in…
+11. Separately assess served binary coverage against real release risk; c…
+12. Measure and remove generated leaderboard metadata/whitespace churn at…
 
 ## Best Immediate Move
 

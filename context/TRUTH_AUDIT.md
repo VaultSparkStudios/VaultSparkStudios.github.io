@@ -1,3 +1,9 @@
+## S400 — local implementation verified; release in progress
+
+Overall status: yellow — S400 implementation verified; release acceptance pending.
+
+Reference49/49, Chromium differential16/16; readability23/23 including16 rendered-background contrast cases (minimum6.04:1), shell14/14 and SW100/100. Final112 persona captures and separate28 disclosure states were actually inspected; CANON-053 passes. Full suite, push, production and final closeout are not inferred from local checks. docs/RELEASE_S400.json is the authoritative current ledger. Earlier staging evidence is explicitly scoped to pre-readability bytes. Existing identity and field-evidence holds remain.
+
 ## S399 — 2026-10-23 — selected outcomes and full release verified
 
 Closing release 59f1f49d36 (full Pages run39930730781) is verified: exact required3/3, production5/5, both producer stamps,1137 served files with0 differ/unread. Canonical closeout and four session waves are complete. Evidence: docs/RELEASE_S399.json.

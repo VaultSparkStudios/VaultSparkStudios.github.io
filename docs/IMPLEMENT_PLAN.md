@@ -1,10 +1,13 @@
-# Session 399 implementation plan
+<!-- Session 400 · source: docs/AUDIT_2026-10-23-S400-readability.json -->
+# S400 readability release follow-through
 
-Source: docs/AUDIT_2026-10-23-S399.json
+Session Intent: /arc then authorized direct main commit/push and full deploy.
 
-Intent: /arc then authorized direct main push and full deployment.
+Original reference outcome verified:docs/AUDIT_2026-10-23-S400.json. This selected extension addresses concrete release-gate findings.
 
-Wave 1: full startup and fresh audit; bound native goal 01a1669c-19de-7b02-a8f9-4ec1a9ea2eb0 to S399. Prior writeback current.
-Wave 2: spark-reading-clearance and responsive-image-reference-gate at L2. Acceptance and evidence are in the audit. Reuse existing mechanisms.
-Wave 3: independent review, full local suite, reviewed seven-theme desktop/mobile captures, staging parity and ceremony, sanitized main push, exact candidate required hosted checks, full production Pages deployment and readback. Rollback: revert the bounded product commit and redeploy the previous accepted tag.
-Wave 4: canonical closeout writebacks and visual boards, remote verification, native completion only after every requirement passes.
+Wave 1: Startup and fresh audit — complete.
+Wave 2: Reference outcome — locally verified; persona-reading-accessibility at L2 is pending. Acceptance: Relevant light persona copy meets WCAG AA 4.5:1 against actual rendered panels; all seven persona colors checked. Spark yields around the actual role=note disclosure in both corners, preserves header recall and preferences. Prior clearance/reference tests pass. Fresh desktop/mobile pixels across all themes are inspected with a hash-bound receipt; Juno numeral observation is resolved with actual rendered evidence.
+Wave 3: Refreshed build, staging, full547-step frozen-tree suite, sanitized main push, exact required checks, normal Pages production and served-byte readback. Prior staging11/11 proves the pre-readability candidate only.
+Wave 4: Full canonical closeout, independent review, memory, intelligence, Ark, remote and native completion audit.
+
+Rollback: revert bounded implementation commits and redeploy prior accepted candidate. Preserve existing identity/field holds.

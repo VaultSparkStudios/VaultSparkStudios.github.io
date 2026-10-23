@@ -1,0 +1,22 @@
+{
+  "kind": "audit",
+  "session": 400,
+  "date": "2026-10-23",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Resolve local references against the actual document base",
+  "items": [
+    {
+      "id": 1,
+      "slug": "browser-faithful-reference-resolution",
+      "title": "Resolve local references against the actual document base",
+      "axis": "speed-organization-efficiency",
+      "leftScore": 6,
+      "rightScore": 4,
+      "insight": "A relative base currently resolves to the document directory in the local reference gate. The browser requests a different file. Native URL resolution and differential fixtures can prevent a false passing build.",
+      "evidence": "Native URL differential cases and a real browser agree for relative/root/query/encoded bases. Missing browser target fails even when the former validator target exists. Existing self-tests and all tracked pages pass."
+    }
+  ],
+  "blockers": [],
+  "followUps": []
+}

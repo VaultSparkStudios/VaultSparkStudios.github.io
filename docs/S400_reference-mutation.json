@@ -1,0 +1,23 @@
+{
+  "session": 400,
+  "checkedAt": "2026-10-23T13:33:09.586Z",
+  "baselineSha": "1a96e6203bdd1e368d310daf50a88f1ca659a7eb",
+  "fixture": {
+    "document": "news/story/index.html",
+    "reference": "icon.png",
+    "base": "../assets/",
+    "existingFiles": [
+      "news/story/icon.png"
+    ]
+  },
+  "baseline": {
+    "target": "/news/story/icon.png",
+    "gatePass": true
+  },
+  "current": {
+    "target": "/news/assets/icon.png",
+    "gatePass": false
+  },
+  "expectedBrowserTarget": "/news/assets/icon.png",
+  "result": "Baseline falsely passes; repaired validator rejects the missing browser target."
+}

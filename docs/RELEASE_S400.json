@@ -1,0 +1,292 @@
+{
+  "schemaVersion": 1,
+  "session": 400,
+  "state": "in-progress",
+  "releaseAccepted": false,
+  "goal": {
+    "threadId": "01a168e8-03b3-79c1-a35e-55b14a694961",
+    "createdAt": 1792761435
+  },
+  "audit": "docs/AUDIT_2026-10-23-S400.json",
+  "implementation": {
+    "items": [
+      "browser-faithful-reference-resolution",
+      "persona-reading-accessibility"
+    ],
+    "selfTests": "49/49",
+    "browser": "16/16 real Chromium differential cases",
+    "references": "339 pages;31210 references resolve",
+    "review": "Two independent FIX rounds; all six findings fixed and regression-tested",
+    "premiseTiming": "Nonpassing planning-artifact classification retained"
+  },
+  "waves": [
+    {
+      "id": 1,
+      "state": "complete",
+      "outcome": "Startup and fresh audit bound to S400"
+    },
+    {
+      "id": 2,
+      "state": "complete",
+      "outcome": "Both selected outcomes locally verified"
+    },
+    {
+      "id": 3,
+      "state": "in-progress",
+      "outcome": "Current staging and11/11 ceremony verified; full suite,push,exact hosted checks and production readback pending"
+    },
+    {
+      "id": 4,
+      "state": "in-progress",
+      "outcome": "Canonical records,memory,intelligence and boards prepared; final review/publication/native audit pending"
+    }
+  ],
+  "limitations": [
+    "Existing identity, field-vitals and account-capacity holds remain unchanged.",
+    "No measured conversion or runtime performance gain claimed.",
+    "Local DOT mobile simulation scored95 in all3 runs; LCP around2.93s does not establish the1.8s target or field Core Web Vitals."
+  ],
+  "priorSessionTriage": "S399 follow-up commit 58d348f9 changes only final receipt labels; no unrecorded product behavior or interrupted work. Final S400 writeback will include this receipt reconciliation.",
+  "localAcceptance": {
+    "build": {
+      "exit": 0,
+      "postbuild": "26/26",
+      "scope": "Historical pre-readability build; current aggregate build evidence is recorded in currentBuild."
+    },
+    "doctor": {
+      "blockingFailing": 0,
+      "overallPass": true
+    },
+    "siteIntegrity": "341 pages;79 redirects;0 failures",
+    "currentBuild": {
+      "evidence": "docs/S400_build-resume.json",
+      "scope": "Initial source build stopped on transient file write; failed generator and all remaining steps resumed, followed by postbuild26/26"
+    },
+    "mobile": {
+      "passed": 215,
+      "failed": 0,
+      "skipped": 0,
+      "path": "docs/mobile-audit/receipt.json"
+    },
+    "fullSuiteAttempts": [
+      {
+        "attempt": 1,
+        "passed": 117,
+        "executed": 118,
+        "planned": 547,
+        "coverageComplete": false,
+        "exit": 1,
+        "evidence": "docs/S400_build-check-attempt1.json",
+        "reason": "Metadata backfill optional capture crashed on empty paragraph; private/report HTML crawl also excluded in remedy."
+      },
+      {
+        "path": "docs/S400_build-check-attempt2.json",
+        "passed": 125,
+        "failed": 1,
+        "executed": 126,
+        "planned": 547,
+        "coverageComplete": false,
+        "remedy": "Added the new test files and generated shell assets to the Git index; unit-suite parity now 53 declared = 53 executed = 53 tracked. No source bytes changed; candidate manifest and staging receipt remain verified."
+      },
+      {
+        "attempt": 3,
+        "passed": 233,
+        "failed": 1,
+        "executed": 234,
+        "planned": 547,
+        "coverageComplete": false,
+        "evidence": "docs/S400_build-check-attempt3.json",
+        "reason": "Required local closeout brief cache missing; restored prepared contract and re-rendered with canonical renderer. Boundary check now passes."
+      }
+    ],
+    "diagnosticSuffixAttempts": [
+      {
+        "evidence": "docs/S400_diagnostic-suffix-attempt1.json",
+        "scope": "Partial diagnostic from step234; never full acceptance",
+        "reason": "Early-hints generator contract stale after fingerprinted Desk stylesheet change; independently rereviewed exact byte-comparison behavior, refreshed only its source hash and scope."
+      }
+    ],
+    "evidenceContractReview": {
+      "reviewer": "/root/studio_reviewer",
+      "verdict": "PASS",
+      "generator": "scripts/build-early-hints-headers.mjs",
+      "sourceSha256": "1643c01c34e4b526fa87f9c496b3f3c610406d0d8fe117569544e7ffde4f088b",
+      "classification": "drift-comparing",
+      "limits": "Recomputed _headers byte parity; no live-delivery claim. Other nine contracts unchanged."
+    }
+  },
+  "staging": {
+    "state": "current-candidate-verified",
+    "scope": "Current source including metadata smoke remedy",
+    "receiptId": "9e38626b8b6a8b2d5ca2befc",
+    "files": 13863,
+    "deployId": "20261023155556",
+    "source": {
+      "commitSha": "1a96e6203bdd1e368d310daf50a88f1ca659a7eb",
+      "fingerprint": "13e624e22fb93f5c0a99d436"
+    },
+    "artifact": {
+      "artifactRoot": "3642ba02b67d54b85344c58b2f2431dee015bb7efe06f8c991070ab6a395c760",
+      "leafCount": 68
+    },
+    "ceremony": {
+      "state": "passed",
+      "passed": 11,
+      "total": 11,
+      "path": "api/release-ceremony.json"
+    }
+  },
+  "visual": {
+    "state": "before-captures-complete-unapproved",
+    "scope": "32 generated persona pages,7 themes,desktop+mobile; HTML differences are whitespace-only",
+    "expectedCaptures": 448,
+    "captures": 448,
+    "receipt": "docs/visual-qa/S400-persona-receipt.json"
+  },
+  "rollback": {
+    "baselineSha": "59f1f49d369f34d27b91c39820c928987d91c9d9",
+    "observedContentLaneHead": "d1fa1a4cf1d6c03da673eb2481c179c6126aec59",
+    "observedWorkflowRun": "39954506967"
+  },
+  "readability": {
+    "state": "locally-verified",
+    "audit": "docs/AUDIT_2026-10-23-S400-readability.json",
+    "premises": "2/2 before CSS/clearance edits; pending admission passed",
+    "findings": [
+      "Low-contrast light persona copy",
+      "Mobile mascot disclosure occlusion",
+      "Juno numeral fragment observation needs timing investigation"
+    ],
+    "review": "Independent FIX on266 sheet captures and8 full-size images; old448 are before evidence, never approved",
+    "changes": [
+      "Light persona copy mix60% to32%",
+      "Reading clearance includes main role=note and aside"
+    ],
+    "validation": "23/23 focused browser,16 rendered-background contrast cases min6.04:1,shell14/14,SW100/100,mobile215/215,independent source/cache/producer reviews PASS",
+    "numeralObservation": "Disproved by root full-size original JUNO image; complete PANELS10 visible. No product fix selected.",
+    "visual": {
+      "latest": "docs/visual-qa/LATEST.json",
+      "personaCaptures": 112,
+      "supplemental": "docs/visual-qa/S400-reviewed-disclosures.json",
+      "disclosureCaptures": 28,
+      "canon053": "passed",
+      "generatorEquivalence": "docs/S400_generator-artifact-equivalence.json"
+    }
+  },
+  "activeProcesses": [
+    {
+      "toolSession": 32472,
+      "role": "local preview",
+      "port": 4198
+    }
+  ],
+  "closeout": {
+    "state": "Prepared records independently reviewed; current full suite,publication and final live audit pending",
+    "score": 939,
+    "velocity": 2,
+    "cdr": "Reviewed; no new creative direction",
+    "intelligence": {
+      "ignis": "docs/S400_ignis-refresh.json",
+      "score": 45051,
+      "entropy": 0.174,
+      "genome": "23/25",
+      "doctorBlockingFailing": 0
+    },
+    "impactBrief": "docs/CLOSEOUT_BRIEF_S400_2026-10-23.md",
+    "statusBoard": "docs/CLOSEOUT_STATUS_BOARD.md",
+    "independentReview": {
+      "state": "passed",
+      "round1": "3 record-consistency findings fixed",
+      "round2": "PASS",
+      "scope": "Prepared source closeout; final live release audit remains pending"
+    }
+  },
+  "priorStagingCandidates": [
+    {
+      "state": "deployed-verified",
+      "receiptId": "f767489042841e53ccca70d7",
+      "files": 12930,
+      "attempts": [
+        {
+          "attempt": 1,
+          "state": "failed",
+          "reason": "Archive omitted 404.html; remote12928 vs manifest12929",
+          "diagnostic": "docs/S400_staging-count-diagnostic.json"
+        },
+        {
+          "attempt": 2,
+          "state": "passed",
+          "files": 12930
+        }
+      ],
+      "ceremony": {
+        "state": "passed",
+        "steps": "11/11",
+        "receipt": "api/release-ceremony.json",
+        "firstAttempt": "docs/S400_ceremony-attempt1.json"
+      },
+      "scope": "Verified pre-readability candidate only; restage required after current UI repairs."
+    },
+    {
+      "state": "current-candidate-verified",
+      "scope": "Current repaired public candidate; source and artifact checks still required at final promotion",
+      "receiptId": "bf28a3cbd68de57f4ab9fc0d",
+      "files": 13860,
+      "deployId": "20261023150842",
+      "source": {
+        "commitSha": "1a96e6203bdd1e368d310daf50a88f1ca659a7eb",
+        "fingerprint": "9e5f92e8d9c18b4e12fa4a27"
+      },
+      "artifact": {
+        "artifactRoot": "7df95df2ca1e009316c26bd368419583ea10e6a1d9102967650751030980dfd1",
+        "leafCount": 68
+      },
+      "ceremony": {
+        "state": "passed",
+        "passed": 11,
+        "total": 11,
+        "path": "api/release-ceremony.json"
+      }
+    }
+  ],
+  "performance": {
+    "session": 400,
+    "scope": "Local candidate DOT persona; three fresh browser profiles; default Lighthouse mobile simulation. Not field or production performance.",
+    "checkedAt": "2026-10-23T15:14:03.902Z",
+    "runs": [
+      {
+        "run": 1,
+        "score": 95,
+        "lcp": 2930,
+        "cls": 0,
+        "tbt": 0,
+        "warnings": []
+      },
+      {
+        "run": 2,
+        "score": 95,
+        "lcp": 2925,
+        "cls": 0,
+        "tbt": 0,
+        "warnings": []
+      },
+      {
+        "run": 3,
+        "score": 95,
+        "lcp": 2923.5,
+        "cls": 0,
+        "tbt": 0,
+        "warnings": []
+      }
+    ],
+    "medianPerformance": 95
+  },
+  "gateRemedy": {
+    "source": "scripts/backfill-meta-descriptions.mjs",
+    "tests": "tests/metadata-backfill.unit.spec.mjs",
+    "units": "4/4",
+    "smoke": "all S98 smoke checks pass",
+    "independentReview": "PASS",
+    "siteMetadataApplied": false
+  }
+}
