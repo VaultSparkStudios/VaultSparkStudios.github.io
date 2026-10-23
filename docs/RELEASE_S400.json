@@ -675,13 +675,23 @@
       ]
     },
     "finalObservationMerge": {
-      "commit": "3e879af9ef",
-      "incoming": "1f6176b3aa",
+      "commit": "28013a64ca739edb6c23d86ef82b51ffafb45e57",
+      "incoming": "6fd7850c02f3169d7fbc7d9af780056e7bbb856e",
       "scope": "Only incoming observation snapshots and their derived records; source,reviewed pixels andcurrent staging critical root unchanged",
       "sourceFingerprint": "d559e6eea96360ef32fe1aa0",
       "receiptId": "23971be3a92d66332bea44e6",
       "stagingRoot": "6ce24d6572548a4cf4508cf36bec7f7e227b48bf3510642bcbdb8b3ebfb78463"
-    }
+    },
+    "observationMergeHistory": [
+      {
+        "commit": "3e879af9ef",
+        "incoming": "1f6176b3aa",
+        "scope": "Only incoming observation snapshots and their derived records; source,reviewed pixels andcurrent staging critical root unchanged",
+        "sourceFingerprint": "d559e6eea96360ef32fe1aa0",
+        "receiptId": "23971be3a92d66332bea44e6",
+        "stagingRoot": "6ce24d6572548a4cf4508cf36bec7f7e227b48bf3510642bcbdb8b3ebfb78463"
+      }
+    ]
   },
   "hostedAttempts": [
     {
@@ -725,5 +735,15 @@
       "remedy": "Regenerated actual generated-surface byte budget and dependent proofs; native checks and measured source remain current",
       "sourceFingerprint": "d559e6eea96360ef32fe1aa0"
     }
-  ]
+  ],
+  "pinnedRelease": {
+    "sha": "06d632056f3cd51b03f09a6a4fd08378877bc359",
+    "tag": "release-s400-06d632056f",
+    "requiredRuns": {
+      "e2e": 40041114227,
+      "lighthouse": 40041119836,
+      "accessibility": 40041130548
+    },
+    "state": "published tag; exact hosted acceptance pending"
+  }
 }
