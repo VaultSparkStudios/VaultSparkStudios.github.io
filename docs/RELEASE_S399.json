@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "session": 399,
+  "state": "local-validated-promotion-pending",
+  "releaseAccepted": false,
+  "goal": {
+    "threadId": "01a1669c-19de-7b02-a8f9-4ec1a9ea2eb0",
+    "createdAt": 1792722894,
+    "sessionStart": "2026-10-23T02:36:50.875Z",
+    "startHead": "a13ab04b312fd170fcffe42da2e24a2bc9ad5dba"
+  },
+  "audit": "docs/AUDIT_2026-10-23-S399.json",
+  "implementation": {
+    "items": [
+      "spark-reading-clearance",
+      "responsive-image-reference-gate"
+    ],
+    "browser": "5/5 focused clearance tests pass; added to hosted e2e and local core/extended suites",
+    "references": "31/31 self-tests; 338 pages, 31568 local references resolve",
+    "mutation": "docs/S399_reference-mutation.json",
+    "review": "Independent studio-reviewer round 1 FIX (quoted attribute false positive), corrected and regression tested; round 2 PASS.",
+    "visual": "docs/visual-qa/LATEST.json: 28 manually reviewed captures, seven themes, desktop/mobile, page/opened Spark. Original bundle baseline captured in .cache/S399-baseline with matching baseline SRI in the capture fixture.",
+    "premise": "Original strict 2/2 pass before behavior edits; timing-classifier planning-artifact deviation and exact Git-byte replay retained in docs/S399_audit-admission-replay.json.",
+    "closeoutReview": "Independent session/rotation review PASS; 85 completed records verified verbatim, remaining open work preserved, public-safe docs checked.",
+    "closeoutDraftReview": "Independent draft review round1 FIX: premature completion wording and suite provenance; corrected cached draft, round2 PASS. Not executed; final release/closeout acceptance pending."
+  },
+  "localAcceptance": {
+    "build": {
+      "exit": 0,
+      "postbuild": "26/26"
+    },
+    "mobile": "215/215 passed; exit 0",
+    "fullSuite": {
+      "exit": 0,
+      "attempt": 5,
+      "receiptId": "746b5594a0a7c3b7b29256dc",
+      "passed": 547,
+      "planned": 547,
+      "coverageComplete": true,
+      "sourceFingerprint": "490c958026e8a86598ec8805",
+      "planFingerprint": "ec87581fc3e365f61242aa70",
+      "startedAt": "2026-10-23T04:28:16.229Z",
+      "finishedAt": "2026-10-23T04:54:07.054Z",
+      "diagnostics": "api/build-check-diagnostics.json"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "state": "failed",
+        "passedSteps": 21,
+        "failedStep": 22,
+        "reason": "Startup context budget 42104 exceeded 42000. Prescribed rotation found no wholly closed blocks; 85 completed rows preserved verbatim in archive, 141 open rows verified unchanged. Budget now 39429.",
+        "receipt": "docs/S399_context-rotation.json"
+      },
+      {
+        "attempt": 2,
+        "state": "failed",
+        "passedSteps": 167,
+        "failedStep": 168,
+        "reason": "Nested visual-QA retention report stale after new captures; native report regenerated without deleting evidence. The first89 proof-surface checks passed before retention check90 stopped.",
+        "log": ".cache/S399-build-check-2.log"
+      },
+      {
+        "attempt": 3,
+        "state": "failed",
+        "passedSteps": 433,
+        "failedStep": 434,
+        "reason": "Stats source timestamps lagged the status-proof generated at03:29. Values unchanged; refreshed through canonical builder and dependency graph.",
+        "diagnostics": ".cache/S399-attempt-3-diagnostics.json"
+      },
+      {
+        "attempt": 4,
+        "state": "failed",
+        "passedSteps": 88,
+        "failedStep": 89,
+        "reason": "Fresh staging-health observation occurred after graph rebuild, leaving dependent release-proof stale. Corrected dependency order through canonical graph repair.",
+        "diagnostics": ".cache/S399-attempt-4-diagnostics.json"
+      },
+      {
+        "attempt": 5,
+        "state": "passed",
+        "steps": "547/547",
+        "exit": 0,
+        "receiptId": "746b5594a0a7c3b7b29256dc"
+      }
+    ],
+    "tailPreflight": {
+      "exit": 0,
+      "firstStep": 435,
+      "passed": 113,
+      "coverageComplete": false,
+      "note": "Diagnostic only; not substituted for full suite."
+    }
+  },
+  "staging": {
+    "state": "deployed-verified",
+    "deployId": "20261023025915",
+    "receiptId": "9a988b9fc6ddd862b344abc8",
+    "files": 12852,
+    "artifactRoot": "8e56b3b8d4abcedd7c05b3b80fd1513defa7d63a5edb9f85f9fd7cc201cd4ac7",
+    "candidateReady": true,
+    "candidateFindings": [],
+    "productionParity": "yellow (expected old production shell; candidate/staging critical roots match)",
+    "rollbackPath": "/opt/studio/staging/website/.rollback/20261023025915",
+    "clearanceBrowser": "5/5 passed against canonical staging, exit0",
+    "ceremony": {
+      "state": "passed",
+      "steps": "11/11",
+      "generatedAt": "2026-10-23T03:27:12.192Z",
+      "receipt": "api/release-ceremony.json",
+      "browserCoverage": "3 executed +3 held identity contracts, 0 skipped/failed/flaky; attention15/15"
+    }
+  },
+  "requiredChecks": {
+    "state": "pending",
+    "contract": ".github/RELEASE_CHECKS.json"
+  },
+  "production": {
+    "state": "pending",
+    "lane": "full Pages promotion"
+  },
+  "rollback": "Revert the bounded S399 product change and redeploy the previously accepted release tag release-s398-418d250656.",
+  "remaining": [
+    "sanitized main commit and push",
+    "exact-SHA hosted checks",
+    "full production Pages promotion and served-byte readback",
+    "canonical closeout and final remote verification"
+  ],
+  "reconciliation": {
+    "remoteBase": "d69ccc35e5",
+    "scope": "Three uptime publisher commits; no executable changes. Nine generated-output conflicts resolved from remote inputs and canonical graph rebuild; S399 work retained in named stash."
+  }
+}

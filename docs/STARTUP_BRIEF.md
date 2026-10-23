@@ -68,7 +68,7 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -79,17 +79,17 @@
 ║  ⛔  Context age   19d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  4d old                         ║
 ║  ⛔  Truth         yellow — selected release verified;…           ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
+║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.192  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ⚠  Revenue sig.  10d old (2026-10-13)                           ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
-║  ⚠  Canon adopt.  5/55 pending review                            ║
+║  ✓  Codex trust   trusted project active                         ║
+║  ⚠  Canon adopt.  4/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -120,8 +120,8 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Spark buddy overlaps Desk text at 390px.    ║
-║        Spark buddy overlaps Desk text at 390px. is open, local,  ║
+║   96  [PRODUCT]      Full deploy/closeout: docs/RELEASE_S399.js  ║
+║        Full deploy/closeout: docs/RELEASE_S399.json. is open, l  ║
 ║                                                                  ║
 ║   93  [PRODUCT]      Staging lineage tolerant of publisher data  ║
 ║        Staging lineage tolerant of publisher data drift. is ope  ║

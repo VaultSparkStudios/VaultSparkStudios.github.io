@@ -1304,3 +1304,156 @@ Waves1–3 verified; release evidence: docs/RELEASE_S389.json.
 - [x] **[S314][DISCOVERY/P1] Exact-path discovery micro-lane.** Sitemap, robots, agents manifest, and llms.txt can promote only through validated exact paths with content-type/link/coherence checks.
 - [x] **[S314][SECURITY/P0] Positive served-surface manifest.** Deploy artifacts are generated from declared public roots and fail on unclassified survivors or missing advertised routes.
 - [x] **[S314][EFFICIENCY/P1] Proof-gate process compression.** Eight logical proof commands run through importable in-process executors while retaining 84/84 receipt coverage; measured wall time fell from 101.8s to about 9.7s.
+
+
+## S399 rotation — completed S397 phase record, 2026-10-23
+
+Wave 1 complete: startup and fresh audit. Wave 2 complete: both selected L2 outcomes verified. Wave 3 complete: exact release and canonical closeout evidence verified.
+
+
+## S399 completed-row rotation — 2026-10-23
+
+## S396 — dead internal references fixed and gated
+
+- [x] [S396 #1-3] Reference gate; two live 404s fixed. docs/AUDIT_2026-10-21-S396.md.
+- [x] [S396 RELEASE] Staging, main, production readback: docs/RELEASE_S396.json.
+
+## S393 — rank-report integrity and authorized full release
+
+- [x] [S393 #1] Validate canonical timestamps, future/stale dates, report schema/counts and member rows; verify actual CLI/provider failure preservation. Focused3/3 and independent review round2 pass.
+- [x] [S393 #2] Restore all seven generated leaderboard themes, isolate capture contexts, reject false observed-theme receipt reuse, and inspect84 actual theme captures.
+- [x] [S393 RELEASE] Complete545/545 twice, current staging11/11, direct-main publication, all3 required exact-candidate workflows, normal full Pages production promotion and strict readback for c0488e184f. Final publication evidence: docs/RELEASE_S393.json.
+
+## S391 — operational reliability
+
+- [x] [S391 #1] Six CLI guards verified; semantic migration probe admission included.
+- [x] [S391 #2] REST canary verified locally and hosted125/7; receipt in docs/RELEASE_S391.json.
+- [x] [S391 RELEASE] Shipped via S395 production 14466ce38c (ancestry checked S396).
+- [x] [SIL][S391] Moderation options verified in S392.
+
+## S390 — public data contracts
+
+- [x] [S390 #1] Public data queries repaired.
+- [x] [S390 #2] Live-verified REST contract gate.
+- [x] [S390 #3] Send commands admit argv strictly.
+- [x] [S390 #4] Extract omissions measured; cap kept.
+- [x] [S390 #5] /changelog/#stories layout shift removed.
+- [x] [SIL][S390] Inventory remaining outward CLIs. (S391: six guards + documented remaining scope.)
+- [x] [SIL][S390] Schedule weekly live REST probe. (S391 hosted run39383473357 passed125/7.)
+
+## S388 — release follow-through
+
+- [x] [SIL][S388][OPS/P2] Resolved by S389 #1/#2.
+
+## S387 — reliability follow-through
+
+- [x] Implement TT diagnostic isolation, complete legacy/R2 evidence reading, private retention and isolated staging round-trip acceptance. Full release acceptance is recorded separately in docs/RELEASE_S387.json.
+
+## S386 — Desk art review contract
+
+- [x] Art reviewer sees the generator brief; daily critique re-roll; newest-story contract. docs/RELEASE_S386.json
+
+## S385 — public data contracts
+
+- [x] S385 community earned-rank and ecosystem coverage contracts (15/15 across 3 engines, 3 mutations); blank-handle directory defect fixed.
+
+## S384 — returning-visitor reliability
+
+- [x] Fresh full startup and nine-axis audit; correct returning-visitor acceptance, require it in CI, preserve diagnostic artifact reporters/paths; 18/18 and three negative mutations verified.
+- [x] S384 observed sitemap readability prerequisite: theme-aware URL labels,28 inspected captures and all119-label contrast checks across seven themes.
+
+## S383 — homepage engagement acceptance
+
+- [x] Fresh full startup and nine-axis audit; repair three reproduced homepage checks, require the seven-test suite in CI, and verify targeted negative mutations.
+
+## S382 — Spark browser acceptance
+
+- [x] Replace five retired palette assertions with real Spark behavior and verify19 focused cases plus broken-load detection.
+- [x] Classify all45 prior persistent failures by exact assertion, without inferring unresolved causes.
+
+## S381 — selected candidate verification
+
+- [x] Repair navigation and visual origin selection; preserve manual override and verify actual-source regressions.
+
+## S376 arc — reader feedback on Desk articles
+
+- [x] Wave1: sync, triage (not cut off), /start, canon sync.
+- [x] Wave2: audit `docs/AUDIT_2026-10-12-S376.md`, three items, premises checked against production.
+- [x] Wave3: stray comment controls hidden; seven themes captured.
+- [x] Wave4: reaction taps no longer lost in WebKit; early-tap delivery in the loader.
+- [x] Wave5: image reaction totals in the feed; independent review, four findings fixed.
+- [x] **[SIL/P3 · S376 → S378]** Spark now yields to controls/editing; actual article submit and name fields verified at both corners across three browsers. Deployment acceptance verified in docs/RELEASE_S378.json.
+
+## S370 arc
+
+- [x] Wave 1: preserve residue, sync, reconcile canon and verify the two publication premises.
+- [x] Wave 2: implement both L2 outcomes, fix independent review findings, pass 39/39 focused checks.
+- [x] Wave 3: canonical staging, hosted checks, pinned production publication and final closeout evidence verified in docs/S370_RELEASE_2026-10-07.md.
+- [x] **[SIL/P2 · completed S371]** Add a routine receipt for out-of-session Desk art commits so write-back currency can identify actual automated work without subject-only exemptions.
+- [x] **[CI/P2 · completed S371]** Restrict the optional Open Graph regeneration publisher to a writable branch; S370 release-tag generation succeeded but publishing failed from detached HEAD (run 37650649182).
+
+## S368 final — open follow-ups (2026-10-05)
+
+- [x] **[P1 · S370 verified runs 37549313182/37590125126]** Confirm the art autopilot's first scheduled publish (`.cache/desk-art-staging/autopilot.log`); fix anything it aborted on.
+- [x] Autopilot verifies every published image and its article are served live (one retry for CDN lag).
+- [x] JSON Feed `date_published` carries the real publish instant (all 106 items).
+- [x] 46 old stashes archived under `refs/stash-archive/` and the stash list cleared.
+- [x] /news/ search + filters, card timestamps, Desk signup bar, per-form Turnstile, legal wording, digest armed, art autopilot (D-S368.10), staging baseline reset.
+
+## S366 — Robinhood Summit and daily homepage publication
+
+- [x] Publish the sourced September 29 Robinhood HOOD Summit analysis and lead the homepage with it.
+- [x] Add a restricted staging credential and an automatic Desk-only path from a successful scheduled publisher through staging byte parity to pinned Cloudflare Pages promotion. Recovery run `36663473926` and production run `36663563135` passed; 109 routes matched staging.
+- [x] **[S366][DESK/P2]** Scheduled News Publish `36679345071` triggered automatic Desk release `36679807164`, and scheduled run `36716077242` triggered release `36716493332`; both downstream runs passed.
+- [x] **[S366][QA]** Add daily local and live route assurance across 232 HTML files, 201 sitemap routes, eight public support files, edge liveness, latest Desk content chain, and 15 Chromium journeys/theme cases. Hosted manual run `36667110751` passed both jobs.
+- [x] **[S366][DESK/QA]** Re-run AI disclosure, claim parity, copy and stats checks plus full local crawl in the restricted Desk release before staging; correct skipped-plan guard to use a yes/no output.
+- [x] **[S366][QA/P2]** First scheduled CI Health Monitor run `36695299391` exposed a same-day story-scope error in the live fact-receipt checker; `ed6d294db` fixed it, and hosted rerun `36750321612` passed both jobs.
+- [x] **[S366][CI/P2]** Hosted E2E and compliance both passed in run `36747372651` after closeout artifact refreshes.
+- [x] **[S366][PERF/P2]** A subsequent hosted Lighthouse run `36741037407` passed all nine route tiers at the unchanged floors; retain trend monitoring before any full-site promotion.
+- [x] **[S366][TRUTH/CI]** Keep IGNIS ROI source age separate from publisher health after a quiet ledger blocked closeout: `generatedAt` remains September 9 evidence, `rebuiltAt` tracks regeneration, and focused freshness checks pass.
+- [x] **[S366][CI]** Declare workflow scope for the new scheduled surface and Desk staging checks, and run their pure self-tests from the build gate; the reachability census now passes 254/254 checks and 325/325 self-tests.
+
+## S365 — completed arc and follow-up
+
+- [x] Extract publisher article prose before fact selection; correct page-chrome facts in the 2026-09-28 edition and gate future Desk facts against navigation, promotion, and captions.
+- [x] Clear the unchanged 0.90 article Lighthouse floor; hosted local and staging Lighthouse passed on `091481ba5` (run `36629194379`).
+- [x] Verify 168/168 theme captures, 215/215 mobile cases, hosted E2E/compliance, and staging ceremony 11/11; deploy the scoped content lane and verify the live article order (`36631405999`).
+- [x] Repair the late-night Desk publisher's art-to-placeholder order after hosted compliance found two missing LQIP entries; regenerate the map, pass 505/505 locally, and guard the workflow ordering.
+- [x] Verify all four scheduled Desk slots ran and three editions published on 2026-09-29, stage the late-night edition, and promote its homepage/news content through the scoped lane (`36648112113`); live homepage and article match.
+- [x] **[S365][DESK/P1]** Founder approved restricted Desk-only automation; S366 installed the scoped staging key, staging parity gate, and pinned production lane. The broad `confirm_content` and identity/full-site holds remain separate.
+
+## S364 — requested signup repair
+
+- [x] Repair the Worker response crash, verify route branches, pin the verifier and prevent consumed-token reuse.
+- [x] Restore the source-owned Turnstile secret on staging; verify negative response without sending mail.
+- [x] Push signup repair and CI corrections; hosted E2E and compliance pass at cf56856ce (505 repository checks).
+- [x] Repair notebook footer shift and badge contrast; LF-bound visual evidence and hosted CLS checks pass.
+- [x] Improve article performance; S365 hosted local and staging Lighthouse passed the unchanged 0.90 floor (`36629194379`).
+- [x] Deploy production Worker and static candidate, install matching Turnstile secret, verify intended 403 validation response instead of 503.
+
+## S369 focused follow-ups
+
+- [x] Premium Desk masthead, AI anchor profile navigation and header News/subscribe links; verify desktop/mobile in every theme.
+- [x] Source-attributed News Brief, reader-impact take labels, late satire and separate public image threads; verify source parity and comment isolation.
+- [x] Honest thresholded Desk readership metrics from existing browser evidence; verify privacy-floor and counting tests.
+- [x] Stage, review and release combined Spark/Desk candidate; confirm actual production behavior.
+- [x] Reconcile deployed acceptance, creative direction, repository and Codex memory, status metadata and the final closeout brief. Preserve the recorded score and history.
+- [x] Fix Desk signup shared-KV quota 503; isolate rate counters, preserve security checks, deploy staging and production and verify no-send route.
+- [x] Observe founder regular signup confirmation and delivery: founder reports the normal signup worked correctly (2026-10-06); no direct address enrollment or new agent-sent email.
+- [x] Publish and verify agent-friendly Desk signup, premium confirmation/digest emails, signed cancellation and immersive welcome. Pages37548337150/source d607927ec and Worker d12535f4 live;530/530 checks and desktop/mobile production pixels pass. New-template mailbox delivery stays separately unverified.
+- [x] Implement Super Intelligence homepage title.
+- [x] Implement animated corner Spark buddy and popup with corner/motion controls.
+- [x] Restore Story Overview and full illustration reaction labels across generated articles.
+- [x] Inspect confirmed subscription and diagnose the scheduled Dispatch failures; remove rejected optional campaign tag.
+- [x] Verify rendered pixels, mobile regressions, canonical staging, hosted checks and production; release 6f6fe8388/Pages37714546973.
+- [x] Observe regular digest acceptance, sent status and provider delivery; no off-schedule send.
+- [x] [SIL] Guard campaign payload compatibility with 44 digest regression checks.
+- [x] [SIL] Guard overview-before-art reading order and complete reaction labels with 112 article contracts and 14 focused browser checks.
+- [x] Reconcile context, task board, CDR, truth audit, repository memory and Codex memory with all five completed founder requests.
+- [x] Stop the remaining local preview terminal and confirm it has exited.
+- [x] Finish canonical closeout checks, main publication and final deployment readback. Acceptance: requested code published on main; corrected release ee8db4f7f verified in production by Pages run 37807641227 and live browser checks; closing records are published by this closeout.
+- [x] [SIL] Refresh generated Oracle answers before closeout sealing; guard the dependency with the build-order invariant.
+
+## S392 checkpoint + remaining release
+
+- [x] [S392] Two command-admission outcomes verified; independent review passed.

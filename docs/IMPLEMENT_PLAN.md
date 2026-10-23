@@ -1,11 +1,10 @@
-# Session 398 implementation plan
+# Session 399 implementation plan
 
-Source: docs/AUDIT_2026-10-22-S398.json
+Source: docs/AUDIT_2026-10-23-S399.json
 
-Session intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
+Intent: /arc then authorized direct main push and full deployment.
 
-Wave 1 complete: fresh Claude Code invocation (conversation a4b9ea35) is bound to S398. The repo was synchronized and was not cut off. Startup canon sync and the frontier radar pass. Doctor reports blockingFailing 0. The audit premise gate passed strict 3/3 before any behavior edits.
-
-Wave 2: two L2 outcomes. First, si-first-use-expansion: the /ai-vs-si/ title, H1 and social titles; the Desk headline source plus canonical regeneration; and a story-order copy-gate rule. Second, offline-origin-down-browser-regression, a Playwright origin-down test with a mutation check. Acceptance is the per-item matrix in the audit. UI changes are text-only, captured at desktop/mobile in every theme.
-
-Wave 3: full required checks, then staging, sanitized direct push and the exact hosted candidate checks. After that, production deployment with readback, then canonical closeout. Rollback is a bounded revert of the title/headline/gate/test commit and a redeploy of the last accepted candidate. No lifecycle change is selected.
+Wave 1: full startup and fresh audit; bound native goal 01a1669c-19de-7b02-a8f9-4ec1a9ea2eb0 to S399. Prior writeback current.
+Wave 2: spark-reading-clearance and responsive-image-reference-gate at L2. Acceptance and evidence are in the audit. Reuse existing mechanisms.
+Wave 3: independent review, full local suite, reviewed seven-theme desktop/mobile captures, staging parity and ceremony, sanitized main push, exact candidate required hosted checks, full production Pages deployment and readback. Rollback: revert the bounded product commit and redeploy the previous accepted tag.
+Wave 4: canonical closeout writebacks and visual boards, remote verification, native completion only after every requirement passes.

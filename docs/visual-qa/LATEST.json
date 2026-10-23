@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-10-23T01:33:39.201Z",
+  "capturedAt": "2026-10-23T02:57:58.665Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,11 +14,12 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "66b0ab702ca368bd7db7450fb9e34cde7ba18e805b7cd57c1e9193a296b60d12",
+    "sha256": "3971b6cfdcab496071d6cc8e471bbfac5139661d754c7ed66abd91ebb22a48df",
     "files": [
-      "ai-vs-si/index.html",
+      "assets/ambient-core.bundle.js",
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
+      "assets/command-palette-loader.js",
       "assets/cookie-consent.js",
       "assets/desk-personas/dot.webp",
       "assets/desk-personas/echo.webp",
@@ -505,6 +506,8 @@
       "assets/rank-orb.js",
       "assets/rank-projector.js",
       "assets/returning-visitor-digest.js",
+      "assets/spark-compass.css",
+      "assets/spark-compass.js",
       "assets/style.css",
       "assets/turnstile.js",
       "assets/vault-genome-strip.js",
@@ -512,7 +515,7 @@
       "data/news-desk/days/2026-08-21.json",
       "data/news-desk/days/2026-08-22.json",
       "data/news-desk/days/2026-08-23.json",
-      "news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/index.html",
+      "news/index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
       "scripts/capture-theme-matrix.mjs",
@@ -530,8 +533,8 @@
     ],
     "entries": [
       {
-        "path": "ai-vs-si/index.html",
-        "sha256": "42bc47c2520abc0665870486d8ab557ad910fdc3af593a55494e8da9e2467ec3"
+        "path": "assets/ambient-core.bundle.js",
+        "sha256": "ea3a29580c115162e9549e3fba9593131011c43964f5437c8f5c795ef7fd5a05"
       },
       {
         "path": "assets/ambient-loader.js",
@@ -540,6 +543,10 @@
       {
         "path": "assets/changelog-reactions.js",
         "sha256": "1ddedc6d812991f7bb72c2ee9405779a897d33fbedaab81784e3df96123d7528"
+      },
+      {
+        "path": "assets/command-palette-loader.js",
+        "sha256": "808a9a69a6cdfc54b98b23beaa6c2a5089ae92600bea843d1782a09b4163408e"
       },
       {
         "path": "assets/cookie-consent.js",
@@ -2486,6 +2493,14 @@
         "sha256": "475ff71a6d4590fb6b1a035305e98e287ccd42ecee848f412f047dd962dc882e"
       },
       {
+        "path": "assets/spark-compass.css",
+        "sha256": "23b7271656b74c5dbe0c093502731f0dd2cdfdfbd0c91fb7a377e3e30017bbef"
+      },
+      {
+        "path": "assets/spark-compass.js",
+        "sha256": "1220404832d5c7d51ed03fe86518dfe85c0cfafcd4a706efbaa6ca520a1c00be"
+      },
+      {
         "path": "assets/style.css",
         "sha256": "90be10c8732d9185e81515c4698213e3d5f7c50da8a3e4ae4e715efe9dfc6287"
       },
@@ -2514,9 +2529,8 @@
         "sha256": "03da839472121835a27018b22ba8b20c6860b1f41745d07c88b13518558080a8"
       },
       {
-        "path": "news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/index.html",
-        "sha256": "c12fa467c178b431737f4a51fdec77b49c14df1ef8d5a658748ab0aa2ce425e1",
-        "routineRegionSha256": "9c2aeca17b769d38ff5e127242c9b095665c9e81d0b81e3aea059491b3f67268"
+        "path": "news/index.html",
+        "sha256": "a0ee58d48209b4ab642220ee25f0f76cbbb31a86f7774ad4a6545d59bd94e21a"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -2578,14 +2592,13 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "e60fef0c1747e477eeb2fc81d255bbb2afae475a7c2f47b1e0a47e83c7177e39",
-    "candidateSha": "91fd2ec9fa8e473c5bc5fe81190464a3db9e2d23",
-    "root": "ceb451148474c5e25a99c3b221c4cdc93ef67185e5f43fae9a9becee7b30d39c"
+    "manifestSha256": "3456e38597764ee3e7f9c5b6f861936f5cd857c22245c75ed45f93a3a3223945",
+    "candidateSha": "905f45651bfb7a68b30082cb79100427a645d782",
+    "root": "8e56b3b8d4abcedd7c05b3b80fd1513defa7d63a5edb9f85f9fd7cc201cd4ac7"
   },
   "matrix": {
     "routes": [
-      "/ai-vs-si/",
-      "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/"
+      "/news/"
     ],
     "themes": [
       "dark",
@@ -2609,7 +2622,8 @@
       }
     ],
     "states": [
-      "page"
+      "page",
+      "spark-open"
     ],
     "expectedCaptures": 28,
     "completedCaptures": 28
@@ -2622,9 +2636,9 @@
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "claude-code (S398)",
+    "reviewer": "codex-S399",
     "findings": [
-      "All 28 captures (2 retitled pages x 7 themes x desktop/mobile) inspected: expanded headlines legible, no clipping or contrast loss. Pre-existing: floating Spark mascot overlaps article body on mobile (dismissible; not this change)."
+      "Reviewed final generated-tree page and opened Spark panel in all seven themes at desktop/mobile. Page state clears reading text; panel remains readable and header recall works."
     ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
@@ -2644,35 +2658,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "ai-vs-si--dark--desktop.png",
-      "sha256": "e9f8caa73876849486f7ea65f94db2df50be7ad533bef31b3ec8e61c1fcfcec2",
-      "page": "/ai-vs-si/",
+      "file": "news--dark--desktop.png",
+      "sha256": "3d8bf6e3ea399a4f23740b03ede8acd50c6fa31a477475e41d9d12c214b44289",
+      "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
-      }
-    },
-    {
-      "theme": "dark",
-      "observedTheme": {
-        "stored": "dark",
-        "root": "dark",
-        "body": "dark"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-10-04-ai-vs-si-what-the-super-intelligence-rename-means-for-businesses--dark--desktop.png",
-      "sha256": "8e2e0c1f822d7c0489d64fd754b4332d7d1cfad3496d645eb2c9791b15af7f58",
-      "page": "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     },
     {
@@ -2688,35 +2680,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "ai-vs-si--light--desktop.png",
-      "sha256": "6535192db1d45517a6e424768c66fa0c60292b3a040503b48feb2e7d504e4e49",
-      "page": "/ai-vs-si/",
+      "file": "news--light--desktop.png",
+      "sha256": "b3621a9b069b2f8b182eeab082006bfe92818bc01ec8d5345faca7fb1ef1cc32",
+      "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
-      }
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-10-04-ai-vs-si-what-the-super-intelligence-rename-means-for-businesses--light--desktop.png",
-      "sha256": "22d4de96f378001db80ac82970d333012a1c42aa5dd407e807c0271ad82dce10",
-      "page": "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     },
     {
@@ -2732,35 +2702,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "ai-vs-si--ambient--desktop.png",
-      "sha256": "9b789901490b2839406499dff3d04e6f33b922d3efb334b50066e200b812fdbf",
-      "page": "/ai-vs-si/",
+      "file": "news--ambient--desktop.png",
+      "sha256": "10a995fb914b2cea2260433111eaaa5f99a47d3f9693c9a4edc61358b485aed7",
+      "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
-      }
-    },
-    {
-      "theme": "ambient",
-      "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient",
-        "body": "ambient"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-10-04-ai-vs-si-what-the-super-intelligence-rename-means-for-businesses--ambient--desktop.png",
-      "sha256": "34509fba8e1282deb98e06ce0e4471f78f22ffe631613e45d779cb688fec95f9",
-      "page": "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     },
     {
@@ -2776,35 +2724,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "ai-vs-si--warm--desktop.png",
-      "sha256": "b0284f3a570fc62984f00eb848a6333eee26408089cb5eb5a66ddd81c3e648a8",
-      "page": "/ai-vs-si/",
+      "file": "news--warm--desktop.png",
+      "sha256": "e40b989edefcaf2c8ced358bc24c468e7ffaf21d147802a66919347c13e7ac9e",
+      "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
-      }
-    },
-    {
-      "theme": "warm",
-      "observedTheme": {
-        "stored": "warm",
-        "root": "warm",
-        "body": "warm"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-10-04-ai-vs-si-what-the-super-intelligence-rename-means-for-businesses--warm--desktop.png",
-      "sha256": "7e096ade4a49fc9ddaae66288057f4850fd8fd0f05a668af4854158c71757d7b",
-      "page": "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     },
     {
@@ -2820,35 +2746,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "ai-vs-si--cool--desktop.png",
-      "sha256": "605cf4a8d6c7ffabafb346411cda2ba032851eab62ab40da1473a681bd73f3d7",
-      "page": "/ai-vs-si/",
+      "file": "news--cool--desktop.png",
+      "sha256": "2c391a6b4331de2946f3217331b5e1bf9716ecf4ad2282c6cef0645b5411a8c1",
+      "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
-      }
-    },
-    {
-      "theme": "cool",
-      "observedTheme": {
-        "stored": "cool",
-        "root": "cool",
-        "body": "cool"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-10-04-ai-vs-si-what-the-super-intelligence-rename-means-for-businesses--cool--desktop.png",
-      "sha256": "9c8861eefc2809658b5711e8a94fc731ee1ab8f95e74230d850254f740936394",
-      "page": "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     },
     {
@@ -2864,35 +2768,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "ai-vs-si--lava--desktop.png",
-      "sha256": "29f6bce68b69839643f2f4e1da481607d2a62a816a041a70a32399e5ec9fc543",
-      "page": "/ai-vs-si/",
+      "file": "news--lava--desktop.png",
+      "sha256": "81928b68247822247d94aaa563dfe0683b637ccc6220d43cf13e1d00fe2265bb",
+      "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
-      }
-    },
-    {
-      "theme": "lava",
-      "observedTheme": {
-        "stored": "lava",
-        "root": "lava",
-        "body": "lava"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-10-04-ai-vs-si-what-the-super-intelligence-rename-means-for-businesses--lava--desktop.png",
-      "sha256": "5a8bfb63fa9d4b2db16e8a6b1ccb635f4c49e052a8bbc71385cabe5629fb9fbf",
-      "page": "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     },
     {
@@ -2908,35 +2790,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "ai-vs-si--high-contrast--desktop.png",
-      "sha256": "72b625e36538309f109b638a1d4cb20692e21235dcd7e750b879ec01326fa56d",
-      "page": "/ai-vs-si/",
+      "file": "news--high-contrast--desktop.png",
+      "sha256": "c8add159f427761c8dbdc20c789462aa35b222a8f160cb1cd91ae40d4efb57c7",
+      "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "observedTheme": {
-        "stored": "high-contrast",
-        "root": "high-contrast",
-        "body": "high-contrast"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-10-04-ai-vs-si-what-the-super-intelligence-rename-means-for-businesses--high-contrast--desktop.png",
-      "sha256": "8846ed14d2f4ae8a0e5106075a6d27dd641076f5cb974888274f0c1012f478e2",
-      "page": "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     },
     {
@@ -2952,16 +2812,304 @@
         "width": 390,
         "height": 844
       },
-      "file": "ai-vs-si--dark--mobile.png",
-      "sha256": "9a169dccd5c15db91f82adc816d1b439e509893bb86089157bc1c3e3dda9dfde",
-      "page": "/ai-vs-si/",
+      "file": "news--dark--mobile.png",
+      "sha256": "7cae3c85454d8185fd92605982f3f550a6e29943121175fab353b2e1ebb88718",
+      "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     },
     {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news--light--mobile.png",
+      "sha256": "34ac9c831e0618690b8ee3bd06924d2959a7897982926c4afb7ec5afa0a779e1",
+      "page": "/news/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399"
+      }
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news--ambient--mobile.png",
+      "sha256": "5eeaecac8ab20ad2e4acea44ca385f1b11a4a47c63a3ad103ff91fd11c5f6d0b",
+      "page": "/news/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399"
+      }
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news--warm--mobile.png",
+      "sha256": "a2745ab4cef2f386d7d69399ef73d1eb186d4f705511eba4228f348690dd3a3c",
+      "page": "/news/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399"
+      }
+    },
+    {
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news--cool--mobile.png",
+      "sha256": "31224acbcfa256fce05fcd9dda7b04454e2c9947afd3502c9d9584d3bf16cc8e",
+      "page": "/news/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399"
+      }
+    },
+    {
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news--lava--mobile.png",
+      "sha256": "73bb7c498cbf8075d7b685bc5de5ff0145a1366a7b76ef854708e200d1004456",
+      "page": "/news/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news--high-contrast--mobile.png",
+      "sha256": "b5dc93914adadbe02049d31c5dfe06cd02312961f16336dd5a5d39f8a65487e7",
+      "page": "/news/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399"
+      }
+    },
+    {
+      "file": "S399-after-dark-desktop-spark-open.png",
+      "sha256": "71afb2158a68ab6deaa30b062123c812e113c266d4d79d156c01e62976c986a3",
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399"
+      }
+    },
+    {
+      "file": "S399-after-light-desktop-spark-open.png",
+      "sha256": "03fd00f06ebf069382defbf25c66f0ff833de2815ea2235473d815d460bfc3db",
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399"
+      }
+    },
+    {
+      "file": "S399-after-ambient-desktop-spark-open.png",
+      "sha256": "a41ba2cc1b3b60f8d3c2f9055f576e809f89bf155528118f5b17917c1268f2b0",
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399"
+      }
+    },
+    {
+      "file": "S399-after-warm-desktop-spark-open.png",
+      "sha256": "ba0b08ff1547c18ad9de233286f99b46b19c83ff168bc6febdb31a1430e8df30",
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399"
+      }
+    },
+    {
+      "file": "S399-after-cool-desktop-spark-open.png",
+      "sha256": "bb30b478afcdf9bcf663f2a7fae72af618120fa4b1a5db38c36650b4be9782c5",
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399"
+      }
+    },
+    {
+      "file": "S399-after-lava-desktop-spark-open.png",
+      "sha256": "bb88649532951a1c63f94f1b295a7bc4d8e38c9a1635e53eafa40f4ff7f34096",
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399"
+      }
+    },
+    {
+      "file": "S399-after-high-contrast-desktop-spark-open.png",
+      "sha256": "c46acad78251180079456970a4a75dfe25016608292c16aca8be6ecabaf1329e",
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399"
+      }
+    },
+    {
+      "file": "S399-after-dark-mobile-spark-open.png",
+      "sha256": "63bee5400d9a63f8110463952fa6f74678ca0e6a16f36d8863eb2072f5ee5ad2",
       "theme": "dark",
       "observedTheme": {
         "stored": "dark",
@@ -2974,16 +3122,16 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-10-04-ai-vs-si-what-the-super-intelligence-rename-means-for-businesses--dark--mobile.png",
-      "sha256": "96d9728234612d5902f11e9f38699578026136395e19e024a97e103221d110d2",
-      "page": "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/",
-      "state": "page",
+      "page": "/news/",
+      "state": "spark-open",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     },
     {
+      "file": "S399-after-light-mobile-spark-open.png",
+      "sha256": "e599480232bfec6d6033f220dffde07ac2a3c81e3ed6ea36aa7df76f24630845",
       "theme": "light",
       "observedTheme": {
         "stored": "light",
@@ -2996,38 +3144,16 @@
         "width": 390,
         "height": 844
       },
-      "file": "ai-vs-si--light--mobile.png",
-      "sha256": "fdc21fb7d0a57ea6269596e5cef5550b2c0ae793b35662da89cf9ba2fa14a671",
-      "page": "/ai-vs-si/",
-      "state": "page",
+      "page": "/news/",
+      "state": "spark-open",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     },
     {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-10-04-ai-vs-si-what-the-super-intelligence-rename-means-for-businesses--light--mobile.png",
-      "sha256": "d60359a7181f8625071f6af383870a1fe602f87adade050a984862abd66c3966",
-      "page": "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code (S398)"
-      }
-    },
-    {
+      "file": "S399-after-ambient-mobile-spark-open.png",
+      "sha256": "9c4a9c432ccf5542406174f261de21a300d0b29d5dae5f2a61f924163695aebb",
       "theme": "ambient",
       "observedTheme": {
         "stored": "ambient",
@@ -3040,38 +3166,16 @@
         "width": 390,
         "height": 844
       },
-      "file": "ai-vs-si--ambient--mobile.png",
-      "sha256": "4d3f474e372f92c175ef941eafd53acda9131500a08caa98e6a00112ab60197d",
-      "page": "/ai-vs-si/",
-      "state": "page",
+      "page": "/news/",
+      "state": "spark-open",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     },
     {
-      "theme": "ambient",
-      "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient",
-        "body": "ambient"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-10-04-ai-vs-si-what-the-super-intelligence-rename-means-for-businesses--ambient--mobile.png",
-      "sha256": "91e29b8e740f1f276518803c651814b8b55426103a54aa7a9f6728bee4974b8b",
-      "page": "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code (S398)"
-      }
-    },
-    {
+      "file": "S399-after-warm-mobile-spark-open.png",
+      "sha256": "64f4bad534a9002fad25584e605b694f7e9c31ed3d8fef4f9d9b22848b623281",
       "theme": "warm",
       "observedTheme": {
         "stored": "warm",
@@ -3084,38 +3188,16 @@
         "width": 390,
         "height": 844
       },
-      "file": "ai-vs-si--warm--mobile.png",
-      "sha256": "487400906e475230a8595ed6f2e7bf715bccf2f3f53589cc9ebbd009bda1ef01",
-      "page": "/ai-vs-si/",
-      "state": "page",
+      "page": "/news/",
+      "state": "spark-open",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     },
     {
-      "theme": "warm",
-      "observedTheme": {
-        "stored": "warm",
-        "root": "warm",
-        "body": "warm"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-10-04-ai-vs-si-what-the-super-intelligence-rename-means-for-businesses--warm--mobile.png",
-      "sha256": "b8c64ccf4507fb34983372607ce80f0aaeb01ca11ce8e13a057965da1abb9920",
-      "page": "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code (S398)"
-      }
-    },
-    {
+      "file": "S399-after-cool-mobile-spark-open.png",
+      "sha256": "3f22d93db1808fea3d211525c7bef2bf4d2363966a0afca8bc2564b4a3f95ada",
       "theme": "cool",
       "observedTheme": {
         "stored": "cool",
@@ -3128,38 +3210,16 @@
         "width": 390,
         "height": 844
       },
-      "file": "ai-vs-si--cool--mobile.png",
-      "sha256": "b85825992ce4e17a697ff77d4eef9505ec7a5ae6bd2f88025401157928b3ef96",
-      "page": "/ai-vs-si/",
-      "state": "page",
+      "page": "/news/",
+      "state": "spark-open",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     },
     {
-      "theme": "cool",
-      "observedTheme": {
-        "stored": "cool",
-        "root": "cool",
-        "body": "cool"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-10-04-ai-vs-si-what-the-super-intelligence-rename-means-for-businesses--cool--mobile.png",
-      "sha256": "2779d21f7499da077ab0fc18fc28d30c413512a871415efac35ac1a92ab2feb0",
-      "page": "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code (S398)"
-      }
-    },
-    {
+      "file": "S399-after-lava-mobile-spark-open.png",
+      "sha256": "4c00013a58dea0391678c6337e947cd66a31fcbea56cf1173777710eded3990a",
       "theme": "lava",
       "observedTheme": {
         "stored": "lava",
@@ -3172,38 +3232,16 @@
         "width": 390,
         "height": 844
       },
-      "file": "ai-vs-si--lava--mobile.png",
-      "sha256": "99ef69c7cfefb92b851cea5e9200496abe1e68b7f198613e579107ad61f8c620",
-      "page": "/ai-vs-si/",
-      "state": "page",
+      "page": "/news/",
+      "state": "spark-open",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     },
     {
-      "theme": "lava",
-      "observedTheme": {
-        "stored": "lava",
-        "root": "lava",
-        "body": "lava"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-10-04-ai-vs-si-what-the-super-intelligence-rename-means-for-businesses--lava--mobile.png",
-      "sha256": "aa3cd51b9413e8be52a7550de1ef7e06f52cd2ce3bef2b8d55f80a2f90942307",
-      "page": "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code (S398)"
-      }
-    },
-    {
+      "file": "S399-after-high-contrast-mobile-spark-open.png",
+      "sha256": "b733795589c0ae5264f657bab43609e080abe6847049f2d82dc05dea8de62630",
       "theme": "high-contrast",
       "observedTheme": {
         "stored": "high-contrast",
@@ -3216,36 +3254,22 @@
         "width": 390,
         "height": 844
       },
-      "file": "ai-vs-si--high-contrast--mobile.png",
-      "sha256": "dfbcb3aad0645f5dee39ea3f50a4dac56f67d99a13af56e003a85795161912fe",
-      "page": "/ai-vs-si/",
-      "state": "page",
+      "page": "/news/",
+      "state": "spark-open",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S398)"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "observedTheme": {
-        "stored": "high-contrast",
-        "root": "high-contrast",
-        "body": "high-contrast"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-10-04-ai-vs-si-what-the-super-intelligence-rename-means-for-businesses--high-contrast--mobile.png",
-      "sha256": "ee55aae657fc480bab38a7ad795e7ff0116f539b5a8eb86e3e79bcdebcb81fc3",
-      "page": "/news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code (S398)"
+        "reviewer": "codex-S399"
       }
     }
-  ]
+  ],
+  "candidateRebind": {
+    "at": "2026-10-23T04:14:33.028Z",
+    "priorCandidate": {
+      "manifest": "api/candidate-artifact-manifest.json",
+      "manifestSha256": "eaf64174dab37d9369dda2aaba2baff1878546a4548a61dfcaacb93d3925e69e",
+      "candidateSha": "905f45651bfb7a68b30082cb79100427a645d782",
+      "root": "8e56b3b8d4abcedd7c05b3b80fd1513defa7d63a5edb9f85f9fd7cc201cd4ac7"
+    },
+    "reason": "Candidate metadata reconciliation only; all bound source and 28 capture hashes verified unchanged."
+  }
 }

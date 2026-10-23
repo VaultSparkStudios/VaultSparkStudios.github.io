@@ -1735,14 +1735,14 @@
     var hide=document.createElement('button');hide.type='button';hide.className='spark-buddy-hide';hide.textContent='×';hide.setAttribute('aria-label','Tuck Spark away for this visit');hide.addEventListener('click',function(){dock.hidden=true;try{sessionStorage.setItem('vs_spark_tucked','true');}catch(_){}var recall=document.querySelector('[data-vs-palette-loader-trigger]');if(recall)recall.focus();});
     dock.append(buddy,hide);document.body.appendChild(dock);
     var style=document.createElement('style');style.textContent=SPARK_BUDDY_STYLE;document.head.appendChild(style);
-    var controls=null,frame=null;
+    var controls=null,reading=null,frame=null;
     function overlapsControl(){
       // Visibility yielding keeps the dock's rectangle measurable, so it can
       // return when clear without alternating between shown and hidden frames.
       var bounds=dock.getBoundingClientRect();
       if(!bounds.width||!bounds.height)return false;
       if(!controls)controls=Array.from(document.querySelectorAll('a[href],button,input,select,textarea,summary,[role="button"],[contenteditable]')).filter(function(n){return !dock.contains(n)&&!n.closest('#spark-compass');});
-      return controls.some(function(n){
+      var controlBlocked=controls.some(function(n){
         // Measuring a control in a skipped content-visibility subtree forces
         // its offscreen section to lay out. It cannot obstruct the dock yet;
         // the existing scroll/resize observers reconsider it when rendered.
@@ -1751,6 +1751,24 @@
         if(!rect.width||!rect.height||rect.bottom<=bounds.top-12||rect.top>=bounds.bottom+12||rect.right<=bounds.left-12||rect.left>=bounds.right+12)return false;
         var visibility=getComputedStyle(n);
         return visibility.visibility!=='hidden'&&visibility.visibility!=='collapse'&&visibility.display!=='none';
+      });
+      if(controlBlocked)return true;
+      // Text occupies glyph rectangles, not the whole width of its container.
+      // Yield on actual reading lines while leaving empty margins available.
+      if(!reading)reading=Array.from(document.querySelectorAll('main p,main h1,main h2,main h3,main h4,main h5,main h6,main li,main dt,main dd,main blockquote,main figcaption')).filter(function(n){return !dock.contains(n)&&!n.closest('#spark-compass');});
+      function intersects(rect){return rect.width>0&&rect.height>0&&rect.bottom>bounds.top-12&&rect.top<bounds.bottom+12&&rect.right>bounds.left-12&&rect.left<bounds.right+12;}
+      return reading.some(function(n){
+        if(n.checkVisibility&&!n.checkVisibility({contentVisibilityAuto:true,visibilityProperty:true}))return false;
+        if(!intersects(n.getBoundingClientRect()))return false;
+        var walker=document.createTreeWalker(n,NodeFilter.SHOW_TEXT),text;
+        while((text=walker.nextNode())){
+          if(!text.textContent.trim())continue;
+          var parent=text.parentElement;
+          if(parent.closest('script,style,[hidden]')||(parent.checkVisibility&&!parent.checkVisibility({visibilityProperty:true})))continue;
+          var range=document.createRange();range.selectNodeContents(text);
+          if(Array.from(range.getClientRects()).some(intersects))return true;
+        }
+        return false;
       });
     }
     function editing(){var active=document.activeElement;return !!(active&&!dock.contains(active)&&!active.closest('#spark-compass')&&(active.matches('input:not([type=button]):not([type=submit]):not([type=reset]),textarea,select')||active.isContentEditable));}
@@ -1766,7 +1784,7 @@
       var recall=document.querySelector('[data-vs-palette-loader-trigger]');if(recall)recall.setAttribute('aria-expanded',String(opened));
       if(blocked&&dock.contains(document.activeElement)&&recall)recall.focus({preventScroll:true});
     }
-    new MutationObserver(function(changes){if(changes.some(function(c){return c.type==='childList'||['href','role','contenteditable'].includes(c.attributeName);}))controls=null;scheduleSync();}).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['open','hidden','class','style','aria-modal','href','role','contenteditable']});
+    new MutationObserver(function(changes){if(changes.some(function(c){return c.type==='childList'||['href','role','contenteditable'].includes(c.attributeName);}))controls=reading=null;scheduleSync();}).observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['open','hidden','class','style','aria-modal','href','role','contenteditable']});
     // Scroll, responsive reflow, delayed content and keyboard focus can all
     // bring a control into the chosen corner. At most one check per frame.
     window.addEventListener('scroll',scheduleSync,{passive:true,capture:true});window.addEventListener('resize',scheduleSync,{passive:true});

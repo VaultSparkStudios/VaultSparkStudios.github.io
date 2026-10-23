@@ -1,0 +1,32 @@
+{
+  "kind": "audit",
+  "session": 399,
+  "date": "2026-10-23",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Protect Desk reading space and responsive image delivery.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "spark-reading-clearance",
+      "title": "Keep Spark clear of reading text",
+      "axis": "ui-ux-feedback",
+      "leftScore": 8,
+      "rightScore": 5,
+      "insight": "A current 390px Desk capture shows the fixed Spark buddy covering route-through-story text. Clearance only measures interactive controls. The existing mechanism supplies the foundation for a focused repair.",
+      "evidence": "Before/after real-browser captures and a hash-bound reviewed receipt; browser regressions prove text clearance, return when clear, header recall, both corners and existing control behavior."
+    },
+    {
+      "id": 2,
+      "slug": "responsive-image-reference-gate",
+      "title": "Check every responsive HTML image candidate",
+      "axis": "speed-organization-efficiency",
+      "leftScore": 6,
+      "rightScore": 5,
+      "insight": "The existing extractor checks href/src only. An image with a valid fallback and a missing srcset candidate passes, although selected viewports receive a 404. The existing mechanism supplies the foundation for a focused repair.",
+      "evidence": "Gate fails a missing responsive candidate despite valid src; handles width/density descriptors, data URL commas, entities, multiple attributes, templates and external bases; current tracked public pages pass."
+    }
+  ],
+  "blockers": [],
+  "followUps": []
+}

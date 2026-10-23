@@ -1,0 +1,81 @@
+{
+  "session": 399,
+  "head": "905f45651bfb7a68b30082cb79100427a645d782",
+  "baselineFiles": [
+    {
+      "file": "assets/command-palette-loader.js",
+      "sha256": "bcfbc38addbe36529d04f7fb2482c7b5ee22e3880ff4c475dae1ee01b8bba70a"
+    },
+    {
+      "file": "scripts/check-local-references.mjs",
+      "sha256": "9984532125ec280406bf6bf0ceb8c7ec82fbeda17e9dd1a2ef7cc1afba6fc577"
+    }
+  ],
+  "admission": {
+    "validExit": 0,
+    "invalidSessionExit": 1,
+    "valid": {
+      "ok": true,
+      "errors": []
+    },
+    "invalid": {
+      "ok": false,
+      "errors": [
+        {
+          "artifact": "plan",
+          "check": "session-mismatch",
+          "message": "Artifact session must equal the selected audit session."
+        }
+      ]
+    }
+  },
+  "baselinePremises": {
+    "exit": 0,
+    "result": {
+      "audit": "AUDIT_2026-10-23-S399.json",
+      "selectionMode": "explicit",
+      "selectionReason": "--audit <repo>\\.cache\\S399-admission-fixture\\docs\\AUDIT_2026-10-23-S399.json",
+      "session": null,
+      "doctorProvenance": null,
+      "total": 2,
+      "verified": 2,
+      "contradicted": 0,
+      "resolvedContradicted": 0,
+      "openContradicted": 0,
+      "shippedAbsencePersists": [],
+      "unverified": 0,
+      "volatile": 0,
+      "volatilePremises": [],
+      "unverifiableRate": 0,
+      "unverifiable": false,
+      "trustworthy": true,
+      "contradictions": [],
+      "openContradictions": [],
+      "directoryTargets": [],
+      "claimScopeMismatches": [],
+      "unresolvedCause": null,
+      "results": [
+        {
+          "itemId": 1,
+          "slug": "spark-reading-clearance",
+          "status": "verified",
+          "claim": "Spark clearance only queries interactive elements",
+          "actual": true,
+          "expected": true,
+          "reason": "evidence supports the claim (true eq true)"
+        },
+        {
+          "itemId": 2,
+          "slug": "responsive-image-reference-gate",
+          "status": "verified",
+          "claim": "The current reference gate has no srcset extraction",
+          "actual": 0,
+          "expected": 0,
+          "reason": "evidence supports the claim (0 eq 0)"
+        }
+      ]
+    }
+  },
+  "timingDeviation": "Original strict gate passed 2/2 before behavior edits. Timing checker classifies the required plan brief and both admission JSON inputs as implementation paths; retained as nonpassing rather than rewriting original evidence. Baseline file bytes replayed from the actual gate head here.",
+  "at": "2026-10-23T02:52:32.557Z"
+}

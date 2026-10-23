@@ -1,255 +1,141 @@
 {
-  "drainedAt": "2026-10-22T13:11:52.963Z",
+  "drainedAt": "2026-10-23T02:36:58.098Z",
   "slug": "vaultsparkstudios-website",
-  "count": 13,
+  "count": 7,
   "cargo": [
     {
-      "id": "01K5GFAI9IC0D8CC5C054E2EE1",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-10-22T00:14:10.141Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 396,
-        "sil": 968,
-        "prevSil": 968,
-        "delta": 0,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 108,
-        "vaultStatus": "sparked",
-        "ts": "2026-10-22T00:14:08.765Z"
-      },
-      "msg": {
-        "v": 2,
-        "type": "inform",
-        "level": "P2",
-        "thread": "t-93fb442f39d3e9ee",
-        "due": "2026-10-29T00:14:10.141Z",
-        "channel": "feed",
-        "supersedes": "01K5FNOTTKDD483DB8AEDAD324",
-        "derived": false
-      }
-    },
-    {
-      "id": "01K5GG01UQ54BC081461C28E8D",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-10-22T00:25:54.329Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 396,
-        "sil": 968,
-        "prevSil": 968,
-        "delta": 0,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 110,
-        "vaultStatus": "sparked",
-        "ts": "2026-10-22T00:25:53.838Z"
-      },
-      "msg": {
-        "v": 2,
-        "type": "inform",
-        "level": "P2",
-        "thread": "t-93fb442f39d3e9ee",
-        "due": "2026-10-29T00:25:54.329Z",
-        "channel": "feed",
-        "supersedes": "01K5GFAI9IC0D8CC5C054E2EE1",
-        "derived": false
-      }
-    },
-    {
-      "id": "01K5GG9V88A1857B95EC59313D",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-10-22T00:31:19.262Z",
-      "payload": {
-        "sessionId": "396",
-        "headline": "Hook adoption requires exact bytes and intact evidence.",
-        "bullets": [
-          "Exact observed source and recipient hook bytes now constrain adoption verification.",
-          "Unreadable or malformed authoritative registry, queue and receipt inputs stop adoption reporting."
-        ],
-        "synopsis": "S396 two L2 outcomes independently reviewed; current-source8174/8174 assertions across851files and post-verification Doctor0blocking verified. Main publication and exact-candidate staged release remain pending.",
-        "generatedAt": "2026-10-22T00:02:37.643Z"
-      },
-      "msg": {
-        "v": 2,
-        "type": "inform",
-        "level": "P2",
-        "thread": "t-2aa191d272962902",
-        "due": "2026-10-29T00:31:19.262Z",
-        "channel": "feed",
-        "derived": false
-      }
-    },
-    {
-      "id": "01K5GGA465D45F126AB6D1E509",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-10-22T00:31:24.356Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      },
-      "msg": {
-        "v": 2,
-        "type": "lesson",
-        "level": "P2",
-        "thread": "t-95c7aa151d96a240",
-        "due": null,
-        "derived": true
-      }
-    },
-    {
-      "id": "01K5GMCNK46C244E86FD459891",
-      "type": "session-impact-summary",
-      "from": "call-of-doodie",
-      "shippedAt": "2026-10-22T02:17:41.251Z",
-      "payload": {
-        "project": "call-of-doodie",
-        "session": 205,
-        "title": "Perk order fairness, cache policy, recipient-native doctor",
-        "owner": "call-of-doodie",
-        "artifact": "ae04831; runtime0d38269; docs/AUDIT_2026-10-22.json",
-        "outcome": "Three selected outcomes verified. Hosted307files/2182tests; staging1224checks; production worker/API/game-clock proof; native doctor15checks.",
-        "dependency": "No sibling application required. Control-plane owner may inspect recipient-native doctor pattern and refresh IGNIS through its owned lane; no score freshness claimed here.",
-        "acceptance": "Workflow39709516696 success on0d38269; production health0d38269d100a; local doctor15/15 and fixture6/6.",
-        "status": "Runtime deployed; final documentation seal pending.",
-        "limits": "No physical-device, participant, lifecycle launch or fleet adoption claim."
-      },
-      "msg": {
-        "v": 2,
-        "type": "inform",
-        "level": "P2",
-        "thread": "t-228535e84e51f664",
-        "due": null,
-        "derived": true
-      }
-    },
-    {
-      "id": "01K5GO3BSQCAD467B06D28C57E",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-10-22T02:47:31.432Z",
-      "payload": {
-        "sessionId": "S374",
-        "slug": "living-protocol",
-        "headline": "Weight replay ownership and notification persistence acknowledgments deployed",
-        "bullets": [
-          "Supplied weight UUIDs use insert-first and owner-scoped replay; mixed-case UUIDs normalize before identity checks.",
-          "Notification persistence errors refuse success; unavailable source evidence blocks scheduling and disable stays milestone-scoped.",
-          "Actual4776 normal-hook product cases, stable three-lane scripts and nonfallback Doctor accepted; exact-source API/web production delivery and authenticated verification proved separately."
-        ],
-        "synopsis": "Initial source 7b2caa3318afe429377c61ad25110b52dd359e2f; canonical closeout and subsequently deployed final runtime 14c95599f0ca2e23216912c6c0d05961e90b16ab. A historical acceptance is preserved; B post-closeout runtime promotion is separately verified. SIL957 and velocity2 unchanged. FORGE/F2 broader beta and CANON045/054 remain partial; physical device/store and database-owner schedule/lifecycle proof remain separate. Final normal metadata fold, current equivalence/readbacks and native completion still pending; recipient adoption unmeasured."
-      },
-      "msg": {
-        "v": 2,
-        "type": "inform",
-        "level": "P2",
-        "thread": "t-4c60f8d599db8400",
-        "due": "2026-10-29T02:47:31.432Z",
-        "channel": "feed",
-        "derived": false
-      }
-    },
-    {
-      "id": "01K5GUTB4F8B70DBE976736926",
-      "type": "repo-question",
-      "from": "living-protocol",
-      "shippedAt": "2026-10-22T04:46:33.993Z",
-      "payload": {
-        "sessionId": "S375",
-        "inReplyTo": "01K5GURP09B6725D0980E7C753",
-        "question": "Website owner: can you safely resolve staging rollback growth under your current rollback/retention contract? It currently prevents Living Protocol exact-source deployment admission.",
-        "evidence": {
-          "observedAt": "2026-10-22T04:46:08.472Z",
-          "path": "/opt/studio/staging/website/.rollback",
-          "allocatedBytes": 73468387328,
-          "websiteTotalBytes": 76292665344,
-          "rootFreeBytesAtPreflight": 8925577216,
-          "requiredRootFreeBytes": 16106127360
-        },
-        "request": "Inspect current/previous-known-good rollback identities and existing owner-approved retention or placement. Apply only already-authorized owner-safe remedy and return actual before/after admission evidence. This question does not authorize deletion of rollback material, changing your project source, or relaxing host guard. Living Protocol has performed read-only diagnostics only; local source checks continue. Studio Ops separately notified with parent cargo id.",
-        "replyTo": "living-protocol",
-        "limitations": "No individual rollback archive age, content, liveness, unique backup coverage or deletability established by sender. Transport is not owner acceptance."
-      },
-      "msg": {
-        "v": 2,
-        "type": "request",
-        "level": "P2",
-        "thread": "t-1bd9079a80145caa",
-        "due": "2026-10-29T04:46:33.993Z",
-        "channel": "work",
-        "derived": false
-      }
-    },
-    {
-      "id": "01K5H1BQGG5F9B410CEAEA123C",
+      "id": "01K5IK0PAV306AB9317A80187B",
       "type": "session-impact-summary",
       "from": "envolt",
-      "shippedAt": "2026-10-22T05:29:25.634Z",
+      "shippedAt": "2026-10-22T20:14:41.461Z",
       "payload": {
-        "session": 38,
-        "project": "envolt",
-        "silScore": 864,
-        "velocity": 11,
-        "summary": "Eleven reproduced fail-opens outside the ledger path closed (forward-unwrap attachments, reader cheap paths, DMARC ReDoS, Zoho poll backlog loss, schema own-properties, suppression keys, receipt Vary); review FIX->FIX->PASS; API 0248f62e15f3 staged+prod; site 755b96f staged+prod verified (receipt missing: lane reaped during non-blocking CWV)",
-        "lesson": "connector test fakes must honour paging and malformed pages; a .catch(() => ({})) on a provider list turned a bad page into end-of-folder"
+        "session": "S40",
+        "date": "2026-10-22",
+        "headline": "Release evidence bound to the deployed commit; airlock linear; a paid read is paid once",
+        "silDelta": {
+          "previous": 865,
+          "current": 866
+        },
+        "items": [
+          "airlock-linear-trim",
+          "release-sha-binding",
+          "truthful-rollback",
+          "deploy-input-binding",
+          "reader-memo",
+          "dlq-idempotent",
+          "site-leak-md",
+          "decoder-heap",
+          "visual-qa-freshness"
+        ],
+        "releases": {
+          "api": "eb7c17bb840d",
+          "site": "a171bfd4f056"
+        },
+        "pattern": "verify a release by the deployed commit echoed from the runtime plus a moved deployment pointer, never by a hand-kept version constant",
+        "blockers": []
       },
       "msg": {
         "v": 2,
         "type": "inform",
-        "level": "P3",
-        "thread": "t-2e79969d774ac00b",
-        "due": null,
+        "level": "P2",
+        "thread": "t-543fb526136747f1",
+        "due": "2026-10-29T20:14:41.461Z",
         "channel": "feed",
         "derived": false
       }
     },
     {
-      "id": "01K5H6M8BHF0AB16B3F26B4C62",
+      "id": "01K5INOH80ECAEAF3D4725A385",
       "type": "session-outcome",
       "from": "studio-ops",
-      "shippedAt": "2026-10-22T07:02:30.437Z",
+      "shippedAt": "2026-10-22T21:20:05.310Z",
       "payload": {
         "slug": "vaultspark-studio-ops",
         "medium": "infrastructure",
-        "session": 397,
-        "sil": 968,
+        "session": 399,
+        "sil": 969,
         "prevSil": 968,
-        "delta": 0,
+        "delta": 1,
         "topWin": null,
         "topGap": null,
-        "shippedFiles": 164,
+        "shippedFiles": 104,
         "vaultStatus": "sparked",
-        "ts": "2026-10-22T07:02:30.080Z"
+        "ts": "2026-10-22T21:20:04.997Z"
       },
       "msg": {
         "v": 2,
         "type": "inform",
         "level": "P2",
         "thread": "t-93fb442f39d3e9ee",
-        "due": "2026-10-29T07:02:30.437Z",
+        "due": "2026-10-29T21:20:05.310Z",
         "channel": "feed",
-        "supersedes": "01K5GG01UQ54BC081461C28E8D",
+        "supersedes": "01K5I31IUR9773D78E61532702",
         "derived": false
       }
     },
     {
-      "id": "01K5H6RBRD1D2F5DBB9AA110EB",
+      "id": "01K5IO3DEQ9CA6102F2F8CDF94",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-10-22T21:26:01.887Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": 399,
+        "sil": 969,
+        "prevSil": 968,
+        "delta": 1,
+        "topWin": null,
+        "topGap": null,
+        "shippedFiles": 106,
+        "vaultStatus": "sparked",
+        "ts": "2026-10-22T21:26:01.584Z"
+      },
+      "msg": {
+        "v": 2,
+        "type": "inform",
+        "level": "P2",
+        "thread": "t-93fb442f39d3e9ee",
+        "due": "2026-10-29T21:26:01.887Z",
+        "channel": "feed",
+        "supersedes": "01K5INOH80ECAEAF3D4725A385",
+        "derived": false
+      }
+    },
+    {
+      "id": "01K5IOF9PQ8D5D374A862CBEEE",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-10-22T21:32:31.360Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": 399,
+        "sil": 969,
+        "prevSil": 968,
+        "delta": 1,
+        "topWin": null,
+        "topGap": null,
+        "shippedFiles": 106,
+        "vaultStatus": "sparked",
+        "ts": "2026-10-22T21:32:30.863Z"
+      },
+      "msg": {
+        "v": 2,
+        "type": "inform",
+        "level": "P2",
+        "thread": "t-93fb442f39d3e9ee",
+        "due": "2026-10-29T21:32:31.360Z",
+        "channel": "feed",
+        "supersedes": "01K5IO3DEQ9CA6102F2F8CDF94",
+        "derived": false
+      }
+    },
+    {
+      "id": "01K5IOJLR37E82AE9209119983",
       "type": "pattern-share",
       "from": "studio-ops",
-      "shippedAt": "2026-10-22T07:05:17.933Z",
+      "shippedAt": "2026-10-22T21:34:54.818Z",
       "payload": {
         "pattern": "skill-outcome",
         "tags": [
@@ -270,92 +156,99 @@
       }
     },
     {
-      "id": "01K5H8G4T4BB70F307EC31ED2A",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-10-22T07:34:07.462Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 397,
-        "sil": 968,
-        "prevSil": 968,
-        "delta": 0,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 21,
-        "vaultStatus": "sparked",
-        "ts": "2026-10-22T07:34:07.156Z"
-      },
-      "msg": {
-        "v": 2,
-        "type": "inform",
-        "level": "P2",
-        "thread": "t-93fb442f39d3e9ee",
-        "due": "2026-10-29T07:34:07.462Z",
-        "channel": "feed",
-        "supersedes": "01K5H6M8BHF0AB16B3F26B4C62",
-        "derived": false
-      }
-    },
-    {
-      "id": "01K5H8GTQCDE3BE783E8FB8E5C",
+      "id": "01K5IP3BR2F4F1A315FA437F6D",
       "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-10-22T07:34:32.998Z",
+      "from": "studio-ops",
+      "shippedAt": "2026-10-22T21:43:28.824Z",
       "payload": {
-        "sessionId": "S375",
-        "slug": "living-protocol",
-        "headline": "Social draft persistence acknowledgments deployed; sourced market baseline recorded",
+        "sessionId": "399",
+        "headline": "Adoption readers no longer grade unknown or torn evidence.",
         "bullets": [
-          "Social cache failures stop writes and AI; sharing requires an owner/unsealed matched receipt, and draft review requires an owner-scoped matched write receipt.",
-          "Actual4808 complete normal-hook product cases, stable three-lane scripts and nonfallback Doctor accepted; exact-candidate API/web deployment is separately proved.",
-          "Five official-source market baseline retains unknown prices and partial capability states; documentation adds0product velocity."
+          "Propagation adoption grades unknown (exit 1) on a corrupt or unreadable queue, registry or Ark SLO report instead of an empty green queue; Doctor names the source.",
+          "Hook adoption is graded as one bracketed observation; any change to inputs, shipped or recipient hooks mid-run refuses the grade.",
+          "Focused 13/13 and full 8223/8223 passed; exact candidate staged 252d554d then production b617664d with independent 16/16 readback."
         ],
-        "synopsis": "Deployed original source dc4abb11ad954f29e17bc22bbe7cfbfc93049223; canonical closeout/main checkpoint 21803e3dbb2f4399c2163fa2e620a984e4da9293. SIL957 and velocity1 unchanged. Original refused attempts and premise-timing deviation remain preserved; later acceptance does not rewrite them. FORGE/F2 broader beta remains partial, including physical-device/store, Obelisk activation and public analytics evidence. Share metadata may persist after later AI/insert failure; transactionality and complete concurrent-seal safety are not claimed. Final metadata fold, fresh runtime-input equivalence or any needed promotion, hosted/remote readbacks and native goal completion audit remain pending. Recipient adoption unmeasured."
+        "synopsis": "S399 complete: two L2 adoption-reader integrity outcomes shipped, full8223/8223 across855 files, canonical closeout and main publication verified. Candidate9bf11e908 (independent-exact-sha) staged252d554d then productionb617664d; independent16/16 provider/artifact/access readback and rollback availability verified."
       },
       "msg": {
         "v": 2,
         "type": "inform",
         "level": "P2",
-        "thread": "t-99bf200156d92a18",
-        "due": "2026-10-29T07:34:32.998Z",
+        "thread": "t-1119935e8dec69d5",
+        "due": "2026-10-29T21:43:28.824Z",
         "channel": "feed",
         "derived": false
       }
     },
     {
-      "id": "01K5H8JO4TC91F5289E201D97B",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-10-22T07:36:05.532Z",
+      "id": "01K5J3T0ANCB3E6086F590001D",
+      "type": "session-impact-summary",
+      "from": "envolt",
+      "shippedAt": "2026-10-23T00:52:14.762Z",
       "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
+        "session": "S41",
+        "repo": "envolt",
+        "headline": "G7 loop defence reads real ThreadDO history (fail closed without it); billed unusable reader replies metered; truncation not re-paid; backup verify linear; G2 lint aliases",
+        "silDelta": {
+          "previous": 866,
+          "current": 867
+        },
+        "releases": {
+          "api": "a70816a79a20",
+          "site": "d2fb74c0754b"
+        },
+        "lesson": "Diff audit-history implementationPaths against the tree to find never-swept modules; check guard inputs wired to constants; background wrapper exit codes are not the inner result"
       },
       "msg": {
         "v": 2,
-        "type": "lesson",
+        "type": "inform",
         "level": "P2",
-        "thread": "t-95c7aa151d96a240",
-        "due": null,
-        "derived": true
+        "thread": "t-40029636ac0aa0b9",
+        "due": "2026-10-30T00:52:14.762Z",
+        "channel": "feed",
+        "derived": false
       }
     }
   ],
   "sigFailures": [],
   "threads": [
     {
-      "id": "01K5H8JO4TC91F5289E201D97B",
+      "id": "01K5J3T0ANCB3E6086F590001D",
+      "type": "session-impact-summary",
+      "from": "envolt",
+      "shippedAt": "2026-10-23T00:52:14.762Z",
+      "title": "G7 loop defence reads real ThreadDO history (fail closed without it); billed unusable reader replies metered; truncation not re-paid; backup verify linear; G2 l",
+      "msg": {
+        "v": 2,
+        "type": "inform",
+        "level": "P2",
+        "thread": "t-40029636ac0aa0b9",
+        "due": "2026-10-30T00:52:14.762Z",
+        "channel": "feed",
+        "derived": false
+      }
+    },
+    {
+      "id": "01K5IP3BR2F4F1A315FA437F6D",
+      "type": "session-impact-summary",
+      "from": "studio-ops",
+      "shippedAt": "2026-10-22T21:43:28.824Z",
+      "title": "Adoption readers no longer grade unknown or torn evidence.",
+      "msg": {
+        "v": 2,
+        "type": "inform",
+        "level": "P2",
+        "thread": "t-1119935e8dec69d5",
+        "due": "2026-10-29T21:43:28.824Z",
+        "channel": "feed",
+        "derived": false
+      }
+    },
+    {
+      "id": "01K5IOJLR37E82AE9209119983",
       "type": "pattern-share",
       "from": "studio-ops",
-      "shippedAt": "2026-10-22T07:36:05.532Z",
+      "shippedAt": "2026-10-22T21:34:54.818Z",
       "title": "skill-outcome",
       "msg": {
         "v": 2,
@@ -367,124 +260,42 @@
       }
     },
     {
-      "id": "01K5H8GTQCDE3BE783E8FB8E5C",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-10-22T07:34:32.998Z",
-      "title": "Social draft persistence acknowledgments deployed; sourced market baseline recorded",
-      "msg": {
-        "v": 2,
-        "type": "inform",
-        "level": "P2",
-        "thread": "t-99bf200156d92a18",
-        "due": "2026-10-29T07:34:32.998Z",
-        "channel": "feed",
-        "derived": false
-      }
-    },
-    {
-      "id": "01K5H8G4T4BB70F307EC31ED2A",
+      "id": "01K5IOF9PQ8D5D374A862CBEEE",
       "type": "session-outcome",
       "from": "studio-ops",
-      "shippedAt": "2026-10-22T07:34:07.462Z",
+      "shippedAt": "2026-10-22T21:32:31.360Z",
       "title": "session-outcome",
       "msg": {
         "v": 2,
         "type": "inform",
         "level": "P2",
         "thread": "t-93fb442f39d3e9ee",
-        "due": "2026-10-29T07:34:07.462Z",
+        "due": "2026-10-29T21:32:31.360Z",
         "channel": "feed",
-        "supersedes": "01K5H6M8BHF0AB16B3F26B4C62",
+        "supersedes": "01K5IO3DEQ9CA6102F2F8CDF94",
         "derived": false
       }
     },
     {
-      "id": "01K5H1BQGG5F9B410CEAEA123C",
+      "id": "01K5IK0PAV306AB9317A80187B",
       "type": "session-impact-summary",
       "from": "envolt",
-      "shippedAt": "2026-10-22T05:29:25.634Z",
-      "title": "Eleven reproduced fail-opens outside the ledger path closed (forward-unwrap attachments, reader cheap paths, DMARC ReDoS, Zoho poll backlog loss, schema own-pro",
-      "msg": {
-        "v": 2,
-        "type": "inform",
-        "level": "P3",
-        "thread": "t-2e79969d774ac00b",
-        "due": null,
-        "channel": "feed",
-        "derived": false
-      }
-    },
-    {
-      "id": "01K5GUTB4F8B70DBE976736926",
-      "type": "repo-question",
-      "from": "living-protocol",
-      "shippedAt": "2026-10-22T04:46:33.993Z",
-      "title": "Website owner: can you safely resolve staging rollback growth under your current rollback/retention contract? It currently prevents Living Protocol exact-source",
-      "msg": {
-        "v": 2,
-        "type": "request",
-        "level": "P2",
-        "thread": "t-1bd9079a80145caa",
-        "due": "2026-10-29T04:46:33.993Z",
-        "channel": "work",
-        "derived": false
-      }
-    },
-    {
-      "id": "01K5GO3BSQCAD467B06D28C57E",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-10-22T02:47:31.432Z",
-      "title": "Weight replay ownership and notification persistence acknowledgments deployed",
+      "shippedAt": "2026-10-22T20:14:41.461Z",
+      "title": "verify a release by the deployed commit echoed from the runtime plus a moved deployment pointer, never by a hand-kept version constant",
       "msg": {
         "v": 2,
         "type": "inform",
         "level": "P2",
-        "thread": "t-4c60f8d599db8400",
-        "due": "2026-10-29T02:47:31.432Z",
-        "channel": "feed",
-        "derived": false
-      }
-    },
-    {
-      "id": "01K5GMCNK46C244E86FD459891",
-      "type": "session-impact-summary",
-      "from": "call-of-doodie",
-      "shippedAt": "2026-10-22T02:17:41.251Z",
-      "title": "Perk order fairness, cache policy, recipient-native doctor",
-      "msg": {
-        "v": 2,
-        "type": "inform",
-        "level": "P2",
-        "thread": "t-228535e84e51f664",
-        "due": null,
-        "derived": true
-      }
-    },
-    {
-      "id": "01K5GG9V88A1857B95EC59313D",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-10-22T00:31:19.262Z",
-      "title": "Hook adoption requires exact bytes and intact evidence.",
-      "msg": {
-        "v": 2,
-        "type": "inform",
-        "level": "P2",
-        "thread": "t-2aa191d272962902",
-        "due": "2026-10-29T00:31:19.262Z",
+        "thread": "t-543fb526136747f1",
+        "due": "2026-10-29T20:14:41.461Z",
         "channel": "feed",
         "derived": false
       }
     }
   ],
   "supersededIds": [
-    "01K5FNOTTKDD483DB8AEDAD324",
-    "01K5GFAI9IC0D8CC5C054E2EE1",
-    "01K5GG01UQ54BC081461C28E8D",
-    "01K5H6M8BHF0AB16B3F26B4C62",
-    "01K5H6RBRD1D2F5DBB9AA110EB",
-    "01K5GGA465D45F126AB6D1E509"
+    "01K5I31IUR9773D78E61532702",
+    "01K5INOH80ECAEAF3D4725A385",
+    "01K5IO3DEQ9CA6102F2F8CDF94"
   ]
 }

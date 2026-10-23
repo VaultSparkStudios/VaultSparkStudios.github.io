@@ -18,6 +18,7 @@ const TIERS = {
     'tests/vaultsparked-csp.spec.js'
   ],
   core: [
+    'tests/spark-clearance.spec.js',
     'tests/computed-styles.spec.js',
     'tests/service-worker-install.spec.js',
     'tests/compliance-pages.spec.js',
@@ -30,6 +31,7 @@ const TIERS = {
     'tests/intelligence-surfaces.spec.js'
   ],
   extended: [
+    'tests/spark-clearance.spec.js',
     'tests/computed-styles.spec.js',
     'tests/service-worker-install.spec.js',
     'tests/compliance-pages.spec.js',

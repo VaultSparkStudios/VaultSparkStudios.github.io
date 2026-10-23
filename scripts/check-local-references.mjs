@@ -56,14 +56,64 @@ export function extractBase(html) {
 }
 
 /** Internal references only: no scheme, no protocol-relative, no bare fragment/query, no templating. */
+export function decodeAttribute(value) {
+  return value.replace(/&(?:amp|quot|apos|lt|gt|#\d+|#x[0-9a-f]+);/gi, (entity) => {
+    const named = {amp:'&',quot:'"',apos:"'",lt:'<',gt:'>'};
+    const token = entity.slice(1, -1).toLowerCase();
+    if (named[token]) return named[token];
+    const point = token.startsWith('#x') ? parseInt(token.slice(2),16) : Number(token.slice(1));
+    return point > 0 && point <= 0x10ffff ? String.fromCodePoint(point) : '\ufffd';
+  });
+}
+
+// Read the URL token before descriptors. Commas inside a data URL belong to
+// that URL; a naive split(',') invents local paths out of embedded image data.
+export function srcsetUrls(value) {
+  const urls = [];
+  let pos = 0;
+  while (pos < value.length) {
+    while (pos < value.length && /[\s,]/.test(value[pos])) pos++;
+    const start = pos;
+    while (pos < value.length && !/\s/.test(value[pos])) pos++;
+    let url = value.slice(start,pos);
+    if (!url) break;
+    if (url.endsWith(',')) { urls.push(url.replace(/,+$/, '')); continue; }
+    urls.push(url);
+    let depth = 0;
+    while (pos < value.length) {
+      const char = value[pos++];
+      if (char === '(') depth++;
+      else if (char === ')') depth = Math.max(0,depth-1);
+      else if (char === ',' && depth === 0) break;
+    }
+  }
+  return urls;
+}
+
 export function extractReferences(html) {
   const found = new Set();
-  for (const m of stripDynamicBodies(html).matchAll(/<(?!base\b)[a-z][a-z0-9-]*\b[^>]*?\s(?:href|src)\s*=\s*["']([^"']*)["']/gi)) {
-    const ref = m[1].trim();
-    if (!ref || /^(?:[a-z][a-z0-9+.-]*:|\/\/|#|\?)/i.test(ref)) continue;
-    if (ref.includes('${') || ref.includes('{{')) continue;
+  const add = (value) => {
+    const ref = value.trim();
+    if (!ref || /^(?:[a-z][a-z0-9+.-]*:|\/\/|#|\?)/i.test(ref)) return;
+    if (ref.includes('${') || ref.includes('{{')) return;
     const clean = ref.split('#')[0].split('?')[0];
     if (clean) found.add(clean);
+  };
+  const cleanHtml = stripDynamicBodies(html);
+  const base = extractBase(cleanHtml);
+  const externalBase = base && /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(base);
+  if (externalBase) return [];
+  for (const tag of cleanHtml.matchAll(/<(?!base\b)[a-z][a-z0-9-]*\b(?:[^>"']|"[^"]*"|'[^']*')*>/gi)) {
+    // Consume unrelated attributes too, so URL-looking text inside alt/title
+    // values is never interpreted as a second HTML attribute.
+    for (const attr of tag[0].matchAll(/\s([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g)) {
+      if (!/^(?:href|src|srcset|imagesrcset)$/i.test(attr[1])) continue;
+      if (attr[2] == null && attr[3] == null && attr[4] == null) continue;
+      const value = decodeAttribute(attr[2] ?? attr[3] ?? attr[4]);
+      for (const ref of /srcset$/i.test(attr[1]) ? srcsetUrls(value) : [value]) {
+        add(ref);
+      }
+    }
   }
   return [...found].sort();
 }
@@ -139,6 +189,19 @@ function selfTest() {
     ['templated refs are ignored', extractReferences('<a href="${x}"></a><a href="{{y}}"></a>').length === 0],
     ['fragments and queries are stripped', extractReferences('<a href="/news/?a=1#b">x</a>').join(',') === '/news/'],
     ['the <base> tag itself is not a reference', extractReferences('<base href="/games/x/"><link href="./a.css">').join(',') === './a.css'],
+    ['all URL attributes on the same tag are checked', extractReferences('<img src="/fallback.png" srcset="/small.png 400w, /large.png 800w">').join(',') === '/fallback.png,/large.png,/small.png'],
+    ['responsive density candidates and picture source are checked', extractReferences('<source srcset="/one.webp 1x, /two.webp 2x">').join(',') === '/one.webp,/two.webp'],
+    ['preloaded responsive images are checked', extractReferences('<link href="/fallback.webp" imagesrcset="/small.webp 400w, /big.webp 800w">').join(',') === '/big.webp,/fallback.webp,/small.webp'],
+    ['data URL commas do not invent local references', extractReferences('<img srcset="data:image/svg+xml,%3Csvg%3E 1x, /large.webp 2x">').join(',') === '/large.webp'],
+    ['trailing data candidate separators preserve following candidates', extractReferences('<img srcset="data:image/png;base64,AAA, /large.webp 2x">').join(',') === '/large.webp'],
+    ['external candidates are ignored without dropping local candidates', extractReferences('<img srcset="https://cdn.test/a.webp 1x, /local.webp 2x">').join(',') === '/local.webp'],
+    ['attribute entities are decoded before fragment stripping', extractReferences('<img src="/a&#35;fragment" srcset="/b&#46;webp 1x, /c.webp?a=1&amp;b=2 2x">').join(',') === '/a,/b.webp,/c.webp'],
+    ['single quoted and unquoted attributes work', extractReferences("<img src=/a.webp srcset='/b.webp 1x, /c.webp 2x'>").join(',') === '/a.webp,/b.webp,/c.webp'],
+    ['quoted angle brackets do not truncate later attributes', extractReferences('<img alt="a > b" src="/a.webp" srcset="/b.webp 2x">').join(',') === '/a.webp,/b.webp'],
+    ['parked responsive images are checked', extractReferences('<template><img srcset="/parked.webp 2x"></template>').join(',') === '/parked.webp'],
+    ['external base paths do not become false local failures', extractReferences('<base href="https://elsewhere.test/"><img src="/remote.webp" srcset="other.webp 2x">').length === 0],
+    ['valid fallback cannot hide a broken selected responsive image', extractReferences('<img src="/assets/icon-128.webp" srcset="/missing.webp 2x">').some(ref => !ok('index.html',ref))],
+    ['URL-looking text inside other attribute values stays text', extractReferences('<img src="/assets/icon-128.webp" alt="Example src=\'/missing.webp\' markup" srcset="/assets/icon-128.webp 2x">').join(',') === '/assets/icon-128.webp'],
   ];
   const failed = cases.filter(([, pass]) => !pass);
   for (const [name, pass] of cases) console.log(`  ${pass ? '✓' : '✗'} ${name}`);
