@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-23T17:59:12.266Z",
+  "generatedAt": "2026-10-23T18:45:09.723Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -13,19 +13,24 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "shell-mismatch"
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
-    "candidateReady": true,
-    "candidateFindings": [],
+    "candidateReady": false,
+    "candidateFindings": [
+      "staging-artifact-root-mismatch"
+    ],
     "candidateBuildSha": "ed7154a378ebe5108b91835788457c8364033306",
     "deployedBuildSha": "ed7154a378ebe5108b91835788457c8364033306",
     "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "1cdc16125f0f0e8dad2421fbfd35b16bdf3cafe7f0b1e9a01283ff709456b139",
+      "candidateRoot": "8717cd307fc520336fa6ed8607ed732499970aa44ecfb5f5084f4cfb11aea926",
       "candidateLeafCount": 68,
       "stagingRoot": "1cdc16125f0f0e8dad2421fbfd35b16bdf3cafe7f0b1e9a01283ff709456b139",
       "stagingLeafCount": 68,
-      "matched": true
+      "matched": false
     },
     "productionParity": false,
     "deployReceipt": {
@@ -38,8 +43,8 @@
       "sourceFingerprint": "73e6277283999a110c2fb558",
       "archiveSha256": "91779497f110cdef59cd322d2c9b3d393cae517973d88246d8f8a5612beac73f",
       "remoteVerified": true,
-      "attested": true,
-      "reason": null
+      "attested": false,
+      "reason": "receipt facts do not match current staging evidence"
     },
     "deployHistory": {
       "depth": 183,
@@ -65,21 +70,21 @@
   },
   "productionDeploy": {
     "state": "behind",
-    "commitsBehind": 19,
-    "ageHours": 4.6,
-    "observedAt": "2026-10-23T17:39:59.747Z",
+    "commitsBehind": 57,
+    "ageHours": 9.9,
+    "observedAt": "2026-10-23T18:45:09.723Z",
     "shellParity": {
-      "state": "superseded",
+      "state": "drift",
       "route": "/",
-      "observedAt": "2026-10-23T17:39:59.747Z",
-      "expectedFrom": "812a27dcaedf619c2d0afd792e4e74424fefd3f10b120efabc3270b1dd140de9",
-      "supersededBy": "fdb7f729a7f8ab525b82c6bb04867a2665ef0517221a86dbbc9233edde97a584",
+      "observedAt": "2026-10-23T18:45:09.723Z",
+      "expectedFrom": "fdb7f729a7f8ab525b82c6bb04867a2665ef0517221a86dbbc9233edde97a584",
+      "supersededBy": null,
       "ageHours": 0,
       "stale": false,
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/after-paint.shell-0392b76d45.js",
-        "assets/ambient-core.shell-ea3a29580c.js",
+        "assets/ambient-core.shell-214cf44506.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/hero-ticker.shell-550971e267.js",
@@ -117,8 +122,12 @@
         "assets/theme-toggle.shell-8221605898.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
-      "missing": [],
-      "unexpected": [],
+      "missing": [
+        "assets/ambient-core.shell-214cf44506.js"
+      ],
+      "unexpected": [
+        "assets/ambient-core.shell-ea3a29580c.js"
+      ],
       "challengedAt": null,
       "challengeError": null
     }
@@ -175,10 +184,10 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": true,
+    "stagingCandidateReady": false,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
-    "stagingDeployAttested": true,
+    "stagingArtifactManifestBound": false,
+    "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
@@ -191,6 +200,9 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
+    "stagingCandidateReady",
+    "stagingArtifactManifestBound",
+    "stagingDeployAttested",
     "productionShellParityMatched",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
