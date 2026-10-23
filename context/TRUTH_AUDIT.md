@@ -1,8 +1,8 @@
-## S400 — local implementation verified; release in progress
+## S400 — implementation verified; release acceptance pending
 
-Overall status: yellow — S400 implementation verified; release acceptance pending.
+Reference49/49 and16actual Chromium differential cases pass; current scan340pages/31806internal references resolves. Current238browser checks include215mobile cells,16AA contrast cases and7clearance cases. The original sampled minimum6.04:1 is historical provenance. Shell14/14 andservice-worker100/100 checks remain separately scoped. Fresh112persona and28disclosure images were inspected in separate receipts across7themes anddesktop/mobile; bound source andPNG hashes remain unchanged. Integrated full source547/547,receipt69324772553d7b797172bbb4,fingerprint959573d48883b8155285c6d7,timing concentration13.29%,is accepted. Isolated Linux archivalfixtures10/10 havezero skips. Current staging waits behind an existing migration lock; hosted andproduction acceptance remain pending.
 
-Reference49/49, Chromium differential16/16; readability23/23 including16 rendered-background contrast cases (minimum6.04:1), shell14/14 and SW100/100. Final112 persona captures and separate28 disclosure states were actually inspected; CANON-053 passes. Full suite, push, production and final closeout are not inferred from local checks. docs/RELEASE_S400.json is the authoritative current ledger. Earlier staging evidence is explicitly scoped to pre-readability bytes. Existing identity and field-evidence holds remain.
+Authoritative release ledger:docs/RELEASE_S400.json. Existing identity,field-vitals andaccount-capacity holds remain separate. No measured conversion,field-performance oravailability gain is claimed.
 
 ## S399 — 2026-10-23 — selected outcomes and full release verified
 

@@ -72,7 +72,9 @@ function checked(result, label) {
 
 export function safeRemoteRoot(value) {
   const root = String(value || '').trim().replace(/\/+$/, '');
-  return /^(?:\/(?:srv|var\/www)\/[A-Za-z0-9._/-]+|\/opt\/studio\/staging\/[A-Za-z0-9._/-]+)$/.test(root)
+  return String(value || '') === root
+    && path.posix.normalize(root) === root
+    && /^(?:\/(?:srv|var\/www)\/[A-Za-z0-9._/-]+|\/opt\/studio\/staging\/[A-Za-z0-9._/-]+)$/.test(root)
     && !root.includes('..')
     && root.split('/').filter(Boolean).length >= 3;
 }
@@ -219,6 +221,7 @@ function selfTest() {
     ['accepts a bounded staging root', safeRemoteRoot('/var/www/website/staging')],
     ['rejects a broad web root', !safeRemoteRoot('/var/www')],
     ['rejects traversal', !safeRemoteRoot('/var/www/site/../other')],
+    ['rejects aliases that bypass exact rollback guards', ['/opt/studio/staging/website/', '/opt/studio/staging/./website', '/opt/studio/staging//website', ' /opt/studio/staging/website'].every(root => !safeRemoteRoot(root))],
     ['News markup is content', classifyPath('news/index.html').ok],
     ['exact discovery roots are content', classifyPath('sitemap.xml').ok && classifyPath('.well-known/llms.txt').ok],
     ['auth markup is withheld', !classifyPath('auth/callback.html').ok],

@@ -1,0 +1,17 @@
+{
+  "session": 400,
+  "scope": "Isolated Linux rollback fixtures; no live staging paths mutated by tests",
+  "startedAt": "2026-10-23T22:42:05.936Z",
+  "finishedAt": "2026-10-23T22:42:07.506Z",
+  "archiveSha256": "db2dec4aca80a98e46a71696411e36214d4712d2a8bd8bae46bb6c8773becb08",
+  "sourceHashes": {
+    "scripts/archive-staging-rollbacks.mjs": "9958f2d11fe26739d821802be0ba63bca088dc91ab0fee753ec3ddcf1229f943",
+    "scripts/deploy-staging.mjs": "d3a7e3bba08bcfb36ab842b352573d94197ac5eb128ccbb3c247f1a5d47849ba",
+    "scripts/deploy-staging-content.mjs": "e8504b6ef10073350d70352875dd8002fbf314b1e44b1c6001f7949e6685c7fd",
+    "tests/rollback-archive.unit.spec.mjs": "5324e9709a2cc7fa81b06d756c7a416879579c33b91265ec49f0c93a584728ab"
+  },
+  "passed": 10,
+  "failed": 0,
+  "skipped": 0,
+  "output": "TAP version 13\n# Subtest: keeps newest three and protects young snapshots independently of ordering\nok 1 - keeps newest three and protects young snapshots independently of ordering\n  ---\n  duration_ms: 2.413783\n  ...\n# Subtest: manifest detects content changes and refuses hard-linked entries\nok 2 - manifest detects content changes and refuses hard-linked entries\n  ---\n  duration_ms: 75.582745\n  ...\n# Subtest: archive mount must be measured and independent of root disk\nok 3 - archive mount must be measured and independent of root disk\n  ---\n  duration_ms: 1.362735\n  ...\n# Subtest: deployer lock is one fixed named flock\nok 4 - deployer lock is one fixed named flock\n  ---\n  duration_ms: 0.210386\n  ...\n# Subtest: wrong archive volume UUID fails before mutation\nok 5 - wrong archive volume UUID fails before mutation\n  ---\n  duration_ms: 0.876239\n  ...\n# Subtest: both deploy producer transactions hold the lock through archival\nok 6 - both deploy producer transactions hold the lock through archival\n  ---\n  duration_ms: 0.909702\n  ...\n# Subtest: CLI invoked through installed symlink actually runs\nok 7 - CLI invoked through installed symlink actually runs\n  ---\n  duration_ms: 48.105115\n  ...\n# Subtest: verified archival preserves original path and all bytes; destination collision retains source\nok 8 - verified archival preserves original path and all bytes; destination collision retains source\n  ---\n  duration_ms: 278.515704\n  ...\n# Subtest: copy corruption never switches or removes original\nok 9 - copy corruption never switches or removes original\n  ---\n  duration_ms: 81.976279\n  ...\n# Subtest: source changes during copy preserve original; deletion failure retains duplicate\nok 10 - source changes during copy preserve original; deletion failure retains duplicate\n  ---\n  duration_ms: 289.280537\n  ...\n1..10\n# tests 10\n# suites 0\n# pass 10\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 875.317303\n"
+}

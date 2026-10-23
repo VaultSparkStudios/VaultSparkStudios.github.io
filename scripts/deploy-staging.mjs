@@ -58,7 +58,9 @@ export function safeManifest(files) {
 
 export function safeRemoteRoot(root) {
   const normalized = String(root || '').trim().replace(/\/+$/, '');
-  return /^(?:\/(?:srv|var\/www)\/[A-Za-z0-9._/-]+|\/opt\/studio\/staging\/[A-Za-z0-9._/-]+)$/.test(normalized)
+  return String(root || '') === normalized
+    && path.posix.normalize(normalized) === normalized
+    && /^(?:\/(?:srv|var\/www)\/[A-Za-z0-9._/-]+|\/opt\/studio\/staging\/[A-Za-z0-9._/-]+)$/.test(normalized)
     && !normalized.includes('..')
     && normalized.split('/').filter(Boolean).length >= 3;
 }
@@ -114,6 +116,7 @@ if (SELF_TEST) {
     ['rejects zombie helper', !manifest.includes(ZOMBIE)],
     ['accepts bounded web roots', safeRemoteRoot('/var/www/website/staging') && safeRemoteRoot('/srv/www/vaultspark') && safeRemoteRoot('/opt/studio/staging/website')],
     ['rejects dangerous roots', !safeRemoteRoot('/') && !safeRemoteRoot('/var/www') && !safeRemoteRoot('/srv/site/../other')],
+    ['rejects aliases that bypass exact rollback guards', ['/opt/studio/staging/website/', '/opt/studio/staging/./website', '/opt/studio/staging//website', ' /opt/studio/staging/website'].every(root => !safeRemoteRoot(root))],
     ['ack parser accepts bounded noise and CRLF', (() => { const parsed = parseDeployAcknowledgement('notice\r\nSTAGING_DEPLOYED 20260728000000 42\r\n'); return parsed.deployId === '20260728000000' && parsed.remoteFileCount === 42; })()],
     ['ack parser rejects duplicate acknowledgements', (() => { try { parseDeployAcknowledgement('STAGING_DEPLOYED 20260728000000 42\nSTAGING_DEPLOYED 20260728000001 43\n'); return false; } catch { return true; } })()],
     ['ack parser rejects zero count', (() => { try { parseDeployAcknowledgement('STAGING_DEPLOYED 20260728000000 0\n'); return false; } catch { return true; } })()],

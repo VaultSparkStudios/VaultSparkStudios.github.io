@@ -76,7 +76,7 @@
       "command": "npm run build:check",
       "type": "tests",
       "status": "green",
-      "note": "Complete source measurement: 547/547; external release acceptance is recorded separately in docs/RELEASE_S400.json."
+      "note": "Complete integrated source measurement: 547/547; release acceptance is recorded separately in docs/RELEASE_S400.json."
     }
   ],
   "vaultStatus": "SPARKED",
@@ -292,7 +292,7 @@
     "behaviorChanged": false
   },
   "currentBuildState": "passed",
-  "currentBuildNote": "S400 source measured 547/547 native checks; receipt f270a03cb7a68463e11d023c. Browser, visual and release evidence are separately scoped in docs/RELEASE_S400.json.",
+  "currentBuildNote": "S400 integrated source measured 547/547 native checks; receipt 69324772553d7b797172bbb4. Browser, visual and release acceptance are separately scoped in docs/RELEASE_S400.json.",
   "lastDeploySession": 399,
   "lastDeployStatus": "verified",
   "silAvg5": 938.2,
@@ -328,14 +328,13 @@
   },
   "velocity": 2,
   "arcProgress": {
-    "session": 399,
-    "phase": "complete",
-    "goalId": "01a1669c-19de-7b02-a8f9-4ec1a9ea2eb0",
-    "goalCreatedAt": 1792722894,
-    "audit": "docs/AUDIT_2026-10-23-S399.json",
-    "releaseEvidence": "docs/RELEASE_S399.json",
-    "candidate": "59f1f49d369f34d27b91c39820c928987d91c9d9",
-    "releaseVerifiedAt": "2026-10-23T09:44:42.709Z"
+    "session": 400,
+    "phase": "in-progress",
+    "goalId": "01a168e8-03b3-79c1-a35e-55b14a694961",
+    "goalCreatedAt": 1792761435,
+    "audit": "docs/AUDIT_2026-10-23-S400.json",
+    "releaseEvidence": "docs/RELEASE_S400.json",
+    "detail": "Integrated source accepted; staging lock wait, exact hosted acceptance and production pending"
   },
   "ignisLastScored": "2026-10-23",
   "historicalTests": {
@@ -358,6 +357,6 @@
   "testsLastRun": "2026-10-23",
   "testsLabel": "measured build:check steps",
   "testsEvidence": "api/build-check-diagnostics.json",
-  "testsPlanFingerprint": "e19ea5ddb711be500dc7ac2b",
-  "testsSourceFingerprint": "810b713327db4052bfa6e1fe"
+  "testsPlanFingerprint": "d353f19031e31b6e5befabf9",
+  "testsSourceFingerprint": "959573d48883b8155285c6d7"
 }

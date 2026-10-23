@@ -21,14 +21,14 @@
          Light persona labels use readable text colors while decorative accents retain their
          identity. Spark yields around actual note text and stays recallable from the header.
          Fingerprinted styles deliver the repair to returning visitors.
-         → 23 browser checks;minimum sampled contrast6.04:1;215 mobile cells;112 final persona and28 supplemental disclosure states inspected.
+         → Current238browser checks:215mobile,16AA contrast,7clearance;original6.04:1sample is historical;fresh112persona and28disclosure frames inspected.
 
   [1]  browser-faithful-reference-resolution                      PROJ 6  ·  ECOS 3
          ── speed-organization-efficiency ───────────────────────────────────────────────────
          The validator now resolves relative bases as the browser does. A baseline mutation
          proves that a missing browser target previously passed. Active base attributes and
          inert content have focused regression coverage.
-         → 49 self-tests;16 real Chromium cases;339-page reference scan; retained baseline mutation.
+         → 49 self-tests;16 actual Chromium differential cases;current340pages/31806internal references resolve;retained baseline mutation.
 
   ───────────────────────────────────────────────────────────────────────────────────────────
 

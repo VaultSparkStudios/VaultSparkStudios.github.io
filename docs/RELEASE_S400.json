@@ -33,7 +33,7 @@
     {
       "id": 3,
       "state": "in-progress",
-      "outcome": "Approved closing artwork preserved and current full source verified. Staging,publication,exact hosted checks and production acceptance pending."
+      "outcome": "Integrated source547/547 accepted with13.29% timing concentration;238browser checks and140reviewed images retained with unchanged bound source. Staging transaction waits behind an existing rollback migration; observe it before any retry. Publication,exact hosted checks and production remain pending."
     },
     {
       "id": 4,
@@ -174,19 +174,19 @@
       "passed": 547,
       "failed": 0,
       "coverageComplete": true,
-      "sourceFingerprint": "810b713327db4052bfa6e1fe",
-      "receiptId": "f270a03cb7a68463e11d023c",
+      "sourceFingerprint": "959573d48883b8155285c6d7",
+      "receiptId": "69324772553d7b797172bbb4",
       "concentration": {
         "maxStepShare": 0.3,
         "minActionableStepMs": 45000,
-        "dominantStep": 168,
-        "dominantCommand": "node scripts/check-proof-surface.mjs",
-        "dominantDurationMs": 428900,
-        "dominantShare": 0.2041,
+        "dominantStep": 1,
+        "dominantCommand": "node --test tests/offline-recovery.unit.spec.mjs tests/offline-navigation.unit.spec.mjs tests/deploy-parity.unit.spec.mjs tests/news-article-css.unit.spec.mjs tests/served-parity.unit.spec.mjs tests/operational-admission.unit.spec.mjs tests/moderation-admission.unit.spec.mjs tests/public-rest-canary.unit.spec.mjs tests/metadata-backfill.unit.spec.mjs tests/heartbeat-snapshot.unit.spec.mjs tests/rollback-archive.unit.spec.mjs",
+        "dominantDurationMs": 187140,
+        "dominantShare": 0.1329,
         "breached": false
       },
-      "evidence": "docs/S400_approved-art-full-suite.json",
-      "scope": "Complete approved-art source run; every planned command actually executed"
+      "evidence": "docs/S400_final-integrated-full-suite.json",
+      "scope": "Complete merged source run including registered rollback archival regressions; every planned command executed"
     },
     "preApprovedArtFullSuite": {
       "passed": 547,
@@ -205,34 +205,47 @@
       },
       "evidence": "docs/S400_close-edition-full-suite.json",
       "scope": "Complete unchanged post-signal retry accepted after timing-variance failure; all actual commands executed"
+    },
+    "preArchiveIntegrationFullSuite": {
+      "passed": 547,
+      "failed": 0,
+      "coverageComplete": true,
+      "sourceFingerprint": "810b713327db4052bfa6e1fe",
+      "receiptId": "f270a03cb7a68463e11d023c",
+      "concentration": {
+        "maxStepShare": 0.3,
+        "minActionableStepMs": 45000,
+        "dominantStep": 168,
+        "dominantCommand": "node scripts/check-proof-surface.mjs",
+        "dominantDurationMs": 428900,
+        "dominantShare": 0.2041,
+        "breached": false
+      },
+      "evidence": "docs/S400_approved-art-full-suite.json",
+      "scope": "Complete approved-art source run; every planned command actually executed"
     }
   },
   "staging": {
-    "state": "corrected-combined-candidate-verified",
-    "receiptId": "7aac193603a63569e178d521",
-    "files": 13892,
-    "deployId": "20261023201845",
-    "source": {
-      "commitSha": "dc2e6e41cad185d5d1e4bb0753d53e4772428c95",
-      "fingerprint": "42440b4073e449a8a3f7dad6"
-    },
-    "artifact": {
-      "artifactRoot": "e08f3ba2337413c0a5b2f74bb529cb330b8d0ab10db9a3edb08c5295e1218d13",
-      "leafCount": 68
-    },
-    "ceremony": {
-      "state": "passed",
-      "passed": 11,
-      "total": 11,
-      "path": "api/release-ceremony.json"
-    }
+    "state": "pending-current-candidate",
+    "artifactRoot": "6c2f9e912103f16f0b3165da3a26527cefa20401737aacd75292e59e34c02217",
+    "sourceFingerprint": "959573d48883b8155285c6d7",
+    "queuedArchive": "20261023222317",
+    "lastVerifiedPrecedingReceipt": "7aac193603a63569e178d521",
+    "scope": "Current remote transaction is queued behind existing rollback migration; no current staging acceptance claimed"
   },
   "visual": {
-    "state": "before-captures-complete-unapproved",
-    "scope": "32 generated persona pages,7 themes,desktop+mobile; HTML differences are whitespace-only",
-    "expectedCaptures": 448,
-    "captures": 448,
-    "receipt": "docs/visual-qa/S400-persona-receipt.json"
+    "state": "current-captures-reviewed",
+    "persona": {
+      "captures": 112,
+      "receipt": "docs/visual-qa/LATEST.json"
+    },
+    "disclosures": {
+      "captures": 28,
+      "receipt": "docs/visual-qa/S400-reviewed-disclosures.json"
+    },
+    "reviewer": "visual_review",
+    "verdict": "PASS",
+    "scope": "Separate Cartesian scopes; original capture times and actual PNG hashes preserved; selected visual sources unchanged"
   },
   "rollback": {
     "baselineSha": "59f1f49d369f34d27b91c39820c928987d91c9d9",
@@ -404,6 +417,27 @@
         "total": 11,
         "path": "api/release-ceremony.json"
       }
+    },
+    {
+      "state": "historical-verified-preceding-source",
+      "receiptId": "7aac193603a63569e178d521",
+      "files": 13892,
+      "deployId": "20261023201845",
+      "source": {
+        "commitSha": "dc2e6e41cad185d5d1e4bb0753d53e4772428c95",
+        "fingerprint": "42440b4073e449a8a3f7dad6"
+      },
+      "artifact": {
+        "artifactRoot": "e08f3ba2337413c0a5b2f74bb529cb330b8d0ab10db9a3edb08c5295e1218d13",
+        "leafCount": 68
+      },
+      "ceremony": {
+        "state": "passed",
+        "passed": 11,
+        "total": 11,
+        "path": "api/release-ceremony.json"
+      },
+      "scope": "Predates approved closing artwork and rollback integration; does not accept the current candidate"
     }
   ],
   "performance": {
@@ -563,6 +597,40 @@
         "reviewer": "/root/visual_review",
         "verdict": "PASS"
       }
+    },
+    "rollbackArchival": {
+      "upstreamCommit": "25d9762e506aad0d1058225b469b23b336417818",
+      "merge": "f1dc22644e",
+      "review": "PASS after root-alias correction",
+      "selfTests": {
+        "fullDeploy": 18,
+        "contentDeploy": 27
+      },
+      "windowsFixtures": {
+        "passed": 6,
+        "skippedLinuxOnly": 4
+      },
+      "hostedLinuxFixtures": "pending exact-candidate hosted suite",
+      "state": "Complete local integrated source accepted; staging and hosted release acceptance pending",
+      "stagingAttempt": {
+        "state": "client timed out while remote transaction waits on pre-existing migration lock",
+        "archiveStamp": "20261023222317",
+        "localPipelineHandle": 46907,
+        "localPipelineExit": 1,
+        "remoteWaiterPid": 2434843,
+        "remoteShellPid": 2434816,
+        "observedAt": "2026-10-23T22:39:55.848Z",
+        "fullSourceReceipt": "69324772553d7b797172bbb4",
+        "sourceFingerprint": "959573d48883b8155285c6d7",
+        "duplicateRetry": false
+      },
+      "linuxFixtures": {
+        "passed": 10,
+        "failed": 0,
+        "skipped": 0,
+        "evidence": "docs/S400_linux-rollback-fixtures.json",
+        "scope": "Isolated Linux fixtures; exact-candidate hosted acceptance remains separate"
+      }
     }
   },
   "hostedAttempts": [
@@ -585,5 +653,12 @@
       "accepted": false,
       "evidence": "docs/S400_hosted-compliance-attempt1.json"
     }
-  ]
+  ],
+  "beforeVisual": {
+    "state": "historical-before-captures-unapproved",
+    "scope": "32 generated persona pages,7 themes,desktop+mobile; HTML differences are whitespace-only",
+    "expectedCaptures": 448,
+    "captures": 448,
+    "receipt": "docs/visual-qa/S400-persona-receipt.json"
+  }
 }

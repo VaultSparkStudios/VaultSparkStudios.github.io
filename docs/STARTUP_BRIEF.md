@@ -79,16 +79,16 @@
 ║  ⛔  Context age   19d                                            ║
 ║  ✓  IGNIS         45139 FORGE  ·  -1d old                        ║
 ║  ⛔  Truth         yellow — S400 implementation verified;…        ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
+║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.185  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ⚠  Revenue sig.  10d old (2026-10-13)                           ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
+║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  4/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -119,22 +119,8 @@
 ║  Calibration: MAE 4.4 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Add pre-upload archive membership verifica  ║
-║        Add pre-upload archive membership verification after the  ║
-║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
-║   93  [PRODUCT]      Coordinate an evidence-backed distinction   ║
-║        Coordinate an evidence-backed distinction between format  ║
-║                                                                  ║
-║   92  [VERIFY]       Verify Studio Ops acceptance of the planni  ║
-║        Verify Studio Ops acceptance of the planning-artifact ti  ║
-║                                                                  ║
-║   87  [PRODUCT]      Staging lineage tolerant of publisher data  ║
-║        Staging lineage tolerant of publisher data drift. is ope  ║
-║                                                                  ║
+╔══ GENIUS HIT LIST ═════════════════════════════════════════════╗
+║  Run `node scripts/ops.mjs genius-list` to generate fresh…       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ```
