@@ -79,16 +79,16 @@
 ║  ⛔  Context age   19d                                            ║
 ║  ✓  IGNIS         45139 FORGE  ·  -1d old                        ║
 ║  ⛔  Truth         yellow — S400 implementation verified;…        ║
-║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
+║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.185  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⚠  Revenue sig.  10d old (2026-10-13)                           ║
+║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ✓  Codex trust   trusted project active                         ║
+║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  4/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝

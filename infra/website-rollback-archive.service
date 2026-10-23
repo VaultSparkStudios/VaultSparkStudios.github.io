@@ -1,0 +1,13 @@
+[Unit]
+Description=Archive settled website staging rollback history off the system disk
+RequiresMountsFor=/mnt/HC_Volume_106991932
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/node /opt/vaultspark-maintenance/archive-staging-rollbacks.mjs --apply
+TimeoutStartSec=infinity
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+UMask=0077
