@@ -2452,3 +2452,17 @@ The Desk's copy-quality gate blocks a story whose first bare "SI" precedes "Supe
 ## D-S398.2 — Pin production to a release tag when publishers move main
 
 When [skip ci] data publishers land after the candidate's required checks pass, production is dispatched against a release-s<n>-<sha> tag of the verified candidate, not against main. Pausing the writer workflows needs founder-level approval (denied in S398 as a CI bypass), so it is not part of the routine path.
+
+
+## D-S399.1 — Reading clearance and responsive-reference coverage
+
+Spark's existing yield mechanism now considers actual text line rectangles in semantic main-content blocks, preserving empty margins and the stationary header recall. Responsive HTML image candidates join the existing local reference gate; no dependency was added. Baseline, focused tests, independent review and rendered proof support these bounded repairs.
+
+## D-S399.2 — Preserve planning and rotation evidence
+
+The premise timing classifier treats required plan briefs as implementation paths. Keep its original nonpassing evidence and the exact baseline replay; do not rewrite it into a historical pass. The startup context limit stayed 42000: after whole-block rotation found no safe move, completed rows were archived verbatim with exact open-row preservation. No canon, identity, public promise, pricing or lifecycle policy changed.
+
+
+## D-S399.3 — Assert arrivals and conditional companion states
+
+Route-progress checks observe each destination arrival ID instead of using corner-buddy visibility as a loading proxy. Companion checks explicitly prove reading yield and header recall, then isolate a clear corner for animation, nonmodal behavior and persisted preferences. All original behavioral assertions remain; local and staging 24/24 and revised exact-candidate hosted checks support the repair.

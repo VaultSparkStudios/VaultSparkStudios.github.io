@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "session": 399,
-  "state": "test-contract-repaired-hosted-revalidation-pending",
-  "releaseAccepted": false,
+  "state": "production-verified-closeout-pending",
+  "releaseAccepted": true,
   "goal": {
     "threadId": "01a1669c-19de-7b02-a8f9-4ec1a9ea2eb0",
     "createdAt": 1792722894,
@@ -51,7 +51,8 @@
       "planFingerprint": "ec87581fc3e365f61242aa70",
       "startedAt": "2026-10-23T04:28:16.229Z",
       "finishedAt": "2026-10-23T04:54:07.054Z",
-      "diagnostics": "api/build-check-diagnostics.json"
+      "diagnostics": ".cache/S399-attempt-5-diagnostics.json",
+      "scope": "Historical implementation suite before subsequent Spark test repair and closeout writebacks; not acceptance of the current closeout tree."
     },
     "attempts": [
       {
@@ -119,29 +120,71 @@
       "generatedAt": "2026-10-23T03:27:12.192Z",
       "receipt": "api/release-ceremony.json",
       "browserCoverage": "3 executed +3 held identity contracts, 0 skipped/failed/flaky; attention15/15"
+    },
+    "fullSparkContract": {
+      "passed": 24,
+      "failed": 0,
+      "exit": 0,
+      "durationSeconds": 41.8,
+      "url": "https://website.staging.vaultsparkstudios.com",
+      "harness": "Secret-free Playwright harness, no local credential files loaded."
     }
   },
   "requiredChecks": {
-    "ok": false,
-    "sha": "0cc0564676e4599d6fc1f128ed1e3b4179df76b5",
-    "contract": ".github/RELEASE_CHECKS.json",
-    "state": "revised-candidate-pending",
-    "runs": {
-      "e2e": 39904337439,
-      "lighthouse": 39904337381,
-      "accessibility": 39904337431
+    "ok": true,
+    "lane": "hosted-exact-sha",
+    "checks": [
+      {
+        "workflow": ".github/workflows/e2e.yml",
+        "state": "passed",
+        "runId": 39906047604
+      },
+      {
+        "workflow": ".github/workflows/lighthouse.yml",
+        "state": "passed",
+        "runId": 39906047539
+      },
+      {
+        "workflow": ".github/workflows/accessibility.yml",
+        "state": "passed",
+        "runId": 39906047603
+      }
+    ],
+    "findings": [],
+    "sourceCommit": "066a768716b39cdafb52e5e39260043988069e16",
+    "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+    "checkedAt": "2026-10-23T05:47:54.529Z",
+    "independentProof": {
+      "ok": false,
+      "expectedSha": "066a768716b39cdafb52e5e39260043988069e16"
     },
-    "observation": "Accessibility success; E2E and Lighthouse in_progress. Final canonical checker still required."
+    "sha": "066a768716b39cdafb52e5e39260043988069e16",
+    "state": "passed",
+    "contract": ".github/RELEASE_CHECKS.json",
+    "receipt": "docs/S399_required-checks.json"
   },
   "production": {
-    "state": "pending",
-    "lane": "full Pages promotion"
+    "state": "verified",
+    "lane": "full Pages promotion",
+    "tag": "release-s399-066a768716",
+    "tagPushed": true,
+    "runId": 39907784576,
+    "workflow": ".github/workflows/pages-deploy.yml",
+    "event": "workflow_dispatch",
+    "sha": "066a768716b39cdafb52e5e39260043988069e16",
+    "dispatchAccepted": true,
+    "verifiedAt": "2026-10-23T06:41:59.968Z",
+    "completedAt": "2026-10-23T06:24:21Z",
+    "workflowReceipt": "docs/S399_production-workflow.json",
+    "steps": "Canonical ceremony, clean dist, full Pages deploy, cache purge and post-purge liveness all succeeded; held step skipped."
   },
   "rollback": "Revert the bounded S399 product change and redeploy the previously accepted release tag release-s398-418d250656.",
   "remaining": [
-    "exact-SHA hosted checks",
-    "full production Pages promotion and served-byte readback",
-    "canonical closeout and final remote verification"
+    "fresh independent closeout review",
+    "canonical autopilot full checks, commit and push",
+    "Ark delivery",
+    "final public-surface currency, remote and shell verification",
+    "native completion audit"
   ],
   "reconciliation": {
     "remoteBase": "d69ccc35e5",
@@ -163,7 +206,7 @@
     "settingsFindings": 0,
     "supplyChain": "project-scoped scanner passed; no IOC findings"
   },
-  "releaseSha": "0cc0564676e4599d6fc1f128ed1e3b4179df76b5",
+  "releaseSha": "066a768716b39cdafb52e5e39260043988069e16",
   "push": {
     "state": "verified",
     "sha": "0cc0564676e4599d6fc1f128ed1e3b4179df76b5",
@@ -192,5 +235,91 @@
       },
       "repair": "Tests now poll actual arrival IDs, explicitly assert reading yield/recall and isolate clear-space companion behavior. Runtime source unchanged. Local full Spark contract24/24 actual exit0; independent reviewer PASS."
     }
-  ]
+  ],
+  "readback": {
+    "pagesOrigin": {
+      "path": "docs/S399_served-parity.json",
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "against": "066a768716b39cdafb52e5e39260043988069e16",
+      "verdict": "tree-current",
+      "expected": 1137,
+      "checked": 1137,
+      "coverageComplete": true,
+      "identical": 1127,
+      "redirected": 10,
+      "differ": 0,
+      "unread": 0
+    },
+    "buildStamps": {
+      "path": "docs/S399_build-stamps.json",
+      "verified": true
+    },
+    "apexBrowser": {
+      "state": "passed",
+      "passed": 5,
+      "failed": 0,
+      "exit": 0,
+      "durationSeconds": 20.1,
+      "harness": "Secret-free public Playwright harness; no local credential files loaded."
+    }
+  },
+  "closeoutScopeGate": {
+    "path": ".cache/S399-closeout-scope-gate.json",
+    "pass": true,
+    "disposition": "complete",
+    "itemsShipped": 2,
+    "authorizedRemaining": 0,
+    "note": "Initial bare invocation was unknown; explicit current-session audit and session supplied."
+  },
+  "closeout": {
+    "state": "review-passed-autopilot-pending",
+    "surfaces": [
+      "CURRENT_STATE",
+      "TASK_BOARD",
+      "LATEST_HANDOFF",
+      "WORK_LOG",
+      "DECISIONS",
+      "SELF_IMPROVEMENT_LOOP",
+      "TRUTH_AUDIT",
+      "PROJECT_STATUS",
+      "agent memory",
+      "audit JSON"
+    ],
+    "cdr": "reviewed; no new direction",
+    "score": 939,
+    "velocity": 2,
+    "intelligence": {
+      "receipt": "docs/S399_intelligence-refresh.json",
+      "ignisReceipt": "docs/S399_ignis-refresh.json",
+      "ignisScore": 44776,
+      "deltaFromPriorCachedStatus": -636,
+      "doctorBlockingFailing": 0
+    },
+    "impactBrief": "docs/CLOSEOUT_BRIEF_S399_2026-10-23.md",
+    "scaffold": {
+      "tasks": 4,
+      "done": 3,
+      "inProgress": 1,
+      "open": 0
+    },
+    "fullSuite": {
+      "state": "pending-retry",
+      "attempts": [
+        {
+          "attempt": 1,
+          "exit": 1,
+          "passed": 233,
+          "failedStep": 234,
+          "reason": "Closeout brief used numeric session filename; canonical boundary requires S399 prefix and local cache receipt.",
+          "log": ".cache/S399-closeout-autopilot.log"
+        }
+      ]
+    },
+    "finalReview": {
+      "reviewer": "closeout_final_reviewer",
+      "rounds": 2,
+      "verdict": "pass",
+      "correction": "Historical547 predates Spark test repair; fresh closing-tree full suite required."
+    }
+  }
 }

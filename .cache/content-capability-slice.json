@@ -1,8 +1,20 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/check-content-capability-slice.mjs",
-  "callers": [],
-  "requiredRoutes": [],
-  "allowed": true,
-  "blockers": []
+  "callers": [
+    {
+      "path": "assets/ambient-core.shell-ea3a29580c.js",
+      "sourceSha256": "ea3a29580c115162e9549e3fba9593131011c43964f5437c8f5c795ef7fd5a05",
+      "routes": [
+        "/v/rum"
+      ]
+    }
+  ],
+  "requiredRoutes": [
+    "/v/rum"
+  ],
+  "allowed": false,
+  "blockers": [
+    "Worker route provenance is missing, future-dated, or older than 72 hours"
+  ]
 }

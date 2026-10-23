@@ -1,3 +1,11 @@
+## S399 — reading clearance and responsive image integrity, fully deployed
+
+Spark now yields around reading text while preserving header recall, preferences and control clearance. The local reference gate checks every responsive HTML image candidate, all supported href/src/srcset/imagesrcset attributes on each tag and encoded attribute values.
+
+Full production 066a768716 (run 39907784576); exact-candidate required checks 3/3; historical local build:check 547/547 before the Spark test repair (fresh closeout-tree full suite pending), mobile 215/215, clearance 5/5 and full Spark contract 24/24 on local and staging, 28 reviewed theme/viewport/state captures, staging ceremony 11/11 and whole served-text tree-current readback. Evidence: docs/RELEASE_S399.json.
+
+Existing identity, field-evidence and account-capacity holds remain distinct. No measured conversion, field performance or availability gain is claimed.
+
 ## S398 — SI spelled out on first use; offline recovery held by a browser gate; fully deployed
 
 S398 closes the live CANON-056 gap. `/ai-vs-si/` (title, H1, social titles, JSON-LD) and the Desk explainer headline now spell out "Super Intelligence (SI)" before any bare SI. The Desk fix went through its source (`data/news-desk/days/2026-10-04.json`) and `news:publish`, with the slug unchanged. `check-news-copy-quality` has a story-order `bare-si` rule, and the Desk author brief states it. `tests/service-worker-install.spec.js` now also proves the adapter-online/origin-down path: a stable fallback, no reload, and exactly one recovery. That test runs in e2e.yml and verify:local, and is mutation-checked against the pre-S397 loop.

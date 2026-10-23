@@ -317,3 +317,12 @@ Closeout 10c6728c3c, then generated-only re-seals 9155e45a (Desk edition, mobile
 ### S398 post-midnight repair
 
 E2E on d825f51914 failed only on the 00:00Z Desk cadence rollover (step 356). The tree was regenerated after midnight (mobile 215/215, build:check 547/547) and pushed as 111dd698ab.
+
+
+## Session 399 — 2026-10-23 — reading clearance and responsive reference integrity
+
+Spark now yields around reading text while preserving header recall, preferences and control clearance. The local reference gate checks every responsive HTML image candidate, all supported href/src/srcset/imagesrcset attributes on each tag and encoded attribute values.
+
+Full production 066a768716 (run 39907784576); exact-candidate required checks 3/3; historical local build:check 547/547 before the Spark test repair (fresh closeout-tree full suite pending), mobile 215/215, clearance 5/5 and full Spark contract 24/24 on local and staging, 28 reviewed theme/viewport/state captures, staging ceremony 11/11 and whole served-text tree-current readback. Evidence: docs/RELEASE_S399.json.
+
+Startup budget repair preserved 85 completed rows in the archive and all remaining open work. Original failed checks remain visible. No new creative direction or lifecycle change. SIL 939/1000; velocity 2.

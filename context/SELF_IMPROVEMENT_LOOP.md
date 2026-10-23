@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 available totals):935 →935 →939 →939 →939
-Avgs (available rolling totals) —3:939.0 |5:937.4 |10:unmeasured |25:unmeasured |all:unmeasured
+Sparkline (last5 available totals):935 →939 →939 →939 →939
+Avgs (available rolling totals) —3:939.0 |5:938.2 |10:unmeasured |25:unmeasured |all:unmeasured
 Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session: 2026-10-22 | Session398 | Total:939/1000 | Velocity:2
-  └ SI first use + origin-down browser gate fully deployed; release acceptance: docs/RELEASE_S398.json.
+Last session: 2026-10-23 | Session399 | Total:939/1000 | Velocity:2
+  └ Reading clearance and responsive image gate fully deployed; docs/RELEASE_S399.json.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -3174,3 +3174,26 @@ Brainstorm: (1) the Spark buddy overlapping Desk text at 390px (committed [SIL])
 **Closing publication for existing S398 entry:** Closeout commit 10c6728c3c was followed by two generated-only re-seals over incoming publishers: 9155e45a (new Desk edition; fresh mobile audit 215/215) and 5fda28d1 (uptime data). Receipt ordering and proof surface 92/92 passed on each; CI build:check is the full verdict for the pushed tree. Score 939/1000 and velocity 2 are unchanged. Production remains 418d250656.
 
 **S398 post-midnight repair:** E2E run 39874707511 on d825f51914 failed at build:check step 356. It ran at 00:00:57Z, after the Desk cadence rolled from today to yesterday, so this was a date rollover, not a code defect. The tree was regenerated after 00:00Z with a fresh mobile 215/215 audit; public-intelligence drift was fixed with its named generator; local build:check passed 547/547; pushed as 111dd698ab. Score unchanged.
+
+
+## Session 399 — 2026-10-23 — reading clearance and responsive image integrity
+
+**Total:** 939/1000
+**Velocity:** 2
+**Win:** Reproduced mobile reading obstruction repaired through the existing companion mechanism; responsive image candidates are held by a mutation-proven reference gate. Full normal production and acceptance verified.
+**Gap:** Initial strict claim used the wrong adapter and was corrected before edits. Planning-artifact timing classification stays nonpassing, with baseline replay preserved. Initial full suite stopped on startup budget; verbatim history rotation repaired it. Hosted E2E exposed two outdated buddy-visibility assumptions; per-stop arrival polling and explicit clear-space/reading fixtures preserve the behavior contract, with 24/24 local and staging and revised exact-candidate hosted acceptance.
+
+| Category | Score |
+|---|---:|
+| Dev Health | 95 |
+| Creative Alignment | 94 |
+| Momentum | 92 |
+| Engagement | 96 |
+| Process Quality | 88 |
+| Cross-Repo Coherence | 94 |
+| Security Posture | 97 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 97 |
+
+Scores unchanged: no measured field benefit is claimed. Website evidence lens within the canonical ten categories: Core Web Vitals has no new field measurement; exact-candidate Lighthouse passed. Conversion remains unmeasured. No editorial changes were selected; existing stale feeds remain reported. Polish is supported by production clearance 5/5, local/staging full Spark 24/24 and 28 reviewed theme/viewport/state captures. Brainstorm: follow through the planning-artifact timing reproduction with its control-plane owner (committed future SIL row); CSS/redirect reference coverage remains the existing S396 future selection. CDR reviewed — no new creative direction. Full production 066a768716 (run 39907784576); exact-candidate required checks 3/3; historical local build:check 547/547 before the Spark test repair (fresh closeout-tree full suite pending), mobile 215/215, clearance 5/5 and full Spark contract 24/24 on local and staging, 28 reviewed theme/viewport/state captures, staging ceremony 11/11 and whole served-text tree-current readback. Evidence: docs/RELEASE_S399.json.

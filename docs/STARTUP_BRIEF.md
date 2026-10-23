@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-23 (Session 398 closeout) -->
-<!-- semantic-freshness: hash=acde37313d139e2c next=399 silSession=398 silScore=939 handoff=- tests=- -->
+<!-- generated-at: 2026-10-23 (Session 399 closeout) -->
+<!-- semantic-freshness: hash=847906cd7042d8af next=400 silSession=399 silScore=939 handoff=399 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 398 closeout · 2026-10-23.
+> **Fast-boot brief** — generated at Session 399 closeout · 2026-10-23.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 399 · 2026-10-23 · FOUNDER MODE                         ║
+║  Session 400 · 2026-10-23 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S398) - WHAT SHIPPED ══════════════════════════╗
-║  S398 spells out Super Intelligence (SI) before bare SI on /ai-  ║
+╔══ LAST SESSION (S399) - WHAT SHIPPED ══════════════════════════╗
+║  S399 reading clearance and responsive-image integrity fully de  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
 ║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2→                          ║
-║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
 ║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -61,7 +61,7 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 398 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 399 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    547/547 passing  ·  Deploy: verified                  ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -77,11 +77,11 @@
 ║  ✓  Velocity      2 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   19d                                            ║
-║  ✓  IGNIS         45412 FORGE  ·  4d old                         ║
+║  ✓  IGNIS         44776 FORGE  ·  -1d old                        ║
 ║  ⛔  Truth         yellow — selected release verified;…           ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.192  (healthy)                               ║
+║  ✓  Entropy       0.170  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
@@ -116,24 +116,24 @@
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
 ║  Projected:  935/1000  (↓4 vs current 939)                       ║
 ║  At-risk:    Momentum Δ-3                                        ║
-║  Calibration: MAE 4.4 over last 10 forecasts                     ║
+║  Calibration: MAE 4.6 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Full deploy/closeout: docs/RELEASE_S399.js  ║
-║        Full deploy/closeout: docs/RELEASE_S399.json. is open, l  ║
+║  100  [VERIFY]       Verify Studio Ops acceptance of the planni  ║
+║        Verify Studio Ops acceptance of the planning-artifact ti  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Staging lineage tolerant of publisher data  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
+║   93  [PRODUCT]      Full deployment verified; canonical closeo  ║
+║        Full deployment verified; canonical closeout finalizatio  ║
+║                                                                  ║
+║   90  [PRODUCT]      Staging lineage tolerant of publisher data  ║
 ║        Staging lineage tolerant of publisher data drift. is ope  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
+║   87  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
 ║        Gate srcset, CSS url(), redirect targets. Future only. i  ║
-║                                                                  ║
-║   87  [PRODUCT]      Investigate timing classification of incom  ║
-║        Investigate timing classification of incoming pre-sessio  ║
-║                                                                  ║
-║   84  [INTELLIGENCE]  Keep startup-generated genius-list drift   ║
-║        Keep startup-generated genius-list drift distinguishable  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 398 closeout · 2026-10-23*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 399 closeout · 2026-10-23*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

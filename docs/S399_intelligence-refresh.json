@@ -1,0 +1,160 @@
+{
+  "session": 399,
+  "project": "vaultsparkstudios-website",
+  "startedAt": "2026-10-23T06:46:30.489Z",
+  "finishedAt": "2026-10-23T06:47:20.489Z",
+  "ignis": "docs/S399_ignis-refresh.json",
+  "doctor": {
+    "date": "2026-10-23",
+    "passing": 14,
+    "warning": 2,
+    "failing": 1,
+    "blockingFailing": 0,
+    "advisoryFailing": 1,
+    "total": 17,
+    "score": 82,
+    "checks": [
+      {
+        "id": "manifest",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "validate",
+        "pass": true,
+        "warn": true,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "canon",
+        "pass": true,
+        "warn": false,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "compliance-velocity",
+        "pass": true,
+        "warn": true,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "sanitize",
+        "pass": true,
+        "warn": false,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "launch",
+        "pass": true,
+        "warn": true,
+        "driftClass": "expected-external",
+        "blocking": false
+      },
+      {
+        "id": "feedback",
+        "pass": true,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "entropy",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "revenue",
+        "pass": false,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "sibling-locks",
+        "pass": false,
+        "warn": true,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "ignis",
+        "pass": true,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "genome",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "prompt-ver",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "propagated-doc",
+        "pass": true,
+        "warn": false,
+        "driftClass": "expected-external",
+        "blocking": false
+      },
+      {
+        "id": "sched-staleness",
+        "pass": false,
+        "warn": true,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "desk-model-servability",
+        "pass": true,
+        "warn": false,
+        "driftClass": "expected-external",
+        "blocking": false
+      },
+      {
+        "id": "deploy-currency-live",
+        "pass": true,
+        "warn": true,
+        "driftClass": "local-broken",
+        "blocking": false
+      }
+    ]
+  },
+  "steps": [
+    {
+      "command": "scripts/render-state-vector.mjs --project .",
+      "exit": 0
+    },
+    {
+      "command": "scripts/ops.mjs doctor --update-json",
+      "exit": 0
+    },
+    {
+      "command": "scripts/compute-entropy.mjs --project . --json --update",
+      "exit": 0
+    },
+    {
+      "command": "scripts/append-genome-snapshot.mjs --project .",
+      "exit": 0
+    },
+    {
+      "command": "scripts/render-state-vector.mjs --project .",
+      "exit": 0
+    }
+  ]
+}
