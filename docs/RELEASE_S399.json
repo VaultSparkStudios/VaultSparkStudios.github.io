@@ -272,7 +272,7 @@
     "note": "Initial bare invocation was unknown; explicit current-session audit and session supplied."
   },
   "closeout": {
-    "state": "staging-verified-final-publication-pending",
+    "state": "corrected-feeds-staging-verified-publication-pending",
     "surfaces": [
       "CURRENT_STATE",
       "TASK_BOARD",
@@ -340,25 +340,64 @@
       "preservedBranch": "s399-closeout-verified-77cca265b8"
     },
     "closingStaging": {
-      "receiptId": "dd6c975617bffceb3f084bae",
-      "deployId": "20261023073841",
-      "candidateRoot": "930b455c0949f1341bfabb4bcc6369dcc90368df0452d417b70c85847bb53332",
+      "receiptId": "97c81d076df505756c1deef9",
+      "deployId": "20261023081130",
+      "candidateRoot": "17300928faa5116407033452bf6f3947afaeae3ceeebf3820b794e4482041e81",
       "files": 12864,
-      "rollback": "/opt/studio/staging/website/.rollback/20261023073841",
+      "rollback": "/opt/studio/staging/website/.rollback/20261023081130",
       "candidateReady": true,
       "parityExit": 0,
       "ceremony": {
         "state": "passed",
         "steps": 11,
         "exit": 0,
-        "generatedAt": "2026-10-23T07:47:06.262Z"
+        "generatedAt": "2026-10-23T08:17:32.223Z"
       },
-      "note": "Full working-tree snapshot, root-bound; source.commitSha is existing build stamp066, not a claim that all closing bytes were committed at066."
+      "note": "Corrected public feeds and dependent graph included in the full working-tree snapshot; root-bound acceptance, source commit field is build stamp066."
     },
     "ark": {
       "summary": "01K5JRMEGE8A960AC9EF620C12",
       "ownerFollowup": "01K5JRMFFP0BA4C88BFC2E1F2A",
       "state": "signed and delivered; recipient acceptance/application unverified"
-    }
+    },
+    "closingHostedAttempts": [
+      {
+        "sha": "bbca7eb30b3174c15fcfcf41ce38829553b730ae",
+        "e2e": {
+          "run": 39920874170,
+          "state": "failed",
+          "mainJob": "success",
+          "compliance": "failed at build:check45 public-intelligence/heartbeat drift"
+        },
+        "lighthouse": {
+          "run": 39920874210,
+          "state": "passed"
+        },
+        "accessibility": {
+          "run": 39920874106,
+          "state": "passed"
+        },
+        "reason": "Closing summaries changed after the preceding public-feed generation. Regenerated both canonical feeds and dependent graph; local drift preflight6/6 now passes. Corrected root requires a new staging snapshot and exact-candidate check run.",
+        "log": ".cache/S399-closing-e2e-failed.log"
+      }
+    ],
+    "stagingHistory": [
+      {
+        "receiptId": "dd6c975617bffceb3f084bae",
+        "deployId": "20261023073841",
+        "candidateRoot": "930b455c0949f1341bfabb4bcc6369dcc90368df0452d417b70c85847bb53332",
+        "files": 12864,
+        "rollback": "/opt/studio/staging/website/.rollback/20261023073841",
+        "candidateReady": true,
+        "parityExit": 0,
+        "ceremony": {
+          "state": "passed",
+          "steps": 11,
+          "exit": 0,
+          "generatedAt": "2026-10-23T07:47:06.262Z"
+        },
+        "note": "Full working-tree snapshot, root-bound; source.commitSha is existing build stamp066, not a claim that all closing bytes were committed at066."
+      }
+    ]
   }
 }
