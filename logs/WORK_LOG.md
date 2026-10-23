@@ -313,3 +313,7 @@ Release: build:check 547/547 · mobile 215/215 · 28 reviewed captures · stagin
 ### S398 closing publication
 
 Closeout 10c6728c3c, then generated-only re-seals 9155e45a (Desk edition, mobile 215/215) and 5fda28d1 (uptime). No behaviour change; production stays at 418d250656.
+
+### S398 post-midnight repair
+
+E2E on d825f51914 failed only on the 00:00Z Desk cadence rollover (step 356). The tree was regenerated after midnight (mobile 215/215, build:check 547/547) and pushed as 111dd698ab.
