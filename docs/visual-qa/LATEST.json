@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-10-23T02:57:58.665Z",
-  "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
+  "capturedAt": "2026-10-23T08:38:02.288Z",
+  "generatedBy": ".cache/s399-capture-closing-visual.mjs (Playwright; existing local-preview-server)",
   "themes": [
     "dark",
     "light",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "3971b6cfdcab496071d6cc8e471bbfac5139661d754c7ed66abd91ebb22a48df",
+    "sha256": "7bd5fc714a332c1538519c5568e80993c9412b7637b77e9909897d602d98180a",
     "files": [
       "assets/ambient-core.bundle.js",
       "assets/ambient-loader.js",
@@ -2530,7 +2530,7 @@
       },
       {
         "path": "news/index.html",
-        "sha256": "a0ee58d48209b4ab642220ee25f0f76cbbb31a86f7774ad4a6545d59bd94e21a"
+        "sha256": "1b36380c50675aa4ec460d1cb50200ab24df2e5cb6498e5c83c79eda591f4608"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -2592,9 +2592,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "192939f49e924592f83e3281c5efafb0ef4fa2e58e16a99e90760040ec0c5ac5",
-    "candidateSha": "905f45651bfb7a68b30082cb79100427a645d782",
-    "root": "8e56b3b8d4abcedd7c05b3b80fd1513defa7d63a5edb9f85f9fd7cc201cd4ac7"
+    "manifestSha256": "28f8562897d276ad0ccacd06c7d809fe00c6d0ff6b74ee6f73ca2c7ee9d17c26",
+    "candidateSha": "066a768716b39cdafb52e5e39260043988069e16",
+    "root": "17300928faa5116407033452bf6f3947afaeae3ceeebf3820b794e4482041e81"
   },
   "matrix": {
     "routes": [
@@ -2623,29 +2623,32 @@
     ],
     "states": [
       "page",
-      "spark-open"
+      "spark-open",
+      "readership"
     ],
-    "expectedCaptures": 28,
-    "completedCaptures": 28
+    "expectedCaptures": 42,
+    "completedCaptures": 42
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 28,
-      "manuallyReviewed": 28,
+      "totalCaptures": 42,
+      "manuallyReviewed": 42,
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "codex-S399",
+    "blockingDefectsOpen": 0,
+    "reviewer": "codex-S399-closing",
     "findings": [
-      "Reviewed final generated-tree page and opened Spark panel in all seven themes at desktop/mobile. Page state clears reading text; panel remains readable and header recall works."
+      "Reviewed all42 new captures in original-resolution contact sheets and readership images: all7 themes, desktop/mobile, page/open/readership; readable text and controls, changed12/15 readership values and2026-10-22 date visible, no blocking defect."
     ],
     "fixesApplied": [],
-    "blockingDefectsOpen": 0,
     "limitation": null
   },
   "captures": [
     {
+      "file": "S399-closing-dark-desktop-page.png",
+      "sha256": "6be749be07e2a768edfb71a1265c5a72377f07e450494d3d5df0c0750ce0bdf6",
       "theme": "dark",
       "observedTheme": {
         "stored": "dark",
@@ -2658,16 +2661,38 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news--dark--desktop.png",
-      "sha256": "3d8bf6e3ea399a4f23740b03ede8acd50c6fa31a477475e41d9d12c214b44289",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S399"
+        "reviewer": "codex-S399-closing"
       }
     },
     {
+      "file": "S399-closing-dark-desktop-spark-open.png",
+      "sha256": "04781b96e2944732b7da11c430e7683ff01eb47485b3bec21ab9809dccd3e4be",
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-light-desktop-page.png",
+      "sha256": "d07a1079f8f20a49ae2bd684a77f93a5042de9398a056298ff6e26bc48c76f0e",
       "theme": "light",
       "observedTheme": {
         "stored": "light",
@@ -2680,16 +2705,38 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news--light--desktop.png",
-      "sha256": "b3621a9b069b2f8b182eeab082006bfe92818bc01ec8d5345faca7fb1ef1cc32",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S399"
+        "reviewer": "codex-S399-closing"
       }
     },
     {
+      "file": "S399-closing-light-desktop-spark-open.png",
+      "sha256": "3466237efae27dfffd87c04c516e20651018c20df0af4df41a15924cc1425a51",
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-ambient-desktop-page.png",
+      "sha256": "52aa30116bd21f512ed646d0aad9a063f2b97e8375b91e9178ca7d1251fb8857",
       "theme": "ambient",
       "observedTheme": {
         "stored": "ambient",
@@ -2702,16 +2749,38 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news--ambient--desktop.png",
-      "sha256": "10a995fb914b2cea2260433111eaaa5f99a47d3f9693c9a4edc61358b485aed7",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S399"
+        "reviewer": "codex-S399-closing"
       }
     },
     {
+      "file": "S399-closing-ambient-desktop-spark-open.png",
+      "sha256": "6d73faa53a595f165ee7920b740dd939c305b367145d426c363cb7d9149f838f",
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-warm-desktop-page.png",
+      "sha256": "70ecb816ac1cbf1704d2ad8d403862d56ed3a8247337bc69d176abef92f45c1a",
       "theme": "warm",
       "observedTheme": {
         "stored": "warm",
@@ -2724,16 +2793,38 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news--warm--desktop.png",
-      "sha256": "e40b989edefcaf2c8ced358bc24c468e7ffaf21d147802a66919347c13e7ac9e",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S399"
+        "reviewer": "codex-S399-closing"
       }
     },
     {
+      "file": "S399-closing-warm-desktop-spark-open.png",
+      "sha256": "d88f2caf3b1e340fea666399d5738890de8ce5fb08089a8b89dd1538f38d9bd9",
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-cool-desktop-page.png",
+      "sha256": "d17c333075e2844767215daa5c5db3b1aa501e593e407f128c6a0658cad7facf",
       "theme": "cool",
       "observedTheme": {
         "stored": "cool",
@@ -2746,16 +2837,38 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news--cool--desktop.png",
-      "sha256": "2c391a6b4331de2946f3217331b5e1bf9716ecf4ad2282c6cef0645b5411a8c1",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S399"
+        "reviewer": "codex-S399-closing"
       }
     },
     {
+      "file": "S399-closing-cool-desktop-spark-open.png",
+      "sha256": "c2ae27d7b3906e07c726d83458b5136717a4d75e1c6cb97ae0cfa82596fedb9a",
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-lava-desktop-page.png",
+      "sha256": "737273a24f7ca16e4ae33e37afc5c28ef056d4359f16b0e04498e8425239fc76",
       "theme": "lava",
       "observedTheme": {
         "stored": "lava",
@@ -2768,16 +2881,38 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news--lava--desktop.png",
-      "sha256": "81928b68247822247d94aaa563dfe0683b637ccc6220d43cf13e1d00fe2265bb",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S399"
+        "reviewer": "codex-S399-closing"
       }
     },
     {
+      "file": "S399-closing-lava-desktop-spark-open.png",
+      "sha256": "45406e77190b6726a4974849fe182026e56de5bf922d22621d7c0fc0a5973f28",
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-high-contrast-desktop-page.png",
+      "sha256": "18b69dd17a2af7a9055e19f205942566864fd936925a6064c0cb00b10954acc9",
       "theme": "high-contrast",
       "observedTheme": {
         "stored": "high-contrast",
@@ -2790,16 +2925,38 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news--high-contrast--desktop.png",
-      "sha256": "c8add159f427761c8dbdc20c789462aa35b222a8f160cb1cd91ae40d4efb57c7",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S399"
+        "reviewer": "codex-S399-closing"
       }
     },
     {
+      "file": "S399-closing-high-contrast-desktop-spark-open.png",
+      "sha256": "4b4d57e1b268899e260bd27f006c896b5cf7b11097d16fddd1a68032814365e6",
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-dark-mobile-page.png",
+      "sha256": "11d625ad069cc35ec2ef0b5491f777d7570e578f257adba866db6b834921b745",
       "theme": "dark",
       "observedTheme": {
         "stored": "dark",
@@ -2812,21 +2969,21 @@
         "width": 390,
         "height": 844
       },
-      "file": "news--dark--mobile.png",
-      "sha256": "7cae3c85454d8185fd92605982f3f550a6e29943121175fab353b2e1ebb88718",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S399"
+        "reviewer": "codex-S399-closing"
       }
     },
     {
-      "theme": "light",
+      "file": "S399-closing-dark-mobile-spark-open.png",
+      "sha256": "4e06b8c2bc8e73c6ec7ecd87707624dd5c60b06de2f491c8214a575a32ed67d7",
+      "theme": "dark",
       "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
       },
       "viewportName": "mobile",
       "viewport": {
@@ -2834,21 +2991,21 @@
         "width": 390,
         "height": 844
       },
-      "file": "news--light--mobile.png",
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-light-mobile-page.png",
       "sha256": "34ac9c831e0618690b8ee3bd06924d2959a7897982926c4afb7ec5afa0a779e1",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-S399"
-      }
-    },
-    {
-      "theme": "ambient",
+      "theme": "light",
       "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient",
-        "body": "ambient"
+        "stored": "light",
+        "root": "light",
+        "body": "light"
       },
       "viewportName": "mobile",
       "viewport": {
@@ -2856,266 +3013,44 @@
         "width": 390,
         "height": 844
       },
-      "file": "news--ambient--mobile.png",
+      "page": "/news/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-light-mobile-spark-open.png",
+      "sha256": "0b9497e2e022aa32b4dd037295e005dd1f35df4bc9cd9e5e424c3b3558010ee0",
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/news/",
+      "state": "spark-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-ambient-mobile-page.png",
       "sha256": "5eeaecac8ab20ad2e4acea44ca385f1b11a4a47c63a3ad103ff91fd11c5f6d0b",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-S399"
-      }
-    },
-    {
-      "theme": "warm",
-      "observedTheme": {
-        "stored": "warm",
-        "root": "warm",
-        "body": "warm"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news--warm--mobile.png",
-      "sha256": "a2745ab4cef2f386d7d69399ef73d1eb186d4f705511eba4228f348690dd3a3c",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-S399"
-      }
-    },
-    {
-      "theme": "cool",
-      "observedTheme": {
-        "stored": "cool",
-        "root": "cool",
-        "body": "cool"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news--cool--mobile.png",
-      "sha256": "31224acbcfa256fce05fcd9dda7b04454e2c9947afd3502c9d9584d3bf16cc8e",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-S399"
-      }
-    },
-    {
-      "theme": "lava",
-      "observedTheme": {
-        "stored": "lava",
-        "root": "lava",
-        "body": "lava"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news--lava--mobile.png",
-      "sha256": "73bb7c498cbf8075d7b685bc5de5ff0145a1366a7b76ef854708e200d1004456",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-S399"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "observedTheme": {
-        "stored": "high-contrast",
-        "root": "high-contrast",
-        "body": "high-contrast"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news--high-contrast--mobile.png",
-      "sha256": "b5dc93914adadbe02049d31c5dfe06cd02312961f16336dd5a5d39f8a65487e7",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-S399"
-      }
-    },
-    {
-      "file": "S399-after-dark-desktop-spark-open.png",
-      "sha256": "71afb2158a68ab6deaa30b062123c812e113c266d4d79d156c01e62976c986a3",
-      "theme": "dark",
-      "observedTheme": {
-        "stored": "dark",
-        "root": "dark",
-        "body": "dark"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "page": "/news/",
-      "state": "spark-open",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-S399"
-      }
-    },
-    {
-      "file": "S399-after-light-desktop-spark-open.png",
-      "sha256": "03fd00f06ebf069382defbf25c66f0ff833de2815ea2235473d815d460bfc3db",
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "page": "/news/",
-      "state": "spark-open",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-S399"
-      }
-    },
-    {
-      "file": "S399-after-ambient-desktop-spark-open.png",
-      "sha256": "a41ba2cc1b3b60f8d3c2f9055f576e809f89bf155528118f5b17917c1268f2b0",
       "theme": "ambient",
       "observedTheme": {
         "stored": "ambient",
         "root": "ambient",
         "body": "ambient"
       },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "page": "/news/",
-      "state": "spark-open",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-S399"
-      }
-    },
-    {
-      "file": "S399-after-warm-desktop-spark-open.png",
-      "sha256": "ba0b08ff1547c18ad9de233286f99b46b19c83ff168bc6febdb31a1430e8df30",
-      "theme": "warm",
-      "observedTheme": {
-        "stored": "warm",
-        "root": "warm",
-        "body": "warm"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "page": "/news/",
-      "state": "spark-open",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-S399"
-      }
-    },
-    {
-      "file": "S399-after-cool-desktop-spark-open.png",
-      "sha256": "bb30b478afcdf9bcf663f2a7fae72af618120fa4b1a5db38c36650b4be9782c5",
-      "theme": "cool",
-      "observedTheme": {
-        "stored": "cool",
-        "root": "cool",
-        "body": "cool"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "page": "/news/",
-      "state": "spark-open",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-S399"
-      }
-    },
-    {
-      "file": "S399-after-lava-desktop-spark-open.png",
-      "sha256": "bb88649532951a1c63f94f1b295a7bc4d8e38c9a1635e53eafa40f4ff7f34096",
-      "theme": "lava",
-      "observedTheme": {
-        "stored": "lava",
-        "root": "lava",
-        "body": "lava"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "page": "/news/",
-      "state": "spark-open",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-S399"
-      }
-    },
-    {
-      "file": "S399-after-high-contrast-desktop-spark-open.png",
-      "sha256": "c46acad78251180079456970a4a75dfe25016608292c16aca8be6ecabaf1329e",
-      "theme": "high-contrast",
-      "observedTheme": {
-        "stored": "high-contrast",
-        "root": "high-contrast",
-        "body": "high-contrast"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "page": "/news/",
-      "state": "spark-open",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-S399"
-      }
-    },
-    {
-      "file": "S399-after-dark-mobile-spark-open.png",
-      "sha256": "63bee5400d9a63f8110463952fa6f74678ca0e6a16f36d8863eb2072f5ee5ad2",
-      "theme": "dark",
-      "observedTheme": {
-        "stored": "dark",
-        "root": "dark",
-        "body": "dark"
-      },
       "viewportName": "mobile",
       "viewport": {
         "name": "mobile",
@@ -3123,37 +3058,15 @@
         "height": 844
       },
       "page": "/news/",
-      "state": "spark-open",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S399"
+        "reviewer": "codex-S399-closing"
       }
     },
     {
-      "file": "S399-after-light-mobile-spark-open.png",
-      "sha256": "e599480232bfec6d6033f220dffde07ac2a3c81e3ed6ea36aa7df76f24630845",
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "page": "/news/",
-      "state": "spark-open",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-S399"
-      }
-    },
-    {
-      "file": "S399-after-ambient-mobile-spark-open.png",
-      "sha256": "9c4a9c432ccf5542406174f261de21a300d0b29d5dae5f2a61f924163695aebb",
+      "file": "S399-closing-ambient-mobile-spark-open.png",
+      "sha256": "9ca610ae2a521afde277e7e808e36566affd50ee0ee7cd2ff0b15e7f9cb77cb0",
       "theme": "ambient",
       "observedTheme": {
         "stored": "ambient",
@@ -3170,12 +3083,34 @@
       "state": "spark-open",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S399"
+        "reviewer": "codex-S399-closing"
       }
     },
     {
-      "file": "S399-after-warm-mobile-spark-open.png",
-      "sha256": "64f4bad534a9002fad25584e605b694f7e9c31ed3d8fef4f9d9b22848b623281",
+      "file": "S399-closing-warm-mobile-page.png",
+      "sha256": "f7a61253caa5ed7ebcbfe143d6e37b9fddff379b0728a195f75b61e4ba459165",
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/news/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-warm-mobile-spark-open.png",
+      "sha256": "2beb9734f10439fa7dac45728e839656d570a0e5cf128b9e1c3348bce2510232",
       "theme": "warm",
       "observedTheme": {
         "stored": "warm",
@@ -3192,12 +3127,34 @@
       "state": "spark-open",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S399"
+        "reviewer": "codex-S399-closing"
       }
     },
     {
-      "file": "S399-after-cool-mobile-spark-open.png",
-      "sha256": "3f22d93db1808fea3d211525c7bef2bf4d2363966a0afca8bc2564b4a3f95ada",
+      "file": "S399-closing-cool-mobile-page.png",
+      "sha256": "2174939b6b7e53058f30db91a1263d58449e69d2ba4f54f2f1497b6663d87323",
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/news/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-cool-mobile-spark-open.png",
+      "sha256": "ad142a5a4b5be46476c504d31f75017a088ba6eaa476e44c27056a8a75d98d29",
       "theme": "cool",
       "observedTheme": {
         "stored": "cool",
@@ -3214,11 +3171,33 @@
       "state": "spark-open",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S399"
+        "reviewer": "codex-S399-closing"
       }
     },
     {
-      "file": "S399-after-lava-mobile-spark-open.png",
+      "file": "S399-closing-lava-mobile-page.png",
+      "sha256": "c1ea996c38e480d29fe5f7678dfa2d6f9d058ba5b32fc619bbfb7ceb35cbf0ce",
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/news/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-lava-mobile-spark-open.png",
       "sha256": "4c00013a58dea0391678c6337e947cd66a31fcbea56cf1173777710eded3990a",
       "theme": "lava",
       "observedTheme": {
@@ -3236,12 +3215,34 @@
       "state": "spark-open",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S399"
+        "reviewer": "codex-S399-closing"
       }
     },
     {
-      "file": "S399-after-high-contrast-mobile-spark-open.png",
-      "sha256": "b733795589c0ae5264f657bab43609e080abe6847049f2d82dc05dea8de62630",
+      "file": "S399-closing-high-contrast-mobile-page.png",
+      "sha256": "b5dc93914adadbe02049d31c5dfe06cd02312961f16336dd5a5d39f8a65487e7",
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/news/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-high-contrast-mobile-spark-open.png",
+      "sha256": "688a7d043cb24581486f8ddef0306b46cefc9b4e23aeba1a7eebf6d54aea2d22",
       "theme": "high-contrast",
       "observedTheme": {
         "stored": "high-contrast",
@@ -3258,18 +3259,317 @@
       "state": "spark-open",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S399"
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-dark-desktop-readership.png",
+      "sha256": "c3bd5108ce627c487b111f1c91414c84dc0cad33f64cc7b72d206dfde3ea8323",
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "readership",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-light-desktop-readership.png",
+      "sha256": "4a2f80ca064c4004e5b804db851784e9b9c50fdd72e7380475c101f6c9518a75",
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "readership",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-ambient-desktop-readership.png",
+      "sha256": "7fc7c87a69e154a1b8e9d66c5aeb6a4b2115b1d22e8376c83da7cbb195adb498",
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "readership",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-warm-desktop-readership.png",
+      "sha256": "15c3788ec8011875dfaa5e2c04ed4f69965c9f61bc22ae44be28066acf906786",
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "readership",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-cool-desktop-readership.png",
+      "sha256": "9ba95bbb56f974878f4bead56fff0d5be4e4f0e57c08d967cbf2a9431a275f53",
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "readership",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-lava-desktop-readership.png",
+      "sha256": "103207d23f5213bf343a7d9b229c61c06b391fdf280764ef6d20c35d87b2cee0",
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "readership",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-high-contrast-desktop-readership.png",
+      "sha256": "14395244eaa1896745e54a8ef60bb8a4c6fb29f55d3df6725f6fd971bcfac528",
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/news/",
+      "state": "readership",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-dark-mobile-readership.png",
+      "sha256": "87cadd5e98bf8f1d3d67de0fde307341e5f731575820aacadc0ed286a045269c",
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/news/",
+      "state": "readership",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-light-mobile-readership.png",
+      "sha256": "529f5d5b45c82c51cf5cf87726a802e76f4685278cf7967fb3698e26dc1fc26c",
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/news/",
+      "state": "readership",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-ambient-mobile-readership.png",
+      "sha256": "5c841eeaac6a7bae6ec0fd6d99c154008f1044355e6193c80ffc761b4a55ed7c",
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/news/",
+      "state": "readership",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-warm-mobile-readership.png",
+      "sha256": "7f87637b6e95dfc2569da04277c3ead2c49afbafa7069257133ea004995b1331",
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/news/",
+      "state": "readership",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-cool-mobile-readership.png",
+      "sha256": "6d7178b4c34b02f2621fe433d1780a2e9788085d11d1179173736ffb8042c83b",
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/news/",
+      "state": "readership",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-lava-mobile-readership.png",
+      "sha256": "904b6b6ef757a27bd322fddc0886a25492fce8fba440bf169a5216ce60d3eeef",
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/news/",
+      "state": "readership",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
+      }
+    },
+    {
+      "file": "S399-closing-high-contrast-mobile-readership.png",
+      "sha256": "a3ba30c1c7f772c1441a34714d3fcca3c96f641a8b5e711162e3957c70a7b144",
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/news/",
+      "state": "readership",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S399-closing"
       }
     }
   ],
-  "candidateRebind": {
-    "at": "2026-10-23T05:03:51.526Z",
-    "priorCandidate": {
-      "manifest": "api/candidate-artifact-manifest.json",
-      "manifestSha256": "3456e38597764ee3e7f9c5b6f861936f5cd857c22245c75ed45f93a3a3223945",
-      "candidateSha": "905f45651bfb7a68b30082cb79100427a645d782",
-      "root": "8e56b3b8d4abcedd7c05b3b80fd1513defa7d63a5edb9f85f9fd7cc201cd4ac7"
-    },
-    "reason": "Candidate metadata reconciliation only; all bound source and 28 capture hashes verified unchanged."
-  }
+  "refreshReason": "Publisher changed news readership counts/date after the initial source-bound review; fresh all-theme/viewport/page-and-open captures, original receipt and images retained."
 }
