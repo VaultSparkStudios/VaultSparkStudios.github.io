@@ -1,5 +1,7 @@
 ## Where We Left Off (Session 399) — reading clearance and responsive image integrity
 
+Closing release 59f1f49d36 (full Pages run39930730781) is verified: exact required3/3, production5/5, both producer stamps,1137 served files with0 differ/unread. Canonical closeout and four session waves are complete. Evidence: docs/RELEASE_S399.json.
+
 Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
 
 Spark now yields around reading text while preserving header recall, preferences and control clearance. The local reference gate checks every responsive HTML image candidate, all supported href/src/srcset/imagesrcset attributes on each tag and encoded attribute values.
@@ -12,4 +14,4 @@ Original strict premises passed 2/2 before behavior edits. The timing classifier
 
 CDR reviewed — no new creative direction. SIL 939/1000, velocity 2, product rubric. Existing identity, field-evidence and account-capacity holds remain distinct. No measured conversion, field performance or availability gain is claimed.
 
-Wave scaffold: 4 tasks · 3 done · 1 in progress · 0 open. Final closeout push and shell verification are recorded in the release receipt before native completion.
+Wave scaffold: 4 tasks · 4 done · 0 in progress · 0 open. Final metadata publication and native completion require the live remote/process audit.

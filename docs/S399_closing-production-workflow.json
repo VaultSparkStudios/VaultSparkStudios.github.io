@@ -1,0 +1,55 @@
+{
+  "runId": 39930730781,
+  "sha": "59f1f49d369f34d27b91c39820c928987d91c9d9",
+  "ref": "release-s399-final-59f1f49d36",
+  "event": "workflow_dispatch",
+  "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39930730781",
+  "status": "completed",
+  "conclusion": "success",
+  "jobId": 120338049666,
+  "startedAt": "2026-10-23T09:17:02Z",
+  "completedAt": "2026-10-23T09:21:41Z",
+  "mode": "normal-full-production",
+  "steps": [
+    {
+      "name": "Evaluate production promotion gate",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run canonical release ceremony",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Promotion held — no production mutation",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Build clean dist (git-tracked files only)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Stamp honest deployed SHA into build-sha.json",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Deploy to Cloudflare Pages",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Purge edge HTML cache",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post-purge edge liveness check",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ]
+}

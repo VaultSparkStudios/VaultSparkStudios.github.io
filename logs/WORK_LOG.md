@@ -326,3 +326,5 @@ Spark now yields around reading text while preserving header recall, preferences
 Full production 066a768716 (run 39907784576); exact-candidate required checks 3/3; historical implementation build:check 547/547 plus two fresh closeout-tree 547/547 passes after the Spark test repair, mobile 215/215, clearance 5/5 and full Spark contract 24/24 on local and staging, 28 reviewed theme/viewport/state captures, staging ceremony 11/11 and whole served-text tree-current readback. Evidence: docs/RELEASE_S399.json.
 
 Startup budget repair preserved 85 completed rows in the archive and all remaining open work. Original failed checks remain visible. No new creative direction or lifecycle change. SIL 939/1000; velocity 2.
+
+**S399 final release:** 59f1f49d36, full Pages39930730781, exact hosted3/3, production5/5 and complete1137-file readback. Fresh42 closing captures reviewed; original28 retained. Closing feed drift, visual binding failures and one readback timeout remain recorded in docs/RELEASE_S399.json. SIL939 unchanged.

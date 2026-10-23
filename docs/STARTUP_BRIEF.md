@@ -81,7 +81,7 @@
 ║  ⛔  Truth         yellow — selected release verified;…           ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.170  (healthy)                               ║
+║  ✓  Entropy       0.171  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
@@ -123,16 +123,16 @@
 ║  100  [VERIFY]       Verify Studio Ops acceptance of the planni  ║
 ║        Verify Studio Ops acceptance of the planning-artifact ti  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Full deployment verified; canonical closeo  ║
-║        Full deployment verified; canonical closeout finalizatio  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Staging lineage tolerant of publisher data  ║
+║   93  [PRODUCT]      Staging lineage tolerant of publisher data  ║
 ║        Staging lineage tolerant of publisher data drift. is ope  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
+║   90  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
 ║        Gate srcset, CSS url(), redirect targets. Future only. i  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Investigate timing classification of incom  ║
+║   87  [PRODUCT]      Investigate timing classification of incom  ║
 ║        Investigate timing classification of incoming pre-sessio  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝

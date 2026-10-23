@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 399,
-  "state": "production-verified-closeout-pending",
+  "state": "complete",
   "releaseAccepted": true,
   "goal": {
     "threadId": "01a1669c-19de-7b02-a8f9-4ec1a9ea2eb0",
@@ -132,60 +132,39 @@
   },
   "requiredChecks": {
     "ok": true,
+    "sha": "59f1f49d369f34d27b91c39820c928987d91c9d9",
     "lane": "hosted-exact-sha",
     "checks": [
       {
         "workflow": ".github/workflows/e2e.yml",
         "state": "passed",
-        "runId": 39906047604
+        "runId": 39927242729
       },
       {
         "workflow": ".github/workflows/lighthouse.yml",
         "state": "passed",
-        "runId": 39906047539
+        "runId": 39927242687
       },
       {
         "workflow": ".github/workflows/accessibility.yml",
         "state": "passed",
-        "runId": 39906047603
+        "runId": 39927242644
       }
     ],
-    "findings": [],
-    "sourceCommit": "066a768716b39cdafb52e5e39260043988069e16",
-    "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
-    "checkedAt": "2026-10-23T05:47:54.529Z",
-    "independentProof": {
-      "ok": false,
-      "expectedSha": "066a768716b39cdafb52e5e39260043988069e16"
-    },
-    "sha": "066a768716b39cdafb52e5e39260043988069e16",
-    "state": "passed",
-    "contract": ".github/RELEASE_CHECKS.json",
-    "receipt": "docs/S399_required-checks.json"
+    "evidence": "docs/S399_closing-required-checks.json"
   },
   "production": {
     "state": "verified",
-    "lane": "full Pages promotion",
-    "tag": "release-s399-066a768716",
-    "tagPushed": true,
-    "runId": 39907784576,
-    "workflow": ".github/workflows/pages-deploy.yml",
-    "event": "workflow_dispatch",
-    "sha": "066a768716b39cdafb52e5e39260043988069e16",
-    "dispatchAccepted": true,
-    "verifiedAt": "2026-10-23T06:41:59.968Z",
-    "completedAt": "2026-10-23T06:24:21Z",
-    "workflowReceipt": "docs/S399_production-workflow.json",
-    "steps": "Canonical ceremony, clean dist, full Pages deploy, cache purge and post-purge liveness all succeeded; held step skipped."
+    "sha": "59f1f49d369f34d27b91c39820c928987d91c9d9",
+    "runId": 39930730781,
+    "ref": "release-s399-final-59f1f49d36",
+    "workflowReceipt": "docs/S399_closing-production-workflow.json",
+    "completedAt": "2026-10-23T09:21:41Z",
+    "verifiedAt": "2026-10-23T09:44:42.709Z",
+    "mode": "normal-full-production"
   },
   "rollback": "Revert the bounded S399 product change and redeploy the previously accepted release tag release-s398-418d250656.",
-  "remaining": [
-    "fresh independent closeout review",
-    "canonical autopilot full checks, commit and push",
-    "Ark delivery",
-    "final public-surface currency, remote and shell verification",
-    "native completion audit"
-  ],
+  "remaining": [],
   "reconciliation": {
     "remoteBase": "d69ccc35e5",
     "scope": "Three uptime publisher commits; no executable changes. Nine generated-output conflicts resolved from remote inputs and canonical graph rebuild; S399 work retained in named stash.",
@@ -206,7 +185,7 @@
     "settingsFindings": 0,
     "supplyChain": "project-scoped scanner passed; no IOC findings"
   },
-  "releaseSha": "066a768716b39cdafb52e5e39260043988069e16",
+  "releaseSha": "59f1f49d369f34d27b91c39820c928987d91c9d9",
   "push": {
     "state": "verified",
     "sha": "0cc0564676e4599d6fc1f128ed1e3b4179df76b5",
@@ -238,9 +217,9 @@
   ],
   "readback": {
     "pagesOrigin": {
-      "path": "docs/S399_served-parity.json",
+      "path": "docs/S399_closing-served-parity.json",
       "origin": "https://vaultsparkstudios-website.pages.dev",
-      "against": "066a768716b39cdafb52e5e39260043988069e16",
+      "against": "59f1f49d369f34d27b91c39820c928987d91c9d9",
       "verdict": "tree-current",
       "expected": 1137,
       "checked": 1137,
@@ -251,16 +230,23 @@
       "unread": 0
     },
     "buildStamps": {
-      "path": "docs/S399_build-stamps.json",
+      "path": "docs/S399_closing-build-stamps.json",
       "verified": true
     },
     "apexBrowser": {
-      "state": "passed",
+      "session": 399,
+      "sha": "59f1f49d369f34d27b91c39820c928987d91c9d9",
+      "origin": "https://vaultsparkstudios.com",
+      "startedAt": "2026-10-23T09:22:27.388Z",
+      "finishedAt": "2026-10-23T09:22:48.130Z",
+      "exit": 0,
       "passed": 5,
       "failed": 0,
-      "exit": 0,
-      "durationSeconds": 20.1,
-      "harness": "Secret-free public Playwright harness; no local credential files loaded."
+      "flaky": 0,
+      "skipped": 0,
+      "durationMs": 17805.999,
+      "harness": "Existing secret-free public Playwright config; no local credential files loaded.",
+      "path": "docs/S399_closing-production-browser.json"
     }
   },
   "closeoutScopeGate": {
@@ -272,7 +258,7 @@
     "note": "Initial bare invocation was unknown; explicit current-session audit and session supplied."
   },
   "closeout": {
-    "state": "proof-refreshed-final-candidate-publication-pending",
+    "state": "complete",
     "surfaces": [
       "CURRENT_STATE",
       "TASK_BOARD",
@@ -298,8 +284,8 @@
     "impactBrief": "docs/CLOSEOUT_BRIEF_S399_2026-10-23.md",
     "scaffold": {
       "tasks": 4,
-      "done": 3,
-      "inProgress": 1,
+      "done": 4,
+      "inProgress": 0,
       "open": 0
     },
     "fullSuite": {
@@ -358,7 +344,12 @@
     "ark": {
       "summary": "01K5JRMEGE8A960AC9EF620C12",
       "ownerFollowup": "01K5JRMFFP0BA4C88BFC2E1F2A",
-      "state": "signed and delivered; recipient acceptance/application unverified"
+      "state": "signed and delivered; recipient acceptance/application unverified",
+      "finalSummary": {
+        "id": "01K5K2G7DV244FF0D983FBA515",
+        "sentAt": "2026-10-23T09:47:01.968Z",
+        "state": "signed and delivered; recipient acceptance/application unverified"
+      }
     },
     "closingHostedAttempts": [
       {
@@ -448,6 +439,126 @@
         "staging": "candidate-green",
         "runtimeAndPageSourceChanged": false
       }
+    },
+    "shells": {
+      "session": 399,
+      "started": 96,
+      "closed": 96,
+      "running": 0,
+      "enumeratedAt": "2026-10-23T09:49:05.065Z",
+      "evidence": ".cache/S399-shell-audit-final.json",
+      "scope": "All recorded long-running unified-exec handles started by S399; synchronous commands excluded."
+    },
+    "finalizedAt": "2026-10-23T09:45:14.219Z",
+    "finalRecordPublication": "The commit containing these records is verified reachable from origin/main before native goal completion; its own SHA is recorded outside this document to avoid self-reference.",
+    "nativeCompletionAudit": ".cache/S399-final-completion-audit.json"
+  },
+  "closingReadbackAttempts": [
+    {
+      "attempt": 1,
+      "sha": "59f1f49d369f34d27b91c39820c928987d91c9d9",
+      "checkedAt": "2026-10-23T09:31:50.308Z",
+      "exit": 1,
+      "verdict": "unverified",
+      "expected": 1137,
+      "checked": 1137,
+      "identical": 1126,
+      "redirected": 10,
+      "differ": 0,
+      "unread": 1,
+      "coverageComplete": true,
+      "reason": "api/news-desk-feed.json timed out at concurrency32. No differing bytes observed; full lower-concurrency retry required, not yet accepted.",
+      "receipt": "docs/S399_closing-served-parity-attempt-1.json"
     }
+  ],
+  "releaseHistory": [
+    {
+      "sha": "066a768716b39cdafb52e5e39260043988069e16",
+      "production": {
+        "state": "verified",
+        "lane": "full Pages promotion",
+        "tag": "release-s399-066a768716",
+        "tagPushed": true,
+        "runId": 39907784576,
+        "workflow": ".github/workflows/pages-deploy.yml",
+        "event": "workflow_dispatch",
+        "sha": "066a768716b39cdafb52e5e39260043988069e16",
+        "dispatchAccepted": true,
+        "verifiedAt": "2026-10-23T06:41:59.968Z",
+        "completedAt": "2026-10-23T06:24:21Z",
+        "workflowReceipt": "docs/S399_production-workflow.json",
+        "steps": "Canonical ceremony, clean dist, full Pages deploy, cache purge and post-purge liveness all succeeded; held step skipped."
+      },
+      "readback": {
+        "pagesOrigin": {
+          "path": "docs/S399_served-parity.json",
+          "origin": "https://vaultsparkstudios-website.pages.dev",
+          "against": "066a768716b39cdafb52e5e39260043988069e16",
+          "verdict": "tree-current",
+          "expected": 1137,
+          "checked": 1137,
+          "coverageComplete": true,
+          "identical": 1127,
+          "redirected": 10,
+          "differ": 0,
+          "unread": 0
+        },
+        "buildStamps": {
+          "path": "docs/S399_build-stamps.json",
+          "verified": true
+        },
+        "apexBrowser": {
+          "state": "passed",
+          "passed": 5,
+          "failed": 0,
+          "exit": 0,
+          "durationSeconds": 20.1,
+          "harness": "Secret-free public Playwright harness; no local credential files loaded."
+        }
+      },
+      "requiredChecks": {
+        "ok": true,
+        "lane": "hosted-exact-sha",
+        "checks": [
+          {
+            "workflow": ".github/workflows/e2e.yml",
+            "state": "passed",
+            "runId": 39906047604
+          },
+          {
+            "workflow": ".github/workflows/lighthouse.yml",
+            "state": "passed",
+            "runId": 39906047539
+          },
+          {
+            "workflow": ".github/workflows/accessibility.yml",
+            "state": "passed",
+            "runId": 39906047603
+          }
+        ],
+        "findings": [],
+        "sourceCommit": "066a768716b39cdafb52e5e39260043988069e16",
+        "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+        "checkedAt": "2026-10-23T05:47:54.529Z",
+        "independentProof": {
+          "ok": false,
+          "expectedSha": "066a768716b39cdafb52e5e39260043988069e16"
+        },
+        "sha": "066a768716b39cdafb52e5e39260043988069e16",
+        "state": "passed",
+        "contract": ".github/RELEASE_CHECKS.json",
+        "receipt": "docs/S399_required-checks.json"
+      }
+    }
+  ],
+  "closingPublication": {
+    "accepted": true,
+    "sha": "59f1f49d369f34d27b91c39820c928987d91c9d9",
+    "tag": "release-s399-final-59f1f49d36",
+    "workflowRunId": 39930730781,
+    "requiredChecks": "docs/S399_closing-required-checks.json",
+    "workflow": "docs/S399_closing-production-workflow.json",
+    "servedReadback": "docs/S399_closing-served-parity.json",
+    "acceptedAt": "2026-10-23T09:44:42.709Z"
   }
 }

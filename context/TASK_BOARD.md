@@ -3,12 +3,12 @@
 Wave 1 · Spark reading clearance — done.
 Wave 2 · Responsive image reference gate — done.
 Wave 3 · Full S399 Pages promotion and 1,137-file readback — done.
-Wave 4 · S399 closeout records, checks, publication and cleanup — in progress. Writebacks, intelligence and impact brief are done; independent review, autopilot, Ark and final public-surface/remote/process verification remain.
+Wave 4 · S399 closeout records, checks, publication and cleanup — done. Release, readback, writebacks, intelligence, independent review, two complete547 suites, Ark and owned-process cleanup verified.
 
 - [ ] [SIL][S399] Verify Studio Ops acceptance of the planning-artifact timing classification reproduction; delivered cargo does not prove an applied fix. Future only.
 
 - [x] Both fixes: docs/AUDIT_2026-10-23-S399.md.
-- [ ] Full deployment verified; canonical closeout finalization pending: docs/RELEASE_S399.json.
+- [x] Full deployment and canonical closeout verified: docs/RELEASE_S399.json.
 
 ## S398 — SI, offline gate
 
