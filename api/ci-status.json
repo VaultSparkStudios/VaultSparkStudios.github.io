@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-23T00:13:38.688Z",
+  "generatedAt": "2026-10-23T01:18:58.679Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,15 +9,15 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 16,
-    "observed": 4,
-    "healthy": 4,
-    "unknown": 12,
+    "observed": 5,
+    "healthy": 5,
+    "unknown": 11,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 4 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Production deployment is stranded for 4 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-22T14:38:08.673Z",
     "currentBehindStreak": 4,
     "newestGradableAt": "2026-10-22T14:38:08.673Z",
-    "newestAgeHours": 9.6,
+    "newestAgeHours": 10.7,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": true
@@ -37,12 +37,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-10-23T00:10:33Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39874707511",
-      "headSha": "d825f51914c529e8cda09cda23546c250b25105b",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-10-23T01:14:58Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39882905677",
+      "headSha": "111dd698abf9217056b275294618a4b7cb6c12b4",
       "event": "push"
     },
     {
@@ -50,19 +50,19 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-10-22T23:56:32Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39874707537",
-      "headSha": "d825f51914c529e8cda09cda23546c250b25105b",
+      "updatedAt": "2026-10-23T01:17:21Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39882905615",
+      "headSha": "111dd698abf9217056b275294618a4b7cb6c12b4",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-10-23T00:10:25Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39874707526",
-      "headSha": "d825f51914c529e8cda09cda23546c250b25105b",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-10-23T01:14:58Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39882905749",
+      "headSha": "111dd698abf9217056b275294618a4b7cb6c12b4",
       "event": "push"
     },
     {
@@ -109,7 +109,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.63,
+      "ageHours": 1.72,
       "staleAfterHours": 48
     },
     {
@@ -177,18 +177,20 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.86,
+      "ageHours": 2.94,
       "staleAfterHours": 48
     },
     {
       "name": "Cloudflare Pages Deploy",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-10-23T01:12:53Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 0.1,
       "staleAfterHours": 48
     },
     {
@@ -205,14 +207,14 @@
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-22T20:35:51Z",
+      "lastUpdatedAt": "2026-10-23T01:05:49Z",
       "recentConclusions": [
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.63,
+      "ageHours": 0.22,
       "staleAfterHours": 48
     },
     {
@@ -229,7 +231,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-22T23:38:50Z",
+      "lastUpdatedAt": "2026-10-23T00:33:49Z",
       "recentConclusions": [
         "success",
         "success",
@@ -238,7 +240,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.58,
+      "ageHours": 0.75,
       "staleAfterHours": 48
     },
     {
