@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-23T17:59:12.266Z",
+  "generatedAt": "2026-10-23T18:15:57.186Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -13,7 +13,10 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "shell-mismatch"
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
     "candidateReady": true,
     "candidateFindings": [],
@@ -65,21 +68,21 @@
   },
   "productionDeploy": {
     "state": "behind",
-    "commitsBehind": 19,
-    "ageHours": 4.6,
-    "observedAt": "2026-10-23T17:39:59.747Z",
+    "commitsBehind": 28,
+    "ageHours": 5.6,
+    "observedAt": "2026-10-23T18:15:57.186Z",
     "shellParity": {
-      "state": "superseded",
+      "state": "drift",
       "route": "/",
-      "observedAt": "2026-10-23T17:39:59.747Z",
-      "expectedFrom": "812a27dcaedf619c2d0afd792e4e74424fefd3f10b120efabc3270b1dd140de9",
-      "supersededBy": "fdb7f729a7f8ab525b82c6bb04867a2665ef0517221a86dbbc9233edde97a584",
+      "observedAt": "2026-10-23T18:15:57.186Z",
+      "expectedFrom": "fdb7f729a7f8ab525b82c6bb04867a2665ef0517221a86dbbc9233edde97a584",
+      "supersededBy": null,
       "ageHours": 0,
       "stale": false,
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/after-paint.shell-0392b76d45.js",
-        "assets/ambient-core.shell-ea3a29580c.js",
+        "assets/ambient-core.shell-214cf44506.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/hero-ticker.shell-550971e267.js",
@@ -117,8 +120,12 @@
         "assets/theme-toggle.shell-8221605898.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
-      "missing": [],
-      "unexpected": [],
+      "missing": [
+        "assets/ambient-core.shell-214cf44506.js"
+      ],
+      "unexpected": [
+        "assets/ambient-core.shell-ea3a29580c.js"
+      ],
       "challengedAt": null,
       "challengeError": null
     }
