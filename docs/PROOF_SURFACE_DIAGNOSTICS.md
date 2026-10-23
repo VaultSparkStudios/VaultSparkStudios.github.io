@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-10-23T22:12:56.424Z
-Receipt: `d8cba7962688cbe520b172c2` · coverage 109/109
+Generated: 2026-10-23T23:13:50.973Z
+Receipt: `90e6227c67b0b3adf4f6c2d8` · coverage 109/109
 
-Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 115.5s
+Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 66.7s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 92 | blocking | 8.1s | 0 | `node scripts/generate-sitemap.mjs --check` |
-| 49 | blocking | 3.0s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 99 | advisory | 2.9s | 0 | `node scripts/build-constellation-activity.mjs --check` |
-| 100 | advisory | 2.8s | 0 | `node scripts/build-oracle-feedback-themes.mjs --check` |
-| 106 | advisory | 2.7s | 0 | `node scripts/generate-build-sha.mjs --check` |
-| 22 | blocking | 2.5s | 0 | `node scripts/check-schema-coverage.mjs` |
-| 98 | advisory | 2.3s | 0 | `node scripts/build-oracle-query-insights.mjs --check` |
-| 24 | blocking | 2.2s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 101 | advisory | 2.2s | 0 | `node scripts/build-cta-state.mjs --check` |
-| 96 | advisory | 2.2s | 0 | `node scripts/check-public-note-freshness.mjs` |
+| 49 | blocking | 1.9s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 102 | advisory | 1.6s | 0 | `node scripts/build-hero-portfolio.mjs --check` |
+| 65 | blocking | 1.6s | 0 | `node scripts/check-content-coherence.mjs` |
+| 106 | advisory | 1.6s | 0 | `node scripts/generate-build-sha.mjs --check` |
+| 37 | blocking | 1.4s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 22 | blocking | 1.4s | 0 | `node scripts/check-schema-coverage.mjs` |
+| 103 | advisory | 1.4s | 0 | `node scripts/build-atlas.mjs --check` |
+| 78 | blocking | 1.3s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
+| 88 | blocking | 1.3s | 0 | `node scripts/check-receipt-ordering.mjs` |
+| 101 | advisory | 1.1s | 0 | `node scripts/build-cta-state.mjs --check` |
 
 ## Failures
 

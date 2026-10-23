@@ -33,7 +33,7 @@
     {
       "id": 3,
       "state": "in-progress",
-      "outcome": "Integrated source547/547 accepted with13.29% timing concentration;238browser checks and140reviewed images retained with unchanged bound source. Staging transaction waits behind an existing rollback migration; observe it before any retry. Publication,exact hosted checks and production remain pending."
+      "outcome": "Combined source accepted547/547,238browser checks,140fresh reviewed images and current11/11staging ceremony. Corrected candidate publication,exact hosted checks and full production readback pending."
     },
     {
       "id": 4,
@@ -174,15 +174,15 @@
       "passed": 547,
       "failed": 0,
       "coverageComplete": true,
-      "sourceFingerprint": "959573d48883b8155285c6d7",
-      "receiptId": "69324772553d7b797172bbb4",
+      "sourceFingerprint": "d559e6eea96360ef32fe1aa0",
+      "receiptId": "23971be3a92d66332bea44e6",
       "concentration": {
         "maxStepShare": 0.3,
         "minActionableStepMs": 45000,
         "dominantStep": 1,
         "dominantCommand": "node --test tests/offline-recovery.unit.spec.mjs tests/offline-navigation.unit.spec.mjs tests/deploy-parity.unit.spec.mjs tests/news-article-css.unit.spec.mjs tests/served-parity.unit.spec.mjs tests/operational-admission.unit.spec.mjs tests/moderation-admission.unit.spec.mjs tests/public-rest-canary.unit.spec.mjs tests/metadata-backfill.unit.spec.mjs tests/heartbeat-snapshot.unit.spec.mjs tests/rollback-archive.unit.spec.mjs",
-        "dominantDurationMs": 187140,
-        "dominantShare": 0.1329,
+        "dominantDurationMs": 217749,
+        "dominantShare": 0.2388,
         "breached": false
       },
       "evidence": "docs/S400_final-integrated-full-suite.json",
@@ -223,15 +223,47 @@
       },
       "evidence": "docs/S400_approved-art-full-suite.json",
       "scope": "Complete approved-art source run; every planned command actually executed"
-    }
+    },
+    "fullSuiteHistory": [
+      {
+        "passed": 547,
+        "failed": 0,
+        "coverageComplete": true,
+        "sourceFingerprint": "959573d48883b8155285c6d7",
+        "receiptId": "69324772553d7b797172bbb4",
+        "concentration": {
+          "maxStepShare": 0.3,
+          "minActionableStepMs": 45000,
+          "dominantStep": 1,
+          "dominantCommand": "node --test tests/offline-recovery.unit.spec.mjs tests/offline-navigation.unit.spec.mjs tests/deploy-parity.unit.spec.mjs tests/news-article-css.unit.spec.mjs tests/served-parity.unit.spec.mjs tests/operational-admission.unit.spec.mjs tests/moderation-admission.unit.spec.mjs tests/public-rest-canary.unit.spec.mjs tests/metadata-backfill.unit.spec.mjs tests/heartbeat-snapshot.unit.spec.mjs tests/rollback-archive.unit.spec.mjs",
+          "dominantDurationMs": 187140,
+          "dominantShare": 0.1329,
+          "breached": false
+        },
+        "evidence": "docs/S400_source-full-suite-69324772553d7b797172bbb4.json",
+        "scope": "Historical complete measurement before subsequent interrupted-copy safety integration"
+      }
+    ]
   },
   "staging": {
-    "state": "pending-current-candidate",
-    "artifactRoot": "6c2f9e912103f16f0b3165da3a26527cefa20401737aacd75292e59e34c02217",
-    "sourceFingerprint": "959573d48883b8155285c6d7",
-    "queuedArchive": "20261023222317",
-    "lastVerifiedPrecedingReceipt": "7aac193603a63569e178d521",
-    "scope": "Current remote transaction is queued behind existing rollback migration; no current staging acceptance claimed"
+    "state": "current-integrated-candidate-verified",
+    "receiptId": "f5bb7d2d750b06bca0f4e49c",
+    "files": 13911,
+    "deployId": "20261023231956",
+    "source": {
+      "commitSha": "da637f4a43b6789f574fb9de30b986c0b4acfd44",
+      "fingerprint": "d559e6eea96360ef32fe1aa0"
+    },
+    "artifact": {
+      "artifactRoot": "6ce24d6572548a4cf4508cf36bec7f7e227b48bf3510642bcbdb8b3ebfb78463",
+      "leafCount": 68
+    },
+    "ceremony": {
+      "state": "passed",
+      "passed": 11,
+      "total": 11,
+      "path": "api/release-ceremony.json"
+    }
   },
   "visual": {
     "state": "current-captures-reviewed",
@@ -285,7 +317,7 @@
     }
   ],
   "closeout": {
-    "state": "Canonical preparation completed; earlier autopilot stopped on timing guard. Current complete native run accepted. Remaining staging,commit,push,production and final-closeout steps continue explicitly.",
+    "state": "All source,projection,visual,mobile and staging gates accepted. Publication and exact-candidate production acceptance pending; final closeout follows live readback.",
     "score": 939,
     "velocity": 2,
     "cdr": "Reviewed; no new creative direction",
@@ -307,6 +339,7 @@
     },
     "contextGuard": {
       "ok": true,
+      "findings": [],
       "evidence": ".cache/S400-final-context-guard.json"
     }
   },
@@ -600,20 +633,20 @@
     },
     "rollbackArchival": {
       "upstreamCommit": "25d9762e506aad0d1058225b469b23b336417818",
-      "merge": "f1dc22644e",
-      "review": "PASS after root-alias correction",
+      "merge": "da637f4a43b6789f574fb9de30b986c0b4acfd44",
+      "review": "Root-alias correction and subsequent interrupted-copy refusal independently reviewed",
       "selfTests": {
         "fullDeploy": 18,
         "contentDeploy": 27
       },
       "windowsFixtures": {
-        "passed": 6,
-        "skippedLinuxOnly": 4
+        "passed": 7,
+        "skippedLinuxOnly": 5
       },
       "hostedLinuxFixtures": "pending exact-candidate hosted suite",
-      "state": "Complete local integrated source accepted; staging and hosted release acceptance pending",
+      "state": "Complete current integrated source accepted; staging and hosted release acceptance pending",
       "stagingAttempt": {
-        "state": "client timed out while remote transaction waits on pre-existing migration lock",
+        "state": "remote earlier-artifact transaction ended after client timeout; verified receipt was not completed",
         "archiveStamp": "20261023222317",
         "localPipelineHandle": 46907,
         "localPipelineExit": 1,
@@ -622,15 +655,24 @@
         "observedAt": "2026-10-23T22:39:55.848Z",
         "fullSourceReceipt": "69324772553d7b797172bbb4",
         "sourceFingerprint": "959573d48883b8155285c6d7",
-        "duplicateRetry": false
+        "duplicateRetry": false,
+        "observedCompleteAt": "2026-10-23T22:56:46.207Z",
+        "observedArtifactRoot": "6c2f9e912103f16f0b3165da3a26527cefa20401737aacd75292e59e34c02217",
+        "remoteMigrationAndWaiterEnded": true,
+        "remainingSettledSnapshots": 0,
+        "verifiedReceipt": false
       },
       "linuxFixtures": {
-        "passed": 10,
+        "passed": 12,
         "failed": 0,
         "skipped": 0,
         "evidence": "docs/S400_linux-rollback-fixtures.json",
-        "scope": "Isolated Linux fixtures; exact-candidate hosted acceptance remains separate"
-      }
+        "scope": "Isolated Linux fixtures; exact hosted acceptance remains separate"
+      },
+      "upstreamCommits": [
+        "25d9762e506aad0d1058225b469b23b336417818",
+        "8a1531269afbcde63fa7458d23413220f18569dc"
+      ]
     }
   },
   "hostedAttempts": [
@@ -660,5 +702,12 @@
     "expectedCaptures": 448,
     "captures": 448,
     "receipt": "docs/visual-qa/S400-persona-receipt.json"
+  },
+  "currentSourceVerification": {
+    "state": "accepted",
+    "receiptId": "23971be3a92d66332bea44e6",
+    "sourceFingerprint": "d559e6eea96360ef32fe1aa0",
+    "evidence": "docs/S400_final-integrated-full-suite.json",
+    "merge": "da637f4a43b6789f574fb9de30b986c0b4acfd44"
   }
 }

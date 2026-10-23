@@ -78,7 +78,7 @@
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   19d                                            ║
 ║  ✓  IGNIS         45139 FORGE  ·  -1d old                        ║
-║  ⛔  Truth         yellow — S400 implementation verified;…        ║
+║  ⛔  Truth         yellow — selected release verified;…           ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.185  (healthy)                               ║
@@ -119,8 +119,22 @@
 ║  Calibration: MAE 4.4 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ GENIUS HIT LIST ═════════════════════════════════════════════╗
-║  Run `node scripts/ops.mjs genius-list` to generate fresh…       ║
+╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
+║   96  [PRODUCT]      Add pre-upload archive membership verifica  ║
+║        Add pre-upload archive membership verification after the  ║
+║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
+║   93  [PRODUCT]      Coordinate an evidence-backed distinction   ║
+║        Coordinate an evidence-backed distinction between format  ║
+║                                                                  ║
+║   92  [VERIFY]       Verify Studio Ops acceptance of the planni  ║
+║        Verify Studio Ops acceptance of the planning-artifact ti  ║
+║                                                                  ║
+║   87  [PRODUCT]      Staging lineage tolerant of publisher data  ║
+║        Staging lineage tolerant of publisher data drift. is ope  ║
+║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ```
