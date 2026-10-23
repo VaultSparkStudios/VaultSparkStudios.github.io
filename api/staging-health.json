@@ -1,18 +1,22 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-23T14:43:33.109Z",
+  "generatedAt": "2026-10-23T15:13:15.119Z",
   "candidateReady": false,
   "candidateFindings": [
     "staging-build-sha-mismatch",
-    "staging-artifact-root-mismatch"
+    "staging-artifact-root-mismatch",
+    "staging-artifact-leaf-count-mismatch",
+    "/:localShellParity",
+    "/studio-pulse/:localShellParity",
+    "/membership/:localShellParity"
   ],
   "candidateBuildSha": "066a768716b39cdafb52e5e39260043988069e16",
   "stagingBuildSha": "1a96e6203bdd1e368d310daf50a88f1ca659a7eb",
   "artifactManifest": {
     "candidateRoot": "da2ede8f8f8e2f68895795937250e6c87c8b24db6164b8c35654e09b7cf6f8b4",
     "candidateLeafCount": 67,
-    "stagingRoot": "90e7b2774b06931455bc5183334e3ce132db2ea41940b50062f739612ba2858e",
-    "stagingLeafCount": 67,
+    "stagingRoot": "7df95df2ca1e009316c26bd368419583ea10e6a1d9102967650751030980dfd1",
+    "stagingLeafCount": 68,
     "matched": false
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
@@ -43,7 +47,7 @@
       "prodShell": [],
       "stagingShell": [
         "assets/after-paint.shell-0392b76d45.js",
-        "assets/ambient-core.shell-ea3a29580c.js",
+        "assets/ambient-core.shell-214cf44506.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/hero-ticker.shell-550971e267.js",
@@ -91,7 +95,7 @@
       "stagingStatus": 200,
       "stagingReachable": true,
       "statusParity": true,
-      "shellParity": true,
+      "shellParity": false,
       "prodShell": [
         "assets/ambient-core.shell-ea3a29580c.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
@@ -106,7 +110,7 @@
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "stagingShell": [
-        "assets/ambient-core.shell-ea3a29580c.js",
+        "assets/ambient-core.shell-214cf44506.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/nav-sheet.shell-c0fddc0c73.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
@@ -135,7 +139,9 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": []
+      "reasonCodes": [
+        "shell-mismatch"
+      ]
     },
     {
       "route": "/membership/",
@@ -143,7 +149,7 @@
       "stagingStatus": 200,
       "stagingReachable": true,
       "statusParity": true,
-      "shellParity": true,
+      "shellParity": false,
       "prodShell": [
         "assets/ambient-core.shell-ea3a29580c.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
@@ -157,7 +163,7 @@
         "assets/trust-depth.shell-bad58045cc.js"
       ],
       "stagingShell": [
-        "assets/ambient-core.shell-ea3a29580c.js",
+        "assets/ambient-core.shell-214cf44506.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/nav-sheet.shell-c0fddc0c73.js",
         "assets/public-intelligence.shell-c86a6ecc39.js",
@@ -185,7 +191,9 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": []
+      "reasonCodes": [
+        "shell-mismatch"
+      ]
     }
   ]
 }
