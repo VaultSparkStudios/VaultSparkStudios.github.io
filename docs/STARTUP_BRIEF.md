@@ -1,6 +1,6 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
 <!-- generated-at: 2026-10-23 (Session 400 closeout) -->
-<!-- semantic-freshness: hash=00e4399ed8378331 next=401 silSession=400 silScore=939 handoff=400 tests=- -->
+<!-- semantic-freshness: hash=f6bf76a64ae907dc next=401 silSession=400 silScore=939 handoff=- tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 

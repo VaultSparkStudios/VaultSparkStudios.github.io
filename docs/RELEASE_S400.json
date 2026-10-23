@@ -15,7 +15,7 @@
     ],
     "selfTests": "49/49",
     "browser": "16/16 real Chromium differential cases",
-    "references": "Current combined source:340pages,31330internalreferences resolve; initial reference proof retained separately",
+    "references": "Approved-art source:340pages and31806internal references resolve; prior measurements retained separately",
     "review": "Two independent FIX rounds; all six findings fixed and regression-tested",
     "premiseTiming": "Nonpassing planning-artifact classification retained"
   },
@@ -33,7 +33,7 @@
     {
       "id": 3,
       "state": "in-progress",
-      "outcome": "Combined source accepted547/547,238browser checks,140fresh reviewed images and current11/11staging ceremony. Corrected candidate publication,exact hosted checks and full production readback pending."
+      "outcome": "Approved closing artwork preserved and current full source verified. Staging,publication,exact hosted checks and production acceptance pending."
     },
     {
       "id": 4,
@@ -174,6 +174,24 @@
       "passed": 547,
       "failed": 0,
       "coverageComplete": true,
+      "sourceFingerprint": "810b713327db4052bfa6e1fe",
+      "receiptId": "f270a03cb7a68463e11d023c",
+      "concentration": {
+        "maxStepShare": 0.3,
+        "minActionableStepMs": 45000,
+        "dominantStep": 168,
+        "dominantCommand": "node scripts/check-proof-surface.mjs",
+        "dominantDurationMs": 428900,
+        "dominantShare": 0.2041,
+        "breached": false
+      },
+      "evidence": "docs/S400_approved-art-full-suite.json",
+      "scope": "Complete approved-art source run; every planned command actually executed"
+    },
+    "preApprovedArtFullSuite": {
+      "passed": 547,
+      "failed": 0,
+      "coverageComplete": true,
       "sourceFingerprint": "42440b4073e449a8a3f7dad6",
       "receiptId": "e945688fe70fda690a734a1b",
       "concentration": {
@@ -254,7 +272,7 @@
     }
   ],
   "closeout": {
-    "state": "All source,projection,visual,mobile and staging gates accepted. Publication and exact-candidate production acceptance pending; final closeout follows live readback.",
+    "state": "Canonical preparation completed; earlier autopilot stopped on timing guard. Current complete native run accepted. Remaining staging,commit,push,production and final-closeout steps continue explicitly.",
     "score": 939,
     "velocity": 2,
     "cdr": "Reviewed; no new creative direction",
@@ -526,6 +544,25 @@
         "scope": "215mobile+16renderedcontrast+7clearance"
       },
       "state": "Fresh full verification and238browser checks accepted; current publication staging pending"
+    },
+    "approvedArt": {
+      "remote": "ea87e4c20e",
+      "scope": "Preserved approved closing-art files, day source, related generated pages and seven automated history commits without changing selected implementation code",
+      "state": "Full source547/547,238browser checks and140fresh reviewed images accepted; current staging and exact hosted acceptance pending",
+      "localMerge": "c21804ec2889d67fa7105b65c691976a9f91a5e1",
+      "browser": {
+        "passed": 238,
+        "failed": 0,
+        "retries": 0,
+        "scope": "215mobile+16renderedcontrast+7clearance"
+      },
+      "visual": {
+        "persona": 112,
+        "disclosures": 28,
+        "fresh": true,
+        "reviewer": "/root/visual_review",
+        "verdict": "PASS"
+      }
     }
   },
   "hostedAttempts": [
