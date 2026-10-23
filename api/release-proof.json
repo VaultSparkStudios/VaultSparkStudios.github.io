@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-23T06:47:17.758Z",
+  "generatedAt": "2026-10-23T06:55:44.856Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -67,14 +67,14 @@
     "sourceContractSha256": "977015c38c170af9d4a0de418a9c9766015d77973b967497ece0a69a52824c44"
   },
   "productionDeploy": {
-    "state": "behind",
-    "commitsBehind": 36,
-    "ageHours": 5.7,
-    "observedAt": "2026-10-23T06:22:28.584Z",
+    "state": "content-current",
+    "commitsBehind": 8,
+    "ageHours": 1.3,
+    "observedAt": "2026-10-23T06:55:44.856Z",
     "shellParity": {
-      "state": "drift",
+      "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-23T06:22:28.584Z",
+      "observedAt": "2026-10-23T06:55:44.856Z",
       "expectedFrom": "812a27dcaedf619c2d0afd792e4e74424fefd3f10b120efabc3270b1dd140de9",
       "supersededBy": null,
       "ageHours": 0,
@@ -102,7 +102,7 @@
       ],
       "actual": [
         "assets/after-paint.shell-0392b76d45.js",
-        "assets/ambient-core.shell-29a2e1a95c.js",
+        "assets/ambient-core.shell-ea3a29580c.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/hero-ticker.shell-550971e267.js",
@@ -120,12 +120,8 @@
         "assets/theme-toggle.shell-8221605898.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
-      "missing": [
-        "assets/ambient-core.shell-ea3a29580c.js"
-      ],
-      "unexpected": [
-        "assets/ambient-core.shell-29a2e1a95c.js"
-      ],
+      "missing": [],
+      "unexpected": [],
       "challengedAt": null,
       "challengeError": null
     }
@@ -189,7 +185,7 @@
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
-    "productionShellParityMatched": false,
+    "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
@@ -198,7 +194,6 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
-    "productionShellParityMatched",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
     "productionPromotionReady",
