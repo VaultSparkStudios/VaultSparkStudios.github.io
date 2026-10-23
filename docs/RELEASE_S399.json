@@ -272,7 +272,7 @@
     "note": "Initial bare invocation was unknown; explicit current-session audit and session supplied."
   },
   "closeout": {
-    "state": "review-passed-autopilot-pending",
+    "state": "staging-verified-final-publication-pending",
     "surfaces": [
       "CURRENT_STATE",
       "TASK_BOARD",
@@ -303,7 +303,7 @@
       "open": 0
     },
     "fullSuite": {
-      "state": "pending-retry",
+      "state": "passed",
       "attempts": [
         {
           "attempt": 1,
@@ -313,13 +313,52 @@
           "reason": "Closeout brief used numeric session filename; canonical boundary requires S399 prefix and local cache receipt.",
           "log": ".cache/S399-closeout-autopilot.log"
         }
-      ]
+      ],
+      "firstPass": ".cache/S399-closeout-first-full-diagnostics.json",
+      "postSignalPass": ".cache/S399-closeout-final-full-diagnostics.json",
+      "passed": 547,
+      "planned": 547,
+      "coverageComplete": true,
+      "exit": 0,
+      "sourceFingerprint": "e267a822bd6103c5fa4787e6",
+      "receiptId": "cd80b7443cbee1f5036d3a91",
+      "startedAt": "2026-10-23T07:23:55.820Z",
+      "finishedAt": "2026-10-23T07:34:09.301Z"
     },
     "finalReview": {
       "reviewer": "closeout_final_reviewer",
       "rounds": 2,
       "verdict": "pass",
       "correction": "Historical547 predates Spark test repair; fresh closing-tree full suite required."
+    },
+    "autopilot": {
+      "exit": 0,
+      "log": ".cache/S399-closeout-autopilot-2.log",
+      "fullSuitesPassed": 2,
+      "push": "rejected; 11 routine publisher commits arrived during verification; normal rebase and canonical dependent graph repair in progress",
+      "originalTip": "77cca265b8",
+      "preservedBranch": "s399-closeout-verified-77cca265b8"
+    },
+    "closingStaging": {
+      "receiptId": "dd6c975617bffceb3f084bae",
+      "deployId": "20261023073841",
+      "candidateRoot": "930b455c0949f1341bfabb4bcc6369dcc90368df0452d417b70c85847bb53332",
+      "files": 12864,
+      "rollback": "/opt/studio/staging/website/.rollback/20261023073841",
+      "candidateReady": true,
+      "parityExit": 0,
+      "ceremony": {
+        "state": "passed",
+        "steps": 11,
+        "exit": 0,
+        "generatedAt": "2026-10-23T07:47:06.262Z"
+      },
+      "note": "Full working-tree snapshot, root-bound; source.commitSha is existing build stamp066, not a claim that all closing bytes were committed at066."
+    },
+    "ark": {
+      "summary": "01K5JRMEGE8A960AC9EF620C12",
+      "ownerFollowup": "01K5JRMFFP0BA4C88BFC2E1F2A",
+      "state": "signed and delivered; recipient acceptance/application unverified"
     }
   }
 }

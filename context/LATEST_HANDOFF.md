@@ -4,7 +4,7 @@ Session Intent: /arc then I authorize a direct push/commit to main/remote and fu
 
 Spark now yields around reading text while preserving header recall, preferences and control clearance. The local reference gate checks every responsive HTML image candidate, all supported href/src/srcset/imagesrcset attributes on each tag and encoded attribute values.
 
-Full production 066a768716 (run 39907784576); exact-candidate required checks 3/3; historical local build:check 547/547 before the Spark test repair (fresh closeout-tree full suite pending), mobile 215/215, clearance 5/5 and full Spark contract 24/24 on local and staging, 28 reviewed theme/viewport/state captures, staging ceremony 11/11 and whole served-text tree-current readback. Evidence: docs/RELEASE_S399.json.
+Full production 066a768716 (run 39907784576); exact-candidate required checks 3/3; historical implementation build:check 547/547 plus two fresh closeout-tree 547/547 passes after the Spark test repair, mobile 215/215, clearance 5/5 and full Spark contract 24/24 on local and staging, 28 reviewed theme/viewport/state captures, staging ceremony 11/11 and whole served-text tree-current readback. Evidence: docs/RELEASE_S399.json.
 
 Native goal 01a1669c-19de-7b02-a8f9-4ec1a9ea2eb0, createdAt1792722894, is bound to S399. This was a fresh full arc; no prior completion evidence reused. Audit: docs/AUDIT_2026-10-23-S399.json. Both selected L2 outcomes verified.
 

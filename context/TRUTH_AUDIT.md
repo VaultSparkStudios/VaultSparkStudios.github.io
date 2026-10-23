@@ -2,7 +2,7 @@
 
 Spark now yields around reading text while preserving header recall, preferences and control clearance. The local reference gate checks every responsive HTML image candidate, all supported href/src/srcset/imagesrcset attributes on each tag and encoded attribute values.
 
-Full production 066a768716 (run 39907784576); exact-candidate required checks 3/3; historical local build:check 547/547 before the Spark test repair (fresh closeout-tree full suite pending), mobile 215/215, clearance 5/5 and full Spark contract 24/24 on local and staging, 28 reviewed theme/viewport/state captures, staging ceremony 11/11 and whole served-text tree-current readback. Evidence: docs/RELEASE_S399.json.
+Full production 066a768716 (run 39907784576); exact-candidate required checks 3/3; historical implementation build:check 547/547 plus two fresh closeout-tree 547/547 passes after the Spark test repair, mobile 215/215, clearance 5/5 and full Spark contract 24/24 on local and staging, 28 reviewed theme/viewport/state captures, staging ceremony 11/11 and whole served-text tree-current readback. Evidence: docs/RELEASE_S399.json.
 
 Original premise timing classification is not relabelled passing. Baseline replay, archive preservation and actual acceptance are separate records. Existing identity, field-evidence and account-capacity holds remain distinct. No measured conversion, field performance or availability gain is claimed.
 

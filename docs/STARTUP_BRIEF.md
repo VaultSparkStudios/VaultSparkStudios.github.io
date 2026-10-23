@@ -68,12 +68,12 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no ledger measurement yet this session — a byte estimate…    ║
+║     no session lock — agent identity unavailable, so there is…   ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         547/547 passing (2026-10-22)                   ║
+║  ✓  Tests         547/547 passing (2026-10-23)                   ║
 ║  ✓  Velocity      2 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   19d                                            ║
@@ -123,9 +123,6 @@
 ║  100  [VERIFY]       Verify Studio Ops acceptance of the planni  ║
 ║        Verify Studio Ops acceptance of the planning-artifact ti  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      Full deployment verified; canonical closeo  ║
 ║        Full deployment verified; canonical closeout finalizatio  ║
 ║                                                                  ║
@@ -134,6 +131,9 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
 ║        Gate srcset, CSS url(), redirect targets. Future only. i  ║
+║                                                                  ║
+║   84  [PRODUCT]      Investigate timing classification of incom  ║
+║        Investigate timing classification of incoming pre-sessio  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
