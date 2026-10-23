@@ -2,10 +2,10 @@
 ║  ✓  Tests         547/547 passing (2026-10-22)                   ║
 ║  ✓  Velocity      2 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⛔  Context age   18d                                            ║
-║  ✓  IGNIS         45412 FORGE  ·  3d old                         ║
+║  ⛔  Context age   19d                                            ║
+║  ✓  IGNIS         45412 FORGE  ·  4d old                         ║
 ║  ⛔  Truth         yellow — selected release verified;…           ║
-║  ⛔  Compliance   31/38 (82%) ↓ ▄▄▄▄▄▄▄▄                          ║
+║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.192  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
