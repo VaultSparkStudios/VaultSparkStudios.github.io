@@ -32,7 +32,7 @@
 ║  Custom        → https://vaultsparkstudios.com/studio-pulse/ ✓   ║
 ║  Local dev     → npm run verify:local ⚠                          ║
 ║  Staging       → https://website.staging.vaultsparkstudios.c ✓   ║
-║  Unit tests    → npm run build:check ⚠                           ║
+║  Unit tests    → npm run build:check ✓                           ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ PROJECT PROFILE ═════════════════════════════════════════════╗
@@ -77,11 +77,11 @@
 ║  ✓  Velocity      2 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   19d                                            ║
-║  ✓  IGNIS         45051 FORGE  ·  -1d old                        ║
+║  ✓  IGNIS         45139 FORGE  ·  -1d old                        ║
 ║  ⛔  Truth         yellow — S400 implementation verified;…        ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.176  (healthy)                               ║
+║  ✓  Entropy       0.185  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║

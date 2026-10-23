@@ -15,7 +15,7 @@
     ],
     "selfTests": "49/49",
     "browser": "16/16 real Chromium differential cases",
-    "references": "339 pages;31210 references resolve",
+    "references": "Current combined source:340pages,31330internalreferences resolve; initial reference proof retained separately",
     "review": "Two independent FIX rounds; all six findings fixed and regression-tested",
     "premiseTiming": "Nonpassing planning-artifact classification retained"
   },
@@ -33,7 +33,7 @@
     {
       "id": 3,
       "state": "in-progress",
-      "outcome": "Source published and first candidate staged; hosted acceptance found a heartbeat clock bug. Repair independently reviewed; new complete source verification and candidate promotion pending."
+      "outcome": "Combined source accepted547/547,238browser checks,140fresh reviewed images and current11/11staging ceremony. Corrected candidate publication,exact hosted checks and full production readback pending."
     },
     {
       "id": 4,
@@ -107,6 +107,18 @@
         "coverageComplete": false,
         "evidence": "docs/S400_heartbeat-full-suite-attempt1.json",
         "reason": "Visual/mobile receipts retained prior candidate SHA after regenerated manifest. All bound source and pixels unchanged; canonical metadata-only rebind paths used, preserving original observation timestamps and actual review."
+      },
+      {
+        "attempt": "close-edition-post-signal",
+        "passed": 547,
+        "failed": 0,
+        "executed": 547,
+        "planned": 547,
+        "coverageComplete": true,
+        "exit": 1,
+        "accepted": false,
+        "evidence": "docs/S400_close-edition-concentration-attempt1.json",
+        "reason": "Every command succeeded, but native timing concentration rejected step1 at30.95% against30% ceiling. Same test code took134.5s in preceding successful complete run and244.0s in this run; timing variance retained, threshold unchanged."
       }
     ],
     "diagnosticSuffixAttempts": [
@@ -149,19 +161,45 @@
       "receiptId": "daef4605ea9f58ffd79328ff",
       "evidence": "docs/S400_integrated-preheartbeat-full-suite.json",
       "secondFullRun": true
+    },
+    "concentrationRetry": {
+      "state": "passed",
+      "plan": "Exact complete547-step native plan; unchanged current source; no reduced checks,threshold changes or hand-entered green signal",
+      "expectedSourceFingerprint": "42440b4073e449a8a3f7dad6",
+      "receiptId": "e945688fe70fda690a734a1b",
+      "actualSourceFingerprint": "42440b4073e449a8a3f7dad6",
+      "thresholdUnchanged": true
+    },
+    "finalCombinedFullSuite": {
+      "passed": 547,
+      "failed": 0,
+      "coverageComplete": true,
+      "sourceFingerprint": "42440b4073e449a8a3f7dad6",
+      "receiptId": "e945688fe70fda690a734a1b",
+      "concentration": {
+        "maxStepShare": 0.3,
+        "minActionableStepMs": 45000,
+        "dominantStep": 1,
+        "dominantCommand": "node --test tests/offline-recovery.unit.spec.mjs tests/offline-navigation.unit.spec.mjs tests/deploy-parity.unit.spec.mjs tests/news-article-css.unit.spec.mjs tests/served-parity.unit.spec.mjs tests/operational-admission.unit.spec.mjs tests/moderation-admission.unit.spec.mjs tests/public-rest-canary.unit.spec.mjs tests/metadata-backfill.unit.spec.mjs tests/heartbeat-snapshot.unit.spec.mjs",
+        "dominantDurationMs": 114584,
+        "dominantShare": 0.1843,
+        "breached": false
+      },
+      "evidence": "docs/S400_close-edition-full-suite.json",
+      "scope": "Complete unchanged post-signal retry accepted after timing-variance failure; all actual commands executed"
     }
   },
   "staging": {
-    "state": "publication-candidate-verified",
-    "receiptId": "2d2807dc86419206321e109f",
-    "files": 13877,
-    "deployId": "20261023175533",
+    "state": "corrected-combined-candidate-verified",
+    "receiptId": "7aac193603a63569e178d521",
+    "files": 13892,
+    "deployId": "20261023201845",
     "source": {
-      "commitSha": "ed7154a378ebe5108b91835788457c8364033306",
-      "fingerprint": "73e6277283999a110c2fb558"
+      "commitSha": "dc2e6e41cad185d5d1e4bb0753d53e4772428c95",
+      "fingerprint": "42440b4073e449a8a3f7dad6"
     },
     "artifact": {
-      "artifactRoot": "1cdc16125f0f0e8dad2421fbfd35b16bdf3cafe7f0b1e9a01283ff709456b139",
+      "artifactRoot": "e08f3ba2337413c0a5b2f74bb529cb330b8d0ab10db9a3edb08c5295e1218d13",
       "leafCount": 68
     },
     "ceremony": {
@@ -216,16 +254,17 @@
     }
   ],
   "closeout": {
-    "state": "Full canonical source closeout and merged verification complete; remote publication, exact hosted checks and production readback pending",
+    "state": "All source,projection,visual,mobile and staging gates accepted. Publication and exact-candidate production acceptance pending; final closeout follows live readback.",
     "score": 939,
     "velocity": 2,
     "cdr": "Reviewed; no new creative direction",
     "intelligence": {
       "ignis": "docs/S400_ignis-refresh.json",
-      "score": 45051,
+      "score": 45139,
       "entropy": 0.174,
       "genome": "23/25",
-      "doctorBlockingFailing": 0
+      "doctorBlockingFailing": 0,
+      "evidence": "docs/S400_ignis-refresh.json"
     },
     "impactBrief": "docs/CLOSEOUT_BRIEF_S400_2026-10-23.md",
     "statusBoard": "docs/CLOSEOUT_STATUS_BOARD.md",
@@ -234,6 +273,10 @@
       "round1": "3 record-consistency findings fixed",
       "round2": "PASS",
       "scope": "Prepared source closeout; final live release audit remains pending"
+    },
+    "contextGuard": {
+      "ok": true,
+      "evidence": ".cache/S400-final-context-guard.json"
     }
   },
   "priorStagingCandidates": [
@@ -323,6 +366,26 @@
         "total": 11,
         "path": "api/release-ceremony.json"
       }
+    },
+    {
+      "state": "publication-candidate-verified",
+      "receiptId": "2d2807dc86419206321e109f",
+      "files": 13877,
+      "deployId": "20261023175533",
+      "source": {
+        "commitSha": "ed7154a378ebe5108b91835788457c8364033306",
+        "fingerprint": "73e6277283999a110c2fb558"
+      },
+      "artifact": {
+        "artifactRoot": "1cdc16125f0f0e8dad2421fbfd35b16bdf3cafe7f0b1e9a01283ff709456b139",
+        "leafCount": 68
+      },
+      "ceremony": {
+        "state": "passed",
+        "passed": 11,
+        "total": 11,
+        "path": "api/release-ceremony.json"
+      }
     }
   ],
   "performance": {
@@ -369,7 +432,7 @@
       "scope": "Acceptance repair required by hosted compliance; no additional product outcome selected",
       "evidence": "docs/S400_hosted-compliance-attempt1.json",
       "regressions": "Four focused tests cover both rolling-window boundaries, added/deleted events, tampered counters, invalid/future timestamps, and real CLI byte preservation.",
-      "state": "Independent code review PASS; four regressions, native snapshot check,54-unit parity and six-sample drift preflight pass; fresh full verification pending",
+      "state": "Independent review and four regressions pass; current combined source complete547-step measurement accepted. Corrected candidate hosted acceptance pending.",
       "review": {
         "reviewer": "/root/studio_reviewer",
         "verdict": "PASS",
@@ -380,6 +443,16 @@
         "visual": "Canonical sourceBinding digest and all112 actual PNG hashes unchanged; only candidate metadata rebound; capturedAt and manual inspection preserved",
         "checks": "check-receipt-ordering,check-visual-review-receipt and check-mobile-runtime-contract pass",
         "freshCaptureClaim": false
+      },
+      "codeVerification": {
+        "passed": 547,
+        "failed": 0,
+        "coverageComplete": true,
+        "sourceFingerprint": "1391cdc65bbfc53df70d1e5d",
+        "receiptId": "9cb24e8970fa75b6bfee60d2",
+        "evidence": "docs/S400_heartbeat-code-full-suite.json",
+        "twoFullRuns": true,
+        "scope": "Heartbeat-corrected source before subsequent close-edition data integration"
       }
     }
   },
@@ -434,6 +507,25 @@
         "stats.json"
       ],
       "scope": "Generated live-feed update preserved in history; derived conflicts regenerated from combined inputs. Shell manifest differs only in volatile generatedAt, restored verified bytes. Complete source receipt revalidated."
+    },
+    "closeEdition": {
+      "cutoff": "a217f0697c",
+      "localMerge": "dc2e6e41ca",
+      "scope": "Preserved7scheduled commits including close edition,artwork,uptime,CIbeacons and Lighthouseledger.58derivedartifacts rebuilt and verified.",
+      "visual": {
+        "persona": 112,
+        "disclosures": 28,
+        "fresh": true,
+        "reviewer": "/root/visual_review",
+        "verdict": "PASS"
+      },
+      "browser": {
+        "passed": 238,
+        "failed": 0,
+        "retries": 0,
+        "scope": "215mobile+16renderedcontrast+7clearance"
+      },
+      "state": "Fresh full verification and238browser checks accepted; current publication staging pending"
     }
   },
   "hostedAttempts": [
@@ -442,11 +534,11 @@
       "required": {
         "e2e": {
           "run": 40001585780,
-          "state": "executed-compliance-failure; overall workflow may still be running"
+          "state": "failure: compliance heartbeat clock; browser e2e job success"
         },
         "lighthouse": {
           "run": 40001585713,
-          "state": "pending at observation"
+          "state": "success"
         },
         "accessibility": {
           "run": 40001585637,

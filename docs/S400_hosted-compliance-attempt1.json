@@ -7,7 +7,6 @@
   "failedStep": "Public intelligence sync check",
   "failedGate": "45/547: check-generated-drift-preflight — heartbeat only",
   "generatedAt": "2026-10-23T17:49:13.232Z",
-  "boundaryEvent": "2026-10-16T18:19:50.752Z",
   "observedAt": "2026-10-23T18:21:17Z",
   "difference": {
     "project": "website",
@@ -17,5 +16,6 @@
   },
   "reviewer": "/root/studio_reviewer",
   "cause": "Check excluded the generatedAt field but recomputed rolling counters against the current clock. Source events were unchanged.",
-  "remedy": "Check source consistency at validated committed generatedAt; generation still uses current time. Snapshot consistency does not establish freshness."
+  "remedy": "Check source consistency at validated committed generatedAt; generation still uses current time. Snapshot consistency does not establish freshness.",
+  "boundaryEvidence": "One source event crossed the seven-day window between snapshot generation and hosted verification; exact operator activity timestamp omitted from this public receipt."
 }

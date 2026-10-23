@@ -1,20 +1,20 @@
 {
   "inputHash": "no-inputs",
-  "iqScore": 45051,
-  "cachedAt": "2026-10-23T15:46:40.601Z",
+  "iqScore": 45139,
+  "cachedAt": "2026-10-23T20:11:59.453Z",
   "dirtyAdapters": [],
   "evidenceGraph": {
-    "generatedAt": "2026-10-23T15:46:40.599Z",
+    "generatedAt": "2026-10-23T20:11:59.449Z",
     "project": "vaultsparkstudios-website",
     "nodes": [
       {
         "id": "pillar:perception",
         "type": "pillar",
         "label": "PERCEPTION",
-        "summary": "PERCEPTION scored 5375/10,000 (C)",
+        "summary": "PERCEPTION scored 5376/10,000 (C)",
         "confidence": 0.75,
         "freshness": 1,
-        "impact": 0.537502,
+        "impact": 0.5375909999999999,
         "metadata": {
           "grade": "C",
           "question": "What can IGNIS see?"
@@ -165,7 +165,7 @@
         "summary": "Signal Richness scored 763/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.7632000000000001,
+        "impact": 0.76321,
         "metadata": {
           "grade": "A",
           "pillar": "perception"
@@ -182,7 +182,7 @@
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 482.05
+          "rawInput": 1227.09
         }
       },
       {
@@ -231,10 +231,10 @@
         "id": "cluster:perception.metadata_completeness",
         "type": "cluster",
         "label": "Metadata Completeness",
-        "summary": "Metadata Completeness scored 364/1000",
+        "summary": "Metadata Completeness scored 365/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.36433,
+        "impact": 0.3649,
         "metadata": {
           "grade": "D",
           "pillar": "perception"
@@ -303,7 +303,7 @@
         "summary": "Temporal Coverage scored 567/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.5667000000000001,
+        "impact": 0.56714,
         "metadata": {
           "grade": "C",
           "pillar": "perception"
@@ -316,25 +316,39 @@
         "summary": "Distribution Evenness = 0.1/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.0006,
+        "impact": 0.0005,
         "metadata": {
           "transfer": "exponential",
           "baseline": false,
-          "rawInput": 3.68
+          "rawInput": 3.8
         }
       },
       {
         "id": "factor:perception.temporal_coverage.temporal_entropy",
         "type": "factor",
         "label": "Temporal Entropy",
-        "summary": "Temporal Entropy = 96.0/100",
+        "summary": "Temporal Entropy = 95.3/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.96,
+        "impact": 0.9527,
         "metadata": {
           "transfer": "linear",
           "baseline": false,
-          "rawInput": 4.02
+          "rawInput": 3.97
+        }
+      },
+      {
+        "id": "factor:perception.temporal_coverage.observation_window_days",
+        "type": "factor",
+        "label": "Observation Window Days",
+        "summary": "Observation Window Days = 94.3/100",
+        "confidence": 0.8,
+        "freshness": 1,
+        "impact": 0.9427,
+        "metadata": {
+          "transfer": "logarithmic",
+          "baseline": false,
+          "rawInput": 200.84
         }
       },
       {
@@ -349,20 +363,6 @@
           "transfer": "sigmoid",
           "baseline": false,
           "rawInput": 100
-        }
-      },
-      {
-        "id": "factor:perception.temporal_coverage.observation_window_days",
-        "type": "factor",
-        "label": "Observation Window Days",
-        "summary": "Observation Window Days = 94.3/100",
-        "confidence": 0.8,
-        "freshness": 1,
-        "impact": 0.9426000000000001,
-        "metadata": {
-          "transfer": "logarithmic",
-          "baseline": false,
-          "rawInput": 200.66
         }
       },
       {
@@ -441,7 +441,7 @@
         "summary": "Data Provenance scored 719/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.71914,
+        "impact": 0.71909,
         "metadata": {
           "grade": "B",
           "pillar": "perception"
@@ -510,7 +510,7 @@
         "summary": "Noise Filtering scored 821/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.8214199999999999,
+        "impact": 0.8214,
         "metadata": {
           "grade": "A",
           "pillar": "perception"
@@ -624,7 +624,7 @@
         "metadata": {
           "transfer": "exponential",
           "baseline": false,
-          "rawInput": 74.83
+          "rawInput": 74.92
         }
       },
       {
@@ -648,7 +648,7 @@
         "summary": "Perception Depth scored 325/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.32477,
+        "impact": 0.32469,
         "metadata": {
           "grade": "D",
           "pillar": "perception"
@@ -714,10 +714,10 @@
         "id": "pillar:trajectory",
         "type": "pillar",
         "label": "TRAJECTORY",
-        "summary": "TRAJECTORY scored 3959/10,000 (D)",
+        "summary": "TRAJECTORY scored 3954/10,000 (D)",
         "confidence": 0.75,
         "freshness": 1,
-        "impact": 0.3959,
+        "impact": 0.395387,
         "metadata": {
           "grade": "D",
           "question": "Where is this going?"
@@ -730,7 +730,7 @@
         "summary": "Session Depth scored 595/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.59489,
+        "impact": 0.59496,
         "metadata": {
           "grade": "C",
           "pillar": "trajectory"
@@ -796,10 +796,10 @@
         "id": "cluster:trajectory.score_stability",
         "type": "cluster",
         "label": "Score Stability",
-        "summary": "Score Stability scored 567/1000",
+        "summary": "Score Stability scored 568/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.5667300000000001,
+        "impact": 0.56764,
         "metadata": {
           "grade": "C",
           "pillar": "trajectory"
@@ -816,7 +816,7 @@
         "metadata": {
           "transfer": "exponential",
           "baseline": false,
-          "rawInput": 1685
+          "rawInput": 1414
         }
       },
       {
@@ -837,14 +837,14 @@
         "id": "factor:trajectory.score_stability.trend_r2",
         "type": "factor",
         "label": "Trend R²",
-        "summary": "Trend R² = 9.2/100",
+        "summary": "Trend R² = 9.9/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.0915,
+        "impact": 0.099,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 1.86
+          "rawInput": 2.97
         }
       },
       {
@@ -1003,10 +1003,10 @@
         "id": "cluster:trajectory.predictability_index",
         "type": "cluster",
         "label": "Predictability Index",
-        "summary": "Predictability Index scored 543/1000",
+        "summary": "Predictability Index scored 541/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.54322,
+        "impact": 0.5407799999999999,
         "metadata": {
           "grade": "C",
           "pillar": "trajectory"
@@ -1141,12 +1141,12 @@
         "id": "cluster:trajectory.trend_decomposition",
         "type": "cluster",
         "label": "Trend Decomposition",
-        "summary": "Trend Decomposition scored 207/1000",
+        "summary": "Trend Decomposition scored 193/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.20697,
+        "impact": 0.19325,
         "metadata": {
-          "grade": "D",
+          "grade": "F",
           "pillar": "trajectory"
         }
       },
@@ -1161,7 +1161,7 @@
         "metadata": {
           "transfer": "gaussian",
           "baseline": false,
-          "rawInput": 4647.15
+          "rawInput": 4671.64
         }
       },
       {
@@ -1182,38 +1182,38 @@
         "id": "factor:trajectory.trend_decomposition.structural_trend_strength",
         "type": "factor",
         "label": "Structural Trend Strength",
-        "summary": "Structural Trend Strength = 2.0/100",
+        "summary": "Structural Trend Strength = 2.2/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.02,
+        "impact": 0.0218,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 1.86
+          "rawInput": 2.97
         }
       },
       {
         "id": "factor:trajectory.trend_decomposition.decomposition_model_fit_r2",
         "type": "factor",
         "label": "Decomposition Model Fit R²",
-        "summary": "Decomposition Model Fit R² = 2.0/100",
+        "summary": "Decomposition Model Fit R² = 2.2/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.02,
+        "impact": 0.0218,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 1.86
+          "rawInput": 2.97
         }
       },
       {
         "id": "cluster:trajectory.inflection_detection",
         "type": "cluster",
         "label": "Inflection Detection",
-        "summary": "Inflection Detection scored 336/1000",
+        "summary": "Inflection Detection scored 347/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.33619,
+        "impact": 0.34654,
         "metadata": {
           "grade": "D",
           "pillar": "trajectory"
@@ -1240,11 +1240,11 @@
         "summary": "Impact Duration = 4.0/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.04,
+        "impact": 0.0404,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 10.82
+          "rawInput": 10.92
         }
       },
       {
@@ -1265,14 +1265,14 @@
         "id": "factor:trajectory.inflection_detection.inflection_frequency",
         "type": "factor",
         "label": "Inflection Frequency",
-        "summary": "Inflection Frequency = 90.4/100",
+        "summary": "Inflection Frequency = 89.3/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.9043000000000001,
+        "impact": 0.8929,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 84.85
+          "rawInput": 82.35
         }
       },
       {
@@ -1348,10 +1348,10 @@
         "id": "cluster:trajectory.trajectory_confidence",
         "type": "cluster",
         "label": "Trajectory Confidence",
-        "summary": "Trajectory Confidence scored 430/1000",
+        "summary": "Trajectory Confidence scored 431/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.43002999999999997,
+        "impact": 0.4313,
         "metadata": {
           "grade": "C",
           "pillar": "trajectory"
@@ -1403,24 +1403,24 @@
         "id": "factor:trajectory.trajectory_confidence.trajectory_certainty_index",
         "type": "factor",
         "label": "Trajectory Certainty Index",
-        "summary": "Trajectory Certainty Index = 2.0/100",
+        "summary": "Trajectory Certainty Index = 2.2/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.02,
+        "impact": 0.0218,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 1.86
+          "rawInput": 2.97
         }
       },
       {
         "id": "pillar:execution",
         "type": "pillar",
         "label": "EXECUTION",
-        "summary": "EXECUTION scored 3722/10,000 (D)",
+        "summary": "EXECUTION scored 3723/10,000 (D)",
         "confidence": 0.75,
         "freshness": 1,
-        "impact": 0.372249,
+        "impact": 0.372259,
         "metadata": {
           "grade": "D",
           "question": "How well does it deliver?"
@@ -1571,7 +1571,7 @@
         "summary": "Delivery Diversity scored 172/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.17199,
+        "impact": 0.17212,
         "metadata": {
           "grade": "F",
           "pillar": "execution"
@@ -2120,10 +2120,10 @@
         "id": "pillar:vitality",
         "type": "pillar",
         "label": "VITALITY",
-        "summary": "VITALITY scored 5708/10,000 (C)",
+        "summary": "VITALITY scored 5697/10,000 (C)",
         "confidence": 0.75,
         "freshness": 1,
-        "impact": 0.5708439999999999,
+        "impact": 0.569703,
         "metadata": {
           "grade": "C",
           "question": "Is it alive and thriving?"
@@ -2133,10 +2133,10 @@
         "id": "cluster:vitality.event_recency",
         "type": "cluster",
         "label": "Event Recency",
-        "summary": "Event Recency scored 687/1000",
+        "summary": "Event Recency scored 686/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.68671,
+        "impact": 0.68586,
         "metadata": {
           "grade": "B",
           "pillar": "vitality"
@@ -2202,10 +2202,10 @@
         "id": "cluster:vitality.session_recency",
         "type": "cluster",
         "label": "Session Recency",
-        "summary": "Session Recency scored 551/1000",
+        "summary": "Session Recency scored 555/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.55076,
+        "impact": 0.55479,
         "metadata": {
           "grade": "C",
           "pillar": "vitality"
@@ -2254,17 +2254,17 @@
         }
       },
       {
-        "id": "factor:vitality.session_recency.session_decay_score",
+        "id": "factor:vitality.session_recency.session_freshness_confidence",
         "type": "factor",
-        "label": "Session Decay Score",
-        "summary": "Session Decay Score = 94.5/100",
+        "label": "Session Freshness Confidence",
+        "summary": "Session Freshness Confidence = 94.3/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.9455,
+        "impact": 0.9427,
         "metadata": {
-          "transfer": "exponential",
+          "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 0.66
+          "rawInput": 100
         }
       },
       {
@@ -2360,7 +2360,7 @@
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": -27.79
+          "rawInput": -33.91
         }
       },
       {
@@ -2374,7 +2374,7 @@
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": -644.39
+          "rawInput": -797.45
         }
       },
       {
@@ -2409,12 +2409,12 @@
         "id": "cluster:vitality.file_staleness",
         "type": "cluster",
         "label": "File Staleness",
-        "summary": "File Staleness scored 751/1000",
+        "summary": "File Staleness scored 747/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.75146,
+        "impact": 0.74694,
         "metadata": {
-          "grade": "A",
+          "grade": "B",
           "pillar": "vitality"
         }
       },
@@ -2481,7 +2481,7 @@
         "summary": "Recovery Responsiveness scored 651/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.6508999999999999,
+        "impact": 0.65073,
         "metadata": {
           "grade": "B",
           "pillar": "vitality"
@@ -2533,24 +2533,24 @@
         "id": "factor:vitality.recovery_responsiveness.recovery_readiness",
         "type": "factor",
         "label": "Recovery Readiness",
-        "summary": "Recovery Readiness = 93.8/100",
+        "summary": "Recovery Readiness = 93.6/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.9377,
+        "impact": 0.9359999999999999,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 96.71
+          "rawInput": 95.79
         }
       },
       {
         "id": "cluster:vitality.metabolic_rate",
         "type": "cluster",
         "label": "Metabolic Rate",
-        "summary": "Metabolic Rate scored 526/1000",
+        "summary": "Metabolic Rate scored 518/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.52563,
+        "impact": 0.51827,
         "metadata": {
           "grade": "C",
           "pillar": "vitality"
@@ -2560,14 +2560,14 @@
         "id": "factor:vitality.metabolic_rate.energy_consistency",
         "type": "factor",
         "label": "Energy Consistency",
-        "summary": "Energy Consistency = 1.7/100",
+        "summary": "Energy Consistency = 1.4/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.0168,
+        "impact": 0.013500000000000002,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 34.74
+          "rawInput": 32.49
         }
       },
       {
@@ -2595,7 +2595,7 @@
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 67.8
+          "rawInput": 67.5
         }
       },
       {
@@ -2619,7 +2619,7 @@
         "summary": "Health Indicators scored 344/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.34408,
+        "impact": 0.34435000000000004,
         "metadata": {
           "grade": "D",
           "pillar": "vitality"
@@ -2636,7 +2636,7 @@
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": -27.79
+          "rawInput": -33.91
         }
       },
       {
@@ -2650,7 +2650,7 @@
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": -476.6
+          "rawInput": -290.5
         }
       },
       {
@@ -2685,10 +2685,10 @@
         "id": "cluster:vitality.burnout_detection",
         "type": "cluster",
         "label": "Burnout Detection",
-        "summary": "Burnout Detection scored 846/1000",
+        "summary": "Burnout Detection scored 844/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.8456,
+        "impact": 0.84404,
         "metadata": {
           "grade": "A",
           "pillar": "vitality"
@@ -2754,13 +2754,27 @@
         "id": "cluster:vitality.seasonal_patterns",
         "type": "cluster",
         "label": "Seasonal Patterns",
-        "summary": "Seasonal Patterns scored 499/1000",
+        "summary": "Seasonal Patterns scored 496/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.49886,
+        "impact": 0.49633999999999995,
         "metadata": {
           "grade": "C",
           "pillar": "vitality"
+        }
+      },
+      {
+        "id": "factor:vitality.seasonal_patterns.time_of_day_pattern",
+        "type": "factor",
+        "label": "Time of Day Pattern",
+        "summary": "Time of Day Pattern = 5.5/100",
+        "confidence": 0.8,
+        "freshness": 1,
+        "impact": 0.0547,
+        "metadata": {
+          "transfer": "sigmoid",
+          "baseline": false,
+          "rawInput": 14.92
         }
       },
       {
@@ -2792,20 +2806,6 @@
         }
       },
       {
-        "id": "factor:vitality.seasonal_patterns.day_of_week_pattern",
-        "type": "factor",
-        "label": "Day of Week Pattern",
-        "summary": "Day of Week Pattern = 6.6/100",
-        "confidence": 0.8,
-        "freshness": 1,
-        "impact": 0.0662,
-        "metadata": {
-          "transfer": "sigmoid",
-          "baseline": false,
-          "rawInput": 17.47
-        }
-      },
-      {
         "id": "factor:vitality.seasonal_patterns.seasonal_optimization",
         "type": "factor",
         "label": "Seasonal Optimization",
@@ -2823,10 +2823,10 @@
         "id": "pillar:synthesis",
         "type": "pillar",
         "label": "SYNTHESIS",
-        "summary": "SYNTHESIS scored 3657/10,000 (D)",
+        "summary": "SYNTHESIS scored 3658/10,000 (D)",
         "confidence": 0.75,
         "freshness": 1,
-        "impact": 0.365735,
+        "impact": 0.365798,
         "metadata": {
           "grade": "D",
           "question": "How connected is the knowledge?"
@@ -2836,10 +2836,10 @@
         "id": "cluster:synthesis.portfolio_context",
         "type": "cluster",
         "label": "Portfolio Context",
-        "summary": "Portfolio Context scored 514/1000",
+        "summary": "Portfolio Context scored 513/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.51383,
+        "impact": 0.51273,
         "metadata": {
           "grade": "C",
           "pillar": "synthesis"
@@ -2877,14 +2877,14 @@
         "id": "factor:synthesis.portfolio_context.portfolio_growth_rate",
         "type": "factor",
         "label": "Portfolio Growth Rate",
-        "summary": "Portfolio Growth Rate = 5.6/100",
+        "summary": "Portfolio Growth Rate = 3.1/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.056100000000000004,
+        "impact": 0.0313,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": -27.79
+          "rawInput": -33.91
         }
       },
       {
@@ -3115,7 +3115,7 @@
         "summary": "Genome Readiness scored 333/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.33319,
+        "impact": 0.33337,
         "metadata": {
           "grade": "D",
           "pillar": "synthesis"
@@ -3253,7 +3253,7 @@
         "summary": "Knowledge Graph scored 345/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.34501,
+        "impact": 0.3454,
         "metadata": {
           "grade": "D",
           "pillar": "synthesis"
@@ -3319,10 +3319,10 @@
         "id": "cluster:synthesis.insight_cross_pollination",
         "type": "cluster",
         "label": "Insight Cross-Pollination",
-        "summary": "Insight Cross-Pollination scored 586/1000",
+        "summary": "Insight Cross-Pollination scored 588/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.58647,
+        "impact": 0.58785,
         "metadata": {
           "grade": "C",
           "pillar": "synthesis"
@@ -3388,10 +3388,10 @@
         "id": "cluster:synthesis.ecosystem_integration",
         "type": "cluster",
         "label": "Ecosystem Integration",
-        "summary": "Ecosystem Integration scored 270/1000",
+        "summary": "Ecosystem Integration scored 269/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.2696,
+        "impact": 0.26942,
         "metadata": {
           "grade": "D",
           "pillar": "synthesis"
@@ -3457,10 +3457,10 @@
         "id": "cluster:synthesis.collective_intelligence",
         "type": "cluster",
         "label": "Collective Intelligence",
-        "summary": "Collective Intelligence scored 366/1000",
+        "summary": "Collective Intelligence scored 367/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.36647,
+        "impact": 0.36695999999999995,
         "metadata": {
           "grade": "D",
           "pillar": "synthesis"
@@ -3526,10 +3526,10 @@
         "id": "pillar:cognition",
         "type": "pillar",
         "label": "COGNITION",
-        "summary": "COGNITION scored 4458/10,000 (C)",
+        "summary": "COGNITION scored 4568/10,000 (C)",
         "confidence": 0.75,
         "freshness": 1,
-        "impact": 0.445779,
+        "impact": 0.456762,
         "metadata": {
           "grade": "C",
           "question": "How well does IGNIS think and reason?"
@@ -3539,10 +3539,10 @@
         "id": "cluster:cognition.logical_consistency",
         "type": "cluster",
         "label": "Logical Consistency",
-        "summary": "Logical Consistency scored 424/1000",
+        "summary": "Logical Consistency scored 425/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.42434,
+        "impact": 0.42484,
         "metadata": {
           "grade": "C",
           "pillar": "cognition"
@@ -3580,14 +3580,14 @@
         "id": "factor:cognition.logical_consistency.trend_linearity",
         "type": "factor",
         "label": "Trend Linearity",
-        "summary": "Trend Linearity = 2.0/100",
+        "summary": "Trend Linearity = 2.2/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.02,
+        "impact": 0.0218,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 1.86
+          "rawInput": 2.97
         }
       },
       {
@@ -3608,10 +3608,10 @@
         "id": "cluster:cognition.causal_reasoning",
         "type": "cluster",
         "label": "Causal Reasoning",
-        "summary": "Causal Reasoning scored 286/1000",
+        "summary": "Causal Reasoning scored 285/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.28552,
+        "impact": 0.2848,
         "metadata": {
           "grade": "D",
           "pillar": "cognition"
@@ -3642,7 +3642,7 @@
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": -378.74
+          "rawInput": -331.58
         }
       },
       {
@@ -3680,7 +3680,7 @@
         "summary": "Abstraction Ability scored 680/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.67974,
+        "impact": 0.67976,
         "metadata": {
           "grade": "B",
           "pillar": "cognition"
@@ -3746,27 +3746,13 @@
         "id": "cluster:cognition.learning_rate",
         "type": "cluster",
         "label": "Learning Rate",
-        "summary": "Learning Rate scored 402/1000",
+        "summary": "Learning Rate scored 498/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.40227999999999997,
+        "impact": 0.49817,
         "metadata": {
           "grade": "C",
           "pillar": "cognition"
-        }
-      },
-      {
-        "id": "factor:cognition.learning_rate.recent_growth_acceleration",
-        "type": "factor",
-        "label": "Recent Growth Acceleration",
-        "summary": "Recent Growth Acceleration = 0.0/100",
-        "confidence": 0.8,
-        "freshness": 1,
-        "impact": 0,
-        "metadata": {
-          "transfer": "sigmoid",
-          "baseline": false,
-          "rawInput": -285.71
         }
       },
       {
@@ -3781,6 +3767,20 @@
           "transfer": "logarithmic",
           "baseline": false,
           "rawInput": 0.01
+        }
+      },
+      {
+        "id": "factor:cognition.learning_rate.recent_growth_acceleration",
+        "type": "factor",
+        "label": "Recent Growth Acceleration",
+        "summary": "Recent Growth Acceleration = 96.0/100",
+        "confidence": 0.8,
+        "freshness": 1,
+        "impact": 0.96,
+        "metadata": {
+          "transfer": "sigmoid",
+          "baseline": false,
+          "rawInput": 171.41
         }
       },
       {
@@ -3815,10 +3815,10 @@
         "id": "cluster:cognition.decision_quality",
         "type": "cluster",
         "label": "Decision Quality",
-        "summary": "Decision Quality scored 534/1000",
+        "summary": "Decision Quality scored 543/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.534,
+        "impact": 0.54263,
         "metadata": {
           "grade": "C",
           "pillar": "cognition"
@@ -3887,7 +3887,7 @@
         "summary": "Assumption Tracking scored 366/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.36619,
+        "impact": 0.36613,
         "metadata": {
           "grade": "D",
           "pillar": "cognition"
@@ -3956,7 +3956,7 @@
         "summary": "Inference Chains scored 272/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.27187,
+        "impact": 0.27205,
         "metadata": {
           "grade": "D",
           "pillar": "cognition"
@@ -4094,7 +4094,7 @@
         "summary": "Meta-Reasoning scored 413/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.41320999999999997,
+        "impact": 0.41331,
         "metadata": {
           "grade": "C",
           "pillar": "cognition"
@@ -4160,10 +4160,10 @@
         "id": "cluster:cognition.cognitive_load",
         "type": "cluster",
         "label": "Cognitive Load",
-        "summary": "Cognitive Load scored 446/1000",
+        "summary": "Cognitive Load scored 449/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.44555,
+        "impact": 0.449,
         "metadata": {
           "grade": "C",
           "pillar": "cognition"
@@ -4229,10 +4229,10 @@
         "id": "pillar:foresight",
         "type": "pillar",
         "label": "FORESIGHT",
-        "summary": "FORESIGHT scored 4093/10,000 (C)",
+        "summary": "FORESIGHT scored 4077/10,000 (C)",
         "confidence": 0.75,
         "freshness": 1,
-        "impact": 0.40928200000000003,
+        "impact": 0.40774499999999997,
         "metadata": {
           "grade": "C",
           "question": "How accurately does IGNIS predict?"
@@ -4242,10 +4242,10 @@
         "id": "cluster:foresight.trend_extrapolation",
         "type": "cluster",
         "label": "Trend Extrapolation",
-        "summary": "Trend Extrapolation scored 384/1000",
+        "summary": "Trend Extrapolation scored 358/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.38391000000000003,
+        "impact": 0.35788,
         "metadata": {
           "grade": "D",
           "pillar": "foresight"
@@ -4255,28 +4255,28 @@
         "id": "factor:foresight.trend_extrapolation.linear_trend_accuracy",
         "type": "factor",
         "label": "Linear Trend Accuracy",
-        "summary": "Linear Trend Accuracy = 2.0/100",
+        "summary": "Linear Trend Accuracy = 2.2/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.02,
+        "impact": 0.0218,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 1.86
+          "rawInput": 2.97
         }
       },
       {
         "id": "factor:foresight.trend_extrapolation.extrapolation_confidence",
         "type": "factor",
         "label": "Extrapolation Confidence",
-        "summary": "Extrapolation Confidence = 2.0/100",
+        "summary": "Extrapolation Confidence = 2.2/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.02,
+        "impact": 0.0218,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 1.86
+          "rawInput": 2.97
         }
       },
       {
@@ -4286,25 +4286,25 @@
         "summary": "History Depth for Trend = 95.9/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.9587,
+        "impact": 0.9589,
         "metadata": {
           "transfer": "logarithmic",
           "baseline": false,
-          "rawInput": 33
+          "rawInput": 34
         }
       },
       {
-        "id": "factor:foresight.trend_extrapolation.recent_trend_strength",
+        "id": "factor:foresight.trend_extrapolation.cadence_regularity",
         "type": "factor",
-        "label": "Recent Trend Strength",
-        "summary": "Recent Trend Strength = 93.0/100",
+        "label": "Cadence Regularity",
+        "summary": "Cadence Regularity = 12.3/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.9304000000000001,
+        "impact": 0.12300000000000001,
         "metadata": {
-          "transfer": "sigmoid",
+          "transfer": "exponential",
           "baseline": false,
-          "rawInput": 93.11
+          "rawInput": 1.03
         }
       },
       {
@@ -4314,7 +4314,7 @@
         "summary": "Risk Detection scored 316/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.31568999999999997,
+        "impact": 0.31568,
         "metadata": {
           "grade": "D",
           "pillar": "foresight"
@@ -4380,10 +4380,10 @@
         "id": "cluster:foresight.opportunity_mapping",
         "type": "cluster",
         "label": "Opportunity Mapping",
-        "summary": "Opportunity Mapping scored 403/1000",
+        "summary": "Opportunity Mapping scored 402/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.40263,
+        "impact": 0.40164999999999995,
         "metadata": {
           "grade": "C",
           "pillar": "foresight"
@@ -4452,7 +4452,7 @@
         "summary": "Scenario Quality scored 302/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.30152999999999996,
+        "impact": 0.30162,
         "metadata": {
           "grade": "D",
           "pillar": "foresight"
@@ -4518,10 +4518,10 @@
         "id": "cluster:foresight.prediction_accuracy",
         "type": "cluster",
         "label": "Prediction Accuracy",
-        "summary": "Prediction Accuracy scored 510/1000",
+        "summary": "Prediction Accuracy scored 512/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.50999,
+        "impact": 0.51173,
         "metadata": {
           "grade": "C",
           "pillar": "foresight"
@@ -4573,14 +4573,14 @@
         "id": "factor:foresight.prediction_accuracy.trend_prediction_accuracy",
         "type": "factor",
         "label": "Trend Prediction Accuracy",
-        "summary": "Trend Prediction Accuracy = 94.3/100",
+        "summary": "Trend Prediction Accuracy = 94.2/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.9426000000000001,
+        "impact": 0.9418000000000001,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 99.94
+          "rawInput": 99.35
         }
       },
       {
@@ -4590,9 +4590,9 @@
         "summary": "Calibration scored 400/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.40049,
+        "impact": 0.39973000000000003,
         "metadata": {
-          "grade": "C",
+          "grade": "D",
           "pillar": "foresight"
         }
       },
@@ -4659,7 +4659,7 @@
         "summary": "Horizon Coverage scored 764/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.76388,
+        "impact": 0.76409,
         "metadata": {
           "grade": "A",
           "pillar": "foresight"
@@ -4725,10 +4725,10 @@
         "id": "cluster:foresight.early_warning",
         "type": "cluster",
         "label": "Early Warning",
-        "summary": "Early Warning scored 251/1000",
+        "summary": "Early Warning scored 260/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.25086,
+        "impact": 0.25987,
         "metadata": {
           "grade": "D",
           "pillar": "foresight"
@@ -4797,7 +4797,7 @@
         "summary": "Predictive Value scored 364/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.36421,
+        "impact": 0.36413,
         "metadata": {
           "grade": "D",
           "pillar": "foresight"
@@ -4838,11 +4838,11 @@
         "summary": "Overall Predictive Value = 1.9/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.018600000000000002,
+        "impact": 0.0194,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 0.93
+          "rawInput": 1.48
         }
       },
       {
@@ -4863,10 +4863,10 @@
         "id": "cluster:foresight.anticipatory_action",
         "type": "cluster",
         "label": "Anticipatory Action",
-        "summary": "Anticipatory Action scored 434/1000",
+        "summary": "Anticipatory Action scored 440/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.43393,
+        "impact": 0.44029,
         "metadata": {
           "grade": "C",
           "pillar": "foresight"
@@ -4932,10 +4932,10 @@
         "id": "pillar:creativity",
         "type": "pillar",
         "label": "CREATIVITY",
-        "summary": "CREATIVITY scored 3588/10,000 (D)",
+        "summary": "CREATIVITY scored 3592/10,000 (D)",
         "confidence": 0.75,
         "freshness": 1,
-        "impact": 0.358849,
+        "impact": 0.359232,
         "metadata": {
           "grade": "D",
           "question": "How innovative is the work?"
@@ -5017,7 +5017,7 @@
         "summary": "Cross-Pollination scored 220/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.22003999999999999,
+        "impact": 0.21975,
         "metadata": {
           "grade": "D",
           "pillar": "creativity"
@@ -5221,10 +5221,10 @@
         "id": "cluster:creativity.pattern_breaking",
         "type": "cluster",
         "label": "Pattern Breaking",
-        "summary": "Pattern Breaking scored 509/1000",
+        "summary": "Pattern Breaking scored 506/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.50903,
+        "impact": 0.50644,
         "metadata": {
           "grade": "C",
           "pillar": "creativity"
@@ -5251,11 +5251,11 @@
         "summary": "Creative Risk Taking = 2.6/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.0265,
+        "impact": 0.0264,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 5.5
+          "rawInput": 5.42
         }
       },
       {
@@ -5290,10 +5290,10 @@
         "id": "cluster:creativity.contrarian_analysis",
         "type": "cluster",
         "label": "Contrarian Analysis",
-        "summary": "Contrarian Analysis scored 334/1000",
+        "summary": "Contrarian Analysis scored 337/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.3343,
+        "impact": 0.33736,
         "metadata": {
           "grade": "D",
           "pillar": "creativity"
@@ -5431,7 +5431,7 @@
         "summary": "What-If Generation scored 487/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.48725999999999997,
+        "impact": 0.48735,
         "metadata": {
           "grade": "C",
           "pillar": "creativity"
@@ -5566,10 +5566,10 @@
         "id": "cluster:creativity.creative_confidence",
         "type": "cluster",
         "label": "Creative Confidence",
-        "summary": "Creative Confidence scored 439/1000",
+        "summary": "Creative Confidence scored 442/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.43933999999999995,
+        "impact": 0.44239999999999996,
         "metadata": {
           "grade": "C",
           "pillar": "creativity"
@@ -5635,10 +5635,10 @@
         "id": "pillar:expression",
         "type": "pillar",
         "label": "EXPRESSION",
-        "summary": "EXPRESSION scored 4962/10,000 (C)",
+        "summary": "EXPRESSION scored 4959/10,000 (C)",
         "confidence": 0.75,
         "freshness": 1,
-        "impact": 0.49618,
+        "impact": 0.49589099999999997,
         "metadata": {
           "grade": "C",
           "question": "How well does IGNIS communicate?"
@@ -5651,7 +5651,7 @@
         "summary": "Insight Density scored 501/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.50148,
+        "impact": 0.50112,
         "metadata": {
           "grade": "C",
           "pillar": "expression"
@@ -5717,10 +5717,10 @@
         "id": "cluster:expression.recommendation_quality",
         "type": "cluster",
         "label": "Recommendation Quality",
-        "summary": "Recommendation Quality scored 302/1000",
+        "summary": "Recommendation Quality scored 300/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.30213999999999996,
+        "impact": 0.30038,
         "metadata": {
           "grade": "D",
           "pillar": "expression"
@@ -5789,7 +5789,7 @@
         "summary": "Narrative Coherence scored 459/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.45933999999999997,
+        "impact": 0.4592,
         "metadata": {
           "grade": "C",
           "pillar": "expression"
@@ -5813,14 +5813,14 @@
         "id": "factor:expression.narrative_coherence.score_trend_coherence",
         "type": "factor",
         "label": "Score Trend Coherence",
-        "summary": "Score Trend Coherence = 2.0/100",
+        "summary": "Score Trend Coherence = 2.2/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.02,
+        "impact": 0.0218,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 1.86
+          "rawInput": 2.97
         }
       },
       {
@@ -5993,10 +5993,10 @@
         "id": "cluster:expression.voice_consistency",
         "type": "cluster",
         "label": "Voice Consistency",
-        "summary": "Voice Consistency scored 567/1000",
+        "summary": "Voice Consistency scored 566/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.5669299999999999,
+        "impact": 0.5661799999999999,
         "metadata": {
           "grade": "C",
           "pillar": "expression"
@@ -6134,7 +6134,7 @@
         "summary": "Evidence Quality scored 655/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.65454,
+        "impact": 0.6545700000000001,
         "metadata": {
           "grade": "B",
           "pillar": "expression"
@@ -6172,14 +6172,14 @@
         "id": "factor:expression.evidence_quality.history_evidence_depth",
         "type": "factor",
         "label": "History Evidence Depth",
-        "summary": "History Evidence Depth = 95.3/100",
+        "summary": "History Evidence Depth = 95.4/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.9531999999999999,
+        "impact": 0.9541,
         "metadata": {
           "transfer": "logarithmic",
           "baseline": false,
-          "rawInput": 33
+          "rawInput": 34
         }
       },
       {
@@ -6272,7 +6272,7 @@
         "summary": "Meta-Communication scored 359/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.35902,
+        "impact": 0.35904,
         "metadata": {
           "grade": "D",
           "pillar": "expression"
@@ -6338,10 +6338,10 @@
         "id": "pillar:potential",
         "type": "pillar",
         "label": "POTENTIAL",
-        "summary": "POTENTIAL scored 4876/10,000 (C)",
+        "summary": "POTENTIAL scored 4883/10,000 (C)",
         "confidence": 0.75,
         "freshness": 1,
-        "impact": 0.487555,
+        "impact": 0.48828900000000003,
         "metadata": {
           "grade": "C",
           "question": "What is the unrealized ceiling?"
@@ -6351,41 +6351,41 @@
         "id": "cluster:potential.growth_trajectory",
         "type": "cluster",
         "label": "Growth Trajectory",
-        "summary": "Growth Trajectory scored 363/1000",
+        "summary": "Growth Trajectory scored 462/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.36252999999999996,
+        "impact": 0.46179000000000003,
         "metadata": {
-          "grade": "D",
+          "grade": "C",
           "pillar": "potential"
-        }
-      },
-      {
-        "id": "factor:potential.growth_trajectory.growth_acceleration",
-        "type": "factor",
-        "label": "Growth Acceleration",
-        "summary": "Growth Acceleration = 0.0/100",
-        "confidence": 0.8,
-        "freshness": 1,
-        "impact": 0,
-        "metadata": {
-          "transfer": "sigmoid",
-          "baseline": false,
-          "rawInput": -285.71
         }
       },
       {
         "id": "factor:potential.growth_trajectory.commitment_trend_r2",
         "type": "factor",
         "label": "Commitment Trend R²",
-        "summary": "Commitment Trend R² = 2.0/100",
+        "summary": "Commitment Trend R² = 2.2/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.02,
+        "impact": 0.0218,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 1.86
+          "rawInput": 2.97
+        }
+      },
+      {
+        "id": "factor:potential.growth_trajectory.growth_acceleration",
+        "type": "factor",
+        "label": "Growth Acceleration",
+        "summary": "Growth Acceleration = 96.0/100",
+        "confidence": 0.8,
+        "freshness": 1,
+        "impact": 0.96,
+        "metadata": {
+          "transfer": "sigmoid",
+          "baseline": false,
+          "rawInput": 171.41
         }
       },
       {
@@ -6395,11 +6395,11 @@
         "summary": "History Depth = 95.9/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.9587,
+        "impact": 0.9589,
         "metadata": {
           "transfer": "logarithmic",
           "baseline": false,
-          "rawInput": 33
+          "rawInput": 34
         }
       },
       {
@@ -6420,10 +6420,10 @@
         "id": "cluster:potential.capability_gaps",
         "type": "cluster",
         "label": "Capability Gaps",
-        "summary": "Capability Gaps scored 536/1000",
+        "summary": "Capability Gaps scored 535/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.53586,
+        "impact": 0.53537,
         "metadata": {
           "grade": "C",
           "pillar": "potential"
@@ -6489,10 +6489,10 @@
         "id": "cluster:potential.resource_utilization",
         "type": "cluster",
         "label": "Resource Utilization",
-        "summary": "Resource Utilization scored 420/1000",
+        "summary": "Resource Utilization scored 422/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.42021,
+        "impact": 0.42239,
         "metadata": {
           "grade": "C",
           "pillar": "potential"
@@ -6558,55 +6558,55 @@
         "id": "cluster:potential.ceiling_distance",
         "type": "cluster",
         "label": "Ceiling Distance",
-        "summary": "Ceiling Distance scored 578/1000",
+        "summary": "Ceiling Distance scored 490/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.57827,
+        "impact": 0.49016000000000004,
         "metadata": {
           "grade": "C",
           "pillar": "potential"
         }
       },
       {
-        "id": "factor:potential.ceiling_distance.next_tier_distance",
+        "id": "factor:potential.ceiling_distance.tier_progress",
         "type": "factor",
-        "label": "Next Tier Distance",
-        "summary": "Next Tier Distance = 1.8/100",
+        "label": "Tier Progress",
+        "summary": "Tier Progress = 1.8/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.0179,
+        "impact": 0.018000000000000002,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 0.48
+          "rawInput": 0.51
         }
       },
       {
         "id": "factor:potential.ceiling_distance.historical_max_distance",
         "type": "factor",
         "label": "Historical Max Distance",
-        "summary": "Historical Max Distance = 3.6/100",
+        "summary": "Historical Max Distance = 3.4/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.0358,
+        "impact": 0.034300000000000004,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 9.35
+          "rawInput": 8.81
         }
       },
       {
-        "id": "factor:potential.ceiling_distance.tier_progress",
+        "id": "factor:potential.ceiling_distance.next_tier_distance",
         "type": "factor",
-        "label": "Tier Progress",
-        "summary": "Tier Progress = 93.9/100",
+        "label": "Next Tier Distance",
+        "summary": "Next Tier Distance = 6.9/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.9392,
+        "impact": 0.0693,
         "metadata": {
           "transfer": "sigmoid",
           "baseline": false,
-          "rawInput": 97.61
+          "rawInput": 18.09
         }
       },
       {
@@ -6627,10 +6627,10 @@
         "id": "cluster:potential.unlock_conditions",
         "type": "cluster",
         "label": "Unlock Conditions",
-        "summary": "Unlock Conditions scored 477/1000",
+        "summary": "Unlock Conditions scored 467/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.47731999999999997,
+        "impact": 0.46667000000000003,
         "metadata": {
           "grade": "C",
           "pillar": "potential"
@@ -6699,10 +6699,24 @@
         "summary": "Scaling Readiness scored 567/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.56656,
+        "impact": 0.56664,
         "metadata": {
           "grade": "C",
           "pillar": "potential"
+        }
+      },
+      {
+        "id": "factor:potential.scaling_readiness.cadence_maturity",
+        "type": "factor",
+        "label": "Cadence Maturity",
+        "summary": "Cadence Maturity = 1.7/100",
+        "confidence": 0.8,
+        "freshness": 1,
+        "impact": 0.0173,
+        "metadata": {
+          "transfer": "sigmoid",
+          "baseline": false,
+          "rawInput": 0
         }
       },
       {
@@ -6734,31 +6748,17 @@
         }
       },
       {
-        "id": "factor:potential.scaling_readiness.cadence_maturity",
-        "type": "factor",
-        "label": "Cadence Maturity",
-        "summary": "Cadence Maturity = 1.8/100",
-        "confidence": 0.8,
-        "freshness": 1,
-        "impact": 0.0176,
-        "metadata": {
-          "transfer": "sigmoid",
-          "baseline": false,
-          "rawInput": 0.28
-        }
-      },
-      {
         "id": "factor:potential.scaling_readiness.multi_session_maturity",
         "type": "factor",
         "label": "Multi-Session Maturity",
-        "summary": "Multi-Session Maturity = 95.3/100",
+        "summary": "Multi-Session Maturity = 95.4/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.9531999999999999,
+        "impact": 0.9541,
         "metadata": {
           "transfer": "logarithmic",
           "baseline": false,
-          "rawInput": 33
+          "rawInput": 34
         }
       },
       {
@@ -6768,7 +6768,7 @@
         "summary": "Latent Patterns scored 638/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.63837,
+        "impact": 0.63788,
         "metadata": {
           "grade": "B",
           "pillar": "potential"
@@ -6834,10 +6834,10 @@
         "id": "cluster:potential.improvement_velocity",
         "type": "cluster",
         "label": "Improvement Velocity",
-        "summary": "Improvement Velocity scored 194/1000",
+        "summary": "Improvement Velocity scored 197/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.19387000000000001,
+        "impact": 0.19669,
         "metadata": {
           "grade": "F",
           "pillar": "potential"
@@ -6906,7 +6906,7 @@
         "summary": "Architectural Capacity scored 712/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.7120700000000001,
+        "impact": 0.71228,
         "metadata": {
           "grade": "B",
           "pillar": "potential"
@@ -6955,27 +6955,27 @@
         }
       },
       {
-        "id": "factor:potential.architectural_capacity.transfer_function_utilization",
+        "id": "factor:potential.architectural_capacity.history_architecture_depth",
         "type": "factor",
-        "label": "Transfer Function Utilization",
-        "summary": "Transfer Function Utilization = 94.3/100",
+        "label": "History Architecture Depth",
+        "summary": "History Architecture Depth = 94.4/100",
         "confidence": 0.8,
         "freshness": 1,
-        "impact": 0.9427,
+        "impact": 0.9438,
         "metadata": {
-          "transfer": "sigmoid",
+          "transfer": "logarithmic",
           "baseline": false,
-          "rawInput": 100
+          "rawInput": 34
         }
       },
       {
         "id": "cluster:potential.genome_readiness",
         "type": "cluster",
         "label": "Genome Readiness",
-        "summary": "Genome Readiness scored 443/1000",
+        "summary": "Genome Readiness scored 444/1000",
         "confidence": 0.7,
         "freshness": 1,
-        "impact": 0.44332,
+        "impact": 0.44353,
         "metadata": {
           "grade": "C",
           "pillar": "potential"
@@ -7038,6 +7038,38 @@
         }
       },
       {
+        "id": "adapter:social-dashboard",
+        "type": "insight",
+        "label": "social-dashboard",
+        "summary": "Evidence adapter social-dashboard",
+        "confidence": 0.72,
+        "freshness": 1,
+        "impact": 0.45,
+        "metadata": {
+          "adapterId": "social-dashboard-vaultsparkstudios-website"
+        }
+      },
+      {
+        "id": "event:social-dashboard-vaultsparkstudios-website-baed2cd04e174bd5",
+        "type": "event",
+        "label": "ops.social-proxy",
+        "summary": "ops.social-proxy from social-dashboard",
+        "confidence": 0.7199995176852484,
+        "freshness": 0.9999993301184006,
+        "impact": 0.6999995310828804,
+        "metadata": {
+          "adapter": "social-dashboard",
+          "adapterId": "social-dashboard-vaultsparkstudios-website",
+          "sourceId": "social-dashboard-vaultsparkstudios-website",
+          "tags": [
+            "ops-signals",
+            "social-dashboard",
+            "proxy"
+          ],
+          "timestamp": "2026-10-23T20:11:59.281Z"
+        }
+      },
+      {
         "id": "adapter:pr-reviews",
         "type": "insight",
         "label": "pr-reviews",
@@ -7050,13 +7082,13 @@
         }
       },
       {
-        "id": "event:pr-reviews-vaultsparkstudios-website-2cc83074f4fddf53",
+        "id": "event:pr-reviews-vaultsparkstudios-website-717a88f91e70d8af",
         "type": "event",
         "label": "ops.review-proxy",
         "summary": "ops.review-proxy from pr-reviews",
-        "confidence": 0.7199997083006207,
-        "freshness": 0.9999995948619731,
-        "impact": 0.6999997164033811,
+        "confidence": 0.7199995119090258,
+        "freshness": 0.9999993220958692,
+        "impact": 0.6999995254671084,
         "metadata": {
           "adapter": "pr-reviews",
           "adapterId": "pr-reviews-vaultsparkstudios-website",
@@ -7066,7 +7098,7 @@
             "pr-reviews",
             "proxy"
           ],
-          "timestamp": "2026-10-23T15:46:40.498Z"
+          "timestamp": "2026-10-23T20:11:59.280Z"
         }
       },
       {
@@ -7082,13 +7114,13 @@
         }
       },
       {
-        "id": "event:studio-hub-vaultsparkstudios-website-050c02269fe724e8",
+        "id": "event:studio-hub-vaultsparkstudios-website-b9c292e808e28df6",
         "type": "event",
         "label": "ops.hub-proxy",
         "summary": "ops.hub-proxy from studio-hub",
-        "confidence": 0.7199994166013594,
-        "freshness": 0.9999991897241103,
-        "impact": 0.6999994328068772,
+        "confidence": 0.7199990238183824,
+        "freshness": 0.9999986441921979,
+        "impact": 0.6999990509345385,
         "metadata": {
           "adapter": "studio-hub",
           "adapterId": "studio-hub-vaultsparkstudios-website",
@@ -7098,39 +7130,7 @@
             "studio-hub",
             "proxy"
           ],
-          "timestamp": "2026-10-23T15:46:40.498Z"
-        }
-      },
-      {
-        "id": "adapter:social-dashboard",
-        "type": "insight",
-        "label": "social-dashboard",
-        "summary": "Evidence adapter social-dashboard",
-        "confidence": 0.72,
-        "freshness": 1,
-        "impact": 0.45,
-        "metadata": {
-          "adapterId": "social-dashboard-vaultsparkstudios-website"
-        }
-      },
-      {
-        "id": "event:social-dashboard-vaultsparkstudios-website-dd748f52b0b0ee6d",
-        "type": "event",
-        "label": "ops.social-proxy",
-        "summary": "ops.social-proxy from social-dashboard",
-        "confidence": 0.7199997083006207,
-        "freshness": 0.9999995948619731,
-        "impact": 0.6999997164033811,
-        "metadata": {
-          "adapter": "social-dashboard",
-          "adapterId": "social-dashboard-vaultsparkstudios-website",
-          "sourceId": "social-dashboard-vaultsparkstudios-website",
-          "tags": [
-            "ops-signals",
-            "social-dashboard",
-            "proxy"
-          ],
-          "timestamp": "2026-10-23T15:46:40.498Z"
+          "timestamp": "2026-10-23T20:11:59.280Z"
         }
       },
       {
@@ -7146,13 +7146,13 @@
         }
       },
       {
-        "id": "event:founder-approvals-vaultsparkstudios-website-2dba19c735250533",
+        "id": "event:founder-approvals-vaultsparkstudios-website-99b6995407b3ee91",
         "type": "event",
         "label": "ops.founder-direction",
         "summary": "ops.founder-direction from founder-approvals",
-        "confidence": 0.7199997054125086,
-        "freshness": 0.9999995908507063,
-        "impact": 0.6999997135954944,
+        "confidence": 0.7199995090209145,
+        "freshness": 0.9999993180846035,
+        "impact": 0.6999995226592224,
         "metadata": {
           "adapter": "founder-approvals",
           "adapterId": "founder-approvals-vaultsparkstudios-website",
@@ -7162,103 +7162,7 @@
             "founder-approvals",
             "proxy"
           ],
-          "timestamp": "2026-10-23T15:46:40.497Z"
-        }
-      },
-      {
-        "id": "adapter:deploys",
-        "type": "insight",
-        "label": "deploys",
-        "summary": "Evidence adapter deploys",
-        "confidence": 0.72,
-        "freshness": 1,
-        "impact": 0.45,
-        "metadata": {
-          "adapterId": "deploys-vaultsparkstudios-website"
-        }
-      },
-      {
-        "id": "event:deploys-vaultsparkstudios-website-e86f228bde405fec",
-        "type": "event",
-        "label": "ops.deploy-status",
-        "summary": "ops.deploy-status from deploys",
-        "confidence": 0.7199964303008692,
-        "freshness": 0.9999950420845407,
-        "impact": 0.6999965294591785,
-        "metadata": {
-          "adapter": "deploys",
-          "adapterId": "deploys-vaultsparkstudios-website",
-          "sourceId": "deploys-vaultsparkstudios-website",
-          "tags": [
-            "ops-signals",
-            "deploys",
-            "proxy"
-          ],
-          "timestamp": "2026-10-23T15:46:40.496Z"
-        }
-      },
-      {
-        "id": "adapter:incidents",
-        "type": "insight",
-        "label": "incidents",
-        "summary": "Evidence adapter incidents",
-        "confidence": 0.72,
-        "freshness": 1,
-        "impact": 0.45,
-        "metadata": {
-          "adapterId": "incidents-vaultsparkstudios-website"
-        }
-      },
-      {
-        "id": "event:incidents-vaultsparkstudios-website-391ae9c9d32785a1",
-        "type": "event",
-        "label": "ops.incident-posture",
-        "summary": "ops.incident-posture from incidents",
-        "confidence": 0.7199988100983232,
-        "freshness": 0.9999983473587823,
-        "impact": 0.6999988431511476,
-        "metadata": {
-          "adapter": "incidents",
-          "adapterId": "incidents-vaultsparkstudios-website",
-          "sourceId": "incidents-vaultsparkstudios-website",
-          "tags": [
-            "ops-signals",
-            "incidents",
-            "proxy"
-          ],
-          "timestamp": "2026-10-23T15:46:40.496Z"
-        }
-      },
-      {
-        "id": "adapter:analytics",
-        "type": "insight",
-        "label": "analytics",
-        "summary": "Evidence adapter analytics",
-        "confidence": 0.72,
-        "freshness": 1,
-        "impact": 0.45,
-        "metadata": {
-          "adapterId": "analytics-vaultsparkstudios-website"
-        }
-      },
-      {
-        "id": "event:analytics-vaultsparkstudios-website-ccd6eae8fc78a7c6",
-        "type": "event",
-        "label": "ops.analytics-snapshot",
-        "summary": "ops.analytics-snapshot from analytics",
-        "confidence": 0.7199998016829173,
-        "freshness": 0.9999997245596074,
-        "impact": 0.6999998071917252,
-        "metadata": {
-          "adapter": "analytics",
-          "adapterId": "analytics-vaultsparkstudios-website",
-          "sourceId": "analytics-vaultsparkstudios-website",
-          "tags": [
-            "ops-signals",
-            "analytics",
-            "proxy"
-          ],
-          "timestamp": "2026-10-23T15:46:40.496Z"
+          "timestamp": "2026-10-23T20:11:59.279Z"
         }
       },
       {
@@ -7274,13 +7178,13 @@
         }
       },
       {
-        "id": "event:revenue-vaultsparkstudios-website-b5d8d7349d64f878",
+        "id": "event:revenue-vaultsparkstudios-website-4f7e81b4a5be560f",
         "type": "event",
         "label": "ops.revenue-readiness",
         "summary": "ops.revenue-readiness from revenue",
-        "confidence": 0.7199999150069578,
-        "freshness": 0.9999998819541082,
-        "impact": 0.6999999173678757,
+        "confidence": 0.7199998506433015,
+        "freshness": 0.999999792560141,
+        "impact": 0.6999998547920987,
         "metadata": {
           "adapter": "revenue",
           "adapterId": "revenue-vaultsparkstudios-website",
@@ -7290,7 +7194,103 @@
             "revenue",
             "proxy"
           ],
-          "timestamp": "2026-10-23T15:46:40.496Z"
+          "timestamp": "2026-10-23T20:11:59.268Z"
+        }
+      },
+      {
+        "id": "adapter:incidents",
+        "type": "insight",
+        "label": "incidents",
+        "summary": "Evidence adapter incidents",
+        "confidence": 0.72,
+        "freshness": 1,
+        "impact": 0.45,
+        "metadata": {
+          "adapterId": "incidents-vaultsparkstudios-website"
+        }
+      },
+      {
+        "id": "event:incidents-vaultsparkstudios-website-507a721a5701358c",
+        "type": "event",
+        "label": "ops.incident-posture",
+        "summary": "ops.incident-posture from incidents",
+        "confidence": 0.7199978974566221,
+        "freshness": 0.9999970798008642,
+        "impact": 0.6999979558606049,
+        "metadata": {
+          "adapter": "incidents",
+          "adapterId": "incidents-vaultsparkstudios-website",
+          "sourceId": "incidents-vaultsparkstudios-website",
+          "tags": [
+            "ops-signals",
+            "incidents",
+            "proxy"
+          ],
+          "timestamp": "2026-10-23T20:11:59.267Z"
+        }
+      },
+      {
+        "id": "adapter:analytics",
+        "type": "insight",
+        "label": "analytics",
+        "summary": "Evidence adapter analytics",
+        "confidence": 0.72,
+        "freshness": 1,
+        "impact": 0.45,
+        "metadata": {
+          "adapterId": "analytics-vaultsparkstudios-website"
+        }
+      },
+      {
+        "id": "event:analytics-vaultsparkstudios-website-861c666a095995e2",
+        "type": "event",
+        "label": "ops.analytics-snapshot",
+        "summary": "ops.analytics-snapshot from analytics",
+        "confidence": 0.7199996495756773,
+        "freshness": 0.9999995132995518,
+        "impact": 0.6999996593096862,
+        "metadata": {
+          "adapter": "analytics",
+          "adapterId": "analytics-vaultsparkstudios-website",
+          "sourceId": "analytics-vaultsparkstudios-website",
+          "tags": [
+            "ops-signals",
+            "analytics",
+            "proxy"
+          ],
+          "timestamp": "2026-10-23T20:11:59.267Z"
+        }
+      },
+      {
+        "id": "adapter:deploys",
+        "type": "insight",
+        "label": "deploys",
+        "summary": "Evidence adapter deploys",
+        "confidence": 0.72,
+        "freshness": 1,
+        "impact": 0.45,
+        "metadata": {
+          "adapterId": "deploys-vaultsparkstudios-website"
+        }
+      },
+      {
+        "id": "event:deploys-vaultsparkstudios-website-a8240bf3a1c4e1e5",
+        "type": "event",
+        "label": "ops.deploy-status",
+        "summary": "ops.deploy-status from deploys",
+        "confidence": 0.7199936577312316,
+        "freshness": 0.9999911912933772,
+        "impact": 0.699993833905364,
+        "metadata": {
+          "adapter": "deploys",
+          "adapterId": "deploys-vaultsparkstudios-website",
+          "sourceId": "deploys-vaultsparkstudios-website",
+          "tags": [
+            "ops-signals",
+            "deploys",
+            "proxy"
+          ],
+          "timestamp": "2026-10-23T20:11:59.266Z"
         }
       },
       {
@@ -7306,13 +7306,13 @@
         }
       },
       {
-        "id": "event:sil-unknown-6b6d73a1ccb7838a",
+        "id": "event:sil-unknown-1fbb326617b56b1d",
         "type": "event",
         "label": "sil.scan",
         "summary": "sil.scan from nerve-sil",
-        "confidence": 0.8999998104675877,
-        "freshness": 0.9999997894084308,
-        "impact": 0.9499997999380092,
+        "confidence": 0.8999996678670373,
+        "freshness": 0.9999996309633747,
+        "impact": 0.949999649415206,
         "metadata": {
           "adapter": "nerve-sil",
           "adapterId": "nerve-sil-vaultsparkstudios-website",
@@ -7322,7 +7322,7 @@
             "self-improvement",
             "scoring"
           ],
-          "timestamp": "2026-10-23T15:46:40.494Z"
+          "timestamp": "2026-10-23T20:11:59.265Z"
         }
       },
       {
@@ -7338,13 +7338,13 @@
         }
       },
       {
-        "id": "event:canon-unknown-d0be133d593e66fa",
+        "id": "event:canon-unknown-11dc61a7974a534d",
         "type": "event",
         "label": "canon.scan",
         "summary": "canon.scan from nerve-canon",
-        "confidence": 0.7999998235042096,
-        "freshness": 0.999999779380262,
-        "impact": 0.6499998565971703,
+        "confidence": 0.7999996983526727,
+        "freshness": 0.9999996229408409,
+        "impact": 0.6499997549115466,
         "metadata": {
           "adapter": "nerve-canon",
           "adapterId": "nerve-canon-vaultsparkstudios-website",
@@ -7354,7 +7354,7 @@
             "decisions",
             "governance"
           ],
-          "timestamp": "2026-10-23T15:46:40.489Z"
+          "timestamp": "2026-10-23T20:11:59.261Z"
         }
       },
       {
@@ -7370,13 +7370,13 @@
         }
       },
       {
-        "id": "event:docs-unknown-fe9d049789f9e850",
+        "id": "event:docs-unknown-35504980d2dc0791",
         "type": "event",
         "label": "docs.scan",
         "summary": "docs.scan from nerve-docs",
-        "confidence": 0.8499997289385807,
-        "freshness": 0.9999996811042126,
-        "impact": 0.9249997050213966,
+        "confidence": 0.8499996760901379,
+        "freshness": 0.999999618929574,
+        "impact": 0.924999647509856,
         "metadata": {
           "adapter": "nerve-docs",
           "adapterId": "nerve-docs-vaultsparkstudios-website",
@@ -7385,7 +7385,7 @@
             "documentation",
             "docs"
           ],
-          "timestamp": "2026-10-23T15:46:40.440Z"
+          "timestamp": "2026-10-23T20:11:59.259Z"
         }
       },
       {
@@ -7401,13 +7401,13 @@
         }
       },
       {
-        "id": "event:tasks-unknown-cc0e8f6cc4eeaf48",
+        "id": "event:tasks-unknown-b05e3ac7f1198fa8",
         "type": "event",
         "label": "tasks.board",
         "summary": "tasks.board from nerve-tasks",
-        "confidence": 0.8999996967481596,
-        "freshness": 0.9999996630535106,
-        "impact": 0.8999996967481596,
+        "confidence": 0.8999996263504255,
+        "freshness": 0.9999995848338061,
+        "impact": 0.8999996263504255,
         "metadata": {
           "adapter": "nerve-tasks",
           "adapterId": "nerve-tasks-vaultsparkstudios-website",
@@ -7416,11 +7416,11 @@
             "tasks",
             "planning"
           ],
-          "timestamp": "2026-10-23T15:46:40.431Z"
+          "timestamp": "2026-10-23T20:11:59.242Z"
         }
       },
       {
-        "id": "risk:incidents-vaultsparkstudios-website-391ae9c9d32785a1",
+        "id": "risk:incidents-vaultsparkstudios-website-507a721a5701358c",
         "type": "risk",
         "label": "Contradiction pressure 1",
         "summary": "ops.incident-posture raises contradiction pressure through incidents.",
@@ -7428,14 +7428,14 @@
         "freshness": 1,
         "impact": 0.722,
         "metadata": {
-          "sourceEvent": "incidents-vaultsparkstudios-website-391ae9c9d32785a1"
+          "sourceEvent": "incidents-vaultsparkstudios-website-507a721a5701358c"
         }
       },
       {
-        "id": "decision:a192276d119172f7",
+        "id": "decision:2c52aef0b7df97a6",
         "type": "decision",
         "label": "Recommendation 1",
-        "summary": "Priority: Improve CREATIVITY (grade D, score 3588/10,000)",
+        "summary": "Priority: Improve CREATIVITY (grade D, score 3592/10,000)",
         "confidence": 0.65,
         "freshness": 1,
         "impact": 0.6,
@@ -7649,15 +7649,22 @@
         "from": "factor:perception.temporal_coverage.distribution_evenness",
         "to": "cluster:perception.temporal_coverage",
         "relation": "weakens",
-        "weight": 0.9987999999999999,
+        "weight": 0.9990000000000001,
         "rationale": "How evenly events are spread across the observation window (CV of daily counts)"
       },
       {
         "from": "factor:perception.temporal_coverage.temporal_entropy",
         "to": "cluster:perception.temporal_coverage",
         "relation": "supports",
-        "weight": 0.92,
+        "weight": 0.9053999999999999,
         "rationale": "Shannon entropy of events distributed across time buckets"
+      },
+      {
+        "from": "factor:perception.temporal_coverage.observation_window_days",
+        "to": "cluster:perception.temporal_coverage",
+        "relation": "supports",
+        "weight": 0.8854,
+        "rationale": "Total span in days from earliest to latest event"
       },
       {
         "from": "factor:perception.temporal_coverage.seasonal_coverage_pct",
@@ -7665,13 +7672,6 @@
         "relation": "supports",
         "weight": 0.8854,
         "rationale": "Percentage of calendar months (within window) that contain events"
-      },
-      {
-        "from": "factor:perception.temporal_coverage.observation_window_days",
-        "to": "cluster:perception.temporal_coverage",
-        "relation": "supports",
-        "weight": 0.8852000000000001,
-        "rationale": "Total span in days from earliest to latest event"
       },
       {
         "from": "cluster:perception.data_quality",
@@ -7908,7 +7908,7 @@
         "from": "factor:trajectory.score_stability.trend_r2",
         "to": "cluster:trajectory.score_stability",
         "relation": "weakens",
-        "weight": 0.8170000000000001,
+        "weight": 0.802,
         "rationale": "How well scores fit a linear trend"
       },
       {
@@ -8083,14 +8083,14 @@
         "from": "factor:trajectory.trend_decomposition.structural_trend_strength",
         "to": "cluster:trajectory.trend_decomposition",
         "relation": "weakens",
-        "weight": 0.96,
+        "weight": 0.9564,
         "rationale": "Strength of the underlying structural trend"
       },
       {
         "from": "factor:trajectory.trend_decomposition.decomposition_model_fit_r2",
         "to": "cluster:trajectory.trend_decomposition",
         "relation": "weakens",
-        "weight": 0.96,
+        "weight": 0.9564,
         "rationale": "How well the decomposition model fits the data"
       },
       {
@@ -8111,7 +8111,7 @@
         "from": "factor:trajectory.inflection_detection.impact_duration",
         "to": "cluster:trajectory.inflection_detection",
         "relation": "weakens",
-        "weight": 0.92,
+        "weight": 0.9192,
         "rationale": "Average duration of inflection impact"
       },
       {
@@ -8125,7 +8125,7 @@
         "from": "factor:trajectory.inflection_detection.inflection_frequency",
         "to": "cluster:trajectory.inflection_detection",
         "relation": "supports",
-        "weight": 0.8086000000000001,
+        "weight": 0.7858000000000002,
         "rationale": "Frequency of inflection point occurrence"
       },
       {
@@ -8195,7 +8195,7 @@
         "from": "factor:trajectory.trajectory_confidence.trajectory_certainty_index",
         "to": "cluster:trajectory.trajectory_confidence",
         "relation": "weakens",
-        "weight": 0.96,
+        "weight": 0.9564,
         "rationale": "Overall certainty of trajectory prediction"
       },
       {
@@ -8612,11 +8612,11 @@
         "rationale": "How overdue the next session is relative to average cadence"
       },
       {
-        "from": "factor:vitality.session_recency.session_decay_score",
+        "from": "factor:vitality.session_recency.session_freshness_confidence",
         "to": "cluster:vitality.session_recency",
         "relation": "supports",
-        "weight": 0.8909999999999999,
-        "rationale": "Longer-term decay signal for sessions (30-day half-life)"
+        "weight": 0.8854,
+        "rationale": "Confidence in freshness signal based on data volume"
       },
       {
         "from": "cluster:vitality.cadence_alignment",
@@ -8755,7 +8755,7 @@
         "from": "factor:vitality.recovery_responsiveness.recovery_readiness",
         "to": "cluster:vitality.recovery_responsiveness",
         "relation": "supports",
-        "weight": 0.8754,
+        "weight": 0.8719999999999999,
         "rationale": "Preparedness for next recovery based on current state"
       },
       {
@@ -8769,7 +8769,7 @@
         "from": "factor:vitality.metabolic_rate.energy_consistency",
         "to": "cluster:vitality.metabolic_rate",
         "relation": "weakens",
-        "weight": 0.9664,
+        "weight": 0.973,
         "rationale": "How consistent is the daily event rate (low CV)"
       },
       {
@@ -8871,6 +8871,13 @@
         "rationale": "Seasonal Patterns contributes to VITALITY"
       },
       {
+        "from": "factor:vitality.seasonal_patterns.time_of_day_pattern",
+        "to": "cluster:vitality.seasonal_patterns",
+        "relation": "weakens",
+        "weight": 0.8906000000000001,
+        "rationale": "Activity concentration by time of day"
+      },
+      {
         "from": "factor:vitality.seasonal_patterns.quarterly_trend",
         "to": "cluster:vitality.seasonal_patterns",
         "relation": "supports",
@@ -8883,13 +8890,6 @@
         "relation": "supports",
         "weight": 0.8854,
         "rationale": "Strength of seasonal patterns from weekly variance"
-      },
-      {
-        "from": "factor:vitality.seasonal_patterns.day_of_week_pattern",
-        "to": "cluster:vitality.seasonal_patterns",
-        "relation": "weakens",
-        "weight": 0.8676,
-        "rationale": "Activity concentration by day of week"
       },
       {
         "from": "factor:vitality.seasonal_patterns.seasonal_optimization",
@@ -8923,7 +8923,7 @@
         "from": "factor:synthesis.portfolio_context.portfolio_growth_rate",
         "to": "cluster:synthesis.portfolio_context",
         "relation": "weakens",
-        "weight": 0.8878,
+        "weight": 0.9373999999999999,
         "rationale": "Rate of portfolio expansion from event volume trend"
       },
       {
@@ -9273,7 +9273,7 @@
         "from": "factor:cognition.logical_consistency.trend_linearity",
         "to": "cluster:cognition.logical_consistency",
         "relation": "weakens",
-        "weight": 0.96,
+        "weight": 0.9564,
         "rationale": "R² of IQ score history — how predictable is the trend"
       },
       {
@@ -9361,18 +9361,18 @@
         "rationale": "Learning Rate contributes to COGNITION"
       },
       {
-        "from": "factor:cognition.learning_rate.recent_growth_acceleration",
-        "to": "cluster:cognition.learning_rate",
-        "relation": "weakens",
-        "weight": 1,
-        "rationale": "Recent IQ growth faster than historical average"
-      },
-      {
         "from": "factor:cognition.learning_rate.canon_growth_rate",
         "to": "cluster:cognition.learning_rate",
         "relation": "weakens",
         "weight": 0.9934000000000001,
         "rationale": "Rate of new canon entries per session"
+      },
+      {
+        "from": "factor:cognition.learning_rate.recent_growth_acceleration",
+        "to": "cluster:cognition.learning_rate",
+        "relation": "supports",
+        "weight": 0.92,
+        "rationale": "Recent IQ growth faster than historical average"
       },
       {
         "from": "factor:cognition.learning_rate.data_volume_growth",
@@ -9609,29 +9609,29 @@
         "from": "factor:foresight.trend_extrapolation.linear_trend_accuracy",
         "to": "cluster:foresight.trend_extrapolation",
         "relation": "weakens",
-        "weight": 0.96,
+        "weight": 0.9564,
         "rationale": "R² of linear fit to IQ history — predictable trend"
       },
       {
         "from": "factor:foresight.trend_extrapolation.extrapolation_confidence",
         "to": "cluster:foresight.trend_extrapolation",
         "relation": "weakens",
-        "weight": 0.96,
+        "weight": 0.9564,
         "rationale": "Combined R² and history depth — overall extrapolation quality"
       },
       {
         "from": "factor:foresight.trend_extrapolation.history_depth_for_trend",
         "to": "cluster:foresight.trend_extrapolation",
         "relation": "supports",
-        "weight": 0.9174000000000001,
+        "weight": 0.9178000000000001,
         "rationale": "Enough history to make reliable extrapolations"
       },
       {
-        "from": "factor:foresight.trend_extrapolation.recent_trend_strength",
+        "from": "factor:foresight.trend_extrapolation.cadence_regularity",
         "to": "cluster:foresight.trend_extrapolation",
-        "relation": "supports",
-        "weight": 0.8608000000000001,
-        "rationale": "R² of recent 5 scores — near-term predictability"
+        "relation": "weakens",
+        "weight": 0.754,
+        "rationale": "Low CV in session intervals — predictable cadence"
       },
       {
         "from": "cluster:foresight.risk_detection",
@@ -9770,7 +9770,7 @@
         "from": "factor:foresight.prediction_accuracy.trend_prediction_accuracy",
         "to": "cluster:foresight.prediction_accuracy",
         "relation": "supports",
-        "weight": 0.8852000000000001,
+        "weight": 0.8836000000000002,
         "rationale": "Linear trend accurately predicts next score"
       },
       {
@@ -9903,7 +9903,7 @@
         "from": "factor:foresight.predictive_value.predictive_value_score",
         "to": "cluster:foresight.predictive_value",
         "relation": "weakens",
-        "weight": 0.9628,
+        "weight": 0.9612,
         "rationale": "Combined metric of foresight utility"
       },
       {
@@ -10106,7 +10106,7 @@
         "from": "factor:creativity.pattern_breaking.creative_risk_taking",
         "to": "cluster:creativity.pattern_breaking",
         "relation": "weakens",
-        "weight": 0.9470000000000001,
+        "weight": 0.9472,
         "rationale": "Score volatility as proxy for creative risk-taking"
       },
       {
@@ -10386,7 +10386,7 @@
         "from": "factor:expression.narrative_coherence.score_trend_coherence",
         "to": "cluster:expression.narrative_coherence",
         "relation": "weakens",
-        "weight": 0.96,
+        "weight": 0.9564,
         "rationale": "IQ score follows a coherent trend — consistent narrative"
       },
       {
@@ -10568,7 +10568,7 @@
         "from": "factor:expression.evidence_quality.history_evidence_depth",
         "to": "cluster:expression.evidence_quality",
         "relation": "supports",
-        "weight": 0.9063999999999999,
+        "weight": 0.9081999999999999,
         "rationale": "Deep history as longitudinal evidence"
       },
       {
@@ -10656,24 +10656,24 @@
         "rationale": "Growth Trajectory contributes to POTENTIAL"
       },
       {
-        "from": "factor:potential.growth_trajectory.growth_acceleration",
-        "to": "cluster:potential.growth_trajectory",
-        "relation": "weakens",
-        "weight": 1,
-        "rationale": "Recent growth faster than overall — accelerating"
-      },
-      {
         "from": "factor:potential.growth_trajectory.commitment_trend_r2",
         "to": "cluster:potential.growth_trajectory",
         "relation": "weakens",
-        "weight": 0.96,
+        "weight": 0.9564,
         "rationale": "How well does a growth model fit — committed trajectory"
+      },
+      {
+        "from": "factor:potential.growth_trajectory.growth_acceleration",
+        "to": "cluster:potential.growth_trajectory",
+        "relation": "supports",
+        "weight": 0.92,
+        "rationale": "Recent growth faster than overall — accelerating"
       },
       {
         "from": "factor:potential.growth_trajectory.history_depth_growth",
         "to": "cluster:potential.growth_trajectory",
         "relation": "supports",
-        "weight": 0.9174000000000001,
+        "weight": 0.9178000000000001,
         "rationale": "Enough history to measure trajectory — data for growth"
       },
       {
@@ -10761,25 +10761,25 @@
         "rationale": "Ceiling Distance contributes to POTENTIAL"
       },
       {
-        "from": "factor:potential.ceiling_distance.next_tier_distance",
+        "from": "factor:potential.ceiling_distance.tier_progress",
         "to": "cluster:potential.ceiling_distance",
         "relation": "weakens",
-        "weight": 0.9642000000000001,
-        "rationale": "Distance to next tier threshold — near-term ceiling"
+        "weight": 0.9640000000000001,
+        "rationale": "Progress within current tier — how close to tier boundary"
       },
       {
         "from": "factor:potential.ceiling_distance.historical_max_distance",
         "to": "cluster:potential.ceiling_distance",
         "relation": "weakens",
-        "weight": 0.9284,
+        "weight": 0.9314,
         "rationale": "Distance from historical maximum — recovery potential"
       },
       {
-        "from": "factor:potential.ceiling_distance.tier_progress",
+        "from": "factor:potential.ceiling_distance.next_tier_distance",
         "to": "cluster:potential.ceiling_distance",
-        "relation": "supports",
-        "weight": 0.8784000000000001,
-        "rationale": "Progress within current tier — how close to tier boundary"
+        "relation": "weakens",
+        "weight": 0.8614,
+        "rationale": "Distance to next tier threshold — near-term ceiling"
       },
       {
         "from": "factor:potential.ceiling_distance.theoretical_max_from_data",
@@ -10831,6 +10831,13 @@
         "rationale": "Scaling Readiness contributes to POTENTIAL"
       },
       {
+        "from": "factor:potential.scaling_readiness.cadence_maturity",
+        "to": "cluster:potential.scaling_readiness",
+        "relation": "weakens",
+        "weight": 0.9654,
+        "rationale": "Regular session cadence established — scalable process"
+      },
+      {
         "from": "factor:potential.scaling_readiness.pillar_maturity",
         "to": "cluster:potential.scaling_readiness",
         "relation": "weakens",
@@ -10845,17 +10852,10 @@
         "rationale": "Forge pipeline active and processing — mature improvement loop"
       },
       {
-        "from": "factor:potential.scaling_readiness.cadence_maturity",
-        "to": "cluster:potential.scaling_readiness",
-        "relation": "weakens",
-        "weight": 0.9648,
-        "rationale": "Regular session cadence established — scalable process"
-      },
-      {
         "from": "factor:potential.scaling_readiness.multi_session_maturity",
         "to": "cluster:potential.scaling_readiness",
         "relation": "supports",
-        "weight": 0.9063999999999999,
+        "weight": 0.9081999999999999,
         "rationale": "Enough sessions to establish baseline — scaling readiness"
       },
       {
@@ -10957,11 +10957,11 @@
         "rationale": "Signal type coverage — measurement architecture"
       },
       {
-        "from": "factor:potential.architectural_capacity.transfer_function_utilization",
+        "from": "factor:potential.architectural_capacity.history_architecture_depth",
         "to": "cluster:potential.architectural_capacity",
         "relation": "supports",
-        "weight": 0.8854,
-        "rationale": "Transfer functions applying to diverse data — architecture health"
+        "weight": 0.8876,
+        "rationale": "Deep history supports architectural analysis"
       },
       {
         "from": "cluster:potential.genome_readiness",
@@ -10999,105 +10999,105 @@
         "rationale": "Event volume supporting genome analysis"
       },
       {
-        "from": "event:pr-reviews-vaultsparkstudios-website-2cc83074f4fddf53",
-        "to": "adapter:pr-reviews",
-        "relation": "cites",
-        "weight": 0.6,
-        "rationale": "Event ops.review-proxy was ingested from pr-reviews."
-      },
-      {
-        "from": "event:studio-hub-vaultsparkstudios-website-050c02269fe724e8",
-        "to": "adapter:studio-hub",
-        "relation": "cites",
-        "weight": 0.6,
-        "rationale": "Event ops.hub-proxy was ingested from studio-hub."
-      },
-      {
-        "from": "event:social-dashboard-vaultsparkstudios-website-dd748f52b0b0ee6d",
+        "from": "event:social-dashboard-vaultsparkstudios-website-baed2cd04e174bd5",
         "to": "adapter:social-dashboard",
         "relation": "cites",
         "weight": 0.6,
         "rationale": "Event ops.social-proxy was ingested from social-dashboard."
       },
       {
-        "from": "event:founder-approvals-vaultsparkstudios-website-2dba19c735250533",
+        "from": "event:pr-reviews-vaultsparkstudios-website-717a88f91e70d8af",
+        "to": "adapter:pr-reviews",
+        "relation": "cites",
+        "weight": 0.6,
+        "rationale": "Event ops.review-proxy was ingested from pr-reviews."
+      },
+      {
+        "from": "event:studio-hub-vaultsparkstudios-website-b9c292e808e28df6",
+        "to": "adapter:studio-hub",
+        "relation": "cites",
+        "weight": 0.6,
+        "rationale": "Event ops.hub-proxy was ingested from studio-hub."
+      },
+      {
+        "from": "event:founder-approvals-vaultsparkstudios-website-99b6995407b3ee91",
         "to": "adapter:founder-approvals",
         "relation": "cites",
         "weight": 0.6,
         "rationale": "Event ops.founder-direction was ingested from founder-approvals."
       },
       {
-        "from": "event:deploys-vaultsparkstudios-website-e86f228bde405fec",
-        "to": "adapter:deploys",
-        "relation": "cites",
-        "weight": 0.6,
-        "rationale": "Event ops.deploy-status was ingested from deploys."
-      },
-      {
-        "from": "event:incidents-vaultsparkstudios-website-391ae9c9d32785a1",
-        "to": "adapter:incidents",
-        "relation": "cites",
-        "weight": 0.6,
-        "rationale": "Event ops.incident-posture was ingested from incidents."
-      },
-      {
-        "from": "event:analytics-vaultsparkstudios-website-ccd6eae8fc78a7c6",
-        "to": "adapter:analytics",
-        "relation": "cites",
-        "weight": 0.6,
-        "rationale": "Event ops.analytics-snapshot was ingested from analytics."
-      },
-      {
-        "from": "event:revenue-vaultsparkstudios-website-b5d8d7349d64f878",
+        "from": "event:revenue-vaultsparkstudios-website-4f7e81b4a5be560f",
         "to": "adapter:revenue",
         "relation": "cites",
         "weight": 0.6,
         "rationale": "Event ops.revenue-readiness was ingested from revenue."
       },
       {
-        "from": "event:sil-unknown-6b6d73a1ccb7838a",
+        "from": "event:incidents-vaultsparkstudios-website-507a721a5701358c",
+        "to": "adapter:incidents",
+        "relation": "cites",
+        "weight": 0.6,
+        "rationale": "Event ops.incident-posture was ingested from incidents."
+      },
+      {
+        "from": "event:analytics-vaultsparkstudios-website-861c666a095995e2",
+        "to": "adapter:analytics",
+        "relation": "cites",
+        "weight": 0.6,
+        "rationale": "Event ops.analytics-snapshot was ingested from analytics."
+      },
+      {
+        "from": "event:deploys-vaultsparkstudios-website-a8240bf3a1c4e1e5",
+        "to": "adapter:deploys",
+        "relation": "cites",
+        "weight": 0.6,
+        "rationale": "Event ops.deploy-status was ingested from deploys."
+      },
+      {
+        "from": "event:sil-unknown-1fbb326617b56b1d",
         "to": "adapter:nerve-sil",
         "relation": "cites",
         "weight": 0.6,
         "rationale": "Event sil.scan was ingested from nerve-sil."
       },
       {
-        "from": "event:canon-unknown-d0be133d593e66fa",
+        "from": "event:canon-unknown-11dc61a7974a534d",
         "to": "adapter:nerve-canon",
         "relation": "cites",
         "weight": 0.6,
         "rationale": "Event canon.scan was ingested from nerve-canon."
       },
       {
-        "from": "event:canon-unknown-d0be133d593e66fa",
+        "from": "event:canon-unknown-11dc61a7974a534d",
         "to": "pillar:synthesis",
         "relation": "supports",
         "weight": 0.4,
         "rationale": "Event tag canon links to synthesis"
       },
       {
-        "from": "event:docs-unknown-fe9d049789f9e850",
+        "from": "event:docs-unknown-35504980d2dc0791",
         "to": "adapter:nerve-docs",
         "relation": "cites",
         "weight": 0.6,
         "rationale": "Event docs.scan was ingested from nerve-docs."
       },
       {
-        "from": "event:tasks-unknown-cc0e8f6cc4eeaf48",
+        "from": "event:tasks-unknown-b05e3ac7f1198fa8",
         "to": "adapter:nerve-tasks",
         "relation": "cites",
         "weight": 0.6,
         "rationale": "Event tasks.board was ingested from nerve-tasks."
       },
       {
-        "from": "risk:incidents-vaultsparkstudios-website-391ae9c9d32785a1",
+        "from": "risk:incidents-vaultsparkstudios-website-507a721a5701358c",
         "to": "pillar:creativity",
         "relation": "contradicts",
         "weight": 0.6379999999999999,
         "rationale": "Risk-bearing events should directly pressure the current bottleneck pillar."
       },
       {
-        "from": "decision:a192276d119172f7",
+        "from": "decision:2c52aef0b7df97a6",
         "to": "pillar:creativity",
         "relation": "explains",
         "weight": 0.5,
@@ -11134,7 +11134,7 @@
     ]
   },
   "evidenceCentrality": {
-    "generatedAt": "2026-10-23T15:46:40.599Z",
+    "generatedAt": "2026-10-23T20:11:59.450Z",
     "project": "vaultsparkstudios-website",
     "nodeCount": 540,
     "edgeCount": 519,
@@ -11145,7 +11145,7 @@
         "nodeType": "pillar",
         "pageRankScore": 1,
         "expectedAuthority": 0.269,
-        "surpriseScore": 3.72,
+        "surpriseScore": 3.71,
         "isSurprise": true,
         "inDegree": 16,
         "outDegree": 0,
@@ -11184,7 +11184,7 @@
         "nodeType": "pillar",
         "pageRankScore": 0.883,
         "expectedAuthority": 0.297,
-        "surpriseScore": 2.97,
+        "surpriseScore": 2.98,
         "isSurprise": true,
         "inDegree": 10,
         "outDegree": 0,
@@ -11212,7 +11212,7 @@
         "nodeType": "pillar",
         "pageRankScore": 1,
         "expectedAuthority": 0.269,
-        "surpriseScore": 3.72,
+        "surpriseScore": 3.71,
         "isSurprise": true,
         "inDegree": 16,
         "outDegree": 0,
@@ -11246,6 +11246,6 @@
         "contradictEdges": 0
       }
     ],
-    "summary": "Top authority: \"CREATIVITY\" (PageRank 1.000). 3 outlier signal(s): \"CREATIVITY\" (3.72× expected), \"SYNTHESIS\" (3.25× expected), \"EXECUTION\" (3.16× expected)."
+    "summary": "Top authority: \"CREATIVITY\" (PageRank 1.000). 3 outlier signal(s): \"CREATIVITY\" (3.71× expected), \"SYNTHESIS\" (3.25× expected), \"EXECUTION\" (3.16× expected)."
   }
 }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-10-23T16:49:53.509Z",
+  "capturedAt": "2026-10-23T19:17:25.279Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,10 +14,12 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "e5abf0b8c5d6df12f0083662f942989975a83c33ebfe8def0847dad9f49cdf5d",
+    "sha256": "436a7ddce9cb9e444332df016f7f9628b991cf3c520e19c34f5f9ba8370fcef2",
     "files": [
+      "assets/ambient-core.bundle.js",
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
+      "assets/command-palette-loader.js",
       "assets/cookie-consent.js",
       "assets/desk-personas/dot.webp",
       "assets/desk-personas/echo.webp",
@@ -539,12 +541,20 @@
     ],
     "entries": [
       {
+        "path": "assets/ambient-core.bundle.js",
+        "sha256": "214cf4450663b84ca1653b707923c42b03fff8bf66cfcc44fe18ff12fea942c1"
+      },
+      {
         "path": "assets/ambient-loader.js",
         "sha256": "ff3f592fc5877a109d669253914d63d7c2e357e2a49640a64cc8304b50394b33"
       },
       {
         "path": "assets/changelog-reactions.js",
         "sha256": "1ddedc6d812991f7bb72c2ee9405779a897d33fbedaab81784e3df96123d7528"
+      },
+      {
+        "path": "assets/command-palette-loader.js",
+        "sha256": "86934ebb8aa394fdf92606c8d876f4286848c21251ac20fe77e100f87555d637"
       },
       {
         "path": "assets/cookie-consent.js",
@@ -2532,7 +2542,7 @@
       },
       {
         "path": "news/personas/dot/index.html",
-        "sha256": "11391ec97274ccfd56cf96935f6ca07941d097df9f21cfc3850e82349bd55ae7"
+        "sha256": "543ad4f39a55448391cb94802d702a1803407392c5ec11f821a965eaa61dd303"
       },
       {
         "path": "news/personas/echo/index.html",
@@ -2556,7 +2566,7 @@
       },
       {
         "path": "news/personas/rex/index.html",
-        "sha256": "61a54fa0e329a4c714b0eb71e4f3ca91e978dbab62f14a37858e1a111a1f9a86"
+        "sha256": "c3fd299552d9add91ce80b8a2ba5efec22d8e19e15ee24f1daa8c119be521f36"
       },
       {
         "path": "news/personas/vera/index.html",
@@ -2622,9 +2632,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "98f9cdb1833bf92037e788d2d078e23823ce7a9a9afc2679008a5eb9ffc8c28b",
-    "candidateSha": "ed7154a378ebe5108b91835788457c8364033306",
-    "root": "1cdc16125f0f0e8dad2421fbfd35b16bdf3cafe7f0b1e9a01283ff709456b139"
+    "manifestSha256": "4e288a410e502a3afeb4fc48a97632dc1ea68c78b6ae9fb51fc9b700e24e490b",
+    "candidateSha": "dc2e6e41cad185d5d1e4bb0753d53e4772428c95",
+    "root": "e08f3ba2337413c0a5b2f74bb529cb330b8d0ab10db9a3edb08c5295e1218d13"
   },
   "matrix": {
     "routes": [
@@ -2674,7 +2684,7 @@
     },
     "reviewer": "/root/visual_review",
     "findings": [
-      "Inspected all112 integrated-candidate captures through eight persona contact sheets and full-size light mobile DOT,NIB,VERA. Readable labels,intact layout,unobscured disclosure; no defects observed within captured viewports. Supplemental28 were previously reviewed and were not recaptured."
+      "All112 fresh close-edition persona captures inspected through8sheets and full-size light mobile DOT,NIB,VERA; updated numbers fit,labels readable,disclosures unobscured. No defects in captured states."
     ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
@@ -2695,7 +2705,7 @@
         "height": 900
       },
       "file": "news-personas-dot--dark--desktop.png",
-      "sha256": "902104d44c697637bc3ac5fe146d0ae7599449db32b6b40e625806871d886f5a",
+      "sha256": "989c2638dd153b2e7a7564b5a88fb8ac0a9826bcaa3fbe3d221d4dee2f6fb7a7",
       "page": "/news/personas/dot/",
       "state": "page",
       "inspection": {
@@ -2717,7 +2727,7 @@
         "height": 900
       },
       "file": "news-personas-echo--dark--desktop.png",
-      "sha256": "c4210bffece00cbb7e2158f10774b3dc796e6d4b4d73bcea19bc7d6fd80cc9b4",
+      "sha256": "f9444eb75d5e309a1d7360a31006398550ea1e3bb01e5da42decd4d28d7522ee",
       "page": "/news/personas/echo/",
       "state": "page",
       "inspection": {
@@ -2739,7 +2749,7 @@
         "height": 900
       },
       "file": "news-personas-juno--dark--desktop.png",
-      "sha256": "db9ece4ae30b9da560aae603e52d37ad72bc1a5fac947030a7dd0a85fa537bb6",
+      "sha256": "5aa1181f0a5cf0208258b1bb0c3f28b9edbfe8b8081ca5734d6848984b014698",
       "page": "/news/personas/juno/",
       "state": "page",
       "inspection": {
@@ -2761,7 +2771,7 @@
         "height": 900
       },
       "file": "news-personas-mara--dark--desktop.png",
-      "sha256": "07c9799b2ff88be4fcc80a739296c12b9574b56d8efabee8b03b2c36a8ecc5ca",
+      "sha256": "9cfadef7c20a542f94f81367a3317a839454d9e85b80744ff16f6aad58fdfa3a",
       "page": "/news/personas/mara/",
       "state": "page",
       "inspection": {
@@ -2827,7 +2837,7 @@
         "height": 900
       },
       "file": "news-personas-rex--dark--desktop.png",
-      "sha256": "af6b46125477ac5adac1981c87c244abd7e25d44e357b2152aa26f0c6c742e58",
+      "sha256": "0447550d31751e34455eca71836388186feb670951d04955fff3a9d2434eb297",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -2849,7 +2859,7 @@
         "height": 900
       },
       "file": "news-personas-vera--dark--desktop.png",
-      "sha256": "5326f77899f602a89aac7605ff7b7095d3b59bda436b026b8ecf7803af1dff94",
+      "sha256": "2f7c3e4815a30f1bb693733153f50cec4a8ca42b4dc4c100792b377c13f5ab91",
       "page": "/news/personas/vera/",
       "state": "page",
       "inspection": {
@@ -2871,7 +2881,7 @@
         "height": 900
       },
       "file": "news-personas-dot--light--desktop.png",
-      "sha256": "3ae0296c957b83bbec31ddd345b8d6c1da3b58ba2fe1fcbd942fe6dbe7b5bbcc",
+      "sha256": "1f571f5e7e2911b43b5757d17709312bf5874109e43be9767dfe447407196db7",
       "page": "/news/personas/dot/",
       "state": "page",
       "inspection": {
@@ -2893,7 +2903,7 @@
         "height": 900
       },
       "file": "news-personas-echo--light--desktop.png",
-      "sha256": "00ce539c941e242a5ec6e73590d4fab26c0b5242a28cc4e95a445c26eae16d3f",
+      "sha256": "526d3c30115b2de62327b8ca657a0ffe682759d971725729c42f69c4062eb2bb",
       "page": "/news/personas/echo/",
       "state": "page",
       "inspection": {
@@ -2981,7 +2991,7 @@
         "height": 900
       },
       "file": "news-personas-nib--light--desktop.png",
-      "sha256": "0c76df0de200bf0f22e01ad9d7bd8938e319e2c4d9cc5265bbc95b0d8d796492",
+      "sha256": "966d215e7e581dda80230c0352c605095c3ebc6e5fc175a7f98c63c0ee8964e3",
       "page": "/news/personas/nib/",
       "state": "page",
       "inspection": {
@@ -3003,7 +3013,7 @@
         "height": 900
       },
       "file": "news-personas-rex--light--desktop.png",
-      "sha256": "80e2326d599d7c3b2f6b28449127bd76610633d88d2012fdb92070e3081be3a8",
+      "sha256": "0722eeb26ecdb0d3d1dc9ac08aa489aa246eb8f509b23a7dd77de11bd02ef470",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -3025,7 +3035,7 @@
         "height": 900
       },
       "file": "news-personas-vera--light--desktop.png",
-      "sha256": "9c9a3ef196886e37ca616c904886ae6b583b41660ec5cd9a389b335fccc94bdc",
+      "sha256": "18c5a9b49318c4083bb33f7498dc3cb6eecb817efdf9663956b1b48187adeee7",
       "page": "/news/personas/vera/",
       "state": "page",
       "inspection": {
@@ -3047,7 +3057,7 @@
         "height": 900
       },
       "file": "news-personas-dot--ambient--desktop.png",
-      "sha256": "886f735f478a53a088acc9dd51bcc3279fe1d37da81fb511f886386322a164e5",
+      "sha256": "3ee7155095d14126940f8dbc2071fbd5f60dc2e5c9b3856f443b67dd6f1b9364",
       "page": "/news/personas/dot/",
       "state": "page",
       "inspection": {
@@ -3113,7 +3123,7 @@
         "height": 900
       },
       "file": "news-personas-mara--ambient--desktop.png",
-      "sha256": "dc767b58ed651cd291e95263343a22ee16ef22650180123a7bc2305452ab6abc",
+      "sha256": "1867b4c13d01ff59456c9896f7ff28d0d620e57f773e5ba23033116625f658ae",
       "page": "/news/personas/mara/",
       "state": "page",
       "inspection": {
@@ -3135,7 +3145,7 @@
         "height": 900
       },
       "file": "news-personas-mica--ambient--desktop.png",
-      "sha256": "f7a839c4eebfa7f13fd8caa2f3c9224a64158272cffcf8534f19ee5fe2ec397a",
+      "sha256": "dd30ab5173614d7400541fcb3064e126fda2f4f413b3797d9fbd0ffdbe3ae10f",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -3157,7 +3167,7 @@
         "height": 900
       },
       "file": "news-personas-nib--ambient--desktop.png",
-      "sha256": "05263b52b658f8119a6a65a49c1337fc5a4607b4874851ec53afb0b002512fe3",
+      "sha256": "006ad0d195df2f809e73b13d6079a35c4015ebeb9724d5346a53849583080ffd",
       "page": "/news/personas/nib/",
       "state": "page",
       "inspection": {
@@ -3179,7 +3189,7 @@
         "height": 900
       },
       "file": "news-personas-rex--ambient--desktop.png",
-      "sha256": "dfa016054ba729a1954abd0fb15e1861b36276a1cfaefbcfe47a6b6bbd7f91a0",
+      "sha256": "43b4b8927f0560e822fd37f4b60473fa402c051fb0758a8654ce2c5276662d8b",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -3223,7 +3233,7 @@
         "height": 900
       },
       "file": "news-personas-dot--warm--desktop.png",
-      "sha256": "ae3e913eeb969c4913665ef90265cabd0e35072c8e79e3bdd12b788beac1c49c",
+      "sha256": "9ff2bf7621205585b610c2246f733e284844a47d4d7002d5c67e1577e584fb94",
       "page": "/news/personas/dot/",
       "state": "page",
       "inspection": {
@@ -3267,7 +3277,7 @@
         "height": 900
       },
       "file": "news-personas-juno--warm--desktop.png",
-      "sha256": "108cd702ec692211f3bf65cd51d72fb8e22f3eb154ac29943aafc586a9ef7e48",
+      "sha256": "b9b9aeb67bb9bc6e8dbbfca17380356d9f6d3cd616d89e18c3faf66cc26d44b4",
       "page": "/news/personas/juno/",
       "state": "page",
       "inspection": {
@@ -3289,7 +3299,7 @@
         "height": 900
       },
       "file": "news-personas-mara--warm--desktop.png",
-      "sha256": "16a44b880d817257f6d718dfd4defb1fffc761e702394b011220e411390f64af",
+      "sha256": "34b9f4600931557a4ef04403d278ee9148bf3dd3107bfa86a5a509c979b1e9de",
       "page": "/news/personas/mara/",
       "state": "page",
       "inspection": {
@@ -3311,7 +3321,7 @@
         "height": 900
       },
       "file": "news-personas-mica--warm--desktop.png",
-      "sha256": "5a3bfa4b2cb99857d398332b25f4908b65cf50a8fd3df12b85afa0e1e78792c8",
+      "sha256": "faa870517afca8acf52c4195b8a4a3a4fc4db714c2bc0d71a8a13dc1d823e22c",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -3355,7 +3365,7 @@
         "height": 900
       },
       "file": "news-personas-rex--warm--desktop.png",
-      "sha256": "9481e6d2d1c324fa4c863561cd67ac4fecb6267535764fd600c7c199fb3ae008",
+      "sha256": "62fd99fb103d6e6938b87d28b2b3bcbcad887e0dd6db37179a1d46d137c6f817",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -3377,7 +3387,7 @@
         "height": 900
       },
       "file": "news-personas-vera--warm--desktop.png",
-      "sha256": "1bbd066b1d3de4a8e3ef70d4905613b59e83c18be125d47dbff59fa66e02d145",
+      "sha256": "4979ad3a415a4d2118cbe86d0c9c5822fc3c009ef3945678f9fd82d34aff3825",
       "page": "/news/personas/vera/",
       "state": "page",
       "inspection": {
@@ -3399,7 +3409,7 @@
         "height": 900
       },
       "file": "news-personas-dot--cool--desktop.png",
-      "sha256": "3873eda145ae768c54cb81f6a9d375bf9f387254071d63c8d156164eb4915013",
+      "sha256": "90707648e24c99a5eb450ec9b245d7c1ace4cb973a34720875d5efbe4e8cc6ec",
       "page": "/news/personas/dot/",
       "state": "page",
       "inspection": {
@@ -3421,7 +3431,7 @@
         "height": 900
       },
       "file": "news-personas-echo--cool--desktop.png",
-      "sha256": "5f0d2964b24d8d605869ff8caa52e5fe8d152cdd07f8f50bd12098b53a28c69a",
+      "sha256": "63e78167966b3c55e5d8eac41359b0bd7d4f11935e28875428b433493dfe9a8d",
       "page": "/news/personas/echo/",
       "state": "page",
       "inspection": {
@@ -3443,7 +3453,7 @@
         "height": 900
       },
       "file": "news-personas-juno--cool--desktop.png",
-      "sha256": "64518e35e0c25de56b8cc1a986cc7371e8b22c3bd72e29b49f399d673b4db41d",
+      "sha256": "d6ed857c518359a676771555873858df7e55f49bc35d9837ea8d2898bb89881d",
       "page": "/news/personas/juno/",
       "state": "page",
       "inspection": {
@@ -3487,7 +3497,7 @@
         "height": 900
       },
       "file": "news-personas-mica--cool--desktop.png",
-      "sha256": "e00a915df1d658cbe519f6552b62dab2d0045ee69b50a6502c642cb9c3923ebb",
+      "sha256": "ec0beb74c7b393d5e8bd24e98f4fef38d4d6517a3e34e33fad777bae153902cc",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -3509,7 +3519,7 @@
         "height": 900
       },
       "file": "news-personas-nib--cool--desktop.png",
-      "sha256": "4368b730ae8716718ca3e6344e020ce87bb7f92acf080caeb6875bb5a8b5dcda",
+      "sha256": "51430da715bd6969f1e89ca7e1ff228523bc00f7a80d98ae0693cc8ff65ec989",
       "page": "/news/personas/nib/",
       "state": "page",
       "inspection": {
@@ -3531,7 +3541,7 @@
         "height": 900
       },
       "file": "news-personas-rex--cool--desktop.png",
-      "sha256": "e78c0fae57af606801763b8e9b9812bdbc5971dcca58423d34f00f5297788686",
+      "sha256": "2fcaba4262cbe2476b2370a5d93d28326951de6f8d393cb7aca4e20a4ad9f2d6",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -3553,7 +3563,7 @@
         "height": 900
       },
       "file": "news-personas-vera--cool--desktop.png",
-      "sha256": "bcbb1a53746bc56a2c151d77c791d3877e60ab036419e8344eda8b5e5ee86781",
+      "sha256": "f222752ab24a9b715e00de8a435eac863179102fd90dffd308209442832afa56",
       "page": "/news/personas/vera/",
       "state": "page",
       "inspection": {
@@ -3575,7 +3585,7 @@
         "height": 900
       },
       "file": "news-personas-dot--lava--desktop.png",
-      "sha256": "95dddcb4b49fa2ed4b46a2e12b1bbcd1f0b737336ecca10e793ebc27793a06d2",
+      "sha256": "98b3d7480e8eae747c0e74dc9fd364793a00772c6931b48643da16422669d2e8",
       "page": "/news/personas/dot/",
       "state": "page",
       "inspection": {
@@ -3619,7 +3629,7 @@
         "height": 900
       },
       "file": "news-personas-juno--lava--desktop.png",
-      "sha256": "9f1e0b5676bdc07e0702ca0c4a297745784451cd1d2c0585b7a4c2b680ee76c9",
+      "sha256": "00dd55ec0f7960d41789a687a9e86a0e5ce4a9003f8690c32b73fd4f2871a848",
       "page": "/news/personas/juno/",
       "state": "page",
       "inspection": {
@@ -3663,7 +3673,7 @@
         "height": 900
       },
       "file": "news-personas-mica--lava--desktop.png",
-      "sha256": "0223443960afc3c00bed8433bc22f342d28b575cf07d214bac31d5e51732e36a",
+      "sha256": "ff6e0f7ef8ad1f58bfc421fce1a38b76ad85a948f3a2b5b0633a70de4ba986fd",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -3685,7 +3695,7 @@
         "height": 900
       },
       "file": "news-personas-nib--lava--desktop.png",
-      "sha256": "034f7cbc1bcd47dc47a6dcbd65b147f2ce304b014c0e70bcde52cba855551dc4",
+      "sha256": "d58530f0fe680e7111ec15435384de63a44596ab82faf856117f46ee87776efd",
       "page": "/news/personas/nib/",
       "state": "page",
       "inspection": {
@@ -3707,7 +3717,7 @@
         "height": 900
       },
       "file": "news-personas-rex--lava--desktop.png",
-      "sha256": "9a1c1d3935d4ddd42e5f9a668fe87a1b8f4f38077caee499b6fd9c2c3e06af3d",
+      "sha256": "f0684d20f6a5fbb7c419ca07326530d3e8cae887001bd37790b67922403136fc",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -3751,7 +3761,7 @@
         "height": 900
       },
       "file": "news-personas-dot--high-contrast--desktop.png",
-      "sha256": "f062728059e3f26d982edc1d54f8ce3d8e2e15541d2edd5a3bdae45e20140b93",
+      "sha256": "f8b473f54d4da10f4db5d43804eebd2268f8a07aeaca63024a3313366f63bc78",
       "page": "/news/personas/dot/",
       "state": "page",
       "inspection": {
@@ -3817,7 +3827,7 @@
         "height": 900
       },
       "file": "news-personas-mara--high-contrast--desktop.png",
-      "sha256": "834b37cf8cb12d217f6028d64556e824035f6c7feae9b341e9a44265cf478e94",
+      "sha256": "d7735b26134efa54345aa37bfee5a90b1354da7b63d5a0885439e9b8d38b3b73",
       "page": "/news/personas/mara/",
       "state": "page",
       "inspection": {
@@ -3839,7 +3849,7 @@
         "height": 900
       },
       "file": "news-personas-mica--high-contrast--desktop.png",
-      "sha256": "22bb022d83db97cbe420c69430e830fa8fab3b501568512cd19cf96f9c9567ba",
+      "sha256": "bf9f498f7e8682be822cc1bcac48424b3b49b490410273e221fe1757bb8e2854",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -3883,7 +3893,7 @@
         "height": 900
       },
       "file": "news-personas-rex--high-contrast--desktop.png",
-      "sha256": "37cbeecf38f4aa0448669974436eab4351ed5b40e9d69034ad3f2de3101b0983",
+      "sha256": "842b34255c40ba27979d591c401e10b6ec8a6aada184fd20f3583e6eacd7a204",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -3927,7 +3937,7 @@
         "height": 844
       },
       "file": "news-personas-dot--dark--mobile.png",
-      "sha256": "971987333e954c97c07a65c845a40aa565f4c7a506d563faee2ca8b9d9a8f2ee",
+      "sha256": "df6124d04f74731ee50decb002b3e3536ddcf8fc10d0f015a5ebffa52c45e000",
       "page": "/news/personas/dot/",
       "state": "page",
       "inspection": {
@@ -3949,7 +3959,7 @@
         "height": 844
       },
       "file": "news-personas-echo--dark--mobile.png",
-      "sha256": "fbe8740d0033ecd60736b997142e70eef424aeccbefb2b115b7b3be1216e44cc",
+      "sha256": "2d2935e99ac4c5f0d169517997c2b896316af2d6e017f6a03ceb33b39b8d0a12",
       "page": "/news/personas/echo/",
       "state": "page",
       "inspection": {
@@ -3993,7 +4003,7 @@
         "height": 844
       },
       "file": "news-personas-mara--dark--mobile.png",
-      "sha256": "f09a8486e27accb75ac9171d95e84886afd53c4c98e266f4c6cd1faeb9cd42d5",
+      "sha256": "672cf164ba70459d206334bb85b932fec55b9f3493d3adcd5ac223e3c6f7ea74",
       "page": "/news/personas/mara/",
       "state": "page",
       "inspection": {
@@ -4015,7 +4025,7 @@
         "height": 844
       },
       "file": "news-personas-mica--dark--mobile.png",
-      "sha256": "8cca66bfe60eaaf8d5dbd42d1944802bc027949ac6d890bddc38944d2f833216",
+      "sha256": "c972ed60e8e640f6e8a50dfd961f68318d944f4ad0761f85858dfc934820442c",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -4059,7 +4069,7 @@
         "height": 844
       },
       "file": "news-personas-rex--dark--mobile.png",
-      "sha256": "6b8f08e1318fc7b8780a66b5ec4f0918aeccf2ccafbc02a05ea3a83921987dc8",
+      "sha256": "a9d8c91543f52fd4ca2bcdff6c9461bd6fe0ffd6578e9988129267eaff2ee04a",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -4081,7 +4091,7 @@
         "height": 844
       },
       "file": "news-personas-vera--dark--mobile.png",
-      "sha256": "7f6eac512d7f2ec3a328127a6a764ff1e1d6747cbfb432cf85df267e956cc67d",
+      "sha256": "56e01170cff3bb9da3aa00ef57d51529cb5e28d4ac7916160686d6fef596a058",
       "page": "/news/personas/vera/",
       "state": "page",
       "inspection": {
@@ -4103,7 +4113,7 @@
         "height": 844
       },
       "file": "news-personas-dot--light--mobile.png",
-      "sha256": "6e8705ab0fbb10332c7538a0d5632ac742ffac74e3394de65acc432d5040143c",
+      "sha256": "4201e8537f68d2ccf443f76183c11defbdd88c0cd09c63e0ef5cb414bfdf4b58",
       "page": "/news/personas/dot/",
       "state": "page",
       "inspection": {
@@ -4125,7 +4135,7 @@
         "height": 844
       },
       "file": "news-personas-echo--light--mobile.png",
-      "sha256": "16a0d7eb2ff7505c38d6e5b3e214968ddacc8011d664b384ee9a22b3963d7eb4",
+      "sha256": "d6fd1749753488eabe5ad8966b5cbb36d00b6cce9c98a103516bb714abc5ed76",
       "page": "/news/personas/echo/",
       "state": "page",
       "inspection": {
@@ -4169,7 +4179,7 @@
         "height": 844
       },
       "file": "news-personas-mara--light--mobile.png",
-      "sha256": "d812fb9fcf4d480009004096c992ac6ca21e77c724dc93b0f5103fd483720796",
+      "sha256": "c77734f68fa684fdb9084c632c196e788152e2958d5d85eec7e29387d2a2bfbc",
       "page": "/news/personas/mara/",
       "state": "page",
       "inspection": {
@@ -4191,7 +4201,7 @@
         "height": 844
       },
       "file": "news-personas-mica--light--mobile.png",
-      "sha256": "d3a992d744f0808a7f6e5dc278c30b4062d41a5915463068a02de3744cd7dabb",
+      "sha256": "f192914d31dc52f64cda49dfcceb634f8bdf15cbd5af54231dd079adad597b52",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -4213,7 +4223,7 @@
         "height": 844
       },
       "file": "news-personas-nib--light--mobile.png",
-      "sha256": "1a260b4c9acbaa4bd7e5659cfda7ab55e6fef65702379b4ab82bbfa9f961be47",
+      "sha256": "0a5ba6e627cf713f2d1c76985be3cd78257688871f3508ead01bdbc1b870e093",
       "page": "/news/personas/nib/",
       "state": "page",
       "inspection": {
@@ -4235,7 +4245,7 @@
         "height": 844
       },
       "file": "news-personas-rex--light--mobile.png",
-      "sha256": "45a6a27cdec606d9a140113f0147e1fb616c614e456f858a83ebc5ae7f9e8ffa",
+      "sha256": "e3bfd61833d6ef792a80a7675b7037406d0ecb01954460fc121822c430781eda",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -4279,7 +4289,7 @@
         "height": 844
       },
       "file": "news-personas-dot--ambient--mobile.png",
-      "sha256": "eae62870b59aace9739d0dbda5af0bf5b4195d49aab0814f55f434ac129258bc",
+      "sha256": "e984a195586dd1da6f3dfd30f5a4ac2289223221ca977692738b16049ad49506",
       "page": "/news/personas/dot/",
       "state": "page",
       "inspection": {
@@ -4323,7 +4333,7 @@
         "height": 844
       },
       "file": "news-personas-juno--ambient--mobile.png",
-      "sha256": "daee6a5fb79f5ebe73a74c7a9ef547e99cdc9353964d8c637c0e7393ffc97b58",
+      "sha256": "34ea49b8b61c7fb70c45909d3fc237c053ffee96c43a83549733d234bc15e6d1",
       "page": "/news/personas/juno/",
       "state": "page",
       "inspection": {
@@ -4345,7 +4355,7 @@
         "height": 844
       },
       "file": "news-personas-mara--ambient--mobile.png",
-      "sha256": "bd73eca31c03300292c83f30d2be3a5193444c505b02c5ca5daa25355ed588fb",
+      "sha256": "be57f30efa0a84e67cc6055fa1d0d3694aaa2dd1d21932004c773a799d8545df",
       "page": "/news/personas/mara/",
       "state": "page",
       "inspection": {
@@ -4367,7 +4377,7 @@
         "height": 844
       },
       "file": "news-personas-mica--ambient--mobile.png",
-      "sha256": "346b0702ce0453103fbfa18860e0a53603164fae3e7a74a87221f240edd77bb4",
+      "sha256": "4473a88c989a63a8cd4843c4c5c571ab5cf9b12e8081d439e7a2f6c72df5d131",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -4389,7 +4399,7 @@
         "height": 844
       },
       "file": "news-personas-nib--ambient--mobile.png",
-      "sha256": "0c34c40cbdbcd5962d9b16e4b6925a1580d59689e841c17e72804df6513252c7",
+      "sha256": "aefe4c6e39b6e73e342ac1baae10c5b439cb8c6e45bb5bff99ea99bd0beb14cd",
       "page": "/news/personas/nib/",
       "state": "page",
       "inspection": {
@@ -4411,7 +4421,7 @@
         "height": 844
       },
       "file": "news-personas-rex--ambient--mobile.png",
-      "sha256": "1f412521a752e26db6d49a1beca4c6bc01ce20399fbb82c6d945ee41dbe8dc80",
+      "sha256": "a2b8e9be18097a1ff54f0c134d36d567cf5fdf542d8c59cff44b5d043c6ffa70",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -4455,7 +4465,7 @@
         "height": 844
       },
       "file": "news-personas-dot--warm--mobile.png",
-      "sha256": "4e4150f34c0068d84b18540266b4a5c35b1777a07882817a7a5b90657fd5d154",
+      "sha256": "6a2273ad05797ec5176bf61ba89e3e46ed797a115d4deb7e75629c02b4fd9dbd",
       "page": "/news/personas/dot/",
       "state": "page",
       "inspection": {
@@ -4477,7 +4487,7 @@
         "height": 844
       },
       "file": "news-personas-echo--warm--mobile.png",
-      "sha256": "c3e4e0a86ab744b1070e9110795b17fd074d5af5582409f3cbc7748bcf053de0",
+      "sha256": "e4d9bded09658b724f53f49b2321d384a5016ec9dba4a32bd757adb39adb47ae",
       "page": "/news/personas/echo/",
       "state": "page",
       "inspection": {
@@ -4499,7 +4509,7 @@
         "height": 844
       },
       "file": "news-personas-juno--warm--mobile.png",
-      "sha256": "4be3791b4920a1679f9150ecd3b7ed197799aed6d2199d6df736373d2a5fb1ff",
+      "sha256": "c0daa37d8d93602fb4f66a6e74a7f28f204b1fbff5fa3d03d32979202fda0f3f",
       "page": "/news/personas/juno/",
       "state": "page",
       "inspection": {
@@ -4565,7 +4575,7 @@
         "height": 844
       },
       "file": "news-personas-nib--warm--mobile.png",
-      "sha256": "186418e3040a936442f64d48f5ec9d4b31c25b21406a1b44ab4485ac6751b190",
+      "sha256": "f45aa4f3b42d971c38677ac7f44111f5bf49ecffde289bdbed5e7e121e0ede37",
       "page": "/news/personas/nib/",
       "state": "page",
       "inspection": {
@@ -4587,7 +4597,7 @@
         "height": 844
       },
       "file": "news-personas-rex--warm--mobile.png",
-      "sha256": "5b22379d96bceaa9d58b39f1370f60c9c9e8c9e9fe562d748ebda7044058ae5c",
+      "sha256": "56d637183ae9971089f5e92ffd93ad2f88a46becdfb6dbff928037af0a0fffad",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -4631,7 +4641,7 @@
         "height": 844
       },
       "file": "news-personas-dot--cool--mobile.png",
-      "sha256": "066525f4a67cb068012bcc886ddb2e2bd6933f1aabeaab49d7233889d90e7415",
+      "sha256": "f0bdcf9acbde3cd87c0928526643601c5d2e749b6cbabe00ae27b432b314d52b",
       "page": "/news/personas/dot/",
       "state": "page",
       "inspection": {
@@ -4675,7 +4685,7 @@
         "height": 844
       },
       "file": "news-personas-juno--cool--mobile.png",
-      "sha256": "a2db5f692813d6df396b117e5ebd8a79e2a3b1d873fb6e69764a003a81c15494",
+      "sha256": "44524446e1aaf1f3b454966dc98ab031e373eb7938e5f20c058c5ae3003c1848",
       "page": "/news/personas/juno/",
       "state": "page",
       "inspection": {
@@ -4719,7 +4729,7 @@
         "height": 844
       },
       "file": "news-personas-mica--cool--mobile.png",
-      "sha256": "cbd0006e2cd2c89fa20853f44761feae07754b85591bec7d7bfb2a5f9c5230c5",
+      "sha256": "6125eebf42d64c924d62a181741ac9dc059158677a01ff4fb0cc7c2e25fe8733",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -4741,7 +4751,7 @@
         "height": 844
       },
       "file": "news-personas-nib--cool--mobile.png",
-      "sha256": "5a2413f410a2b95621d00a6f6839f9b88119ba6e68d1e07bb53fa04b29b4eb33",
+      "sha256": "1f08c5c9d74d04006cc53344991237e6b93723781b7ab773e6cb47cd518d4a29",
       "page": "/news/personas/nib/",
       "state": "page",
       "inspection": {
@@ -4763,7 +4773,7 @@
         "height": 844
       },
       "file": "news-personas-rex--cool--mobile.png",
-      "sha256": "a10afb47d1eec1c1dbf270e4d7fc1b1531f2fa678072ada79c5af1d7bdc42d1d",
+      "sha256": "be1a46f4ec601a0a7d68de6013a60aad674d460f71ca51f65a0797eb1d5d41bb",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -4807,7 +4817,7 @@
         "height": 844
       },
       "file": "news-personas-dot--lava--mobile.png",
-      "sha256": "0031c5c1fa27720c91dcd4511aebee8fc7654d909b2a835df959e15f97bfb7ac",
+      "sha256": "6c9d1a890f1ad3b370facca51afcc03cecbaa68c4a914bc9d60a7f5644a1d170",
       "page": "/news/personas/dot/",
       "state": "page",
       "inspection": {
@@ -4829,7 +4839,7 @@
         "height": 844
       },
       "file": "news-personas-echo--lava--mobile.png",
-      "sha256": "31672cd25daab204e9b409376f721ef62c8f9b56050d303bc5a491f02aab2bf6",
+      "sha256": "18cca2f545466a8c51179d9120cf8ec250853730fef9333f6372c1d428f5235c",
       "page": "/news/personas/echo/",
       "state": "page",
       "inspection": {
@@ -4895,7 +4905,7 @@
         "height": 844
       },
       "file": "news-personas-mica--lava--mobile.png",
-      "sha256": "390ef2b91bb173e8a58d45719a9a0d2ea58b4fe8fb0e9a75508c8a262b49a838",
+      "sha256": "d6cab83c4e48435127c4c2c15111fbce5c2a792dccee54aa49afde3157acdae3",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -4939,7 +4949,7 @@
         "height": 844
       },
       "file": "news-personas-rex--lava--mobile.png",
-      "sha256": "a138b12eede0f16e15e0142dc971422479c6bbd7f8bbafd86c1500aba6c2a654",
+      "sha256": "c2607fd60b62cb947a88d30c9a000c8c05a65ca467c90ba1714765e4c0e671a0",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -4983,7 +4993,7 @@
         "height": 844
       },
       "file": "news-personas-dot--high-contrast--mobile.png",
-      "sha256": "488f81b04f99747f5de78df4faadb71a5cef8968f66271561c41e24b151dd92d",
+      "sha256": "7a0e1cd38034fc303ea7ebe1069f815fad53e503f7f404861b8bd591c15764a3",
       "page": "/news/personas/dot/",
       "state": "page",
       "inspection": {
@@ -5005,7 +5015,7 @@
         "height": 844
       },
       "file": "news-personas-echo--high-contrast--mobile.png",
-      "sha256": "9c41ba71eef55a0db72cef5dfc07135ed6ae9019545d65da825441049c76ad20",
+      "sha256": "8213fafa116ec7f3bdab04632df1113bc50489b79276909277eb54e81279a252",
       "page": "/news/personas/echo/",
       "state": "page",
       "inspection": {
@@ -5115,7 +5125,7 @@
         "height": 844
       },
       "file": "news-personas-rex--high-contrast--mobile.png",
-      "sha256": "2ebbc731325dbc9c27ab5b515ab7325722d35f3a8f37d9b3c80b9c4eb7805543",
+      "sha256": "02063a78d26ae5dae80bffbd44d245cb109d7ef99cdcd2a513848f1828b67ede",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -5146,14 +5156,18 @@
       }
     }
   ],
+  "sourceBindingNote": "Clearance source and delivered ambient bundle existed unchanged throughout the fresh close-edition capture sequence and are included explicitly in this binding.",
+  "supplementalEvidence": [
+    "docs/visual-qa/S400-reviewed-disclosures.json"
+  ],
   "rebound": {
-    "at": "2026-10-23T18:40:42.359Z",
+    "at": "2026-10-23T20:17:17.930Z",
     "reason": "Candidate metadata only. Canonical sourceBinding matched the aggregate bound-source digest and all112 actual PNG hashes matched. Original capture time and actual manual inspection preserved; no recapture or new pixel review claimed.",
     "previousCandidate": {
       "manifest": "api/candidate-artifact-manifest.json",
-      "manifestSha256": "93a45945b1ef884bf1b9fce7d7c7f70c7eb5ed0947b9d7c6330ade890f4678d7",
-      "candidateSha": "1a96e6203bdd1e368d310daf50a88f1ca659a7eb",
-      "root": "1b9ad9016f41b9e98ad92d3bd8ca851bcb5d279cd099a07e5617d5afd2d0d6e4"
+      "manifestSha256": "dcc2005c3d4fa488db40c44b7509492bb56f55758adb3d376b992653e19ea621",
+      "candidateSha": "dc2e6e41cad185d5d1e4bb0753d53e4772428c95",
+      "root": "f540fca67daf649c1850c40e82f37dce370d9f7b67f61842ef4002c5d28554dc"
     }
   }
 }
