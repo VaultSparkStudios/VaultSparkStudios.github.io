@@ -32,7 +32,7 @@ function noSymlinkParents(target) {
   let part = path.parse(path.resolve(target)).root;
   for (const segment of path.resolve(target).slice(part.length).split(path.sep).filter(Boolean)) {
     part = path.join(part, segment);
-    if (fs.existsSync(part) && fs.lstatSync(part).isSymbolicLink()) throw Error(`Symlink parent refused: ${part}`);
+    if (fs.lstatSync(part, { throwIfNoEntry: false })?.isSymbolicLink()) throw Error(`Symlink parent refused: ${part}`);
   }
 }
 export function planSnapshots(entries, { keep = KEEP, now = Date.now(), settledMs = 3600_000 } = {}) {
@@ -84,7 +84,9 @@ export function assertArchiveVolume({ volume = VOLUME, archive = ARCHIVE, root =
   const uuid = run('findmnt', ['-n', '-M', volume, '-o', 'UUID']).trim();
   if (uuid !== VOLUME_UUID) throw Error('Archive filesystem identity mismatch');
   const identityFile = path.join(volume, 'studio-archives', '.website-rollback-volume.json');
-  if (fs.existsSync(identityFile)) {
+  const identityStat=fs.lstatSync(identityFile,{throwIfNoEntry:false});
+  if (identityStat?.isSymbolicLink()) throw Error('Archive identity file must not be a symlink');
+  if (identityStat) {
     const expected = JSON.parse(fs.readFileSync(identityFile,'utf8'));
     if (expected.uuid !== uuid || expected.volume !== volume) throw Error('Archive volume identity mismatch');
   }
@@ -102,7 +104,12 @@ export async function archiveSnapshot(name, { root = ROOT, archive = ARCHIVE, co
   noSymlinkParents(root); noSymlinkParents(archive);
   const source = path.join(root,name), destination = path.join(archive,name);
   if (!fs.lstatSync(source).isDirectory() || fs.lstatSync(source).isSymbolicLink()) throw Error('Source is not a real snapshot directory');
-  if (fs.existsSync(destination)) throw Error(`Existing archive destination requires explicit recovery: ${name}`);
+  if (fs.lstatSync(destination,{throwIfNoEntry:false})) throw Error(`Existing archive destination requires explicit recovery: ${name}`);
+  // A failed copy is evidence requiring reconciliation, not permission for a
+  // fresh UUID and another full copy on every timer tick. Refuse any inode kind,
+  // including a dangling symlink, under this exact safe snapshot-name prefix.
+  const partialPrefix=`.copy-${name}-`;
+  if(fs.readdirSync(archive).some(entry=>entry.startsWith(partialPrefix)&&entry.length>partialPrefix.length))throw Error(`Interrupted archive copy requires explicit recovery: ${name}`);
   const before = await manifest(source);
   const space=fs.statfsSync(archive);
   const freeBytes=Number(space.bavail)*Number(space.bsize);
@@ -155,7 +162,7 @@ export async function main(argv=process.argv.slice(2)) {
   console.log(JSON.stringify({readOnly:!apply,...plan,identity:{volume:identity.volume,uuid:identity.uuid}}));
   if(!apply)return;
   fs.mkdirSync(ARCHIVE,{recursive:true,mode:0o700});
-  if(!fs.existsSync(identity.identityFile))writeReceipt(identity.identityFile,{schemaVersion:1,volume:identity.volume,uuid:identity.uuid});
+  if(!fs.lstatSync(identity.identityFile,{throwIfNoEntry:false}))writeReceipt(identity.identityFile,{schemaVersion:1,volume:identity.volume,uuid:identity.uuid});
   for(const name of plan.candidates)await archiveSnapshot(name);
 }
 if(process.argv[1]&&fs.realpathSync(path.resolve(process.argv[1]))===fs.realpathSync(fileURLToPath(import.meta.url)))main().catch(e=>{console.error(`archive-staging-rollbacks: ${e.message}`);process.exitCode=1;});

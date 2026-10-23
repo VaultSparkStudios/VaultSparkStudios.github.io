@@ -57,6 +57,35 @@ test('copy corruption never switches or removes original',{skip:process.platform
  const temp=fs.mkdtempSync(path.join(os.tmpdir(),'website-corrupt-'));const root=path.join(temp,'rollback'),archive=path.join(temp,'archive'),name='20261023000200';fs.mkdirSync(root);fs.mkdirSync(archive);fs.mkdirSync(path.join(root,name));fs.writeFileSync(path.join(root,name,'file'),'original');
  try{let exchanged=false;await assert.rejects(archiveSnapshot(name,{root,archive,copy:(_,dest)=>fs.writeFileSync(path.join(dest,'file'),'corrupt'),flush:()=>{},exchange:()=>{exchanged=true;},log:()=>{}}),/verification failed/);assert.equal(exchanged,false);assert.equal(fs.readFileSync(path.join(root,name,'file'),'utf8'),'original');}finally{fs.rmSync(temp,{recursive:true,force:true});}
 });
+test('interrupted copy retry creates no new copy and leaves source unchanged',async()=>{
+ const temp=fs.mkdtempSync(path.join(os.tmpdir(),'website-copy-retry-'));const root=path.join(temp,'rollback'),archive=path.join(temp,'archive'),name='20261023000201';fs.mkdirSync(root);fs.mkdirSync(archive);fs.mkdirSync(path.join(root,name));fs.writeFileSync(path.join(root,name,'file'),'original');
+ try{
+  const before=await manifest(path.join(root,name));let copies=0,exchanges=0,removals=0;
+  const options={root,archive,copy:(_,dest)=>{copies++;fs.writeFileSync(path.join(dest,'interrupted'),'partial');throw Error('simulated interrupted copy');},exchange:()=>{exchanges++;},remove:()=>{removals++;},log:()=>{}};
+  await assert.rejects(archiveSnapshot(name,options),/simulated interrupted/);
+  const afterFirst=fs.readdirSync(archive);
+  assert.equal(afterFirst.length,1);assert.ok(afterFirst[0].startsWith(`.copy-${name}-`));
+  await assert.rejects(archiveSnapshot(name,options),/Interrupted archive copy requires explicit recovery/);
+  assert.equal(copies,1);assert.equal(exchanges,0);assert.equal(removals,0);assert.deepEqual(fs.readdirSync(archive),afterFirst);
+  assert.equal((await manifest(path.join(root,name))).digest,before.digest);assert.deepEqual(fs.readdirSync(root),[name]);
+ }finally{fs.rmSync(temp,{recursive:true,force:true});}
+});
+test('dangling source, destination and same-snapshot partial links refuse copying',{skip:process.platform!=='linux'},async()=>{
+ const temp=fs.mkdtempSync(path.join(os.tmpdir(),'website-dangling-'));const root=path.join(temp,'rollback'),archive=path.join(temp,'archive'),name='20261023000202';fs.mkdirSync(root);fs.mkdirSync(archive);
+ try{
+  let copied=false;const options={root,archive,copy:()=>{copied=true;},log:()=>{}};
+  fs.symlinkSync(path.join(temp,'missing-source'),path.join(root,name),'dir');
+  await assert.rejects(archiveSnapshot(name,options),/not a real snapshot/);
+  fs.unlinkSync(path.join(root,name));fs.mkdirSync(path.join(root,name));fs.writeFileSync(path.join(root,name,'file'),'original');
+  fs.symlinkSync(path.join(temp,'missing-destination'),path.join(archive,name),'dir');
+  await assert.rejects(archiveSnapshot(name,options),/Existing archive destination/);
+  assert.equal(fs.lstatSync(path.join(archive,name)).isSymbolicLink(),true);fs.unlinkSync(path.join(archive,name));
+  const partial=`.copy-${name}-00000000-0000-0000-0000-000000000000`;
+  fs.symlinkSync(path.join(temp,'missing-partial'),path.join(archive,partial),'dir');
+  await assert.rejects(archiveSnapshot(name,options),/Interrupted archive copy/);
+  assert.equal(copied,false);assert.deepEqual(fs.readdirSync(archive),[partial]);assert.equal(fs.readFileSync(path.join(root,name,'file'),'utf8'),'original');
+ }finally{fs.rmSync(temp,{recursive:true,force:true});}
+});
 test('source changes during copy preserve original; deletion failure retains duplicate',{skip:process.platform!=='linux'},async()=>{
  const temp=fs.mkdtempSync(path.join(os.tmpdir(),'website-interrupt-'));const root=path.join(temp,'rollback'),archive=path.join(temp,'archive');fs.mkdirSync(root);fs.mkdirSync(archive);
  try{
