@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 399,
-  "state": "local-validated-promotion-pending",
+  "state": "test-contract-repaired-hosted-revalidation-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a1669c-19de-7b02-a8f9-4ec1a9ea2eb0",
@@ -22,7 +22,17 @@
     "visual": "docs/visual-qa/LATEST.json: 28 manually reviewed captures, seven themes, desktop/mobile, page/opened Spark. Original bundle baseline captured in .cache/S399-baseline with matching baseline SRI in the capture fixture.",
     "premise": "Original strict 2/2 pass before behavior edits; timing-classifier planning-artifact deviation and exact Git-byte replay retained in docs/S399_audit-admission-replay.json.",
     "closeoutReview": "Independent session/rotation review PASS; 85 completed records verified verbatim, remaining open work preserved, public-safe docs checked.",
-    "closeoutDraftReview": "Independent draft review round1 FIX: premature completion wording and suite provenance; corrected cached draft, round2 PASS. Not executed; final release/closeout acceptance pending."
+    "closeoutDraftReview": "Independent draft review round1 FIX: premature completion wording and suite provenance; corrected cached draft, round2 PASS. Not executed; final release/closeout acceptance pending.",
+    "sparkContractRepair": {
+      "local": {
+        "passed": 24,
+        "failed": 0,
+        "exit": 0,
+        "durationSeconds": 52.8
+      },
+      "review": "Fresh independent spark_contract_reviewer PASS; no blocking findings",
+      "runtimeSourceChanged": false
+    }
   },
   "localAcceptance": {
     "build": {
@@ -112,8 +122,16 @@
     }
   },
   "requiredChecks": {
-    "state": "pending",
-    "contract": ".github/RELEASE_CHECKS.json"
+    "ok": false,
+    "sha": "0cc0564676e4599d6fc1f128ed1e3b4179df76b5",
+    "contract": ".github/RELEASE_CHECKS.json",
+    "state": "revised-candidate-pending",
+    "runs": {
+      "e2e": 39904337439,
+      "lighthouse": 39904337381,
+      "accessibility": 39904337431
+    },
+    "observation": "Accessibility success; E2E and Lighthouse in_progress. Final canonical checker still required."
   },
   "production": {
     "state": "pending",
@@ -121,7 +139,6 @@
   },
   "rollback": "Revert the bounded S399 product change and redeploy the previously accepted release tag release-s398-418d250656.",
   "remaining": [
-    "sanitized main commit and push",
     "exact-SHA hosted checks",
     "full production Pages promotion and served-byte readback",
     "canonical closeout and final remote verification"
@@ -145,5 +162,35 @@
     "filesAtInitialScan": 556,
     "settingsFindings": 0,
     "supplyChain": "project-scoped scanner passed; no IOC findings"
-  }
+  },
+  "releaseSha": "0cc0564676e4599d6fc1f128ed1e3b4179df76b5",
+  "push": {
+    "state": "verified",
+    "sha": "0cc0564676e4599d6fc1f128ed1e3b4179df76b5",
+    "exit": 0,
+    "remote": "origin/main",
+    "note": "Normal push with all pre-push hooks; no bypass or force. Three intervening routine data commits reconciled."
+  },
+  "hostedAttempts": [
+    {
+      "sha": "0cc0564676e4599d6fc1f128ed1e3b4179df76b5",
+      "e2e": {
+        "runId": 39904337439,
+        "state": "failed",
+        "tests": [
+          "route progress waited for visible buddy",
+          "buddy assumed initially visible in occupied corner"
+        ]
+      },
+      "lighthouse": {
+        "runId": 39904337381,
+        "state": "passed"
+      },
+      "accessibility": {
+        "runId": 39904337431,
+        "state": "passed"
+      },
+      "repair": "Tests now poll actual arrival IDs, explicitly assert reading yield/recall and isolate clear-space companion behavior. Runtime source unchanged. Local full Spark contract24/24 actual exit0; independent reviewer PASS."
+    }
+  ]
 }

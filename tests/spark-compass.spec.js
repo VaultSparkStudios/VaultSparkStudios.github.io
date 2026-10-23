@@ -42,7 +42,7 @@ test('accepting an updated saved path persists its revision and list selection',
 test('route progress is earned only when its destination actually loads',async({page})=>{
   await page.goto('/games/');await open(page);await page.getByRole('button',{name:'Mix interests',exact:true}).click();await page.getByRole('button',{name:'Compose a path'}).click();await page.getByRole('button',{name:'Start this route'}).click();
   const active=await page.evaluate(()=>JSON.parse(localStorage.getItem('vs_spark_active_v1')));expect(active.visited).toEqual([]);
-  for(const target of active.targets){await page.goto(target.path);await page.getByRole('button',{name:'Open Spark — Vault Compass'}).waitFor();}
+  for(const target of active.targets){await page.goto(target.path);await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('vs_spark_active_v1')).visited)).toContain(target.id);}
   await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('vs_spark_v1')).completed)).toContain(active.stops.join('.'));await expect(page.locator('#spark-compass[open]')).toHaveCount(0);
 });
 
@@ -54,8 +54,14 @@ test('MindFrame launch destinations use its current domain',async({page})=>{
   for(const route of ['/play/','/games/mindframe/']){await page.goto(route);expect(await page.locator('a[href*="steadfast-determination"]').count()).toBe(0);expect(await page.locator('a[href^="https://usemindframe.com"]').count()).toBeGreaterThan(0);}
 });
 
-test('corner buddy animates, opens a nonmodal popup and remembers placement',async({page})=>{
+test('corner buddy yields to reading, animates in clear space and remembers placement',async({page})=>{
   await page.setViewportSize({width:360,height:640});await page.goto('/games/');
+  const dock=page.locator('.spark-buddy');await dock.waitFor({state:'attached'});
+  await page.evaluate(()=>{const p=document.createElement('p');p.textContent='Clear reading space';p.style.cssText='position:fixed;right:12px;bottom:24px;width:76px';document.querySelector('main').append(p);});
+  await expect(dock).toHaveAttribute('data-yield','true');await expect(dock).toBeHidden();
+  await open(page);await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Open Spark navigation'})).toBeFocused();
+  // Isolate the clear-corner state before testing the companion itself.
+  await page.evaluate(()=>document.querySelector('main').style.visibility='hidden');
   const buddy=page.getByRole('button',{name:'Open Spark — Vault Compass'});await expect(buddy).toBeVisible();
   const box=await buddy.boundingBox();expect(box.x+box.width).toBeLessThanOrEqual(360);
   expect(await page.locator('.spark-buddy-orb').evaluate(n=>getComputedStyle(n).animationName)).toBe('spark-buddy-float');
@@ -63,6 +69,7 @@ test('corner buddy animates, opens a nonmodal popup and remembers placement',asy
   await page.getByLabel('Spark corner').selectOption('left');await expect(page.locator('.spark-buddy')).toHaveAttribute('data-side','left');
   await page.getByLabel('Spark motion',{exact:true}).selectOption('still');await expect(page.locator('.spark-buddy')).toHaveAttribute('data-motion','still');
   await page.keyboard.press('Escape');await expect(page.locator('#spark-compass[open]')).toHaveCount(0);if(await buddy.isVisible())await expect(buddy).toBeFocused();else await expect(page.getByRole('button',{name:'Open Spark navigation'})).toBeFocused();await page.reload();await expect(page.locator('.spark-buddy')).toHaveAttribute('data-side','left');
+  await page.evaluate(()=>document.querySelector('main').style.visibility='hidden');await expect(buddy).toBeVisible();await expect(dock).toHaveAttribute('data-motion','still');
   await page.getByRole('button',{name:'Tuck Spark away for this visit'}).click();await expect(page.locator('.spark-buddy')).toBeHidden();
   await page.getByRole('button',{name:'Open Spark navigation'}).click();await expect(page.locator('#spark-compass')).toBeVisible();
 });
