@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-23T20:13:21.525Z",
+  "generatedAt": "2026-10-23T20:43:47.393Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -20,15 +20,16 @@
     ],
     "candidateReady": false,
     "candidateFindings": [
+      "staging-build-sha-mismatch",
       "staging-artifact-root-mismatch"
     ],
     "candidateBuildSha": "ed7154a378ebe5108b91835788457c8364033306",
-    "deployedBuildSha": "ed7154a378ebe5108b91835788457c8364033306",
-    "candidateShaBound": true,
+    "deployedBuildSha": "dc2e6e41cad185d5d1e4bb0753d53e4772428c95",
+    "candidateShaBound": false,
     "artifactManifest": {
       "candidateRoot": "8717cd307fc520336fa6ed8607ed732499970aa44ecfb5f5084f4cfb11aea926",
       "candidateLeafCount": 68,
-      "stagingRoot": "1cdc16125f0f0e8dad2421fbfd35b16bdf3cafe7f0b1e9a01283ff709456b139",
+      "stagingRoot": "e08f3ba2337413c0a5b2f74bb529cb330b8d0ab10db9a3edb08c5295e1218d13",
       "stagingLeafCount": 68,
       "matched": false
     },
@@ -70,13 +71,13 @@
   },
   "productionDeploy": {
     "state": "behind",
-    "commitsBehind": 64,
-    "ageHours": 11.2,
-    "observedAt": "2026-10-23T20:13:21.525Z",
+    "commitsBehind": 66,
+    "ageHours": 11.8,
+    "observedAt": "2026-10-23T20:43:47.393Z",
     "shellParity": {
       "state": "drift",
       "route": "/",
-      "observedAt": "2026-10-23T20:13:21.525Z",
+      "observedAt": "2026-10-23T20:43:47.393Z",
       "expectedFrom": "fdb7f729a7f8ab525b82c6bb04867a2665ef0517221a86dbbc9233edde97a584",
       "supersededBy": null,
       "ageHours": 0,
@@ -185,7 +186,7 @@
     "canonicalFavicon": true,
     "stagingReachable": true,
     "stagingCandidateReady": false,
-    "stagingCandidateShaBound": true,
+    "stagingCandidateShaBound": false,
     "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
@@ -201,6 +202,7 @@
   },
   "blockers": [
     "stagingCandidateReady",
+    "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "productionShellParityMatched",
