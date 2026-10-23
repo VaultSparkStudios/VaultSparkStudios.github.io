@@ -17,6 +17,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from './lib/safe-spawn.mjs';
+import { ROLLBACK_PREFLIGHT, ROLLBACK_ARCHIVE } from './archive-staging-rollbacks.mjs';
 import { isDiscoveryPath } from './lib/discovery-content.mjs';
 import { deriveNewsReleaseContract, runNewsReleaseContractSelfTest } from './lib/news-release-contract.mjs';
 
@@ -354,6 +355,7 @@ try {
     `CONTENT_COUNT='${promotable.length}'`,
     `DELETE_PATHS='${removals.join(' ')}'`,
     'case "$ROOT" in /srv/*|/var/www/*|/opt/studio/staging/*) ;; *) echo UNSAFE_ROOT; exit 1;; esac',
+    ROLLBACK_PREFLIGHT,
     'ACTUAL_SHA=$(sha256sum "$ARCHIVE" | awk \'{print $1}\')',
     '[ "$ACTUAL_SHA" = "$EXPECTED_SHA" ] || { echo ARCHIVE_DIGEST_MISMATCH; exit 1; }',
     'STAGE=$(mktemp -d /tmp/vaultspark-content.XXXXXX)',
@@ -367,6 +369,7 @@ try {
     'chmod 755 "$ROOT"',
     'find "$ROOT" -path "$ROOT/.rollback" -prune -o -type d -exec chmod 755 {} +',
     'find "$ROOT" -path "$ROOT/.rollback" -prune -o -type f -exec chmod 644 {} +',
+    ROLLBACK_ARCHIVE,
     'NOW=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)',
     'DAY=$(date -u +%Y-%m-%d)',
     'mkdir -p "$ROOT/api"',

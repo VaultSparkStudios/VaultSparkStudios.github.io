@@ -22,6 +22,7 @@ import { verificationSurfaceFingerprint } from './lib/build-check-evidence.mjs';
 import { writeJsonAtomic, writeTextAtomic } from './lib/evidence-io.mjs';
 import { appendStagingDeployHistory, parseStagingDeployHistory, renderStagingDeployHistory } from './lib/staging-deploy-history.mjs';
 import { createStagingDeployReceipt, runStagingDeployReceiptSelfTest, validateStagingDeployReceipt } from './lib/staging-deploy-receipt.mjs';
+import { ROLLBACK_PREFLIGHT, ROLLBACK_ARCHIVE } from './archive-staging-rollbacks.mjs';
 
 import { admitDeployment } from './lib/deploy-argv.mjs';
 const admitted = admitDeployment({"name":"deploy-staging","boolFlags":["--self-test","--probe"],"modes":["--self-test","--probe"],"usage":"node scripts/deploy-staging.mjs [--probe | --self-test]"});
@@ -202,6 +203,7 @@ try {
     `STAMP='${stamp}'`,
     `EXPECTED_ARCHIVE_SHA='${archiveSha256}'`,
     'case "$ROOT" in /srv/*|/var/www/*|/opt/studio/staging/*) ;; *) echo UNSAFE_ROOT; exit 1;; esac',
+    ROLLBACK_PREFLIGHT,
     'STAGE=$(mktemp -d /tmp/vaultspark-release.XXXXXX)',
     "trap 'rm -rf \"$STAGE\"; rm -f \"$ARCHIVE\"' EXIT",
     'ACTUAL_ARCHIVE_SHA=$(sha256sum "$ARCHIVE" | awk \'{print $1}\')',
@@ -218,6 +220,7 @@ try {
     'chmod 755 "$ROOT"',
     'find "$ROOT" -path "$ROOT/.rollback" -prune -o -type d -exec chmod 755 {} +',
     'find "$ROOT" -path "$ROOT/.rollback" -prune -o -type f -exec chmod 644 {} +',
+    ROLLBACK_ARCHIVE,
     `REMOTE_FILE_COUNT=$(find "$ROOT" -path "$ROOT/.rollback" -prune -o -path "$ROOT/${RECEIPT_REL}" -prune -o -type f -print | wc -l | tr -d ' ')`,
     'printf "STAGING_DEPLOYED %s %s\\n" "$STAMP" "$REMOTE_FILE_COUNT"',
   ].join('; ');
