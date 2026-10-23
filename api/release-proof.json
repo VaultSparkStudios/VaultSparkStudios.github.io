@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-23T02:48:34.124Z",
+  "generatedAt": "2026-10-23T03:15:42.801Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -21,15 +21,18 @@
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch"
+      "staging-artifact-root-mismatch",
+      "/:localShellParity",
+      "/studio-pulse/:localShellParity",
+      "/membership/:localShellParity"
     ],
     "candidateBuildSha": "91fd2ec9fa8e473c5bc5fe81190464a3db9e2d23",
-    "deployedBuildSha": "512b1475713e0f0d17527c51d56c4c5ac4d73df0",
+    "deployedBuildSha": "905f45651bfb7a68b30082cb79100427a645d782",
     "candidateShaBound": false,
     "artifactManifest": {
       "candidateRoot": "ceb451148474c5e25a99c3b221c4cdc93ef67185e5f43fae9a9becee7b30d39c",
       "candidateLeafCount": 67,
-      "stagingRoot": "3724ac29c786e50b6d0e9fe37564652849b694458208d80d7ee42c16f4f5af12",
+      "stagingRoot": "8e56b3b8d4abcedd7c05b3b80fd1513defa7d63a5edb9f85f9fd7cc201cd4ac7",
       "stagingLeafCount": 67,
       "matched": false
     },
@@ -71,13 +74,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 17,
-    "ageHours": 2.3,
-    "observedAt": "2026-10-23T02:48:34.124Z",
+    "commitsBehind": 18,
+    "ageHours": 2.7,
+    "observedAt": "2026-10-23T03:15:42.801Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-23T02:48:34.124Z",
+      "observedAt": "2026-10-23T03:15:42.801Z",
       "expectedFrom": "b44484ca1469cb5c4dbe450d09fae7c007a482a5634fd22a90c838273809fa20",
       "supersededBy": null,
       "ageHours": 0,
