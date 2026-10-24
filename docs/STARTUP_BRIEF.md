@@ -123,9 +123,6 @@
 ║   96  [PRODUCT]      Consider per-member byte verification only  ║
 ║        Consider per-member byte verification only if source mut  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      Coordinate an evidence-backed distinction   ║
 ║        Coordinate an evidence-backed distinction between format  ║
 ║                                                                  ║
@@ -134,6 +131,9 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Staging lineage tolerant of publisher data  ║
 ║        Staging lineage tolerant of publisher data drift. is ope  ║
+║                                                                  ║
+║   84  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
+║        Gate srcset, CSS url(), redirect targets. Future only. i  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
