@@ -2490,3 +2490,10 @@ Hosted compliance reproduced elapsed-window drift: the same event ledger yielded
 
 
 ## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.
+
+
+## D-S401.1 — Verify archive inventory before staging upload
+
+Reuse installed tar for exact member names and independent regular-entry checks, and Node streaming gunzip for complete gzip CRC validation. Admit only regular single-link sources with real directory parents and unambiguous printable ASCII relative paths. Both full and content staging producers verify before scp; the full staging receipt binds inventory count and SHA-256 digest alongside archive byte identity. Historical receipts remain readable. This proves archive names/types/integrity, not per-member source-byte equality or a frozen filesystem snapshot. No dependency or identity/trust-policy change.
+
+CANON-045 STRONG gap remains separately justified: unchanged relying-party integration and existing provider holds are not expanded or cleared by this operational release. Canon startup sync suggest timed out once; direct suggest/check recovered successfully. Premise gate strictly verified both premises before behavior edits, but timing classifier remains nonpassing for four startup/planning artifacts. Preserve that diagnostic; do not relabel it as a pass.

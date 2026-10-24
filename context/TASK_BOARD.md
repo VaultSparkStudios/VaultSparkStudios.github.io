@@ -1,3 +1,8 @@
+## S401 selected outcome
+
+- [x] [S401] Local archive membership and gzip integrity implementation: 10/10 actual tar fixtures, independent round 2 approval; release acceptance tracked in docs/RELEASE_S401.json.
+- [ ] [SIL][S401] Consider per-member byte verification only if source mutation during packaging is observed; not selected in this arc.
+
 ## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.
 
 ## S400 — reference integrity and persona readability

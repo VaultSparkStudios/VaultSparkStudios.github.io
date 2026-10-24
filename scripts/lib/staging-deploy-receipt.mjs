@@ -25,6 +25,7 @@ export function createStagingDeployReceipt(input) {
     archive: {
       sha256: input.archiveSha256,
       bytes: input.archiveBytes,
+      ...(input.archiveInventory ? { inventory: input.archiveInventory } : {}),
     },
     deploy: {
       id: input.deployId,
@@ -65,6 +66,12 @@ export function validateStagingDeployReceipt(value, { requireVerifiedRemote = fa
     throw new Error('archive identity is invalid');
   }
   if (!DEPLOY_ID.test(value.deploy?.id || '')) throw new Error('deploy id must be a UTC timestamp');
+  if (value.archive.inventory !== undefined) {
+    const inventory = value.archive.inventory;
+    if (inventory?.schemaVersion !== 1 || inventory.regularFilesOnly !== true
+      || !SHA64.test(inventory.inventorySha256 || '') || !Number.isInteger(inventory.fileCount)
+      || inventory.fileCount !== value.deploy?.manifestFileCount) throw new Error('archive inventory is not manifest-bound');
+  }
   if (!Number.isInteger(value.deploy?.manifestFileCount) || value.deploy.manifestFileCount <= 0
     || value.deploy.remoteFileCount !== value.deploy.manifestFileCount) {
     throw new Error('remote file count must equal the bounded manifest count');

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "session": 401,
+  "state": "in-progress",
+  "releaseAccepted": false,
+  "goal": {
+    "threadId": "01a16bcf-5329-7ce3-954f-c816bc504446",
+    "createdAt": 1792810128
+  },
+  "audit": "docs/AUDIT_2026-10-24-S401.json",
+  "implementation": {
+    "item": "pre-upload-archive-membership",
+    "focusedTests": "10/10 zero skipped",
+    "review": "Round 1 CRC finding fixed; round 2 independent approval",
+    "deploySelfTests": [
+      "18/18",
+      "27/27"
+    ]
+  },
+  "limitations": [
+    "Existing identity/provider and field-evidence holds remain separate.",
+    "Inventory proof does not claim source-byte snapshot equality.",
+    "Premise timing classifier nonpassing for startup/planning artifacts."
+  ],
+  "waves": [
+    {
+      "id": 1,
+      "state": "complete"
+    },
+    {
+      "id": 2,
+      "state": "local-verification-complete"
+    },
+    {
+      "id": 3,
+      "state": "in-progress"
+    },
+    {
+      "id": 4,
+      "state": "pending"
+    }
+  ]
+}

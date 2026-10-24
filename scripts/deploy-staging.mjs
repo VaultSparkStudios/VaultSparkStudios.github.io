@@ -23,6 +23,7 @@ import { writeJsonAtomic, writeTextAtomic } from './lib/evidence-io.mjs';
 import { appendStagingDeployHistory, parseStagingDeployHistory, renderStagingDeployHistory } from './lib/staging-deploy-history.mjs';
 import { createStagingDeployReceipt, runStagingDeployReceiptSelfTest, validateStagingDeployReceipt } from './lib/staging-deploy-receipt.mjs';
 import { ROLLBACK_PREFLIGHT, ROLLBACK_ARCHIVE } from './archive-staging-rollbacks.mjs';
+import { assertArchiveSources, verifyStagingArchive } from './lib/staging-archive.mjs';
 
 import { admitDeployment } from './lib/deploy-argv.mjs';
 const admitted = admitDeployment({"name":"deploy-staging","boolFlags":["--self-test","--probe"],"modes":["--self-test","--probe"],"usage":"node scripts/deploy-staging.mjs [--probe | --self-test]"});
@@ -172,6 +173,7 @@ try {
   for (const required of ['index.html', 'oracle/index.html', 'api/ecosystem-state.json', 'favicon.ico']) {
     if (!manifest.includes(required)) throw new Error(`release manifest missing ${required}`);
   }
+  assertArchiveSources(ROOT, manifest);
 
   const stamp = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14);
   // S304: the archive and list paths are REPO-RELATIVE, never absolute
@@ -194,6 +196,8 @@ try {
   // evidence. Windows tar can exceed five minutes on that input; keep a bounded
   // archive allowance separate from the shorter upload and remote-command limits.
   checked(run('tar', ['-czf', archiveRel, '--null', '-T', listRel], { timeout: 900_000 }), 'release archive');
+  const archiveInventory = await verifyStagingArchive(ROOT, archiveRel, manifest);
+  console.log(`deploy-staging: verified exact archive inventory · ${archiveInventory.fileCount} regular files · ${archiveInventory.inventorySha256}`);
   const archiveBytes = fs.statSync(archivePath).size;
   const archiveSha256 = await fileSha256(archivePath);
   // scp shares tar's colon-parsing: a `C:\` source reads as host `C`. Relative.
@@ -247,6 +251,7 @@ try {
     archiveBytes,
     deployId: stamp,
     manifestFileCount: manifest.length,
+    archiveInventory,
     remoteFileCount,
     remoteRoot,
     parity,

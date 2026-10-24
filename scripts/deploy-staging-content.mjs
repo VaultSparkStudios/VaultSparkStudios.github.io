@@ -18,6 +18,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from './lib/safe-spawn.mjs';
 import { ROLLBACK_PREFLIGHT, ROLLBACK_ARCHIVE } from './archive-staging-rollbacks.mjs';
+import { assertArchiveSources, verifyStagingArchive } from './lib/staging-archive.mjs';
 import { isDiscoveryPath } from './lib/discovery-content.mjs';
 import { deriveNewsReleaseContract, runNewsReleaseContractSelfTest } from './lib/news-release-contract.mjs';
 
@@ -339,9 +340,12 @@ try {
   fs.mkdirSync(tempDir, { recursive: true });
   const listRel = path.posix.join('.cache', 'staging-content-tmp', `content-${stamp}.files`);
   const archiveRel = path.posix.join('.cache', 'staging-content-tmp', `content-${stamp}.tgz`);
+  assertArchiveSources(ROOT, promotable);
   fs.writeFileSync(path.join(ROOT, listRel), Buffer.from(promotable.join('\0'), 'utf8'));
   checked(run('tar', ['-czf', archiveRel, '--null', '-T', listRel], { timeout: 300_000 }), 'content archive');
   const archivePath = path.join(ROOT, archiveRel);
+  const archiveInventory = await verifyStagingArchive(ROOT, archiveRel, promotable);
+  console.log(`deploy-staging-content: verified exact archive inventory · ${archiveInventory.fileCount} regular files · ${archiveInventory.inventorySha256}`);
   const archiveSha = crypto.createHash('sha256').update(fs.readFileSync(archivePath)).digest('hex');
   const remoteArchive = `/tmp/vaultspark-content-${stamp}.tgz`;
   checked(run('scp', ['-i', key, '-o', 'BatchMode=yes', '-o', 'StrictHostKeyChecking=accept-new', archiveRel, `${sshTarget}:${remoteArchive}`], { timeout: 300_000 }), 'content upload');

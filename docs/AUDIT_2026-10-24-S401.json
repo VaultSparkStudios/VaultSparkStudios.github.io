@@ -1,0 +1,268 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-10-24",
+  "generatedAt": "2026-10-24T02:55:13.211Z",
+  "session": 401,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S401 supported-release arc; exact staging archive membership before upload at L2, then authorized full deployment.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 1,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "new-member-features",
+          "premise": "new member features",
+          "evidence": "SOUL requires complete membership features; existing account acceptance holds need provider evidence. No new feature failure reproduced."
+        },
+        {
+          "slug": "more-project-content",
+          "premise": "more project content",
+          "evidence": "SOUL requires complete membership features; existing account acceptance holds need provider evidence. No new feature failure reproduced."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "another-persona-redesign",
+          "premise": "another persona redesign",
+          "evidence": "S400 shipped persona readability and reading clearance; current 340-page reference check passes. No fresh UI defect reproduced; visual redesign not selected."
+        },
+        {
+          "slug": "new-navigation",
+          "premise": "new navigation",
+          "evidence": "S400 shipped persona readability and reading clearance; current 340-page reference check passes. No fresh UI defect reproduced; visual redesign not selected."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "new-streaks",
+          "premise": "new streaks",
+          "evidence": "Existing nine-tier rank economy is load-bearing; no retention evidence supports a change."
+        },
+        {
+          "slug": "rank-economy-change",
+          "premise": "rank economy change",
+          "evidence": "Existing nine-tier rank economy is load-bearing; no retention evidence supports a change."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "new-agent-provider",
+          "premise": "new agent provider",
+          "evidence": "Existing agents manifest and Oracle generators are present; no provider failure demonstrated and no paid inference authorized."
+        },
+        {
+          "slug": "oracle-rewrite",
+          "premise": "oracle rewrite",
+          "evidence": "Existing agents manifest and Oracle generators are present; no provider failure demonstrated and no paid inference authorized."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "archive-symlink-admission",
+          "premise": "archive symlink admission",
+          "evidence": "Archive source symlink admission is folded into the selected archive outcome; identity policy changes remain outside scope. No current tracked symlink was found."
+        },
+        {
+          "slug": "auth-policy-change",
+          "premise": "auth policy change",
+          "evidence": "Archive source symlink admission is folded into the selected archive outcome; identity policy changes remain outside scope. No current tracked symlink was found."
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "surviving": [
+        "pre-upload-archive-membership"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "replace-tar",
+          "premise": "replace tar",
+          "evidence": "Existing tar, safe-spawn, SHA streaming and rollback tooling can be reused. No library install is needed."
+        },
+        {
+          "slug": "new-archive-dependency",
+          "premise": "new archive dependency",
+          "evidence": "Existing tar, safe-spawn, SHA streaming and rollback tooling can be reused. No library install is needed."
+        }
+      ]
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "prompt-cache-rewrite",
+          "premise": "prompt cache rewrite",
+          "evidence": "No measured token cost regression. Replacing models or prompts would not repair archive deployment integrity."
+        },
+        {
+          "slug": "cheaper-model",
+          "premise": "cheaper model",
+          "evidence": "No measured token cost regression. Replacing models or prompts would not repair archive deployment integrity."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "archive-inventory-receipt",
+          "premise": "archive inventory receipt",
+          "evidence": "Inventory proof belongs in the selected staging receipt. Existing health holds cannot be cleared by changing labels."
+        },
+        {
+          "slug": "green-status-relabel",
+          "premise": "green status relabel",
+          "evidence": "Inventory proof belongs in the selected staging receipt. Existing health holds cannot be cleared by changing labels."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "planning-timing-rewrite",
+          "premise": "planning timing rewrite",
+          "evidence": "Pre-upload archive membership is a current open SIL outcome and source gap; planning classifier coordination is separate and remains unselected."
+        },
+        {
+          "slug": "new-parity-runner",
+          "premise": "new parity runner",
+          "evidence": "Pre-upload archive membership is a current open SIL outcome and source gap; planning classifier coordination is separate and remains unselected."
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "pre-upload-archive-membership",
+      "axis": "speed-organization-efficiency",
+      "title": "Verify exact staging archive members before upload",
+      "tier": "⚡",
+      "impact": 7,
+      "innovation": 4,
+      "effortHours": 2,
+      "priority": 14,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "deploy-staging hashes and uploads the tar without comparing its member list. A remote count does not detect same-count substitution. Source admission also follows symlinks.",
+      "recipe": "Reuse existing tar listing and fail closed on ambiguous names; compare exact unique inventory against the admitted regular-file manifest before scp, and bind inventory digest/count to the staging receipt. Reject symlink sources and parents before packaging. Test actual tar substitutions and unsafe inputs.",
+      "acceptance": "Actual archives accept exact names including spaces and long paths; reject missing, unexpected, duplicate and malformed members, unsafe source links/directories/traversal, corrupt or truncated archives. A real full staging deploy records matching inventory before upload; full required checks and production readback pass.",
+      "userOutcome": "Prevent missing or substituted public pages/assets from reaching visitors through a count-only deployment check.",
+      "readinessArea": "supported-release deployment reliability",
+      "stageRationale": "Stabilize current public release without changing identity, pricing or user flows.",
+      "premises": [
+        {
+          "claim": "Staging archive is currently uploaded directly after byte hashing without member inventory validation",
+          "adapter": "file-content",
+          "target": "scripts/deploy-staging.mjs",
+          "pattern": "const archiveSha256 = await fileSha256(archivePath);",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Archive member verification helper is absent",
+          "adapter": "file-exists",
+          "target": "scripts/lib/staging-archive.mjs",
+          "operator": "eq",
+          "expected": false
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Compare archive member names only."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Regular-source admission, exact inventory before upload, receipt binding, actual tar fixtures and independent review."
+        },
+        "L3": {
+          "effortHours": 8,
+          "recipe": "Per-member streaming byte-hash tar parser and frozen-source filesystem; unselected."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-24T03:00:05.232633+00:00",
+          "status": "implemented",
+          "note": "10/10 focused fixtures and independent round 2 approval. Initial 7/8 failed on expected error wording; corrected. Reviewer found CRC acceptance gap after 9/9; streaming gunzip and actual CRC mutation regression close it. Full deployers self-tests 18/18 and 27/27. Release still pending."
+        }
+      ]
+    }
+  ],
+  "research": {
+    "survey": "Fresh S401 startup; 340 pages and 31806 references pass; doctor 15/17 with zero blocking failures. Read deploy producers, rollback tests, release protocol and bounded task projection.",
+    "reuse": "Studio Ops INTERNAL_TOOLS reviewed: existing hashes, tar, safe-spawn, staging receipt and rollback tools; no matching archive inventory gate.",
+    "novelCandidates": [
+      "Inventory substitution tripwire",
+      "Archive/source identity receipt binding",
+      "Ambiguous filename refusal before packaging"
+    ],
+    "market": "Market strategy unselected; no competitor claims or new provider use."
+  },
+  "totals": {
+    "count": 1,
+    "priority": 14,
+    "top3": [
+      "pre-upload-archive-membership"
+    ]
+  },
+  "skipped": [],
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-24T02:55:19.334Z",
+    "head": "0e65ea0df46025cfa6dc818aedd53a5c95c42933",
+    "sidecar": "docs/AUDIT_2026-10-24-S401.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "e3dab1b04a378a9b415f6a6492e765ef77fafe9c840b3299685c3e47a4f72b3a",
+    "implementationDirty": [
+      ".ops-cache/handoff-digest.json",
+      "docs/GENIUS_LIST.md",
+      "docs/S401_audit-brief.json",
+      "docs/S401_plan-brief.json"
+    ]
+  },
+  "timingNote": "Strict premises verified before behavior edits; timing classifier remains nonpassing for four startup/planning artifact paths. Original evidence retained."
+}
