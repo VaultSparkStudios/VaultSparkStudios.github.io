@@ -339,10 +339,25 @@ export function deriveHistory({ rows = [], coarseOnsetAt = null, rumHealthyWindo
   const recovery = deriveRecovery(rows);
   const openIncidents = incidents.filter((incident) => incident.open);
   const routeOnset = openIncidents.length ? openIncidents.map((incident) => incident.openedAt).sort()[0] : null;
-  const bounds = [routeOnset, coarseOnsetAt].filter(Boolean).sort();
-  const onsetNotLaterThan = bounds[0] || null;
-  const onsetEvidence = deriveOnsetEvidence({ routeOnsetAt: routeOnset, coarseOnsetAt, rumHealthyWindow });
   const asOf = last?.observedAt || null;
+  // Corroboration is not an incident. Neither an old whole-edge outage nor a
+  // later aggregate RUM day can keep a recovered route's clock running.
+  const priorRecovery = routeOnset ? rows.filter(row => row.state === 'matched'
+    && Date.parse(row.observedAt) < Date.parse(routeOnset)).at(-1)?.observedAt : null;
+  const exclusions = [];
+  const inEpisode = value => Number.isFinite(Date.parse(value))
+    && Date.parse(value) <= Date.parse(asOf)
+    && (!priorRecovery || Date.parse(value) > Date.parse(priorRecovery));
+  const activeCoarse = routeOnset && inEpisode(coarseOnsetAt) ? coarseOnsetAt : null;
+  if (coarseOnsetAt && !activeCoarse) exclusions.push({ source: 'data/uptime-history.ndjson',
+    reason: 'No active route episode, or coarse onset is invalid, outside its observation window, or predates recovery.' });
+  // Samples prove POST intake, not the OPTIONS status in ROUTE_CONTRACT.
+  // Preserve their day resolution as context, never as a method-contract bound.
+  if (rumHealthyWindow) exclusions.push({ source: 'data/rum-history.ndjson',
+    reason: 'POST intake samples do not establish the OPTIONS route contract or its onset; aggregate days also lack exact event times.' });
+  const onsetEvidence = deriveOnsetEvidence({ routeOnsetAt: routeOnset, coarseOnsetAt: activeCoarse });
+  onsetEvidence.exclusions.push(...exclusions);
+  const onsetNotLaterThan = onsetEvidence.interval.onsetNotLaterThan;
   const degradedMs = onsetNotLaterThan && asOf ? Math.max(0, Date.parse(asOf) - Date.parse(onsetNotLaterThan)) : 0;
   return {
     schemaVersion: '1.0',
@@ -373,6 +388,7 @@ export function deriveHistory({ rows = [], coarseOnsetAt = null, rumHealthyWindo
         }
         : null,
       onsetEvidence,
+      rumCorroboration: rumHealthyWindow,
       // Surfaced rather than silently dropped: the newest receipt could not be
       // used because the edge challenged the observer, so the timeline below is
       // older than the newest probe attempt.
@@ -480,13 +496,29 @@ function selfTest() {
   }));
   const historicalRecovery = deriveRecovery(historicalRecoveryRows);
   const darkFeed = deriveHistory({ rows: [] });
-  const corroborated = deriveHistory({ rows: broke.rows, coarseOnsetAt: '2026-01-01T00:00:00.000Z' });
+  const corroborated = deriveHistory({ rows: broke.rows, coarseOnsetAt: '2026-01-02T12:00:00.000Z' });
   const rumWindow = lastRumHealthyWindow([
     { day: '2026-01-01', samples: 2 },
     { day: '2026-01-02', samples: 0 },
     { day: '2026-01-03', samples: 4 },
   ]);
-  const intervalFeed = deriveHistory({ rows: broke.rows, coarseOnsetAt: '2026-01-04T00:00:00.000Z', rumHealthyWindow: rumWindow });
+  const laterBroken = appendIfChanged(broke.rows, { ...brokenReceipt, generatedAt: '2026-01-05T00:00:00.000Z',
+    routes: brokenReceipt.routes.map(r => r.id === 'rum-ingest' ? { ...r, observedStatus: 500 } : r) });
+  const currentRumWindow = lastRumHealthyWindow([{ day: '2026-01-04', samples: 4 }]);
+  const intervalFeed = deriveHistory({ rows: laterBroken.rows, rumHealthyWindow: currentRumWindow });
+  const recoveredCoarse = deriveHistory({ rows: repaired.rows, coarseOnsetAt: '2026-01-01T00:00:00.000Z', rumHealthyWindow: rumWindow });
+  const darkCoarse = deriveHistory({ coarseOnsetAt: '2026-01-01T00:00:00.000Z', rumHealthyWindow: rumWindow });
+  const oldEpisode = deriveHistory({ rows: reBroke.rows, coarseOnsetAt: '2026-01-03T00:00:00.000Z', rumHealthyWindow: rumWindow });
+  const futureEvidence = deriveHistory({ rows: broke.rows, coarseOnsetAt: '2026-01-04T00:00:00.000Z', rumHealthyWindow: rumWindow });
+  const nonIntakeRows = broke.rows.map(row => ({ ...row, routes: Object.fromEntries(Object.entries(row.routes).map(([id,r]) =>
+    [id, id === 'rum-ingest' ? { observed: 204, matched: true } : id === 'csp-intake' && row.state === 'mismatch' ? { observed: 405, matched: false } : r])) }));
+  const unrelatedRum = deriveHistory({ rows: nonIntakeRows, rumHealthyWindow: lastRumHealthyWindow([{ day: '2026-01-02', samples: 4 }]) });
+  const boundedRows = broke.rows.map((row,index) => index === 0 ? { ...row, observedAt: '2026-01-01T00:00:00.000Z' } : row);
+  const compatibleRum = deriveHistory({ rows: boundedRows, rumHealthyWindow: lastRumHealthyWindow([{ day: '2026-01-02', samples: 4 }]) });
+  const invalidCoarse = deriveHistory({ rows: broke.rows, coarseOnsetAt: 'not-a-date' });
+  const staggeredRows = [...nonIntakeRows, { ...reBroke.rows.at(-1), routes: Object.fromEntries(Object.entries(reBroke.rows.at(-1).routes)
+    .map(([id,r]) => [id, id === 'csp-intake' ? { observed: 405, matched: false } : r])) }];
+  const staggeredRum = deriveHistory({ rows: staggeredRows, rumHealthyWindow: currentRumWindow });
   const conflict = deriveOnsetEvidence({ routeOnsetAt: '2026-01-02T00:00:00.000Z', rumHealthyWindow: { ...rumWindow, observedWindow: { start: '2026-01-03T00:00:00.000Z', endExclusive: '2026-01-04T00:00:00.000Z' } } });
 
   const uptimeUp = [{ t: 'a', overall: 'up' }, { t: 'b', overall: 'up' }];
@@ -515,11 +547,20 @@ function selfTest() {
     ['recurrence preserves the prior recovery proof without implying current health', recurrenceRecovery.recoveryCount === 1 && recurrenceRecovery.state === 'verified-prior-recovery'],
     ['open production stays explicitly awaiting live recovery', deriveRecovery(broke.rows).state === 'awaiting-real-recovery' && deriveRecovery(broke.rows).liveProofAvailable === false],
     ['empty ledger stays honest-dark', darkFeed.state === 'unobserved' && darkFeed.incidents.length === 0 && darkFeed.current.onsetNotLaterThan === null],
-    ['coarse probe tightens the onset bound', corroborated.current.onsetNotLaterThan === '2026-01-01T00:00:00.000Z' && corroborated.current.degradedForMs === 2 * DAY_MS],
+    ['in-episode coarse probe tightens the onset bound', corroborated.current.onsetNotLaterThan === '2026-01-02T12:00:00.000Z' && corroborated.current.degradedForMs === DAY_MS / 2],
+    ['recovery clears current bounds despite retained historical corroboration', recoveredCoarse.current.onsetNotLaterThan === null && recoveredCoarse.current.onsetNotEarlierThan === null && recoveredCoarse.current.degradedForMs === 0 && recoveredCoarse.honesty.corroboration.edgeDegradedSince !== null],
+    ['unobserved does not inherit a coarse outage clock', darkCoarse.state === 'unobserved' && darkCoarse.current.onsetNotLaterThan === null && darkCoarse.current.degradedForMs === 0],
+    ['recurrence cannot borrow evidence across recovery', oldEpisode.current.onsetNotLaterThan === '2026-01-06T00:00:00.000Z' && oldEpisode.current.onsetNotEarlierThan === null],
+    ['future coarse and partial-day RUM evidence stay excluded', futureEvidence.current.onsetNotLaterThan === '2026-01-03T00:00:00.000Z' && futureEvidence.honesty.onsetEvidence.contributions.length === 1 && futureEvidence.honesty.onsetEvidence.state === 'bounded'],
+    ['RUM intake does not prove unrelated route health', unrelatedRum.current.onsetNotEarlierThan === null && unrelatedRum.honesty.onsetEvidence.exclusions.some(item => item.source === 'data/rum-history.ndjson')],
+    ['compatible POST samples retain day resolution without proving OPTIONS health', compatibleRum.current.onsetNotEarlierThan === null && compatibleRum.honesty.rumCorroboration.observedWindow.start === '2026-01-02T00:00:00.000Z' && compatibleRum.honesty.rumCorroboration.resolution.startsWith('day')],
+    ['invalid coarse date cannot manufacture an onset or NaN duration', invalidCoarse.current.onsetNotLaterThan === '2026-01-03T00:00:00.000Z' && invalidCoarse.current.degradedForMs === 0],
+    ['later intake incident cannot constrain an earlier unrelated route outage', staggeredRum.current.onsetNotLaterThan === '2026-01-03T00:00:00.000Z' && staggeredRum.honesty.onsetEvidence.state === 'bounded' && staggeredRum.current.onsetNotEarlierThan === null],
+    ['recovery retains closed incidents and recovery proof exactly', JSON.stringify(recoveredCoarse.incidents) === JSON.stringify(closedFeed.incidents) && JSON.stringify(recoveredCoarse.recovery) === JSON.stringify(closedFeed.recovery)],
     ['corroboration is labelled, never merged into route evidence', corroborated.honesty.corroboration.resolution.startsWith('coarse')],
     ['RUM adapter keeps day-level resolution', rumWindow.observedWindow.start === '2026-01-03T00:00:00.000Z' && rumWindow.resolution.startsWith('day')],
     ['latest non-empty RUM day wins', rumWindow.samples === 4],
-    ['onset becomes a lower/upper interval', intervalFeed.current.onsetNotEarlierThan === '2026-01-03T00:00:00.000Z' && intervalFeed.current.onsetNotLaterThan === '2026-01-03T00:00:00.000Z'],
+    ['later POST evidence cannot manufacture an OPTIONS onset conflict', intervalFeed.honesty.onsetEvidence.state === 'bounded' && intervalFeed.current.onsetNotEarlierThan === null],
     ['each evidence source retains its role and resolution', intervalFeed.honesty.onsetEvidence.contributions.every((item) => item.role && item.resolution)],
     ['static promotion history is explicitly excluded', intervalFeed.honesty.onsetEvidence.exclusions[0].source === 'data/promotion-history.ndjson'],
     ['conflicting bounds fail honest-dark instead of swapping dates', conflict.state === 'conflict' && conflict.interval.onsetNotEarlierThan === null],

@@ -1,0 +1,22 @@
+{
+  "kind": "audit",
+  "session": 402,
+  "date": "2026-10-24",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Clear current degradation after observed route recovery",
+  "items": [
+    {
+      "id": 1,
+      "slug": "recovered-route-duration",
+      "title": "Clear current degradation after observed route recovery",
+      "axis": "observability-honesty",
+      "leftScore": 8,
+      "rightScore": 4,
+      "insight": "The route ledger records recovery, but the public feed keeps a coarse outage clock running. Scope current bounds to the active route episode and retain historical corroboration separately.",
+      "evidence": "Recovered and unobserved feeds have null current onset bounds and zero duration even with coarse/RUM evidence. Open incident evidence and historical incident durations remain intact; recurrence is not backdated across a verified recovery. Public status projects corrected fields; full suite, staging and exact production acceptance pass."
+    }
+  ],
+  "blockers": [],
+  "followUps": []
+}

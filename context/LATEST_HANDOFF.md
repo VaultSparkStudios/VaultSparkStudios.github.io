@@ -1,3 +1,11 @@
+## S402 active arc — 2026-10-24
+
+Session Intent: /arc then authorized direct main commit/push and full deployment. Native goal 01a16f06-5d63-7031-9625-ae209e94faf4, createdAt 1792864081, binds S402 starting d251316ec14c95a74460145161f0d552b5901b0a. Continue this session's audit and unfinished phases; do not start another arc.
+
+Fresh startup and nine-axis audit completed: docs/AUDIT_2026-10-24-S402.json; docs/IMPLEMENT_PLAN.md. Both typed premises passed strictly before behavior edits; pending audit/plan admission passed. Timing classifier remains nonpassing on three startup/planning artifact paths, retained as a limitation. Selected recovered-route-duration is implemented but release acceptance is pending. Route-history self-tests55/55 and public-status17 assertions pass. Independent review round1 found staggered route/RUM scope; fixed. Round2 approved final source and55/55. POST intake samples now remain corroboration only because they cannot prove OPTIONS contract health. Recovered route state reports zero current duration and null onset; closed incidents and append-only ledger unchanged. Full build is currently running; inspect its actual process handle before restarting. Staging, full candidate checks, production release/readback and canonical closeout remain required.
+
+Wave1 complete; Wave2 implementation complete, full verification in progress; Wave3 release pending; Wave4 closeout pending. Existing identity/provider, field-evidence and capacity holds remain separate. No measured availability gain is claimed.
+
 ## Where We Left Off (Session 401) — complete in closing publication transaction
 
 Goal01a16bcf-5329-7ce3-954f-c816bc504446, createdAt1792810128, is bound to S401 starting35e5d5f181aae01ae02e9ee0e8ebd47661645871. Continuation resumes this arc; do not start another session.

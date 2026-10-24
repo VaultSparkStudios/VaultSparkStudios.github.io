@@ -2502,3 +2502,9 @@ CANON-045 STRONG gap remains separately justified: unchanged relying-party integ
 ### D-S401.1 release evidence addendum — 2026-10-24T05:40:51.330Z
 
 Normal full production 7348fc96f556d3223988eee1aa0b27a8678db483 accepted; docs/RELEASE_S401.json preserves initial failed source check, diagnostic-only tail, complete final suite, exact hosted checks, real staging inventory and production readback. Canonical-root equivalence excludes only declared shell-manifest generatedAt metadata; original staging and later source fingerprints remain separately scoped. No source-byte snapshot or field gain is inferred.
+
+## D-S402.1 — Scope current route duration to the active episode
+
+The production feed was matched with zero open incidents but reported2.5days of current degradation. Current onset now requires an open route incident. Coarse uptime evidence must fall after the prior matching route observation and no later than the route snapshot; excluded evidence remains labelled. POST real-user telemetry does not prove the OPTIONS route-method contract, so its original aggregate day window remains corroboration only. Closed incident durations, recovery records and the append-only semantic ledger are preserved. This repairs a public status derivation, not measured availability or an identity policy.
+
+CANON-045 STRONG gap remains separately justified: unchanged relying-party integration and existing provider acceptance holds are outside this status repair. No lifecycle, pricing, auth or trust-policy change. Strict audit premises passed before behavior edits and pending audit/plan admission passed; the timing classifier still rejects three startup/planning artifacts. Preserve that diagnostic rather than claiming timing acceptance. Rollback is a normal revert of the bounded implementation and redeployment of the prior accepted candidate7348fc96f556d3223988eee1aa0b27a8678db483.
