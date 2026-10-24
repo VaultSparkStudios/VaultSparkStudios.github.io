@@ -1042,3 +1042,13 @@ Normal full production 7348fc96f556d3223988eee1aa0b27a8678db483 accepted; docs/R
 The production feed was matched with zero open incidents but reported2.5days of current degradation. Current onset now requires an open route incident. Coarse uptime evidence must fall after the prior matching route observation and no later than the route snapshot; excluded evidence remains labelled. POST real-user telemetry does not prove the OPTIONS route-method contract, so its original aggregate day window remains corroboration only. Closed incident durations, recovery records and the append-only semantic ledger are preserved. This repairs a public status derivation, not measured availability or an identity policy.
 
 CANON-045 STRONG gap remains separately justified: unchanged relying-party integration and existing provider acceptance holds are outside this status repair. No lifecycle, pricing, auth or trust-policy change. Strict audit premises passed before behavior edits and pending audit/plan admission passed; the timing classifier still rejects three startup/planning artifacts. Preserve that diagnostic rather than claiming timing acceptance. Rollback is a normal revert of the bounded implementation and redeployment of the prior accepted candidate7348fc96f556d3223988eee1aa0b27a8678db483.
+
+
+<!-- S402-closeout-writeback -->
+## D-S402.2 — accepted implementation and closing metadata have separate evidence
+
+Decision archive is raw byte-exact to 99852b7c6d:context/DECISIONS.md (257073 bytes; SHA-256 13f61e652175a1f41f1eb1044527f62fb238d2d8b3cb1ffd1bf01a0cfa968271). The historical working-tree preimage was 257080 bytes with seven CRLF differences; that preimage is text-equivalent after newline normalization and is not claimed as raw-equal to the archive. All complete decision sections remain preserved.
+
+SIL archive context/archive/SIL_S1-S401.md is raw byte-exact to the original committed ledger (306672 bytes; SHA-256 0ca6d0f65fc88c706ba3e4fcc5132dbfc94b29e94e3abcb3bf6e2b21407ff33c). The complete Rolling Status and recent complete sections remain in the hot file; the SIL cap is 300 KiB. Evidence: docs/S402_sil-rotation.json.
+
+The released candidate is 1f5e24f9029bd0c9b5e4973cf4148cc1474455ad. Later writebacks do not silently replace its acceptance evidence. POST RUM samples stay corroboration-only for an OPTIONS contract. Closing publication must be verified normally; no force push, no bypass and no native-completion claim. Evidence: docs/RELEASE_S402.json.

@@ -1,0 +1,711 @@
+<!-- S402-closeout-writeback -->
+## Session 402 — 2026-10-24 — current route status accuracy
+
+Recovered and unobserved route states now have null current onset bounds and zero degradation duration. Coarse evidence cannot backdate a recurrence across recovery. RUM POST samples remain labelled corroboration and do not establish the OPTIONS route contract. Historical incidents and recovery records are preserved. Focused 55/55; full implementation source 547/547; hosted 3/3; staging ceremony 11/11; normal full production 1f5e24f9029bd0c9b5e4973cf4148cc1474455ad; complete canonical served-text readback 1150 paths (1140 identical, 10 verified redirects, zero differences/unread). Evidence: docs/RELEASE_S402.json.
+
+Decision archive is raw byte-exact to 99852b7c6d:context/DECISIONS.md (257073 bytes; SHA-256 13f61e652175a1f41f1eb1044527f62fb238d2d8b3cb1ffd1bf01a0cfa968271). The historical working-tree preimage was 257080 bytes with seven CRLF differences; that preimage is text-equivalent after newline normalization and is not claimed as raw-equal to the archive. All complete decision sections remain preserved.
+
+SIL archive context/archive/SIL_S1-S401.md is raw byte-exact to the original committed ledger (306672 bytes; SHA-256 0ca6d0f65fc88c706ba3e4fcc5132dbfc94b29e94e3abcb3bf6e2b21407ff33c). The complete Rolling Status and recent complete sections remain in the hot file; the SIL cap is 300 KiB. Evidence: docs/S402_sil-rotation.json.
+
+Waves1–3 complete. Wave4: canonical writeback prepared; final independent closeout review, intelligence, autopilot, Ark delivery, process cleanup and remote publication remain explicit acceptance work. No native-completion claim.
+
+Limitations:
+- Strict premises preceded behavior edits; planning-artifact timing classifier remains nonpassing.
+- Existing identity/provider, field-vitals and account-capacity holds remain separate.
+- No measured field-performance, conversion or availability gain is claimed.
+- Served parity measures complete tracked served text at the canonical origin, not all binary assets or raw edge-transformed apex bytes.
+- S402 original failed source attempts and prior failed staging observations remain retained.
+- Lighthouse attempt1 failed the article0.90 floor at0.88; unchanged-candidate attempt2 passed at0.92. Both actual attempts are retained; no performance improvement or threshold change is claimed.
+- Staging proof source remains2e1e075b; final tag1f5e24f902 has unchanged deployed runtime code, all68 critical leaves match staging with existing nonce normalisation for6HTML responses, and one disclosed validation-only house-style exception.
+- Raw apex byte parity is outside the edge-transformed HTML model; canonical-origin served-text parity has its stated scope.
+- Strict premises preceded behavior edits; the planning-artifact timing classifier remains nonpassing.
+- Final closeout review, intelligence refresh, autopilot checks and normal remote publication must be verified separately before native goal completion.
+
+CDR reviewed — no new creative direction. SIL939/1000 unchanged; velocity1.
+
+
+## Session 401 — archive integrity fully released
+
+S401 archive admission is implemented in both staging producers: exact unique regular-member inventory, source path/type checks and complete gzip CRC validation before upload. Focused actual-tar fixtures10/10; full/content deployer self-tests18/18 and27/27. Real staging13934files, inventory digest and SSH byte readback verified; ceremony11/11. Complete implementation source547/547, mobile215/215 and14 reviewed homepage captures across seven themes/two viewports. Exact hosted3/3 and normal full production 7348fc96f556d3223988eee1aa0b27a8678db483 (Pages run40066222368) accepted through actual deploy-step success, provider identity, canonical-origin whole-text parity and apex live behavior. Evidence: docs/RELEASE_S401.json.
+
+Inventory proof does not establish frozen per-member source-byte equality. Strict premises passed before behavior edits; planning-artifact timing classifier remains nonpassing. Existing identity/provider, field-vitals and account-capacity holds remain separate. Post-deploy Sparked QA entitlement and simulated origin-outage browser cases fail identically on the prior immutable deployment with unchanged code; neither is counted as a passing journey. Homepage, service-worker install/precache and Eternal positive-path cases passed. No measured field-performance, conversion or availability gain is claimed. Raw apex byte parity remains outside the edge-transformed HTML model.
+
+## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.
+
+## S400 — selected outcomes fully deployed andverified
+
+Both selected outcomes are fully deployed at 06d632056f (tag release-s400-06d632056f), normal Pages run40043209707, production deployment9226ae4d-c13a-467e-85f1-02924336f352. Exact hosted3/3 passed; Lighthouse neededone unchanged-candidate retry,retaining the first failure. Staging13911files and11/11ceremony passed. Current complete source547/547,receipt23971be3a92d66332bea44e6,fingerprintd559e6eea96360ef32fe1aa0 is accepted. Canonical producer readback covers1143files:1133byte-identical and10verified redirects,zero differences/unread. Both public build stamps match. Live production23/23browser checks andfourviewed light/dark desktop/mobile captures pass.
+
+Reference49self-tests and16actual Chromium differential cases pass; current340pages/31806references resolve. Original238public browser checks,112persona and28disclosure manual images remain separately scoped. Current16contrast cases meetAA; original6.04:1minimum sample is historical. Linux archivalfixtures12/12zero skips andbothdeploy self-tests18/18,27/27 pass.
+
+Raw apex byte audit remains explicitly unverified becauseedge-transformed HTML andruntime redirects exceed the static artifact model; no raw apex parity claim is made. The producer-origin comparison andlive apex behavior are independently passing. Premise timing classifier remains nonpassing; strict premise checks passed before behavior edits. Existing identity,field-vitals andcapacity holds remain separate. No measured conversion,field-performance oravailability gain is claimed. Evidence:docs/RELEASE_S400.json.
+
+## S399 — reading clearance and responsive image integrity, fully deployed
+
+Closing release 59f1f49d36 (full Pages run39930730781) is verified: exact required3/3, production5/5, both producer stamps,1137 served files with0 differ/unread. Canonical closeout and four session waves are complete. Evidence: docs/RELEASE_S399.json.
+
+Spark now yields around reading text while preserving header recall, preferences and control clearance. The local reference gate checks every responsive HTML image candidate, all supported href/src/srcset/imagesrcset attributes on each tag and encoded attribute values.
+
+Full production 066a768716 (run 39907784576); exact-candidate required checks 3/3; historical implementation build:check 547/547 plus two fresh closeout-tree 547/547 passes after the Spark test repair, mobile 215/215, clearance 5/5 and full Spark contract 24/24 on local and staging, 28 reviewed theme/viewport/state captures, staging ceremony 11/11 and whole served-text tree-current readback. Evidence: docs/RELEASE_S399.json.
+
+Existing identity, field-evidence and account-capacity holds remain distinct. No measured conversion, field performance or availability gain is claimed.
+
+## S398 — SI spelled out on first use; offline recovery held by a browser gate; fully deployed
+
+S398 closes the live CANON-056 gap. `/ai-vs-si/` (title, H1, social titles, JSON-LD) and the Desk explainer headline now spell out "Super Intelligence (SI)" before any bare SI. The Desk fix went through its source (`data/news-desk/days/2026-10-04.json`) and `news:publish`, with the slug unchanged. `check-news-copy-quality` has a story-order `bare-si` rule, and the Desk author brief states it. `tests/service-worker-install.spec.js` now also proves the adapter-online/origin-down path: a stable fallback, no reload, and exactly one recovery. That test runs in e2e.yml and verify:local, and is mutation-checked against the pre-S397 loop.
+
+Evidence: production `418d250656` (tag `release-s398-418d250656`, run 39858675909: ceremony and the Pages deploy step ran). Hosted exact-SHA e2e, Lighthouse and accessibility passed. Pages origin is tree-current, 1125/1135 identical with 10 redirects and 0 differ. Local build:check passed 547/547; the mobile audit passed 215/215; 28 captures across 7 themes × 2 viewports were reviewed. Staging release spec passed 6/6 and staging parity was green. Details: docs/RELEASE_S398.json.
+
+No measured search or field gain is claimed. Existing identity and field-evidence holds are unchanged.
+
+## S397 — offline reliability fully deployed
+
+S397 repairs origin-confirmed offline recovery and failed public navigation through the current declared precache. The fallback uses cached recovery handlers and the existing saved-theme controller. Both selected L2 outcomes are verified and fully deployed in normal production release 63641742e50c6b61a8e041663966f9852748bfbf.
+
+Evidence: complete local547/547 and hosted547/547; fresh mobile215/215;56 reviewed captures across seven themes/two viewports/four states; fresh staging ceremony11/11; provider and both build stamps; full1133-path served sweep (1123 identical,10 redirects,0 differ/unread);34 focused comparisons (33 raw exact,1 narrowly normalized apex HTML);153 news pages/1675 assets exact; edge2/2 andfeeds101/101. docs/RELEASE_S397.json records the local normal-lane transport and retained hosted failures/cancellation.
+
+No measured field reliability, conversion or performance gain is claimed. Existing identity and field-evidence holds remain separate.
+
+## S396 — dead internal references fixed, reference-integrity gate added
+
+Two live production 404s on public journeys are fixed at source. Confirmed Desk Dispatch subscribers' "Meet your AI news desk" link on /news/subscribed/ now goes to the /news/#anchors roster; it pointed at /news/personas/, which has per-persona pages but no index. The 8 investor-portal pages now show the VaultSpark mark from existing assets; they referenced assets/logo.png, which never existed, so the login page and interest form rendered a broken image. A new build:check gate, `scripts/check-local-references.mjs`, resolves every internal href/src (including `<script src>` and parked `<template>` tags, exact-case, honouring `<base>`, `_redirects` and Worker runtime routes) on 334 tracked public pages, 28,929 references. Self-test 18/18; it fails the pre-fix tree on exactly these two defects. CANON-053 receipt: 14 manually reviewed captures across 7 themes (docs/visual-qa/LATEST.json) plus 4 dark-only investor captures (docs/visual-qa/S396-investor-portal.json). Release evidence: docs/RELEASE_S396.json.
+
+## S395 — complete integrated product and closing publication verified
+
+S395 complete: one selected served-text coverage outcome is verified and released. Productc931cc736f70b524509378c1e35e1a69e8b3927d (run39650067973) and closing14466ce38c0c0e6e1b33c6c6816a086e7b6e9085 (run39678958995) each passed their own complete nonempty served-text sweep, exact hosted checks/provider identity/full-normal steps/both build stamps,65 product critical leaves and66 closing critical leaves on Pages/apex,12 incoming image variants per origin and source-bound shell readback. Closing source passed actual545/545 and current staging11/11. This is fresh whole-text closing evidence, not a baseline-plus-delta substitute. Binary scope remains12 incoming variants, and apex critical transport normalization remains narrowly declared. Original timing failure, absent original instrumentation, retired failed candidates and actual performance-attempt history remain retained. SIL935/1000 and velocity1 are unchanged; two future SIL rows remain unselected.
+
+Evidence: docs/RELEASE_S395.json. Final native acknowledgment follows the independent goal audit; a new founder arc requires a new full session.
+
+## S394 — full product release verified
+
+S394 shell parity requires HTTP success and a nonempty expected shell, with complete CLI admission before IO. CLI 2/2, self-test 14/14 and independent review pass. Two complete 545/545 runs, mobile 215/215 and staging ceremony 11/11 pass. Normal full Pages release a6752c927e4566240763f040b6bfc75b9b75f592 (run 39535687085) is verified by provider identity, both public build stamps and tree-current served-byte comparison. Original premise timing remains nonpassing; existing identity and field-vitals holds remain unchanged. No measured conversion or performance gain is claimed.
+
+Closing status publication is recorded separately in docs/RELEASE_S394.json.
+
+## S393 — full product release verified
+
+S393 validates canonical rank-report timestamps, schema/counts and provider rows before publication, preserving the prior report on invalid provider data. Generated leaderboard shells load the actual shared theme controller after the body exists; capture contexts isolate all seven themes and reject false observed-theme receipts. Normal full Pages release c0488e184ff5839a09aabe11447e6c8ab28d90e3 (run39501117343) is verified: 1108/1118 served-text candidates identical,10 configured redirects, zero differences/missing/unread;65 nonstamp critical leaves and6 origin artifacts match. All6 S147 canonical301 redirects remain. Local545/545 passed twice; required exact-candidate E2E, Lighthouse and accessibility pass; mobile215/215 and84 inspected captures pass. Original premise timing remains nonpassing,7 REST deferrals and the disjoint identity holds remain unchanged. No provider restart or measured performance gain is claimed.
+
+Current publication successor, remaining actions and final acceptance are maintained in docs/RELEASE_S393.json. Earlier pre-release addenda below retain their original historical state.
+
+## S392 — partial closeout; release acceptance pending
+
+Two operator-input boundaries are implemented and independently reviewed. Both complete545-step validation runs passed; the second verifies regenerated test-signal outputs. The real local mobile audit passed215/215 with zero P0/P1. Local checkpoint commits c6c9d8ff9a and a4a0a4520d are recorded. The full site build failed at Supabase rank-climbers; provider database/REST/auth remain UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push, current staging acceptance or production deployment is claimed.
+
+Evidence: docs/RELEASE_S392.json. Resume native goal01a159cf-3925-7480-959e-0dd6caa69447, bound to S392; remaining phases are provider recovery, full site build, staging, publication and production readback.
+
+## S391 — local acceptance complete, live release held
+
+Six operational CLI guards and the weekly read-only REST canary are implemented. The canary previously passed hosted125/7. The bounded Spark collision repair removes offscreen forced layouts;42 browser tests,215 mobile probes,28 reviewed visual captures and the complete545/545 suite pass. Full staging payload12183 files is verified at source ca9cba1d10ba7a057f94491e. Current Supabase database/REST/auth are UNHEALTHY; all125 live queries fail and staging ceremony rejects10/11 on504/CORS. One restart awaits approval; none performed. Production remains ceeeb2de9f. Premise timing remains nonpassing; existing identity holds remain unaccepted. Evidence: docs/RELEASE_S391.json.
+
+Native goal01a157cd-72fc-7c72-88e1-90d3e0c93ba9 remains bound to S391. Resume this arc and its release verification; do not start another arc or mark native completion.
+
+## Session 390 — public data contract repair (2026-10-19)
+
+S390 repairs public data queries that production rejected: Community RSVP counts, the members directory, the leaderboard game, challenge and weekly tables, the signed-in /membership/ rank strip, three member-portal dashboard widgets and the investor KPI session series. A new offline gate (`scripts/check-public-rest-contract.mjs`, in build:check) requires every browser REST query, including filter and order columns, to match a live-verified manifest: 125 queries recorded, 7 deferred with notes (vault-sdk member fetch, rank orb, challenge streaks, member achievements, investor messages, studio-hub feedback). /changelog/#stories (the /journal/ redirect target) no longer shifts: CLS 0.1154 → below 0.01 at four widths, local Lighthouse 0.0017. Four member-facing send commands admit argv strictly; the handoff extract keeps its 6000-character cap on measured evidence (2/80 versions cut the newest session). Visual QA: 56 hash-bound captures (84 reviewed). Released: production serves ceeeb2de9f, byte parity tree-current, 0 Supabase 4xx; docs/RELEASE_S390.json.
+
+## Session 389 — release verified (2026-10-19)
+
+S389 verifies five repairs: deployment argument admission, deterministic handoff extraction, archive sitemap discovery, Oracle answer ordering, and field-proof publication ordering. Complete local validation passed542/542 twice; post-event closure109/109; mobile215/215 with zero P0/P1;28 sitemap captures inspected. Exact-candidate staging, hosted checks, full Pages and Worker deployment and strict production readback verified for c86109ee05dff52ad0fe134ed34a060b97bcbe4f. No measured performance improvement or authenticated identity acceptance is claimed. Release evidence: docs/RELEASE_S389.json.
+
+Continue with the two queued S389 SIL observations. Native goal01a1557e-9d32-7d13-b5cf-3e802fd6616d createdAt1792435752 is bound to S389; this release belongs to that invocation. Final publication, restoration and cleanup evidence is recorded in docs/RELEASE_S389.json.
+
+## Session 388 — CSP diagnostic reliability deployed (2026-10-18)
+
+S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout complete.
+
+Continue the bound S388 goal; do not start another arc. Canonical closeout complete; release evidence is ready for publication. Other KV writers and existing identity holds remain separate.
+
+
+Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed.
+
+## Session 387 — diagnostic storage isolation deployed (2026-10-18)
+
+S387 deployed 3ceaae612d: Trusted Types diagnostic writes use private R2 batches and a distinct existing SQLite counter, capped at 3 batches per one-hour counter window, five reports per batch and 8192 streamed request bytes. Intake never accesses or falls back to sign-in KV. Legacy and paginated R2 reads reject failed/incomplete evidence. Both buckets are private with 30-day tt/raw/ retention. Production Worker 73bd16bb-e430-4609-9901-34d3a845f98a returned 204, its synthetic report was read back from R2 and removed with 404 verification; /login remained 302 to Obelisk. Required exact-SHA hosted checks and the 11-step staging ceremony passed. Two full local 539-step runs passed; unit acceptance 442 passed/0 failed/1 existing TODO; mobile 215/215; 28 inspected sitemap theme/viewport captures. Pages readback covered 1,107 served text files with zero differences or unread responses; primary HTML coverage 323, zero unverified. Full evidence: docs/RELEASE_S387.json.
+
+Other shared KV writers remain a recurrence risk. The cap bounds successful R2 writes, not inbound requests or Durable Object calls. Stored samples are not a traffic census. Existing identity/field-vitals holds remain separate.
+
+## Session 386 — Desk art review contract (2026-10-16)
+
+S386 repairs the scheduled Desk art pipeline that kept CI Health Monitor red on 2026-10-15 and 2026-10-16 (one banner on placeholder art past 48h; three stories without satire cartoons). The autopilot reviewer saw only headline and scene while the generator draws from sourced facts, the satire joke and caption, so faithful renders were rejected every run. The reviewer now receives the same fenced brief; an exhausted story gets one critique-guided re-roll per UTC day, with the last rejection reasons in the prompt; a re-cased Windows checkout path no longer aborts the run as a foreign worktree. Autopilot self-test 47/47 and generator 60/60, with three negative mutations detected. Real-data dry run: all three stuck satire cartoons now pass and were image-inspected; the milk banner fails only a genuine numeral-clock noText defect, and the bounded daily re-roll fired exactly once.
+
+S386 follow-through: candidate 0a434fad21 promoted (run 38974570139, tag s386-seal-production-20261016); production serves it, shell parity clean, served parity 1080/1090 identical, 0 differ. Autopilot then published 4 approved satire cartoons and 2 banners; the stuck milk banner passed on its first critique-guided re-roll; all live bytes matched; art currency now green (122 stories, 44 cartoons). A dispatched CI Health Monitor then reached a later check: the release contract ranked same-day stories alphabetically, so after the latenight edition it demanded a homepage link to the midday story. It now ranks by publication instant (8/8 cases, mutation detected). Persona pagination pages 404 after Desk lane releases because the lane allowlist and the root-owned Hetzner copy omit them; a full promotion ships them. P0 open: account-wide KV free write quota exhausted 2026-10-16 (1,186 writes); /login returned named 503 on staging and production until 00:00Z.
+
+Release: operator-tooling change plus the contract fix; acceptance docs/RELEASE_S386.json. Acceptance and release evidence: docs/AUDIT_2026-10-16-S386.json; production promotion recorded below once verified. No new human creative direction.
+
+S386 final release (2026-10-17): candidate cef79ce719 (newest-story contract + records) promoted, run 38989131366, tag s386-final-production-20261017. Exact-SHA E2E/Accessibility passed; Lighthouse passed on rerun after the documented article flake (0.89, article changed only by one related-story card). Full staging spec 6/6 across 3 engines incl. Obelisk after the KV reset; ceremony 11/11; build:check 537/537 (3 runs); mobile 215/215. Production served parity 1083/1093 identical, 0 differ; juno/page/2 now 200. Dispatched CI Health Monitor 38989927325: both jobs success. Acceptance: docs/RELEASE_S386.json. All three waves complete; CDR reviewed, no new human creative direction.
+
+## Session 385 — verified release (2026-10-16)
+
+S385 verified full release (2026-10-16T19:09:25.849Z): neutral searchable directory identities, trimmed profile links, earned-rank boundaries and response-bound ecosystem coverage.15/15 local focused cases across3engines and3 negative mutations;13 shell tests;215 mobile cases;112 inspected before/after theme captures;56 scoped contrast samples pass. Complete current-source validation537/537; stagingcritical66/66; ceremony11/11; required exact hosted checks; confirmed full Pages run38950850357 at facc75343b677ac57817392a6cc29c51138a766a. Immutable readback1090 served text files and primary315 HTML routes verified. Live defaults14/15 with one Firefox driver body-retrieval failure; all15 original assertions pass with a Firefox-only original Fetch-clone reader and exact feed hash; a dropped-project mutation is still detected. Existing identity holds, field-vitals limits, axe gradient incompleteness and optional broad diagnostics600pass/34fail/1flaky/60skip remain explicit. SIL933/1000 unchanged.
+
+Native goal 01a1459b-2ba2-7863-b06e-0fa86eb23b24 remains associated with this invocation S385, start45eb2fbafd. All three waves complete. CDR reviewed; no new human creative direction. Final metadata push and ignored cleanup proof precede native completion. Preserve unrelated residue. Acceptance: docs/RELEASE_S385.json.
+
+## Session 384 — verified release (2026-10-16)
+
+S384 verified full release (2026-10-16T16:32:24.488Z): returning-visitor contract6/6 across three engines18/18, three negative mutations detected, mobile215/215,28 sitemap plus84 incoming-art rendered captures and119 sitemap labels/theme measured at minimum5.291:1. Complete current-source validation537/537; stagingcritical65/65; ceremony11/11; exact required hosted checks; full Pages deployment38931769343 at 7a9159690566056665f2cfb1a92f664f4dc8c87c. Immutable readback1089 served text files and primary315 HTML routes verified. Hosted optional diagnostics: 596 expected,36 unexpected,0 flaky,60 skipped; JSON/HTML reports and168 failure screenshots retained. Existing identity holds, field-vitals limitations and axe gradient incompleteness remain separate. Final metadata push, publisher restoration and owned-process cleanup follow before native goal completion. SIL933/1000 unchanged.
+
+All three waves complete. CDR reviewed; no new human creative direction. Preserve unrelated operator residue. Acceptance: docs/RELEASE_S384.json.
+
+## Session 383 — verified release (2026-10-16)
+
+S383 complete: three reproduced homepage acceptance failures now exercise the actual milestone loader, proof/Vault Door/membership ordering and network-bound public intelligence. All seven engagement cases run unconditionally in required CI. All21 cases across Chromium, Firefox and WebKit passed; blocked milestone loading and a corrupted intelligence score were detected by negative tests. The combined score/grade mutation proves score detection, not an independent grade-only mutation. No runtime or visual-baseline change. Local validation passed537/537 and mobile215/215. Candidate d4f69cca9327 passed the three required exact-SHA hosted checks and full Pages deployment 38856553984; stagingcritical65/65, ceremony11/11 and complete immutable/primary production readback verified. Exact-candidate optional broad diagnostics separately report589 passed,37 failed,3 flaky and60 skipped; these are not claimed fixed. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. SIL933/1000 unchanged. Evidence: docs/RELEASE_S383.json.
+
+**Closing follow-through**
+
+Final source seal verified (2026-10-16T06:43:12.082Z): 6f80ad39edcd2548823eb73428e65bd515fe8870 passed exact required hosted checks, stagingcritical65/65, ceremony11/11 and full Pages deployment 38862272871. Complete immutable and primary readback covers1085 served text files and313 HTML routes. The five publishing workflows remain intentionally held until this evidence is pushed; their actual original-state restoration, remote synchronization and strict served-source equivalence are verified afterwards in .cache/s383-final-completion-proof.json before native goal completion. No further Git mutation follows restoration. Existing identity and optional-diagnostic limitations remain separate.
+
+## Session 382 — verified release (2026-10-16)
+
+S382 complete: five obsolete palette tests now verify shipped Spark behavior, and all19 affected/existing cases run unconditionally in required CI. Broken actual-script loading is detected. The45 prior optional failures are classified; remaining40 retain their original provenance. Current optional broad run separately reports586 passed,43 failed and60 skipped; those failures are not claimed fixed. Local full validation passed537/537 and mobile215/215. Seven-theme visual review covers28 counter and112 inherited Desk-art captures. Candidate 791ef632d4ee passed required exact-SHA hosted checks and full Pages deployment 38842758645; stagingcritical65/65, ceremony11/11 and immutable/primary production readback verified. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. Evidence: docs/RELEASE_S382.json.
+
+## Session 381 — verified release (2026-10-15)
+
+S381 complete: browser release checks follow their selected candidate, and pull-request visual checks audit the checked-out preview. Actual-spec negative fixtures and independent review passed. Complete local validation passed 537/537, focused contracts 5/5 and real local navigation 1/1. Candidate 5bf58495904c passed required exact-SHA hosted checks and was fully deployed by confirmed Pages run 38787970210. Staging critical leaves passed 65/65 and release ceremony 11/11; production immutable and primary readback verified. All five publisher states restored and owned processes closed. Existing identity and field-vitals limitations and optional broad E2E diagnostics remain separate. Exact evidence: docs/RELEASE_S381.json.
+
+## Session 380 — browser collection and verified release (2026-10-15)
+
+S380 complete: Playwright collects browser tests without loading Node unit suites and preserves mobile evidence. Collection is mandatory without authentication credentials; inventories are 689 Chromium, 619 Firefox and 619 WebKit tests. Fresh mobile cases passed 215/215 and survived collection byte-for-byte. The complete build passed 537/537 steps, isolation regressions 2/2, and Node tests 430 passed with zero failures and one existing TODO. Rank reports resolve privileged credentials only for their target and preserve previous evidence on fetch failure. Streamed SHA-256 verified the actual staging archive above 2 GiB; deployer self-tests passed 17/17. Shared brand, Discord and reaction names now contain their visible labels. Public accessibility passed 20/20; all 112 before/after captures across seven themes and two widths were inspected. Independent reviews passed, and concurrent Desk art commits were preserved by normal merge. Candidate 4ce367580b22 was pushed normally to main and fully deployed by confirmed Pages run 38763989597. Immutable and primary readback verified the deployed source. Staging verified 65/65 critical leaves and the tested source association. Browser checks passed three cases with three identity cases explicitly held; attention passed 15/15 and the production ceremony 11/11. All five publisher states were restored; canonical closeout is complete. Existing identity and field-vitals limitations remain separate. Broad optional E2E remains unresolved: 573 passed, 55 failed, 60 skipped, 1 flaky on exact candidate run 38761766861; the inherited workflow tolerates these failures when authentication email is absent.
+
+See docs/RELEASE_S380.json for exact release receipts. No auth, membership, pricing or lifecycle policy change.
+
+## Session 379 — release-profile discovery (2026-10-15)
+
+S379 complete: target-bound canonical release-profile discovery shipped, with exact identity and unknown fallback preserved. Closing candidate d049e56b763b pushed normally to main and fully deployed by confirmed Pages run 38669110903. Exact required hosted checks passed; complete535/535 and fresh mobile215/215, profile13/13, archive-deployer15/15,56 directly inspected cadence/counter captures across seven themes. Closing staging critical65/65, content3passed/3identityheld and attention15/15; production ceremony11/11. Immutable served text and primary source readback verified. Canonical closeout complete; all five publisher states and original operator capture restored. Existing identity and field-vitals limitations remain separate. See docs/RELEASE_S379.json.
+
+Generated homepage cadence copy now reflects the UTC day boundary. Membership economy, authentication policy and lifecycle records retain their existing behavior. The bounded archive timeout prerequisite preserves the existing deployment manifest and verification.
+
+# S378 companion control clearance — 2026-10-13
+
+S378 complete: Spark clears reader controls and editing, then returns with preferences and header recall preserved. Closing candidate 0a3fa422354d pushed normally to main and fully deployed by confirmed Pages run 38495788787. Exact required hosted checks passed; local full534/534, mobile215/215, Spark42/42, shell13/13 and56 inspected captures across seven themes. Closing staging/live Spark9/9, scoped content3 passed/3 identity held, attention15/15 and production ceremony11/11. Immutable served text matches the candidate; primary HTML matches after strictly bounded provider transport. Existing identity and field-vitals holds remain outside this release. Canonical closeout completed; temporary publishing schedules restored. See docs/RELEASE_S378.json.
+
+# S377 homepage Recent Ships restored — 2026-10-13
+
+The deferred Recent Ships module now initializes once whether it loads before or after DOMContentLoaded. The homepage renders three release cards from public intelligence, with the existing changelog and unavailable-data fallbacks. A hashed child bundle makes the loader deliver the repaired executable. Local task projection and strict audit-premise adapters reuse Studio Ops and reject foreign paths and duplicate selectors.
+
+Verification: three initializer regressions and two adapter regressions; complete local and clean-checkout build gates 534/534; mobile 215/215; 28 manually inspected captures across seven themes, desktop and phone. Canonical staging browser: three passed and three explicitly held identity contracts; six feature cases passed. Candidate 6633fe0d22; required E2E 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json.
+
+Existing identity hold, member-feed dormancy, field-vitals gaps and performance-stability tasks remain. Conversion impact is unmeasured.
+
+# S376 reader feedback on Desk articles — 2026-10-12
+
+- **Comment threads.** The reply banner and its Cancel reply button no longer show on a thread until a reader presses Reply; at phone width a Try again button also showed after a successful load. Both carried the `hidden` attribute and were displayed anyway because a class set `display`. `assets/desk-comments.css` now keeps hidden elements inside a thread hidden.
+- **Reaction taps.** Article sections are rendered late only in browsers that have scroll anchoring (`@supports (overflow-anchor:auto)`). Without anchoring, a late section taking its real height moved the page under the reader after a jump: 181px in WebKit, enough for a press on a reaction to be released on the article. Early WebKit taps went from 1 of 8 delivered to 8 of 8.
+- **Early taps.** `assets/after-paint.js` keeps the last reaction tap made before the parked reactions script exists and delivers it once the script has run; a tap the live script already handled is never delivered twice.
+- **Reader-signal feed.** `api/news-desk-reactions.json` now lists illustration and cartoon reactions per story under `panels`, separate from the story total, with the same five-signal floor and reset rule. First probe: 248 panels read, all below the floor, so no image total is published yet. The feed's definition was corrected to say what is counted where.
+- **Checks.** After-paint unit suite 12 (was 10 plus two new cases); reactions builder self-test 25; the reactions browser spec passes in WebKit 12 of 12 (was 5 of 12). Firefox still loses a tap issued straight after a jump about 2 times in 14; it passes on retry and is on the task board. Seven themes captured at 1366px and 390px (`docs/visual-qa/S376_COMMENTS.json`).
+
+# S375 satire cartoon below the illustration — 2026-10-12
+
+- **Article order.** On every Desk article with a satire cartoon (122 of 123), the cartoon is the stage directly below the AI-generated illustration and above the News Brief. It used to render after the predictions and the transcript.
+- **Cartoon feedback.** The cartoon has its own side panel: eight reactions counted under `<date>/<slug>/panel/satire-cartoon`, separate from the illustration and the story, and its own comment thread. The reaction ids are the ones the Worker already accepts, so the Worker did not change. The Desk feed publishes the scope as `_vaultspark.satire_reaction_key`.
+- **Layout fix.** The article shell can no longer be scrolled sideways. It used `overflow:hidden` around a glow that extends 352px past the right edge, and opening an image comment panel at 1366px could move the article that far left. It now also declares `overflow:clip`.
+- **Checks.** `test-news-article-layout` requires the cartoon between the illustration and the News Brief with exactly one cartoon reaction scope and an attached thread; `check-public-contract-health` and `tests/desk-artwork.spec.js` follow the new order. Seven themes captured at 1366px and 390px (`docs/visual-qa/S375_CARTOON.json`).
+- **Not shown yet.** Cartoon reaction totals are collected but no public summary reads them.
+
+# S374 scripts after first paint, SI first use — 2026-10-11
+
+- **Script loading.** Scripts that change nothing above the fold are parked in `<template data-after-paint>` and run by `assets/after-paint.js` once the page has loaded and a frame is on screen, or at the first interaction. Desk pages park the reactions, comments, CSRF and Turnstile scripts (four of eleven on an article); presence stays eager because it times the visit from when it runs. The homepage parks seven of its 28: the public data client, the newsletter client and its fallback, live proof, the hydration timeout, the stats tile and the join bar. The consent banner, hero scripts, click tracking and error reporting stay eager. The homepage idle loader waits for the parked pass before starting.
+- **Why.** The required Lighthouse check failed on unchanged bytes from S370 to S373; its result files tied the score to how many deferred scripts finished before a text paint. Floors are unchanged.
+- **Checks.** `tests/after-paint.unit.spec.js` (10) and `tests/after-paint.spec.js` (3, real pages) assert that parked scripts are requested after first paint, run in order, and still mount. The article layout test refuses a parked script with no activator or one that also loads eagerly. Layout shift measured the same before and after (homepage at or below 0.008, article at or below 0.004, desktop and mobile).
+- **Terminology.** The Resources menu reads "Synthetic Intelligence (SI)" on every page, so the expansion precedes the abbreviation; `check-si-terminology` went from 258 findings to 2 (one page title and one published Desk headline, both recorded in D-S374.3). One FAQ question on `/synthetic-intelligence/` was reworded without changing its answer.
+- **Stats.** The Sparked-projects count carries an explicit small-count clearance (it counts projects, not people). `/stats/` stays retired into `/evidence/#numbers` (D-S374.2).
+
+# S373 follow-ups, guards and test coverage — 2026-10-10
+
+Eight of the ten S372 follow-ups are closed, each with a test.
+
+- **Release truth.** `scripts/check-served-parity.mjs` compares the bytes an origin serves with a commit and names the lane that can carry each difference; production measured `tree-current` against its deployed commit. The content lane now carries `data/promotion-history.ndjson`, `data/uptime-history.ndjson` and `data/stats-surface.json` by exact path, with their public anchors re-proven on every self-test.
+- **Process guards.** Pre-push blocks a skip-CI token in a commit body (subject only). The closeout tool refuses a non-interactive shell before doing any work unless `--yes` or `--dry-run` is given. `scripts/verify-clean-checkout.mjs` runs build:check in a clean worktree as CI sees it, removing its node_modules link before the worktree. The audit sidecar finder reads `-S<n>` files and the writer refuses to overwrite another session's audit.
+- **Checkout.** `.gitattributes` pins text to LF; the index held no CRLF text, so nothing was renormalized.
+- **Desk.** The satire lane emits a `--640.avif` derivative (nine backfilled). "More from The Desk" cards request 128w/640w AVIF, show a whole 16:9 thumbnail on mobile, and the pending placeholder no longer clips. `tests/desk-more-cards.spec.js` asserts this in a browser.
+- **Staging.** The staging Worker applies the origin's `_redirects` (`PAGES_REDIRECTS_EMULATION`, staging only); staging matched production on 16 of 16 probed routes. Staging Worker version 41746efa.
+
+- **Receipts.** Routine Desk content inside a reviewed article no longer invalidates the visual receipt: the block is set aside only when `generate-news-pages --check` proves the page, its digest is recorded, and drift is reported (D-S373.6, founder-approved).
+
+- **Git-history feeds.** The commit-velocity feed and the commit map refuse to write in a shallow clone and keep the committed file (D-S373.7); a depth-1 publisher had zeroed 59 days of the velocity feed on `main`.
+
+Production: promoted 2026-10-10. Worker ed6ca127 and the full Pages lane are live; served bytes are tree-current at a2c339580 (0 differing files). Identity surfaces remain held.
+
+Not done: the Lighthouse fix. The gate failed twice at one commit and passed at the next with no JS or CSS change, so it is measuring variance. Six article runs score 0.81 to 0.82 when all eleven scripts finish before first paint and 0.86 to 0.94 when one finishes after, while real paint is 150 to 240 ms. The homepage loads 28 deferred scripts, so the fix is a script-loading change on both page types.
+
+# S372 assurance and redirect repair — 2026-10-09
+
+The daily public-surface assurance (CI Health Monitor) runs again. `check-live-surface-matrix.mjs` requires `/changelog/` instead of the `/journal/` index that S368 retired. A missing required route is now one reported failure, not an abort, so the 247-route sweep always runs. A build:check self-test rejects any required route that `_redirects` retires. The Chromium smoke journey checks the retirement redirect and changelog stories. Live matrix: 247 routes, 0 failures. Edge smoke passes 2/2 and Chromium 15/15.
+
+The edge Worker's legacy redirects now reach their destination in one hop: `/signal-log` → `/changelog/#stories` and `/vaultspark-football-gm` → `/games/franchise-architect/`. A query string is placed before a fragment target. `tests/s372-redirect-chains.unit.spec.mjs` (in build:check and test:unit) fails any Worker or `_redirects` rule that lands on a retired route. Staging Worker 08480916 was verified first. Production Worker 9c7c29f1-34c4-4670-aa01-3a34450db061 is live (run 38005943124), with one-hop redirects and post-deploy route provenance 9/9.
+
+Production serves the whole committed tree at 556b4d14e (full lane run 38017202206); a byte comparison against that commit found 0 differing files across code, data and HTML. The identity hold is unchanged.
+
+The visual-QA receipt covers the two Desk articles the art autopilot changed after S371: 28 captures in seven themes, all manually reviewed. The source binding uses committed LF bytes; all 400 entries match the git blobs.
+
+# S371 release maintenance — 2026-10-09
+
+Four source fixes are implemented and independently reviewed: exact automated-art routine receipts, complete closeout-anchor history, main-only Open Graph publication and formatting-safe persona generator comparison. Focused tests4/4, news generation154/154 and current mobile runtime215/215 pass. Full build, canonical staging and pinned production acceptance are verified. Acceptance: docs/S371_RELEASE_2026-10-09.md. Existing identity holds and accepted Spark/Desk behavior are preserved.
+
+## S370 — publication evidence shipped (2026-10-07)
+
+S370 publication evidence is shipped: the art release pins checkout to its requested SHA, confirms the matching workflow run, and verifies served banner and satire bytes against the candidate.
+
+Candidate 8068adfcea36eef062c3b6a7dbd56260f82571a6; pinned Desk run 37651535578; production Desk run 37651733967; general content run 37652265810. Hosted acceptance succeeded; live image hashes and article references passed. Independent review passed; focused checks 39/39, mobile 215/215, visual 28/28 in seven themes, staging content byte parity and browser contracts passed. Existing identity holds remain enforced.
+
+Acceptance: docs/S370_RELEASE_2026-10-07.md. Earlier candidate checkpoints below are superseded by this observed release.
+
+## S370 — publication evidence candidate (2026-10-07)
+
+S370 hardens automated Desk publication: pinned candidate checkout and title/SHA-bound run confirmation; served banner and satire derivatives must match the pinned bytes.
+
+Independent review passed after two fix rounds; focused self-tests 39/39 and workflow guards passed. Staging/hosted release acceptance is pending. Scheduled art runs 37549313182 and 37590125126 succeeded with live image checks; scheduled publisher release 37622619279 succeeded. The subsequent automation commits are recorded here rather than treated as an interrupted human session. Existing identity and credential holds remain separate.
+
+# Current State
+
+## S369 — Spark live release (2026-10-06)
+
+Production content lane: Pages run 37515965605, source 61efa22a56fad17326fcf0fd733b11669e4735e9; edge Worker 97e7e2b3-b93e-41eb-814f-71495d22a778. Live Spark 10/10 and seeded-history Membership 14/14 (seven themes × desktop/mobile) verified. Both old corner guides remain absent. MindFrame launches at https://usemindframe.com/. Full local build 530/530, mobile contract 215/215, staging ceremony 11/11; actual receipts and images are linked in docs/SPARK_RELEASE_2026-10-06.md. Existing identity/Supabase holds remain unchanged. The Desk ships a premium AI news masthead, clickable anchor profiles, mini navigation and a sitewide AI News/subscribe strip. Articles lead with artwork and version-bound public image threads beside it, then source-attributed News Briefs, The Desk’s Take and the signal-versus-hype axis. Satire follows all persona discussion before the full AI disclosure and subscription area. Readership cards expose thresholded recorded homepage/article loads and engaged reading evidence; missing values stay Collecting. Verification: 22/22 browser cases, 7/7 verification-helper cases, 33/33 metric cases, exact claim parity, 210 Desk captures reviewed in seven themes, including profile pagination preserving every contribution and 215/215 full mobile checks.
+
+## S369 — Spark implementation candidate (2026-10-06)
+
+Spark replaces the competing discovery guides with one manually opened Vault Compass. Its colorful CSS sphere, stationary region controls, map/list/search, Proof Orbit, interest mixing, saved three-stop routes, arrival-earned local sigils and public itinerary export share a validated 26-destination manifest. Quiet/still controls and reduced motion are supported; no model requests are made. Old progress remains readable and neither corner guide is scheduled. MindFrame now launches at https://usemindframe.com/ throughout the public registry and generated discovery surfaces. This is a candidate, not yet a verified production release.
+
+Canonical staging: Spark 10/10, mobile 215/215, release ceremony 11/11 (three browser cases executed; three identity cases explicitly held). All 140 final Compass captures reviewed in seven themes; 28 entry/bridge images also reviewed. Cold list opening measured 141–249ms and warm opening 54ms in three unthrottled headless Chromium samples; this is lab evidence, not field performance. Full single-run repository verification and production promotion remain pending.
+
+Last updated: 2026-10-04 UTC (S368 continued: Desk art restored, satire cartoons, hybrid AI & SI positioning)
+
+## S368 final — Desk search, publish times, signup fixes, art autopilot (2026-10-05)
+
+- /news/ has full-text search across every edition (headlines, summaries, body, facts, personas) with correspondent, topic, edition, format, month and has-prediction filters, sorting and shareable URL parameters. The index (`api/news-desk-search*.json`, month-sharded) loads only on first search.
+- Every Desk card, archive list, persona feed, homepage Desk card and article byline shows the publish date and time in ET inside `<time datetime>`; source order: story.publishedAt, first-commit ledger, authoredBy.at, edition slot ("Scheduled").
+- The Desk Dispatch signup sits at the top of /news/ (#desk-dispatch); each signup form renders its own Turnstile widget and waits up to two minutes for an interactive check. The daily digest is armed (autoSend) and sends at 23:30 UTC.
+- Desk art publishes without founder review (D-S368.10): `scripts/desk-art-autopilot.mjs` runs four times a day from the founder's PC and deploys through `desk-content-release.yml`, then checks the art is served live.
+- The JSON Feed (`api/news-desk-feed.json`) carries each story's real publish instant.
+
+## S368 continued — Desk art restored, two-image stories, hybrid AI & Synthetic Intelligence (SI) studio (2026-10-03 → 10-04)
+
+- **Desk banner art restored.** A Windows spawn regression had silently broken the local art worker's sandbox check since 2026-09-17, so 58 stories shipped on procedural placeholders. Fixed (native `codex.exe` resolution), all 58 regenerated and visually reviewed; three re-rolled (staged likeness of King Charles, wrong-country landmarks). Worker rule: never depict a named person or a stand-in; landmarks true to the story's country. Nightly Windows task "VaultSpark Desk Art (nightly)" stages art; `check-desk-art-currency` runs in the daily CI Health Monitor and fails any placeholder older than 48h.
+- **Two images per story (D-S368.7).** Each story now has a person-free banner plus an AI-generated satire cartoon in the correspondent's register (`visual.satireCartoon`), labelled "Satire · AI-generated cartoon"; public figures named in the story may appear only as obvious caricatures, recorded per approval (`+caricature`/`+none`, hash-bound). 95 stories have reviewed cartoons; six older stories keep the banner-panel fallback after repeated logo, look-alike, wrong-landmark or off-subject renders. Derivatives step down a fixed quality ladder to meet budgets.
+- **Hybrid AI & SI positioning (D-S368.8).** The studio describes itself as "an AI & Synthetic Intelligence (SI) studio" alongside its AI wording (slogan "From Artificial Intelligence to Synthetic Intelligence."). New cornerstone pages `/synthetic-intelligence/` and `/ai-vs-si/` (cited sources, FAQPage and DefinedTermSet JSON-LD). Studio description, slogan and knowsAbout live once in `scripts/lib/org-entity.mjs` and feed homepage, `/studio/`, `agents.json`, `llms.txt` and llms-full shards. Disclosure wording ("AI-generated", "AI persona") is unchanged; the site never claims superintelligence.
+- **The Desk AI→SI special report.** Four sourced 2026-10-04 stories on the federal "Super Intelligence (SI)" executive order, the industry accord, AI vs. SI for builders, and the 60-day statutory clock. Desk prose now links the studio's own pages when it names one that exists.
+- **Source text repaired.** The fact extractor decoded only six named entities; 48 facts carried `&#x27;` (rendered "King&amp;#x27;s") and eight carried publisher page chrome. Extractor now decodes all entities and strips chrome; 55 facts across 23 days repaired with their quoted anchors.
+- **Deploy tooling.** Staging deploys of 1,000+ paths failed silently (the path list exceeded the Windows command-line limit); the content gate and discovery verifier now take `--paths-file`.
+- **Live:** production build `0a878de`+ through Pages run 37240419736; staging verified at 1,146 overlays.
+
+## S368 — Full audit refresh implemented: membership truth, Season 1, invite-led doors, new pages, Ask the Vault (2026-10-02)
+
+Audit `docs/AUDIT_2026-10-02.{json,md}` (25 items, four-zone page-by-page pass). 23 shipped, 1 blocked (real-login E2E, waiting on Obelisk), 1 deferred (publisher drift cascade). Founder rulings D-S368.1–6.
+
+- **Membership (D-S368.1).** The site sells Free, VaultSparked $4.99/mo and VaultSparked Eternal $29.99/mo, monthly only; annual is "coming later". Only enforced perks are advertised; 2×/3× XP, discounts, priority queue, co-dev and credit promises are gone. `api/membership-tiers.json` is the single source. The portal shows the real price (it said $24.99), offers an Eternal checkout, hides the gift. Server: annual rejected, a second subscription is refused (409 `already_subscribed` / `plan_change_via_billing` → billing portal), phase slots are claimed on payment, the gift endpoint returns 410, `reserve_phase_slot` and gift inserts are service-role only.
+- **Season 1 (D-S368.2).** Live probe found `award_season_xp()` referencing missing columns, so every game score, session and challenge submission insert had been rolled back. Fixed live; Season 1 — Ignition (2026-09-02 → 2026-10-14) active with five recognition tiers and `get_season_standings()`. Portal countdown, standings and results card; leaderboard "This Season" tab.
+- **Security.** Ask IGNIS cache no longer serves one member's personalised reply to others; a public read policy on `ignis_response_cache` was dropped; weekly score and follow feed check the caller; team invite codes and voter ids no longer public; AI endpoints fail closed; models on claude-sonnet-5-5 / Haiku 4.5 with per-model pricing; agent-action receipts scoped to the subject; `noai` header only for training crawlers; jsdelivr path-scoped.
+- **Doors and truth.** Enrolment is invite-led: header "Request Invite" and 104 inline CTAs go to `/contact/?topic=invite`; signed-in members never see Join. Statuses, counts and catalogs render from the registry (`scripts/derive-registry-surfaces.mjs`). Project descriptions follow D-S368.3. Operator language removed from visitor pages; a visitor-text leak patrol runs in content coherence. Hosting statements corrected to Cloudflare Pages.
+- **Structure.** 12 routes retired behind 301s (stats, oracle, notebook, atlas, ask-founders → Ask the Studio, brand, careers, members, journal, games/voidfall, gridiron-gm-play). New `/play/`, `/dispatch/`, `/collaborate/`, `/api/`, `/projects/veilos/`; roadmap is Now/Next/Later from the registry.
+- **Portal.** One Vault Initiation quest (the old checklist never rendered and the overlay never ran), since-last-visit card, nearest rival, panel feedback, one Your Games panel, admin markup and classified lore out of public HTML, investor gate no longer signs members out.
+- **Experience and AI.** Scroll-driven Vault Door below the homepage LCP; keyboard-navigable universe constellation with View Transitions; Ask the Vault (semantic-search v5) answers from cited passages with a zero-token no-answer path; one `#org` entity graph, games ItemList, agents.json actions, grounding coherence gate; root `llms.txt`, full root `llms-full.txt`, sitemap `lastmod`.
+- **The Desk.** Persona taglines, character sheets and a corpus-derived notebook; one Desk Dispatch signup on the homepage, `/news/`, every article, persona profiles and `/dispatch/`; signup function fixed and redeployed (verify 6/6). Daily digest sender (D-S368.6) built with auto-send off until the founder approves a test issue.
+- **Speed.** Duplicate logos removed (−3.85 MB); homepage scroll CLS fixed (mobile 1.08 → ~0.01).
+- **Live already:** all S368 migrations except the column-revoke follow-up; edge functions ask-ignis v18, semantic-search v5, create-checkout v27, stripe-webhook v30, create-gift-checkout v23, eternal-intelligence v9, subscribe-desk-dispatch.
+
+## S367 — Whole-site audit, canon-true statuses, login and email hardening (2026-10-01)
+
+Whole-site audit `docs/AUDIT_2026-10-01.{json,md}` (22 ranked items, baseline test results) covers every public page, the portal, login, email, AI, security, speed and token cost.
+
+- **Statuses follow studio-ops canon.** Founder ruling: Call of Doodie, PromoGrind and Velaxis are FORGE. The "deployed on our domain means SPARKED" override in `generate-public-intelligence` is gone. Fixed: hub mirror, game registry, homepage tiers, hero, /games/ (stat strip now derived from the registry), game and project pages, /roadmap/, /press/, /sitemap-page/ and /projects/. Playable FORGE games show "Playable Beta" and keep their Play CTA. A derive-game-index bug that duplicated the slug tail on reordered cards is fixed and self-tested.
+- **Signup door.** Obelisk production enrolment is invite-only (403 `signup-token-required`). /vault-member/ now says so and links /contact/ for an invite. Ark repo-question to Obelisk asks to reopen.
+- **Security and login.** HTML CSP nonce is an HMAC under a key the client never sees (takes effect on next Worker deploy). The compatibility data token renews from the Obelisk edge before expiry and on focus; a revoked edge session signs the tab out. `/vault-member/settings/` 301s to the settings tab, which portal deep links now open.
+- **Truth gates.** `check-content-coherence` now fails on any printed per-month or per-year price the tier feed does not offer. Stale tests repaired; Desk presence "avg avg" fixed.
+- **Lifecycle.** Proposal to redefine FORGE/SPARKED/VAULTED and the SPARKED launch gate shipped to studio-ops (`docs/proposals/LIFECYCLE_SPARKED_GATE_S367.md`, Ark `01K3SJ87V2E1476FF1FE837A06`).
+
+## Post-S366 — News archive live (2026-10-01)
+
+The News hub shows seven recent editions and links complete August, September and October archives; all 90 published stories remain reachable. PR #134 reduced the hub from 207,037 to 92,390 source bytes, below its 200 KiB budget. After a later scheduled Desk release exposed staging ancestry, allowlist and receiver-rule gaps, main commits `584d86957`, `eb94a31aa` and `5ded8c0de` repaired the content lane. Recovery run `36835514861` and Pages run `36835622726` passed; the October article and archive are live. Production matched the candidate at 159/159 paths and preserved all 153 prior overlay paths. The canonical hub, October story/archive and sampled profiles returned 200; 1366px and 390px browser checks found no horizontal overflow. The full-site identity/provider hold remains separate. Observe the next scheduled publisher-to-release run after this repair.
+
+## Post-S366 — Desk personas live (2026-09-30)
+
+The Desk has eight live fictional correspondent profiles with distinct generated portraits, vector marks, writing taglines, beats and editorial boundaries. Each profile draws reports, positions, panel turns, captions and predictions from published stories, with links to the source article. MICA adds a creative-tools, games and media lens; her feed says no work is published yet. The Desk hub and article bylines link to the profiles. The late-night edition has 89 stories; its VERA contributions appear on her profile. PR #132 merged as `91116c423`; scoped Cloudflare Pages run `36791903046` published 147 static paths while preserving the earlier 124-path Desk overlay. Canonical staging and the public Pages origin matched all 147 paths exactly, and the canonical REX, VERA and MICA routes returned 200. The full-site identity/provider promotion hold remains in force.
+
+Verification: full 506/506 build checks, 215/215 mobile browser cases, 70/70 reviewed desktop/mobile captures across seven themes, hosted E2E/compliance, accessibility, Lighthouse and the refreshed Linux visual-regression run passed. The prior production screenshot baseline had been stale on 40 unrelated surfaces; its current Linux reference images were reviewed and refreshed before release.
+
+> Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S366 — Robinhood Summit analysis and automatic Desk content release
+
+Post-closeout observation: scheduled Desk authoring runs `36679345071` and `36716077242` both started the restricted downstream release, which passed in `36679807164` and `36716493332`. The first scheduled CI Health Monitor run exposed a live fact-receipt checker that mixed same-day stories; the story-scoped repair landed as `ed6d294db`, and hosted rerun `36750321612` passed both jobs. Hosted E2E/compliance passed in `36747372651`; Lighthouse `36741037407` passed all nine route tiers. Full-site promotion remains held on the independent identity/provider gate.
+
+The September 29 HOOD Summit analysis is live at `/news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/` and leads the homepage. The deep article covers Robinhood's in-app trading agents, approval controls, weekend equities plans, crypto perpetual futures, earnings contracts, Social, agentic app implications, and a clearly hypothetical VaultSpark role. Its UTC edition date is September 30; the event date is September 29. The 85-story Desk corpus passed its gates, and 42 current route/theme/viewport captures passed CANON-053 visual review.
+
+The four scheduled Desk authoring slots now feed a separate content-only release workflow after a successful publisher run. The workflow checks the corpus, applies only allowlisted homepage/newsroom files to canonical staging through a forced-command SSH key, checks every production candidate file against served staging bytes, then dispatches the production content lane pinned to the reviewed commit. A manual recovery run (`36663473926`) exercised the complete path and succeeded; Cloudflare Pages run `36663563135` promoted 109 Desk paths over baseline `c46f22fa36d52901e505f2a99433cef9276fbbd0`. The live homepage, article, art, and Pages build receipt were verified. The next scheduled `workflow_run` trigger remains to be observed; the manually triggered path is proven. Full-site and identity promotion remain held.
+
+A same-session assurance follow-up added a daily read-only surface job to CI Health Monitor. It crawls every local HTML file, requests every route in the live sitemap from the Pages origin, checks eight public support files, verifies the latest Desk feed/claim/article/art/homepage chain, probes edge liveness, and runs Chromium public-journey and Desk-theme tests. The hosted dispatch `36667110751` passed both jobs; locally 232/232 HTML files, 201/201 live sitemap routes, eight public files and 15 browser tests passed. The Desk release now repeats its fact, AI disclosure, copy and stats gates plus the full local crawl before staging. The guard for a skipped staging plan uses a nonnumeric yes/no output. The first scheduled assurance run remains to be observed.
+
+Closeout found the current hosted E2E/compliance gate failing at its startup-context-budget check because one historical task-board block had not rotated. The archive-preserving rotation ran, and the same budget check now passes locally with zero rotatable blocks. The latest hosted homepage Lighthouse reading is 0.73 versus its unchanged 0.76 longtail floor. Fresh hosted evidence is required before a full-site promotion; the existing Desk-only production release remains verified and the full-site hold remains in force.
+
+The full closeout build also exposed an IGNIS ROI feed freshness mismatch: its last source evidence is September 9, while the scheduled generator can rebuild from the same quiet ledger. The feed now carries separate `generatedAt` (source age) and `rebuiltAt` (publisher health); the trust ceiling checks the latter without claiming newer input. The focused trust-feed and generator checks pass.
+
+The refreshed local browser evidence passed 215/215 mobile route and viewport cases. A 42-capture matrix of the homepage, News index and Summit article across seven themes and desktop/mobile was inspected from rendered pixels with no blocking defects; receipt ordering, visual review and the 109-step proof-surface gate pass on this candidate.
+
+Closeout also repaired two gate metadata dependencies exposed by the full build: the IGNIS ROI generator's reviewed evidence-contract fingerprint was updated after its timestamp change, and the new scheduled/live Desk checkers now declare their real workflow scopes with their pure self-tests reachable from `build:check`. The focused reachability census passes 254/254 checks and 325/325 self-tests. The final local full build passed **505/505** on September 30; hosted checks still need the pushed SHA.
+
+## S365 — Desk source integrity and article performance (2026-09-29; content deployed)
+
+The 2026-09-28 audit's three items are shipped. Publisher fetching now selects semantic article prose before fact candidates; the observed page-chrome facts in the edition were corrected; a quality gate rejects navigation, promotion and caption fragments. The current 83-story corpus passes claim parity. Article pages now place the short version, story, and sources before the illustration and reactions. The first mobile viewport makes no illustration request, and the unchanged 0.90 article Lighthouse floor passed in hosted local and staging jobs (`36629194379`).
+
+The candidate passed 215/215 mobile checks, 168/168 manually reviewed seven-theme captures, hosted E2E and compliance (`36629194109`), and a staging release ceremony at 11/11. Staging served receipt `eb48a702c8d5cf87b330e334` at continuity depth 87. Production content-lane workflow `36631405999` overlaid 385 content-pure paths on the existing deployed baseline and withheld 375 other paths. Live Pages metadata names content head `c46f22fa36d52901e505f2a99433cef9276fbbd0`; the public article returns 200 with story, sources, then illustration. The standing identity/Worker identity hold remains scoped out of this release.
+
+Closeout reproduced and repaired the known standalone build-check step-81 drift: the runner now sanitizes the gitignored Oracle export before freezing its verification snapshot. The work log was rotated at its 250 KB cap.
+
+The Desk's four scheduled daily slots ran on 2026-09-29, with wire, midday, and late-night editions published. The late-night edition landed after the initial S365 content release. Its new art exposed an index-order gap in the publisher's image placeholder map; the map and publisher guard were repaired, and the corrected tree passed 505/505 locally plus hosted E2E and compliance. A fresh Lighthouse local rerun passed after one isolated `/community/` lab dip. Canonical staging then served the late-night homepage and article through its scoped content lane. Production run `36648112113` promoted 125 content-pure paths; the live homepage, News index, and OpenAI late-night article now show the latest edition. Identity and full-site release holds remain in place. Future unattended live content promotion still requires a separate decision because the content lane has an explicit manual confirmation gate and CI lacks a staging deploy credential.
+
+## S364 — Desk signup repair (2026-09-23; deployed)
+
+S364: production Desk signup response crash repaired, matching Turnstile binding installed, and consumed-token reuse fixed. Production returns the intended missing-token rejection instead of 503. Static production serves the repaired candidate. No real confirmation email was sent; delivery remains unverified.
+
+Hosted E2E and compliance passed on cf56856ce, including 505 repository checks and notebook CLS. Mobile 215/215; visual evidence spans seven themes. The founder directed immediate deployment after disclosure of the article performance shortfall (85/100 against 90); this is a one-release exception, not a changed threshold.
+
+## S363 A safety gate keyed on the wrong thing, and a propagation quietly took eight guards back (2026-09-20)
+
+**The monthly newsletter's arming decision was bypassable by a dropdown.** The unarmed send was held behind `EVENT_NAME = schedule`, so a manual `workflow_dispatch` with `mode=send` skipped the hold entirely and would have mailed every opted-in member while `NEWSLETTER_ARMED` was still unset. The same choice made the hold branch unreachable by any manual run, so the guard added last session would first have executed unobserved on 2026-10-02. The gate now keys on the effective **mode**: it holds whenever a send is requested and the repository variable is not `true`, whatever triggered the run. That closes the bypass and makes the branch testable by the same dispatch it protects. Nothing was armed and nothing was sent.
+
+**The staleness probe can now say "repaired, awaiting its next run."** It judged crons purely on run history, so the newsletter's six pre-fix failures were going to read as a dead cron until 2026-10-02 even though both causes were already fixed — and during that window a genuinely newly-broken monthly cron would have looked identical. The probe now also reads the commit time of the workflow's own source. A streak whose every run predates the fix is reported as `repaired-untested`, with the streak, the commit and an expiry instant all named. It self-expires after one full cadence, a workflow nobody touched stays broken, a failure postdating the fix makes the streak real again, and silence past cadence is still reported. This is not the mute D-S362.8 refused: it asserts only what git can prove.
+
+**`/status/` was publishing that Supabase was blocked while three of its four authorities were live.** The control-plane receipt computed its headline from the service-role plane alone, so it read `overall: "blocked"` while carrying `managementApi`, `sqlMigration` and `edgeFunctions` all `ready` — and the identity receipt beside it published `readyPlanes: 3, totalPlanes: 4` next to that same word. Deploy authority was live throughout; this session used it to enumerate 30 edge functions. The verdict now aggregates all four planes and the CLI names which authorities are live. The promotion gate keys on `ready`, so nothing was loosened.
+
+**The startup brief could never find the revenue signal.** It parsed a path that exists only inside studio-ops, so from this repo the read always came back empty and the brief always printed `Revenue sig. not found` — a signal structurally incapable of ever being found, rendered as if the file were missing, while the doctor resolved it fine. Both surfaces now go through the shared resolver.
+
+**A propagation drained at `/start` took eight guards back, and only the loud ones were visible.** The inbound drain was mostly a real improvement — 44 files, net +2,162 lines — but it also removed symbols this repo's own code imports: the capability gateway's UNKNOWN-vs-MISSING separation and its presence-is-not-health fields, the `check-secrets` caller-error render and its exit code 3, the SIL invariant helpers in a pure 23-line deletion, the task-board inventory parser and the brief row that uses it, the deprecated-alias guard on `PROJECT_STATUS.json`, and `probe-capability`'s entire self-test. Every one is a phantom-blocker or honesty guard. All were merged back beside the propagated improvements rather than reverted, and the lane fix was shipped upstream as Ark cargo — the second time for one of them.
+
+**The write-back probe could be made to cry wolf by a `git pull`.** Fifty-seven upstream commits, every one authored by `github-actions[bot]`, counted as substantive session debt; the session lock written afterwards then tripped the cut-off heuristic and the probe reported an abandoned session with 57 unrecorded commits. Authorship is now the filter: a commit no session produced is not a session's debt. The file also gained a real `--self-test` — it had none, so `build:check` had been running the live git probe while reporting itself as a logic test.
+
+## S362 Two probes stopped crying wolf, and a browser now installs the worker (2026-09-19)
+
+**The scheduled-cron probe could not read half the crons it was watching.** Any cron line carrying a trailing YAML comment matched nothing — 11 lines in 9 workflows — so those jobs were expected daily whatever their real cadence, and the weekly maintenance job, which ran on time, was reported `silent`. Cron lines are now read to the closing quote (or to the comment), and several lines combine by adding their rates: the four daily Desk slots are one run every 6h, not one a day. Live: 14 workflows checked, 0 silent.
+
+**Write-back currency stopped reporting debt after a clean closeout.** `context/PROJECT_STATUS.json` is written by hand and by tools, and the post-closeout resync rewrites `doctorScore` inside it, so every resync commit looked like un-written-back session work. It is now classified by which top-level keys changed: a resync that touches a hand-written key still counts as debt, and a diff that cannot be read stays debt.
+
+**A browser gate installs the service worker.** `tests/service-worker-install.spec.js` registers `/sw.js`, requires `activated`, and checks that every declared precache entry landed. It blocks the E2E compliance job and runs in `verify:local`. A 404 precache entry turns it red, so the three-month production failure S361 found could not survive it again.
+
+**The unarmed newsletter holds instead of failing.** Its scheduled run had failed six times since April because it is deliberately not armed. It now emits a held annotation and exits 0 unless the repository variable `NEWSLETTER_ARMED` is `true`. Nothing was armed and nothing was sent.
+
+**The precache was reviewed and kept:** 100 entries, 3.2 MB raw / about 779 KB brotli, fetched in the background only for members who turn on offline and push.
+
+## S361 The service worker installs again, and Supabase is back (2026-09-19)
+
+**The service worker had never installed in production.** `sw.js` listed three precache entries twice, and `Cache.addAll()` rejects a batch that contains a duplicate request. Every install went `redundant`, which meant no offline precache and no way for a member to turn on push notifications. The duplicates date back to at least the 2026-06-03 history root. The list is now de-duplicated, the install de-duplicates again as a guard, and a unit test rejects duplicates. A real install now reaches `activated` in the browser.
+
+**/status/ stops calling a browser capability an outage.** The Service Worker row used to show "Down" whenever the API was missing (private windows, some browsers), and that alone flipped the banner to "Partial Outage". The row is now "Notifications & Offline (this browser)": Active, or Not in use with the honest reason. It never counts toward the outage verdict.
+
+**Supabase recovered.** The health API reports db, REST and auth all ACTIVE_HEALTHY, and Desk comments return `ok:true`. The restart was not done by the agent.
+
+## S360 /status/ says who is down, and never says "all operational" before it knows (2026-09-18)
+
+**/status/ names a provider outage as one.** When every Supabase-backed check fails together, the banner reads "Database Provider Outage" and a note says the website is up and names what is affected (Desk comments, member profiles, sign-in, leaderboards). A new Member Accounts (Auth) row probes the auth service directly. Measured live against the current outage.
+
+**It stopped claiming "All Systems Operational" for its first five seconds.** The banner summarised whatever had reported, and at first only the Website row had, so every load, including during today's outage, opened on a false green. It now reads "Checking services… (n of 7)" until every check has answered. A gateway 401/403 no longer counts as a working database; only a response that came from the database does.
+
+**Desk comments point readers to /status/** when the comments service itself fails.
+
+**The leaderboard embed is readable on any host page.** It painted text with the host page's theme colours on its own fixed near-black background, so our light theme put ranks at about 1.9:1. The widget now uses only its own colours, and a unit test rejects any `var(--` in it.
+
+**`build-shell-assets` is safe to import.** Its pure predicate helper now has seven unit tests. A negative control shows the import test fails if the guard is removed.
+
+**Supabase is still down** (db/rest/auth UNHEALTHY). The restart was refused by the permission policy a second time. It is a founder action.
+
+## S359 Public surfaces count readers, not commits (2026-09-18)
+
+**"You asked → we shipped" only shows what readers asked for.** It had been counting commits keyword-matched to a theme as reader signals. It now shows a theme only once the anonymous reader choices reach the public threshold of five. None has yet, so the box is empty.
+
+**No public feed is built from git any more.** The changelog narrative (returning-visitor strip, IGNIS topic chips, subscriber push notifications) is built from founder-approved changelog entries. The push notifier, run manually and never sent, would have pushed commit sentences to subscribers; it now sends the approved title and keys on a git-free entry id.
+
+**/games/ reads in light theme.** The Sparked / In The Forge / Vaulted labels were hardcoded colours at 1.47–2.22:1; they are now theme classes at 5.2–6.6:1, unchanged in dark themes.
+
+**Supabase is down.** The site's project cannot reach its database, which breaks Desk comments and Vault Member sign-in. It needs a project restart (founder action).
+
+## S358 Every script a page loads can now be updated, and the changelog stops guessing (2026-09-18)
+
+**Seventeen client scripts the content lane could never update are now fingerprinted.** Production served pre-S356 bytes for 19 scripts that pages still loaded. 17 of them now join the shell-asset table (five through the ambient bundle's content-addressed loader list, `trust-depth` inside the idle loader), so new bytes ship under new URLs on the path the lane promotes. The other two were already fixed: the drift gate had been reading an unbundled loader source. It now follows references from what pages actually load, so a source file only counts when something served reaches it. On the rebuilt tree, drift that matters is **19 → 0**.
+
+**"You asked → we shipped" reads the reader changelog, not git.** A commit subject had slipped past S357's filters within a day. The box now shows a changelog entry only when the founder has declared, at approval, which feedback theme it answers (`answers:` in the draft). No entry is tagged yet, so the box is honest-dark until one is.
+
+**/changelog/ no longer 404s on every visit.** It was querying a `vault_feedback` table that deliberately does not exist. The loop section now shows true static counts, no session codes, and no longer claims the founder-presence underline that was retired for privacy.
+
+**The homepage stops showing commit subjects.** The hero ticker and the returning-visitor strip now name the newest founder-approved changelog entry ("The Desk: real art, reader-first articles, and a community on every story") instead of lines like "Refined record the three board items worked."
+
+**Desk comments depend on an intermittently failing provider.** At session start the Supabase project was healthy and comments returned 200 on both origins; by release it was UNHEALTHY again, so comments currently return `comments_upstream_failed`. Readers see the existing degraded state, not an error page.
+
+## S357 The deploy-truth surface stops certifying trees it never measured (2026-09-17)
+
+**What changed in shipped behaviour, and what did not.** Everything below is committed, gated at build:check 499/499, and deployed to staging where it is verified. **None of it is in production.** Production still serves `e65eca737` from 2026-09-14. Both promotion steps were refused by the agent session's permission policy; the exact two commands are in `LATEST_HANDOFF.md`.
+
+**The public deploy-truth feed was green over a stale production.** `api/deploy-currency.json` published `content-current` with shell parity `matched` while a live probe of the same origin reported `stale` with four shell assets missing and three unexpected — over a 67.7h content backlog. The cause was not a build-ordering race (that hypothesis was tested and refuted with byte-level evidence) but tree identity: shell parity compares two operands and recorded only production as evidence, so a CI reading taken against `origin/main` was rebased into a tree that added a twelfth shell asset and kept asserting `matched`. Three closures: a verdict now carries a hash of the operand it was measured against and becomes `superseded` when the tree moves (recovered retroactively for every receipt ever written, because the operand was always sitting in `expected[]`); `matched` now expires, since the existing observation clock is reset by a different sub-probe and could never bound it; and the gate string now says the pages.dev vantage certifies the promoted artifact, never the served surface.
+
+**The content lane cannot update an unhashed client script — nobody had said so.** `check-content-lane-purity` holds unhashed `.js` as "sensitive, executable, or unrecognised type" and promotes only fingerprinted shell assets. Correct as a safety property, but it means a plain client script only changes on a full deploy. Measured on staging: 27 of 171 unhashed client scripts were serving pre-S356 bytes, including two that still fetched a privacy endpoint S356 deleted. The release ceremony's browser gate caught the resulting 404 on chromium and webkit and refused promotion. Production looked clean only because it still serves the pre-removal deploy, so promoting without the fix would have moved the 404 to production. `studio-now` and `public-intelligence` are now content-addressed; 25 remain.
+
+**Light theme was unreadable on surfaces nobody had measured.** `/ignis/` carried text at 1.40:1 and 1.64:1 and four tier labels between 1.47:1 and 2.30:1 — the exact bug class `/oracle/` had already diagnosed and repaired for its own panels and never extended. The changelog timeline's entry title read 1.63:1 and its Live label 2.30:1, found by measuring the deployed staging page rather than the stylesheet. 32 declarations repaired in all, each to the smallest value clearing 4.5:1 on its own measured ground. Two items the board listed were disproved in the process and corrected in place.
+
+**Four gates that had never run now run.** Two scripts were referenced by nothing (a 43-article Desk contract and a 12-case reaction-cooldown suite), and two self-tests were reachable by no build:check path. Reachability is now 252/252 build-scope modes and 320/320 self-test modes. Separately, three gates that could not fail now can: the Trusted-Types sink guard was pinned to a call site S356 legitimately refactored away, the signal-bus check was pinned to a path fingerprinting moved, and the generated-drift preflight printed "generated artifacts are current" — an unquantified whole-tree claim — from a sample of 6 out of 94 gated generators. It now computes its own denominator and reports its sample's evidence strength.
+
+**Two generators had been quietly undoing a third.** `generate-pathways` stripped the site-wide Desk wire from six pages on every run, and `generate-evidence-hub` hand-wrote a header that shipped `/evidence/` without the GitHub link every other page carries. Both now harvest shared chrome from a page they do not write, and both refuse rather than ship a stripped header.
+
+**The changelog speaks to readers again.** The first public entry since 2026-07-16 clears the 60-day trust ceiling, and every line was verified against staging before publication. The "You asked → we shipped" box was about to publish raw commit subjects to visitors — including one carrying a candidate hash — and now filters structurally on touched files and commit type rather than on a vocabulary denylist that was out-vocabularied twice.
+
+**The slowest gate step is 83% faster** (95.9s → 16.5s) by memoizing three pure functions on content hashes, with no threshold moved and no assertion relaxed.
+
+
+## S356 The Desk becomes the flagship, and the studio's public numbers start telling the truth (2026-09-15)
+
+**Real illustrations are back.** 25 stories had shipped a procedural diagram card because the publisher never had an image model. A local worker now generates art on the founder's ChatGPT plan, ingest accepts only reviewed images, and all 25 were regenerated and reviewed one at a time; one was redone because it carried a company mascot.
+
+**Articles are built for readers.** Headline, byline, illustration and a short-version box come first; persona blocks are readable prose instead of monospace; every fact keeps its receipt, folded away. The index is image-led. The Desk now leads the homepage and rides in a site-wide header strip that only says "Live" when the measured cadence is daily.
+
+**Reactions behave.** One pick per bar, tap again to remove, eight panel emoji, and the floating feedback widget no longer covers them.
+
+**Comments are built.** Anyone may post, an automatic filter decides publish/hold/reject, members are badged and featured, reports auto-hold, and moderation runs from a CLI. Not live until the migration and Worker deploy.
+
+**Daily publishing is enforced by evidence.** Authoring now runs the same checks promote runs, anchors are repaired verbatim only when genuinely related, a missed day turns the late-night run red, novelty is 7 days, follow-ups need a new source, and 20 verified feeds widened supply.
+
+**Studio Pulse stopped overstating.** Solara is no longer "right now in the forge" after 93 quiet days, dormancy comes from real activity, the founder presence tile is honest about staleness, a studio-wide timeline reports partial coverage instead of a false total, and the false "stranded deploy" alarm is closed.
+
+**A site-wide crawl (736 loads, 7 themes) found 25 defects; the P0s and most P1s are fixed:** a decorative sigil covered the mobile menu button on 134 pages, floating widgets covered content on 104+ loads (including a service's "Down" state), two links 404'd in production, /invite/ threw on every load, light-theme buttons sat at 2.8:1, and 181 tap targets were under 44px.
+
+## S355 seven agent-owned fixes to publishing, gates and observability (2026-09-14)
+
+**Promotions can no longer be cancelled by a no-op.** `pages-deploy.yml` cancels an in-flight run only for a dispatch confirming production or content, so publisher dispatches that take "Promotion held" queue instead of killing a real deploy.
+
+**Publishers re-derive after the push-time rebase.** refresh-live-data (84 graph sources), leaderboard-api and weekly-maintenance now push with `--resync`. `check-publisher-resync` (in build:check) fails any `[skip ci]` publisher that stages a graph source without it; 12 publishers, 9 staging graph sources, all compliant.
+
+**This repo's gates stop depending on other repos' sessions.** Founder presence `--check` validates the committed payload against a `sourceDigest` of its own generator, slug library and registry instead of today's studio-wide sessions; `--check-live` keeps the strict comparison.
+
+**A Desk edition refusal that was the gate's own bug.** `check-news-claim-parity` escaped `& < >` while the renderer also escaped `"`, so a quoted fact read as absent and the 2026-09-13 latenight edition was refused. Both share `scripts/lib/news-html.mjs`; pages unchanged (39/39).
+
+**More observable publishing.** The scheduled-staleness probe reports runs that concluded success while logging a held marker (advisory, checked only for workflows that can emit one). `check-desk-model-servability` asks each declared authoring model for one completion with no failover and is a doctor advisory; both models are servable today.
+
+**The mobile audit cannot silently measure production.** `.env.playwright.local*` sets BASE_URL to production for the credentialed specs; the audit now refuses that host unless `MOBILE_AUDIT_ALLOW_PRODUCTION=1`.
+
+**Deferred with reasons:** the /journal/ narrative mount, staging Worker observability, Desk source breadth, the S336 visual review, the Trusted Types hoist and /atlas/ (D-S355.5).
+
+## S354 analytics that was delivered all along, and a release proof no job rebuilt (2026-09-14)
+
+**Cloudflare Web Analytics works end to end; the seven-day zero was real traffic.** Enabled with auto-install since 2026-03-04. In a real Chromium visit to production, the page carries one nonce-bound beacon, `beacon.min.js` loads (200), no CSP violation fires, and the page-load report POSTs to same-origin `/cdn-cgi/rum` (204). Four headless test visits then appeared in GraphQL within minutes (bot=1, ChromeHeadless), so ingestion works; before them this site had no rows for seven days while other sites had up to 493. An earlier "zero for every site" reading was a parser bug in my probe, not the query. Two wrong diagnoses were coded and reverted before any build: "no beacon" (a probe without `Accept: text/html`) and "`connect-src` blocks it" (the beacon posts same-origin). `/privacy/` now discloses the measurement, which had been running without mention.
+
+**Release proof strand, found by modeling one generator.** `build-release-proof` reads `api/release-dependencies.json`, an edge the evidence graph lacked. Once modeled, the cascade gate named Weekly Maintenance, which committed the dependency receipt without rebuilding the proof. It now rebuilds and stages both. Coverage 73/92, baseline 19.
+
+**Smaller repairs:** `scan-secrets` no longer calls an empty file set clean; `capture-theme-matrix` refuses routes Git Bash rewrote into Windows paths; `build-og-cards` writes through a helper that retries transient Windows locks.
+
+**Observed, not a defect:** one homepage Supabase request failed CORS once; three fresh loads returned 200/206 with the correct header, consistent with a transient error response that carries no CORS headers.
+
+**Released:** production serves `a4a40a84a` (SCOPED dispatch `34824371781`, smoke 6/6), staging first. Two earlier dispatches did not land: one rejected for a flaky CI-only staging 503, one cancelled by a publisher's held no-op Pages dispatch. Both causes are recorded for wave 2.
+
+**Cross-repo:** five Ark messages (sampler follow-up, brief revenue-age bug, credential-owner status, registry field/case bugs, external-source resync pattern).
+
+## S353 three scheduled publishers that could not do their job, and one that said it had (2026-09-14)
+
+**Vault Narrative had been red since 2026-09-10 and committed nothing.** The workflow never ran `npm install`. Its `refresh-live-data` profile reaches `build-news-desk.mjs --rebuild`, which imports `sharp`, so the profile reported `build-news-desk.mjs:warn` and the job failed before its commit step. The job now installs first. `check-workflow-runtime-dependencies` (new, in `build:check`) follows `node scripts/…`, derived-build profiles and `npm run` into local imports per job, and fails when a declared package is needed without an install. Against the pre-fix workflow it names `sharp`; a try-guarded optional import (the CI beacon's Playwright path) is exempt.
+
+**Before that, the same workflow was green for 13 days while publishing no dispatch.** Every run from 2026-08-27 either timed out or rejected the model's answer as ungrounded, kept the 2026-08-26 dispatch, and exited 0. The validator and the prompt disagreed on what "concrete" meant. Both now read `groundingAnchors()`, and count claims are checked against the snapshot. Three real answers from a live rerun are self-test fixtures that pass on merit (15/15), and a fresh live run through the new code accepted two of three, rejecting one for a real error. A held publisher now shows a GitHub warning, and a final `--check-fresh` step fails the run past 48h. It currently fails at 446.8h, which is true.
+
+**Weekly Maintenance failed on an empty glob.** `git add member/*/index.html` matched nothing because the anonymous member read returns 0 rows, so git exited 128 before staging the Obelisk registration probe the job exists to refresh. It now stages the directory. `check-workflow-git-add-pathspecs` (new, in `build:check`) fails any unguarded glob matching no tracked file, and names this line against the pre-fix workflow.
+
+**The coverage ratchet was measuring a subset.** `check-evidence-graph-coverage` read only `build:check:steps`; 25 generator checks run inside `check-proof-surface`, and 20 of those are unmodeled. Coverage is now 72/92, baseline 20. This closes the S352 staged-but-unmodeled row by making the debt visible, not by modeling it.
+
+**Unchanged:** no page, style or Worker changed. The edge sampler still waits on studio-ops (the handoff was drained, not answered).
+
+**Found by the live run, fixed the same session: rebased publishers could not push.** Dispatched on the released commit, Vault Narrative wrote its first grounded dispatch since 2026-08-26 and then failed at commit. After a rebase, `resync-derived` forced every node with a source git does not track to rebuild, and `brand-assets`' source is `external:founder-brand-masters`, which no runner has. `build-brand-assets` refused, so the publisher refused to push. Desk edition and uptime publishers had hit the same error since S351. `external:` sources no longer make a node always-dirty (16 → 13 on the live graph); `founder-presence` is still forced.
+
+**Released:** production serves `ea6cd1c9f` (SCOPED dispatch `34807949053`, smoke 6/6), staging first. Weekly Maintenance succeeded live with 0 members.
+
+## S352 a publisher that staged the sitemap and never rebuilt it (2026-09-13)
+
+**New stories were reaching production missing from `sitemap.xml`.** `news-publish.yml` listed `sitemap.xml` in its `git add` but its cascade step never ran `generate-sitemap.mjs`. The midday edition of 2026-09-12 published `/news/2026-09-12/anthropic-says-it-blocked-potential-ai-bioweapon-misuse/` and the sitemap did not list it. `generate-sitemap --check` was red on a freshly pulled `origin/main`. The publisher now rebuilds and checks the sitemap in the same commit.
+
+**Why the cascade gate said "all closed".** `check-publish-cascade-coverage` reads its edges from `config/evidence-graph.json`, and the graph had no sitemap node, so there was nothing for it to check. The graph now models `sitemap <- news/` (81 nodes). With the graph fixed and no workflow edited yet, the gate named four publishers, and all four are now closed: `news-publish` and `rum-pull` never rebuilt the sitemap, while `refresh-live-data`, `rum-pull` and `vault-narrative` staged `news/` without staging it. The self-test fixture was widened the same way as S319/S328, and two new mutation cases show it still fails when it should (23/23).
+
+**The write-back check no longer reports regeneration as unfinished work.** It flagged `c29a1b0f`, a regeneration-only commit, because its hand-written generated-path list did not match `brand/assets.json`, `data/stats-surface.json`, `feed/forge-ledger.*`, `stats.json` or `.cache/*`. It now takes the generated set from the evidence graph, excluding HTML pages and `sharedOutput` nodes so a homepage edit still counts as work. If the graph is unreadable the set is empty, so the error goes toward reporting debt. Self-test 15/15, including the real `c29a1b0f` file list.
+
+**Unit-suite lists are now gated.** `scripts/check-unit-suite-parity.mjs` requires `test:unit` specs = specs run by `build:check` = git-tracked `tests/*.unit.spec.js`. It runs in `build:check:steps` right before `node --test`, and exits 3 when it cannot measure. Self-test 9/9. A live mutation (one spec removed from `test:unit`) fails and names the file.
+
+**Edge sampler: an agent path around the cron cap, sent and not yet shipped.** `studio-ops-cron` already fires every 30 minutes. An Ark `agent-handoff` to studio-ops proposes it call the website Worker through a service-binding RPC entrypoint, so no new trigger is needed. Nothing in this repo changed for it: an entrypoint with no caller does nothing yet. The sampler stays dark and `/status/` still reports the edge as UNMEASURED.
+
+## S351 the edge is now sampled from inside the edge (2026-09-12)
+
+**The uptime sampler is ENABLED.** S349 shipped `scheduled()` dark and S350 recorded it as founder-held. S351 re-probed the hold instead of carrying it and found it gone: the Cloudflare bindings API created `production-UPTIME_SAMPLES` (`adfe5ed60c90426ea1286321360138e3`) with no founder action. The binding is declared beside the other production KV namespaces, the cron is declared as `[env.production.triggers]`, and `UPTIME_SAMPLER_ENABLED` is `"1"`. A wrangler dry-run confirms binding + flag on production and their absence on staging.
+
+**This is a producer, not yet a measurement.** Nothing has been read back. `/status/` continues to report the edge as UNMEASURED, and must, until `drain-uptime-kv.mjs` reads a real sample. Arming a producer is not observation.
+
+**A near-miss caught before deploy.** The first placement of the new table headers sat between `[env.production.vars]` and the bare keys following it, which silently re-parents `HUB_SUBDOMAIN_ENABLED` and `HUB_SESSION_TTL_SEC` into `[triggers]` — turning the hub subdomain off as a side effect of enabling uptime sampling. Both keys are verified back in `env.production.vars`.
+
+**`build-brand-assets.mjs` could only ever destroy its own manifest.** `BRAND_ROOT` was the *sanitized* literal `<user-home>/Documents/...` with nothing expanding it, so every job skipped on every run — and the caller wrote the manifest anyway. The failure mode S350 hit under `--sweep-repair` (a correct 7-entry `brand/assets.json` replaced by `"assets": []`, exit 0) was not an edge case; it was the only behaviour. Now the placeholder expands to the real home directory at runtime (`BRAND_ASSETS_ROOT` overrides) so the generator finds the masters, and it REFUSES to write a manifest when any job was skipped, naming each missing source. Verified both ways: all 7 jobs build and reproduce every committed `.png` byte-identically, and a deliberately bad root exits 1 with the manifest byte-preserved.
+
+**Three unit suites were coverage that never ran.** `test:unit` declared five spec files; `build:check:steps` executed two; and `npm run test:unit` was invoked by nothing — not the runner, not any workflow. `tt-report-only`, `resync-derived` and `local-preview` (16 tests) were gated by no runner at all. They pass, so this armed an alarm rather than fixing a red; the gate now runs all five.
+
+**The stale-shell matcher can no longer go dead silently.** S350 root-fixed a regex here that had never matched anything. The predicate is now exported, the live path routes through it, and `--self-test` (8 cases, wired into `build:check`) asserts a known-stale fixture classifies as stale — the one thing that distinguishes a working cleaner from a dead pattern, since both print "no stale shell files found".
+
+**Publisher cascade debt, paid by hand.** A `[skip ci]` desk publisher had changed `index.html` and added news art without regenerating anything downstream. S351 ran the cascade (lqip-map, sitemap, news freshness, home desk module, oracle sanitizer + answers, candidate manifest) and re-captured the 215-cell mobile receipt against the settled tree. Recorded as structural debt in TASK_BOARD, not as a one-off.
+
+## S351 CORRECTION — the sampler is NOT armed; the cron could not be registered
+
+Written after the deploy, replacing the claim above it. The production Worker deployed
+and the `UPTIME_SAMPLES` binding is LIVE (verified against the deployed script, not the
+repo). The **cron trigger was refused**: Cloudflare error 10072 — Workers Free caps the
+account at 5 cron triggers, and all five belong to other projects (seamline `*/5`,
+studio-ops-cron `*/30`, veilos hourly, velaxis-proxy ×2).
+
+With no cron there is no invoker, so `scheduled()` can never run. `UPTIME_SAMPLER_ENABLED`
+is back to `"0"` and the cron is commented out — left declared it would fail EVERY future
+Worker deploy at the trigger step, because wrangler does not roll back the part that
+succeeded.
+
+**What is genuinely done:** the KV namespace exists, the binding is live in production,
+the drain resolves its namespace from the config, and the enabling step is now two lines.
+**What is not:** nothing has observed our edge. `/status/` still reports UNMEASURED and
+that remains correct.
+
+**Founder decision required** — one of: (a) free a cron slot by retiring one of the five,
+which is a live change to a different project and so not this repo's call; or (b) move the
+account to Workers Paid, raising the limit to 1,000. Option (b) is billing and is founder-
+reserved under CANON-019.
+
+## S350 hidden-tab polling, shell pruning, heading order (2026-09-11)
+
+**Background tabs stop spending requests.** `favicon-pulse.js` no longer polls founder presence while the tab is hidden, and `vault-pulse.js` neither rotates ticker rows nor refetches its pool off-screen. All three presence/ticker scripts refresh once when the reader returns, so what they see is current on sight rather than up to one interval stale.
+
+**Superseded hashed shells are pruned at build time.** `build-shell-assets.mjs` always had `cleanupOldFingerprintedFiles`, but its pattern ended in `\\${ext...}`: the backslash escaped the `$`, the extension was never interpolated, and the pattern matched no file. Every rotation left its old shell tracked and publicly servable. Root-fixed; eight stale shells (six style, one nav-sheet, one ambient-feature) are gone.
+
+**Heading order.** Community, Journal and Contact no longer jump from h1 to h3. The demoted headings keep their exact look via `font-family: inherit` (the critical shell CSS gives h2 Georgia).
+
+**Contact form inputs render at their designed height.** Found during the rendered-pixel pass, not from the board: `.input-field` carries `flex: 1` for horizontal email rows, and inside Contact's column-flex `.form-group` that zero flex-basis overrode `height: 48px`. The name, email and subject inputs measured 22px in every theme, with placeholder text crowding the borders on the studio's main inbound form. Scoped fix on the Contact page only (`flex: none`); it is the only page that nests `.input-field` in `.form-group`.
+
+**Recovered record.** `50f13941` (S349 follow-up: an unobservable uptime leg renders `?` and exits 0 instead of reading as an outage) landed without a write-back; it is recorded in this session.
+
+**Not changed:** the edge uptime sampler is still dark. Creating its KV namespace was blocked by the agent permission layer; see TASK_BOARD.
+
+## S349 uptime observability honesty + edge-vantage sampler (2026-09-10)
+
+**Shipped behaviour change on a public surface.** `/status/` no longer reports a Cloudflare bot challenge as an outage. Between 2026-07-13 and this session it published `edge-degraded` on 604 consecutive samples — every one with content healthy and zero routes down — because Cloudflare widened bot challenges to JSON and OPTIONS paths, expiring the premise the probe was rewritten on in S177 ("JSON/API paths are not bot-challenged"). Measured live: `/api/founder-presence.json` answers 200 from a residential IP and 403 in 127ms from CI.
+
+`observable` is now a question separate from `ok`. A challenged leg is neither an outage nor a pass: `overall` reports the new `edge-unobservable` state, such rows leave the rollup denominators (`fullStackObservedChecks`, `unobservableChecks` are published beside the percentage), the alert path no longer pages on a challenge, and the `/status/` tile reads "Not observable" with the reason rather than a false red or a laundered green. Pre-S349 rows are preserved exactly and published as `unresolvedLegacyChecks` — a challenge and a real edge outage are indistinguishable in them now that the shape is gone, so they are labelled rather than re-scored, and they age out of the retained window naturally.
+
+A silent consequence was fixed at the same time: `edgeHtmlBroken` guarded on `!liveness.ok`, which was permanently true while challenged, so the S179 apex-HTML failure shape that function exists to catch could not have fired once in the entire window.
+
+**The edge is now honestly unmeasured rather than falsely broken, which is not the same as fixed.** The Worker `scheduled()` sampler that can actually observe it — a Cloudflare cron is never challenged — ships this session but ships DARK: `UPTIME_SAMPLER_ENABLED = "0"`, no KV binding, cron trigger commented out. Five unit tests assert it performs no KV write and no subrequest while off, so the deploy is provably inert. Enabling it is its own release (four steps documented in `cloudflare/wrangler.toml`) with a flag-flip rollback. `scripts/drain-uptime-kv.mjs` is ready and folds samples into the unchanged uptime contract, append-only and never rewriting a row.
+
+**Service worker.** Navigations moved to their own `PAGE_CACHE`. They had shared `CACHE_NAME` with the install precache, and the LRU deletes `keys[0]` — the first entry ever written, i.e. `/` from `STATIC_ASSETS` — so past 60 entries every navigation evicted a precached shell asset in order, quietly dismantling the offline experience. `activate` also kept only an exact `CACHE_NAME` match, destroying the API cache on every activation; it now keeps the whole version-prefixed family.
+
+**Accessibility.** `.skip-link:focus{top:0}` lived only in the async-loaded stylesheet, so a keyboard user tabbing before the swap focused a link parked at `top:-100%` (WCAG 2.4.7). Fixed in the critical-shell generator and propagated: 108/108 pages carry it, 0 remain unpatched.
+
+**Secrets gateway.** `resolveCapability` now returns `lastProbeStatus`/`lastProbeAt`/`probeFailing`, and `check-secrets` renders a distinct FAILING state instead of printing READY for a credential whose own map entry records `auth-error`. It immediately surfaced a second unknown failure (`openai.api` unreachable). Honest ready count is 44/72, not 46/72. Exit codes are unchanged so a failing probe cannot be folded into a human-blocked label.
+
+Verification: 479/479 build steps exit 0 from a frozen tree, 119/119 unit tests, 62/62 probe self-tests, 12/12 drain self-tests, 215/215 mobile cells against a local preview, 14/14 theme captures re-captured and directly inspected, Doctor `blockingFailing: 0`. Identity/provider acceptance, newsletter arming, cadence, public-member-data and warm-origin decisions remain untouched holds.
+
+## S347 recovered full arc — 2026-09-09
+
+The cut-off S347 implementation is reconstructed, integrity-clean, and verified as one synchronized candidate. All 23 audited items are shipped in source and the complete 477-step build gate passed. Fresh CANON-053 evidence covers 84/84 normal captures across six routes, seven themes, and desktop/mobile; 84 supplemental interactive-state captures cover Search, navigation, changed covers, reader signals, and honest-empty/populated Reader-to-Director states. No blocking visual defect remained.
+
+Recovery also found and fixed a local evidence defect: `_headers` preloaded the fingerprinted shell stylesheet while the preview served it `no-store`, causing a duplicate transfer. Fingerprinted shell CSS/JavaScript now receives immutable preview caching while HTML and unhashed assets remain `no-store`; its child-server unit test passes. Final mobile lab reports bind all six routes and preserve performance misses as exceptions rather than claiming field Core Web Vitals conformance.
+
+The local candidate is green; production currency remains the one blocking Doctor finding until this commit is pushed and the canonical staging-first release path completes. Identity/provider acceptance, credential-owner reconciliation, newsletter arming, and the human signup walkthrough remain separate holds and were not cleared.
+## S347 recovered full arc released (2026-09-09)
+
+The recovered 23-item S347 candidate is committed on `main` as `172073cb7` (`recover S347 closeout`). The rebased final tree passed one uninterrupted 477/477 canonical build gate, 215/215 mobile runtime cells with zero P0/P1 findings, and 84/84 manually reviewed route/theme/viewport captures plus 84 supplemental interaction-state captures.
+
+CANON-007 staging-first release completed with a full 6,490-file Hetzner staging deployment, rollback snapshot `20260909222156`, and attested receipt `bb5016b2a85891bf778e4f87` at lineage depth 59. The canonical ten-step release ceremony passed. Production content promotion completed in GitHub Actions run `34412238486`; live probes report content-current with matched shell parity. Studio Doctor now reports `blockingFailing: 0` (13 pass, 1 warning, 2 advisory failures). Identity/provider acceptance, newsletter arming, and Desk cadence remain separate holds and were not broadened by this scoped release.
+
+## S348 full arc — 2026-09-10
+
+S348 shipped eleven audited improvements after the recovered S347 boundary. Changelog reactions now hydrate only near view with a bounded idle fallback; the local performance harness records warmed multi-run distributions and a host-noise envelope; and mobile evidence writes atomically across navigation retries. The measured Changelog lab result was volatile and therefore abstained (LCP p75 1.636s; CLS median 0.0021); no field Core Web Vitals claim is made.
+
+The evidence system is now complete for every checked generator: 67/67 are source-reviewed and modeled across 80 acyclic nodes, all declared checks and outputs are reachable, and all 29 scheduled publisher cascades close. Forge and feedback provenance use source-derived clocks and exact-byte checks. Fixed-size Git-history summaries must carry a sentinel/truncation verdict, and `CURRENT_STATE.md` now stays hot while its exact 563,454-byte preimage remains in `context/archive/CURRENT_STATE_through_S347.md`.
+
+The Desk's eight-day source probation retained the two feeds that produced published work and removed the two that did not. All 30 stories now expose deterministic `critique.json` argument maps plus a hash manifest, joining stable fact receipts to stances, predictions, and visual evidence while labeling unsupported claims `unlinked`.
+
+The synchronized local candidate passed the complete 479/479 build gate from step one, 215/215 mobile runtime cells with zero P0/P1 findings, 28/28 manually reviewed final touched-state captures, and Studio Doctor with `blockingFailing: 0`. Staging, production promotion, and post-push CI remain release observations; identity, privacy, newsletter arming, immutable-origin, and cadence decisions remain separate gates.
+
+### S348 release addendum — 2026-09-10
+
+The release gap found during production verification is closed. The content lane now carries the dynamically imported Vault Pulse module as immutable `assets/vault-pulse.shell-8204990170.js`; its fingerprinted parent loader references that exact child. The homepage ticker's previously missing `/api/recent-ships.json` fallback is now a deterministic projection of the public Changelog narrative, eliminating the staging 404 pair without broadening the content-only promotion scope.
+
+The final rebased candidate passed the 479/479 repository gate, a retry-free 215/215 mobile matrix, 14/14 manually inspected Changelog theme captures, and the canonical release ceremony 10/10. Hetzner staging receipt `5d2df635546d213dbd236c80` is verified at lineage depth 71. Production content promotion run `34508529884` serves baseline `7ea9b3c579e5` plus content head `761ebb3ddd536755380f16120034838feb33f79a`; live smoke is 6/6 and the production seven-theme UI sweep passes Chromium, Firefox, and WebKit. The push-time sitemap drift exposed after a publisher rebase was regenerated to 147 indexable routes and landed by the canonical publisher.
+
+
+## S369 requested closeout reconciliation — 2026-10-06T21:06:30.871Z
+
+S369 Spark and premium AI News Desk are deployed: Pages 37515965605 (61efa22a56fad17326fcf0fd733b11669e4735e9), Worker 97e7e2b3-b93e-41eb-814f-71495d22a778. Live Desk 12/12, Spark 10/10 and returning Membership 14/14 passed; full build 530/530. Detailed acceptance: docs/SPARK_RELEASE_2026-10-06.md. Identity holds remain distinct from this scoped release. Context, creative direction and memory now include the expanded Desk and hero directives; prior candidate observations remain historical.
+
+
+### Desk signup recovery
+
+Desk signup recovery (2026-10-06): production trace confirmed shared KV daily write exhaustion caused edge_handler_unavailable before Turnstile or the email provider. Public-form counters now use their isolated SQLite Durable Object binding, retaining atomic three attempts per IP/form per fixed hour, CSRF and Turnstile. Current production Worker 13980895-7780-4963-9e42-c7b7f5f3fa3a; staging dfc45f3e-949e-4277-a5c4-72a4de5f6a8d. Focused Worker/counter tests 78/78 passed; independent review passed; staging and production empty no-send requests return expected 403 turnstile_token_missing rather than 503. Provider no-send checks 6/6 passed. No confirmation email was sent by the agent; founder will test through the normal public form. Delivery remains unverified until that retry.
+
+
+### S369 newsletter follow-through checkpoint
+
+Founder reports the regular Desk signup worked correctly. New requested follow-through removes newsletter Turnstile friction for humans and AI agents, preserves email double opt-in, and adds recipient24h/globalUTC100 send limits inside the email function so direct callers cannot bypass them. Premium confirmation HTML/plain-text emails include signed cancel/unsubscribe links and one-click headers; daily digest masthead is upgraded. The welcome page has a colorful moving sphere, newsroom/profile/feed links, seven themes, reduced motion and explicit unsubscribe/error states. Scoped canonical staging verified145 HTML/art/discovery files; newsletter backend deployed with no-send6/6 and real database rollback assertions passing. Production Worker/Pages publication of this follow-through is pending final checks.
+
+
+### S369 newsletter production edge acceptance
+
+Newsletter production Worker d12535f4-a4a9-4baf-ab41-03c4a502102a deployed after11/11 release-ceremony checks. An actual curl-User-Agent POST with valid signed CSRF returned400 invalid_email without a challenge or email send. Independent edge review passed84/84; newsletter suites23/23. Current homepage mobile regression passed5/5 widths; unchanged210 prior cells were retained only after exact source/capture hash checks. Frontend publication remains pending until the confirmed Pages content deployment lands. New-template mailbox delivery remains unverified.
+
+
+### S369 final newsletter publication
+
+Newsletter follow-through is published: source d607927ec56d1a3bda4b57856b9ae917c70388ea, confirmed Pages run37548337150 (successful actual deploy), production Worker d12535f4-a4a9-4baf-ab41-03c4a502102a after11/11 ceremony checks. The uninterrupted full suite passed530/530, with zero secret findings. Live desktop1366/mobile390 welcome screens were captured and inspected; the served content head matches, all newsletter challenge slots are absent and the human/agent contract is available. Backend recipient/global limits, premium confirmation/plain-text emails and signed cancellation are deployed; the digest design is updated. No extra real emails were sent. Founder confirmed the prior regular signup; delivery/rendering of the upgraded email in a real mailbox remains unverified. All four temporarily paused publishers are active again. Existing identity holds remain separate.
+
+### 2026-10-07 requested follow-through published
+
+Homepage title uses Super Intelligence. Animated Spark opens an optional, nonmodal corner popup with left/right, motion and tuck preferences; unsolicited guide/path popups are removed. All 112 articles retain an expanded Story Overview before artwork, with full illustration reaction names. Desktop retains early illustration discovery; mobile lets the overview paint first. The provider-rejected optional Dispatch tag is removed. The regular daily digest succeeded and provider delivery is verified; schedule remains 23:30 UTC, once per publication day when new live editions exist. No off-schedule email was sent.
+
+Production content release 6f6fe8388339674d331422c5033c8a95c8f9e55a, Pages run 37714546973, is published and its served contentLaneHead matches. Exact-commit E2E/compliance run 37713267729 passed the full 530-step suite and 215 mobile checks; Lighthouse run 37713273657 passed 9 route tiers (article performance 92/accessibility 100); accessibility run 37713280248 passed after restarting a stalled browser download. Focused browser checks passed 14/14 locally, on canonical staging and on production. Seven themes were inspected at desktop/mobile sizes with 140 primary and 84 supplemental current captures, plus 56 retained before captures. Sixteen production screenshots were inspected in dark/light at 1366/390px.
+
+
+### 2026-10-08 — S370 final closeout reconciliation
+
+All five requested follow-through outcomes are published: Super Intelligence title; animated corner Spark with optional popup and local preferences; expanded Story Overview before illustrations; complete reaction labels; diagnosed and repaired daily digest delivery. Production content 6f6fe8388339674d331422c5033c8a95c8f9e55a, Pages run 37714546973. Exact-source E2E/compliance 37713267729, Lighthouse 37713273657 and accessibility 37713280248 passed. Full suite 530/530, mobile 215/215, focused local/staging/production browser checks 14/14. Seven themes received desktop/mobile pixel review; 16 production images were inspected in dark/light. October 8 live readback confirmed the deployed content head, title, overview-before-art and complete reaction labels.
+
+The obsolete local preview terminal has been stopped and re-enumerated with no matching preview process. Final closeout publication is being verified separately from the existing UI release. No new feature, identity, pricing or lifecycle changes are part of this reconciliation.
+
+
+### S370 final validation coherence repair
+
+Closeout validation found an omitted generated answer-feed rebuild. The full derived-build profile now refreshes Oracle answers before candidate sealing; citation remains last. Independent review passed; ordering37/37 and invocation10/10 self-tests pass. Rebuilt answer and visual-retention outputs; proof-surface92/92 blocking checks pass. This is a necessary closeout coherence repair, with no browser, identity or pricing change.
+
+### S370 final production acceptance — 2026-10-08
+
+Production content ee8db4f7fcb72857f3ba7401efd2bb19cca7658c; confirmed Pages run 37807641227. Exact-source E2E/compliance 37805030392, Lighthouse 37805029771 attempt 2 and accessibility 37805029706 passed. Hosted full suite 530/530 and mobile 215/215. Canonical staging verified 514 overlays and three safe removals; focused staging checks 14/14. Production browser checks passed in four dark/light desktop/mobile contexts: animated nonmodal Spark, correct title, 483-character overview before art and complete unclipped reactions. Sixteen production images captured; four representative images inspected. Existing seven-theme implementation receipts retain their original hashes and review dates.
+
+All five requested outcomes are live. Canonical autopilot and final record verification completed. The closing commit publishes the reconciled records to main. Existing identity/Worker baseline stays held; this was the authorized static-content promotion.
+
+
+## S371 closing follow-through verified — 2026-10-09
+
+Closing candidate `9b105d275e2f32cabe6ca2597205b6aebbd963cb` (tag `release-S371-9b105d275`) is verified live through Pages run `37986968939`. Required exact-candidate checks passed: E2E/compliance 37985123589, accessibility 37985123779, and Lighthouse 37985123593 including staging. Staging snapshot 20261009201032 verified 562 overlays and three safe removals. Fourteen staging artifacts matched the candidate.
+
+Production metadata and fourteen served artifacts match the candidate after documented edge transforms. The normal cached article CSS and four normal public-feed URLs also match. Reviewed HTML and browser assets are preserved, with only the shell-manifest timestamp changed. All three bound sources and 168 screenshot hashes were independently verified unchanged before metadata-only rebinding; original capture and review dates remain. The earlier closing E2E failure 37983977935 is retained.
+
+Canonical closeout completed with two full 531-step passes. Corrected native proof closure passed 92/92 blocking checks across 109 commands. Earlier 215 mobile probes and 168 reviewed article captures retain their actual observation dates. Live Spark passed 11/11 after the closing promotion. Initial browser Find positioning remains a documented preexisting limitation; identity holds remain unchanged.
+
+The owner's original dirty checkout, local backups and private evidence are preserved. Retained temporary preview, capture and verification handles completed, and port 4175 no longer listens. Field performance and conversion remain unmeasured.
+
+
+### S378 record recovery — 2026-10-14
+
+Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+
+
+S382 release prerequisite: regenerate public intelligence and its dependent artifacts after ordered session writeback. Complete npm build body and a successful26-step postbuild lifecycle refreshed projections. Only semantic HTML delta is the generated launch counter225→226;28 stabilized before/after captures across seven themes and1366/390widths were directly inspected. Persona-page differences are whitespace-only. No runtime JavaScript or CSS change. The first postbuild attempt hit a transient Windows UNKNOWN file-open error; shell retry and complete postbuild rerun passed.
+
+
+S385 delivery follow-through: live mutable directory URL is cached604800seconds. Existing shell pipeline now emits a hashed directory asset, rewrites the actual community script and excludes the mutable alias from service-worker caching. All15 focused cases re-pass across three engines; three negative mutations detect blocked hashed execution, wrong ranks and dropped projects. Existing13 shell unit cases pass, shell references are synchronized, and all14 after captures were recaptured and inspected across seven themes. Before captures remain original. Candidate binding is now present; first full gate failed honestly at160/537 on its absence, not a source runtime failure. Full mobile revalidation and complete local/staging/hosted/production acceptance remain pending.
+
+
+S385 final implementation evidence:15/15 focused cases across three engines; three mutations detected;13 shell tests;112 image-inspected before/after captures across7themes and1366/390px, covering default, neutral search, trimmed search and empty results. Theme primary text fixes the measured light rank/avatar failures; all56 sampled card foreground/background combinations pass their scoped thresholds. Axe gradient analysis remains incomplete. Hashed delivery prevents the old seven-day mutable cache from retaining the bug. Complete current-source local/staging/hosted/production acceptance remains pending.
+
+
+S389 field-proof repair: RUM grading now precedes field-win and public consumers; both build profiles and affected publisher staging enforce that dependency. Build-order41/41, cascade35/35 and independent review pass. Measured verdict logic unchanged; full validation and release remain pending.
+
+
+### S393 current validation addendum
+
+S393 theme release dependency accepted locally: Final build/postbuild26 pass; generated-page theme tests9/9 including42 route/theme combinations, receipt rejection1/1, independent source review round2 pass. All84 final desktop/mobile captures inspected in seven theme contact sheets; actual root/body/stored theme matches; CANON053 hash-bound receipt passes. Pre-existing dismissible mobile Spark overlap is disclosed. Whole-project suite, current staging, sanitized main push, required exact-candidate CI and full production readback remain pending.
+
+
+### S393 current runtime evidence
+
+Fresh215/215 local mobile cells and84 inspected final theme captures pass. Both receipts bind the current candidate; all109 proof-surface checks pass (92 blocking, zero advisory findings). Partial remainder274–545 passes; it is diagnostic coverage, not a complete whole-project acceptance receipt. Canonical closeout filename/cache and obsolete capture-tool orphan exemption are corrected. Full545-step acceptance, current staging, sanitized main push, required exact-candidate hosted checks and normal full production readback remain pending.

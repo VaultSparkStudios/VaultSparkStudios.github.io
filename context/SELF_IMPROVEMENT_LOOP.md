@@ -10,9 +10,9 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last5 available totals):939 →939 →939 →939 →939
 Avgs (available rolling totals) —3:939.0 |5:939.0 |10:unmeasured |25:unmeasured |all:unmeasured
-Velocity trend:↓ |Protocol velocity:→ |Debt:→
-Last session:2026-10-24 | Session 401 | Total:939/1000 | Velocity:1
-  └ One archive-integrity outcome released; docs/RELEASE_S401.json.
+Velocity trend:→ |Protocol velocity:→ |Debt:→
+Last session:2026-10-24 | Session 402 | Total:939/1000 | Velocity:1
+  └ Route-status outcome released; closing publication pending. docs/RELEASE_S402.json.
 <!-- rolling-status-end -->
 
 > Older entries through S401 live verbatim in `context/archive/SIL_S1-S401.md` (exact committed pre-rotation snapshot). Recent complete entries follow.
@@ -1934,3 +1934,54 @@ Brainstorm committed to TASK_BOARD: consider per-member source-byte verification
 ### Session 401 verified closeout addendum
 
 Canonical autopilot exited0 after two complete547/547 runs at source fingerprintd8eaeeb81e62e04b4b62d20e. Five existing platform skips remain visible; selected archive fixtures executed10/10. SIL939 and velocity1 unchanged. Final publication must be verified remotely before native completion.
+
+
+<!-- S402-closeout-writeback -->
+## Session 402 — 2026-10-24 — current route status accuracy
+
+Total:939/1000. Velocity:1.
+
+| Category | Score |
+|---|---:|
+| Dev Health | 95 |
+| Creative Alignment | 94 |
+| Momentum | 92 |
+| Engagement | 96 |
+| Process Quality | 88 |
+| Cross-Repo Coherence | 94 |
+| Security Posture | 97 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 97 |
+
+Representation correction: the explicit total and table make the existing S402 values readable by the canonical ledger parser. No score or historical entry changed.
+
+Recovered and unobserved route states now have null current onset bounds and zero degradation duration. Coarse evidence cannot backdate a recurrence across recovery. RUM POST samples remain labelled corroboration and do not establish the OPTIONS route contract. Historical incidents and recovery records are preserved. Focused 55/55; full implementation source 547/547; hosted 3/3; staging ceremony 11/11; normal full production 1f5e24f9029bd0c9b5e4973cf4148cc1474455ad; complete canonical served-text readback 1150 paths (1140 identical, 10 verified redirects, zero differences/unread). Evidence: docs/RELEASE_S402.json.
+
+Decision archive is raw byte-exact to 99852b7c6d:context/DECISIONS.md (257073 bytes; SHA-256 13f61e652175a1f41f1eb1044527f62fb238d2d8b3cb1ffd1bf01a0cfa968271). The historical working-tree preimage was 257080 bytes with seven CRLF differences; that preimage is text-equivalent after newline normalization and is not claimed as raw-equal to the archive. All complete decision sections remain preserved.
+
+SIL archive context/archive/SIL_S1-S401.md is raw byte-exact to the original committed ledger (306672 bytes; SHA-256 0ca6d0f65fc88c706ba3e4fcc5132dbfc94b29e94e3abcb3bf6e2b21407ff33c). The complete Rolling Status and recent complete sections remain in the hot file; the SIL cap is 300 KiB. Evidence: docs/S402_sil-rotation.json.
+
+Waves1–3 complete. Wave4: canonical writeback prepared; final independent closeout review, intelligence, autopilot, Ark delivery, process cleanup and remote publication remain explicit acceptance work. No native-completion claim.
+
+Limitations:
+- Strict premises preceded behavior edits; planning-artifact timing classifier remains nonpassing.
+- Existing identity/provider, field-vitals and account-capacity holds remain separate.
+- No measured field-performance, conversion or availability gain is claimed.
+- Served parity measures complete tracked served text at the canonical origin, not all binary assets or raw edge-transformed apex bytes.
+- S402 original failed source attempts and prior failed staging observations remain retained.
+- Lighthouse attempt1 failed the article0.90 floor at0.88; unchanged-candidate attempt2 passed at0.92. Both actual attempts are retained; no performance improvement or threshold change is claimed.
+- Staging proof source remains2e1e075b; final tag1f5e24f902 has unchanged deployed runtime code, all68 critical leaves match staging with existing nonce normalisation for6HTML responses, and one disclosed validation-only house-style exception.
+- Raw apex byte parity is outside the edge-transformed HTML model; canonical-origin served-text parity has its stated scope.
+- Strict premises preceded behavior edits; the planning-artifact timing classifier remains nonpassing.
+- Final closeout review, intelligence refresh, autopilot checks and normal remote publication must be verified separately before native goal completion.
+
+CDR reviewed — no new creative direction. SIL939/1000 unchanged; velocity1.
+
+devHealth:95 · creativeAlignment:94 · momentum:92 · engagement:96 · processQuality:88 · crossRepoCoherence:94 · securityPosture:97 · ecosystemIntegration:91 · capitalEfficiency:95 · automationCoverage:97
+
+Brainstorm committed to TASK_BOARD as two future unselected rows: ledger session-heading support, and method-specific corroboration coverage if signals expand.
+
+### Session 402 addendum — release evidence in this same closeout
+
+Commit ddafbaab96 recorded the verified full production release before the canonical S402 closeout writeback. Merge346b273f2c preserves13 incoming automated commits. These are part of this same native goal, not another arc or another SIL score. The immutable accepted production candidate remains1f5e24f902; later merged art and observation updates are not claimed as part of that deployed tree. Final closing verification and publication are tracked in docs/RELEASE_S402.json,waves[3]. Score939/1000 and velocity1 remain unchanged.

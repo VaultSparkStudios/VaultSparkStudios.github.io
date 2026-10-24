@@ -15,7 +15,8 @@
     "mode": "supported-release",
     "health": "yellow",
     "stageSource": "registry",
-    "statusSource": "project-status"
+    "statusSource": "project-status",
+    "releaseTarget": null
   },
   "axes": {
     "features-depth": 1,
@@ -29,6 +30,278 @@
     "sil-debt": 1
   },
   "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "more-member-features",
+          "premise": "more member features",
+          "evidence": "SOUL requires complete membership; current identity holds need provider proof, not another membership feature."
+        },
+        {
+          "slug": "more-project-content",
+          "premise": "more project content",
+          "evidence": "Current 342-page reference sweep and 344-page integrity check pass; no missing project route reproduced."
+        }
+      ],
+      "completed": []
+    },
+    "ui-ux-feedback": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "persona-redesign",
+          "premise": "persona redesign",
+          "evidence": "S400 fixes remain in assets/desk.css; local references all resolve. No new visual defect reproduced."
+        },
+        {
+          "slug": "new-navigation",
+          "premise": "new navigation",
+          "evidence": "Existing navigation and local route checks pass; no broken navigation journey reproduced."
+        }
+      ],
+      "completed": []
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "new-streaks",
+          "premise": "new streaks",
+          "evidence": "Nine-tier economy is load-bearing under SOUL; no retention evidence supports another mechanic."
+        },
+        {
+          "slug": "rank-rebalance",
+          "premise": "rank rebalance",
+          "evidence": "No rank-economy failure reproduced; tier logic changes require separate direction."
+        }
+      ],
+      "completed": []
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "new-provider",
+          "premise": "new provider",
+          "evidence": "Current doctor servability 2/2 passes; no paid provider addition justified."
+        },
+        {
+          "slug": "oracle-rewrite",
+          "premise": "oracle rewrite",
+          "evidence": "Existing agents.json and Oracle surfaces exist; no reproduced grounding failure."
+        }
+      ],
+      "completed": []
+    },
+    "security": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "archive-rewrite",
+          "premise": "archive rewrite",
+          "evidence": "S401 exact inventory and CRC admission exist in scripts/lib/staging-archive.mjs; no new archive defect reproduced."
+        },
+        {
+          "slug": "identity-policy-change",
+          "premise": "identity policy change",
+          "evidence": "CANON-045 gap remains real, separately recorded and approval-sensitive; current status bug needs no trust-policy change."
+        }
+      ],
+      "completed": []
+    },
+    "speed-organization-efficiency": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "source-byte-parser",
+          "premise": "source byte parser",
+          "evidence": "Current archive inventory explicitly does not claim source-byte equality; no mutation failure reproduced."
+        },
+        {
+          "slug": "new-parity-runner",
+          "premise": "new parity runner",
+          "evidence": "Existing staging and served-parity runners cover the selected release."
+        }
+      ],
+      "completed": []
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "paid-audit-inference",
+          "premise": "paid audit inference",
+          "evidence": "No paid inference needed for deterministic reproduced status bug."
+        },
+        {
+          "slug": "new-cache-layer",
+          "premise": "new cache layer",
+          "evidence": "No measured token or build bottleneck supports another cache."
+        }
+      ],
+      "completed": []
+    },
+    "observability-honesty": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "invent-fresh-availability",
+          "premise": "invent fresh availability",
+          "evidence": "Semantic history intentionally retains last change time; do not relabel old observations as live."
+        }
+      ],
+      "completed": [
+        "recovered-route-duration"
+      ]
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "timing-classifier-rewrite",
+          "premise": "timing classifier rewrite",
+          "evidence": "Shared planning classifier ownership is Studio Ops; not needed for selected public status repair."
+        },
+        {
+          "slug": "broader-maintenance",
+          "premise": "broader maintenance",
+          "evidence": "Current doctor 15/17 with zero blocking failures; warnings do not authorize unrelated work."
+        }
+      ],
+      "completed": []
+    }
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "recovered-route-duration",
+      "axis": "observability-honesty",
+      "title": "Clear current degradation after observed route recovery",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 2,
+      "priority": 16,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "why": "Current public feed is matched with zero open incidents but still says degradedForDays 2.5 because coarse whole-edge evidence survives route recovery.",
+      "recipe": "Scope current onset evidence to open route incidents. Preserve original coarse corroboration and closed incident history without assigning them to a recovered or unobserved route state. Add recovery, genesis, unobserved and recurrence regressions; rebuild public projections.",
+      "acceptance": "Recovered and unobserved feeds have null current onset bounds and zero duration even with coarse/RUM evidence. Open incident evidence and historical incident durations remain intact; recurrence is not backdated across a verified recovery. Public status projects corrected fields; full suite, staging and exact production acceptance pass.",
+      "userOutcome": "Readers checking studio availability see current route health without a stale ongoing outage claim.",
+      "readinessArea": "supported-release status accuracy",
+      "stageRationale": "Correct a reproduced public trust contradiction without changing identity or availability promises.",
+      "premises": [
+        {
+          "claim": "Current matched feed retains a nonzero degradation duration",
+          "adapter": "file-content",
+          "target": "api/worker-route-history.json",
+          "pattern": "\"degradedForDays\": 2.5",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Generator unconditionally merges coarse onset into current bounds",
+          "adapter": "file-content",
+          "target": "scripts/build-worker-route-history.mjs",
+          "pattern": "const bounds = [routeOnset, coarseOnsetAt].filter(Boolean).sort();",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Clear duration for recovered state only."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Separate active episode evidence from historical corroboration, preserve closed incidents and verify public projections plus recurrence."
+        },
+        "L3": {
+          "effortHours": 8,
+          "recipe": "Introduce full cross-signal episode correlation; unselected without source-level correlation evidence."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-24T18:00:34.063Z",
+          "status": "implemented",
+          "note": "55/55 focused self-tests; public-status17 assertions; final independent round2 approval after method-scope correction. Production-before confirms actual2.5d contradiction on apex and canonical origin. Full build/release pending."
+        },
+        {
+          "at": "2026-10-24T21:25:41.061Z",
+          "status": "shipped",
+          "note": "S402 acceptance verified:55/55 focused,547/547 full source,215/215 mobile,11/11 staging ceremony,all3 exact-SHA hosted workflows. Normal full Pages40132867769 actually built/deployed candidate1f5e24f902; held step skipped. Provider+both stamps exact;4/4 selected feeds raw-exact;complete native canonical served-text audit1150/1150 (1140 exact,10 verified redirects,0differ/0unread). Evidence docs/RELEASE_S402.json. Canonical closeout/main publication remains pending."
+        }
+      ]
+    }
+  ],
+  "research": {
+    "survey": "Fresh S402 startup, sampled source, independent audit; current route history matched/open0 but 2.5d degradation; local references342/31561 pass, site integrity344/79 pass, claims exact, doctor15/17 zero blocking.",
+    "reuse": "Internal tools registry reviewed; reuse deriveHistory, deriveOnsetEvidence, public-status projection and existing deterministic self-tests. No dependency.",
+    "novelCandidates": [
+      "Episode-scoped cross-signal duration",
+      "Recovered-state contradiction tripwire",
+      "Historical corroboration versus current onset separation"
+    ],
+    "market": "Market changes unselected; no competitor claims. MARKET.json absent; no broad market study authorized."
+  },
+  "totals": {
+    "count": 1,
+    "priority": 16,
+    "top3": [
+      "recovered-route-duration"
+    ]
+  },
+  "skipped": [],
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-24T17:53:38.139Z",
+    "head": "d251316ec14c95a74460145161f0d552b5901b0a",
+    "sidecar": "docs/AUDIT_2026-10-24-S402.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "113e0e4e3d1dcbad6eb3e01e228bf0726df8ad04129016bc179186a5e4b35c4b",
+    "implementationDirty": [
+      ".ops-cache/handoff-digest.json",
+      "docs/S402_audit-brief.json",
+      "docs/S402_plan-brief.json"
+    ]
+  },
+  "timingNote": "Strict premises verified before behavior edits; timing classifier remains nonpassing for3 startup/planning artifact paths. Pending candidate admission passed.",
+  "lifecycleReview": {
+    "at": "2026-10-24T21:25:41.060Z",
+    "previous": {
+      "stage": "S1",
+      "audience": "public-live",
+      "mode": "supported-release",
+      "health": "yellow",
+      "stageSource": "registry",
+      "statusSource": "project-status"
+    },
+    "checked": {
+      "stage": "S1",
+      "recordedStage": "S1",
+      "display": "SPARKED · RELEASED",
+      "audience": "public-live",
+      "health": "yellow",
+      "releaseTarget": null,
+      "mode": "supported-release",
+      "readiness": false,
+      "areas": [],
+      "stageConflict": null,
+      "statusSource": "project-status",
+      "stageSource": "registry"
+    },
+    "note": "Same S1 supported public-live release, yellow health. Normalize the omitted releaseTarget to the live explicit null before the native write contract; no lifecycle or scope change."
+  },
+  "admissionAxisCoverage": {
     "features-depth": {
       "surviving": [],
       "rejectedOnVerify": [
@@ -161,103 +434,5 @@
         }
       ]
     }
-  },
-  "items": [
-    {
-      "id": 1,
-      "slug": "recovered-route-duration",
-      "axis": "observability-honesty",
-      "title": "Clear current degradation after observed route recovery",
-      "tier": "⚡",
-      "impact": 8,
-      "innovation": 4,
-      "effortHours": 2,
-      "priority": 16,
-      "status": "pending",
-      "selectedDepth": "L2",
-      "why": "Current public feed is matched with zero open incidents but still says degradedForDays 2.5 because coarse whole-edge evidence survives route recovery.",
-      "recipe": "Scope current onset evidence to open route incidents. Preserve original coarse corroboration and closed incident history without assigning them to a recovered or unobserved route state. Add recovery, genesis, unobserved and recurrence regressions; rebuild public projections.",
-      "acceptance": "Recovered and unobserved feeds have null current onset bounds and zero duration even with coarse/RUM evidence. Open incident evidence and historical incident durations remain intact; recurrence is not backdated across a verified recovery. Public status projects corrected fields; full suite, staging and exact production acceptance pass.",
-      "userOutcome": "Readers checking studio availability see current route health without a stale ongoing outage claim.",
-      "readinessArea": "supported-release status accuracy",
-      "stageRationale": "Correct a reproduced public trust contradiction without changing identity or availability promises.",
-      "premises": [
-        {
-          "claim": "Current matched feed retains a nonzero degradation duration",
-          "adapter": "file-content",
-          "target": "api/worker-route-history.json",
-          "pattern": "\"degradedForDays\": 2.5",
-          "operator": "eq",
-          "expected": true
-        },
-        {
-          "claim": "Generator unconditionally merges coarse onset into current bounds",
-          "adapter": "file-content",
-          "target": "scripts/build-worker-route-history.mjs",
-          "pattern": "const bounds = [routeOnset, coarseOnsetAt].filter(Boolean).sort();",
-          "operator": "eq",
-          "expected": true
-        }
-      ],
-      "ladder": {
-        "L1": {
-          "effortHours": 0.5,
-          "recipe": "Clear duration for recovered state only."
-        },
-        "L2": {
-          "effortHours": 2,
-          "recipe": "Separate active episode evidence from historical corroboration, preserve closed incidents and verify public projections plus recurrence."
-        },
-        "L3": {
-          "effortHours": 8,
-          "recipe": "Introduce full cross-signal episode correlation; unselected without source-level correlation evidence."
-        }
-      },
-      "executionLog": [
-        {
-          "at": "2026-10-24T18:00:34.063Z",
-          "status": "implemented",
-          "note": "55/55 focused self-tests; public-status17 assertions; final independent round2 approval after method-scope correction. Production-before confirms actual2.5d contradiction on apex and canonical origin. Full build/release pending."
-        }
-      ]
-    }
-  ],
-  "research": {
-    "survey": "Fresh S402 startup, sampled source, independent audit; current route history matched/open0 but 2.5d degradation; local references342/31561 pass, site integrity344/79 pass, claims exact, doctor15/17 zero blocking.",
-    "reuse": "Internal tools registry reviewed; reuse deriveHistory, deriveOnsetEvidence, public-status projection and existing deterministic self-tests. No dependency.",
-    "novelCandidates": [
-      "Episode-scoped cross-signal duration",
-      "Recovered-state contradiction tripwire",
-      "Historical corroboration versus current onset separation"
-    ],
-    "market": "Market changes unselected; no competitor claims. MARKET.json absent; no broad market study authorized."
-  },
-  "totals": {
-    "count": 1,
-    "priority": 16,
-    "top3": [
-      "recovered-route-duration"
-    ]
-  },
-  "skipped": [],
-  "premiseGate": {
-    "schema": "premise-gate/v1",
-    "at": "2026-10-24T17:53:38.139Z",
-    "head": "d251316ec14c95a74460145161f0d552b5901b0a",
-    "sidecar": "docs/AUDIT_2026-10-24-S402.json",
-    "selectionMode": "explicit",
-    "recordPathPolicy": "project",
-    "strict": true,
-    "exit": 0,
-    "verified": 2,
-    "contradicted": 0,
-    "unverified": 0,
-    "premiseDigest": "113e0e4e3d1dcbad6eb3e01e228bf0726df8ad04129016bc179186a5e4b35c4b",
-    "implementationDirty": [
-      ".ops-cache/handoff-digest.json",
-      "docs/S402_audit-brief.json",
-      "docs/S402_plan-brief.json"
-    ]
-  },
-  "timingNote": "Strict premises verified before behavior edits; timing classifier remains nonpassing for3 startup/planning artifact paths. Pending candidate admission passed."
+  }
 }

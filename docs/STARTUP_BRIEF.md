@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-24 (Session 401 closeout) -->
-<!-- semantic-freshness: hash=d792761daea16aab next=402 silSession=401 silScore=939 handoff=401 tests=- -->
+<!-- generated-at: 2026-10-24 (Session 402 closeout) -->
+<!-- semantic-freshness: hash=e9654be7024a003d next=403 silSession=402 silScore=939 handoff=402 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 401 closeout · 2026-10-24.
+> **Fast-boot brief** — generated at Session 402 closeout · 2026-10-24.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 402 · 2026-10-24 · FOUNDER MODE                         ║
+║  Session 403 · 2026-10-24 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S401) - WHAT SHIPPED ══════════════════════════╗
-║  S401 archive-integrity release verified; canonical closeout an  ║
+╔══ LAST SESSION (S402) - WHAT SHIPPED ══════════════════════════╗
+║  S402 route-status outcome released at 1f5e24f9029bd0c9b5e4973c  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -42,9 +42,9 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 1↓                          ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 1→                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
-║    Trend  ▂▂▂▄  ↓  (last 4 sessions)                             ║
+║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -61,7 +61,7 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 401 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 402 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    547/547 passing  ·  Deploy: verified                  ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -74,7 +74,7 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         547/547 passing (2026-10-24)                   ║
-║  ⚠  Velocity      1 ↓  ·  Debt: →                                ║
+║  ⚠  Velocity      1 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   20d                                            ║
 ║  ✓  IGNIS         45371 FORGE  ·  -1d old                        ║
@@ -108,7 +108,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▂▂▂▄  1↓  (last 5 sessions)                         ║
+║  Velocity:   ▂▂▂▄  1→  (last 5 sessions)                         ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Consider per-member byte verification only  ║
+║   96  [PRODUCT]      Add session-heading support to the existin  ║
+║        Add session-heading support to the existing ledger rotat  ║
+║                                                                  ║
+║   93  [PRODUCT]      Extend method-specific corroboration cover  ║
+║        Extend method-specific corroboration coverage if additio  ║
+║                                                                  ║
+║   90  [PRODUCT]      Consider per-member byte verification only  ║
 ║        Consider per-member byte verification only if source mut  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Coordinate an evidence-backed distinction   ║
+║   87  [PRODUCT]      Coordinate an evidence-backed distinction   ║
 ║        Coordinate an evidence-backed distinction between format  ║
 ║                                                                  ║
-║   87  [VERIFY]       Verify Studio Ops acceptance of the planni  ║
+║   81  [VERIFY]       Verify Studio Ops acceptance of the planni  ║
 ║        Verify Studio Ops acceptance of the planning-artifact ti  ║
-║                                                                  ║
-║   87  [PRODUCT]      Staging lineage tolerant of publisher data  ║
-║        Staging lineage tolerant of publisher data drift. is ope  ║
-║                                                                  ║
-║   84  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
-║        Gate srcset, CSS url(), redirect targets. Future only. i  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 401 closeout · 2026-10-24*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 402 closeout · 2026-10-24*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

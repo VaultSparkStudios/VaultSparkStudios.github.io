@@ -1,3 +1,12 @@
+<!-- S402-closeout-writeback -->
+## Session 402 selected outcome
+
+- [x] [S402] Recovered-route duration and method-scoped corroboration fully accepted; docs/RELEASE_S402.json.
+- [ ] [SIL][S402] Add session-heading support to the existing ledger rotator; future, unselected.
+- [ ] [SIL][S402] Extend method-specific corroboration coverage if additional signals are introduced; future, unselected.
+
+Waves1–3 complete. Wave4 canonical closeout and publication have their authoritative state in docs/RELEASE_S402.json, waves[3]. The two future SIL rows remain unselected.
+
 ## Session 401 selected outcome
 
 - [x] [S401] Archive membership and gzip integrity fully accepted: 10/10 fixtures, independent CRC correction,13934-file staging,547/547 source checks, hosted3/3 and normal full production. docs/RELEASE_S401.json.

@@ -1,4 +1,4 @@
-# Genius Hit List — Session 401
+# Genius Hit List — Session 402
 
 Generated: 2026-10-24
 Project: `VaultSparkStudios.github.io`
@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **939/1000**
 - CI health: **check gh run list**
-- Current focus: S401 staging archive integrity fully released
+- Current focus: S402 route status accuracy fully released; closing publication pending
 
 ## Strategic Read
 
@@ -22,77 +22,77 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Consider per-member byte verification only if source mutation during …
+#### 1. [PRODUCT] Add session-heading support to the existing ledger rotator; future, u…
 Final score: **96**
+[SIL][S402] Add session-heading support to the existing ledger rotator; future, unselected.
+Why it matters: Add session-heading support to the existing ledger rotator; future, un is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Extend method-specific corroboration coverage if additional signals a…
+Final score: **93**
+[SIL][S402] Extend method-specific corroboration coverage if additional signals are introduced; future, unselected.
+Why it matters: Extend method-specific corroboration coverage if additional signals ar is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Consider per-member byte verification only if source mutation during …
+Final score: **90**
 [SIL][S401] Consider per-member byte verification only if source mutation during packaging is observed; not selected in this arc.
 Why it matters: Consider per-member byte verification only if source mutation during p is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Coordinate an evidence-backed distinction between formatting-only sou…
-Final score: **93**
+#### 4. [PRODUCT] Coordinate an evidence-backed distinction between formatting-only sou…
+Final score: **87**
 [SIL][S400] Coordinate an evidence-backed distinction between formatting-only source writes and actual pixel changes in visual freshness; existing mandatory gate remains enforced. Future selection only.
 Why it matters: Coordinate an evidence-backed distinction between formatting-only sour is open, local, and unblocked — can ship this session.
 
-#### 3. [VERIFY] Verify Studio Ops acceptance of the planning-artifact timing classifi…
-Final score: **87**
+### NEXT
+
+#### 1. [VERIFY] Verify Studio Ops acceptance of the planning-artifact timing classifi…
+Final score: **81**
 [SIL][S399] Verify Studio Ops acceptance of the planning-artifact timing classification reproduction; delivered cargo does not prove an applied fix. Future only.
-Why it matters: Verify Studio Ops acceptance of the planning-artifact timing classific was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
+Why it matters: Verify Studio Ops acceptance of the planning-artifact timing classific was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check`
 
-#### 4. [PRODUCT] Staging lineage tolerant of publisher data drift.
-Final score: **87**
+#### 2. [PRODUCT] Staging lineage tolerant of publisher data drift.
+Final score: **81**
 [SIL][S398] Staging lineage tolerant of publisher data drift.
 Why it matters: Staging lineage tolerant of publisher data drift. is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [PRODUCT] Gate srcset, CSS url(), redirect targets. Future only.
-Final score: **84**
+#### 3. [PRODUCT] Gate srcset, CSS url(), redirect targets. Future only.
+Final score: **78**
 [SIL][S396] Gate srcset, CSS url(), redirect targets. Future only.
 Why it matters: Gate srcset, CSS url(), redirect targets. Future only. is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Investigate timing classification of incoming pre-session same-identi…
-Final score: **81**
+#### 4. [PRODUCT] Investigate timing classification of incoming pre-session same-identi…
+Final score: **75**
 [SIL][S395][PROTOCOL/P2] Investigate timing classification of incoming pre-session same-identity automation after a pre-sync lock; preserve original failure. Future selection only.
 Why it matters: Investigate timing classification of incoming pre-session same-identit is open, local, and unblocked — can ship this session.
 
-#### 3. [INTELLIGENCE] Keep startup-generated genius-list drift distinguishable from selecte…
-Final score: **78**
+#### 5. [INTELLIGENCE] Keep startup-generated genius-list drift distinguishable from selecte…
+Final score: **72**
 [SIL][S394][PROTOCOL/P2] Keep startup-generated genius-list drift distinguishable from selected implementation in premise timing; preserve the original nonpassing receipt. Future selection only.
 Why it matters: Keep startup-generated genius-list drift distinguishable from selected keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 4. [PRODUCT] Assess cross-origin redirect handling in diagnostic HTTP commands wit…
-Final score: **72**
+### LATER
+
+#### 1. [PRODUCT] Assess cross-origin redirect handling in diagnostic HTTP commands wit…
+Final score: **66**
 [SIL][S394][RELIABILITY/P2] Assess cross-origin redirect handling in diagnostic HTTP commands with measured caller compatibility. Future selection only.
 Why it matters: Assess cross-origin redirect handling in diagnostic HTTP commands with is open, local, and unblocked — can ship this session.
 
-#### 5. [INTELLIGENCE] Record strict premise acceptance before creating any plan artifact in…
-Final score: **72**
+#### 2. [INTELLIGENCE] Record strict premise acceptance before creating any plan artifact in…
+Final score: **66**
 [SIL][S393][PROTOCOL/P2] Record strict premise acceptance before creating any plan artifact in the next selected audit.
 Why it matters: Record strict premise acceptance before creating any plan artifact in  keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-### LATER
-
-#### 1. [VERIFY] Separately assess served binary coverage against real release risk; c…
-Final score: **68**
+#### 3. [VERIFY] Separately assess served binary coverage against real release risk; c…
+Final score: **62**
 [SIL][S395][VERIFY/P2] Separately assess served binary coverage against real release risk; current verifier explicitly measures tracked served text. Future selection only.
-Why it matters: Separately assess served binary coverage against real release risk; cu is a 6-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Separately assess served binary coverage against real release risk; cu is a 7-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 2. [PRODUCT] Measure and remove generated leaderboard metadata/whitespace churn at…
-Final score: **66**
-[SIL][S393][BUILD/P2] Measure and remove generated leaderboard metadata/whitespace churn at its existing builder boundaries; preserve canonical social previews and rendered evidence. Future selection only.
-Why it matters: Measure and remove generated leaderboard metadata/whitespace churn at  is open, local, and unblocked — can ship this session.
-
-#### 3. [PRODUCT] Require the strict premise checkpoint before delegated edits.
-Final score: **63**
-[SIL][S391] Require the strict premise checkpoint before delegated edits.
-Why it matters: Require the strict premise checkpoint before delegated edits. is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -138,18 +138,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Consider per-member byte verification only if source mutation during …
-2. Coordinate an evidence-backed distinction between formatting-only sou…
-3. Verify Studio Ops acceptance of the planning-artifact timing classifi…
-4. Staging lineage tolerant of publisher data drift.
-5. Gate srcset, CSS url(), redirect targets. Future only.
-6. Investigate timing classification of incoming pre-session same-identi…
-7. Keep startup-generated genius-list drift distinguishable from selecte…
-8. Assess cross-origin redirect handling in diagnostic HTTP commands wit…
-9. Record strict premise acceptance before creating any plan artifact in…
-10. Separately assess served binary coverage against real release risk; c…
-11. Measure and remove generated leaderboard metadata/whitespace churn at…
-12. Require the strict premise checkpoint before delegated edits.
+1. Add session-heading support to the existing ledger rotator; future, u…
+2. Extend method-specific corroboration coverage if additional signals a…
+3. Consider per-member byte verification only if source mutation during …
+4. Coordinate an evidence-backed distinction between formatting-only sou…
+5. Verify Studio Ops acceptance of the planning-artifact timing classifi…
+6. Staging lineage tolerant of publisher data drift.
+7. Gate srcset, CSS url(), redirect targets. Future only.
+8. Investigate timing classification of incoming pre-session same-identi…
+9. Keep startup-generated genius-list drift distinguishable from selecte…
+10. Assess cross-origin redirect handling in diagnostic HTTP commands wit…
+11. Record strict premise acceptance before creating any plan artifact in…
+12. Separately assess served binary coverage against real release risk; c…
 
 ## Best Immediate Move
 
