@@ -1,8 +1,10 @@
-## S400 — implementation verified; release acceptance pending
+## S400 — selected outcomes fully deployed andverified
 
-Reference49/49 and16actual Chromium differential cases pass; current scan340pages/31806internal references resolves. Current238browser checks include215mobile cells,16AA contrast cases and7clearance cases. The original sampled minimum6.04:1 is historical provenance. Shell14/14 andservice-worker100/100 checks remain separately scoped. Fresh112persona and28disclosure images were inspected in separate receipts across7themes anddesktop/mobile; bound source andPNG hashes remain unchanged. Integrated full source547/547,receipt69324772553d7b797172bbb4,fingerprint959573d48883b8155285c6d7,timing concentration13.29%,is accepted. Isolated Linux archivalfixtures10/10 havezero skips. Current staging waits behind an existing migration lock; hosted andproduction acceptance remain pending.
+Both selected outcomes are fully deployed at 06d632056f (tag release-s400-06d632056f), normal Pages run40043209707, production deployment9226ae4d-c13a-467e-85f1-02924336f352. Exact hosted3/3 passed; Lighthouse neededone unchanged-candidate retry,retaining the first failure. Staging13911files and11/11ceremony passed. Current complete source547/547,receipt23971be3a92d66332bea44e6,fingerprintd559e6eea96360ef32fe1aa0 is accepted. Canonical producer readback covers1143files:1133byte-identical and10verified redirects,zero differences/unread. Both public build stamps match. Live production23/23browser checks andfourviewed light/dark desktop/mobile captures pass.
 
-Authoritative release ledger:docs/RELEASE_S400.json. Existing identity,field-vitals andaccount-capacity holds remain separate. No measured conversion,field-performance oravailability gain is claimed.
+Reference49self-tests and16actual Chromium differential cases pass; current340pages/31806references resolve. Original238public browser checks,112persona and28disclosure manual images remain separately scoped. Current16contrast cases meetAA; original6.04:1minimum sample is historical. Linux archivalfixtures12/12zero skips andbothdeploy self-tests18/18,27/27 pass.
+
+Raw apex byte audit remains explicitly unverified becauseedge-transformed HTML andruntime redirects exceed the static artifact model; no raw apex parity claim is made. The producer-origin comparison andlive apex behavior are independently passing. Premise timing classifier remains nonpassing; strict premise checks passed before behavior edits. Existing identity,field-vitals andcapacity holds remain separate. No measured conversion,field-performance oravailability gain is claimed. Evidence:docs/RELEASE_S400.json.
 
 ## S399 — reading clearance and responsive image integrity, fully deployed
 

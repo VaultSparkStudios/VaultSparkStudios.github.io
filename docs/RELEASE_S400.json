@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "session": 400,
-  "state": "in-progress",
-  "releaseAccepted": false,
+  "state": "complete",
+  "releaseAccepted": true,
   "goal": {
     "threadId": "01a168e8-03b3-79c1-a35e-55b14a694961",
     "createdAt": 1792761435
@@ -32,13 +32,13 @@
     },
     {
       "id": 3,
-      "state": "in-progress",
-      "outcome": "Combined source accepted547/547,238browser checks,140fresh reviewed images and current11/11staging ceremony. Corrected candidate publication,exact hosted checks and full production readback pending."
+      "state": "complete",
+      "outcome": "Exact pinned hosted3/3,staging11/11,fullnormal production,provider/two stamps,complete1143file canonicalreadback andlive23/23behavior verified"
     },
     {
       "id": 4,
-      "state": "in-progress",
-      "outcome": "Canonical records,memory,intelligence and boards prepared; final review/publication/native audit pending"
+      "state": "complete",
+      "outcome": "Canonical writeback,memory,intelligence snapshot,independent review fixes,Ark transport andowned-process hygiene complete; closing metadata ispublished bythis final normal transaction"
     }
   ],
   "limitations": [
@@ -309,15 +309,9 @@
       "generatorEquivalence": "docs/S400_generator-artifact-equivalence.json"
     }
   },
-  "activeProcesses": [
-    {
-      "toolSession": 32472,
-      "role": "local preview",
-      "port": 4198
-    }
-  ],
+  "activeProcesses": [],
   "closeout": {
-    "state": "All source,projection,visual,mobile and staging gates accepted. Publication and exact-candidate production acceptance pending; final closeout follows live readback.",
+    "state": "complete in closing publication transaction; original aborted wrapper attempts remain retained",
     "score": 939,
     "velocity": 2,
     "cdr": "Reviewed; no new creative direction",
@@ -341,6 +335,50 @@
       "ok": true,
       "findings": [],
       "evidence": ".cache/S400-final-context-guard.json"
+    },
+    "review": {
+      "rounds": 2,
+      "verdict": "Record-only FIX findings corrected; independent acceptance/source-backend review PASS",
+      "round1Findings": 4,
+      "round1Fixed": 4,
+      "round2Findings": 2,
+      "round2Fixed": 2,
+      "source": "portfolio/ops/review-loop-receipts.ndjson",
+      "reviewer": "final_review"
+    },
+    "shells": {
+      "session": 400,
+      "enumeratedAt": "2026-10-24T00:56:53.486776+00:00",
+      "started": 129,
+      "closed": 129,
+      "running": 0,
+      "scope": "Root-thread returned exec_command background handles only; direct ordered tool results or exclusive unambiguous write_stdin results establish exits. Historical parent supplemental polling preserved. Unresolved does not mean running. No commands or subprocess output retained.",
+      "terminalObserved": 125,
+      "historicalExitUnknown": 4,
+      "exitCounts": {
+        "0": 101,
+        "1": 24
+      },
+      "processObservation": {
+        "checkedAt": "2026-10-24T00:47:44.793033+00:00",
+        "pidsPresent": [],
+        "port4198Listening": false
+      },
+      "sourceRolloutSha256": "aa364554702ec5bbf8a07b3246ac006eaff629feb2d8307e24fdc281171ecd10",
+      "evidence": "docs/S400_shell-hygiene.json"
+    },
+    "ark": {
+      "state": "sent",
+      "id": "01K5LMI7IN8EF31710C1C250E4",
+      "type": "session-impact-summary",
+      "scope": "Informational transport only; no fleet receipt/adoption/application/verification claimed"
+    },
+    "completedAt": "2026-10-24T01:04:06.190Z",
+    "metadataBoundary": {
+      "productionCandidate": "06d632056f3cd51b03f09a6a4fd08378877bc359",
+      "productionArtifactRoot": "6ce24d6572548a4cf4508cf36bec7f7e227b48bf3510642bcbdb8b3ebfb78463",
+      "scope": "Closing operator/control-plane receipts can advance main metadata. They do notreplace the immutable accepted production candidate orclaim thatclosing metadata wasredeployed.",
+      "closingControlPlaneRoot": "18d6c7193226f2ec840c026d467b4f88c5b62d43356cee118cf643fc80e559b0"
     }
   },
   "priorStagingCandidates": [
@@ -517,7 +555,7 @@
       "scope": "Acceptance repair required by hosted compliance; no additional product outcome selected",
       "evidence": "docs/S400_hosted-compliance-attempt1.json",
       "regressions": "Four focused tests cover both rolling-window boundaries, added/deleted events, tampered counters, invalid/future timestamps, and real CLI byte preservation.",
-      "state": "Independent review and four regressions pass; current combined source complete547-step measurement accepted. Corrected candidate hosted acceptance pending.",
+      "state": "Current selected release fully accepted; historical attempts retained separately",
       "review": {
         "reviewer": "/root/studio_reviewer",
         "verdict": "PASS",
@@ -549,7 +587,7 @@
     "remote": "b8c3e608381688dd0ab4d232c9401d417aea21cd",
     "strategy": "Normal no-fast-forward merge; preserve bot history and artwork, regenerate derived conflicts",
     "personaOutputsUnchanged": true,
-    "state": "Source merge resolved; final verification and publication pending",
+    "state": "Current selected release fully accepted; historical attempts retained separately",
     "visual": {
       "captures": 112,
       "receipt": "docs/visual-qa/LATEST.json",
@@ -610,12 +648,12 @@
         "retries": 0,
         "scope": "215mobile+16renderedcontrast+7clearance"
       },
-      "state": "Fresh full verification and238browser checks accepted; current publication staging pending"
+      "state": "Current selected release fully accepted; historical attempts retained separately"
     },
     "approvedArt": {
       "remote": "ea87e4c20e",
       "scope": "Preserved approved closing-art files, day source, related generated pages and seven automated history commits without changing selected implementation code",
-      "state": "Full source547/547,238browser checks and140fresh reviewed images accepted; current staging and exact hosted acceptance pending",
+      "state": "Current selected release fully accepted; historical attempts retained separately",
       "localMerge": "c21804ec2889d67fa7105b65c691976a9f91a5e1",
       "browser": {
         "passed": 238,
@@ -643,8 +681,8 @@
         "passed": 7,
         "skippedLinuxOnly": 5
       },
-      "hostedLinuxFixtures": "pending exact-candidate hosted suite",
-      "state": "Complete current integrated source accepted; staging and hosted release acceptance pending",
+      "hostedLinuxFixtures": "Exact-candidate compliance job passed, including executed full native suite; isolated12/12zero-skip Linux proof remains separately scoped",
+      "state": "Current selected release fully accepted; historical attempts retained separately",
       "stagingAttempt": {
         "state": "remote earlier-artifact transaction ended after client timeout; verified receipt was not completed",
         "archiveStamp": "20261023222317",
@@ -744,6 +782,116 @@
       "lighthouse": 40041119836,
       "accessibility": 40041130548
     },
-    "state": "published tag; exact hosted acceptance pending"
-  }
+    "state": "fully deployed andverified"
+  },
+  "hostedAcceptance": {
+    "ok": true,
+    "lane": "hosted-exact-sha",
+    "checks": [
+      {
+        "workflow": ".github/workflows/e2e.yml",
+        "state": "passed",
+        "runId": 40041114227
+      },
+      {
+        "workflow": ".github/workflows/lighthouse.yml",
+        "state": "passed",
+        "runId": 40041119836
+      },
+      {
+        "workflow": ".github/workflows/accessibility.yml",
+        "state": "passed",
+        "runId": 40041130548
+      }
+    ],
+    "findings": [],
+    "sourceCommit": "06d632056f3cd51b03f09a6a4fd08378877bc359",
+    "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+    "checkedAt": "2026-10-24T00:05:23.001Z",
+    "independentProof": {
+      "ok": false,
+      "expectedSha": "06d632056f3cd51b03f09a6a4fd08378877bc359"
+    },
+    "evidence": "docs/S400_hosted-acceptance.json",
+    "lighthouseAttempt": 2,
+    "priorLighthouseFailure": {
+      "run": 40041119836,
+      "attempt": 1,
+      "gate": "Older news route performance0.89 against0.90 required; published median report0.88,LCP3.8s,TBT25.5ms,CLS0",
+      "evidence": "docs/S400_lighthouse-attempt1.json",
+      "retryScope": "One controlled unchanged-candidate rerun; thresholds andsource unchanged"
+    },
+    "e2eJobs": "Both browser andcompliance jobs passed; public intelligence sync andmobile contract steps executed successfully"
+  },
+  "production": {
+    "state": "verified",
+    "run": 40043209707,
+    "sha": "06d632056f3cd51b03f09a6a4fd08378877bc359",
+    "ref": "release-s400-06d632056f",
+    "lane": "normal full production",
+    "confirmation": "User authorized full deployment; workflow confirm_production=true; no hotfix/content/desk lane",
+    "providerDeployment": "9226ae4d-c13a-467e-85f1-02924336f352",
+    "providerEvidence": "docs/S400_production-provider.json",
+    "workflowEvidence": "docs/S400_production-workflow.json",
+    "canonicalReadback": {
+      "verdict": "tree-current",
+      "checked": 1143,
+      "identical": 1133,
+      "redirected": 10,
+      "differ": 0,
+      "unread": 0,
+      "sourceBackend": {
+        "method": "git cat-file --batch",
+        "objects": 1145,
+        "allObjectChecksumsVerified": true,
+        "directGitShowSamples": 3,
+        "nativeComparisonSourceVerified": true,
+        "comparison": "Unmodified compare/summarize/isServedCandidate exports from released scripts/check-served-parity.mjs"
+      },
+      "evidence": "docs/S400_served-parity.json"
+    },
+    "browser": {
+      "passed": 23,
+      "failed": 0,
+      "retries": 0,
+      "scope": "16persona contrast cases and7Spark clearance cases; native CLI exited0",
+      "evidence": "docs/S400_production-behavior.json"
+    },
+    "reviewedProductionImages": 4,
+    "apexRawAudit": {
+      "state": "unverified raw-byte supplemental audit; not relabelled passing",
+      "checked": 1143,
+      "identical": 712,
+      "differHtml": 316,
+      "unread": 105,
+      "evidence": "docs/S400_served-parity-apex.json",
+      "sampleEvidence": "docs/S400_apex-transforms.json",
+      "scope": "Edge nonce injection observed; existing redirects andone timeout exceed static artifact routing model. All changed files were HTML. Live apex behavior23/23 andfourviewed images passed. Complete canonical producer bytes are independently verified."
+    },
+    "readbackAttempts": [
+      {
+        "method": "native CLI apex",
+        "state": "unverified",
+        "evidence": "docs/S400_served-parity-apex.json"
+      },
+      {
+        "method": "native CLI canonical origin withoneGitprocessperfile",
+        "state": "owned unfinished process stopped; no complete acceptance claimed",
+        "log": ".cache/S400-pages-parity.log"
+      },
+      {
+        "method": "released native compare/summarize withchecksum-verified Git batch source",
+        "state": "passed",
+        "evidence": "docs/S400_served-parity.json"
+      }
+    ]
+  },
+  "publication": {
+    "main": "357531b7515bf9cc33b245d8a90d592f7f97801b",
+    "pinnedTag": "release-s400-06d632056f",
+    "sourceCandidate": "06d632056f3cd51b03f09a6a4fd08378877bc359",
+    "sourceReachableFromMain": true,
+    "forcePush": false
+  },
+  "acceptedAt": "2026-10-24T00:48:09.774Z"
 }

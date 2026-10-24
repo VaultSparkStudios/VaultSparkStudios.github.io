@@ -36,7 +36,7 @@
     • Future only: archive membership preflight and source-equivalence handling for visual freshness.
 
   BLOCKERS
-    • Current release acceptance is recorded separately in docs/RELEASE_S400.json; no production acceptance is inferred here.
+    (none)
 
   ACTION GATE
     2 items shipped · ready to commit & push? [y/N]

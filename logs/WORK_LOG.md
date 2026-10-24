@@ -333,3 +333,8 @@ Startup budget repair preserved 85 completed rows in the archive and all remaini
 ## Session 400 — 2026-10-23
 
 Browser-faithful local reference validation and readable persona/disclosure surfaces. Reference49/49, Chromium differential16/16; readability23/23 including16 rendered-background contrast cases (minimum6.04:1), shell14/14 and SW100/100. Final112 persona captures and separate28 disclosure states were actually inspected; CANON-053 passes. Release remains in progress; actual final acceptance is maintained in docs/RELEASE_S400.json. No new identity, pricing, membership, canon or lifecycle policy was selected.
+
+
+### S400 release acceptance — 2026-10-24T00:48:09.774Z
+
+Both selected outcomes fully deployed at06d632056f3cd51b03f09a6a4fd08378877bc359,normal Pages40043209707. Exact hosted3/3,current source547/547,staging11/11,canonical1143file readback withzero drift/unread,andlive23/23browser checks plusfourviewed production images passed. Earlier failures andrawapex audit limits remain in docs/RELEASE_S400.json. SIL939/1000,velocity2; future SIL rows stay unselected. No new creative,identity,pricing,membership,canon orlifecycle policy.

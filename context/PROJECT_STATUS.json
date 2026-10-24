@@ -26,7 +26,7 @@
     "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action.",
     "Shared account KV write budget remains a risk from other writers. S387 isolates Trusted Types diagnostics; actual release and usage evidence is in docs/RELEASE_S387.json."
   ],
-  "lastUpdated": "2026-10-23",
+  "lastUpdated": "2026-10-24",
   "currentSession": 400,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-10-23",
@@ -42,13 +42,13 @@
       "url": "https://vaultsparkstudios.com/",
       "type": "production",
       "status": "green",
-      "note": "S399 full release accepted; docs/RELEASE_S399.json. Existing disjoint identity/field holds remain."
+      "note": "S400 selected release accepted; docs/RELEASE_S400.json. Existing disjoint identity/field holds remain."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
       "type": "staging",
       "status": "green",
-      "note": "S399 full release accepted; docs/RELEASE_S399.json. Existing disjoint identity/field holds remain."
+      "note": "S400 selected release accepted; docs/RELEASE_S400.json. Existing disjoint identity/field holds remain."
     },
     {
       "url": "https://vaultsparkstudios.com/?nav=sheet",
@@ -70,7 +70,7 @@
       "url": "https://website.staging.vaultsparkstudios.com/status/",
       "type": "staging",
       "status": "green",
-      "note": "S399 full release accepted; docs/RELEASE_S399.json. Existing disjoint identity/field holds remain."
+      "note": "S400 selected release accepted; docs/RELEASE_S400.json. Existing disjoint identity/field holds remain."
     },
     {
       "command": "npm run build:check",
@@ -258,13 +258,24 @@
   "lastSessionSummary": "S400 repaired browser-base validation, light persona contrast and mobile disclosure clearance",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
-    "session": 399,
-    "started": 96,
-    "closed": 96,
+    "session": 400,
+    "enumeratedAt": "2026-10-24T00:56:53.486776+00:00",
+    "started": 129,
+    "closed": 129,
     "running": 0,
-    "enumeratedAt": "2026-10-23T09:49:05.065Z",
-    "evidence": ".cache/S399-shell-audit-final.json",
-    "scope": "All recorded long-running unified-exec handles started by S399; synchronous commands excluded."
+    "scope": "Root-thread returned exec_command background handles only; direct ordered tool results or exclusive unambiguous write_stdin results establish exits. Historical parent supplemental polling preserved. Unresolved does not mean running. No commands or subprocess output retained.",
+    "terminalObserved": 125,
+    "historicalExitUnknown": 4,
+    "exitCounts": {
+      "0": 101,
+      "1": 24
+    },
+    "processObservation": {
+      "checkedAt": "2026-10-24T00:47:44.793033+00:00",
+      "pidsPresent": [],
+      "port4198Listening": false
+    },
+    "sourceRolloutSha256": "aa364554702ec5bbf8a07b3246ac006eaff629feb2d8307e24fdc281171ecd10"
   },
   "closeoutFollowthrough": {
     "session": 395,
@@ -292,49 +303,55 @@
     "behaviorChanged": false
   },
   "currentBuildState": "passed",
-  "currentBuildNote": "S400 integrated source measured 547/547 native checks; receipt 23971be3a92d66332bea44e6. Browser, visual and release acceptance are separately scoped in docs/RELEASE_S400.json.",
-  "lastDeploySession": 399,
+  "currentBuildNote": "Source547/547 receipt23971be3a92d66332bea44e6; production06d632056f accepted withhosted3/3,staging11/11,canonical1143file readback andlive23/23browser checks.",
+  "lastDeploySession": 400,
   "lastDeployStatus": "verified",
   "silAvg5": 938.2,
   "lastReleaseAcceptance": {
-    "session": 399,
-    "candidate": "59f1f49d369f34d27b91c39820c928987d91c9d9",
-    "receipt": "docs/RELEASE_S399.json",
-    "workflowRun": 39930730781
+    "session": 400,
+    "candidate": "06d632056f3cd51b03f09a6a4fd08378877bc359",
+    "receipt": "docs/RELEASE_S400.json",
+    "workflowRun": 40043209707
   },
   "truthAuditSummary": "S395 served-text parity requires complete nonempty exactly-once coverage, committed redirect status/destination and strict CLI admission. Focused fixtures3/3, self-test19/19, existing regressions9/9 and independent review pass. The earlier actual npm full build/postbuild26/26 is retained as preintegration evidence. Fresh integrated36-node native-owner closure, declared news checks and two complete 545/545 runs plus current staging11/11 pass;84 manually inspected news captures across7themes at1440/390px and215 automated device probes retain their stated limits. Retired8442f8f4 failed hosted compliance atstep143 because WORK_LOG measured251KB against the250KB cap; native rotation moved0 for session-first headings, so older history was archived verbatim before corrected candidate16f6938f. Normal full production candidate c931cc736f70b524509378c1e35e1a69e8b3927d (run 39650067973) is verified by hosted checks, provider identity, both build stamps, complete served text,65 critical leaves on Pages/apex and exactly12 incoming news-image variants on both origins. This does not certify all binary assets. Original premise timing remains nonpassing; original baseline trace/context usage is unmeasured. Existing identity and field-vitals holds remain separate; no measured visitor or performance gain is claimed.",
   "currentVerification": {
-    "session": 399,
+    "session": 400,
     "state": "release-verified",
-    "source": "docs/RELEASE_S399.json",
-    "lastCompleteTestsSession": 399
+    "source": "docs/RELEASE_S400.json",
+    "lastCompleteTestsSession": 400
   },
   "metadataPublication": {
-    "session": 399,
-    "candidate": "59f1f49d369f34d27b91c39820c928987d91c9d9",
-    "workflowRun": 39930730781,
+    "session": 400,
+    "candidate": "06d632056f3cd51b03f09a6a4fd08378877bc359",
+    "workflowRun": 40043209707,
     "state": "verified",
-    "receipt": "docs/RELEASE_S399.json"
+    "receipt": "docs/RELEASE_S400.json",
+    "scope": "Closing metadata transaction; production acceptance remains pinned"
   },
   "lastCompletedArc": {
-    "session": 399,
-    "phase": "complete",
-    "goalId": "01a1669c-19de-7b02-a8f9-4ec1a9ea2eb0",
-    "goalCreatedAt": 1792722894,
-    "audit": "docs/AUDIT_2026-10-23-S399.json",
-    "releaseEvidence": "docs/RELEASE_S399.json",
-    "candidate": "59f1f49d369f34d27b91c39820c928987d91c9d9",
-    "releaseVerifiedAt": "2026-10-23T09:44:42.709Z"
-  },
-  "velocity": 2,
-  "arcProgress": {
     "session": 400,
-    "phase": "in-progress",
+    "phase": "complete",
     "goalId": "01a168e8-03b3-79c1-a35e-55b14a694961",
     "goalCreatedAt": 1792761435,
     "audit": "docs/AUDIT_2026-10-23-S400.json",
     "releaseEvidence": "docs/RELEASE_S400.json",
-    "detail": "Integrated source accepted; staging lock wait, exact hosted acceptance and production pending"
+    "detail": "Both selected outcomes fullydeployed; canonical closeout completed in closing publication transaction",
+    "candidate": "06d632056f3cd51b03f09a6a4fd08378877bc359",
+    "releaseVerifiedAt": "2026-10-24T00:48:09.774Z",
+    "completedAt": "2026-10-24T01:04:06.190Z"
+  },
+  "velocity": 2,
+  "arcProgress": {
+    "session": 400,
+    "phase": "complete",
+    "goalId": "01a168e8-03b3-79c1-a35e-55b14a694961",
+    "goalCreatedAt": 1792761435,
+    "audit": "docs/AUDIT_2026-10-23-S400.json",
+    "releaseEvidence": "docs/RELEASE_S400.json",
+    "detail": "Both selected outcomes fullydeployed; canonical closeout completed in closing publication transaction",
+    "candidate": "06d632056f3cd51b03f09a6a4fd08378877bc359",
+    "releaseVerifiedAt": "2026-10-24T00:48:09.774Z",
+    "completedAt": "2026-10-24T01:04:06.190Z"
   },
   "ignisLastScored": "2026-10-23",
   "historicalTests": {
