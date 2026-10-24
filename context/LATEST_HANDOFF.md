@@ -1,3 +1,13 @@
+## Where We Left Off (Session 401) — release verified; closing publication in progress
+
+Goal01a16bcf-5329-7ce3-954f-c816bc504446, createdAt1792810128, is bound to S401 starting35e5d5f181aae01ae02e9ee0e8ebd47661645871. Continuation resumes this arc; do not start another session.
+
+Deploy: fully deployed to production. S401 archive admission is implemented in both staging producers: exact unique regular-member inventory, source path/type checks and complete gzip CRC validation before upload. Focused actual-tar fixtures10/10; full/content deployer self-tests18/18 and27/27. Real staging13934files, inventory digest and SSH byte readback verified; ceremony11/11. Complete implementation source547/547, mobile215/215 and14 reviewed homepage captures across seven themes/two viewports. Exact hosted3/3 and normal full production 7348fc96f556d3223988eee1aa0b27a8678db483 (Pages run40066222368) accepted through actual deploy-step success, provider identity, canonical-origin whole-text parity and apex live behavior. Evidence: docs/RELEASE_S401.json.
+
+Inventory proof does not establish frozen per-member source-byte equality. Strict premises passed before behavior edits; planning-artifact timing classifier remains nonpassing. Existing identity/provider, field-vitals and account-capacity holds remain separate. Post-deploy Sparked QA entitlement and simulated origin-outage browser cases fail identically on the prior immutable deployment with unchanged code; neither is counted as a passing journey. Homepage, service-worker install/precache and Eternal positive-path cases passed. No measured field-performance, conversion or availability gain is claimed. Raw apex byte parity remains outside the edge-transformed HTML model.
+
+SIL939/1000, velocity1. CDR reviewed — no new creative direction. Future SIL source-byte verification remains unselected. Closeout records are later metadata; implementation acceptance remains bound to immutable candidate 7348fc96f556d3223988eee1aa0b27a8678db483, not later observation commits. Finish canonical closeout, independent review, autopilot, Ark, owned-process cleanup and verify remote publication before completing the native goal.
+
 ## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.
 
 ## Where We Left Off — S400 complete in closing publication transaction

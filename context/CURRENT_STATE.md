@@ -1,3 +1,9 @@
+## Session 401 — archive integrity fully released
+
+S401 archive admission is implemented in both staging producers: exact unique regular-member inventory, source path/type checks and complete gzip CRC validation before upload. Focused actual-tar fixtures10/10; full/content deployer self-tests18/18 and27/27. Real staging13934files, inventory digest and SSH byte readback verified; ceremony11/11. Complete implementation source547/547, mobile215/215 and14 reviewed homepage captures across seven themes/two viewports. Exact hosted3/3 and normal full production 7348fc96f556d3223988eee1aa0b27a8678db483 (Pages run40066222368) accepted through actual deploy-step success, provider identity, canonical-origin whole-text parity and apex live behavior. Evidence: docs/RELEASE_S401.json.
+
+Inventory proof does not establish frozen per-member source-byte equality. Strict premises passed before behavior edits; planning-artifact timing classifier remains nonpassing. Existing identity/provider, field-vitals and account-capacity holds remain separate. Post-deploy Sparked QA entitlement and simulated origin-outage browser cases fail identically on the prior immutable deployment with unchanged code; neither is counted as a passing journey. Homepage, service-worker install/precache and Eternal positive-path cases passed. No measured field-performance, conversion or availability gain is claimed. Raw apex byte parity remains outside the edge-transformed HTML model.
+
 ## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.
 
 ## S400 — selected outcomes fully deployed andverified

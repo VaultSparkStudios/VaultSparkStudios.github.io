@@ -2497,3 +2497,8 @@ Hosted compliance reproduced elapsed-window drift: the same event ledger yielded
 Reuse installed tar for exact member names and independent regular-entry checks, and Node streaming gunzip for complete gzip CRC validation. Admit only regular single-link sources with real directory parents and unambiguous printable ASCII relative paths. Both full and content staging producers verify before scp; the full staging receipt binds inventory count and SHA-256 digest alongside archive byte identity. Historical receipts remain readable. This proves archive names/types/integrity, not per-member source-byte equality or a frozen filesystem snapshot. No dependency or identity/trust-policy change.
 
 CANON-045 STRONG gap remains separately justified: unchanged relying-party integration and existing provider holds are not expanded or cleared by this operational release. Canon startup sync suggest timed out once; direct suggest/check recovered successfully. Premise gate strictly verified both premises before behavior edits, but timing classifier remains nonpassing for four startup/planning artifacts. Preserve that diagnostic; do not relabel it as a pass.
+
+
+### D-S401.1 release evidence addendum — 2026-10-24T05:40:51.330Z
+
+Normal full production 7348fc96f556d3223988eee1aa0b27a8678db483 accepted; docs/RELEASE_S401.json preserves initial failed source check, diagnostic-only tail, complete final suite, exact hosted checks, real staging inventory and production readback. Canonical-root equivalence excludes only declared shell-manifest generatedAt metadata; original staging and later source fingerprints remain separately scoped. No source-byte snapshot or field gain is inferred.

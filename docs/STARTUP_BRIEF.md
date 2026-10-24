@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-24 (Session 400 closeout) -->
-<!-- semantic-freshness: hash=f6bf76a64ae907dc next=401 silSession=400 silScore=939 handoff=- tests=- -->
+<!-- generated-at: 2026-10-24 (Session 401 closeout) -->
+<!-- semantic-freshness: hash=d792761daea16aab next=402 silSession=401 silScore=939 handoff=401 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 400 closeout · 2026-10-24.
+> **Fast-boot brief** — generated at Session 401 closeout · 2026-10-24.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 401 · 2026-10-24 · FOUNDER MODE                         ║
+║  Session 402 · 2026-10-24 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S400) - WHAT SHIPPED ══════════════════════════╗
-║  S400 repaired browser-base validation, light persona contrast   ║
+╔══ LAST SESSION (S?) - WHAT SHIPPED ════════════════════════════╗
+║  One archive-integrity outcome fully deployed; canonical closeo  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -42,9 +42,9 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2→                          ║
-║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
-║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 1↓                          ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
+║    Trend  ▂▂▂▄  ↓  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -61,7 +61,7 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 400 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 401 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    547/547 passing  ·  Deploy: verified                  ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -74,20 +74,20 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         547/547 passing (2026-10-23)                   ║
-║  ✓  Velocity      2 →  ·  Debt: →                                ║
+║  ⚠  Velocity      1 ↓  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   20d                                            ║
-║  ✓  IGNIS         45139 FORGE  ·  0d old                         ║
+║  ✓  IGNIS         45371 FORGE  ·  -1d old                        ║
 ║  ⛔  Truth         yellow — selected release verified;…           ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.185  (healthy)                               ║
+║  ✓  Entropy       0.170  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  0d old (2026-10-24)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
+║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
 ║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -108,7 +108,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▂▂▂▄  2→  (last 5 sessions)                         ║
+║  Velocity:   ▂▂▂▄  1↓  (last 5 sessions)                         ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -116,7 +116,7 @@
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
 ║  Projected:  935/1000  (↓4 vs current 939)                       ║
 ║  At-risk:    Momentum Δ-3                                        ║
-║  Calibration: MAE 4.4 over last 10 forecasts                     ║
+║  Calibration: MAE 4.3 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
@@ -129,7 +129,7 @@
 ║   93  [PRODUCT]      Coordinate an evidence-backed distinction   ║
 ║        Coordinate an evidence-backed distinction between format  ║
 ║                                                                  ║
-║   92  [VERIFY]       Verify Studio Ops acceptance of the planni  ║
+║   87  [VERIFY]       Verify Studio Ops acceptance of the planni  ║
 ║        Verify Studio Ops acceptance of the planning-artifact ti  ║
 ║                                                                  ║
 ║   87  [PRODUCT]      Staging lineage tolerant of publisher data  ║
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 400 closeout · 2026-10-24*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 401 closeout · 2026-10-24*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

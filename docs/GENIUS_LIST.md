@@ -1,4 +1,4 @@
-# Genius Hit List — Session 400
+# Genius Hit List — Session 401
 
 Generated: 2026-10-24
 Project: `VaultSparkStudios.github.io`
@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **939/1000**
 - CI health: **check gh run list**
-- Current focus: S400 reference integrity and persona readability
+- Current focus: S401 staging archive integrity fully released
 
 ## Strategic Read
 
@@ -40,9 +40,9 @@ Final score: **93**
 Why it matters: Coordinate an evidence-backed distinction between formatting-only sour is open, local, and unblocked — can ship this session.
 
 #### 4. [VERIFY] Verify Studio Ops acceptance of the planning-artifact timing classifi…
-Final score: **92**
+Final score: **87**
 [SIL][S399] Verify Studio Ops acceptance of the planning-artifact timing classification reproduction; delivered cargo does not prove an applied fix. Future only.
-Why it matters: Verify Studio Ops acceptance of the planning-artifact timing classific shipped last session — confirm it works in production before piling new work on top.
+Why it matters: Verify Studio Ops acceptance of the planning-artifact timing classific was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check`
 
@@ -87,7 +87,7 @@ First command: `node scripts/generate-genius-list.mjs`
 #### 2. [VERIFY] Separately assess served binary coverage against real release risk; c…
 Final score: **68**
 [SIL][S395][VERIFY/P2] Separately assess served binary coverage against real release risk; current verifier explicitly measures tracked served text. Future selection only.
-Why it matters: Separately assess served binary coverage against real release risk; cu is a 5-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Separately assess served binary coverage against real release risk; cu is a 6-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 

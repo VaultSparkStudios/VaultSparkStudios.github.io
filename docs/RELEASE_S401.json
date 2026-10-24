@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "session": 401,
-  "state": "ready-for-source-publication",
-  "releaseAccepted": false,
+  "state": "release-verified-closeout-in-progress",
+  "releaseAccepted": true,
   "goal": {
     "threadId": "01a16bcf-5329-7ce3-954f-c816bc504446",
     "createdAt": 1792810128
@@ -20,7 +20,8 @@
   "limitations": [
     "Existing identity/provider and field-evidence holds remain separate.",
     "Inventory proof does not claim source-byte snapshot equality.",
-    "Premise timing classifier nonpassing for startup/planning artifacts."
+    "Premise timing classifier nonpassing for startup/planning artifacts.",
+    "Post-deploy Sparked QA entitlement and simulated origin-outage browser cases fail identically on prior immutable release; no passing claim for those scopes."
   ],
   "waves": [
     {
@@ -33,11 +34,11 @@
     },
     {
       "id": 3,
-      "state": "in-progress"
+      "state": "complete"
     },
     {
       "id": 4,
-      "state": "pending"
+      "state": "in-progress"
     }
   ],
   "localAcceptance": {
@@ -171,5 +172,107 @@
       }
     ],
     "stampsMatch": true
-  }
+  },
+  "candidate": "7348fc96f556d3223988eee1aa0b27a8678db483",
+  "hosted": {
+    "ok": true,
+    "lane": "hosted-exact-sha",
+    "checks": [
+      {
+        "workflow": ".github/workflows/e2e.yml",
+        "state": "passed",
+        "runId": 40065057735
+      },
+      {
+        "workflow": ".github/workflows/lighthouse.yml",
+        "state": "passed",
+        "runId": 40065057762
+      },
+      {
+        "workflow": ".github/workflows/accessibility.yml",
+        "state": "passed",
+        "runId": 40065057740
+      }
+    ],
+    "findings": [],
+    "sourceCommit": "7348fc96f556d3223988eee1aa0b27a8678db483",
+    "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+    "checkedAt": "2026-10-24T05:26:04.455Z",
+    "independentProof": {
+      "ok": false,
+      "expectedSha": "7348fc96f556d3223988eee1aa0b27a8678db483"
+    }
+  },
+  "productionAttempt": {
+    "tag": "release-s401-7348fc96f5",
+    "workflowRun": 40066222368,
+    "state": "completed-success",
+    "normalFullLane": true,
+    "deployment": "4a069120",
+    "deployStep": "success",
+    "heldStep": "skipped",
+    "news": {
+      "pages": 157,
+      "exactAssets": 1719,
+      "passed": true
+    },
+    "stamps": "docs/S401_production-stamps.json"
+  },
+  "productionBrowserAttempt": {
+    "passed": 3,
+    "failed": 1,
+    "exit": 1,
+    "evidence": ".cache/logs/S401-production-browser.log",
+    "failure": "Sparked QA account renders free-tier locked panel instead of Sparked digest",
+    "baselineReproduction": {
+      "origin": "https://9226ae4d.vaultsparkstudios-website.pages.dev",
+      "sha": "06d632056f3cd51b03f09a6a4fd08378877bc359",
+      "sameFailure": true,
+      "exit": 1,
+      "evidence": ".cache/logs/S401-baseline-auth.log"
+    },
+    "codeDiff": "No dashboard, auth helper or Eternal spec changes between baseline and7348fc96f5",
+    "scope": "Existing unchanged account-data/identity hold; not counted as passing authenticated acceptance"
+  },
+  "productionPublicBrowserAttempt": {
+    "passed": 3,
+    "failed": 1,
+    "exit": 1,
+    "evidence": ".cache/logs/S401-public-production-browser.log",
+    "passedCases": [
+      "Homepage render",
+      "Homepage prove-first",
+      "SW install/precache"
+    ],
+    "failure": "Simulated origin outage page.goto ERR_FAILED",
+    "baselineReproduction": {
+      "origin": "https://9226ae4d.vaultsparkstudios-website.pages.dev",
+      "sameFailure": true,
+      "exit": 1,
+      "evidence": ".cache/logs/S401-baseline-sw.log"
+    },
+    "codeDiff": "No sw.js, offline or spec changes from previous accepted deployment",
+    "scope": "No passing live-outage claim"
+  },
+  "production": {
+    "sha": "7348fc96f556d3223988eee1aa0b27a8678db483",
+    "tag": "release-s401-7348fc96f5",
+    "workflowRun": 40066222368,
+    "deployment": "4a069120",
+    "providerOrigin": "https://4a069120.vaultsparkstudios-website.pages.dev",
+    "workflowEvidence": "docs/S401_production-workflow.json",
+    "providerEvidence": "docs/S401_provider-identity.json",
+    "stamps": "docs/S401_production-stamps.json",
+    "servedParity": {
+      "evidence": "docs/S401_served-parity.json",
+      "verdict": "tree-current",
+      "checked": 1143,
+      "identical": 1133,
+      "redirected": 10,
+      "differ": 0,
+      "unread": 0
+    },
+    "liveScope": "Homepage2/2, SW install/precache1/1, Eternal positive1/1 passed. Sparked QA and simulated-outage failures reproduced on old immutable deployment and retained separately."
+  },
+  "verifiedAt": "2026-10-24T05:40:50.178Z"
 }

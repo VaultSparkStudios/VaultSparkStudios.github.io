@@ -1,6 +1,6 @@
-## S401 selected outcome
+## Session 401 selected outcome
 
-- [x] [S401] Local archive membership and gzip integrity implementation: 10/10 actual tar fixtures, independent round 2 approval; release acceptance tracked in docs/RELEASE_S401.json.
+- [x] [S401] Archive membership and gzip integrity fully accepted: 10/10 fixtures, independent CRC correction,13934-file staging,547/547 source checks, hosted3/3 and normal full production. docs/RELEASE_S401.json.
 - [ ] [SIL][S401] Consider per-member byte verification only if source mutation during packaging is observed; not selected in this arc.
 
 ## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.
@@ -750,3 +750,5 @@ Wave 1 ✔ fresh audit. Wave 2 ✔ two input-boundary fixes. Wave 3 ◻ release 
 
 
 Both selected local outcomes are accepted. Whole-project and release checks remain pending; no prior-session acceptance is borrowed.
+
+- [ ] [S401 FOLLOW-UP] Diagnose live-browser simulated origin-outage ERR_FAILED and Sparked QA entitlement mismatch; both reproduce on prior immutable release with unchanged code. Retained in docs/RELEASE_S401.json; not selected for this archive-integrity arc.

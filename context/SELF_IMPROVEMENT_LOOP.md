@@ -10,9 +10,9 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last5 available totals):939 →939 →939 →939 →939
 Avgs (available rolling totals) —3:939.0 |5:939.0 |10:unmeasured |25:unmeasured |all:unmeasured
-Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session:2026-10-23 | Session400 | Total:939/1000 | Velocity:2
-  └ Two local outcomes verified; release acceptance authoritative in docs/RELEASE_S400.json.
+Velocity trend:↓ |Protocol velocity:→ |Debt:→
+Last session:2026-10-24 | Session 401 | Total:939/1000 | Velocity:1
+  └ One archive-integrity outcome released; docs/RELEASE_S401.json.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -3230,3 +3230,16 @@ Production06d632056f accepted through actual hosted,staging,provider,canonicalby
 
 
 ## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.
+
+
+## Session 401 — 2026-10-24 — pre-upload archive integrity
+
+Total:939/1000. Velocity:1.
+
+S401 archive admission is implemented in both staging producers: exact unique regular-member inventory, source path/type checks and complete gzip CRC validation before upload. Focused actual-tar fixtures10/10; full/content deployer self-tests18/18 and27/27. Real staging13934files, inventory digest and SSH byte readback verified; ceremony11/11. Complete implementation source547/547, mobile215/215 and14 reviewed homepage captures across seven themes/two viewports. Exact hosted3/3 and normal full production 7348fc96f556d3223988eee1aa0b27a8678db483 (Pages run40066222368) accepted through actual deploy-step success, provider identity, canonical-origin whole-text parity and apex live behavior. Evidence: docs/RELEASE_S401.json.
+
+devHealth:95 · creativeAlignment:94 · momentum:92 · engagement:96 · processQuality:88 · crossRepoCoherence:94 · securityPosture:97 · ecosystemIntegration:91 · capitalEfficiency:95 · automationCoverage:97
+
+Scores unchanged. Website lens: Core Web Vitals has no new field measurement; hosted Lighthouse passed. Conversion unmeasured; no editorial freshness improvement selected. Polish evidence is14 actual reviewed captures and mobile215/215. Independent reviewer found a real gzip CRC gap; streaming validation and a mutation regression fixed it. Original failed88-step run and incomplete458-step diagnostic remain retained. Inventory proof does not establish frozen per-member source-byte equality. Strict premises passed before behavior edits; planning-artifact timing classifier remains nonpassing. Existing identity/provider, field-vitals and account-capacity holds remain separate. Post-deploy Sparked QA entitlement and simulated origin-outage browser cases fail identically on the prior immutable deployment with unchanged code; neither is counted as a passing journey. Homepage, service-worker install/precache and Eternal positive-path cases passed. No measured field-performance, conversion or availability gain is claimed. Raw apex byte parity remains outside the edge-transformed HTML model.
+
+Brainstorm committed to TASK_BOARD: consider per-member source-byte verification only after observed packaging mutation; not selected. Scorer shim subject-root finding and archive-helper reuse pattern delivered to Studio Ops through Ark; delivery does not prove adoption. CDR reviewed — no new creative direction.

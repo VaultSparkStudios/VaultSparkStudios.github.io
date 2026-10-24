@@ -178,7 +178,7 @@
       "innovation": 4,
       "effortHours": 2,
       "priority": 14,
-      "status": "pending",
+      "status": "shipped",
       "selectedDepth": "L2",
       "why": "deploy-staging hashes and uploads the tar without comparing its member list. A remote count does not detect same-count substitution. Source admission also follows symlinks.",
       "recipe": "Reuse existing tar listing and fail closed on ambiguous names; compare exact unique inventory against the admitted regular-file manifest before scp, and bind inventory digest/count to the staging receipt. Reject symlink sources and parents before packaging. Test actual tar substitutions and unsafe inputs.",
@@ -222,6 +222,11 @@
           "at": "2026-10-24T03:00:05.232633+00:00",
           "status": "implemented",
           "note": "10/10 focused fixtures and independent round 2 approval. Initial 7/8 failed on expected error wording; corrected. Reviewer found CRC acceptance gap after 9/9; streaming gunzip and actual CRC mutation regression close it. Full deployers self-tests 18/18 and 27/27. Release still pending."
+        },
+        {
+          "at": "2026-10-24T05:40:51.352Z",
+          "status": "shipped",
+          "note": "Full selected acceptance verified. S401 archive admission is implemented in both staging producers: exact unique regular-member inventory, source path/type checks and complete gzip CRC validation before upload. Focused actual-tar fixtures10/10; full/content deployer self-tests18/18 and27/27. Real staging13934files, inventory digest and SSH byte readback verified; ceremony11/11. Complete implementation source547/547, mobile215/215 and14 reviewed homepage captures across seven themes/two viewports. Exact hosted3/3 and normal full production 7348fc96f556d3223988eee1aa0b27a8678db483 (Pages run40066222368) accepted through actual deploy-step success, provider identity, canonical-origin whole-text parity and apex live behavior. Evidence: docs/RELEASE_S401.json."
         }
       ]
     }
