@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-10-24T19:09:39.145Z",
+  "generatedAt": "2026-10-24T20:04:04.807Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,19 +12,19 @@
     "trustScore": 89,
     "worstStale": {
       "key": "identity-migration-receipt",
-      "ageSeconds": 5161465,
+      "ageSeconds": 5164730,
       "generatedAt": "2026-08-26T01:25:14.581Z"
     },
     "seedRisk": [
       {
         "key": "identity-migration-receipt",
-        "ageHours": 1434,
+        "ageHours": 1435,
         "staleAfterH": 336,
         "pctOfWindow": 427
       },
       {
         "key": "supabase-control-plane",
-        "ageHours": 97,
+        "ageHours": 98,
         "staleAfterH": 168,
         "pctOfWindow": 58
       }
@@ -35,7 +35,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-10-24T19:09:35.422Z",
-      "freshnessSeconds": 4,
+      "freshnessSeconds": 3269,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -196,7 +196,7 @@
       "present": true,
       "source": "/api/worker-route-provenance.json",
       "generatedAt": "2026-10-18T17:26:13.584Z",
-      "freshnessSeconds": 524606,
+      "freshnessSeconds": 527871,
       "staleAfterH": 6,
       "stale": true,
       "data": {
@@ -331,7 +331,7 @@
       "present": true,
       "source": "/api/deploy-currency.json",
       "generatedAt": "2026-10-24T19:09:37.284Z",
-      "freshnessSeconds": 2,
+      "freshnessSeconds": 3268,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -525,8 +525,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-10-24T16:32:47.525Z",
-      "freshnessSeconds": 9412,
+      "generatedAt": "2026-10-24T20:03:59.089Z",
+      "freshnessSeconds": 6,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -586,19 +586,19 @@
             "postLcpP75": 1300
           }
         ],
-        "generatedAt": "2026-10-24T16:32:47.525Z"
+        "generatedAt": "2026-10-24T20:03:59.089Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-10-24T16:33:02.819Z",
-      "freshnessSeconds": 9396,
+      "generatedAt": "2026-10-24T20:04:02.531Z",
+      "freshnessSeconds": 2,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-10-24T16:33:02.819Z",
+        "generatedAt": "2026-10-24T20:04:02.531Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -627,7 +627,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-10-24T06:47:20.699Z",
-      "freshnessSeconds": 44538,
+      "freshnessSeconds": 47804,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -904,7 +904,7 @@
       "present": true,
       "source": "/api/newsroom-run.json",
       "generatedAt": "2026-10-24T06:47:20.699Z",
-      "freshnessSeconds": 44538,
+      "freshnessSeconds": 47804,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -955,7 +955,7 @@
       "present": true,
       "source": "/api/promotion-receipt.json",
       "generatedAt": "2026-10-24T05:49:37.043Z",
-      "freshnessSeconds": 48002,
+      "freshnessSeconds": 51268,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -1071,13 +1071,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-10-24T03:45:10.252Z",
-      "freshnessSeconds": 55469,
+      "generatedAt": "2026-10-24T17:58:01.415Z",
+      "freshnessSeconds": 7563,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-10-24T03:45:10.252Z",
+        "generatedAt": "2026-10-24T17:58:01.415Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -1099,26 +1099,23 @@
     "staging-health": {
       "present": true,
       "source": "/api/staging-health.json",
-      "generatedAt": "2026-10-24T19:09:36.970Z",
-      "freshnessSeconds": 2,
+      "generatedAt": "2026-10-24T19:36:33.358Z",
+      "freshnessSeconds": 1651,
       "staleAfterH": 168,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-10-24T19:09:36.970Z",
-        "candidateReady": false,
-        "candidateFindings": [
-          "staging-build-sha-mismatch",
-          "staging-artifact-root-mismatch"
-        ],
-        "candidateBuildSha": "7348fc96f556d3223988eee1aa0b27a8678db483",
-        "stagingBuildSha": "99852b7c6d5a54954e3ad70705e92c914678148d",
+        "generatedAt": "2026-10-24T19:36:33.358Z",
+        "candidateReady": true,
+        "candidateFindings": [],
+        "candidateBuildSha": "2e1e075bf136fd00d4b2d8f7cfcef26794ba5c47",
+        "stagingBuildSha": "2e1e075bf136fd00d4b2d8f7cfcef26794ba5c47",
         "artifactManifest": {
-          "candidateRoot": "1fb7ad4e020140ff7e21b9fca3774fbdab66701ed4ab53117df28e1d2b563387",
+          "candidateRoot": "965e013b0b3f966ce3f5e0da2d10f9c0ce3da4190a687d98f2646d736d6a4deb",
           "candidateLeafCount": 68,
-          "stagingRoot": "7f2a273c3cdcffafb6eec94ed8450e011b57ac8e859fdb5b120a07803b508afc",
+          "stagingRoot": "965e013b0b3f966ce3f5e0da2d10f9c0ce3da4190a687d98f2646d736d6a4deb",
           "stagingLeafCount": 68,
-          "matched": false
+          "matched": true
         },
         "generatedBy": "scripts/check-staging-parity.mjs",
         "publicSafe": true,
@@ -1126,13 +1123,15 @@
         "staging": "https://website.staging.vaultsparkstudios.com",
         "status": "yellow",
         "surfaceParity": {
-          "state": "uncomparable",
-          "productionRoutes": null,
-          "stagingRoutes": 296,
+          "state": "staging-ahead",
+          "productionRoutes": 296,
+          "stagingRoutes": 297,
           "missingOnStaging": [],
-          "missingOnStagingCount": null,
-          "aheadOnStaging": [],
-          "aheadOnStagingCount": null,
+          "missingOnStagingCount": 0,
+          "aheadOnStaging": [
+            "/news/2026-10-24/nvidia-transforms-european-retail-from-digital-discovery-to-physical/"
+          ],
+          "aheadOnStagingCount": 1,
           "gating": true,
           "gatingSince": "S339",
           "remedy": "node scripts/deploy-staging-content.mjs --baseline <served-staging-build-sha>"
@@ -1140,12 +1139,31 @@
         "routes": [
           {
             "route": "/",
-            "prodStatus": 403,
+            "prodStatus": 200,
             "stagingStatus": 200,
             "stagingReachable": true,
-            "statusParity": false,
-            "shellParity": false,
-            "prodShell": [],
+            "statusParity": true,
+            "shellParity": true,
+            "prodShell": [
+              "assets/after-paint.shell-0392b76d45.js",
+              "assets/ambient-core.shell-214cf44506.js",
+              "assets/ambient-feature.shell-9b5baeb1ab.js",
+              "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+              "assets/hero-ticker.shell-550971e267.js",
+              "assets/home-idle-loader.shell-7b976ad580.js",
+              "assets/nav-sheet.shell-c0fddc0c73.js",
+              "assets/nav-toggle.shell-8c1f2155b5.js",
+              "assets/public-intelligence.shell-c86a6ecc39.js",
+              "assets/pwa-install.shell-30b48f0ae6.js",
+              "assets/pwa-nav.shell-5f63b6b75a.js",
+              "assets/schema-injector.shell-33115efcde.js",
+              "assets/sentry-init.shell-8b1d92d92b.js",
+              "assets/shell-health.shell-0995bd7945.js",
+              "assets/stats-surface.shell-b33242e1cc.js",
+              "assets/style.shell-dafcbbf695.css",
+              "assets/theme-toggle.shell-8221605898.js",
+              "assets/vault-door.shell-20bb2584bc.js"
+            ],
             "stagingShell": [
               "assets/after-paint.shell-0392b76d45.js",
               "assets/ambient-core.shell-214cf44506.js",
@@ -1166,12 +1184,12 @@
               "assets/theme-toggle.shell-8221605898.js",
               "assets/vault-door.shell-20bb2584bc.js"
             ],
-            "headerParity": false,
+            "headerParity": true,
             "prodHeaders": {
-              "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
-              "hsts": "",
+              "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
+              "hsts": "max-age=31536000; includeSubDomains; preload",
               "xcto": "nosniff",
-              "referrer": "same-origin"
+              "referrer": "strict-origin-when-cross-origin"
             },
             "stagingHeaders": {
               "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -1183,12 +1201,7 @@
             "stagingCspMode": "dynamic-worker",
             "stagingCanonicalCsp": true,
             "stagingSecurityHeaders": true,
-            "reasonCodes": [
-              "status-mismatch",
-              "prod-forbidden",
-              "shell-mismatch",
-              "header-mismatch"
-            ]
+            "reasonCodes": []
           },
           {
             "route": "/studio-pulse/",
@@ -1299,7 +1312,7 @@
       "present": true,
       "source": "/api/identity-migration-receipt.json",
       "generatedAt": "2026-08-26T01:25:14.581Z",
-      "freshnessSeconds": 5161465,
+      "freshnessSeconds": 5164730,
       "staleAfterH": 336,
       "stale": true,
       "data": {
@@ -1472,7 +1485,7 @@
       "present": true,
       "source": "/api/supabase-control-plane.json",
       "generatedAt": "2026-10-20T18:11:40.950Z",
-      "freshnessSeconds": 349078,
+      "freshnessSeconds": 352344,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -1546,13 +1559,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-10-24T19:09:39.034Z",
-      "freshnessSeconds": 0,
+      "generatedAt": "2026-10-24T19:26:21.861Z",
+      "freshnessSeconds": 2263,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-10-24T19:09:39.034Z",
+        "generatedAt": "2026-10-24T19:26:21.861Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\" (privacy). Rows under 20 samples are confidence:\"low\" — render those as \"insufficient samples\", not as a measurement. dataWindow reports when the underlying visits actually happened; readers must surface staleness rather than trusting generatedAt.",
@@ -1560,15 +1573,15 @@
         "confidenceSamples": 20,
         "dataWindow": {
           "firstDay": "2026-05-25",
-          "lastDay": "2026-07-02",
-          "days": 38
+          "lastDay": "2026-09-10",
+          "days": 61
         },
         "countries": [
           {
             "country": "US",
-            "samples": 464,
-            "lcpP75": 992,
-            "ttfbP75": 157,
+            "samples": 891,
+            "lcpP75": 936,
+            "ttfbP75": 123,
             "confidence": "high",
             "colos": [
               "ATL",
@@ -1576,24 +1589,82 @@
               "CMH",
               "DEN",
               "DFW",
+              "DTW",
               "EWR",
+              "HNL",
               "IAD",
+              "JAX",
+              "LAS",
               "LAX",
               "MCI",
+              "MIA",
+              "OMA",
               "ORD",
+              "PHL",
+              "PHX",
               "SEA",
+              "SJC",
+              "SMF",
+              "YYZ"
+            ]
+          },
+          {
+            "country": "CN",
+            "samples": 13,
+            "lcpP75": 1000,
+            "ttfbP75": 10,
+            "confidence": "low",
+            "colos": [
+              "AMS",
+              "LAX",
               "SJC"
             ]
           },
           {
             "country": "GB",
-            "samples": 8,
-            "lcpP75": 1388,
-            "ttfbP75": 437,
+            "samples": 13,
+            "lcpP75": 1072,
+            "ttfbP75": 337,
             "confidence": "low",
             "colos": [
               "LHR",
               "MAN"
+            ]
+          },
+          {
+            "country": "RU",
+            "samples": 10,
+            "lcpP75": 1584,
+            "ttfbP75": 196,
+            "confidence": "low",
+            "colos": [
+              "AMS",
+              "DME",
+              "FRA",
+              "GIG"
+            ]
+          },
+          {
+            "country": "AU",
+            "samples": 7,
+            "lcpP75": 2368,
+            "ttfbP75": 568,
+            "confidence": "low",
+            "colos": [
+              "MEL",
+              "PER",
+              "SIN"
+            ]
+          },
+          {
+            "country": "CA",
+            "samples": 7,
+            "lcpP75": 9960,
+            "ttfbP75": 1286,
+            "confidence": "low",
+            "colos": [
+              "YVR",
+              "YYZ"
             ]
           },
           {
@@ -1609,25 +1680,23 @@
             ]
           },
           {
-            "country": "CA",
-            "samples": 6,
-            "lcpP75": 9960,
-            "ttfbP75": 1286,
+            "country": "HN",
+            "samples": 5,
+            "lcpP75": 1876,
+            "ttfbP75": 78,
             "confidence": "low",
             "colos": [
-              "YVR",
-              "YYZ"
+              "ATL"
             ]
           },
           {
-            "country": "CN",
-            "samples": 6,
-            "lcpP75": 1020,
-            "ttfbP75": 746,
+            "country": "BR",
+            "samples": 4,
+            "lcpP75": 1724,
+            "ttfbP75": 538,
             "confidence": "low",
             "colos": [
-              "AMS",
-              "LAX"
+              "GRU"
             ]
           },
           {
@@ -1641,6 +1710,17 @@
             ]
           },
           {
+            "country": "DE",
+            "samples": 4,
+            "lcpP75": 9756,
+            "ttfbP75": 529,
+            "confidence": "low",
+            "colos": [
+              "CPH",
+              "FRA"
+            ]
+          },
+          {
             "country": "EG",
             "samples": 4,
             "lcpP75": 2184,
@@ -1648,6 +1728,28 @@
             "confidence": "low",
             "colos": [
               "MRS"
+            ]
+          },
+          {
+            "country": "PH",
+            "samples": 4,
+            "lcpP75": 1522,
+            "ttfbP75": 880,
+            "confidence": "low",
+            "colos": [
+              "MNL",
+              "SIN"
+            ]
+          },
+          {
+            "country": "IT",
+            "samples": 3,
+            "lcpP75": 1599,
+            "ttfbP75": 975,
+            "confidence": "low",
+            "colos": [
+              "FCO",
+              "MXP"
             ]
           },
           {
@@ -1661,6 +1763,16 @@
             ]
           },
           {
+            "country": "SG",
+            "samples": 3,
+            "lcpP75": 1084,
+            "ttfbP75": 118,
+            "confidence": "low",
+            "colos": [
+              "SIN"
+            ]
+          },
+          {
             "country": "TR",
             "samples": 3,
             "lcpP75": 764,
@@ -1671,27 +1783,34 @@
             ]
           },
           {
-            "country": "other",
-            "samples": 23,
-            "lcpP75": 1284,
-            "ttfbP75": 538,
-            "confidence": "high",
+            "country": "UA",
+            "samples": 3,
+            "lcpP75": 1824,
+            "ttfbP75": 318,
+            "confidence": "low",
             "colos": [
+              "VIE"
+            ]
+          },
+          {
+            "country": "other",
+            "samples": 19,
+            "lcpP75": 1256,
+            "ttfbP75": 594,
+            "confidence": "low",
+            "colos": [
+              "AKL",
               "ARN",
               "BOM",
               "BRU",
               "BUD",
-              "DFW",
-              "DME",
-              "FCO",
-              "FRA",
-              "GRU",
+              "CDG",
+              "CPH",
+              "HKG",
               "LIS",
               "MAD",
-              "MNL",
               "MRS",
               "PRG",
-              "SIN",
               "WAW"
             ]
           }
@@ -1702,7 +1821,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-09-10T00:00:00.000Z",
-      "freshnessSeconds": 3870579,
+      "freshnessSeconds": 3873845,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -2099,7 +2218,7 @@
       "present": true,
       "source": "/api/attention-pressure.json",
       "generatedAt": "2026-09-10T00:00:00.000Z",
-      "freshnessSeconds": 3870579,
+      "freshnessSeconds": 3873845,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -2129,13 +2248,13 @@
     "canonical-destination-reachability": {
       "present": true,
       "source": "/api/canonical-destination-reachability.json",
-      "generatedAt": "2026-10-24T16:32:52.702Z",
-      "freshnessSeconds": 9406,
+      "generatedAt": "2026-10-24T19:25:20.994Z",
+      "freshnessSeconds": 2324,
       "staleAfterH": 36,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-10-24T16:32:52.702Z",
+        "generatedAt": "2026-10-24T19:25:20.994Z",
         "generatedBy": "scripts/probe-canonical-destinations.mjs",
         "publicSafe": true,
         "source": {
@@ -2155,7 +2274,7 @@
           "passed": 18,
           "failed": 0,
           "unknown": 2,
-          "longestUnknownStreak": 448,
+          "longestUnknownStreak": 449,
           "neverKnownGood": 2
         },
         "results": [
@@ -2173,7 +2292,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2190,7 +2309,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2207,7 +2326,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2224,7 +2343,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2241,7 +2360,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2258,7 +2377,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2275,7 +2394,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2292,7 +2411,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2309,7 +2428,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2320,7 +2439,7 @@
             "attemptCount": 2,
             "attempts": [
               {
-                "status": 403,
+                "status": 401,
                 "redirected": false,
                 "outcome": "unknown"
               },
@@ -2330,7 +2449,7 @@
                 "outcome": "unknown"
               }
             ],
-            "unknownStreak": 448,
+            "unknownStreak": 449,
             "lastKnownGoodAt": null,
             "lastKnownGoodAgeHours": null
           },
@@ -2348,7 +2467,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2365,7 +2484,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2382,7 +2501,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2399,7 +2518,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2416,7 +2535,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2437,7 +2556,7 @@
                 "outcome": "unknown"
               }
             ],
-            "unknownStreak": 411,
+            "unknownStreak": 412,
             "lastKnownGoodAt": null,
             "lastKnownGoodAgeHours": null
           },
@@ -2455,7 +2574,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2472,7 +2591,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2489,7 +2608,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2506,7 +2625,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-24T16:32:52.702Z",
+            "lastKnownGoodAt": "2026-10-24T19:25:20.994Z",
             "lastKnownGoodAgeHours": 0
           }
         ],
@@ -2517,7 +2636,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-10-24T00:00:00.000Z",
-      "freshnessSeconds": 68979,
+      "freshnessSeconds": 72245,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -2532,7 +2651,7 @@
           "forge": 17,
           "vaulted": 5,
           "activeThisWeek": 1,
-          "lastArkBroadcastAt": "2026-10-24T07:54:52.000Z",
+          "lastArkBroadcastAt": "2026-10-24T19:20:00.000Z",
           "ignisHeartbeatAt": "2026-10-24T06:13:30.925Z",
           "lastShippedOn": "2026-10-24"
         },
@@ -2541,8 +2660,8 @@
           "routesMatched": 9,
           "routesTotal": 9,
           "openIncidents": 0,
-          "degradedSince": "2026-09-15T05:13:10.586Z",
-          "degradedForDays": 2.5,
+          "degradedSince": null,
+          "degradedForDays": 0,
           "observationBounded": true,
           "asOf": "2026-09-17T17:59:22.088Z",
           "source": "api/worker-route-history.json",
@@ -2580,7 +2699,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-10-24T00:00:00.000Z",
-      "freshnessSeconds": 68979,
+      "freshnessSeconds": 72245,
       "staleAfterH": 720,
       "stale": false,
       "data": {

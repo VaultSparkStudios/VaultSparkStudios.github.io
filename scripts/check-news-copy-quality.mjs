@@ -176,6 +176,7 @@ export const ACRONYMS = new Set([
   // Brands whose own house style is all-caps — flagging these reads as noise.
   'NVIDIA', 'IBM', 'AMD', 'ARM', 'TSMC', 'HBM', 'PCIE', 'DDR', 'SRAM', 'DRAM',
   'CUDA', 'ROCM', 'MLPERF', 'NASA', 'DARPA', 'MIT', 'IEEE', 'ACM', 'UNCTAD',
+  'TRELLIS', // 3D generation product name; NVIDIA's published house style.
 ]);
 
 /** Brands and identifiers that legitimately begin a sentence in lowercase. */
