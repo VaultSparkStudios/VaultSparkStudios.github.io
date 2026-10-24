@@ -79,16 +79,16 @@
 ║  ⛔  Context age   20d                                            ║
 ║  ✓  IGNIS         45371 FORGE  ·  -1d old                        ║
 ║  ⛔  Truth         yellow — selected release verified;…           ║
-║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
+║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.170  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  0d old (2026-10-24)                            ║
+║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
-║  ✓  Codex trust   trusted project active                         ║
+║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
+║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -123,6 +123,9 @@
 ║   96  [PRODUCT]      Consider per-member byte verification only  ║
 ║        Consider per-member byte verification only if source mut  ║
 ║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   93  [PRODUCT]      Coordinate an evidence-backed distinction   ║
 ║        Coordinate an evidence-backed distinction between format  ║
 ║                                                                  ║
@@ -131,9 +134,6 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Staging lineage tolerant of publisher data  ║
 ║        Staging lineage tolerant of publisher data drift. is ope  ║
-║                                                                  ║
-║   84  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
-║        Gate srcset, CSS url(), redirect targets. Future only. i  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
