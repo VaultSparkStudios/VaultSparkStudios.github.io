@@ -17,7 +17,7 @@ Wave 4 · Canonical closeout and final native audit — authoritative state: doc
 
 Release and closeout are complete only when the corresponding ledger waves are complete and releaseAccepted is true; local verification alone does not establish deployment.
 
-- [ ] [SIL][S400] Add pre-upload archive membership verification after the transient omitted404 staging attempt; preserve the original failure. Future selection only.
+- [x] [SIL][S400][S401] Pre-upload archive membership verification implemented in both staging publishers, with streaming gzip integrity and 10 actual-tar regressions. Original S400 omission retained; real deployment acceptance tracked in docs/RELEASE_S401.json.
 - [ ] [SIL][S400] Coordinate an evidence-backed distinction between formatting-only source writes and actual pixel changes in visual freshness; existing mandatory gate remains enforced. Future selection only.
 
 ## S399

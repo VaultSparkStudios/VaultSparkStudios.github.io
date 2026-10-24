@@ -1,6 +1,6 @@
 # Genius Hit List — Session 400
 
-Generated: 2026-10-23
+Generated: 2026-10-24
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
@@ -22,10 +22,10 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Add pre-upload archive membership verification after the transient om…
+#### 1. [PRODUCT] Consider per-member byte verification only if source mutation during …
 Final score: **96**
-[SIL][S400] Add pre-upload archive membership verification after the transient omitted404 staging attempt; preserve the original failure. Future selection only.
-Why it matters: Add pre-upload archive membership verification after the transient omi is open, local, and unblocked — can ship this session.
+[SIL][S401] Consider per-member byte verification only if source mutation during packaging is observed; not selected in this arc.
+Why it matters: Consider per-member byte verification only if source mutation during p is open, local, and unblocked — can ship this session.
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -140,7 +140,7 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Add pre-upload archive membership verification after the transient om…
+1. Consider per-member byte verification only if source mutation during …
 2. Post-push CI confirmation
 3. Coordinate an evidence-backed distinction between formatting-only sou…
 4. Verify Studio Ops acceptance of the planning-artifact timing classifi…
