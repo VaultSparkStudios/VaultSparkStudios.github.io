@@ -2428,3 +2428,23 @@ Existing identity/field-vitals holds remain separate; no lifecycle transition, a
 History: context/HANDOFF_ARCHIVE.md preserves exact pre-release checkpoints, including failed/incomplete attempts. Implementation plan and old visual receipt were archived before intentional replacement. Current receipts bind56 offline captures and215 mobile probes to unchanged sources.
 
 Final cleanup/publication checkpoint is recorded in docs/RELEASE_S397.json. A new founder /arc requires a full new session; an automatic continuation resumes this bound invocation.
+
+
+---
+<!-- archived: 2026-10-24 -->
+
+## Where We Left Off — S400 complete in closing publication transaction
+
+Native goal01a168e8-03b3-79c1-a35e-55b14a694961,createdAt1792761435,is bound to S400,startHead1a96e6203bdd1e368d310daf50a88f1ca659a7eb. This invocation performed fresh startup,audits,implementation andrelease. Do not start another arc during continuation.
+
+Both selected outcomes are fully deployed at 06d632056f (tag release-s400-06d632056f), normal Pages run40043209707, production deployment9226ae4d-c13a-467e-85f1-02924336f352. Exact hosted3/3 passed; Lighthouse neededone unchanged-candidate retry,retaining the first failure. Staging13911files and11/11ceremony passed. Current complete source547/547,receipt23971be3a92d66332bea44e6,fingerprintd559e6eea96360ef32fe1aa0 is accepted. Canonical producer readback covers1143files:1133byte-identical and10verified redirects,zero differences/unread. Both public build stamps match. Live production23/23browser checks andfourviewed light/dark desktop/mobile captures pass.
+
+Reference49self-tests and16actual Chromium differential cases pass; current340pages/31806references resolve. Original238public browser checks,112persona and28disclosure manual images remain separately scoped. Current16contrast cases meetAA; original6.04:1minimum sample is historical. Linux archivalfixtures12/12zero skips andbothdeploy self-tests18/18,27/27 pass.
+
+Raw apex byte audit remains explicitly unverified becauseedge-transformed HTML andruntime redirects exceed the static artifact model; no raw apex parity claim is made. The producer-origin comparison andlive apex behavior are independently passing. Premise timing classifier remains nonpassing; strict premise checks passed before behavior edits. Existing identity,field-vitals andcapacity holds remain separate. No measured conversion,field-performance oravailability gain is claimed. Evidence:docs/RELEASE_S400.json.
+
+Normal main publication357531b751 preserves allincoming history andthe release candidate06d632 is reachable frommain. No force push. Candidate is immutable; later observation-only main commits do not replace its acceptance evidence. Current verified shell snapshot:.cache/S400-archive-shell-manifest.json. Source fingerprints andoriginal capture times are never silently rebound after source changes.
+
+SIL939/1000,velocity2. Canonical writeback,memory,independent review corrections,Ark transport andowned-process cleanup are complete. The closing transaction publishes thisreceipt normally. Mark the native goal complete after actual push andremote reachability verification; if interrupted beforethat,finish publication without restarting anarc. Do not rerun fullsource orstaging without new source/failure evidence. Onlytwo future SIL rows remain unselected. CDR reviewed:no new creative direction. Prior failed build,staging,concentration,push andhosted attempts remain retained. Ownedpreview32472/4198 was closed after live verification.
+
+Closing publication boundary: incoming automated homepage cadence text advances from today to yesterday at the generator UTC boundary. Production remains immutable 06d632056f. The completed 547-check and mobile receipts prove that released candidate; they are historical for the later main observation snapshot. Do not rebind them across the label change or claim the closing main snapshot was redeployed.
