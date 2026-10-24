@@ -1,0 +1,37 @@
+{
+  "observedAt": "2026-10-24T18:11:48.694Z",
+  "origin": "https://website.staging.vaultsparkstudios.com",
+  "rows": [
+    {
+      "path": "api/worker-route-history.json",
+      "matched": true,
+      "state": "matched",
+      "current": {
+        "openIncidents": 0,
+        "totalRoutes": 9,
+        "onsetNotLaterThan": null,
+        "onsetNotEarlierThan": null,
+        "degradedForMs": 0,
+        "degradedForHours": 0,
+        "degradedForDays": 0
+      }
+    },
+    {
+      "path": "api/public-status.json",
+      "matched": true,
+      "state": "matched",
+      "current": {
+        "state": "matched",
+        "routesMatched": 9,
+        "routesTotal": 9,
+        "openIncidents": 0,
+        "degradedSince": null,
+        "degradedForDays": 0,
+        "observationBounded": true,
+        "asOf": "2026-09-17T17:59:22.088Z",
+        "source": "api/worker-route-history.json",
+        "note": "degradedSince is an upper bound on the true onset, corroborated against the independent uptime probe — never a claimed start time."
+      }
+    }
+  ]
+}

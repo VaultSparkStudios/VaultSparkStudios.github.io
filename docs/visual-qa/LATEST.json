@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-10-24T03:54:45.281Z",
+  "capturedAt": "2026-10-24T18:07:59.752Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "db37c5cca6b9435ac4327b131bc47ac2f96003d6dae0b17a6127d2ced56a2a53",
+    "sha256": "c56670196b07e283f5af271989602a0c1bb8dfc41cd7a5f5823a39ed00df5a94",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -505,6 +505,9 @@
       "assets/og/news/2026-10-23--unauthorized-ai-agents-are-reportedly-already-accessing-us-bank--meme--128.avif",
       "assets/og/news/2026-10-23--unauthorized-ai-agents-are-reportedly-already-accessing-us-bank--meme--640.avif",
       "assets/og/news/2026-10-23--unauthorized-ai-agents-are-reportedly-already-accessing-us-bank--meme--640.webp",
+      "assets/og/news/2026-10-24--openai-says-its-cutting-off-internet-access-for-frontier--meme--128.avif",
+      "assets/og/news/2026-10-24--openai-says-its-cutting-off-internet-access-for-frontier--meme--640.avif",
+      "assets/og/news/2026-10-24--openai-says-its-cutting-off-internet-access-for-frontier--meme--640.webp",
       "assets/page-sigil.js",
       "assets/pwa-install.js",
       "assets/rank-orb.js",
@@ -517,7 +520,6 @@
       "data/news-desk/days/2026-08-21.json",
       "data/news-desk/days/2026-08-22.json",
       "data/news-desk/days/2026-08-23.json",
-      "index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
       "scripts/capture-theme-matrix.mjs",
@@ -527,6 +529,7 @@
       "scripts/generate-news-pages.mjs",
       "scripts/lib/news-desk.mjs",
       "scripts/lib/news-memes.mjs",
+      "status/index.html",
       "tests/attention-surfaces.spec.js",
       "vault-member/portal-auth.js",
       "vault-member/portal-dashboard.js",
@@ -2491,6 +2494,18 @@
         "sha256": "56e1b4584341d1121b3d3ad6d9b85180f20fe4b2e891c388f94d40856c35d642"
       },
       {
+        "path": "assets/og/news/2026-10-24--openai-says-its-cutting-off-internet-access-for-frontier--meme--128.avif",
+        "sha256": "3fff5c31b3732eb90b7ba38dd0131bda0d49e91fb0c527ffe8279e7f5d974d2e"
+      },
+      {
+        "path": "assets/og/news/2026-10-24--openai-says-its-cutting-off-internet-access-for-frontier--meme--640.avif",
+        "sha256": "78faf1d9963426bf9b2d8ebc82b23324ee710a1e94b201dd5d9acfb0f7066c18"
+      },
+      {
+        "path": "assets/og/news/2026-10-24--openai-says-its-cutting-off-internet-access-for-frontier--meme--640.webp",
+        "sha256": "dd9821bc742fe80ca9742020db6e337e50e4f2fdb58d162cb0d081355499b644"
+      },
+      {
         "path": "assets/page-sigil.js",
         "sha256": "7a82a7807fa3275323298c0b90ed4f6de80526ac61bce9eb69305253441e06c1"
       },
@@ -2539,10 +2554,6 @@
         "sha256": "03da839472121835a27018b22ba8b20c6860b1f41745d07c88b13518558080a8"
       },
       {
-        "path": "index.html",
-        "sha256": "0284ed110d9fc73b5d28c351509f151bd3716e720c54cf91562506809596dac5"
-      },
-      {
         "path": "scripts/build-deploy-currency.mjs",
         "sha256": "bdec5314c366c8c5df8be99b288d2ecd0bd50bfb30e09da38a91768b4fade773"
       },
@@ -2579,6 +2590,10 @@
         "sha256": "a8de3d0e7fbfca6850044cc54c9dfe945a191d8c67682685534f5d46d00941ea"
       },
       {
+        "path": "status/index.html",
+        "sha256": "0fb3df915a757d92b389630f8cda4c60c88cd5df6b24bf201adedad5a3713fa3"
+      },
+      {
         "path": "tests/attention-surfaces.spec.js",
         "sha256": "7f38cf1245481a011933d83c8d7f22dc73b46a61abc3f717a50beb80a121fec8"
       },
@@ -2602,13 +2617,13 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "7d55493b890f9456c344b422b60d1b1c7bc1100684fe1ee675c8ff08cd56c1b3",
-    "candidateSha": "7348fc96f556d3223988eee1aa0b27a8678db483",
-    "root": "1ec960f6c8d2c70e7ec62b76db1b806ee6704e013e1c183c9515b5f17b686f58"
+    "manifestSha256": "af43af45180a2612ccdce8e5c459b272061373a85631b7776efe1696cfeaffc2",
+    "candidateSha": "99852b7c6d5a54954e3ad70705e92c914678148d",
+    "root": "7f2a273c3cdcffafb6eec94ed8450e011b57ac8e859fdb5b120a07803b508afc"
   },
   "matrix": {
     "routes": [
-      "/"
+      "/status/"
     ],
     "themes": [
       "dark",
@@ -2632,7 +2647,7 @@
       }
     ],
     "states": [
-      "page"
+      "changed-surface"
     ],
     "expectedCaptures": 14,
     "completedCaptures": 14
@@ -2645,7 +2660,7 @@
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Codex S401 rendered review",
+    "reviewer": "image-capable agent",
     "findings": [],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
@@ -2665,13 +2680,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "s401-home--dark--desktop.png",
-      "sha256": "1b127044d01f8d5b3134cdb91181ef65d34be5e00558017089e040c9e748e54a",
-      "page": "/",
-      "state": "page",
+      "file": "status--dark--desktop--changed-surface.png",
+      "sha256": "6594f34ced5ef1d9d57e950e2b730ec175832cd02e728ed67887fb6b999bceec",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S401 rendered review"
+        "reviewer": "image-capable agent"
       }
     },
     {
@@ -2687,13 +2702,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "s401-home--light--desktop.png",
-      "sha256": "0322116db105eb7c8a886230f549278e6890de2a5fa52e1423100551758ded5b",
-      "page": "/",
-      "state": "page",
+      "file": "status--light--desktop--changed-surface.png",
+      "sha256": "cc657ac3cd68b919ef3ca60f2039b151614a49f39548627a9df20f2420615cb6",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S401 rendered review"
+        "reviewer": "image-capable agent"
       }
     },
     {
@@ -2709,13 +2724,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "s401-home--ambient--desktop.png",
-      "sha256": "91ed90a99e187a4752c670839fa7befe39c848875d1a977cc35562d83429d3b2",
-      "page": "/",
-      "state": "page",
+      "file": "status--ambient--desktop--changed-surface.png",
+      "sha256": "edd403678b4df378407da98baccff611be7f0fa633dab6e90eb6714851922d66",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S401 rendered review"
+        "reviewer": "image-capable agent"
       }
     },
     {
@@ -2731,13 +2746,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "s401-home--warm--desktop.png",
-      "sha256": "2e4ddfa0836cfc858c33c614384a4be66bdb5a52e6f87e9f74cc629ce8cc38f7",
-      "page": "/",
-      "state": "page",
+      "file": "status--warm--desktop--changed-surface.png",
+      "sha256": "0fbc346a7007a011513d1e6604f31b2cfebe7de72022887bbe43b4dc45caa441",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S401 rendered review"
+        "reviewer": "image-capable agent"
       }
     },
     {
@@ -2753,13 +2768,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "s401-home--cool--desktop.png",
-      "sha256": "72da9193a17916ad4171e8bd0fb8969111aa4d550b64ffaea457f074f639f8ab",
-      "page": "/",
-      "state": "page",
+      "file": "status--cool--desktop--changed-surface.png",
+      "sha256": "1f8d91b18615d2d5ce28ba8a23ee1502aa2b6e4d41993be1b58ed0a982fbeab7",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S401 rendered review"
+        "reviewer": "image-capable agent"
       }
     },
     {
@@ -2775,13 +2790,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "s401-home--lava--desktop.png",
-      "sha256": "cfb22d4e442d43828c06fa3131c3af4f2046dd67286121a7f192fb429ec1bb07",
-      "page": "/",
-      "state": "page",
+      "file": "status--lava--desktop--changed-surface.png",
+      "sha256": "60f17e27e6521ad18259bc2df04eeb902ab078c3ebc3a895b905ec33ef3642cd",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S401 rendered review"
+        "reviewer": "image-capable agent"
       }
     },
     {
@@ -2797,13 +2812,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "s401-home--high-contrast--desktop.png",
-      "sha256": "b922fc4b4421ae6fceec8ff5f171f1b7c76a39f1aed0282c54b0edc7bfd4478a",
-      "page": "/",
-      "state": "page",
+      "file": "status--high-contrast--desktop--changed-surface.png",
+      "sha256": "19dacce9705df7f7b06ba6d45aa8f0323ea8532d64300febaf5c687ac6ff3e35",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S401 rendered review"
+        "reviewer": "image-capable agent"
       }
     },
     {
@@ -2819,13 +2834,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "s401-home--dark--mobile.png",
-      "sha256": "845c72827e7198813e5aa2a96e62cd8c4f8ad61adb3ef1ee6d5a15c3819ecae0",
-      "page": "/",
-      "state": "page",
+      "file": "status--dark--mobile--changed-surface.png",
+      "sha256": "969f7c19cac4055c441287e7a22a3efdd1813f8dde57c113b3b00cd637ff2bfc",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S401 rendered review"
+        "reviewer": "image-capable agent"
       }
     },
     {
@@ -2841,13 +2856,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "s401-home--light--mobile.png",
-      "sha256": "8081562b5979f6d6c104e8a8231071bb3ef4f0705afd3d591856277000fbede1",
-      "page": "/",
-      "state": "page",
+      "file": "status--light--mobile--changed-surface.png",
+      "sha256": "1a6e6a5f699deb051698eed4e59998ac52ba88bc5c307567a4c528cfd3901f7f",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S401 rendered review"
+        "reviewer": "image-capable agent"
       }
     },
     {
@@ -2863,13 +2878,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "s401-home--ambient--mobile.png",
-      "sha256": "13d1f20d953c3775134078d23a7000b2b7d1c434b0be4767e42fc392be4b493f",
-      "page": "/",
-      "state": "page",
+      "file": "status--ambient--mobile--changed-surface.png",
+      "sha256": "bd4290c0855bdd202a6a4a6f03c9f01a592969afc244db1328bd3012dbb5fc36",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S401 rendered review"
+        "reviewer": "image-capable agent"
       }
     },
     {
@@ -2885,13 +2900,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "s401-home--warm--mobile.png",
-      "sha256": "f224b682f24b353285b27180d79ee3e83bf9f0c835421d6e958f311cec6134d3",
-      "page": "/",
-      "state": "page",
+      "file": "status--warm--mobile--changed-surface.png",
+      "sha256": "b70229e81f384801e46e3d704c5f4d036de39e7355f2e7e5e8df955c184ac851",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S401 rendered review"
+        "reviewer": "image-capable agent"
       }
     },
     {
@@ -2907,13 +2922,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "s401-home--cool--mobile.png",
-      "sha256": "dfdced55266e70804f2d17ea6b171a9c761b74b2af75259908d2553a29608c24",
-      "page": "/",
-      "state": "page",
+      "file": "status--cool--mobile--changed-surface.png",
+      "sha256": "e74af183c77dbb4ad17ec3a20fa4b513fad8cd0285969932a6fa5eb27d59210b",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S401 rendered review"
+        "reviewer": "image-capable agent"
       }
     },
     {
@@ -2929,13 +2944,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "s401-home--lava--mobile.png",
-      "sha256": "70df36803ebd8b245814d21e2f37fd1989b730c70b4dac575b414fd757b567d4",
-      "page": "/",
-      "state": "page",
+      "file": "status--lava--mobile--changed-surface.png",
+      "sha256": "09b96b1b95ee7fe9ceec9228d90d8793f971846ba07e88e6fc34f4771c1ac567",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S401 rendered review"
+        "reviewer": "image-capable agent"
       }
     },
     {
@@ -2951,16 +2966,14 @@
         "width": 390,
         "height": 844
       },
-      "file": "s401-home--high-contrast--mobile.png",
-      "sha256": "5f5fafb1c75f31c64cadfa745ddad637e06094a6a38624cf6e1c16cd4f27b1b6",
-      "page": "/",
-      "state": "page",
+      "file": "status--high-contrast--mobile--changed-surface.png",
+      "sha256": "3d6cbc4b441447020a9381336014fbc940ae773f02f4fe9439b140f742983091",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S401 rendered review"
+        "reviewer": "image-capable agent"
       }
     }
-  ],
-  "reboundAt": "2026-10-24T06:22:42.544Z",
-  "rebindScope": "Candidate metadata only; exact original bound source, PNG hashes and per-capture observation times preserved. No new rendered capture or manual review claimed."
+  ]
 }

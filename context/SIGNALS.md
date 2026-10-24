@@ -15,7 +15,7 @@
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
 ║  ✓  Codex trust   trusted project active                         ║
-║  ⚠  Canon adopt.  5/55 pending review                            ║
+║  ⚠  Canon adopt.  4/55 pending review                            ║
 ║  Open current tasks 36 / Human-action entries 6                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.01/7d · estimated metered total…       ║
