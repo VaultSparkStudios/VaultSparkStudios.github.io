@@ -1,0 +1,61 @@
+{
+  "session": 402,
+  "observedAt": "2026-10-24T23:28:39.967Z",
+  "acceptedRelease": "1f5e24f9029bd0c9b5e4973cf4148cc1474455ad",
+  "sourceFingerprint": "7b5d3c116e9a33d8a0df9a4f",
+  "runs": [
+    {
+      "receiptId": "a85d33fd362984eae50ca93f",
+      "startedAt": "2026-10-24T23:04:47.788Z",
+      "finishedAt": "2026-10-24T23:18:03.351Z",
+      "passed": 547,
+      "failed": 0,
+      "commandCount": 547,
+      "coverageComplete": true,
+      "sourceFingerprint": "7b5d3c116e9a33d8a0df9a4f",
+      "concentration": {
+        "maxStepShare": 0.3,
+        "minActionableStepMs": 45000,
+        "dominantStep": 1,
+        "dominantCommand": "node --test tests/staging-archive.unit.spec.mjs tests/offline-recovery.unit.spec.mjs tests/offline-navigation.unit.spec.mjs tests/deploy-parity.unit.spec.mjs tests/news-article-css.unit.spec.mjs tests/served-parity.unit.spec.mjs tests/operational-admission.unit.spec.mjs tests/moderation-admission.unit.spec.mjs tests/public-rest-canary.unit.spec.mjs tests/metadata-backfill.unit.spec.mjs tests/heartbeat-snapshot.unit.spec.mjs tests/rollback-archive.unit.spec.mjs",
+        "dominantDurationMs": 109518,
+        "dominantShare": 0.1439,
+        "breached": false
+      }
+    },
+    {
+      "receiptId": "b36c8f70ade89d0327f45cd2",
+      "startedAt": "2026-10-24T23:18:16.405Z",
+      "finishedAt": "2026-10-24T23:26:48.099Z",
+      "passed": 547,
+      "failed": 0,
+      "commandCount": 547,
+      "coverageComplete": true,
+      "sourceFingerprint": "7b5d3c116e9a33d8a0df9a4f",
+      "concentration": {
+        "maxStepShare": 0.3,
+        "minActionableStepMs": 45000,
+        "dominantStep": 1,
+        "dominantCommand": "node --test tests/staging-archive.unit.spec.mjs tests/offline-recovery.unit.spec.mjs tests/offline-navigation.unit.spec.mjs tests/deploy-parity.unit.spec.mjs tests/news-article-css.unit.spec.mjs tests/served-parity.unit.spec.mjs tests/operational-admission.unit.spec.mjs tests/moderation-admission.unit.spec.mjs tests/public-rest-canary.unit.spec.mjs tests/metadata-backfill.unit.spec.mjs tests/heartbeat-snapshot.unit.spec.mjs tests/rollback-archive.unit.spec.mjs",
+        "dominantDurationMs": 131460,
+        "dominantShare": 0.2573,
+        "breached": false
+      }
+    }
+  ],
+  "autopilot": {
+    "exitCode": 0,
+    "log": ".cache/logs/S402-closeout-autopilot.log",
+    "commit": "89a82d12ed",
+    "reconcile": "6f9973f7a7",
+    "push": "Initial push rejected non-fast-forward; scheduled uptime a6d9c3eab3 preserved by normal merge. Final remote reachability is checked after publishing this record."
+  },
+  "ark": {
+    "id": "01K5O3SKF8ED13B997EA4D6FE0",
+    "state": "sent",
+    "receipt": ".cache/logs/S402-ark-impact.log",
+    "recipientApplication": "not claimed"
+  },
+  "publicationCondition": "This closing record and accepted release must be reachable from remote main before native goal completion.",
+  "deployedScope": "Accepted1f5e24f902 full release; later closing and routine observation commits are not claimed as that deployment."
+}

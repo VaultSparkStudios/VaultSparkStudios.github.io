@@ -7,7 +7,7 @@ Decision archive is raw byte-exact to 99852b7c6d:context/DECISIONS.md (257073 by
 
 SIL archive context/archive/SIL_S1-S401.md is raw byte-exact to the original committed ledger (306672 bytes; SHA-256 0ca6d0f65fc88c706ba3e4fcc5132dbfc94b29e94e3abcb3bf6e2b21407ff33c). The complete Rolling Status and recent complete sections remain in the hot file; the SIL cap is 300 KiB. Evidence: docs/S402_sil-rotation.json.
 
-Waves1–3 complete. Wave4: canonical writeback prepared; final independent closeout review, intelligence, autopilot, Ark delivery, process cleanup and remote publication remain explicit acceptance work. No native-completion claim.
+Waves1–3 complete. Wave4: all ten writeback surfaces, independent review round2, recipient-owned intelligence refresh and two complete547/547 closeout runs are verified. Ark impact cargo01K5O3SKF8ED13B997EA4D6FE0 was sent (recipient application is not claimed). Normal closing publication preserves scheduled uptime updates; native completion requires final remote reachability of this record. Evidence: docs/S402_closeout-acceptance.json. Accepted production1f5e24f902 remains distinct from later closing snapshots.
 
 Limitations:
 - Strict premises preceded behavior edits; planning-artifact timing classifier remains nonpassing.
@@ -19,7 +19,7 @@ Limitations:
 - Staging proof source remains2e1e075b; final tag1f5e24f902 has unchanged deployed runtime code, all68 critical leaves match staging with existing nonce normalisation for6HTML responses, and one disclosed validation-only house-style exception.
 - Raw apex byte parity is outside the edge-transformed HTML model; canonical-origin served-text parity has its stated scope.
 - Strict premises preceded behavior edits; the planning-artifact timing classifier remains nonpassing.
-- Final closeout review, intelligence refresh, autopilot checks and normal remote publication must be verified separately before native goal completion.
+- Final remote reachability is checked after normal closing publication; earlier pending checkpoints remain historical.
 
 CDR reviewed — no new creative direction. SIL939/1000 unchanged; velocity1.
 

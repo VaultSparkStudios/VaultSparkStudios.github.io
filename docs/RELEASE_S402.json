@@ -575,7 +575,8 @@
       "productionWorkflow": "docs/S402_production-workflow.json",
       "providerIdentity": "docs/S402_provider-identity.json",
       "productionStamps": "docs/S402_production-stamps.json"
-    }
+    },
+    "acceptance": "docs/S402_closeout-acceptance.json"
   },
   "limitations": [
     "Strict premises preceded behavior edits; planning-artifact timing classifier remains nonpassing.",
@@ -604,8 +605,9 @@
     },
     {
       "id": 4,
-      "state": "publication-pending",
-      "detail": "Canonical writeback, final closeout review/intelligence/autopilot/Ark/process cleanup and normal remote publication require separate execution and verification."
+      "state": "complete",
+      "evidence": "docs/S402_closeout-acceptance.json",
+      "publicationCondition": "Remote main must contain this closing record before native completion."
     }
   ]
 }

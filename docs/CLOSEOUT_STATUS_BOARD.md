@@ -1,28 +1,68 @@
-# S401 closeout — prepared publication snapshot
+<!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
+<!-- generated-at: 2026-10-24 (Session 402 closeout) -->
 
-Production remains pinned to7348fc96f556d3223988eee1aa0b27a8678db483. Closing records and incoming observation projections are a separate publication, not a new runtime deployment.
+# Closeout Status Board — VaultSparkStudios.github.io
 
-```text
-╔══ SESSION CLOSEOUT · S401 ═══════════════════════════════════╗
-║ WHAT SHIPPED                                                ║
-║ Exact archive inventory and gzip integrity before upload    ║
-╠══ SCORES ═══════════════════════════════════════════════════╣
-║ SIL939/1000 · velocity1 · selected outcome1/1 verified       ║
-║ Source547/547 twice · archive fixtures10/10 executed        ║
-╠══ WRITE-BACK STATUS ════════════════════════════════════════╣
-║ Canonical files, audit, memory, fresh review, Ark complete   ║
-╠══ GIT STATUS ═══════════════════════════════════════════════╣
-║ main · closing merge pending normal commit/push verification║
-╠══ DEPLOYMENT ═══════════════════════════════════════════════╣
-║ Staging13934 regular files · ceremony11/11                  ║
-║ Live7348fc96f5 · full Pages40066222368 · provider4a069120      ║
-║ Canonical1143paths:1133exact10redirects0different/unread     ║
-║ Two baseline-reproduced browser failures remain nonpassing  ║
-╠══ POST-SESSION SIGNALS ═════════════════════════════════════╣
-║ Doctor15/17 ·2warnings ·0blocking ·IGNIS45371               ║
-║ Shell snapshot28recorded ·28closed ·0running ·0preview ports║
-║ SCAFFOLD4tasks ·4done ·0in progress ·0open                  ║
-╠══ NEXT SESSION ═════════════════════════════════════════════╣
-║ Observe released reliability; future outcomes unselected   ║
-╚═════════════════════════════════════════════════════════════╝
 ```
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S402 ═══════╗
+║  Date: 2026-10-24  ·  SIL: 939/1000  ·  Velocity: 1 stable       ║
+║  Mode: FOUNDER  ·  Agent: codex                                  ║
+║  Autopilot: BYPASSED (S402) — no receipt; run node scripts/clos  ║
+║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
+║  ✓ Strict premises preceded behavior edits; planning-artifact t  ║
+║  ✓ Existing identity/provider, field-vitals and account-capacit  ║
+║  ✓ No measured field-performance, conversion or availability ga  ║
+║  ✓ Served parity measures complete tracked served text at the c  ║
+║  ✓ S402 original failed source attempts and prior failed stagin  ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ SCORES · SIL 939/1000 ═══════════════════════════════════════╗
+║    Dev Health         95   ██████████                            ║
+║    Alignment          94   █████████░                            ║
+║    Momentum           92   █████████░                            ║
+║    Engagement         96   ██████████                            ║
+║    Process Qual       88   █████████░                            ║
+║    Coherence          94   █████████░                            ║
+║    Security           97   ██████████                            ║
+║    Ecosystem          91   █████████░                            ║
+║    Capital            95   ██████████                            ║
+║    Automation         97   ██████████                            ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
+║  ✓ context/CURRENT_STATE.md                                      ║
+║  · context/TASK_BOARD.md                                         ║
+║  ✓ context/LATEST_HANDOFF.md                                     ║
+║  ✓ logs/WORK_LOG.md                                              ║
+║  · context/DECISIONS.md                                          ║
+║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
+║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  ✓ context/PROJECT_STATUS.json                                   ║
+║  · Codex agent memory                                            ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ GIT STATUS ══════════════════════════════════════════════════╗
+║  Changes: 38 files  ·  M:37 A:0 D:0 ?:1                          ║
+║  Ahead: 3  ·  Behind: 1                                          ║
+║  Branch: main                                                    ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
+║  Staging:  https://website.staging.vaultsparkstudios.com  ·  he  ║
+║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
+║  Doctor:        15/17                                            ║
+║  Compliance:    —                                                ║
+║  Tests:         547/547                                          ║
+║  Validation:    full-fresh                                       ║
+║  IGNIS:         0d ago                                           ║
+║  Truth:         yellow                                           ║
+║  Sanitization:  —                                                ║
+║  shells:        unknown · missing/stale enumeration              ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ NEXT SESSION ════════════════════════════════════════════════╗
+║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║
+╚════════════════════════════════════════════════════════════════╝
+```
+
+*Generated by `scripts/render-closeout-board.mjs v1.1`*
