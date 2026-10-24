@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 401,
-  "state": "in-progress",
+  "state": "ready-for-source-publication",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a16bcf-5329-7ce3-954f-c816bc504446",
@@ -39,5 +39,137 @@
       "id": 4,
       "state": "pending"
     }
-  ]
+  ],
+  "localAcceptance": {
+    "focusedTests": "10/10 zero skipped",
+    "mobile": {
+      "passed": 215,
+      "failed": 0,
+      "skipped": 0,
+      "evidence": "docs/mobile-audit/receipt.json",
+      "log": ".cache/logs/S401-mobile.log"
+    },
+    "visual": {
+      "captures": 14,
+      "manuallyReviewed": 14,
+      "themes": 7,
+      "viewports": [
+        "desktop1366",
+        "mobile390"
+      ],
+      "evidence": "docs/visual-qa/LATEST.json",
+      "scope": "Fresh settled-source homepage primary viewport. Earlier concurrent-build captures are unaccepted; historical persona receipt preserved separately."
+    },
+    "attempts": [
+      {
+        "scope": "Initial full run",
+        "passed": 88,
+        "failedStep": 89,
+        "coverageComplete": false,
+        "exit": 1,
+        "reason": "Release-proof projection had not consumed the new staging receipt.",
+        "evidence": "docs/S401_build-check-attempt1.json"
+      },
+      {
+        "scope": "Diagnostic continuation from90",
+        "passed": 458,
+        "failed": 0,
+        "coverageComplete": false,
+        "exit": 0,
+        "evidence": "docs/S401_tail-diagnostic.json",
+        "note": "Not full acceptance. A complete run from1 is required."
+      }
+    ],
+    "fullSource": {
+      "passed": 547,
+      "planned": 547,
+      "coverageComplete": true,
+      "sourceFingerprint": "6ca004820f01eb2f48b94374",
+      "receiptId": "f32f576d182820ff6102247b",
+      "exit": 0,
+      "evidence": "docs/S401_full-source-acceptance.json"
+    }
+  },
+  "staging": {
+    "schemaVersion": "1.0",
+    "generatedAt": "2026-10-24T03:21:43.554Z",
+    "generatedBy": "scripts/deploy-staging.mjs",
+    "publicSafe": true,
+    "state": "verified",
+    "source": {
+      "commitSha": "793d6644faa2b284343d61927384777ff0072c80",
+      "fingerprint": "9f2064d73a77dd047b0f314f"
+    },
+    "candidate": {
+      "artifactRoot": "6d5b311b9bbe64eed99cfcb27e67de05eac0fbe3281faf96f9826638823d5480",
+      "leafCount": 68
+    },
+    "archive": {
+      "sha256": "8ec23ec6bbf315d8deb2edad214ad11266e1e3ec6d663d6a8305aa5d1a06cad4",
+      "bytes": 3223186631,
+      "inventory": {
+        "schemaVersion": 1,
+        "fileCount": 13934,
+        "regularFilesOnly": true,
+        "inventorySha256": "8182ec8e5e24042f54a2350136e1de0561b2302d21fc2692f38db2a9461c4937"
+      }
+    },
+    "deploy": {
+      "id": "20261024031510",
+      "manifestFileCount": 13934,
+      "remoteFileCount": 13934,
+      "remoteRoot": "/opt/studio/staging/website",
+      "rollbackPath": "/opt/studio/staging/website/.rollback/20261024031510"
+    },
+    "parity": {
+      "generatedAt": "2026-10-24T03:21:43.172Z",
+      "candidateReady": true,
+      "findings": [],
+      "candidateBuildSha": "793d6644faa2b284343d61927384777ff0072c80",
+      "stagingBuildSha": "793d6644faa2b284343d61927384777ff0072c80",
+      "candidateRoot": "6d5b311b9bbe64eed99cfcb27e67de05eac0fbe3281faf96f9826638823d5480",
+      "stagingRoot": "6d5b311b9bbe64eed99cfcb27e67de05eac0fbe3281faf96f9826638823d5480",
+      "matched": true
+    },
+    "remoteVerification": {
+      "method": "atomic-install-and-byte-equality",
+      "verified": true
+    },
+    "receiptId": "118b7587454f4dbeedfe475d"
+  },
+  "stagingCurrentness": {
+    "runtimeArtifactRoot": "6d5b311b9bbe64eed99cfcb27e67de05eac0fbe3281faf96f9826638823d5480",
+    "codeChangedSinceStaging": false,
+    "shellManifestDifference": [
+      "generatedAt"
+    ],
+    "canonicalShellManifestMatches": true,
+    "note": "Initial receipt preserves its actual9f2064d73a77dd047b0f314f source fingerprint. Later shell-manifest generation metadata yields6ca004820f01eb2f48b94374; declared canonical runtime bytes match. No timestamp was rebound across changed runtime source."
+  },
+  "stagingCeremony": {
+    "passed": 11,
+    "total": 11,
+    "evidence": "docs/S401_staging-ceremony.json",
+    "scope": "Native ceremony checks all passed; underlying browser/identity scope is preserved in its own receipts."
+  },
+  "productionRollback": {
+    "observedAt": "2026-10-24T04:43:11.267Z",
+    "rows": [
+      {
+        "origin": "https://vaultsparkstudios-website.pages.dev",
+        "sha": "06d632056f3cd51b03f09a6a4fd08378877bc359",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "sha": "06d632056f3cd51b03f09a6a4fd08378877bc359",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null
+      }
+    ],
+    "stampsMatch": true
+  }
 }
