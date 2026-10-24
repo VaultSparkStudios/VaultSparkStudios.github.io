@@ -3227,3 +3227,6 @@ Scores unchanged; no field or conversion gain claimed. Brainstorm committed as f
 ### S400 verified release addendum — 2026-10-24T00:48:09.774Z
 
 Production06d632056f accepted through actual hosted,staging,provider,canonicalbyte andlivebrowser evidence. SIL939/1000 andvelocity2 remain unchanged; existingtwofuture SIL commitments remain unselected. Timing-classifier limitation,initialLighthouse failure,staging lock timeout andrawapex audit limits stay visible. No field orconversion gain is inferred.
+
+
+## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.

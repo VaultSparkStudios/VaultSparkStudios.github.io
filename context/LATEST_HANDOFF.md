@@ -1,3 +1,5 @@
+## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.
+
 ## Where We Left Off — S400 complete in closing publication transaction
 
 Native goal01a168e8-03b3-79c1-a35e-55b14a694961,createdAt1792761435,is bound to S400,startHead1a96e6203bdd1e368d310daf50a88f1ca659a7eb. This invocation performed fresh startup,audits,implementation andrelease. Do not start another arc during continuation.

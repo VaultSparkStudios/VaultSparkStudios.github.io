@@ -2487,3 +2487,6 @@ The full suite stopped after117 passing steps because an optional paragraph capt
 ## D-S400.4 — Heartbeat checks replay the published snapshot clock
 
 Hosted compliance reproduced elapsed-window drift: the same event ledger yielded website pulses7d14 at the artifact timestamp and13 after an event crossed seven days. Verification now reconstructs at a canonical, nonfuture artifact generatedAt; live generation retains current time. This establishes source/snapshot consistency only; it does not establish freshness. Missing or invalid clocks, changed sources and tampered counters remain failures. Four focused regressions include a real read-only CLI check. This is an acceptance repair for the two selected S400 outcomes, with no new public promise or identity change. Failed candidate/run evidence remains in docs/S400_hosted-compliance-attempt1.json.
+
+
+## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.

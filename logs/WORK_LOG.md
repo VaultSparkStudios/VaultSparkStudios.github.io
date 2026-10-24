@@ -338,3 +338,6 @@ Browser-faithful local reference validation and readable persona/disclosure surf
 ### S400 release acceptance — 2026-10-24T00:48:09.774Z
 
 Both selected outcomes fully deployed at06d632056f3cd51b03f09a6a4fd08378877bc359,normal Pages40043209707. Exact hosted3/3,current source547/547,staging11/11,canonical1143file readback withzero drift/unread,andlive23/23browser checks plusfourviewed production images passed. Earlier failures andrawapex audit limits remain in docs/RELEASE_S400.json. SIL939/1000,velocity2; future SIL rows stay unselected. No new creative,identity,pricing,membership,canon orlifecycle policy.
+
+
+## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.

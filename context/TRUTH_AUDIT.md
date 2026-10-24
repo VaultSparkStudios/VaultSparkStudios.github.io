@@ -1,3 +1,5 @@
+## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.
+
 ## S400 — selected outcomes fully deployed andverified
 
 Both selected outcomes are fully deployed at 06d632056f (tag release-s400-06d632056f), normal Pages run40043209707, production deployment9226ae4d-c13a-467e-85f1-02924336f352. Exact hosted3/3 passed; Lighthouse neededone unchanged-candidate retry,retaining the first failure. Staging13911files and11/11ceremony passed. Current complete source547/547,receipt23971be3a92d66332bea44e6,fingerprintd559e6eea96360ef32fe1aa0 is accepted. Canonical producer readback covers1143files:1133byte-identical and10verified redirects,zero differences/unread. Both public build stamps match. Live production23/23browser checks andfourviewed light/dark desktop/mobile captures pass.
