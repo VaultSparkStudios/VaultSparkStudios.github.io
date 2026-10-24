@@ -48,7 +48,7 @@
     "log": ".cache/logs/S402-closeout-autopilot.log",
     "commit": "89a82d12ed",
     "reconcile": "6f9973f7a7",
-    "push": "Initial push rejected non-fast-forward; scheduled uptime a6d9c3eab3 preserved by normal merge. Final remote reachability is checked after publishing this record."
+    "push": "Initial non-fast-forward push repaired by normal merge; closing records verified at remote main dc7fa570a58032771b62e1a83bcb0172cf2b3819."
   },
   "ark": {
     "id": "01K5O3SKF8ED13B997EA4D6FE0",
@@ -57,5 +57,30 @@
     "recipientApplication": "not claimed"
   },
   "publicationCondition": "This closing record and accepted release must be reachable from remote main before native goal completion.",
-  "deployedScope": "Accepted1f5e24f902 full release; later closing and routine observation commits are not claimed as that deployment."
+  "deployedScope": "Accepted1f5e24f902 full release; later closing and routine observation commits are not claimed as that deployment.",
+  "publication": {
+    "verifiedAt": "2026-10-24T23:30:47.075Z",
+    "commit": "dc7fa570a58032771b62e1a83bcb0172cf2b3819",
+    "remote": "refs/heads/main",
+    "acceptedReleaseAncestor": true,
+    "normalPush": true,
+    "log": ".cache/logs/S402-final-closeout-push.log"
+  },
+  "processHygiene": {
+    "verifiedAt": "2026-10-24T23:30:47.075Z",
+    "verificationLockPresent": false,
+    "sessionLockPresent": false,
+    "previewPorts": [
+      {
+        "port": 4187,
+        "listening": false
+      },
+      {
+        "port": 4198,
+        "listening": false
+      }
+    ],
+    "ownedLiveHandles": [],
+    "scope": "Current continuation observed terminal completion for handles18338,40627,25429,15131,88574; previously summarized owned handles terminal. No unrelated process was stopped."
+  }
 }

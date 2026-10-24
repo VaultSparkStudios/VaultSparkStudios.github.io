@@ -10,6 +10,10 @@ Decision archive is raw byte-exact to 99852b7c6d:context/DECISIONS.md (257073 by
 
 SIL archive context/archive/SIL_S1-S401.md is raw byte-exact to the original committed ledger (306672 bytes; SHA-256 0ca6d0f65fc88c706ba3e4fcc5132dbfc94b29e94e3abcb3bf6e2b21407ff33c). The complete Rolling Status and recent complete sections remain in the hot file; the SIL cap is 300 KiB. Evidence: docs/S402_sil-rotation.json.
 
+- Shipped: recovered route state clears current duration; historical incidents retained.
+- Verified: full production1f5e24f902, hosted3/3, staging11/11, served text1150/1150 and two closing547/547 runs.
+- Published: closing merge dc7fa570a5 verified on remote main; Ark impact sent.
+
 Waves1–3 complete. Wave4: all ten writeback surfaces, independent review round2, recipient-owned intelligence refresh and two complete547/547 closeout runs are verified. Ark impact cargo01K5O3SKF8ED13B997EA4D6FE0 was sent (recipient application is not claimed). Normal closing publication preserves scheduled uptime updates; native completion requires final remote reachability of this record. Evidence: docs/S402_closeout-acceptance.json. Accepted production1f5e24f902 remains distinct from later closing snapshots.
 
 - Strict premises preceded behavior edits; planning-artifact timing classifier remains nonpassing.

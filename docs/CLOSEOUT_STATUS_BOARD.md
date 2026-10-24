@@ -7,15 +7,15 @@
 ╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S402 ═══════╗
 ║  Date: 2026-10-24  ·  SIL: 939/1000  ·  Velocity: 1 stable       ║
 ║  Mode: FOUNDER  ·  Agent: codex                                  ║
-║  Autopilot: BYPASSED (S402) — no receipt; run node scripts/clos  ║
+║  Autopilot: proven (S402)                                        ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
+║  ✓ Shipped: recovered route state clears current duration; hist  ║
+║  ✓ Verified: full production1f5e24f902, hosted3/3, staging11/11  ║
+║  ✓ Published: closing merge dc7fa570a5 verified on remote main;  ║
 ║  ✓ Strict premises preceded behavior edits; planning-artifact t  ║
 ║  ✓ Existing identity/provider, field-vitals and account-capacit  ║
-║  ✓ No measured field-performance, conversion or availability ga  ║
-║  ✓ Served parity measures complete tracked served text at the c  ║
-║  ✓ S402 original failed source attempts and prior failed stagin  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 939/1000 ═══════════════════════════════════════╗
 ║    Dev Health         95   ██████████                            ║
@@ -30,20 +30,20 @@
 ║    Automation         97   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  ✓ context/CURRENT_STATE.md                                      ║
+║  · context/CURRENT_STATE.md                                      ║
 ║  · context/TASK_BOARD.md                                         ║
 ║  ✓ context/LATEST_HANDOFF.md                                     ║
-║  ✓ logs/WORK_LOG.md                                              ║
+║  · logs/WORK_LOG.md                                              ║
 ║  · context/DECISIONS.md                                          ║
 ║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  · context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 38 files  ·  M:37 A:0 D:0 ?:1                          ║
-║  Ahead: 3  ·  Behind: 1                                          ║
+║  Changes: 5 files  ·  M:5 A:0 D:0 ?:0                            ║
+║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
@@ -58,7 +58,7 @@
 ║  IGNIS:         0d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
-║  shells:        unknown · missing/stale enumeration              ║
+║  shells:        5 started · 5 closed · 0 running                 ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
 ║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║
