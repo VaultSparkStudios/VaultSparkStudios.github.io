@@ -19,8 +19,8 @@
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S?) - WHAT SHIPPED ════════════════════════════╗
-║  One archive-integrity outcome fully deployed; canonical closeo  ║
+╔══ LAST SESSION (S401) - WHAT SHIPPED ══════════════════════════╗
+║  S401 archive-integrity release verified; canonical closeout an  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -68,12 +68,12 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no ledger measurement yet this session — a byte estimate…    ║
+║     no session lock — agent identity unavailable, so there is…   ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         547/547 passing (2026-10-23)                   ║
+║  ✓  Tests         547/547 passing (2026-10-24)                   ║
 ║  ⚠  Velocity      1 ↓  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   20d                                            ║

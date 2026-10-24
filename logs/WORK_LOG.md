@@ -350,3 +350,6 @@ S401 archive admission is implemented in both staging producers: exact unique re
 Inventory proof does not establish frozen per-member source-byte equality. Strict premises passed before behavior edits; planning-artifact timing classifier remains nonpassing. Existing identity/provider, field-vitals and account-capacity holds remain separate. Post-deploy Sparked QA entitlement and simulated origin-outage browser cases fail identically on the prior immutable deployment with unchanged code; neither is counted as a passing journey. Homepage, service-worker install/precache and Eternal positive-path cases passed. No measured field-performance, conversion or availability gain is claimed. Raw apex byte parity remains outside the edge-transformed HTML model.
 
 S400 closing observations recovered separately. CDR reviewed: no new creative direction. Direct main publication preserved incoming bot history; no force push or CI bypass.
+
+
+Session 401 closeout: fresh reviewer pass; canonical autopilot and two complete547-check runs passed. Final normal publication remains a transaction to verify remotely; implementation stays deployed at7348fc96f5. No passing claim for the two baseline-reproduced browser failures.

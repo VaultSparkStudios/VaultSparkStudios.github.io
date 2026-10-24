@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 401,
-  "state": "release-verified-closeout-in-progress",
+  "state": "complete-in-closing-publication-transaction",
   "releaseAccepted": true,
   "goal": {
     "threadId": "01a16bcf-5329-7ce3-954f-c816bc504446",
@@ -30,7 +30,7 @@
     },
     {
       "id": 2,
-      "state": "local-verification-complete"
+      "state": "complete"
     },
     {
       "id": 3,
@@ -38,7 +38,7 @@
     },
     {
       "id": 4,
-      "state": "in-progress"
+      "state": "complete"
     }
   ],
   "localAcceptance": {
@@ -274,5 +274,82 @@
     },
     "liveScope": "Homepage2/2, SW install/precache1/1, Eternal positive1/1 passed. Sparked QA and simulated-outage failures reproduced on old immutable deployment and retained separately."
   },
-  "verifiedAt": "2026-10-24T05:40:50.178Z"
+  "verifiedAt": "2026-10-24T05:40:50.178Z",
+  "closeout": {
+    "localComplete": true,
+    "autopilot": {
+      "exit": 0,
+      "log": ".cache/logs/S401-closeout-autopilot.log",
+      "respectStaged": true,
+      "pushMode": "skip-push; normal reviewed closing publication follows"
+    },
+    "sourceRuns": [
+      "docs/S401_closeout-first-source.json",
+      "docs/S401_closeout-second-source.json"
+    ],
+    "sourceFingerprint": "d8eaeeb81e62e04b4b62d20e",
+    "passed": 547,
+    "completeCoverage": true,
+    "platformSkips": "Five existing platform skips retained in grouped-unit output; selected archive fixtures10/10 executed",
+    "review": "fresh independent pass; minor stale note corrected",
+    "sil": 939,
+    "velocity": 1,
+    "memory": "S401 project note and memory index updated",
+    "intelligence": {
+      "ignis": 45371,
+      "recipientProof": true,
+      "entropy": 0.17,
+      "genome": 23
+    },
+    "scaffold": {
+      "tasks": 4,
+      "done": 4,
+      "inProgress": 0,
+      "open": 0
+    },
+    "hygiene": {
+      "recordedBackgroundHandles": 25,
+      "terminal": 25,
+      "running": 0,
+      "knownProcessesAbsent": true,
+      "ownedPreviewPorts": 0,
+      "recordedHandles": [
+        15050,
+        70842,
+        97069,
+        24751,
+        36094,
+        38273,
+        53181,
+        16235,
+        80859,
+        54397,
+        18808,
+        9181,
+        74835,
+        42545,
+        84742,
+        22665,
+        78993,
+        98560,
+        59106,
+        8350,
+        7787,
+        55941,
+        62305,
+        96937,
+        53959
+      ],
+      "snapshotAt": "2026-10-24T06:17:41.554Z"
+    },
+    "publication": "Transaction is complete only after normal push and actual remote reachability verification; native goal completion follows that verification",
+    "deployedScope": "Immutable7348fc96f5 remains the implementation release. Later closing projections and observations are not a second runtime deployment.",
+    "ark": {
+      "summary": "01K5M8QVFMC6E37B6809424E34",
+      "scorerFinding": "01K5M5B67U5D45E88B70970233",
+      "reusePattern": "01K5M5B6S13A5990F4F530D123",
+      "status": "delivered; adoption not asserted"
+    },
+    "telemetry": "Original incremental arc/closeout traces absent. Retrospective evidence indexes recorded and finalized with explicit labels; no reconstructed timeline claim."
+  }
 }

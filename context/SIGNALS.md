@@ -1,5 +1,5 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         547/547 passing (2026-10-23)                   ║
+║  ✓  Tests         547/547 passing (2026-10-24)                   ║
 ║  ⚠  Velocity      1 ↓  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   20d                                            ║
