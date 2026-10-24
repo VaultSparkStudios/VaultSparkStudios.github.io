@@ -76,12 +76,12 @@
 ║  ✓  Tests         547/547 passing (2026-10-24)                   ║
 ║  ⚠  Velocity      1 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⛔  Context age   20d                                            ║
-║  ✓  IGNIS         45371 FORGE  ·  -1d old                        ║
+║  ✓  Context age   0d                                             ║
+║  ✓  IGNIS         45633 FORGE  ·  -1d old                        ║
 ║  ⛔  Truth         yellow — selected release verified;…           ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.170  (healthy)                               ║
+║  ✓  Entropy       0.174  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
@@ -116,7 +116,7 @@
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
 ║  Projected:  935/1000  (↓4 vs current 939)                       ║
 ║  At-risk:    Momentum Δ-3                                        ║
-║  Calibration: MAE 4.3 over last 10 forecasts                     ║
+║  Calibration: MAE 4.5 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
