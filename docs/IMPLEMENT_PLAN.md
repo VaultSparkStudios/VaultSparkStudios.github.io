@@ -9,3 +9,5 @@ Wave 3: Full build and suite, staging, exact candidate checks, normal main push 
 Wave 4: Canonical closeout, independent review, Ark, remote and native goal completion.
 
 Rollback: revert the bounded implementation commit and redeploy the prior accepted release. CANON-045 existing identity gap remains separately justified; this operational release does not alter identity or trust policy.
+
+Final scaffold:4 tasks ·4 done ·0 in progress ·0 open. Normal closing publication requires actual remote verification before native goal completion.
