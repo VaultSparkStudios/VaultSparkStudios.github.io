@@ -1,0 +1,42 @@
+{
+  "session": 403,
+  "observedAt": "2026-10-25T18:43:54.334Z",
+  "state": "passed",
+  "sourceFingerprint": "032949f6d24c2a415b393e2d",
+  "sourceReceiptId": "a3c29944d15ae47816b39e27",
+  "commands": [
+    {
+      "command": "node scripts/run-doctor.mjs --json --update-json",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/update-test-signal.mjs --from-diagnostics",
+      "exit": 0
+    },
+    {
+      "command": "node .cache/S403-derive.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node .cache/S403-rebind.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/rebind-mobile-receipt.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/check-visual-qa-retention.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/check-receipt-ordering.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/lib/write-project-status.mjs --check",
+      "exit": 0
+    }
+  ],
+  "scope": "Local metadata/derived contracts and unchanged-source receipt rebinding; staging and production are still pending"
+}

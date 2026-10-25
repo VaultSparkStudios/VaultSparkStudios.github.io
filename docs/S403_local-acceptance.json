@@ -1,10 +1,52 @@
 {
   "session": 403,
   "observedAt": "2026-10-25T17:13:00Z",
-  "state": "focused-passed-release-pending",
-  "unit": {"command": "node --test tests/ledger-rotation.unit.spec.mjs", "passed": 4, "failed": 0},
-  "existingSelfTest": {"command": "node scripts/rotate-ledger.mjs --self-test", "passed": 19, "failed": 0},
-  "independentReview": {"round1": "fix: same-day session order and malformed date prefixes", "round2": "approve: zero remaining findings", "evidence": "portfolio/ops/review-loop-receipts.ndjson"},
-  "preservation": ["Actual CLI fixture archives exact CRLF preimage", "Conflicting preimage refuses hot-file mutation", "Every original section remains hot or quarterly archived", "Normal second apply changes no bytes"],
-  "limitations": ["Full source suite, current staging, exact-candidate hosted checks, production readback and canonical closeout remain pending", "No user interface, identity policy or public promises changed", "Byte budgets are measured; no token-cost or field-performance improvement is claimed", "Premise timing classifier remains nonpassing for three startup/planning paths; strict typed premises passed before rotator/test implementation edits"]
+  "state": "local-accepted-staging-pending",
+  "unit": {
+    "command": "node --test tests/ledger-rotation.unit.spec.mjs",
+    "passed": 4,
+    "failed": 0
+  },
+  "existingSelfTest": {
+    "command": "node scripts/rotate-ledger.mjs --self-test",
+    "passed": 19,
+    "failed": 0
+  },
+  "independentReview": {
+    "round1": "fix: same-day session order and malformed date prefixes",
+    "round2": "approve: zero remaining findings",
+    "evidence": "portfolio/ops/review-loop-receipts.ndjson"
+  },
+  "preservation": [
+    "Actual CLI fixture archives exact CRLF preimage",
+    "Conflicting preimage refuses hot-file mutation",
+    "Every original section remains hot or quarterly archived",
+    "Normal second apply changes no bytes"
+  ],
+  "limitations": [
+    "Current staging, exact-candidate hosted checks, production readback and canonical closeout remain pending.",
+    "The selected repair changes no UI layout/style, identity policy or public promises. The normal build advances the generated homepage launch counter234→235, verified in28 before/after renders.",
+    "Byte budgets are measured; no token-cost or field-performance improvement is claimed",
+    "Premise timing classifier remains nonpassing for three startup/planning paths; strict typed premises passed before rotator/test implementation edits"
+  ],
+  "fullSource": {
+    "passed": 547,
+    "total": 547,
+    "coverageComplete": true,
+    "sourceFingerprint": "032949f6d24c2a415b393e2d",
+    "receiptId": "a3c29944d15ae47816b39e27",
+    "evidence": "docs/S403_full-source-acceptance.json"
+  },
+  "mobile": {
+    "passed": 215,
+    "total": 215,
+    "evidence": "docs/S403_mobile-acceptance.json"
+  },
+  "visual": {
+    "captures": 28,
+    "themes": 7,
+    "viewports": 2,
+    "evidence": "docs/S403_visual-acceptance.json"
+  },
+  "prestageAdmission": "docs/S403_prestage-admission.json"
 }
