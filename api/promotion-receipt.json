@@ -4,19 +4,19 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "f2da66b23c8d1598492876927df5132eec8b779c",
+    "sha": "cb89e4e0bd699adfb5c9042d26cb4827bd8275b1",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "1f5e24f9029bd0c9b5e4973cf4148cc1474455ad",
+    "sha": "95cf0ccbada89ba1e7365dd00caf3bcfdac22ed6",
     "contentLaneHead": null,
     "reachable": true,
     "reconciliation": "behind",
     "shellParity": {
       "state": "matched",
-      "observedAt": "2026-10-24T22:37:53.771Z",
-      "ageHours": 0.4,
+      "observedAt": "2026-10-25T22:11:15.895Z",
+      "ageHours": 1,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -33,7 +33,7 @@
   "browser": {
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
-    "consoleErrors": 8,
+    "consoleErrors": 7,
     "workerRouteErrors": 7,
     "signalCardinality": 7,
     "signalEndpoints": [
@@ -76,7 +76,7 @@
         "route": "/games/franchise-architect/",
         "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
         "captured": true,
-        "consoleErrors": 2,
+        "consoleErrors": 1,
         "workerRouteErrors": 1,
         "signalCardinality": 2,
         "signalEndpoints": [
@@ -89,21 +89,21 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "the repo has advanced past the last promotion: production serves 1f5e24f9, repo build-sha is f2da66b2 — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
-    "8 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 1 unexplained"
+    "the repo has advanced past the last promotion: production serves 95cf0ccb, repo build-sha is cb89e4e0 — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
+    "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-10-24T23:04:39.815Z",
+  "generatedAt": "2026-10-25T23:13:02.653Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-10-24T23:04:39.815Z",
-    "currentBehindStreak": 1,
-    "newestGradableAt": "2026-10-24T23:04:39.815Z",
+    "lastStrandedAt": "2026-10-25T23:13:02.653Z",
+    "currentBehindStreak": 3,
+    "newestGradableAt": "2026-10-25T23:13:02.653Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,
-    "strandedAlert": false
+    "strandedAlert": true
   }
 }

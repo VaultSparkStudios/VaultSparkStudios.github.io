@@ -6,7 +6,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **81/100**
+- Overall opportunity pressure: **78/100**
 - Health: **yellow**
 - Current SIL: **939/1000**
 - CI health: **check gh run list**
@@ -27,74 +27,72 @@ Final score: **96**
 [SIL][S402] Extend method-specific corroboration coverage if additional signals are introduced; future, unselected.
 Why it matters: Extend method-specific corroboration coverage if additional signals ar is open, local, and unblocked — can ship this session.
 
-#### 2. [VERIFY] Post-push CI confirmation
-Final score: **96**
-Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
-Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
-
-First command: `gh run list --limit 10`
-
-#### 3. [PRODUCT] Consider per-member byte verification only if source mutation during …
+#### 2. [PRODUCT] Consider per-member byte verification only if source mutation during …
 Final score: **93**
 [SIL][S401] Consider per-member byte verification only if source mutation during packaging is observed; not selected in this arc.
 Why it matters: Consider per-member byte verification only if source mutation during p is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Coordinate an evidence-backed distinction between formatting-only sou…
+#### 3. [PRODUCT] Coordinate an evidence-backed distinction between formatting-only sou…
 Final score: **90**
 [SIL][S400] Coordinate an evidence-backed distinction between formatting-only source writes and actual pixel changes in visual freshness; existing mandatory gate remains enforced. Future selection only.
 Why it matters: Coordinate an evidence-backed distinction between formatting-only sour is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [PRODUCT] Staging lineage tolerant of publisher data drift.
+#### 4. [PRODUCT] Staging lineage tolerant of publisher data drift.
 Final score: **84**
 [SIL][S398] Staging lineage tolerant of publisher data drift.
 Why it matters: Staging lineage tolerant of publisher data drift. is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Gate srcset, CSS url(), redirect targets. Future only.
+### NEXT
+
+#### 1. [PRODUCT] Gate srcset, CSS url(), redirect targets. Future only.
 Final score: **81**
 [SIL][S396] Gate srcset, CSS url(), redirect targets. Future only.
 Why it matters: Gate srcset, CSS url(), redirect targets. Future only. is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Investigate timing classification of incoming pre-session same-identi…
+#### 2. [PRODUCT] Investigate timing classification of incoming pre-session same-identi…
 Final score: **78**
 [SIL][S395][PROTOCOL/P2] Investigate timing classification of incoming pre-session same-identity automation after a pre-sync lock; preserve original failure. Future selection only.
 Why it matters: Investigate timing classification of incoming pre-session same-identit is open, local, and unblocked — can ship this session.
 
-#### 4. [VERIFY] Verify Studio Ops acceptance of the planning-artifact timing classifi…
+#### 3. [VERIFY] Verify Studio Ops acceptance of the planning-artifact timing classifi…
 Final score: **77**
 [SIL][S399] Verify Studio Ops acceptance of the planning-artifact timing classification reproduction; delivered cargo does not prove an applied fix. Future only.
 Why it matters: Verify Studio Ops acceptance of the planning-artifact timing classific is a 4-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check`
 
-#### 5. [INTELLIGENCE] Keep startup-generated genius-list drift distinguishable from selecte…
+#### 4. [INTELLIGENCE] Keep startup-generated genius-list drift distinguishable from selecte…
 Final score: **75**
 [SIL][S394][PROTOCOL/P2] Keep startup-generated genius-list drift distinguishable from selected implementation in premise timing; preserve the original nonpassing receipt. Future selection only.
 Why it matters: Keep startup-generated genius-list drift distinguishable from selected keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-### LATER
-
-#### 1. [PRODUCT] Assess cross-origin redirect handling in diagnostic HTTP commands wit…
+#### 5. [PRODUCT] Assess cross-origin redirect handling in diagnostic HTTP commands wit…
 Final score: **69**
 [SIL][S394][RELIABILITY/P2] Assess cross-origin redirect handling in diagnostic HTTP commands with measured caller compatibility. Future selection only.
 Why it matters: Assess cross-origin redirect handling in diagnostic HTTP commands with is open, local, and unblocked — can ship this session.
 
-#### 2. [INTELLIGENCE] Record strict premise acceptance before creating any plan artifact in…
+### LATER
+
+#### 1. [INTELLIGENCE] Record strict premise acceptance before creating any plan artifact in…
 Final score: **69**
 [SIL][S393][PROTOCOL/P2] Record strict premise acceptance before creating any plan artifact in the next selected audit.
 Why it matters: Record strict premise acceptance before creating any plan artifact in  keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 3. [VERIFY] Separately assess served binary coverage against real release risk; c…
+#### 2. [VERIFY] Separately assess served binary coverage against real release risk; c…
 Final score: **65**
 [SIL][S395][VERIFY/P2] Separately assess served binary coverage against real release risk; current verifier explicitly measures tracked served text. Future selection only.
 Why it matters: Separately assess served binary coverage against real release risk; cu is a 8-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
+
+#### 3. [PRODUCT] Measure and remove generated leaderboard metadata/whitespace churn at…
+Final score: **63**
+[SIL][S393][BUILD/P2] Measure and remove generated leaderboard metadata/whitespace churn at its existing builder boundaries; preserve canonical social previews and rendered evidence. Future selection only.
+Why it matters: Measure and remove generated leaderboard metadata/whitespace churn at  is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -141,17 +139,17 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 ## Recommended Build Order
 
 1. Extend method-specific corroboration coverage if additional signals a…
-2. Post-push CI confirmation
-3. Consider per-member byte verification only if source mutation during …
-4. Coordinate an evidence-backed distinction between formatting-only sou…
-5. Staging lineage tolerant of publisher data drift.
-6. Gate srcset, CSS url(), redirect targets. Future only.
-7. Investigate timing classification of incoming pre-session same-identi…
-8. Verify Studio Ops acceptance of the planning-artifact timing classifi…
-9. Keep startup-generated genius-list drift distinguishable from selecte…
-10. Assess cross-origin redirect handling in diagnostic HTTP commands wit…
-11. Record strict premise acceptance before creating any plan artifact in…
-12. Separately assess served binary coverage against real release risk; c…
+2. Consider per-member byte verification only if source mutation during …
+3. Coordinate an evidence-backed distinction between formatting-only sou…
+4. Staging lineage tolerant of publisher data drift.
+5. Gate srcset, CSS url(), redirect targets. Future only.
+6. Investigate timing classification of incoming pre-session same-identi…
+7. Verify Studio Ops acceptance of the planning-artifact timing classifi…
+8. Keep startup-generated genius-list drift distinguishable from selecte…
+9. Assess cross-origin redirect handling in diagnostic HTTP commands wit…
+10. Record strict premise acceptance before creating any plan artifact in…
+11. Separately assess served binary coverage against real release risk; c…
+12. Measure and remove generated leaderboard metadata/whitespace churn at…
 
 ## Best Immediate Move
 

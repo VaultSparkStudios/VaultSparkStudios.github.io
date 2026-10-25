@@ -123,9 +123,6 @@
 ║   96  [PRODUCT]      Extend method-specific corroboration cover  ║
 ║        Extend method-specific corroboration coverage if additio  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      Consider per-member byte verification only  ║
 ║        Consider per-member byte verification only if source mut  ║
 ║                                                                  ║
@@ -134,6 +131,9 @@
 ║                                                                  ║
 ║   84  [PRODUCT]      Staging lineage tolerant of publisher data  ║
 ║        Staging lineage tolerant of publisher data drift. is ope  ║
+║                                                                  ║
+║   81  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
+║        Gate srcset, CSS url(), redirect targets. Future only. i  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
