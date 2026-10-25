@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-25T20:06:07.149Z",
+  "generatedBy": "scripts/run-release-ceremony.mjs",
+  "publicSafe": true,
+  "state": "passed",
+  "stagingOrigin": "https://website.staging.vaultsparkstudios.com",
+  "steps": [
+    {
+      "id": "redirect-readiness-probe",
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 1002
+    },
+    {
+      "id": "redirect-readiness",
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 1,
+      "verdict": "passed",
+      "contractSha256": "da9c26ea5590217ea599164d5f2b315fd6910af1d0bd3f0365b0766dd6f4fe80"
+    },
+    {
+      "id": "staging-deploy-lineage",
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 413
+    },
+    {
+      "id": "lane-held-asset-drift",
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 3631
+    },
+    {
+      "id": "staging-browser",
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 43185
+    },
+    {
+      "id": "staging-browser-receipt",
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 1,
+      "passed": 3,
+      "expected": 6,
+      "skipped": 0,
+      "held": 3,
+      "heldContracts": [
+        "anonymous Obelisk boundary is fail-closed and reaches the provider"
+      ],
+      "heldSurfaces": [
+        "identity",
+        "worker:identity"
+      ]
+    },
+    {
+      "id": "attention-browser",
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 37388
+    },
+    {
+      "id": "attention-browser-receipt",
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 2,
+      "passed": 15,
+      "expected": 15,
+      "skipped": 0,
+      "failed": 0,
+      "flaky": 0
+    },
+    {
+      "id": "promotion-contract",
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 956
+    },
+    {
+      "id": "promotion-ready",
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 1,
+      "releaseState": "hold",
+      "reasonCodes": [
+        "real-provider-e2e-pending",
+        "supabase-control-plane-partial"
+      ],
+      "promotionMode": "scoped",
+      "scopeReason": "scoped-disjoint",
+      "heldSurfaces": [
+        "auth/**",
+        "identity",
+        "worker:identity"
+      ],
+      "blockedLeaves": [],
+      "unclassifiedLeaves": []
+    },
+    {
+      "id": "doctor",
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 2,
+      "blockingFailing": 0,
+      "exemptedBlocking": 0,
+      "observedDate": "2026-10-25"
+    }
+  ],
+  "evidenceSha256": "51e1940568c2a1a73684fcc107ed05ee2874022e4f7e8e35fc6249f7d4a89bb4",
+  "contractSha256": "c3eb0abf77afc414837705d29312eeba13262463d7ad6935f12f8b594a73bf01",
+  "chain": {
+    "previousReceiptSha256": "480b6dcd5dc6a6f9e013fe3446bdcd04dbd8637b7ab4563e568f654e81184268"
+  },
+  "privacy": {
+    "stdoutRetained": false,
+    "stderrRetained": false,
+    "responseBodiesRetained": false
+  }
+}
