@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Add session-heading support to the existin  ║
-║        Add session-heading support to the existing ledger rotat  ║
+║   96  [PRODUCT]      Session-headed ledger rotation: focused 4/  ║
+║        Session-headed ledger rotation: focused 4/4 and existing  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Extend method-specific corroboration cover  ║
+║   93  [PRODUCT]      Add session-heading support to the existin  ║
+║        Add session-heading support to the existing ledger rotat  ║
+║                                                                  ║
+║   90  [PRODUCT]      Extend method-specific corroboration cover  ║
 ║        Extend method-specific corroboration coverage if additio  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Consider per-member byte verification only  ║
+║   87  [PRODUCT]      Consider per-member byte verification only  ║
 ║        Consider per-member byte verification only if source mut  ║
-║                                                                  ║
-║   87  [PRODUCT]      Coordinate an evidence-backed distinction   ║
-║        Coordinate an evidence-backed distinction between format  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
