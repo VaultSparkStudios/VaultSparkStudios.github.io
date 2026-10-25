@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-25T16:13:13.991Z",
+  "generatedAt": "2026-10-25T16:40:28.262Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -11,23 +11,17 @@
   "staging": {
     "status": "yellow",
     "routeCount": 3,
-    "reachable": false,
+    "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "staging-canonical-csp-drift",
-      "staging-security-header-baseline",
-      "staging-unreachable",
+      "prod-forbidden",
+      "shell-mismatch",
       "status-mismatch"
     ],
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch",
-      "/:stagingReachable",
-      "/:stagingStatus",
-      "/:stagingCanonicalCsp",
-      "/:stagingSecurityHeaders",
-      "/:localShellParity"
+      "staging-artifact-root-mismatch"
     ],
     "candidateBuildSha": "f2da66b23c8d1598492876927df5132eec8b779c",
     "deployedBuildSha": "2e1e075bf136fd00d4b2d8f7cfcef26794ba5c47",
@@ -77,13 +71,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 4,
-    "ageHours": 1.7,
-    "observedAt": "2026-10-25T16:13:13.991Z",
+    "commitsBehind": 6,
+    "ageHours": 2.6,
+    "observedAt": "2026-10-25T16:40:28.262Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-25T16:13:13.991Z",
+      "observedAt": "2026-10-25T16:40:28.262Z",
       "expectedFrom": "fdb7f729a7f8ab525b82c6bb04867a2665ef0517221a86dbbc9233edde97a584",
       "supersededBy": null,
       "ageHours": 0,
@@ -186,7 +180,7 @@
   },
   "checks": {
     "canonicalFavicon": true,
-    "stagingReachable": false,
+    "stagingReachable": true,
     "stagingCandidateReady": false,
     "stagingCandidateShaBound": false,
     "stagingArtifactManifestBound": false,
@@ -203,7 +197,6 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
-    "stagingReachable",
     "stagingCandidateReady",
     "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
