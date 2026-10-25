@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 403,
-  "state": "premerge-staging-accepted-upstream-content-sync-pending",
+  "state": "merged-browser-accepted-fullsource-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a173fb-dc92-75d0-9489-6832e36263f8",
@@ -51,14 +51,6 @@
     "Shared radar write invocation failed; the read-only follow-up verified10/10 official sources current at that observation. Neither proves project readiness.",
     "No field availability, conversion, token-cost or performance gain is claimed"
   ],
-  "localSource": {
-    "evidence": "docs/S403_full-source-acceptance.json",
-    "passed": 547,
-    "total": 547,
-    "coverageComplete": true,
-    "sourceFingerprint": "032949f6d24c2a415b393e2d",
-    "receiptId": "a3c29944d15ae47816b39e27"
-  },
   "prestageAdmission": "docs/S403_prestage-admission.json",
   "preMergeStaging": {
     "candidate": "1c2942b89792610a8da58ce25ef4c82822542926",
@@ -72,8 +64,22 @@
   "incomingContent": {
     "commit": "c45175a200",
     "observedRemoteHead": "e836cedba4",
-    "state": "must-preserve-and-verify",
+    "state": "preserved-in-4fcc90a120",
     "reason": "New Desk edition introduced new HTML after the prior source snapshot."
   },
-  "publisherWindow": "docs/S403_publisher-window.json"
+  "publisherWindow": "docs/S403_publisher-window.json",
+  "preMergeLocalSource": {
+    "evidence": "docs/S403_full-source-acceptance.json",
+    "passed": 547,
+    "total": 547,
+    "coverageComplete": true,
+    "sourceFingerprint": "032949f6d24c2a415b393e2d",
+    "receiptId": "a3c29944d15ae47816b39e27"
+  },
+  "mergedBrowserAcceptance": {
+    "mobile": "docs/S403_mobile-merged.json",
+    "visual": "docs/S403_merged-visual-acceptance.json",
+    "visualCaptures": 56,
+    "mobileCases": 215
+  }
 }

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-10-25T17:22:16.336Z",
-  "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
+  "capturedAt": "2026-10-25T19:18:08.371Z",
+  "generatedBy": "Native capture-theme-matrix: merged homepage, launch-stat and Desk matrices with scoped filenames",
   "themes": [
     "dark",
     "light",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "d52dac4ff80ef80acf64b419aee26c0664cb45011887152f46766be1bcd01f3e",
+    "sha256": "0f6bc07881225fada82221146f9b567bbbd0204c1597f0c9210998a839ba46a6",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -2630,7 +2630,7 @@
       },
       {
         "path": "index.html",
-        "sha256": "6a00888165f4414b96b41a28722018a90ff7d4ad1bf697672240b0035a4d986b"
+        "sha256": "bfdd3c4a21c7f0b53821bb438885483168d995c8f6cfaa686ed875918925c754"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -2692,9 +2692,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "a97b909a29df3cec2b16b8ec18ce007187c04ca388f643a03f189c1824d44cf1",
-    "candidateSha": "383b4ba361fba1e26cce430f3d3d1ffb4f9a1328",
-    "root": "2faff02fb9fec4ffbd88943c6e1b47c879865ebe2506d68817b4970d13761f35"
+    "manifestSha256": "ac50be28d859df787871b784452e758ebf2addc030475ff03053250b1f55e59d",
+    "candidateSha": "4fcc90a120a61f727fcfa74d5915e4147bd1d67e",
+    "root": "1d6eedd1147787fa8e6254edca7c69332fcfba91cfd247411efb9fade2d6f801"
   },
   "matrix": {
     "routes": [
@@ -2722,25 +2722,33 @@
       }
     ],
     "states": [
-      "changed-surface"
+      "page",
+      "launch-stats",
+      "desk-showcase",
+      "desk-clearance"
     ],
-    "expectedCaptures": 14,
-    "completedCaptures": 14
+    "expectedCaptures": 56,
+    "completedCaptures": 56
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 14,
-      "manuallyReviewed": 14,
+      "totalCaptures": 56,
+      "manuallyReviewed": 56,
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "codex-S403",
+    "blockingDefectsOpen": 0,
+    "captureLimitations": [
+      "Full-section Desk captures include a sticky-header overlay caused by element capture. Complementary normal viewport captures expose those areas without hiding the real header or changing application styles."
+    ],
+    "reviewer": "codex-merged_mobile_pixels",
     "findings": [
-      "Inspected all 14 original desktop/mobile stat-strip captures across seven themes; both values and labels are readable with no clipping. Generated launch day is235; no layout or style change."
+      "Root individually viewed all14 launch-stat captures;17 and235 are readable and unclipped across all themes/viewports.",
+      "Independent desktop reviewer viewed21 originals. All seven complementary viewport shots resolve prior element-capture occlusion; no UI fix needed. Hero ellipsis is intentional.",
+      "Independent mobile reviewer viewed21 originals. Read-the-story and Also-on-the-Desk areas are visible beneath the real header in every complementary capture; no horizontal overflow."
     ],
     "fixesApplied": [],
-    "blockingDefectsOpen": 0,
     "limitation": null
   },
   "captures": [
@@ -2757,14 +2765,15 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S403-after-home--dark--desktop--changed-surface.png",
-      "sha256": "ea9b2061948865f3769bd0eaf366d082f9abfbb148977e57a126396ed59dc84b",
+      "file": "S403-merged-page-home--dark--desktop.png",
+      "sha256": "ac5d3bb66d3798438325b5e6df83730191fd268a7da5063d452310ff74f041b7",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S403"
-      }
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "page"
     },
     {
       "theme": "light",
@@ -2779,14 +2788,15 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S403-after-home--light--desktop--changed-surface.png",
-      "sha256": "2f52fd7e63c6d9f3f4899b5cb95cfc6f19b2dc987d278fec16e667ec77280410",
+      "file": "S403-merged-page-home--light--desktop.png",
+      "sha256": "892f34a5d6c5adaba788d6438386214d44984552e3fd31fe06e09fcaf81e3f04",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S403"
-      }
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "page"
     },
     {
       "theme": "ambient",
@@ -2801,14 +2811,15 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S403-after-home--ambient--desktop--changed-surface.png",
-      "sha256": "f5d0a9a1c9162013d42d1f5c8a425e5cff100d34cbf328e77b38c5ee11b5d037",
+      "file": "S403-merged-page-home--ambient--desktop.png",
+      "sha256": "fd5aa29dde63566ce7b4055af85e73ab55d426867b468f0808fe7de683e44d57",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S403"
-      }
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "page"
     },
     {
       "theme": "warm",
@@ -2823,14 +2834,15 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S403-after-home--warm--desktop--changed-surface.png",
-      "sha256": "db0bd80e038c514edc6fa0b08fc83945a0939a671c7b293b4222887865034672",
+      "file": "S403-merged-page-home--warm--desktop.png",
+      "sha256": "59441b75afa19a5314328ce8b4a888dfc46699d50a65b24149c39a41fcb9459f",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S403"
-      }
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "page"
     },
     {
       "theme": "cool",
@@ -2845,14 +2857,15 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S403-after-home--cool--desktop--changed-surface.png",
-      "sha256": "e1d2707cb61dd5dd7f95597dd40efc0b805938f728f83e1ab9ecb62f84078d5e",
+      "file": "S403-merged-page-home--cool--desktop.png",
+      "sha256": "c305e9fd07d682c320a69d3e8d9d433b461d6f24199357ac5a1de110deb95593",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S403"
-      }
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "page"
     },
     {
       "theme": "lava",
@@ -2867,14 +2880,15 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S403-after-home--lava--desktop--changed-surface.png",
-      "sha256": "c0ac585103409288c13acf52e740377952fe3d993aa9f8e3045de41cc06a2bb1",
+      "file": "S403-merged-page-home--lava--desktop.png",
+      "sha256": "2d6292a00b9cab7a0641e33fa305f6372208d8f2cdab6c3fbd6587a782920bc0",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S403"
-      }
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "page"
     },
     {
       "theme": "high-contrast",
@@ -2889,14 +2903,15 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S403-after-home--high-contrast--desktop--changed-surface.png",
-      "sha256": "75d46e353dcf4d08bdeecc7e6191ad788e32e7025f8cb73895a6eafea52545f6",
+      "file": "S403-merged-page-home--high-contrast--desktop.png",
+      "sha256": "5025c9ed8214ab9dd8200ac29d0af3b2f19b8d2176df20b48f9b8ca91972570f",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S403"
-      }
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "page"
     },
     {
       "theme": "dark",
@@ -2911,14 +2926,15 @@
         "width": 390,
         "height": 844
       },
-      "file": "S403-after-home--dark--mobile--changed-surface.png",
-      "sha256": "6363df5a8def6d2b56c16a41af8c1178997a6cece93b0abd580360a52e58aa06",
+      "file": "S403-merged-page-home--dark--mobile.png",
+      "sha256": "b975780373989ca5646640dde9b8b155cff9de7611cf20844aa4c6c7d03a369e",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S403"
-      }
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "page"
     },
     {
       "theme": "light",
@@ -2933,14 +2949,15 @@
         "width": 390,
         "height": 844
       },
-      "file": "S403-after-home--light--mobile--changed-surface.png",
-      "sha256": "8c0ee73228e77376b7d85afdaad3c1fb75261a2db93a45296d0a49cbb6dd9325",
+      "file": "S403-merged-page-home--light--mobile.png",
+      "sha256": "69997d99c5926890eeae3d26c01241cb9c795ce062700c072d1807ebdf85d683",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S403"
-      }
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "page"
     },
     {
       "theme": "ambient",
@@ -2955,14 +2972,15 @@
         "width": 390,
         "height": 844
       },
-      "file": "S403-after-home--ambient--mobile--changed-surface.png",
-      "sha256": "707e66c5bc3241e955addd6fa8eaa6b25ac831136755e5dd3571cb2a95043d05",
+      "file": "S403-merged-page-home--ambient--mobile.png",
+      "sha256": "3efd2ddbdfe6768f46d4b50344ec60493f9443bcd5a3943589ba99566d6533c4",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S403"
-      }
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "page"
     },
     {
       "theme": "warm",
@@ -2977,14 +2995,15 @@
         "width": 390,
         "height": 844
       },
-      "file": "S403-after-home--warm--mobile--changed-surface.png",
-      "sha256": "074894630bff4cb230b756029d0562d5aa4c452080624fba77a487e6f651040d",
+      "file": "S403-merged-page-home--warm--mobile.png",
+      "sha256": "25ca9f10c9dc0e32cb195f96e9706ae6498d75640783662804ffc620d8693709",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S403"
-      }
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "page"
     },
     {
       "theme": "cool",
@@ -2999,14 +3018,15 @@
         "width": 390,
         "height": 844
       },
-      "file": "S403-after-home--cool--mobile--changed-surface.png",
-      "sha256": "c647c83666460004d53c94521e24cb43935a8103f8ce0c9e1caebb8d0136ccd1",
+      "file": "S403-merged-page-home--cool--mobile.png",
+      "sha256": "484c06acf386ce02fdd253356524b2a592c8b0729192bd0c3f67f23b169d8751",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S403"
-      }
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "page"
     },
     {
       "theme": "lava",
@@ -3021,14 +3041,15 @@
         "width": 390,
         "height": 844
       },
-      "file": "S403-after-home--lava--mobile--changed-surface.png",
-      "sha256": "91467d297bcb721d71fa250046bf60571b645bee7d8c37dfebaa524d5bc94e1e",
+      "file": "S403-merged-page-home--lava--mobile.png",
+      "sha256": "c5b5f0f6dac50555e8f223eb1832e136f3126279115097b7097a2b2c1d385b83",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S403"
-      }
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "page"
     },
     {
       "theme": "high-contrast",
@@ -3043,31 +3064,992 @@
         "width": 390,
         "height": 844
       },
-      "file": "S403-after-home--high-contrast--mobile--changed-surface.png",
-      "sha256": "e0f0ee4ae2a75e7cb22ac92ddb24c25fa5e3256bdf671c0de0502aaefa0f5294",
+      "file": "S403-merged-page-home--high-contrast--mobile.png",
+      "sha256": "2afd48d1f962df2db96720f79bcbc73c9cb8058fc3d89217a38d92d05802ba2b",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-S403"
-      }
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "page"
+    },
+    {
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-launch-stats-home--dark--desktop--changed-surface.png",
+      "sha256": "ea9b2061948865f3769bd0eaf366d082f9abfbb148977e57a126396ed59dc84b",
+      "page": "/",
+      "state": "launch-stats",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S403-root"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-launch-stats-home--light--desktop--changed-surface.png",
+      "sha256": "2f52fd7e63c6d9f3f4899b5cb95cfc6f19b2dc987d278fec16e667ec77280410",
+      "page": "/",
+      "state": "launch-stats",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S403-root"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-launch-stats-home--ambient--desktop--changed-surface.png",
+      "sha256": "f5d0a9a1c9162013d42d1f5c8a425e5cff100d34cbf328e77b38c5ee11b5d037",
+      "page": "/",
+      "state": "launch-stats",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S403-root"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-launch-stats-home--warm--desktop--changed-surface.png",
+      "sha256": "db0bd80e038c514edc6fa0b08fc83945a0939a671c7b293b4222887865034672",
+      "page": "/",
+      "state": "launch-stats",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S403-root"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-launch-stats-home--cool--desktop--changed-surface.png",
+      "sha256": "e1d2707cb61dd5dd7f95597dd40efc0b805938f728f83e1ab9ecb62f84078d5e",
+      "page": "/",
+      "state": "launch-stats",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S403-root"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-launch-stats-home--lava--desktop--changed-surface.png",
+      "sha256": "c0ac585103409288c13acf52e740377952fe3d993aa9f8e3045de41cc06a2bb1",
+      "page": "/",
+      "state": "launch-stats",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S403-root"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-launch-stats-home--high-contrast--desktop--changed-surface.png",
+      "sha256": "75d46e353dcf4d08bdeecc7e6191ad788e32e7025f8cb73895a6eafea52545f6",
+      "page": "/",
+      "state": "launch-stats",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S403-root"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-launch-stats-home--dark--mobile--changed-surface.png",
+      "sha256": "6ec7d7b5d66d45c0a9e1a8691ffb2b315c452db95a2bb84da9e301c91da63265",
+      "page": "/",
+      "state": "launch-stats",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S403-root"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-launch-stats-home--light--mobile--changed-surface.png",
+      "sha256": "dd4664162ae21e9fa8dee976dca30cda3da38bca19a5c101495813b1873b98f3",
+      "page": "/",
+      "state": "launch-stats",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S403-root"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-launch-stats-home--ambient--mobile--changed-surface.png",
+      "sha256": "0ffe334f4fa8e140cba9be59a85646fcf88c5df7940b0b25b3522da5a06fcdea",
+      "page": "/",
+      "state": "launch-stats",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S403-root"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-launch-stats-home--warm--mobile--changed-surface.png",
+      "sha256": "e6de1922a8b88e13eda42c44b65a5a6dbb08889fb53f230dcb625811f926cddd",
+      "page": "/",
+      "state": "launch-stats",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S403-root"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-launch-stats-home--cool--mobile--changed-surface.png",
+      "sha256": "5f33cf9dd5507ce554e540dbf08ef39ff1e0e64c8f0ded90c7078191ba94ab34",
+      "page": "/",
+      "state": "launch-stats",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S403-root"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-launch-stats-home--lava--mobile--changed-surface.png",
+      "sha256": "2b966c8b676c647e50cbcbd1af2395afe6e8ffd77e57722a2e0df13757fb7ca7",
+      "page": "/",
+      "state": "launch-stats",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S403-root"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-launch-stats-home--high-contrast--mobile--changed-surface.png",
+      "sha256": "5a43e67f50ce0694f69784644ea9bc0c1e9fb3f783dff4a5d3b89b60451cec2f",
+      "page": "/",
+      "state": "launch-stats",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S403-root"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-desk-showcase-home--dark--desktop--changed-surface.png",
+      "sha256": "40748b5849e92f93122e421fb2d12b48bddc7431adb1ead7b01165f4aa33332d",
+      "page": "/",
+      "state": "desk-showcase",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-desk-showcase-home--light--desktop--changed-surface.png",
+      "sha256": "9810c2f974fdefaf21146eb0cc95f32176baa256b50073bf0d48fb8593adf24f",
+      "page": "/",
+      "state": "desk-showcase",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-desk-showcase-home--ambient--desktop--changed-surface.png",
+      "sha256": "e15aa6a6ce914fa56bc61d5bbeab6253d82c266828474374677caac7bee48363",
+      "page": "/",
+      "state": "desk-showcase",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-desk-showcase-home--warm--desktop--changed-surface.png",
+      "sha256": "af0d4251e5771894ab9be124598b2c67df518739ba0309895c1e1d162242de0c",
+      "page": "/",
+      "state": "desk-showcase",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-desk-showcase-home--cool--desktop--changed-surface.png",
+      "sha256": "7ff1642a90b8615110e16df8fd6adf4fbf3dee488b7ad61d37a34ea33457a5cd",
+      "page": "/",
+      "state": "desk-showcase",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-desk-showcase-home--lava--desktop--changed-surface.png",
+      "sha256": "b498c1944402f8028054316ce171cc351cee422c1486fae73270e7ceae8fd870",
+      "page": "/",
+      "state": "desk-showcase",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-desk-showcase-home--high-contrast--desktop--changed-surface.png",
+      "sha256": "69d208c82638b8f1da9e80290b6978c5a664b51cd5f756fa56ca139173086bf6",
+      "page": "/",
+      "state": "desk-showcase",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-desk-showcase-home--dark--mobile--changed-surface.png",
+      "sha256": "19b48ec3543ec8e9132cdf3fc302edc8aa8573801a117b7513d1eb64325aa28e",
+      "page": "/",
+      "state": "desk-showcase",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-desk-showcase-home--light--mobile--changed-surface.png",
+      "sha256": "ce8ae949ab6e403e44c2c034fdf399aa76f6e9f96ab8a69cb152b788834b3672",
+      "page": "/",
+      "state": "desk-showcase",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-desk-showcase-home--ambient--mobile--changed-surface.png",
+      "sha256": "3121bb2562035ab5a34f56590c0847d7935eaf66ca6f902fffcc6d1c7abd114f",
+      "page": "/",
+      "state": "desk-showcase",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-desk-showcase-home--warm--mobile--changed-surface.png",
+      "sha256": "280ff0e188733fe4813c8a0c43dc553da0ac0a047b2f17348507b1f433d8ff24",
+      "page": "/",
+      "state": "desk-showcase",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-desk-showcase-home--cool--mobile--changed-surface.png",
+      "sha256": "e4afa9e66616e349c25606afdda154ff2d97c56cb7999dbae4617d74503a517f",
+      "page": "/",
+      "state": "desk-showcase",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-desk-showcase-home--lava--mobile--changed-surface.png",
+      "sha256": "bf46c377251a28ceaaf70296195be8c13dfc08dc32c1fe8f7052f6df68ef2281",
+      "page": "/",
+      "state": "desk-showcase",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-desk-showcase-home--high-contrast--mobile--changed-surface.png",
+      "sha256": "7dd5da1b04313e3483bb9bf8eb558e9801ae607971ba2355d09c1fd1678f7431",
+      "page": "/",
+      "state": "desk-showcase",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-desk-clearance-home--dark--desktop--changed-surface.png",
+      "sha256": "86cc68c99a4df881e4860c639641bae300d92f73477badb3c35801fc8b8aeb61",
+      "page": "/",
+      "state": "desk-clearance",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-desk-clearance-home--light--desktop--changed-surface.png",
+      "sha256": "9331f90c030cca35a820679533204c492c4da316d79293f846a82bca810914df",
+      "page": "/",
+      "state": "desk-clearance",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-desk-clearance-home--ambient--desktop--changed-surface.png",
+      "sha256": "a90c97e087f65c2104e28f3bc5e2cef229ec76a9165becd733ca43c3938c136f",
+      "page": "/",
+      "state": "desk-clearance",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-desk-clearance-home--warm--desktop--changed-surface.png",
+      "sha256": "5df4114fb9a007fd3f37154ddd6700d52ab12f20387bafac546c43950d0d8a2e",
+      "page": "/",
+      "state": "desk-clearance",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-desk-clearance-home--cool--desktop--changed-surface.png",
+      "sha256": "f6edf18e9323f52477d7061293b6eb0647135752f4be84e046bccb1fb7907553",
+      "page": "/",
+      "state": "desk-clearance",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-desk-clearance-home--lava--desktop--changed-surface.png",
+      "sha256": "c2773da64ac25fb44f56dbbd95a93dab9ae378f9f53c4b05b3af7980ef33e00e",
+      "page": "/",
+      "state": "desk-clearance",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S403-merged-desk-clearance-home--high-contrast--desktop--changed-surface.png",
+      "sha256": "780bb80c2dc3e31980eadfa2f16d680db4284716fa50d90ecbffcae10ddf8c3e",
+      "page": "/",
+      "state": "desk-clearance",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_desktop_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-desk-clearance-home--dark--mobile--changed-surface.png",
+      "sha256": "d250516edc18b24927528fadac74d4fa87ba4633c849ba8443ebc6de2bcf5729",
+      "page": "/",
+      "state": "desk-clearance",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-desk-clearance-home--light--mobile--changed-surface.png",
+      "sha256": "fe933e274a7dcf27b5ff3368c666f855597e9a8a6b11652b3c3aadfe27d4b043",
+      "page": "/",
+      "state": "desk-clearance",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-desk-clearance-home--ambient--mobile--changed-surface.png",
+      "sha256": "744ff75354b1b276518fa19bf2b9c654768c50f0226ea72ae55ce307ba7b9703",
+      "page": "/",
+      "state": "desk-clearance",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-desk-clearance-home--warm--mobile--changed-surface.png",
+      "sha256": "e2b2d46b0882ed79f689db668257290340c23a287574c701cdb991cac7c06fe1",
+      "page": "/",
+      "state": "desk-clearance",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-desk-clearance-home--cool--mobile--changed-surface.png",
+      "sha256": "a1802c4e572d9e6b128551cb01df5d25b41d6e1242dbef7309a012b8431d8e03",
+      "page": "/",
+      "state": "desk-clearance",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-desk-clearance-home--lava--mobile--changed-surface.png",
+      "sha256": "22f1e264b163704d389ae39b91698a20b2f2c2a388bac8dcf083753b2fb12c68",
+      "page": "/",
+      "state": "desk-clearance",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "changed-surface"
+    },
+    {
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S403-merged-desk-clearance-home--high-contrast--mobile--changed-surface.png",
+      "sha256": "39daad5405c3b2d956dbfa215bea4b989e6f934ecfed9b7b255565ff0f364b48",
+      "page": "/",
+      "state": "desk-clearance",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-merged_mobile_pixels"
+      },
+      "nativeState": "changed-surface"
     }
   ],
-  "beforeEvidence": {
-    "receipt": "docs/S403_visual-acceptance.json",
-    "sourceCommit": "087fe13ee8b45cfe3b80133ebf568fe2302fdf1f",
-    "note": "Before-source version captured through the existing harness with index.html served from exact starting Git blob. Unchanged assets served from current source. No tracked source swapped during mobile audit."
-  },
-  "metadataReboundAt": "2026-10-25T18:43:39.392Z",
-  "metadataRebind": {
-    "reason": "Candidate metadata only; source and all reviewed pixel hashes reverified unchanged",
-    "previousCandidate": {
-      "manifest": "api/candidate-artifact-manifest.json",
-      "manifestSha256": "a97b909a29df3cec2b16b8ec18ce007187c04ca388f643a03f189c1824d44cf1",
-      "candidateSha": "383b4ba361fba1e26cce430f3d3d1ffb4f9a1328",
-      "root": "2faff02fb9fec4ffbd88943c6e1b47c879865ebe2506d68817b4970d13761f35"
-    },
-    "originalCaptureTime": "2026-10-25T17:22:16.336Z",
-    "remeasured": false
+  "captureSet": "S403-merged",
+  "captureEvidence": {
+    "sets": [
+      "S403-merged-page.json",
+      "S403-merged-launch-stats.json",
+      "S403-merged-desk-showcase.json",
+      "S403-merged-clearance.json"
+    ],
+    "lastCapturedAt": "2026-10-25T19:26:24.346Z",
+    "originalCaptureTimePreserved": "2026-10-25T19:18:08.371Z"
   }
 }
