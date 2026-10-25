@@ -1,0 +1,22 @@
+{
+  "kind": "audit",
+  "session": 403,
+  "date": "2026-10-25",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Rotate session-headed ledgers using real UTF-8 byte budgets",
+  "items": [
+    {
+      "id": 1,
+      "slug": "session-ledger-rotation",
+      "title": "Rotate session-headed ledgers using real UTF-8 byte budgets",
+      "axis": "speed-organization-efficiency",
+      "leftScore": 7,
+      "rightScore": 4,
+      "insight": "Session-first headings bypass the existing rotator, and Unicode records outgrow character-count budgets. Extend the existing tool with conservative date recognition, real byte accounting and preservation checks.",
+      "evidence": "Session-first and date-first dated entries rotate oldest-first; undated sections and complete recent entries stay hot; Unicode sizes use UTF-8 bytes; real CLI fixtures preserve the exact preimage, archive every removed complete block, refuse conflicting archives, and rerun idempotently. Full source checks and authorized staging/production acceptance remain required."
+    }
+  ],
+  "blockers": [],
+  "followUps": []
+}

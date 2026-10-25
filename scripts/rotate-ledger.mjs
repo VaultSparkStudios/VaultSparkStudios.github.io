@@ -27,6 +27,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import crypto from 'node:crypto';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -48,7 +49,19 @@ const DRY = argv.includes('--dry-run');
 const APPLY = argv.includes('--apply');
 const SELF_TEST = argv.includes('--self-test');
 
-const DATE_HEADER = /^## (\d{4})-(\d{2})-(\d{2})/;
+const DATE_HEADER = /^## (\d{4})-(\d{2})-(\d{2})\b/;
+
+// Only explicit dates in known session headings are eligible. An arbitrary
+// metadata heading mentioning a date must remain hot, as must undated sessions.
+export function dateFromHeader(header) {
+  const match = header.match(DATE_HEADER) ||
+    (/^## (?:Session\s*\d+[A-Za-z]?\b|S\d+\b)/i.test(header)
+      ? header.match(/\b(\d{4})-(\d{2})-(\d{2})\b/) : null);
+  if (!match) return null;
+  const date = `${match[1]}-${match[2]}-${match[3]}`;
+  const parsed = new Date(`${date}T00:00:00Z`);
+  return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0, 10) === date ? date : null;
+}
 
 // Split text into { preamble, blocks:[{header, lines, date|null}] } on `## ` headers.
 export function parseBlocks(text) {
@@ -59,8 +72,7 @@ export function parseBlocks(text) {
   for (const line of lines) {
     if (line.startsWith('## ')) {
       if (cur) blocks.push(cur);
-      const m = line.match(DATE_HEADER);
-      cur = { header: line, lines: [line], date: m ? `${m[1]}-${m[2]}-${m[3]}` : null };
+      cur = { header: line, lines: [line], date: dateFromHeader(line) };
     } else if (cur) {
       cur.lines.push(line);
     } else {
@@ -77,7 +89,7 @@ export function quarterOf(dateStr) {
 }
 
 function sessionFromHeader(header) {
-  const values = [...String(header || '').matchAll(/(?:\bS|Session\s+)(\d{1,5})\b/gi)]
+  const values = [...String(header || '').matchAll(/(?:\bS|Session\s*)(\d{1,5})(?:[A-Za-z])?\b/gi)]
     .map((match) => Number(match[1]))
     .filter(Number.isFinite);
   return values.length ? Math.max(...values) : null;
@@ -108,10 +120,11 @@ export const HARD_FLOOR = 4; // never rotate below this many dated blocks, cap o
 
 export function planDatedRotation(text, { targetBytes, keepRecent }) {
   const { preamble, blocks } = parseBlocks(text);
-  const dated = blocks.filter((b) => b.date).sort((a, b) => (a.date < b.date ? 1 : -1)); // newest first
+  const dated = blocks.filter((b) => b.date).sort((a, b) =>
+    b.date.localeCompare(a.date) || (sessionFromHeader(b.header) ?? -1) - (sessionFromHeader(a.header) ?? -1)); // newest first; stable for true ties
   const moved = [];
   let keep = new Set(blocks);
-  const sizeOf = () => [...preamble, ...blocks.filter((b) => keep.has(b)).flatMap((b) => b.lines)].join('\n').length;
+  const sizeOf = () => Buffer.byteLength([...preamble, ...blocks.filter((b) => keep.has(b)).flatMap((b) => b.lines)].join('\n'), 'utf8');
   // candidates oldest-first, beyond the keepRecent newest
   const candidates = dated.slice(keepRecent).reverse();
   for (const b of candidates) {
@@ -248,6 +261,15 @@ function run() {
       console.log(`${DRY ? '[dry-run] ' : ''}${entry.file}: rotating ${plan.moved.length} block(s) → ${[...byQuarter.keys()].join(', ')}`);
       if (DRY) continue;
       fs.mkdirSync(ARCHIVE_DIR, { recursive: true });
+      // Preserve the exact input before any quarterly append or hot-file write.
+      // Content addressing makes repeat attempts idempotent and conflicts fail
+      // closed; this snapshot also preserves original ordering and CRLF bytes.
+      const original = fs.readFileSync(full);
+      const digest = crypto.createHash('sha256').update(original).digest('hex');
+      const preimage = path.join(ARCHIVE_DIR, `${entry.tag}_preimage_${digest}.md`);
+      if (fs.existsSync(preimage)) {
+        if (!fs.readFileSync(preimage).equals(original)) throw new Error('Ledger preimage archive conflict; refusing mutation');
+      } else fs.writeFileSync(preimage, original, { flag: 'wx' });
       for (const [q, blocksInQ] of byQuarter) {
         const shard = path.join(ARCHIVE_DIR, `${entry.tag}_${q}.md`);
         const marker = `\n<!-- rotated-from: ${entry.file} · ${new Date().toISOString().slice(0, 10)} -->\n`;
@@ -281,4 +303,4 @@ function run() {
   console.log(`rotate-ledger: ${rotated} ledger(s) rotated${DRY ? ' (dry-run)' : ''}`);
 }
 
-run();
+if (process.argv[1] && path.resolve(process.argv[1]) === url.fileURLToPath(import.meta.url)) run();

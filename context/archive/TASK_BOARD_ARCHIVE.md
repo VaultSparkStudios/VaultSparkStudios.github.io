@@ -1457,3 +1457,9 @@ Wave 1 complete: startup and fresh audit. Wave 2 complete: both selected L2 outc
 ## S392 checkpoint + remaining release
 
 - [x] [S392] Two command-admission outcomes verified; independent review passed.
+
+
+<!-- rotated 2026-10-25 · sessions < 401 · 1 block(s) -->
+
+## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.
+

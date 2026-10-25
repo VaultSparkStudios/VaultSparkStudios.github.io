@@ -1,3 +1,14 @@
+
+
+## S403 active outcome — preservation-safe ledger rotation
+
+- [ ] [S403] Session-headed ledger rotation: focused 4/4 and existing 19/19 checks pass; independent review round2 approved. Full release and closeout pending in docs/RELEASE_S403.json.
+
+Wave 1 complete: startup, fresh nine-axis audit, strict premises and candidate admission.
+Wave 2 complete locally: dated heading recognition, UTF-8 budgets, exact preimage archives and retention regressions.
+Wave 3 in progress: full source checks, staging and authorized full production release.
+Wave 4 pending: canonical closeout and publication.
+
 <!-- S402-closeout-writeback -->
 ## Session 402 selected outcome
 
@@ -6,13 +17,10 @@
 - [ ] [SIL][S402] Extend method-specific corroboration coverage if additional signals are introduced; future, unselected.
 
 Waves1–3 complete. Wave4 canonical closeout and publication have their authoritative state in docs/RELEASE_S402.json, waves[3]. The two future SIL rows remain unselected.
-
 ## Session 401 selected outcome
 
 - [x] [S401] Archive membership and gzip integrity fully accepted: 10/10 fixtures, independent CRC correction,13934-file staging,547/547 source checks, hosted3/3 and normal full production. docs/RELEASE_S401.json.
 - [ ] [SIL][S401] Consider per-member byte verification only if source mutation during packaging is observed; not selected in this arc.
-
-## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.
 
 ## S400 — reference integrity and persona readability
 

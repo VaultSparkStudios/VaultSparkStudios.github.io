@@ -1052,3 +1052,9 @@ Decision archive is raw byte-exact to 99852b7c6d:context/DECISIONS.md (257073 by
 SIL archive context/archive/SIL_S1-S401.md is raw byte-exact to the original committed ledger (306672 bytes; SHA-256 0ca6d0f65fc88c706ba3e4fcc5132dbfc94b29e94e3abcb3bf6e2b21407ff33c). The complete Rolling Status and recent complete sections remain in the hot file; the SIL cap is 300 KiB. Evidence: docs/S402_sil-rotation.json.
 
 The released candidate is 1f5e24f9029bd0c9b5e4973cf4148cc1474455ad. Later writebacks do not silently replace its acceptance evidence. POST RUM samples stay corroboration-only for an OPTIONS contract. Closing publication must be verified normally; no force push, no bypass and no native-completion claim. Evidence: docs/RELEASE_S402.json.
+
+## D-S403.1 — preservation-safe dated session rotation
+
+Reuse the existing rotator for explicit date-first and session-first headings, including compact session labels and addenda. Leave undated metadata hot. Order same-day entries by session number and count actual UTF-8 bytes. Before any dated-ledger mutation, preserve a content-addressed exact input snapshot; refuse conflicting snapshot bytes. Focused fixtures prove complete-section preservation, CRLF equality, same-day retention and idempotency. No dependency, public promise, identity-policy or visual change is selected.
+
+The CANON-045 STRONG gap remains separately recorded: this maintenance repair changes no identity flow and does not claim provider integration acceptance. Strict typed audit premises preceded implementation; the shared timing classifier still flags three startup/planning paths. Candidate admission passes and that timing limitation is retained. Radar write failed on its shared report; read-only follow-up proves all ten official sources current at 11.2 hours, without another cross-repo write. Full release acceptance is tracked in docs/RELEASE_S403.json.

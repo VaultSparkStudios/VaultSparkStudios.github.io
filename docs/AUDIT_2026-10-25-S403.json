@@ -1,0 +1,258 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-10-25",
+  "generatedAt": "2026-10-25T17:09:26.476Z",
+  "session": 403,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S403 nine-axis supported-release audit and authorized full deployment.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status",
+    "releaseTarget": null
+  },
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 1,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "more-member-features",
+          "premise": "More member features",
+          "evidence": "Existing complete member economy and project routes already exist; no new missing journey reproduced."
+        },
+        {
+          "slug": "more-project-routes",
+          "premise": "More project routes",
+          "evidence": "Existing complete member economy and project routes already exist; no new missing journey reproduced."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "persona-redesign",
+          "premise": "Persona redesign",
+          "evidence": "Recent S399/S400 rendered fixes remain present; this selection makes no UI change."
+        },
+        {
+          "slug": "new-navigation",
+          "premise": "New navigation",
+          "evidence": "Recent S399/S400 rendered fixes remain present; this selection makes no UI change."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "new-streaks",
+          "premise": "New streaks",
+          "evidence": "Existing nine-tier system is load-bearing; no measured economy failure justifies changing tier logic."
+        },
+        {
+          "slug": "rank-rebalance",
+          "premise": "Rank rebalance",
+          "evidence": "Existing nine-tier system is load-bearing; no measured economy failure justifies changing tier logic."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "new-provider",
+          "premise": "New provider",
+          "evidence": "Current AI discovery and grounded Oracle surfaces exist; no reproduced source-grounding defect."
+        },
+        {
+          "slug": "oracle-rewrite",
+          "premise": "Oracle rewrite",
+          "evidence": "Current AI discovery and grounded Oracle surfaces exist; no reproduced source-grounding defect."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "archive-upload-rewrite",
+          "premise": "Archive upload rewrite",
+          "evidence": "S401 inventory/CRC checks exist; Obelisk gap remains separately recorded and no identity change is selected."
+        },
+        {
+          "slug": "identity-policy-change",
+          "premise": "Identity policy change",
+          "evidence": "S401 inventory/CRC checks exist; Obelisk gap remains separately recorded and no identity change is selected."
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "surviving": [
+        "session-ledger-rotation"
+      ],
+      "rejectedOnVerify": []
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "paid-inference",
+          "premise": "Paid inference",
+          "evidence": "Deterministic existing rotator is reusable; no paid inference or cache is justified. Byte reduction is measured, not a token savings claim."
+        },
+        {
+          "slug": "new-cache-layer",
+          "premise": "New cache layer",
+          "evidence": "Deterministic existing rotator is reusable; no paid inference or cache is justified. Byte reduction is measured, not a token savings claim."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "recovered-route-duration",
+          "premise": "Recovered route duration",
+          "evidence": "S402 episode correction remains present; served verifier explicitly declares tracked-text scope, not binary parity."
+        },
+        {
+          "slug": "binary-parity-coverage",
+          "premise": "Binary parity coverage",
+          "evidence": "S402 episode correction remains present; served verifier explicitly declares tracked-text scope, not binary parity."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "cross-repo-timing-classifier",
+          "premise": "Cross-repo timing classifier",
+          "evidence": "Shared classifier is owned by Studio Ops; this selected rotator improvement is the S402 follow-up."
+        },
+        {
+          "slug": "broader-unselected-upkeep",
+          "premise": "Broader unselected upkeep",
+          "evidence": "Shared classifier is owned by Studio Ops; this selected rotator improvement is the S402 follow-up."
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "session-ledger-rotation",
+      "axis": "speed-organization-efficiency",
+      "title": "Rotate session-headed ledgers using real UTF-8 byte budgets",
+      "tier": "⚡",
+      "impact": 7,
+      "innovation": 4,
+      "effortHours": 2,
+      "priority": 14,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "The live SIL and WORK_LOG use session-first headings, which DATE_HEADER never recognizes. The planner also uses string.length for byte thresholds.",
+      "recipe": "Extend the existing ledger parser for explicitly dated session headings, retain undated blocks, calculate UTF-8 bytes, and archive an immutable hash-addressed full preimage before mutating dated ledgers. Add real CLI regressions in isolated roots and reuse the existing self-test suite.",
+      "acceptance": "Session-first and date-first dated entries rotate oldest-first; undated sections and complete recent entries stay hot; Unicode sizes use UTF-8 bytes; real CLI fixtures preserve the exact preimage, archive every removed complete block, refuse conflicting archives, and rerun idempotently. Full source checks and authorized staging/production acceptance remain required.",
+      "userOutcome": "Reliable bounded handoffs let maintenance agents find recent website release facts without silently dropping historical evidence.",
+      "readinessArea": "supported-release maintenance reliability",
+      "stageRationale": "Repair reproduced tooling failure without altering membership, identity, visual design or public promises.",
+      "premises": [
+        {
+          "claim": "Dated planner counts characters rather than UTF-8 bytes",
+          "adapter": "file-content",
+          "target": "scripts/rotate-ledger.mjs",
+          "pattern": ".join('\\n').length",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Live SIL uses session-first headings",
+          "adapter": "file-content",
+          "target": "context/SELF_IMPROVEMENT_LOOP.md",
+          "pattern": "## Session 113 — 2026-04-27",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Recognize dated session-first headings."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Recognize explicit dates conservatively, budget actual bytes, preserve immutable preimages and prove real CLI archive/retention behavior."
+        },
+        "L3": {
+          "effortHours": 8,
+          "recipe": "General transactional multi-ledger storage migration; unselected."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-25T17:16:10.513Z",
+          "status": "implemented",
+          "note": "4/4 focused unit;19/19 selftests; independent review round2 approved. Full release and closeout pending; docs/RELEASE_S403.json."
+        }
+      ]
+    }
+  ],
+  "research": {
+    "survey": "Live parser, writer, recent SIL/WORK_LOG/CURRENT_STATE, previous accepted release and existing served-parity scope inspected.",
+    "reuse": "Reuse rotate-ledger.mjs; no dependency, new framework or paid provider.",
+    "novelCandidates": [
+      "Heading-family retention symmetry",
+      "Byte-budget pressure with multibyte history",
+      "Immutable rotation preimage addressing"
+    ],
+    "market": "No competitor claim or market changes selected."
+  },
+  "totals": {
+    "count": 1,
+    "priority": 14,
+    "top3": [
+      "session-ledger-rotation"
+    ]
+  },
+  "skipped": [],
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-25T17:09:40.979Z",
+    "head": "087fe13ee8b45cfe3b80133ebf568fe2302fdf1f",
+    "sidecar": "docs/AUDIT_2026-10-25-S403.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "77aaf5fdad913d6b17def2201b2329a948367d4b837f46dd216ec78673b03735",
+    "implementationDirty": [
+      "docs/GENIUS_LIST.md",
+      "docs/S403_audit-brief.json",
+      "docs/S403_plan-brief.json"
+    ]
+  },
+  "timingNote": "Strict typed premises passed before behavior edits; three startup/planning paths remain nonpassing in the shared timing classifier."
+}

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "2.0",
+  "generatedAt": "2026-10-25T17:41:50.797Z",
+  "publicSafe": true,
+  "source": "scripts/run-build-check.mjs",
+  "commandCount": 3,
+  "plannedCommandCount": 547,
+  "firstStep": 22,
+  "coverageComplete": false,
+  "planFingerprint": "f44cd26c65e89fda5932dae9",
+  "sourceFingerprint": "c41fc859ad09cf435a03b917",
+  "passed": 2,
+  "failed": 1,
+  "totalDurationMs": 3970,
+  "startedAt": "2026-10-25T17:41:39.776Z",
+  "finishedAt": "2026-10-25T17:41:50.797Z",
+  "slowest": [
+    {
+      "step": 22,
+      "command": "node scripts/check-startup-context-budget.mjs",
+      "status": 0,
+      "durationMs": 2007,
+      "error": null
+    },
+    {
+      "step": 24,
+      "command": "node scripts/build-proof-aware-projects.mjs --check",
+      "status": 1,
+      "durationMs": 1166,
+      "error": null
+    },
+    {
+      "step": 23,
+      "command": "node scripts/build-proof-aware-projects.mjs --self-test",
+      "status": 0,
+      "durationMs": 797,
+      "error": null
+    }
+  ],
+  "concentration": {
+    "maxStepShare": 0.3,
+    "minActionableStepMs": 45000,
+    "dominantStep": 22,
+    "dominantCommand": "node scripts/check-startup-context-budget.mjs",
+    "dominantDurationMs": 2007,
+    "dominantShare": 0.5055,
+    "breached": false
+  },
+  "failures": [
+    {
+      "step": 24,
+      "command": "node scripts/build-proof-aware-projects.mjs --check",
+      "status": 1,
+      "durationMs": 1166,
+      "error": null
+    }
+  ],
+  "steps": [
+    {
+      "step": 22,
+      "command": "node scripts/check-startup-context-budget.mjs",
+      "status": 0,
+      "durationMs": 2007,
+      "error": null
+    },
+    {
+      "step": 23,
+      "command": "node scripts/build-proof-aware-projects.mjs --self-test",
+      "status": 0,
+      "durationMs": 797,
+      "error": null
+    },
+    {
+      "step": 24,
+      "command": "node scripts/build-proof-aware-projects.mjs --check",
+      "status": 1,
+      "durationMs": 1166,
+      "error": null
+    }
+  ],
+  "note": "Public-safe build gate timing, plan identity, coverage, and direct exit-code summary. Command output is intentionally excluded.",
+  "receiptId": "a0eb0bad23bd21f6940054fb"
+}

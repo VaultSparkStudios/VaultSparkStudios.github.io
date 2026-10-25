@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-10-24T23:24:01.208Z
-Receipt: `014d43b4a834a99a29177eb1` · coverage 109/109
+Generated: 2026-10-25T17:57:21.476Z
+Receipt: `d8d83f327198e088ec0c116e` · coverage 109/109
 
-Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 35.6s
+Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 154.8s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 65 | blocking | 2.0s | 0 | `node scripts/check-content-coherence.mjs` |
-| 49 | blocking | 1.5s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 35 | blocking | 1.2s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 24 | blocking | 1.2s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 18 | blocking | 1.2s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 106 | advisory | 1.1s | 0 | `node scripts/generate-build-sha.mjs --check` |
-| 82 | blocking | 1.0s | 0 | `node scripts/build-route-consolidation.mjs --check` |
-| 45 | blocking | 0.9s | 0 | `node scripts/derive-game-nav.mjs --self-test` |
-| 37 | blocking | 0.9s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 78 | blocking | 0.8s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
+| 78 | blocking | 11.8s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
+| 65 | blocking | 8.1s | 0 | `node scripts/check-content-coherence.mjs` |
+| 88 | blocking | 5.8s | 0 | `node scripts/check-receipt-ordering.mjs` |
+| 76 | blocking | 3.9s | 0 | `node scripts/build-intelligence-suite.mjs --check` |
+| 49 | blocking | 3.6s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 37 | blocking | 3.2s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 77 | blocking | 3.1s | 0 | `node scripts/build-news-visual-receipts.mjs --self-test` |
+| 71 | blocking | 2.8s | 0 | `node scripts/check-project-status-coherence.mjs` |
+| 24 | blocking | 2.8s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 35 | blocking | 2.6s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
 
 ## Failures
 
