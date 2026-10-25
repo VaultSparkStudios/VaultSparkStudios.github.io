@@ -1,0 +1,58 @@
+{
+  "session": 403,
+  "observedAt": "2026-10-25T23:40:41.696Z",
+  "state": "passed",
+  "sourceFingerprint": "83f9d1e1b08072ee85e6931a",
+  "sourceReceiptId": "19ae14480ff996d34587243f",
+  "commands": [
+    {
+      "command": "node scripts/generate-build-sha.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/resync-derived.mjs --changed api/build-sha.json,api/build-check-diagnostics.json,context/PROJECT_STATUS.json --verify --sweep-repair",
+      "exit": 0
+    },
+    {
+      "command": "node .cache/S403-derive.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-candidate-artifact-manifest.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-release-proof.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-status-proof.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/build-stats-surface.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node .cache/S403-rebind.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/rebind-mobile-receipt.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/check-receipt-ordering.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/check-visual-qa-retention.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/lib/write-project-status.mjs --check",
+      "exit": 0
+    }
+  ],
+  "scope": "Closing metadata and current guarded render bindings; complete measured source unchanged. New current staging/hosted checks/production remain required."
+}
