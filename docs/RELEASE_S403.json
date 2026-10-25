@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "session": 403,
-  "state": "art-inclusive-staging-accepted-hosted-production-pending",
-  "releaseAccepted": false,
+  "state": "normal-full-release-accepted-closeout-pending",
+  "releaseAccepted": true,
   "goal": {
     "threadId": "01a173fb-dc92-75d0-9489-6832e36263f8",
     "createdAt": 1792947304
@@ -10,7 +10,7 @@
   "startHead": "087fe13ee8b45cfe3b80133ebf568fe2302fdf1f",
   "audit": "docs/AUDIT_2026-10-25-S403.json",
   "localAcceptance": "docs/S403_local-acceptance.json",
-  "candidate": null,
+  "candidate": "95cf0ccbada89ba1e7365dd00caf3bcfdac22ed6",
   "waves": [
     {
       "id": 1,
@@ -24,23 +24,23 @@
     },
     {
       "id": 3,
-      "state": "in-progress",
+      "state": "complete",
       "outcome": "Full source, staging, hosted exact-candidate checks and normal production readback",
       "verified": [
         "Complete current547-step source run",
         "Current215-case mobile audit with zeroP0/P1",
         "56 current individually reviewed viewport captures",
         "Admission/secrets scan and current full staging",
-        "11/11 current staging ceremony and68/68 critical readback before uptime-only reconciliation"
+        "11/11 current staging ceremony and68/68 critical readback before uptime-only reconciliation",
+        "All3required hostedworkflows passed at exact95cf0ccbad",
+        "Actual normal-full production six required steps and provider SHA verified",
+        "Complete canonical1159-text and12-changed-image readback; both live full-release stamps"
       ],
-      "remaining": [
-        "Exact final-candidate hosted checks",
-        "Normal full production, actual deploy steps and complete served-text readback"
-      ]
+      "remaining": []
     },
     {
       "id": 4,
-      "state": "pending",
+      "state": "in-progress",
       "outcome": "Canonical closeout, remote publication and native completion audit"
     }
   ],
@@ -125,5 +125,35 @@
     "criticalLeaves": 68,
     "ceremonySteps": 11
   },
-  "supplyChain": "docs/S403_supply-chain.json"
+  "supplyChain": "docs/S403_supply-chain.json",
+  "tag": "s403-full-20261025-95cf0ccbad",
+  "hostedRequiredChecks": "docs/S403_hosted-required-checks.json",
+  "production": {
+    "runId": 40235072271,
+    "event": "workflow_dispatch",
+    "candidate": "95cf0ccbada89ba1e7365dd00caf3bcfdac22ed6",
+    "tag": "s403-full-20261025-95cf0ccbad",
+    "confirmation": "confirm_production=true",
+    "state": "verified",
+    "evidence": "docs/S403_production-workflow.json",
+    "actualSteps": "docs/S403_production-steps.json",
+    "provider": "docs/S403_provider-identity.json",
+    "readback": {
+      "stamps": "docs/S403_production-stamps.json",
+      "selected": "docs/S403_production-selected-readback.json",
+      "servedText": "docs/S403_served-parity.json",
+      "servedImages": "docs/S403_binary-parity.json",
+      "text": {
+        "checked": 1159,
+        "expected": 1159,
+        "identical": 1149,
+        "redirected": 10
+      },
+      "changedImages": {
+        "checked": 12,
+        "expected": 12
+      }
+    }
+  },
+  "acceptedAt": "2026-10-25T21:32:40.773Z"
 }

@@ -1,22 +1,22 @@
 
 
-## S403 active outcome — preservation-safe ledger rotation
+## S403 outcome and release evidence — preservation-safe ledger rotation
 
-- [ ] [S403] Session-headed ledger rotation: focused 4/4 and existing 19/19 checks pass; independent review round2 approved. Full release and closeout pending in docs/RELEASE_S403.json.
+- [x] [S403] Session-headed ledger rotation: focused 4/4 and existing 19/19 checks pass; independent review round2 approved. Full release verified; canonical closing state is authoritative in docs/RELEASE_S403.json.
 
 Wave 1 complete: startup, fresh nine-axis audit, strict premises and candidate admission.
 Wave 2 complete locally: dated heading recognition, UTF-8 budgets, exact preimage archives and retention regressions.
-Wave 3 in progress: full source checks, staging and authorized full production release.
-Wave 4 pending: canonical closeout and publication.
+Wave 3 complete: full source checks, staging and authorized full production release.
+Wave 4 canonical closeout and publication: authoritative state in docs/RELEASE_S403.json, waves[3].
 
 <!-- S402-closeout-writeback -->
 ## Session 402 selected outcome
 
 - [x] [S402] Recovered-route duration and method-scoped corroboration fully accepted; docs/RELEASE_S402.json.
-- [ ] [SIL][S402] Add session-heading support to the existing ledger rotator; future, unselected.
+- [x] [SIL][S402] Add session-heading support to the existing ledger rotator; completed by S403 accepted outcome, docs/RELEASE_S403.json.
 - [ ] [SIL][S402] Extend method-specific corroboration coverage if additional signals are introduced; future, unselected.
 
-Waves1–3 complete. Wave4 canonical closeout and publication have their authoritative state in docs/RELEASE_S402.json, waves[3]. The two future SIL rows remain unselected.
+Waves1–3 complete. Wave4 canonical closeout and publication have their authoritative state in docs/RELEASE_S402.json, waves[3]. S403 follow-up: session-heading support completed; additional method-specific corroboration remains future/unselected.
 ## Session 401 selected outcome
 
 - [x] [S401] Archive membership and gzip integrity fully accepted: 10/10 fixtures, independent CRC correction,13934-file staging,547/547 source checks, hosted3/3 and normal full production. docs/RELEASE_S401.json.
@@ -769,3 +769,6 @@ Wave 1 ✔ fresh audit. Wave 2 ✔ two input-boundary fixes. Wave 3 ◻ release 
 Both selected local outcomes are accepted. Whole-project and release checks remain pending; no prior-session acceptance is borrowed.
 
 - [ ] [S401 FOLLOW-UP] Diagnose live-browser simulated origin-outage ERR_FAILED and Sparked QA entitlement mismatch; both reproduce on prior immutable release with unchanged code. Retained in docs/RELEASE_S401.json; not selected for this archive-integrity arc.
+
+- [ ] [SIL][S403] Assess the separate shard-ledger byte-offset path before generalizing dated-ledger UTF-8 planning; future, unselected.
+- [ ] [SIL][S403] Verify Studio Ops adoption of the rotated-ledger pattern after Ark delivery; transport alone does not prove adoption. Future, unselected.

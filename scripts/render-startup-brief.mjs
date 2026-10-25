@@ -540,7 +540,11 @@ const daysSinceClosedOut = lastSilDate ? daysBetween(lastSilDate, today) : '?';
 const daysSinceLast = daysSinceActive;
 
 // IGNIS freshness
-const ignisAge = status.ignisLastComputed ? daysBetween(status.ignisLastComputed, today) : '?';
+const ignisComputedAt = Date.parse(status.ignisLastComputed || '');
+const ignisElapsedMs = Date.now() - ignisComputedAt;
+const ignisAge = Number.isFinite(ignisElapsedMs) && ignisElapsedMs >= 0
+  ? Math.floor(ignisElapsedMs / 86400000)
+  : '?';
 
 // ── SESSION_PLAN prediction ───────────────────────────────────────────────────
 const planGenAt  = sessionPlan.match(/<!-- generated-at: (\d{4}-\d{2}-\d{2})/)?.[1] ?? null;

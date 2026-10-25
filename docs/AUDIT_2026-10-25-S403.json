@@ -168,7 +168,7 @@
       "innovation": 4,
       "effortHours": 2,
       "priority": 14,
-      "status": "pending",
+      "status": "shipped",
       "selectedDepth": "L2",
       "why": "The live SIL and WORK_LOG use session-first headings, which DATE_HEADER never recognizes. The planner also uses string.length for byte thresholds.",
       "recipe": "Extend the existing ledger parser for explicitly dated session headings, retain undated blocks, calculate UTF-8 bytes, and archive an immutable hash-addressed full preimage before mutating dated ledgers. Add real CLI regressions in isolated roots and reuse the existing self-test suite.",
@@ -213,6 +213,11 @@
           "at": "2026-10-25T17:16:10.513Z",
           "status": "implemented",
           "note": "4/4 focused unit;19/19 selftests; independent review round2 approved. Full release and closeout pending; docs/RELEASE_S403.json."
+        },
+        {
+          "at": "2026-10-25T21:32:40.775Z",
+          "status": "shipped",
+          "note": "Current547/547 source,215/215 mobile,56 inspected current viewport captures,staging11/11 and68critical leaves,3 exact-SHA hosted workflows,actual normal-full95cf0ccbad production and provider stamps,1159/1159 served text and12/12 changed public images accepted. Canonical closeout remains pending; docs/RELEASE_S403.json."
         }
       ]
     }

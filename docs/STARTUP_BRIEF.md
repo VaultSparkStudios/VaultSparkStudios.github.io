@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-25 (Session 402 closeout) -->
-<!-- semantic-freshness: hash=e9654be7024a003d next=403 silSession=402 silScore=939 handoff=402 tests=- -->
+<!-- generated-at: 2026-10-25 (Session 403 closeout) -->
+<!-- semantic-freshness: hash=5dedd3c60155542b next=404 silSession=403 silScore=939 handoff=403 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 402 closeout · 2026-10-25.
+> **Fast-boot brief** — generated at Session 403 closeout · 2026-10-25.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 403 · 2026-10-25 · FOUNDER MODE                         ║
+║  Session 404 · 2026-10-25 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S402) - WHAT SHIPPED ══════════════════════════╗
-║  S402 route-status outcome released at 1f5e24f9029bd0c9b5e4973c  ║
+╔══ LAST SESSION (S403) - WHAT SHIPPED ══════════════════════════╗
+║  S403 preservation-safe ledger rotation; release and closeout e  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
 ║    SIL v3.0  ·  Avg3: ?  ·  Velocity 1→                          ║
-║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest…   ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
 ║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -61,7 +61,7 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 402 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 403 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    547/547 passing  ·  Deploy: verified                  ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -76,8 +76,8 @@
 ║  ✓  Tests         547/547 passing (2026-10-25)                   ║
 ║  ⚠  Velocity      1 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ✓  Context age   1d                                             ║
-║  ✓  IGNIS         45633 FORGE  ·  0d old                         ║
+║  ✓  Context age   0d                                             ║
+║  ✓  IGNIS         45410 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — selected release verified;…           ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
@@ -116,24 +116,24 @@
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
 ║  Projected:  935/1000  (↓4 vs current 939)                       ║
 ║  At-risk:    Momentum Δ-3                                        ║
-║  Calibration: MAE 4.5 over last 10 forecasts                     ║
+║  Calibration: MAE 4.2 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Session-headed ledger rotation: focused 4/  ║
-║        Session-headed ledger rotation: focused 4/4 and existing  ║
+║   96  [PRODUCT]      Extend method-specific corroboration cover  ║
+║        Extend method-specific corroboration coverage if additio  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Add session-heading support to the existin  ║
-║        Add session-heading support to the existing ledger rotat  ║
-║                                                                  ║
-║   90  [PRODUCT]      Extend method-specific corroboration cover  ║
-║        Extend method-specific corroboration coverage if additio  ║
-║                                                                  ║
-║   87  [PRODUCT]      Consider per-member byte verification only  ║
+║   93  [PRODUCT]      Consider per-member byte verification only  ║
 ║        Consider per-member byte verification only if source mut  ║
+║                                                                  ║
+║   90  [PRODUCT]      Coordinate an evidence-backed distinction   ║
+║        Coordinate an evidence-backed distinction between format  ║
+║                                                                  ║
+║   84  [PRODUCT]      Staging lineage tolerant of publisher data  ║
+║        Staging lineage tolerant of publisher data drift. is ope  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 402 closeout · 2026-10-25*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 403 closeout · 2026-10-25*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

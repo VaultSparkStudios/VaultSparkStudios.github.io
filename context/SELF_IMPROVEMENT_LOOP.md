@@ -11,8 +11,8 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last5 available totals):939 →939 →939 →939 →939
 Avgs (available rolling totals) —3:939.0 |5:939.0 |10:unmeasured |25:unmeasured |all:unmeasured
 Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session:2026-10-24 | Session 402 | Total:939/1000 | Velocity:1
-  └ Route-status outcome released; closing publication pending. docs/RELEASE_S402.json.
+Last session:2026-10-25 | Session 403 | Total:939/1000 | Velocity:1
+  └ Ledger rotation released; canonical closing publication pending. docs/RELEASE_S403.json.
 <!-- rolling-status-end -->
 
 > Older entries through S401 live verbatim in `context/archive/SIL_S1-S401.md` (exact committed pre-rotation snapshot). Recent complete entries follow.
@@ -1990,3 +1990,37 @@ Commit ddafbaab96 recorded the verified full production release before the canon
 S402 final closing addendum: independent review round2 passed; intelligence45633, entropy0.174 and genome23/25 refreshed; canonical local autopilot executed two complete547/547 suites (source7b5d3c116e9a33d8a0df9a4f). Initial push rejected concurrent uptime update; normal merge preserves it. Ark impact sent01K5O3SKF8ED13B997EA4D6FE0; no recipient application claim. Final remote reachability gates native completion. Production accepted1f5e24f902 remains separate from closing metadata. SIL939/1000, velocity1, same S402, one outcome. See docs/S402_closeout-acceptance.json.
 
 S402 publication evidence: normal push dc7fa570a58032771b62e1a83bcb0172cf2b3819 verified on remote main after preserving uptime a6d9c3eab3. Canonical autopilot actual run recorded retrospectively because localv3.1 omits its newer receipt ledger; no rerun or pass was fabricated. Current continuation owned handles5/5 terminal, owned preview ports closed, both locks absent. Same outcome, score939, velocity1. docs/S402_closeout-acceptance.json is authoritative; accepted deployed1f remains distinct from closing main.
+
+
+<!-- S403-closeout-writeback -->
+## Session 403 — 2026-10-25 — preservation-safe ledger rotation
+
+Dated session-ledger headings now rotate oldest-first, including same-day session ordering; byte planning uses UTF-8 and exact content-addressed preimages protect historical records. Four focused unit cases and19 existing self-tests pass; independent review round2 approved. Local mobile215/215 and56 current art-inclusive viewport captures are accepted; historical captures remain preserved. Full source547/547, required exact-SHA hosted checks and current staging accepted. Initial normal full production95cf0ccbada89ba1e7365dd00caf3bcfdac22ed6; served text1159/1159 covered (1149 identical,10 verified redirects,0 differences/unread), plus12/12 changed public images. Current closing/publication state is authoritative in docs/RELEASE_S403.json.
+
+Selected implementation and release verified. Canonical closing checks, Ark and final remote publication remain separate until docs/RELEASE_S403.json wave4 is complete.
+
+- Existing identity/provider and field-vitals gaps remain separate
+- Strict typed premises passed before behavior edits; shared planning-artifact timing classifier retains three nonpassing startup/planning paths
+- Shared radar write invocation failed; the read-only follow-up verified10/10 official sources current at that observation. Neither proves project readiness.
+- No field availability, conversion, token-cost or performance gain is claimed
+
+Website assessment: Hosted Lighthouse/local and staging audits passed; field samples remain absent, so no field Core Web Vitals gain is claimed. No conversion change or measured conversion gain. Latest Desk edition and concurrently approved art preserved and released;12 changed public images read back exactly. 56 current viewport captures individually reviewed across7themes and desktop/mobile;215-case mobile audit has zeroP0/P1.
+
+CDR reviewed: no new creative direction. SIL939/1000 unchanged; velocity1. No field-performance, conversion or token-savings claim.
+
+| Category | Score | Rationale |
+|---|---:|---|
+| Dev Health | 95 | 547/547 source and3/3 exact hosted workflows; full staging/production accepted. Field Core Web Vitals remain unmeasured. |
+| Creative Alignment | 94 | Brand and creative direction preserved; current content/art readable in all7themes. |
+| Momentum | 92 | One selectedL2 repair verified and released; no additional outcomes inferred. |
+| Engagement | 96 | Membership and conversion behavior unchanged; no conversion gain claimed. |
+| Process Quality | 88 | Strict premises verified before edits; three planning-artifact timing flags remain recorded. |
+| Cross-Repo Coherence | 94 | No sibling tree edits; pattern adoption remains future/unverified. |
+| Security Posture | 97 | Clean staged scans; unchanged trust policy and existing independent identity holds retained. |
+| Ecosystem Integration | 91 | Native contracts, staging, exact hosted identity and live readback accepted. |
+| Capital Efficiency | 95 | No new dependency or paid provider; no measured spend/token saving claimed. |
+| Automation Coverage | 97 | Four realCLI unit cases plus19 rotator self-tests, native suite parity and full source checks. |
+
+**Total: 939/1000** · **Velocity: 1**
+
+Brainstorm committed as two future unselected TASK_BOARD rows: shard-offset measurement and evidence-backed Ark adoption. Available last-five totals remain939; no inferred impact score gain.

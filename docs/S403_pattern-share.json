@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "session": 403,
+  "type": "pattern-share",
+  "state": "extracted-not-yet-transported",
+  "requestedOutcome": "Preserve complete dated ledger history while keeping recent evidence within real UTF-8 byte budgets.",
+  "owner": "Recipient project implementer; source artifact owned by website",
+  "artifact": {
+    "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+    "version": "S403",
+    "commit": "95cf0ccbada89ba1e7365dd00caf3bcfdac22ed6",
+    "path": "scripts/rotate-ledger.mjs",
+    "sha256": "833ec29089b9f10a1573c98e2570c810f9e76ed29e44926de7c4e69dcae934df",
+    "tests": "tests/ledger-rotation.unit.spec.mjs"
+  },
+  "pattern": "Recognize date-first and explicitly dated session headings conservatively; sort by date and same-day session; measure Buffer.byteLength; retain undated blocks; write an immutable content-addressed exact preimage before modifying dated ledgers; reject conflicting archives.",
+  "actualDependency": "Recipient must assess its own ledger shape and run its own checks; delivery is not adoption and this packet does not authorize sibling tree edits.",
+  "acceptanceEvidence": [
+    "4 real CLI unit cases and19 existing self-tests",
+    "Exact preimage/complete-section preservation, UTF-8 budgets, conflict refusal, same-day ordering and idempotency",
+    "Initial full source547/547 and normal-full production accepted; docs/RELEASE_S403.json"
+  ],
+  "adoption": {
+    "verifiedRecipients": [
+      "vaultsparkstudios-website"
+    ],
+    "otherRecipientsVerified": 0
+  }
+}

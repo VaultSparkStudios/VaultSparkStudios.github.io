@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S402 route status accuracy released; canonical closeout verified",
+  "currentFocus": "S403 preservation-safe ledger rotation; release and closeout evidence in docs/RELEASE_S403.json",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Selected arc outcome complete; future SIL outcomes remain unselected",
+  "nextMilestone": "Complete S403 closing verification and publication; afterward select a future unselected maintenance outcome",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -26,15 +26,15 @@
     "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action.",
     "Shared account KV write budget remains a risk from other writers. S387 isolates Trusted Types diagnostics; actual release and usage evidence is in docs/RELEASE_S387.json."
   ],
-  "lastUpdated": "2026-10-24",
-  "currentSession": 402,
+  "lastUpdated": "2026-10-25",
+  "currentSession": 403,
   "truthAuditStatus": "yellow",
-  "truthAuditLastRun": "2026-10-24",
+  "truthAuditLastRun": "2026-10-25",
   "silScore": 939,
   "silAvg3": 939,
   "silVelocity": 1,
   "silDebt": "stable",
-  "silLastSession": 402,
+  "silLastSession": 403,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -42,13 +42,13 @@
       "url": "https://vaultsparkstudios.com/",
       "type": "production",
       "status": "green",
-      "note": "S402 selected release accepted; docs/RELEASE_S402.json. Canonical closeout is verified; existing independent holds remain separate."
+      "note": "S403 release and closing evidence: docs/RELEASE_S403.json. Existing independent holds remain separate."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
       "type": "staging",
       "status": "green",
-      "note": "S402 selected release accepted; docs/RELEASE_S402.json. Canonical closeout is verified; existing independent holds remain separate."
+      "note": "S403 release and closing evidence: docs/RELEASE_S403.json. Existing independent holds remain separate."
     },
     {
       "url": "https://vaultsparkstudios.com/?nav=sheet",
@@ -70,7 +70,7 @@
       "url": "https://website.staging.vaultsparkstudios.com/status/",
       "type": "staging",
       "status": "green",
-      "note": "S402 selected release accepted; docs/RELEASE_S402.json. Canonical closeout is verified; existing independent holds remain separate."
+      "note": "S403 release and closing evidence: docs/RELEASE_S403.json. Existing independent holds remain separate."
     },
     {
       "command": "npm run build:check",
@@ -80,10 +80,10 @@
     }
   ],
   "vaultStatus": "SPARKED",
-  "ignisScore": 45633,
-  "ignisScoreDelta": 262,
+  "ignisScore": 45410,
+  "ignisScoreDelta": -223,
   "ignisGrade": "FORGE",
-  "ignisLastComputed": "2026-10-24T21:34:46.914Z",
+  "ignisLastComputed": "2026-10-25T21:38:52.012Z",
   "entropyScore": 0.174,
   "entropyLastComputed": "2026-10-24",
   "sessionMode": "founder",
@@ -102,7 +102,7 @@
     "capitalEfficiency": 95,
     "automationCoverage": 97
   },
-  "silCategoriesUpdatedSession": 402,
+  "silCategoriesUpdatedSession": 403,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-10-25",
@@ -255,7 +255,7 @@
     "docs/visual-qa/SPARK_HELD_MEMBERSHIP.json"
   ],
   "truthGenome": "23/25",
-  "lastSessionSummary": "S402 route-status outcome released at 1f5e24f9029bd0c9b5e4973cf4148cc1474455ad; canonical closeout publication still pending",
+  "lastSessionSummary": "S403 preservation-safe ledger rotation; release and closeout evidence in docs/RELEASE_S403.json",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
     "session": 402,
@@ -273,13 +273,13 @@
     "validation": "S395 served-text parity requires complete nonempty exactly-once coverage, committed redirect status/destination and strict CLI admission. Focused fixtures3/3, self-test19/19, existing regressions9/9 and independent review pass. The earlier actual npm full build/postbuild26/26 is retained as preintegration evidence. Fresh integrated36-node native-owner closure, declared news checks and two complete 545/545 runs plus current staging11/11 pass;84 manually inspected news captures across7themes at1440/390px and215 automated device probes retain their stated limits. Retired8442f8f4 failed hosted compliance atstep143 because WORK_LOG measured251KB against the250KB cap; native rotation moved0 for session-first headings, so older history was archived verbatim before corrected candidate16f6938f. Normal full production candidate c931cc736f70b524509378c1e35e1a69e8b3927d (run 39650067973) is verified by hosted checks, provider identity, both build stamps, complete served text,65 critical leaves on Pages/apex and exactly12 incoming news-image variants on both origins. This does not certify all binary assets. Original premise timing remains nonpassing; original baseline trace/context usage is unmeasured. Existing identity and field-vitals holds remain separate; no measured visitor or performance gain is claimed.",
     "releaseEvidence": "docs/RELEASE_S395.json"
   },
-  "lastSession": 402,
+  "lastSession": 403,
   "sessionState": {
     "version": 1,
-    "durableSession": 402,
-    "currentFocus": "S402 route status accuracy released; canonical closeout verified",
-    "nextMilestone": "Selected arc outcome complete; future SIL outcomes remain unselected",
-    "lastSessionSummary": "S402 route-status outcome released at 1f5e24f9029bd0c9b5e4973cf4148cc1474455ad; canonical closeout publication still pending"
+    "durableSession": 403,
+    "currentFocus": "S403 preservation-safe ledger rotation; release and closeout evidence in docs/RELEASE_S403.json",
+    "nextMilestone": "Complete S403 closing verification and publication; afterward select a future unselected maintenance outcome",
+    "lastSessionSummary": "S403 preservation-safe ledger rotation; release and closeout evidence in docs/RELEASE_S403.json"
   },
   "s378RecordRecovery": {
     "date": "2026-10-14",
@@ -301,12 +301,12 @@
     "receipt": "docs/RELEASE_S400.json",
     "workflowRun": 40043209707
   },
-  "truthAuditSummary": "Recovered and unobserved route states now have null current onset bounds and zero degradation duration. Coarse evidence cannot backdate a recurrence across recovery. RUM POST samples remain labelled corroboration and do not establish the OPTIONS route contract. Historical incidents and recovery records are preserved. Focused 55/55; full implementation source 547/547; hosted 3/3; staging ceremony 11/11; normal full production 1f5e24f9029bd0c9b5e4973cf4148cc1474455ad; complete canonical served-text readback 1150 paths (1140 identical, 10 verified redirects, zero differences/unread). Evidence: docs/RELEASE_S402.json.",
+  "truthAuditSummary": "Dated session-ledger headings now rotate oldest-first, including same-day session ordering; byte planning uses UTF-8 and exact content-addressed preimages protect historical records. Four focused unit cases and19 existing self-tests pass; independent review round2 approved. Local mobile215/215 and56 current art-inclusive viewport captures are accepted; historical captures remain preserved. Full source547/547, required exact-SHA hosted checks and current staging accepted. Initial normal full production95cf0ccbada89ba1e7365dd00caf3bcfdac22ed6; served text1159/1159 covered (1149 identical,10 verified redirects,0 differences/unread), plus12/12 changed public images. Current closing/publication state is authoritative in docs/RELEASE_S403.json.",
   "currentVerification": {
-    "session": 402,
+    "session": 403,
     "state": "release-verified",
-    "source": "docs/RELEASE_S402.json",
-    "lastCompleteTestsSession": 402
+    "source": "docs/RELEASE_S403.json",
+    "lastCompleteTestsSession": 403
   },
   "metadataPublication": {
     "session": 400,
@@ -330,23 +330,22 @@
   },
   "velocity": 1,
   "arcProgress": {
-    "session": 402,
+    "session": 403,
     "phase": "release-accepted-publication-pending",
-    "goalId": "01a16f06-5d63-7031-9625-ae209e94faf4",
-    "goalCreatedAt": 1792864081,
-    "audit": "docs/AUDIT_2026-10-24-S402.json",
-    "releaseEvidence": "docs/RELEASE_S402.json",
-    "candidate": "1f5e24f9029bd0c9b5e4973cf4148cc1474455ad",
-    "detail": "Waves1–3 complete. Wave4: canonical writeback prepared; final independent closeout review, intelligence, autopilot, Ark delivery, process cleanup and remote publication remain explicit acceptance work. No native-completion claim."
+    "goalId": "01a173fb-dc92-75d0-9489-6832e36263f8",
+    "goalCreatedAt": 1792947304,
+    "audit": "docs/AUDIT_2026-10-25-S403.json",
+    "releaseEvidence": "docs/RELEASE_S403.json",
+    "candidate": "95cf0ccbada89ba1e7365dd00caf3bcfdac22ed6"
   },
-  "ignisLastScored": "2026-10-24",
+  "ignisLastScored": "2026-10-25",
   "historicalTests": {
-    "session": 402,
-    "scope": "Accepted implementation source; current closing metadata requires its own measured suite",
-    "testsTotal": 547,
+    "session": 403,
+    "scope": "Initial implementation acceptance; canonical closing measurement is recorded separately",
     "testsPassing": 547,
-    "testsSourceFingerprint": "1bdf897a0f6fabec68c48a2f",
-    "evidence": "docs/S402_full-source-acceptance.json"
+    "testsTotal": 547,
+    "testsSourceFingerprint": "f63c114996ab8e31ec84f7e0",
+    "evidence": "docs/S403_full-source-acceptance.json"
   },
   "testsSession": 400,
   "testsTotal": 547,

@@ -1,0 +1,58 @@
+{
+  "kind": "closeout",
+  "session": "S403",
+  "date": "2026-10-25",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Session-headed ledgers now rotate safely under UTF-8 budgets; initial full production verified.",
+  "silDelta": {
+    "previous": 939,
+    "current": 939
+  },
+  "extraMetrics": [
+    {
+      "label": "Verification",
+      "value": "547 source · 215 mobile · 56 views · 3 hosted · 11 staging"
+    },
+    {
+      "label": "Live readback",
+      "value": "1159/1159 text paths ·12/12 changed images"
+    },
+    {
+      "label": "Scaffold",
+      "value": "4 tasks ·3 done ·1 in progress ·0 open"
+    },
+    {
+      "label": "Closing state",
+      "value": "Canonical checks and closing publication pending"
+    },
+    {
+      "label": "Honesty",
+      "value": "No field or conversion gain; independent holds retained"
+    },
+    {
+      "label": "CDR",
+      "value": "Reviewed; no new creative direction or entries"
+    }
+  ],
+  "items": [
+    {
+      "id": "#1",
+      "slug": "session-ledger-rotation",
+      "title": "Preservation-safe dated ledger rotation",
+      "axis": "organization",
+      "leftScore": 5,
+      "rightScore": 1,
+      "projectImpact": 5,
+      "ecosystemImpact": 1,
+      "insight": "Session-ledger entries now rotate oldest-first under UTF-8 byte limits. Exact preimages and complete-section CLI fixtures protect history. The repair passed local, staging, hosted and full production checks. Cross-project adoption remains unverified.",
+      "evidence": "docs/RELEASE_S403.json; tests/ledger-rotation.unit.spec.mjs"
+    }
+  ],
+  "followUps": [
+    "Future, unselected: assess the separate shard-ledger byte-offset path.",
+    "Future, unselected: verify recipient adoption after Ark delivery; transport alone does not prove application."
+  ],
+  "blockers": [],
+  "authorization": "The existing native goal explicitly authorizes main commit/push and full deployment. Staging and release checks remain required."
+}

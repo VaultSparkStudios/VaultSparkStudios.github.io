@@ -383,3 +383,21 @@ CDR reviewed — no new creative direction. SIL939/1000 unchanged; velocity1.
 
 
 S402 final closing addendum: independent review round2 passed; intelligence45633, entropy0.174 and genome23/25 refreshed; canonical local autopilot executed two complete547/547 suites (source7b5d3c116e9a33d8a0df9a4f). Initial push rejected concurrent uptime update; normal merge preserves it. Ark impact sent01K5O3SKF8ED13B997EA4D6FE0; no recipient application claim. Final remote reachability gates native completion. Production accepted1f5e24f902 remains separate from closing metadata. SIL939/1000, velocity1, same S402, one outcome. See docs/S402_closeout-acceptance.json.
+
+
+<!-- S403-closeout-writeback -->
+## Session 403 — 2026-10-25 — preservation-safe ledger rotation
+
+Dated session-ledger headings now rotate oldest-first, including same-day session ordering; byte planning uses UTF-8 and exact content-addressed preimages protect historical records. Four focused unit cases and19 existing self-tests pass; independent review round2 approved. Local mobile215/215 and56 current art-inclusive viewport captures are accepted; historical captures remain preserved. Full source547/547, required exact-SHA hosted checks and current staging accepted. Initial normal full production95cf0ccbada89ba1e7365dd00caf3bcfdac22ed6; served text1159/1159 covered (1149 identical,10 verified redirects,0 differences/unread), plus12/12 changed public images. Current closing/publication state is authoritative in docs/RELEASE_S403.json.
+
+Selected implementation and release verified. Canonical closing checks, Ark and final remote publication remain separate until docs/RELEASE_S403.json wave4 is complete.
+
+- Existing identity/provider and field-vitals gaps remain separate
+- Strict typed premises passed before behavior edits; shared planning-artifact timing classifier retains three nonpassing startup/planning paths
+- Shared radar write invocation failed; the read-only follow-up verified10/10 official sources current at that observation. Neither proves project readiness.
+- No field availability, conversion, token-cost or performance gain is claimed
+
+Website assessment: Hosted Lighthouse/local and staging audits passed; field samples remain absent, so no field Core Web Vitals gain is claimed. No conversion change or measured conversion gain. Latest Desk edition and concurrently approved art preserved and released;12 changed public images read back exactly. 56 current viewport captures individually reviewed across7themes and desktop/mobile;215-case mobile audit has zeroP0/P1.
+
+CDR reviewed: no new creative direction. SIL939/1000 unchanged; velocity1. No field-performance, conversion or token-savings claim.
+
