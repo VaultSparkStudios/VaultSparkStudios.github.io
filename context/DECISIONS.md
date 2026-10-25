@@ -1058,3 +1058,9 @@ The released candidate is 1f5e24f9029bd0c9b5e4973cf4148cc1474455ad. Later writeb
 Reuse the existing rotator for explicit date-first and session-first headings, including compact session labels and addenda. Leave undated metadata hot. Order same-day entries by session number and count actual UTF-8 bytes. Before any dated-ledger mutation, preserve a content-addressed exact input snapshot; refuse conflicting snapshot bytes. Focused fixtures prove complete-section preservation, CRLF equality, same-day retention and idempotency. No dependency, public promise, identity-policy or visual change is selected.
 
 The CANON-045 STRONG gap remains separately recorded: this maintenance repair changes no identity flow and does not claim provider integration acceptance. Strict typed audit premises preceded implementation; the shared timing classifier still flags three startup/planning paths. Candidate admission passes and that timing limitation is retained. Radar write failed on its shared report; read-only follow-up proves all ten official sources current at 11.2 hours, without another cross-repo write. Full release acceptance is tracked in docs/RELEASE_S403.json.
+
+
+<!-- S403-git-index-preservation -->
+## D-S403.2 — 2026-10-25 — preserve raw preimages through Git staging
+
+The repository LF filter normalized a real CRLF snapshot in the Git index during an isolated regression (3/4 red). Immutable content-addressed context/archive/*_preimage_*.md files now disable text normalization; ordinary source keeps LF. The extended real-CLI fixture verifies exact indexed bytes/digest, unchanged normal-source LF behavior, preservation and idempotency. The source-evidence fingerprint also binds .gitattributes, with removal/restoration checked. Focused4/4 green and independent implementation review passed. Full closing checks and publication remain required. This is a local archival transport rule, with no canon, trust, licensing or public-promise change.

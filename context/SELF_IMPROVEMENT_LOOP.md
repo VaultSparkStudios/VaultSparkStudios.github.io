@@ -2024,3 +2024,9 @@ CDR reviewed: no new creative direction. SIL939/1000 unchanged; velocity1. No fi
 **Total: 939/1000** · **Velocity: 1**
 
 Brainstorm committed as two future unselected TASK_BOARD rows: shard-offset measurement and evidence-backed Ark adoption. Available last-five totals remain939; no inferred impact score gain.
+
+
+<!-- S403-git-index-preservation -->
+### S403 closing preservation verification
+
+Git-index normalization was reproduced and corrected with a narrow raw-preimage attribute and actual Git regression. Four focused cases pass; normal text retains LF; source evidence now binds this policy. The initial95cf0ccbad release remains historical acceptance. Closing full-source verification and publication remain pending in docs/RELEASE_S403.json.

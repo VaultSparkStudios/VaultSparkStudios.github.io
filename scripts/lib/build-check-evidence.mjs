@@ -28,7 +28,7 @@ export function verificationSurfaceFingerprint(root) {
   // by the candidate manifest. Including agents.json here would create a
   // cryptographic cycle: agents.json advertises this receipt, while the receipt
   // would then fingerprint agents.json.
-  const rootFiles = new Set(['package.json', 'service-worker.js', 'style.css', '_headers', '_redirects', 'robots.txt']);
+  const rootFiles = new Set(['.gitattributes', 'package.json', 'service-worker.js', 'style.css', '_headers', '_redirects', 'robots.txt']);
   const explicitContextInputs = [
     'context/CANON_ADOPTION.md',
     'context/DECISIONS.md',
