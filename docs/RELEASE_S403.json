@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 403,
-  "state": "local-accepted-staging-pending",
+  "state": "art-inclusive-staging-accepted-hosted-production-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a173fb-dc92-75d0-9489-6832e36263f8",
@@ -27,14 +27,15 @@
       "state": "in-progress",
       "outcome": "Full source, staging, hosted exact-candidate checks and normal production readback",
       "verified": [
-        "Complete547-step art-inclusive source run",
-        "215-case art-inclusive local mobile audit",
-        "56 individually inspected art-inclusive viewport renders; historical captures retained",
-        "Pre-staging derived contracts and guarded proof rebinding"
+        "Complete current547-step source run",
+        "Current215-case mobile audit with zeroP0/P1",
+        "56 current individually reviewed viewport captures",
+        "Admission/secrets scan and current full staging",
+        "11/11 current staging ceremony and68/68 critical readback before uptime-only reconciliation"
       ],
       "remaining": [
-        "Current staging for merged candidate",
-        "Exact-SHA hosted checks, normal full production and readback"
+        "Exact final-candidate hosted checks",
+        "Normal full production, actual deploy steps and complete served-text readback"
       ]
     },
     {
@@ -85,7 +86,7 @@
     "head": "3573e33f0e4352ff44a4e6a3ed75cbbd95a6953b",
     "mergedIn": "a6475dffe0",
     "scope": "Two newly approved art images, generated article outputs and routine receipts; no code/security changes. Windows scheduled art task completed19:57Z; next scheduled23:45Z, observed20:06Z. Task remains enabled.",
-    "state": "local-source-browser-accepted-staging-pending"
+    "state": "current-source-browser-staging-accepted"
   },
   "preArtSource": {
     "evidence": "docs/S403_full-source-pre-art.json",
@@ -114,5 +115,15 @@
     "visual": "docs/S403_art-visual-acceptance.json",
     "visualCaptures": 56,
     "mobileCases": 215
-  }
+  },
+  "staging": {
+    "deploy": "docs/S403_staging-deploy-merged.json",
+    "ceremony": "docs/S403_staging-ceremony-merged.json",
+    "currentness": "docs/S403_staging-currentness-merged.json",
+    "sourceFingerprint": "f63c114996ab8e31ec84f7e0",
+    "receiptId": "bdde939b9edc67c73b349ab5",
+    "criticalLeaves": 68,
+    "ceremonySteps": 11
+  },
+  "supplyChain": "docs/S403_supply-chain.json"
 }
