@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 403,
-  "state": "local-accepted-staging-pending",
+  "state": "premerge-staging-accepted-upstream-content-sync-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a173fb-dc92-75d0-9489-6832e36263f8",
@@ -31,6 +31,12 @@
         "215-case local mobile audit",
         "28 inspected before/after renders",
         "Pre-staging derived contracts and guarded proof rebinding"
+      ],
+      "remaining": [
+        "Preserve upstream Desk edition",
+        "Verify merged source and source-bound browser evidence",
+        "Current staging for merged candidate",
+        "Exact-SHA hosted checks, normal full production and readback"
       ]
     },
     {
@@ -53,5 +59,21 @@
     "sourceFingerprint": "032949f6d24c2a415b393e2d",
     "receiptId": "a3c29944d15ae47816b39e27"
   },
-  "prestageAdmission": "docs/S403_prestage-admission.json"
+  "prestageAdmission": "docs/S403_prestage-admission.json",
+  "preMergeStaging": {
+    "candidate": "1c2942b89792610a8da58ce25ef4c82822542926",
+    "deploy": "docs/S403_staging-deploy.json",
+    "ceremony": "docs/S403_staging-ceremony.json",
+    "currentness": "docs/S403_staging-currentness.json",
+    "criticalLeaves": 68,
+    "ceremonySteps": 11,
+    "scope": "Valid for premerge candidate only; does not prove incoming Desk content accepted."
+  },
+  "incomingContent": {
+    "commit": "c45175a200",
+    "observedRemoteHead": "e836cedba4",
+    "state": "must-preserve-and-verify",
+    "reason": "New Desk edition introduced new HTML after the prior source snapshot."
+  },
+  "publisherWindow": "docs/S403_publisher-window.json"
 }
