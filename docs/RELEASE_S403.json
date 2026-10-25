@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 403,
-  "state": "merged-browser-accepted-fullsource-pending",
+  "state": "local-accepted-staging-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a173fb-dc92-75d0-9489-6832e36263f8",
@@ -27,14 +27,12 @@
       "state": "in-progress",
       "outcome": "Full source, staging, hosted exact-candidate checks and normal production readback",
       "verified": [
-        "Complete547-step source run",
-        "215-case local mobile audit",
-        "28 inspected before/after renders",
+        "Complete547-step merged-source run",
+        "215-case merged-source local mobile audit",
+        "56 individually inspected merged-source renders; original28 before/after renders retained",
         "Pre-staging derived contracts and guarded proof rebinding"
       ],
       "remaining": [
-        "Preserve upstream Desk edition",
-        "Verify merged source and source-bound browser evidence",
         "Current staging for merged candidate",
         "Exact-SHA hosted checks, normal full production and readback"
       ]
@@ -69,7 +67,7 @@
   },
   "publisherWindow": "docs/S403_publisher-window.json",
   "preMergeLocalSource": {
-    "evidence": "docs/S403_full-source-acceptance.json",
+    "evidence": "docs/S403_full-source-pre-Desk.json",
     "passed": 547,
     "total": 547,
     "coverageComplete": true,
@@ -81,5 +79,13 @@
     "visual": "docs/S403_merged-visual-acceptance.json",
     "visualCaptures": 56,
     "mobileCases": 215
+  },
+  "localSource": {
+    "evidence": "docs/S403_full-source-acceptance.json",
+    "passed": 547,
+    "total": 547,
+    "coverageComplete": true,
+    "sourceFingerprint": "41cee7040302eef70194a4a9",
+    "receiptId": "0fe70efc468318e94b52e8a5"
   }
 }
