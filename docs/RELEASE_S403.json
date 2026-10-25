@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 403,
-  "state": "local-accepted-staging-pending",
+  "state": "concurrent-art-preserved-renewed-source-browser-staging-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a173fb-dc92-75d0-9489-6832e36263f8",
@@ -27,14 +27,15 @@
       "state": "in-progress",
       "outcome": "Full source, staging, hosted exact-candidate checks and normal production readback",
       "verified": [
-        "Complete547-step merged-source run",
-        "215-case merged-source local mobile audit",
-        "56 individually inspected merged-source renders; original28 before/after renders retained",
-        "Pre-staging derived contracts and guarded proof rebinding"
+        "Ledger repair and review",
+        "Pre-art full source547/547 and staging11/11; historical only",
+        "Concurrent art and routine receipts preserved in normal merge"
       ],
       "remaining": [
-        "Current staging for merged candidate",
-        "Exact-SHA hosted checks, normal full production and readback"
+        "Current source-bound mobile/visual acceptance",
+        "Complete current source measurement",
+        "Current art-inclusive staging",
+        "Exact-SHA hosted checks and normal full production/readback"
       ]
     },
     {
@@ -80,12 +81,25 @@
     "visualCaptures": 56,
     "mobileCases": 215
   },
-  "localSource": {
-    "evidence": "docs/S403_full-source-acceptance.json",
+  "incomingArt": {
+    "commit": "6a815e23dbe1b4e79d2b7300335368642dce1dc9",
+    "head": "3573e33f0e4352ff44a4e6a3ed75cbbd95a6953b",
+    "mergedIn": "a6475dffe0",
+    "scope": "Two newly approved art images, generated article outputs and routine receipts; no code/security changes. Windows scheduled art task completed19:57Z; next scheduled23:45Z, observed20:06Z. Task remains enabled.",
+    "state": "preserved-acceptance-pending"
+  },
+  "preArtSource": {
+    "evidence": "docs/S403_full-source-pre-art.json",
     "passed": 547,
     "total": 547,
     "coverageComplete": true,
     "sourceFingerprint": "41cee7040302eef70194a4a9",
     "receiptId": "0fe70efc468318e94b52e8a5"
+  },
+  "preArtStaging": {
+    "deploy": "docs/S403_staging-deploy-pre-art.json",
+    "ceremony": "docs/S403_staging-ceremony-pre-art.json",
+    "ceremonySteps": 11,
+    "scope": "Full passed staging for pre-art source only; not current for the incoming art."
   }
 }
