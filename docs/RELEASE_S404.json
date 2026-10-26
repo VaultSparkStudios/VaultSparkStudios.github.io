@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 404,
-  "state": "implementation-verified-release-pending",
+  "state": "merged-edition-current-browser-source-staging-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a17a47-2667-73b1-b1d3-50bf728ec71a",
@@ -46,9 +46,9 @@
       "postFixGeometry": "passed",
       "existingArticleCssCases": "2/2",
       "beforeVisuals": "docs/visual-qa/S404-before.json",
-      "afterVisuals": "docs/S404_visual-acceptance.json",
-      "mobile": "current full run in progress; pre-fix117/215interrupted and nonpassing",
-      "afterManuallyReviewed": 42
+      "afterVisuals": "docs/S404_visual-current-acceptance.json",
+      "mobile": "Current pre-edition run215/215passed. Incoming edition requires renewed current-source215cell audit.",
+      "afterManuallyReviewed": 56
     }
   },
   "limitations": [
@@ -67,7 +67,28 @@
   },
   "incomingContent": {
     "commit": "83bf6716995ee809ce5b71aaa74831726e8ce3d2",
-    "state": "observed-not-yet-integrated",
-    "reason": "Preserve new latenight edition before current staging/full release"
-  }
+    "state": "preserved-by-normal-rebase-and-native-regeneration",
+    "reason": "Preserve new latenight edition before current staging/full release",
+    "mergedIn": "fceff1118f",
+    "scope": "New latenight News story and generated consumers.175generated-output conflicts retained current upstream publication, then merged source regenerated with native builders. No source repair discarded."
+  },
+  "preIncomingBrowser": {
+    "visual": "docs/S404_visual-pre-latenight.json",
+    "visualCaptures": 42,
+    "mobile": "docs/S404_mobile-pre-latenight.json",
+    "mobilePassed": 215,
+    "mobileTotal": 215,
+    "scope": "Actually accepted before incoming edition; retained as historical, not current-source release acceptance."
+  },
+  "sourceAttempts": [
+    {
+      "state": "failed",
+      "evidence": "docs/S404_source-attempt1.json",
+      "passed": 167,
+      "total": 547,
+      "failure": "Visual retention report stale after actual56incoming-edition captures",
+      "repair": "Native check-visual-qa-retention regeneration and its own --check passed;2856bound records, zero deleted.",
+      "log": ".cache/logs/S404-closeout-autopilot.log"
+    }
+  ]
 }

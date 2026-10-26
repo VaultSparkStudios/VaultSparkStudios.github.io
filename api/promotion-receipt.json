@@ -4,19 +4,19 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "cb89e4e0bd699adfb5c9042d26cb4827bd8275b1",
+    "sha": "1825c2c5282c48527978242bb22ff62a9dc81682",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "95cf0ccbada89ba1e7365dd00caf3bcfdac22ed6",
-    "contentLaneHead": null,
+    "sha": "c352393f1af8d157d2dc0366646f10944de8a2ba",
+    "contentLaneHead": "83bf6716995ee809ce5b71aaa74831726e8ce3d2",
     "reachable": true,
-    "reconciliation": "behind",
+    "reconciliation": "content-lane-match",
     "shellParity": {
       "state": "matched",
-      "observedAt": "2026-10-25T22:11:15.895Z",
-      "ageHours": 1,
+      "observedAt": "2026-10-26T22:42:17.626Z",
+      "ageHours": 0.5,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -33,7 +33,7 @@
   "browser": {
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
-    "consoleErrors": 7,
+    "consoleErrors": 8,
     "workerRouteErrors": 7,
     "signalCardinality": 7,
     "signalEndpoints": [
@@ -76,7 +76,7 @@
         "route": "/games/franchise-architect/",
         "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
         "captured": true,
-        "consoleErrors": 1,
+        "consoleErrors": 2,
         "workerRouteErrors": 1,
         "signalCardinality": 2,
         "signalEndpoints": [
@@ -89,21 +89,21 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "the repo has advanced past the last promotion: production serves 95cf0ccb, repo build-sha is cb89e4e0 — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
-    "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
+    "production build sha c352393f is the content-lane baseline; served contentLaneHead 83bf6716 is at/after promoted 1825c2c5 and shell parity was observed 'matched' at 2026-10-26T22:42:17.626Z (current)",
+    "8 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 1 unexplained"
   ],
-  "generatedAt": "2026-10-25T23:13:02.653Z",
+  "generatedAt": "2026-10-26T23:12:23.083Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
     "lastStrandedAt": "2026-10-25T23:13:02.653Z",
-    "currentBehindStreak": 3,
-    "newestGradableAt": "2026-10-25T23:13:02.653Z",
+    "currentBehindStreak": 0,
+    "newestGradableAt": "2026-10-26T23:12:23.083Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,
-    "strandedAlert": true
+    "strandedAlert": false
   }
 }
