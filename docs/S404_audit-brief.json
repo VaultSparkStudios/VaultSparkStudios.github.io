@@ -1,0 +1,22 @@
+{
+  "kind": "audit",
+  "session": 404,
+  "date": "2026-10-26",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Verify every deployed static asset against the candidate manifest",
+  "items": [
+    {
+      "id": 1,
+      "slug": "complete-served-asset-parity",
+      "title": "Verify every deployed static asset against the candidate manifest",
+      "axis": "observability-honesty",
+      "leftScore": 8,
+      "rightScore": 4,
+      "insight": "The native CLI only enumerates TEXT_EXT. Recent releases separately compare changed images, leaving unchanged binary assets and fonts outside measured coverage.",
+      "evidence": "Actual CLI detects corrupt and missing non-text assets, measures unchanged binary assets, uses the compared commit manifest despite dirty configuration, preserves default text behavior and fails closed on absent/invalid manifest. Full production acceptance includes complete all-served readback."
+    }
+  ],
+  "blockers": [],
+  "followUps": []
+}

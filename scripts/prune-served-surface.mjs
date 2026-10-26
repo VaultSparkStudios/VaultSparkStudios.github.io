@@ -38,6 +38,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from './lib/safe-spawn.mjs';
 import { fileURLToPath } from 'node:url';
+import { isServed as classifyServed } from './lib/served-surface.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MANIFEST_PATH = path.join(ROOT, 'config', 'served-surface.json');
@@ -71,12 +72,7 @@ export function isInternal(rel) {
 
 /** Positive classification: absence from this manifest means not deployed. */
 export function isServed(rel, manifest = SERVED_MANIFEST) {
-  const p = String(rel).replace(/\\/g, '/').replace(/^\.\//, '');
-  if (!p) return false;
-  if ((manifest.excludedPrefixes || []).some((prefix) => p.startsWith(prefix))) return false;
-  if ((manifest.exact || []).includes(p)) return true;
-  if ((manifest.prefixes || []).some((prefix) => p.startsWith(prefix))) return true;
-  return (manifest.keptInternalPrefixes || []).some((prefix) => p.startsWith(prefix));
+  return classifyServed(rel, manifest);
 }
 
 /** Site-relative paths advertised by the discovery surfaces, as page routes. */

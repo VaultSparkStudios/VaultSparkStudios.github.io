@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-26 (Session 403 closeout) -->
-<!-- semantic-freshness: hash=5dedd3c60155542b next=404 silSession=403 silScore=939 handoff=403 tests=- -->
+<!-- generated-at: 2026-10-26 (Session 404 closeout) -->
+<!-- semantic-freshness: hash=d3ee66bfca199a5c next=405 silSession=404 silScore=939 handoff=404 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 403 closeout · 2026-10-26.
+> **Fast-boot brief** — generated at Session 404 closeout · 2026-10-26.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 404 · 2026-10-26 · FOUNDER MODE                         ║
+║  Session 405 · 2026-10-26 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S403) - WHAT SHIPPED ══════════════════════════╗
-║  S403 preservation-safe ledger rotation; release and closeout e  ║
+╔══ LAST SESSION (S404) - WHAT SHIPPED ══════════════════════════╗
+║  S404 two local repairs; current full release acceptance pendin  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -42,8 +42,8 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 1→                          ║
-║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest…   ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2→                          ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
 ║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -61,34 +61,34 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 403 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 404 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    547/547 passing  ·  Deploy: verified                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         547/547 passing (2026-10-25)                   ║
-║  ⚠  Velocity      1 →  ·  Debt: →                                ║
+║  ✓  Velocity      2 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   1d                                             ║
-║  ✓  IGNIS         45410 FORGE  ·  0d old                         ║
+║  ✓  IGNIS         45412 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — selected release verified;…           ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
+║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.174  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ✓  Revenue sig.  2d old (2026-10-24)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
+║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
+║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  4/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -108,7 +108,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▂▂▂▄  1→  (last 5 sessions)                         ║
+║  Velocity:   ▂▂▂▄  2→  (last 5 sessions)                         ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Extend method-specific corroboration cover  ║
+║   96  [PRODUCT]      Consider response-body streaming only if m  ║
+║        Consider response-body streaming only if measured remote  ║
+║                                                                  ║
+║   93  [PRODUCT]      Consider native positive-manifest text par  ║
+║        Consider native positive-manifest text parity as a separ  ║
+║                                                                  ║
+║   90  [PRODUCT]      Extend method-specific corroboration cover  ║
 ║        Extend method-specific corroboration coverage if additio  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Consider per-member byte verification only  ║
+║   87  [PRODUCT]      Consider per-member byte verification only  ║
 ║        Consider per-member byte verification only if source mut  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Coordinate an evidence-backed distinction   ║
+║   84  [PRODUCT]      Coordinate an evidence-backed distinction   ║
 ║        Coordinate an evidence-backed distinction between format  ║
-║                                                                  ║
-║   84  [PRODUCT]      Staging lineage tolerant of publisher data  ║
-║        Staging lineage tolerant of publisher data drift. is ope  ║
-║                                                                  ║
-║   81  [PRODUCT]      Gate srcset, CSS url(), redirect targets.   ║
-║        Gate srcset, CSS url(), redirect targets. Future only. i  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 403 closeout · 2026-10-26*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 404 closeout · 2026-10-26*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

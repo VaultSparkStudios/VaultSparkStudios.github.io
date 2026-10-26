@@ -262,6 +262,8 @@ body.light-mode [data-persona],body.light-mode [data-voice]{--persona-ink:color-
 
 .desk-article{width:min(780px,calc(100% - 2rem));padding:3rem 0 5rem}
 .desk-article-head .desk-kicker{display:block;line-height:1.6}
+/* Keep the fixed 44px page-status target off the mobile kicker text. */
+@media(max-width:760px){.desk-article-head .desk-kicker{padding-inline-end:54px}}
 .desk-article-head .desk-kicker:before{display:inline-block;margin-right:.65rem;vertical-align:middle}
 .desk-kicker-home{color:inherit;text-decoration:none}
 .desk-kicker-home:hover{text-decoration:underline}

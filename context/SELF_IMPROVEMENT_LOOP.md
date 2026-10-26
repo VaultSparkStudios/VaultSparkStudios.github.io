@@ -11,8 +11,8 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last5 available totals):939 →939 →939 →939 →939
 Avgs (available rolling totals) —3:939.0 |5:939.0 |10:unmeasured |25:unmeasured |all:unmeasured
 Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session:2026-10-25 | Session 403 | Total:939/1000 | Velocity:1
-  └ Ledger rotation released; canonical closing publication pending. docs/RELEASE_S403.json.
+Last session:2026-10-26 | Session 404 | Total:939/1000 | Velocity:2
+  └ Complete asset parity implemented; full release and closing state: docs/RELEASE_S404.json.
 <!-- rolling-status-end -->
 
 > Older entries through S401 live verbatim in `context/archive/SIL_S1-S401.md` (exact committed pre-rotation snapshot). Recent complete entries follow.
@@ -2038,3 +2038,19 @@ Git-index normalization was reproduced and corrected with a narrow raw-preimage 
 Closing full production c352393f1af8d157d2dc0366646f10944de8a2ba verified by workflow40247839864 and Cloudflare deploymentd8f44bbe-c2c9-4488-8d70-4c426e2c0676. Current complete source547/547; hosted3/3; staging11/11 and68/68 critical leaves; fresh served text1159/1159 (1149 exact,10 verified redirects,0 differences/unread), changed public images12/12, and both full-release stamps. Git-index raw preservation is covered by the closing source measurement. All paused publishers restored; Ark summary delivered, recipient adoption unverified. Background jobs 79/79 closed at 2026-10-26T00:18:00.274Z; preview listeners0.
 
 SIL939/1000 unchanged; velocity1. Existing unrelated identity/provider and field-vitals gaps remain. Two future SIL rows stay unselected. CDR reviewed; no new creative direction.
+
+<!-- S404-closeout-writeback -->
+## Session 404 — 2026-10-26 — complete served asset parity
+
+Intent: fresh /arc and authorized main push/full deploy. One selected repair implemented; full end-to-end intent acceptance is authoritative in docs/RELEASE_S404.json. Local verification alone is not deployment completion.
+
+SIL v3.0 product rubric: devHealth:95 · creativeAlignment:94 · momentum:92 · engagement:96 · processQuality:88 · crossRepoCoherence:94 · securityPosture:97 · ecosystemIntegration:91 · capitalEfficiency:95 · automationCoverage:97. Total:939/1000; previous939 →939 (delta0). Velocity1 locally implemented; protocol velocity0; debtstable. No measured product conversion or field-performance gain is claimed.
+
+Brainstorm and future commitments: measure remote body memory pressure before any streaming change; consider positive-manifest text-default migration separately. Both are recorded as unselected future SIL tasks on TASK_BOARD.
+
+Evidence: fresh typed premise2/2, actual new binary cases3/3, independent reviewer2rounds, canonical parity19/19 and prune44/44. Full source/browser/staging/hosted/production and closeout evidence remains in the S404 release ledger.
+
+
+### S404 bounded release correction
+
+S404 release pixel review found the fixed page-status ring crossing the News mobile kicker. Reserve54px inline-end clearance only on mobile article kickers. Existing44px status target remains visible and functional. Actual Chromium text-range geometry reproduced pre-fix collision and passes56theme/width/article cells after the fix; existing article CSS cases2/2 pass. Native shell assets and208HTML references carry the repair. Local velocity2outcomes; SIL939/1000 unchanged. Full release intent remains pending in docs/RELEASE_S404.json; earlier interrupted mobile audit117/215was stopped because this observed source correction required a new current full run, not treated as passing.

@@ -1,3 +1,15 @@
+<!-- S404-closeout-writeback -->
+## S404 selected outcomes
+
+- [x] [S404] Mobile News kicker/status-ring clearance repaired with56actual geometry cells; current source-bound after pixels and full release tracked in docs/RELEASE_S404.json.
+- [x] [S404] Complete manifest-based native asset comparison implemented and independently reviewed. Full release acceptance: docs/RELEASE_S404.json.
+- [ ] [SIL][S404] Consider response-body streaming only if measured remote readback memory pressure justifies it; future, unselected.
+- [ ] [SIL][S404] Consider native positive-manifest text parity as a separately reviewed default migration; preserve legacy default in this session. Future, unselected.
+
+Wave 1 complete: new invocation startup, fresh nine-axis audit, strict typed premises and candidate admission.
+Wave 2 complete locally: complete inventory, efficient binary hashing, real HTTP/CLI fixtures and corrected independent review.
+Wave 3 release and Wave 4 closeout/publication acceptance have their authoritative state in docs/RELEASE_S404.json. Local verification alone proves neither.
+
 
 
 ## S403 outcome and release evidence — preservation-safe ledger rotation

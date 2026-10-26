@@ -1,28 +1,20 @@
-<!-- S403-closeout-writeback -->
-## Where We Left Off (Session 403)
+<!-- S404-closeout-writeback -->
+## Where We Left Off (Session 404)
 
-Deploy: normal-full production c352393f1af8d157d2dc0366646f10944de8a2ba verified; closing evidence in docs/RELEASE_S403.json.
+Deploy: pending current S404 source/browser/staging/hosted checks and full production readback; authoritative closing status in docs/RELEASE_S404.json.
 
 Session Intent: /arc then authorized direct main commit/push and full deploy.
-Native goal01a173fb-dc92-75d0-9489-6832e36263f8, createdAt1792947304, is bound to S403 from087fe13ee8b45cfe3b80133ebf568fe2302fdf1f. Continuation resumes this arc, never starts another.
+Native goal01a17a47-2667-73b1-b1d3-50bf728ec71a, createdAt1793052877, is bound to S404 from08549a13a6fd212ae2074ac02c80b1db8ee1b8c7. Startup synchronized59 automated commits toff839c4ce1. A continuation resumes S404; it never borrows S403 completion.
 
-Dated session-ledger headings now rotate oldest-first, including same-day session ordering; byte planning uses UTF-8 and exact content-addressed preimages protect historical records. Four focused unit cases and19 existing self-tests pass; independent review round2 approved. Local mobile215/215 and56 current art-inclusive viewport captures are accepted; historical captures remain preserved. Full source547/547, required exact-SHA hosted checks and current staging accepted. Initial normal full production95cf0ccbada89ba1e7365dd00caf3bcfdac22ed6; served text1159/1159 covered (1149 identical,10 verified redirects,0 differences/unread), plus12/12 changed public images. Current closing/publication state is authoritative in docs/RELEASE_S403.json.
+Native served-parity now supports --scope=all-served, using the compared commit positive deployment manifest and one NUL-framed Git blob inventory. Images, fonts, unknown asset types, CNAME, .nojekyll and kept public proof files are measured. Only Pages control files and its deployed-SHA stamp are excluded. Default text scope stays compatible and receipts identify their scope.
 
-S403 closing acceptance is complete. Final remote publication is verified separately before native goal completion; authoritative proofs: docs/RELEASE_S403.json.
+The fresh audit selected one L2 outcome. Typed premises2/2 and pending plan admission passed; throwaway-fixture admission also passed. Binary tests3/3; independent round2 approved after correcting CNAME/.nojekyll coverage and removing per-file Git spawn overhead. Native parity19/19 and pruning44/44 self-tests pass. Current full source and deployment acceptance remain in progress; consult docs/RELEASE_S404.json.
 
-## Existing constraints
+CANON-045 STRONG gap remains justified for unchanged identity integration; no identity, pricing, lifecycle or public promise change selected. Premise timing classifier retains its nonpassing pre-sync/startup-path diagnostic; strict premises actually preceded behavior edits. No field-performance, conversion, availability or token-savings gain is claimed.
 
-- Existing identity/provider and field-vitals gaps remain separate
-- Strict typed premises passed before behavior edits; shared planning-artifact timing classifier retains three nonpassing startup/planning paths
-- Shared radar write invocation failed; the read-only follow-up verified10/10 official sources current at that observation. Neither proves project readiness.
-- No field availability, conversion, token-cost or performance gain is claimed
-
-CDR reviewed: no creative direction. Future SIL rows remain unselected.
+CDR reviewed: no new human creative direction. Future SIL rows remain unselected. The separately admitted mobile News kicker repair is the selected UI change; current browser evidence covers its before/after state and incoming News content.
 
 
-<!-- S403-final-closing-acceptance -->
-### Session 403 final closing acceptance — 2026-10-26
+### S404 rendered release correction
 
-Closing full production c352393f1af8d157d2dc0366646f10944de8a2ba verified by workflow40247839864 and Cloudflare deploymentd8f44bbe-c2c9-4488-8d70-4c426e2c0676. Current complete source547/547; hosted3/3; staging11/11 and68/68 critical leaves; fresh served text1159/1159 (1149 exact,10 verified redirects,0 differences/unread), changed public images12/12, and both full-release stamps. Git-index raw preservation is covered by the closing source measurement. All paused publishers restored; Ark summary delivered, recipient adoption unverified. Background jobs 79/79 closed at 2026-10-26T00:18:00.274Z; preview listeners0.
-
-Future SIL tasks remain unselected. SIL939/1000 and velocity1 are unchanged. No new field-performance, conversion or token-savings gain is claimed. This invocation remains bound to S403; a new founder /arc starts a fresh session.
+S404 release pixel review found the fixed page-status ring crossing the News mobile kicker. Reserve54px inline-end clearance only on mobile article kickers. Existing44px status target remains visible and functional. Actual Chromium text-range geometry reproduced pre-fix collision and passes56theme/width/article cells after the fix; existing article CSS cases2/2 pass. Native shell assets and208HTML references carry the repair. Before42-view corpus retained with one defect; after42-view inspection and full release remain tracked in docs/RELEASE_S404.json. The original audit and secondary clearance audit are both part of S404.

@@ -1064,3 +1064,19 @@ The CANON-045 STRONG gap remains separately recorded: this maintenance repair ch
 ## D-S403.2 — 2026-10-25 — preserve raw preimages through Git staging
 
 The repository LF filter normalized a real CRLF snapshot in the Git index during an isolated regression (3/4 red). Immutable content-addressed context/archive/*_preimage_*.md files now disable text normalization; ordinary source keeps LF. The extended real-CLI fixture verifies exact indexed bytes/digest, unchanged normal-source LF behavior, preservation and idempotency. The source-evidence fingerprint also binds .gitattributes, with removal/restoration checked. Focused4/4 green and independent implementation review passed. Full closing checks and publication remain required. This is a local archival transport rule, with no canon, trust, licensing or public-promise change.
+
+<!-- S404-closeout-writeback -->
+## D-S404.1 — 2026-10-26 — complete manifest asset parity
+
+Reuse the positive deployment classifier and existing remote comparator. Preserve text default compatibility; opt-in all-served scope uses the compared commit manifest and Git blob IDs/sizes from one NUL-framed inventory. Hash actual downloaded binary bytes with the Git blob header; compare object identity and length. Receipts name actual scope and include independent expected Git IDs, actual Git IDs and actual SHA-256 values. Include CNAME and .nojekyll because live Pages actually serves them. Only _headers/_redirects and stamped api/build-sha.json are excluded; redirects must match the committed redirect contract. Invalid/missing inventory is nonpassing. No dependency or new service is required.
+
+Independent review corrected served-control assumptions and measured slow per-file Git startup; the single inventory replaces that overhead. Full exact-candidate release acceptance remains in docs/RELEASE_S404.json. Rollback is a normal revert and prior accepted production deployment; never force-push or weaken release gates.
+
+CANON-045 STRONG gap remains separately justified: this verifier repair changes no identity/auth/trust policy and cannot claim provider integration acceptance. Strict typed premises preceded behavior edits; the timing classifier counts pre-sync automation and three startup/propagated files, and its original nonpassing diagnostic is preserved. Startup canon sync and official frontier radar completed successfully; radar10/10 current at40.2hours.
+
+
+## D-S404.2 — 2026-10-26 — rendered mobile kicker clearance
+
+S404 release pixel review found the fixed page-status ring crossing the News mobile kicker. Reserve54px inline-end clearance only on mobile article kickers. Existing44px status target remains visible and functional. Actual Chromium text-range geometry reproduced pre-fix collision and passes56theme/width/article cells after the fix; existing article CSS cases2/2 pass. Native shell assets and208HTML references carry the repair.
+
+This is a separately premise-verified and admitted repair discovered by actual rendered-pixel release inspection. Before images retain the defect; after captures must be inspected. No redesign, identity, pricing or launch change. Revert the mobile padding rule for rollback. Current accepted state remains in docs/RELEASE_S404.json.

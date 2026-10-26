@@ -1,0 +1,62 @@
+{
+  "kind": "closeout",
+  "session": "S404",
+  "date": "2026-10-26",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Complete asset verification and mobile News clearance locally verified; full release checks in progress.",
+  "silDelta": {
+    "previous": 939,
+    "current": 939
+  },
+  "extraMetrics": [
+    {
+      "label": "Local proof",
+      "value": "3binary cases ·56geometry cells ·42reviewed after captures"
+    },
+    {
+      "label": "Scaffold",
+      "value": "Wave1 done ·Wave2 done ·Wave3 in progress ·Wave4 pending"
+    },
+    {
+      "label": "Deployment",
+      "value": "Pending; authoritative ledger docs/RELEASE_S404.json"
+    },
+    {
+      "label": "Honesty",
+      "value": "No field/conversion/token gain claimed; existing independent holds retained"
+    }
+  ],
+  "items": [
+    {
+      "id": "#1",
+      "slug": "complete-served-asset-parity",
+      "title": "Complete committed-manifest asset verification",
+      "axis": "observability-honesty",
+      "projectImpact": 6,
+      "ecosystemImpact": 1,
+      "insight": "The native release tool can now verify every static asset from the compared commit deployment manifest, including binary images and fonts. A single Git object inventory removes per-file process overhead. Independent review and actual HTTP fixtures passed; full production acceptance remains pending.",
+      "evidence": "docs/AUDIT_2026-10-26-S404.json; docs/RELEASE_S404.json",
+      "leftScore": 6,
+      "rightScore": 1
+    },
+    {
+      "id": "#2",
+      "slug": "news-kicker-sigil-clearance",
+      "title": "News kicker clears the mobile page-status ring",
+      "axis": "ui-ux-feedback",
+      "projectImpact": 4,
+      "ecosystemImpact": 1,
+      "insight": "Actual release pixel review found a status marker crossing News kicker text. Mobile inline clearance fixes it while retaining the status target and desktop layout.56rendered geometry cells and42reviewed after viewports pass.",
+      "evidence": "docs/AUDIT_2026-10-26-S404-clearance.json; docs/S404_visual-acceptance.json",
+      "leftScore": 4,
+      "rightScore": 1
+    }
+  ],
+  "followUps": [
+    "Future, unselected: measure response-body memory pressure before streaming changes.",
+    "Future, unselected: consider manifest-based text-default migration separately."
+  ],
+  "blockers": [],
+  "authorization": "Native goal explicitly authorizes direct main commit/push and full deployment; no new confirmation requested."
+}

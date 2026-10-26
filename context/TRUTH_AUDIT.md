@@ -1,3 +1,8 @@
+<!-- S404-closeout-writeback -->
+## S404 — 2026-10-26 — explicit readback scope
+
+Text parity remains explicitly text-scoped. The new all-served CLI covers the candidate positive deployment manifest including binary assets and kept proof resources, excluding only Pages configuration and deployed-SHA stamp. Exact HTTP comparisons must establish release parity; successful publisher workflows alone do not. Native release acceptance is unproven until docs/RELEASE_S404.json is complete. Existing identity/provider and field-vitals gaps remain separate.
+
 <!-- S402-closeout-writeback -->
 ## Session 402 — 2026-10-24 — current route status accuracy
 
@@ -1802,3 +1807,6 @@ CDR reviewed: no new creative direction. SIL939/1000 unchanged; velocity1. No fi
 Closing full production c352393f1af8d157d2dc0366646f10944de8a2ba verified by workflow40247839864 and Cloudflare deploymentd8f44bbe-c2c9-4488-8d70-4c426e2c0676. Current complete source547/547; hosted3/3; staging11/11 and68/68 critical leaves; fresh served text1159/1159 (1149 exact,10 verified redirects,0 differences/unread), changed public images12/12, and both full-release stamps. Git-index raw preservation is covered by the closing source measurement. All paused publishers restored; Ark summary delivered, recipient adoption unverified. Background jobs 79/79 closed at 2026-10-26T00:18:00.274Z; preview listeners0.
 
 SIL939/1000 unchanged; velocity1. Existing unrelated identity/provider and field-vitals gaps remain. Two future SIL rows stay unselected. CDR reviewed; no new creative direction.
+
+
+S404 visual finding: before42screens reviewed with one mobile overlap finding. Actual pre-fix geometry failed. The bounded padding repair passes56geometry cells; current after captures and fresh215cell mobile audit remain required before release. Earlier interrupted117/215mobile run is not complete evidence.

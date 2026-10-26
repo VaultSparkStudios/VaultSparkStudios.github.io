@@ -134,6 +134,8 @@ export function isSelfRemediable(id, { healMap = HEAL_MAP, remedies = REMEDIES, 
 // warn/pass/skip — see run-doctor.mjs).
 export const DRIFT_META = {
   'cpx-memory-census': { driftClass: 'local-stale', blocking: false },
+  // S400: a vulnerable PHP runtime is a hard fail; stale/partial receipts only warn.
+  'php-exposure':      { driftClass: 'local-broken', blocking: true },
   manifest:              { driftClass: 'local-broken', blocking: true },
   'supabase-rls-exposure': { driftClass: 'local-broken', blocking: true },
   // S288 [audit item 2] — studio-ops genuinely owns the CPX51 disk healer, so

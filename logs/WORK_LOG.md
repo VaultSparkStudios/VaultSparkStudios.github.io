@@ -415,3 +415,11 @@ Git-index normalization was reproduced and corrected with a narrow raw-preimage 
 Closing full production c352393f1af8d157d2dc0366646f10944de8a2ba verified by workflow40247839864 and Cloudflare deploymentd8f44bbe-c2c9-4488-8d70-4c426e2c0676. Current complete source547/547; hosted3/3; staging11/11 and68/68 critical leaves; fresh served text1159/1159 (1149 exact,10 verified redirects,0 differences/unread), changed public images12/12, and both full-release stamps. Git-index raw preservation is covered by the closing source measurement. All paused publishers restored; Ark summary delivered, recipient adoption unverified. Background jobs 79/79 closed at 2026-10-26T00:18:00.274Z; preview listeners0.
 
 SIL939/1000 unchanged; velocity1. Existing unrelated identity/provider and field-vitals gaps remain. Two future SIL rows stay unselected. CDR reviewed; no new creative direction.
+
+<!-- S404-closeout-writeback -->
+## Session 404 — 2026-10-26 — complete served asset verification
+
+Fresh arc startup and audit selected one L2 release reliability repair. Native served-parity now supports --scope=all-served, using the compared commit positive deployment manifest and one NUL-framed Git blob inventory. Images, fonts, unknown asset types, CNAME, .nojekyll and kept public proof files are measured. Only Pages control files and its deployed-SHA stamp are excluded. Default text scope stays compatible and receipts identify their scope. Focused new binary cases3/3 and independent round2 approval; broader source, browser, staging, hosted checks, production and closeout acceptance are recorded in docs/RELEASE_S404.json. No earlier session receipt satisfies this goal.
+
+
+S404 rendered release correction: S404 release pixel review found the fixed page-status ring crossing the News mobile kicker. Reserve54px inline-end clearance only on mobile article kickers. Existing44px status target remains visible and functional. Actual Chromium text-range geometry reproduced pre-fix collision and passes56theme/width/article cells after the fix; existing article CSS cases2/2 pass. Native shell assets and208HTML references carry the repair.

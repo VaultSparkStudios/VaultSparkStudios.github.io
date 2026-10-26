@@ -1,0 +1,269 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-10-26",
+  "generatedAt": "2026-10-26T22:18:22.571Z",
+  "session": 404,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S404 nine-axis supported-release audit and authorized full deployment.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status",
+    "releaseTarget": null
+  },
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 1,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s404-features-depth-0",
+          "premise": "more-member-features",
+          "evidence": "Existing member routes and nine-tier economy already present; no demonstrated missing journey in this audit."
+        },
+        {
+          "slug": "s404-features-depth-1",
+          "premise": "New portfolio routes",
+          "evidence": "Existing member routes and nine-tier economy already present; no demonstrated missing journey in this audit."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s404-ui-ux-feedback-0",
+          "premise": "Persona redesign",
+          "evidence": "S399/S400 fixes and browser receipts exist. No reproduced UI regression selected."
+        },
+        {
+          "slug": "s404-ui-ux-feedback-1",
+          "premise": "Navigation replacement",
+          "evidence": "S399/S400 fixes and browser receipts exist. No reproduced UI regression selected."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s404-gamification-immersion-0",
+          "premise": "New streak mechanics",
+          "evidence": "Existing economy is load-bearing; no measured failure or authorization for tier changes."
+        },
+        {
+          "slug": "s404-gamification-immersion-1",
+          "premise": "Rank rebalance",
+          "evidence": "Existing economy is load-bearing; no measured failure or authorization for tier changes."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s404-ai-intelligence-0",
+          "premise": "New AI provider",
+          "evidence": "Grounded discovery spine and Oracle already exist; no paid inference is required for byte verification."
+        },
+        {
+          "slug": "s404-ai-intelligence-1",
+          "premise": "Oracle rewrite",
+          "evidence": "Grounded discovery spine and Oracle already exist; no paid inference is required for byte verification."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s404-security-0",
+          "premise": "Identity policy rewrite",
+          "evidence": "Identity changes need separate escalation; S401 archive safeguards are present. Preserve unchanged auth."
+        },
+        {
+          "slug": "s404-security-1",
+          "premise": "Archive upload rewrite",
+          "evidence": "Identity changes need separate escalation; S401 archive safeguards are present. Preserve unchanged auth."
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s404-speed-organization-efficiency-0",
+          "premise": "New verifier service",
+          "evidence": "Existing native compare/summarize and positive manifest provide reusable primitives."
+        },
+        {
+          "slug": "s404-speed-organization-efficiency-1",
+          "premise": "New deployment framework",
+          "evidence": "Existing native compare/summarize and positive manifest provide reusable primitives."
+        }
+      ]
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s404-token-cost-0",
+          "premise": "New inference cache",
+          "evidence": "No measured token-cost premise. Reuse deterministic byte hashing; no savings claim."
+        },
+        {
+          "slug": "s404-token-cost-1",
+          "premise": "Paid analysis pipeline",
+          "evidence": "No measured token-cost premise. Reuse deterministic byte hashing; no savings claim."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [
+        "complete-served-asset-parity"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "s404-observability-honesty-0",
+          "premise": "Changed-images-only proof",
+          "evidence": "Native TEXT_EXT excludes binary files; previous release explicitly limits image proof to changed images. Selected complete inventory repair."
+        },
+        {
+          "slug": "s404-observability-honesty-1",
+          "premise": "Text implies complete artifact parity",
+          "evidence": "Native TEXT_EXT excludes binary files; previous release explicitly limits image proof to changed images. Selected complete inventory repair."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s404-sil-debt-0",
+          "premise": "Method-specific expansion",
+          "evidence": "No newly introduced methods; S403 rotator fix present. Binary coverage follow-up is verified and selected."
+        },
+        {
+          "slug": "s404-sil-debt-1",
+          "premise": "Another ledger rotation",
+          "evidence": "No newly introduced methods; S403 rotator fix present. Binary coverage follow-up is verified and selected."
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "complete-served-asset-parity",
+      "title": "Verify every deployed static asset against the candidate manifest",
+      "axis": "observability-honesty",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 3,
+      "priority": 13.78,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "The native CLI only enumerates TEXT_EXT. Recent releases separately compare changed images, leaving unchanged binary assets and fonts outside measured coverage.",
+      "recipe": "Extend the existing byte comparator with an explicit all-served scope derived from the compared commit positive deployment manifest. Preserve text default compatibility, exclude provider control/stamp files, report exact scope, and verify binary mismatches, missing assets, committed inventory and invalid admission through actual HTTP/CLI fixtures.",
+      "acceptance": "Actual CLI detects corrupt and missing non-text assets, measures unchanged binary assets, uses the compared commit manifest despite dirty configuration, preserves default text behavior and fails closed on absent/invalid manifest. Full production acceptance includes complete all-served readback.",
+      "userOutcome": "Visitors receive the candidate images and fonts; release operators can establish full asset delivery rather than infer it from successful publishing.",
+      "readinessArea": "supported-release artifact reliability",
+      "stageRationale": "Repair a proven coverage gap without changing interface, auth, pricing or lifecycle.",
+      "premises": [
+        {
+          "claim": "The CLI inventory filters text candidates only",
+          "adapter": "file-content",
+          "target": "scripts/check-served-parity.mjs",
+          "pattern": "const files = tracked.filter(isServedCandidate);",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "The positive served manifest includes public assets",
+          "adapter": "file-content",
+          "target": "config/served-surface.json",
+          "pattern": "\"assets/\"",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Report explicit text scope only."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Add complete committed-manifest scope, explicit exclusions, exact byte verification and real CLI regressions."
+        },
+        "L3": {
+          "effortHours": 10,
+          "recipe": "Persistent remote content-addressed audit service; unselected."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-26T22:28:05.198Z",
+          "status": "implemented",
+          "note": "New complete inventory and binary hashing fixtures3/3 pass; independent review round2 approved after2 findings corrected. Native parity19/19 and prune44/44 self-tests pass. Full release acceptance pending, docs/RELEASE_S404.json."
+        }
+      ]
+    }
+  ],
+  "research": {
+    "survey": "Live parity CLI, actual HTTP/CLI unit suite, positive deployment manifest, pruner, S403 text/image receipts, project brief, soul, state, recent decisions and bounded task projection.",
+    "reuse": "Existing check-served-parity and prune-served-surface isServed classifier; Internal Tools registry checked. No new package or paid service.",
+    "novelCandidates": [
+      "Commit-specific manifest inventory",
+      "Explicit whole-asset receipt scope",
+      "Binary corruption and manifest-drift HTTP canaries"
+    ],
+    "market": "No competitor or market claim; no market intervention selected."
+  },
+  "totals": {
+    "count": 1,
+    "priority": 13.78,
+    "top3": [
+      "complete-served-asset-parity"
+    ]
+  },
+  "skipped": [],
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-26T22:18:27.498Z",
+    "head": "ff839c4ce156babba80a35b95ce4e7fbf2fbb3dc",
+    "sidecar": "docs/AUDIT_2026-10-26-S404.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "896e38086b78338e835d64bdf2bd0eb37c9cc82745d56e1512e331fd75952ab2",
+    "implementationDirty": [
+      "docs/GENIUS_LIST.md",
+      "scripts/lib/doctor-remedies.mjs",
+      "scripts/lib/shared-policies.mjs"
+    ]
+  },
+  "timingNote": "Strict typed premises accepted at ff839c4ce before behavior edits. Shared timing classifier counts pre-sync automation and3 startup/propagated paths; the original nonpassing result is retained, not relabeled accepted."
+}

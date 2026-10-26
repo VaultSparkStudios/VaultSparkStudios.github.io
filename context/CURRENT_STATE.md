@@ -1,3 +1,10 @@
+<!-- S404-closeout-writeback -->
+## Session 404 — complete served asset parity
+
+Native served-parity now supports --scope=all-served, using the compared commit positive deployment manifest and one NUL-framed Git blob inventory. Images, fonts, unknown asset types, CNAME, .nojekyll and kept public proof files are measured. Only Pages control files and its deployed-SHA stamp are excluded. Default text scope stays compatible and receipts identify their scope.
+
+Local binary fixtures3/3 and independent review round2 approved. Full source, current browser/staging, hosted candidate and normal production acceptance are tracked in docs/RELEASE_S404.json; they remain pending until that ledger proves them. Existing identity/provider and field-vitals constraints remain separate.
+
 # Current State
 
 Last updated: 2026-10-25
@@ -50,3 +57,8 @@ Limitations:
 - Final remote reachability is checked after normal closing publication; earlier pending checkpoints remain historical.
 
 CDR reviewed — no new creative direction. SIL939/1000 unchanged; velocity1.
+
+
+### S404 rendered release correction
+
+S404 release pixel review found the fixed page-status ring crossing the News mobile kicker. Reserve54px inline-end clearance only on mobile article kickers. Existing44px status target remains visible and functional. Actual Chromium text-range geometry reproduced pre-fix collision and passes56theme/width/article cells after the fix; existing article CSS cases2/2 pass. Native shell assets and208HTML references carry the repair. Before42-view corpus retained with one defect; after42-view inspection and full release remain tracked in docs/RELEASE_S404.json. The original audit and secondary clearance audit are both part of S404.

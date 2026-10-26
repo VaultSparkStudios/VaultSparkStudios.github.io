@@ -9,7 +9,9 @@
  * content lane withholds them by type. A lane's exit status says the lane ran; it
  * does not say what the origin serves. This measures that directly.
  *
- * It fetches every git-tracked, served, text-type file from the origin, compares it
+ * By default it fetches tracked served text. --scope=all-served instead selects
+ * all resource types from the compared commit's positive deployment manifest.
+ * It compares each resource's bytes
  * with the committed blob, and groups the differences by the release lane that can
  * carry them (content lane, or full promotion only). Read-only: GET requests, no
  * bodies recorded, nothing written unless --json-out is given.
@@ -28,14 +30,15 @@ import { execFileSync } from './lib/safe-spawn.mjs';
 import { classifyPath, NOT_SERVED } from './check-content-lane-purity.mjs';
 import { parsePagesRedirects, matchPagesRedirect, redirectLocation } from '../cloudflare/pages-redirects.js';
 import { parseDeployArgv } from './lib/deploy-argv.mjs';
+import { isServed } from './lib/served-surface.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const USAGE = 'Usage: node scripts/check-served-parity.mjs [--origin=URL] [--against=REF] [--require=tree-current|content-current|content-lag|unverified] [--concurrency=1..64] [--json-out=PATH]\n       --help | --self-test';
+const USAGE = 'Usage: node scripts/check-served-parity.mjs [--origin=URL] [--against=REF] [--scope=text|all-served] [--require=tree-current|content-current|content-lag|unverified] [--concurrency=1..64] [--json-out=PATH]\n       --help | --self-test';
 
 export function parseArgs(args) {
   const parsed = parseDeployArgv(args, {
     name: 'check-served-parity', boolFlags: ['--self-test'],
-    valueFlags: ['--origin', '--against', '--require', '--concurrency', '--json-out'],
+    valueFlags: ['--origin', '--against', '--scope', '--require', '--concurrency', '--json-out'],
   });
   const { values } = parsed;
   if (parsed.flags.has('--self-test')) {
@@ -50,8 +53,10 @@ export function parseArgs(args) {
   const required = values['--require'] ?? '';
   if (required && !ORDER.includes(required)) throw new Error('unknown --require verdict');
   const against = values['--against'] ?? '';
+  const scope = values['--scope'] ?? 'text';
+  if (!['text', 'all-served'].includes(scope)) throw new Error('--scope must be text or all-served');
   if (against && (!/^[A-Za-z0-9][A-Za-z0-9._/@~^{}-]*$/.test(against) || against.includes('..'))) throw new Error('invalid --against commit reference');
-  return { mode: parsed.help || parsed.dry ? 'help' : 'run', origin: url.origin, concurrency, required, against, jsonOut: values['--json-out'] ?? '' };
+  return { mode: parsed.help || parsed.dry ? 'help' : 'run', origin: url.origin, concurrency, required, against, scope, jsonOut: values['--json-out'] ?? '' };
 }
 
 export const TEXT_EXT = Object.freeze(['.html', '.js', '.css', '.json', '.ndjson', '.xml', '.txt', '.svg', '.webmanifest']);
@@ -60,6 +65,22 @@ const EXTRA_NOT_SERVED = Object.freeze(['portfolio/', 'config/', 'cloudflare/', 
 // Stamped by the deploy itself with the deployed SHA, so it differs from the commit by design.
 export const DEPLOY_STAMPED = Object.freeze(["api/build-sha.json"]);
 const ROOT_NOT_SERVED = new Set(['package.json', 'package-lock.json', 'playwright.config.js', '_headers', '_redirects', 'README_DEPLOY.txt', '.mcp.json', '.lighthouserc.json']);
+// Pages consumes these as configuration; they are not visitor resources.
+export const PROVIDER_CONTROL = Object.freeze(['_headers', '_redirects']);
+const SERVED_MANIFEST_PATH = 'config/served-surface.json';
+
+/** Select from the compared commit, including binary and otherwise unknown types. */
+export function selectServedFiles(tracked, scope, manifest) {
+  if (scope === 'text') return tracked.filter(isServedCandidate);
+  if (scope !== 'all-served') throw new Error('unknown parity scope');
+  for (const key of ['exact', 'prefixes', 'excludedPrefixes', 'keptInternalPrefixes']) {
+    if (!Array.isArray(manifest?.[key]) || manifest[key].some(p => typeof p !== 'string' || !p || p.startsWith('/') || p.includes('\\') || p.split('/').some(part => part === '..' || part === '.'))) {
+      throw new Error(`invalid served manifest ${key}`);
+    }
+  }
+  if (!manifest.exact.length && !manifest.prefixes.length && !manifest.keptInternalPrefixes.length) throw new Error('empty served manifest');
+  return tracked.filter(file => isServed(file, manifest) && !PROVIDER_CONTROL.includes(file) && !DEPLOY_STAMPED.includes(file));
+}
 
 /** Pages serves clean URLs: `x/index.html` answers at `x/` and `foo.html` at `foo`. */
 export function routeFor(file) {
@@ -106,6 +127,30 @@ export function meets(verdict, required) {
 const sha256 = (bytes) => crypto.createHash('sha256').update(bytes).digest('hex');
 const gitAt = (root) => (argv, opts = {}) => execFileSync('git', ['-C', root, ...argv], { maxBuffer: 1 << 28, ...opts });
 
+/** Git -l -z supplies exact committed blob IDs/sizes in one call, without reading
+ * hundreds of MB or spawning Git per download. Paths are NUL framed, not lines. */
+export function parseBlobInventory(raw) {
+  const blobs = new Map();
+  for (const entry of raw.split('\0').filter(Boolean)) {
+    const tab = entry.indexOf('\t');
+    const meta = entry.slice(0, tab).match(/^\d+ blob ([a-f0-9]{40}|[a-f0-9]{64})\s+(\d+)$/);
+    if (tab < 0 || !meta) throw new Error('invalid or non-blob committed inventory');
+    const file = entry.slice(tab + 1);
+    const size = Number(meta[2]);
+    if (!file || blobs.has(file) || !Number.isSafeInteger(size)) throw new Error('invalid committed blob path/size');
+    blobs.set(file, { objectId: meta[1], size });
+  }
+  return blobs;
+}
+
+export function compareBlobBytes(bytes, expected) {
+  const algorithm = expected.objectId.length === 40 ? 'sha1' : 'sha256';
+  const actualGitObject = crypto.createHash(algorithm).update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+  const actualSha256 = sha256(bytes);
+  const identical = actualGitObject === expected.objectId && bytes.length === expected.size;
+  return { state: identical ? 'identical' : 'differ', expectedGitObject: expected.objectId, actualGitObject, gitObjectAlgorithm: algorithm, actualSha256, ...(identical ? { expectedSha256: actualSha256 } : {}), expectedBytes: expected.size, actualBytes: bytes.length };
+}
+
 async function fetchBytes(url, attempts = 2) {
   let last;
   for (let attempt = 0; attempt < attempts; attempt += 1) {
@@ -118,7 +163,7 @@ async function fetchBytes(url, attempts = 2) {
   throw last;
 }
 
-export async function compare(origin, sha, files, { width = 10, rules = [], git = gitAt(ROOT) } = {}) {
+export async function compare(origin, sha, files, { width = 10, rules = [], git = gitAt(ROOT), blobs } = {}) {
   if (!Number.isSafeInteger(width) || width < 1 || width > 64) throw new Error('invalid comparison concurrency');
   const results = [];
   let cursor = 0;
@@ -139,8 +184,16 @@ export async function compare(origin, sha, files, { width = 10, rules = [], git 
         }
         if (served.status === 404) { results.push({ file, lane, state: 'not-served' }); continue; }
         if (served.status !== 200) { results.push({ file, lane, state: 'error', detail: `HTTP ${served.status}` }); continue; }
-        const blob = git(['show', `${sha}:${file}`]);
-        results.push({ file, lane, state: sha256(served.bytes) === sha256(blob) ? 'identical' : 'differ' });
+        if (blobs) {
+          const expected = blobs.get(file);
+          if (!expected) throw new Error('missing committed blob inventory');
+          results.push({ file, lane, ...compareBlobBytes(served.bytes, expected) });
+        } else {
+          // Compatibility for callers that supply a custom Git reader.
+          const blob = git(['show', `${sha}:${file}`]);
+          const expectedSha256 = sha256(blob), actualSha256 = sha256(served.bytes);
+          results.push({ file, lane, state: actualSha256 === expectedSha256 ? 'identical' : 'differ', expectedSha256, actualSha256, expectedBytes: blob.length, actualBytes: served.bytes.length });
+        }
       } catch (error) { results.push({ file, lane, state: 'error', detail: error.message }); }
     }
   }));
@@ -180,7 +233,7 @@ export async function main(args = process.argv.slice(2), { root = ROOT } = {}) {
   try { options = parseArgs(args); } catch (error) { console.error(`check-served-parity: ${error.message}\n${USAGE}`); return 2; }
   if (options.mode === 'help') { console.log(USAGE); return 0; }
   if (options.mode === 'self-test') { selfTest(); return 0; }
-  const { origin, concurrency, required, jsonOut } = options;
+  const { origin, concurrency, required, jsonOut, scope } = options;
   const git = gitAt(root);
   let against = options.against;
   let reported = null;
@@ -197,15 +250,22 @@ export async function main(args = process.argv.slice(2), { root = ROOT } = {}) {
     console.log(`check-served-parity: unverified · commit ${String(against).slice(0, 12)} is not in this checkout (shallow clone?)`);
     return required ? 1 : 0;
   }
-  const tracked = git(['ls-tree', '-r', '--name-only', sha], { encoding: 'utf8' }).split(/\r?\n/).filter(Boolean);
-  const files = tracked.filter(isServedCandidate);
+  const blobs = parseBlobInventory(git(['ls-tree', '-r', '-l', '-z', sha], { encoding: 'utf8' }));
+  const tracked = [...blobs.keys()];
+  let manifestBytes;
+  let manifest;
+  if (scope === 'all-served') {
+    manifestBytes = git(['show', `${sha}:${SERVED_MANIFEST_PATH}`]);
+    manifest = JSON.parse(manifestBytes.toString('utf8'));
+  }
+  const files = selectServedFiles(tracked, scope, manifest);
   // Redirects are part of the compared release, never taken from a dirty worktree.
   const rules = tracked.includes('_redirects') ? parsePagesRedirects(git(['show', `${sha}:_redirects`], { encoding: 'utf8' })) : [];
-  const results = await compare(origin, sha, files, { width: concurrency, rules, git });
+  const results = await compare(origin, sha, files, { width: concurrency, rules, git, blobs });
   const summary = summarize(results, files);
-  const report = { checkedAt: new Date().toISOString(), origin, against: sha, deployedBy: reported?.deployedBy ?? null, ...summary, results };
+  const report = { checkedAt: new Date().toISOString(), origin, against: sha, scope, inventory: scope === 'all-served' ? { source: SERVED_MANIFEST_PATH, sha256: sha256(manifestBytes), providerControlExcluded: PROVIDER_CONTROL, deployStampedExcluded: DEPLOY_STAMPED } : { source: 'tracked text extensions', extensions: TEXT_EXT }, deployedBy: reported?.deployedBy ?? null, ...summary, results };
   if (jsonOut) await writeFile(path.resolve(jsonOut), `${JSON.stringify(report, null, 2)}\n`);
-  console.log(`check-served-parity: ${summary.verdict} · ${origin} vs ${sha.slice(0, 12)} · ${summary.identical}/${summary.checked} identical · ${summary.differ} differ (${summary.contentLag.length} content-lane, ${summary.fullPromotionOnly.length} full-promotion-only) · ${summary.redirected} redirected · ${summary.notServed.length} not served · ${summary.unread} unread`);
+  console.log(`check-served-parity: ${summary.verdict} · scope=${scope} · ${origin} vs ${sha.slice(0, 12)} · ${summary.identical}/${summary.checked} identical · ${summary.differ} differ (${summary.contentLag.length} content-lane, ${summary.fullPromotionOnly.length} full-promotion-only) · ${summary.redirected} redirected · ${summary.notServed.length} not served · ${summary.unread} unread`);
   for (const file of summary.contentLag.slice(0, 20)) console.log(`  content-lane lag: ${file}`);
   for (const file of summary.fullPromotionOnly.slice(0, 20)) console.log(`  full-promotion-only lag: ${file}`);
   for (const row of results.filter((r) => !['identical', 'differ', 'redirected'].includes(r.state)).slice(0, 20)) console.log(`  unverified: ${row.file}: ${row.detail ?? row.state}`);

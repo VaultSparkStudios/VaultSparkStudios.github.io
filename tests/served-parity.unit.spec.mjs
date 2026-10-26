@@ -47,7 +47,7 @@ test('CLI admission rejects malformed options without repository, network or out
   const report = path.join(root, 'report.json');
   try {
     for (const args of [
-      ['--wat'], ['--origin'], ['--against='], ['--concurrency=0'], ['--concurrency=-1'], ['--concurrency=NaN'], ['--concurrency=1.5'], ['--concurrency=65'], ['--concurrency=9007199254740992'],
+      ['--wat'], ['--scope=bogus'], ['--scope='], ['--scope=text', '--scope=all-served'], ['--origin'], ['--against='], ['--concurrency=0'], ['--concurrency=-1'], ['--concurrency=NaN'], ['--concurrency=1.5'], ['--concurrency=65'], ['--concurrency=9007199254740992'],
       ['--require=bogus'], ['--origin=file:///tmp/a'], ['--origin=https://user:pass@example.com/'], ['--origin=https://example.com/path'], ['--origin=https://example.com/path/..'], ['--origin=https://example.com/?a=1'], ['--origin=https://example.com/#x'],
       ['--against=--help'], ['--against=HEAD..main'], ['--help', '--wat'], ['--self-test', '--against=HEAD'], ['--origin=' + origin, '--origin=' + origin], ['positional'],
     ]) {
