@@ -5,16 +5,15 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Session-headed ledgers now rotate safely under UTF-8 budgets; initial full production      ║
-║    verified.                                                                                  ║
+║    Preservation-safe session ledgers and Git-index byte protection fully deployed.            ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     █████░░░░░   50/100                                                       ║
 ║  ECOSYSTEM IMPACT   █░░░░░░░░░   10/100                                                       ║
 ║  SIL DELTA          939 → 939  (+0)                                                           ║
-║  VERIFICATION       547 source · 215 mobile · 56 views · 3 hosted · 11 staging                ║
+║  VERIFICATION       547 closing source ·3 hosted ·11 staging ·68 critical                     ║
 ║  LIVE READBACK      1159/1159 text paths ·12/12 changed images                                ║
-║  SCAFFOLD           4 tasks ·3 done ·1 in progress ·0 open                                    ║
-║  CLOSING STATE      Canonical checks and closing publication pending                          ║
+║  SCAFFOLD           4 tasks ·4 done ·0 in progress ·0 open                                    ║
+║  CLOSING STATE      Full production and closing acceptance verified                           ║
 ║  HONESTY            No field or conversion gain; independent holds retained                   ║
 ║  CDR                Reviewed; no new creative direction or entries                            ║
 ║                                                                                               ║
@@ -41,7 +40,7 @@
     (none)
 
   ACTION GATE
-    Already authorized: commit/push after staging checks; no further approval requested.
+    Authorized main push and full deployment verified; final evidence publication follows.
 
 ```
 

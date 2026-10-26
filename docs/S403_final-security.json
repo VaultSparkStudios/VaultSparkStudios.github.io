@@ -1,0 +1,20 @@
+{
+  "session": 403,
+  "observedAt": "2026-10-26T00:30:47.887Z",
+  "settings": {
+    "command": "node scripts/sanitize-claude-settings.mjs --check --json",
+    "ok": true,
+    "findings": 0
+  },
+  "stagedScan": {
+    "command": "node scripts/scan-secrets.mjs --staged",
+    "exit": 0,
+    "files": 43,
+    "findings": 0
+  },
+  "gateway": {
+    "command": "node scripts/check-secrets.mjs --audit",
+    "exit": 0,
+    "scope": "Gateway audit is advisory; this is not a claim that every provider capability is ready."
+  }
+}

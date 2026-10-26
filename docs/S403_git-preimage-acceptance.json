@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 403,
-  "state": "focused-verified-closing-required",
+  "state": "full-closing-verified",
   "red": {
     "command": "node --test tests/ledger-rotation.unit.spec.mjs",
     "passed": 3,
@@ -20,5 +20,16 @@
   "scope": "Normal source LF policy retained; existing archive blobs untouched.",
   "evidenceBinding": ".gitattributes included in verificationSurfaceFingerprint; weakening invalidates evidence; restoration reproduces fingerprint.",
   "review": "S403-git-preimage-boundary round1 pass,0findings",
-  "closingSourceAndPublication": "pending"
+  "closingSourceAndPublication": {
+    "candidate": "c352393f1af8d157d2dc0366646f10944de8a2ba",
+    "source": {
+      "evidence": "docs/S403_closing-source-acceptance.json",
+      "passed": 547,
+      "total": 547,
+      "coverageComplete": true,
+      "sourceFingerprint": "83f9d1e1b08072ee85e6931a",
+      "receiptId": "19ae14480ff996d34587243f"
+    },
+    "release": "docs/RELEASE_S403.json"
+  }
 }

@@ -1,7 +1,7 @@
 {
   "session": 403,
   "goal": "01a173fb-dc92-75d0-9489-6832e36263f8",
-  "createdAt": "2026-10-25T19:04:10.800Z",
+  "createdAt": "2026-10-25T19:04:10.8Z",
   "purpose": "Bounded exact-candidate release window after an actual upstream Desk publication race; preserve latest upstream content and restore original states before goal completion.",
   "original": [
     {
@@ -55,40 +55,66 @@
       "at": "2026-10-25T19:04:15.631Z",
       "path": ".github/workflows/cloudflare-analytics-pull.yml",
       "action": "hold"
+    },
+    {
+      "at": "2026-10-26T00:17:07.831Z",
+      "path": ".github/workflows/news-publish.yml",
+      "action": "restore"
+    },
+    {
+      "at": "2026-10-26T00:17:08.618Z",
+      "path": ".github/workflows/desk-content-release.yml",
+      "action": "restore"
+    },
+    {
+      "at": "2026-10-26T00:17:09.37Z",
+      "path": ".github/workflows/refresh-live-data.yml",
+      "action": "restore"
+    },
+    {
+      "at": "2026-10-26T00:17:10.156Z",
+      "path": ".github/workflows/rum-pull.yml",
+      "action": "restore"
+    },
+    {
+      "at": "2026-10-26T00:17:10.921Z",
+      "path": ".github/workflows/cloudflare-analytics-pull.yml",
+      "action": "restore"
     }
   ],
-  "state": "held",
+  "state": "restored",
   "uptimeExcluded": true,
-  "verifiedAt": "2026-10-25T19:04:16.581Z",
+  "verifiedAt": "2026-10-26T00:17:11.697Z",
   "current": [
     {
       "path": ".github/workflows/news-publish.yml",
-      "state": "disabled_manually"
+      "state": "active"
     },
     {
       "path": ".github/workflows/desk-content-release.yml",
-      "state": "disabled_manually"
+      "state": "active"
     },
     {
       "path": ".github/workflows/refresh-live-data.yml",
-      "state": "disabled_manually"
+      "state": "active"
     },
     {
       "path": ".github/workflows/rum-pull.yml",
-      "state": "disabled_manually"
+      "state": "active"
     },
     {
       "path": ".github/workflows/cloudflare-analytics-pull.yml",
-      "state": "disabled_manually"
+      "state": "active"
     }
   ],
   "uptimeState": "active",
   "localArtPublisher": {
     "kind": "local-scheduled-art-publisher",
     "originalEnabled": true,
-    "state": "held",
+    "state": "restored",
     "nextRunUtc": "2026-10-25T23:45:00Z",
-    "restoreRequired": true,
-    "scope": "Only the concurrent art writer; uptime monitoring remains active"
+    "restoreRequired": false,
+    "scope": "Only the concurrent art writer; uptime monitoring remains active",
+    "restoredAt": "2026-10-26T00:17:13.7439206Z"
   }
 }

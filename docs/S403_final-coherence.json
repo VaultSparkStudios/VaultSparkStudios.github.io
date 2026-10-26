@@ -1,0 +1,270 @@
+{
+  "session": 403,
+  "observedAt": "2026-10-26T00:28:00.348Z",
+  "rows": [
+    {
+      "id": "spark-manifest",
+      "command": [
+        "node",
+        "scripts/build-spark-manifest.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "public-intelligence",
+      "command": [
+        "node",
+        "scripts/generate-public-intelligence.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "heartbeat",
+      "command": [
+        "node",
+        "scripts/generate-heartbeat.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "startup-brief",
+      "command": [
+        "node",
+        "scripts/check-startup-session-coherence.mjs"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "candidate-artifact-manifest",
+      "command": [
+        "node",
+        "scripts/build-candidate-artifact-manifest.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "staging-deploy-receipt",
+      "command": [
+        "node",
+        "scripts/check-staging-deploy-receipt.mjs"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "deploy-currency",
+      "command": [
+        "node",
+        "scripts/build-deploy-currency.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "release-proof",
+      "command": [
+        "node",
+        "scripts/build-release-proof.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "public-status",
+      "command": [
+        "node",
+        "scripts/build-public-status.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "canonical-destination-reachability",
+      "command": [
+        "node",
+        "scripts/probe-canonical-destinations.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "status-proof",
+      "command": [
+        "node",
+        "scripts/build-status-proof.mjs",
+        "--check",
+        "--check-content"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "citation",
+      "command": [
+        "node",
+        "scripts/build-citation.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "studio-timeline",
+      "command": [
+        "node",
+        "scripts/build-studio-timeline.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "intent-map",
+      "command": [
+        "node",
+        "scripts/build-intent-map.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "launch-age",
+      "command": [
+        "node",
+        "scripts/build-launch-age.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "stats-surface",
+      "command": [
+        "node",
+        "scripts/build-stats-surface.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "nervous-system",
+      "command": [
+        "node",
+        "scripts/build-nervous-system.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "intelligence-budget",
+      "command": [
+        "node",
+        "scripts/build-intelligence-budget.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "agents-json",
+      "command": [
+        "node",
+        "scripts/build-agents-json.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "ai-discovery-health",
+      "command": [
+        "node",
+        "scripts/build-ai-discovery-health.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "changelog-live",
+      "command": [
+        "node",
+        "scripts/build-changelog-live.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "ignis-conduit",
+      "command": [
+        "node",
+        "scripts/build-ignis-conduit.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "ignis-search-index",
+      "command": [
+        "node",
+        "scripts/build-ignis-search-index.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "llms-full-shards",
+      "command": [
+        "node",
+        "scripts/build-llms-full-shards.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "oracle-query-clusters",
+      "command": [
+        "node",
+        "scripts/build-oracle-query-clusters.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "public-ecosystem",
+      "command": [
+        "node",
+        "scripts/build-public-ecosystem.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "staging-deploy-continuity",
+      "command": [
+        "node",
+        "scripts/build-staging-deploy-continuity.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "api-index",
+      "command": [
+        "node",
+        "scripts/build-api-index.mjs",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "id": "oracle-answers",
+      "command": [
+        "node",
+        "scripts/build-oracle-answers.mjs",
+        "--check"
+      ],
+      "exit": 0
+    }
+  ],
+  "passed": 29,
+  "failed": 0,
+  "sourceFingerprint": "83f9d1e1b08072ee85e6931a",
+  "scope": "Native affected-evidence checks for final writebacks; complete closing source receipt remains unchanged. Production release candidate remains c352393f1af8d157d2dc0366646f10944de8a2ba; later CI observation commits retained separately."
+}

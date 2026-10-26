@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 403,
-  "state": "initial-release-accepted-closing-local-verified",
+  "state": "complete",
   "releaseAccepted": true,
   "goal": {
     "threadId": "01a173fb-dc92-75d0-9489-6832e36263f8",
@@ -10,7 +10,7 @@
   "startHead": "087fe13ee8b45cfe3b80133ebf568fe2302fdf1f",
   "audit": "docs/AUDIT_2026-10-25-S403.json",
   "localAcceptance": "docs/S403_local-acceptance.json",
-  "candidate": "95cf0ccbada89ba1e7365dd00caf3bcfdac22ed6",
+  "candidate": "c352393f1af8d157d2dc0366646f10944de8a2ba",
   "waves": [
     {
       "id": 1,
@@ -40,8 +40,17 @@
     },
     {
       "id": 4,
-      "state": "in-progress",
-      "outcome": "Canonical closeout, remote publication and native completion audit"
+      "state": "complete",
+      "outcome": "Canonical closeout, remote publication and native completion audit",
+      "verified": [
+        "Canonical writebacks,10-category SIL939 and owned intelligence refresh",
+        "Independent closeout and Git-boundary reviews passed",
+        "Canonical closeout autopilot and both complete547 source runs",
+        "Closing exact-candidate staging,3hosted workflows and actual normal full production",
+        "Fresh complete served-text and changed-image readback",
+        "Ark broadcasts delivered; adoption unverified",
+        "Original publisher states restored and owned background jobs reconfirmed closed"
+      ]
     }
   ],
   "limitations": [
@@ -103,12 +112,12 @@
     "scope": "Full passed staging for pre-art source only; not current for the incoming art."
   },
   "localSource": {
-    "evidence": "docs/S403_full-source-acceptance.json",
+    "evidence": "docs/S403_closing-source-acceptance.json",
     "passed": 547,
     "total": 547,
     "coverageComplete": true,
-    "sourceFingerprint": "f63c114996ab8e31ec84f7e0",
-    "receiptId": "a0195d3e3dc49ed349a69ad1"
+    "sourceFingerprint": "83f9d1e1b08072ee85e6931a",
+    "receiptId": "19ae14480ff996d34587243f"
   },
   "artBrowserAcceptance": {
     "mobile": "docs/S403_mobile-art.json",
@@ -117,18 +126,119 @@
     "mobileCases": 215
   },
   "staging": {
-    "deploy": "docs/S403_staging-deploy-merged.json",
-    "ceremony": "docs/S403_staging-ceremony-merged.json",
-    "currentness": "docs/S403_staging-currentness-merged.json",
-    "sourceFingerprint": "f63c114996ab8e31ec84f7e0",
-    "receiptId": "bdde939b9edc67c73b349ab5",
+    "deploy": "docs/S403_staging-deploy-closeout.json",
+    "ceremony": "docs/S403_staging-ceremony-closeout.json",
+    "currentness": "docs/S403_staging-currentness-closeout.json",
     "criticalLeaves": 68,
-    "ceremonySteps": 11
+    "ceremonySteps": 11,
+    "sourceFingerprint": "83f9d1e1b08072ee85e6931a",
+    "receiptId": "dbc64ec87242f8e370d95918",
+    "postCandidateObservations": "docs/S403_post-candidate-staging-observations.json"
   },
   "supplyChain": "docs/S403_supply-chain.json",
-  "tag": "s403-full-20261025-95cf0ccbad",
-  "hostedRequiredChecks": "docs/S403_hosted-required-checks.json",
+  "tag": "s403-closeout-20261025-c352393f1a",
+  "hostedRequiredChecks": "docs/S403_hosted-required-checks-closing.json",
   "production": {
+    "runId": 40247839864,
+    "event": "workflow_dispatch",
+    "candidate": "c352393f1af8d157d2dc0366646f10944de8a2ba",
+    "tag": "s403-closeout-20261025-c352393f1a",
+    "confirmation": "confirm_production=true",
+    "state": "verified",
+    "evidence": "docs/S403_production-workflow-closing.json",
+    "actualSteps": "docs/S403_production-steps-closing.json",
+    "provider": "docs/S403_provider-identity-closing.json",
+    "rollback": "docs/S403_provider-before-closing.json",
+    "readback": {
+      "stamps": "docs/S403_production-stamps-closing.json",
+      "selected": "docs/S403_production-selected-readback-closing.json",
+      "servedText": "docs/S403_served-parity-closing.json",
+      "servedImages": "docs/S403_binary-parity-closing.json",
+      "text": {
+        "checked": 1159,
+        "expected": 1159,
+        "identical": 1149,
+        "redirected": 10
+      },
+      "changedImages": {
+        "checked": 12,
+        "expected": 12
+      }
+    }
+  },
+  "acceptedAt": "2026-10-26T00:19:03.010Z",
+  "closingCorrections": {
+    "gitPreimage": "docs/S403_git-preimage-acceptance.json",
+    "startupAge": "Elapsed precise timestamp age; malformed/future timestamps remain unknown",
+    "state": "full-source-staging-hosted-production-verified"
+  },
+  "closing": {
+    "state": "verified",
+    "autopilot": "docs/S403_closing-autopilot.json",
+    "localHead": "0ffdba8a68db1bb3cb591af9bee74c3d0f359736",
+    "source": {
+      "evidence": "docs/S403_closing-source-acceptance.json",
+      "passed": 547,
+      "total": 547,
+      "coverageComplete": true,
+      "sourceFingerprint": "83f9d1e1b08072ee85e6931a",
+      "receiptId": "19ae14480ff996d34587243f"
+    },
+    "candidate": "c352393f1af8d157d2dc0366646f10944de8a2ba",
+    "completedAt": "2026-10-26T00:19:03.010Z",
+    "staging": {
+      "deploy": "docs/S403_staging-deploy-closeout.json",
+      "ceremony": "docs/S403_staging-ceremony-closeout.json",
+      "currentness": "docs/S403_staging-currentness-closeout.json",
+      "criticalLeaves": 68,
+      "ceremonySteps": 11,
+      "sourceFingerprint": "83f9d1e1b08072ee85e6931a",
+      "receiptId": "dbc64ec87242f8e370d95918",
+      "postCandidateObservations": "docs/S403_post-candidate-staging-observations.json"
+    },
+    "production": {
+      "runId": 40247839864,
+      "event": "workflow_dispatch",
+      "candidate": "c352393f1af8d157d2dc0366646f10944de8a2ba",
+      "tag": "s403-closeout-20261025-c352393f1a",
+      "confirmation": "confirm_production=true",
+      "state": "verified",
+      "evidence": "docs/S403_production-workflow-closing.json",
+      "actualSteps": "docs/S403_production-steps-closing.json",
+      "provider": "docs/S403_provider-identity-closing.json",
+      "rollback": "docs/S403_provider-before-closing.json",
+      "readback": {
+        "stamps": "docs/S403_production-stamps-closing.json",
+        "selected": "docs/S403_production-selected-readback-closing.json",
+        "servedText": "docs/S403_served-parity-closing.json",
+        "servedImages": "docs/S403_binary-parity-closing.json",
+        "text": {
+          "checked": 1159,
+          "expected": 1159,
+          "identical": 1149,
+          "redirected": 10
+        },
+        "changedImages": {
+          "checked": 12,
+          "expected": 12
+        }
+      }
+    },
+    "hosted": "docs/S403_hosted-required-checks-closing.json",
+    "writebacks": "Canonical10 writebacks completed; CDR reviewed with no new direction",
+    "review": "portfolio/ops/review-loop-receipts.ndjson",
+    "publishers": "docs/S403_publisher-window.json",
+    "hygiene": "docs/S403_session-hygiene.json",
+    "ark": [
+      "docs/S403_ark-pattern-transport.json",
+      "docs/S403_ark-impact-transport.json"
+    ],
+    "publicationScope": "docs/S403_final-publication-scope.json",
+    "finalCoherence": "docs/S403_final-coherence.json",
+    "publicProjectionCheck": "docs/S403_final-projection-check.json"
+  },
+  "initialCandidate": "95cf0ccbada89ba1e7365dd00caf3bcfdac22ed6",
+  "initialProduction": {
     "runId": 40235072271,
     "event": "workflow_dispatch",
     "candidate": "95cf0ccbada89ba1e7365dd00caf3bcfdac22ed6",
@@ -155,22 +265,24 @@
       }
     }
   },
-  "acceptedAt": "2026-10-25T21:32:40.773Z",
-  "closingCorrections": {
-    "gitPreimage": "docs/S403_git-preimage-acceptance.json",
-    "startupAge": "Elapsed precise timestamp age; malformed/future timestamps remain unknown",
-    "state": "focused-verified-full-closing-pending"
+  "initialLocalSource": {
+    "evidence": "docs/S403_full-source-acceptance.json",
+    "passed": 547,
+    "total": 547,
+    "coverageComplete": true,
+    "sourceFingerprint": "f63c114996ab8e31ec84f7e0",
+    "receiptId": "a0195d3e3dc49ed349a69ad1"
   },
-  "closing": {
-    "state": "local-verified-staging-pending",
-    "autopilot": "docs/S403_closing-autopilot.json",
-    "localHead": "0ffdba8a68db1bb3cb591af9bee74c3d0f359736",
-    "source": {
-      "evidence": "docs/S403_closing-source-acceptance.json",
-      "sourceFingerprint": "83f9d1e1b08072ee85e6931a",
-      "receiptId": "19ae14480ff996d34587243f",
-      "passed": 547,
-      "total": 547
-    }
-  }
+  "initialStaging": {
+    "deploy": "docs/S403_staging-deploy-merged.json",
+    "ceremony": "docs/S403_staging-ceremony-merged.json",
+    "currentness": "docs/S403_staging-currentness-merged.json",
+    "sourceFingerprint": "f63c114996ab8e31ec84f7e0",
+    "receiptId": "bdde939b9edc67c73b349ab5",
+    "criticalLeaves": 68,
+    "ceremonySteps": 11
+  },
+  "initialHostedRequiredChecks": "docs/S403_hosted-required-checks.json",
+  "initialAcceptedAt": "2026-10-25T21:32:40.773Z",
+  "nativeCompletionBoundary": "The release candidate is already remote and fully deployed. Native completion additionally requires verified remote publication of this final closing record; local files alone do not establish that publication."
 }

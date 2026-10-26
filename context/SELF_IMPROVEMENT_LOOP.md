@@ -2030,3 +2030,11 @@ Brainstorm committed as two future unselected TASK_BOARD rows: shard-offset meas
 ### S403 closing preservation verification
 
 Git-index normalization was reproduced and corrected with a narrow raw-preimage attribute and actual Git regression. Four focused cases pass; normal text retains LF; source evidence now binds this policy. The initial95cf0ccbad release remains historical acceptance. Closing full-source verification and publication remain pending in docs/RELEASE_S403.json.
+
+
+<!-- S403-final-closing-acceptance -->
+### Session 403 final closing acceptance — 2026-10-26
+
+Closing full production c352393f1af8d157d2dc0366646f10944de8a2ba verified by workflow40247839864 and Cloudflare deploymentd8f44bbe-c2c9-4488-8d70-4c426e2c0676. Current complete source547/547; hosted3/3; staging11/11 and68/68 critical leaves; fresh served text1159/1159 (1149 exact,10 verified redirects,0 differences/unread), changed public images12/12, and both full-release stamps. Git-index raw preservation is covered by the closing source measurement. All paused publishers restored; Ark summary delivered, recipient adoption unverified. Background jobs 79/79 closed at 2026-10-26T00:18:00.274Z; preview listeners0.
+
+SIL939/1000 unchanged; velocity1. Existing unrelated identity/provider and field-vitals gaps remain. Two future SIL rows stay unselected. CDR reviewed; no new creative direction.
