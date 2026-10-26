@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 404,
-  "state": "merged-edition-current-browser-source-staging-pending",
+  "state": "local-full-source-accepted-staging-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a17a47-2667-73b1-b1d3-50bf728ec71a",
@@ -49,6 +49,13 @@
       "afterVisuals": "docs/S404_visual-current-acceptance.json",
       "mobile": "Current pre-edition run215/215passed. Incoming edition requires renewed current-source215cell audit.",
       "afterManuallyReviewed": 56
+    },
+    "currentBrowser": {
+      "mobile": "docs/S404_mobile-acceptance.json",
+      "mobilePassed": 215,
+      "mobileTotal": 215,
+      "visual": "docs/S404_visual-current-acceptance.json",
+      "manuallyReviewed": 56
     }
   },
   "limitations": [
@@ -90,5 +97,21 @@
       "repair": "Native check-visual-qa-retention regeneration and its own --check passed;2856bound records, zero deleted.",
       "log": ".cache/logs/S404-closeout-autopilot.log"
     }
-  ]
+  ],
+  "localSource": {
+    "evidence": "docs/S404_full-source-acceptance.json",
+    "passed": 547,
+    "total": 547,
+    "coverageComplete": true,
+    "sourceFingerprint": "ffc151f8e35ea3f7331d864f",
+    "receiptId": "7899a9d0dd8165682d1af281"
+  },
+  "localAutopilot": {
+    "command": "node scripts/closeout-autopilot.mjs --yes --skip-push",
+    "exit": 0,
+    "head": "14c5b7fb787cddaa2f3ce67562bef6ab7c8cbcda",
+    "log": ".cache/logs/S404-closeout-autopilot-retry1.log",
+    "scope": "Canonical local closeout gates and commits only; staging, remote publication and production remain required."
+  },
+  "publisherWindow": "docs/S404_publisher-window.json"
 }
