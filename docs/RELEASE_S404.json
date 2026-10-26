@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 404,
-  "state": "local-full-source-accepted-staging-pending",
+  "state": "full-staging-accepted-exact-candidate-publication-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a17a47-2667-73b1-b1d3-50bf728ec71a",
@@ -24,7 +24,18 @@
     {
       "id": 3,
       "state": "in-progress",
-      "outcome": "Full current source/browser/staging/candidate/production acceptance pending."
+      "outcome": "Full current source/browser/staging/candidate/production acceptance pending.",
+      "verified": [
+        "Complete current547/547source",
+        "Current215/215mobile and56individually reviewed captures",
+        "Actual full14587file staging deployment",
+        "Current canonical11/11staging ceremony"
+      ],
+      "remaining": [
+        "Exact-candidate current staging readback",
+        "Remote main publication and3required hosted checks",
+        "Normal full production/provider identity and complete all-served readback"
+      ]
     },
     {
       "id": 4,
@@ -113,5 +124,21 @@
     "log": ".cache/logs/S404-closeout-autopilot-retry1.log",
     "scope": "Canonical local closeout gates and commits only; staging, remote publication and production remain required."
   },
-  "publisherWindow": "docs/S404_publisher-window.json"
+  "publisherWindow": "docs/S404_publisher-window.json",
+  "staging": {
+    "deploy": "docs/S404_staging-deploy.json",
+    "ceremony": "docs/S404_staging-ceremony.json",
+    "state": "passed",
+    "files": 14587,
+    "sourceFingerprint": "ffc151f8e35ea3f7331d864f",
+    "artifactRoot": "8515baf436b9184aed07766ee474de6aededc33415ad37ef02ee5b8eccb533e4",
+    "receiptId": "bf7ba6f5fd1e77077a7a95a0",
+    "steps": 11,
+    "currentness": "pending exact candidate commit"
+  },
+  "observationMerge": {
+    "commit": "824c2ae75c",
+    "state": "preserved",
+    "sourceFingerprintUnchanged": true
+  }
 }
