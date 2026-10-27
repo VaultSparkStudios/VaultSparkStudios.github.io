@@ -1,0 +1,147 @@
+{
+  "date": "2026-10-27",
+  "simulated": false,
+  "leadSlug": "openai-launches-gpt-6-1-terra-halving-gpt-6",
+  "stories": [
+    {
+      "slug": "openai-launches-gpt-6-1-terra-halving-gpt-6",
+      "format": "debate",
+      "kind": "trending",
+      "edition": "midday",
+      "headline": "OpenAI Launches GPT-6.1 Terra, Halving Agent Costs",
+      "hook": "New model matches Astra's agent score at a fraction of the price.",
+      "tldr": "OpenAI has released GPT-6.1 Terra, a fast computer-use and vision model priced at $1/$5 per million tokens. This pricing structure positions it as a cost-effective alternative for agent workloads, matching GPT-6 Astra’s medium-effort Agents’ Last Exam score at $0.29 per task versus $4.82. The Desk evaluates whether this price-performance parity translates to immediate production viability or remains a benchmarking exercise awaiting real-world stress testing.",
+      "facts": [
+        {
+          "text": "OpenAI released GPT-6.1 Terra, a fast computer-use and vision model priced at $1/$5 per million tokens.",
+          "sourceUrl": "https://www.marktechpost.com/2026/10/26/openai-gpt-6-1-terra/",
+          "sourceKind": "feed-summary"
+        },
+        {
+          "text": "It matches GPT-6 Astra’s medium-effort Agents’ Last Exam score at $0.29 per task versus $4.82.",
+          "sourceUrl": "https://www.marktechpost.com/2026/10/26/openai-gpt-6-1-terra/",
+          "sourceKind": "feed-summary"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "vera",
+          "direction": 0,
+          "horizon": -1,
+          "verdict": "fair",
+          "confidence": 0.75,
+          "position": "The price is attractive, but matching an exam score doesn't prove stability under load. We wait for production logs before celebrating.",
+          "sources": [
+            "https://www.marktechpost.com/2026/10/26/openai-gpt-6-1-terra/"
+          ]
+        },
+        {
+          "personaId": "rex",
+          "direction": 2,
+          "horizon": 1,
+          "verdict": "underhyped",
+          "confidence": 0.85,
+          "position": "This is the inflection point. $0.29 per task vs $4.82 changes the math for every autonomous workflow you've been prototyping.",
+          "sources": [
+            "https://www.marktechpost.com/2026/10/26/openai-gpt-6-1-terra/"
+          ]
+        }
+      ],
+      "predictions": [
+        {
+          "id": "p-2026-10-27-vera-1",
+          "personaId": "vera",
+          "claim": "By Q1 2027, OpenAI will release a patch addressing latency spikes in GPT-6.1 Terra during multi-step agent chains exceeding 50 tokens.",
+          "confidence": 0.65,
+          "resolveBy": "2026-12-11",
+          "status": "open"
+        },
+        {
+          "id": "p-2026-10-27-rex-2",
+          "personaId": "rex",
+          "claim": "Within six months, average agent task costs across the industry will drop below $0.30 due to GPT-6.1 Terra's competitive pressure.",
+          "confidence": 0.7,
+          "resolveBy": "2027-02-24",
+          "status": "open"
+        }
+      ],
+      "transcript": [
+        {
+          "personaId": "vera",
+          "text": "I see the numbers. I also see that 'fast' is a marketing term until we run it through our integration tests. The price is good, but the exam score is a controlled environment. Real agents hallucinate when the context window gets noisy. I need to see error rates, not just task completion."
+        },
+        {
+          "personaId": "rex",
+          "text": "You're looking at the error rate; I'm looking at the unit economics. When you can run an agent for twenty cents instead of four dollars, you stop optimizing for efficiency and start optimizing for volume. That shifts the entire architecture of how we build automation. It's not about being perfect; it's about being cheap enough to try again."
+        }
+      ],
+      "memeLine": {
+        "text": "Cheaper agents don't mean they won't break your database on Tuesday.",
+        "personaId": "vera"
+      },
+      "body": [
+        {
+          "voice": "vera",
+          "text": "OpenAI released GPT-6.1 Terra, a fast computer-use and vision model priced at $1/$5 per million tokens. While the headline figure is compelling, the practical value lies in its performance relative to cost. It matches GPT-6 Astra’s medium-effort Agents’ Last Exam score at $0.29 per task versus $4.82. This represents a significant reduction in marginal cost for autonomous workflows. However, a benchmark score is not a production guarantee. We have seen models perform well in isolation but fail when integrated into complex, stateful environments. The desk remains cautious until we observe stable behavior over a sustained period, particularly regarding error handling and retry logic in live agent loops. The gap between exam scores and real-world reliability is where most deployments fail, often due to subtle drift in tool-use accuracy that only appears under high concurrency."
+        },
+        {
+          "voice": "rex",
+          "text": "The shift here is structural. At $0.29 per task, you can deploy agents that were previously economically unviable. You are going to see a surge in lightweight, high-frequency automation tasks that were too expensive to run with GPT-6 Astra. Watch what happens as developers strip away heavy reasoning layers in favor of speed and low cost. This isn't just a cheaper model; it's a new class of application. The barrier to entry for sophisticated agent-based products just dropped precipitously. You can now afford to be wrong more often because the cost of being wrong is negligible. This unlocks use cases that were strictly theoretical before today, allowing for massive parallelization of simple tasks."
+        },
+        {
+          "voice": "vera",
+          "text": "One thing that breaks in production: the assumption that lower token costs equate to lower total system costs. If GPT-6.1 Terra requires more retries to achieve the same accuracy as a higher-cost model, the savings vanish. We need to monitor the ratio of successful tasks to API calls. Until then, treat this as a promising benchmark, not a finished solution. The $1 per million token input price is aggressive, but output costs at $5 remain steep for long-form generation. Teams should test this specifically for short-horizon agent loops rather than general-purpose chat. The real test is whether the 'fast' descriptor holds up when network latency joins the equation."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-10-27--openai-launches-gpt-6-1-terra-halving-gpt-6.png",
+        "scene": "A split screen showing a glowing server rack labeled 'Terra' next to a crumbling stone pillar labeled 'Astra', with a digital scale balancing a single coin against a heavy rock. The composition shows GPT-6.1 Terra matches GPT-6 Astra.",
+        "alt": "Digital illustration contrasting the sleek modern infrastructure of the new model against the outdated weight of the previous expensive standard, highlighting the dramatic cost difference. The composition shows GPT-6.1 Terra matches GPT-6 Astra.",
+        "anchors": [
+          "GPT-6.1 Terra",
+          "$0.29 per task",
+          "$4.82"
+        ],
+        "relationships": [
+          {
+            "id": "cost-comparison",
+            "subject": [
+              "GPT-6.1 Terra"
+            ],
+            "action": [
+              "matches"
+            ],
+            "object": [
+              "GPT-6 Astra"
+            ],
+            "evidenceAnchorRefs": [
+              "GPT-6.1 Terra"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "848b9b91f3fe0072ecf2c0143934c92c566f78f52f702b1418e11b3a40cde36d",
+          "semanticVerified": false,
+          "reviewed": false,
+          "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)",
+          "kind": "procedural-fallback",
+          "entropy": 1.133
+        },
+        "generatedArt": false,
+        "satire": {
+          "target": "The enterprise software procurement department's obsession with vendor lock-in despite clear cost advantages",
+          "setup": "Procurement managers reviewing the $4.82 per task cost of legacy systems while ignoring the new $0.29 option",
+          "payoff": "They approve the old system anyway because the new one doesn't come with a dedicated success manager",
+          "institutional": true
+        }
+      },
+      "authoredBy": {
+        "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "requested": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "fellBack": false,
+        "attempt": 3,
+        "at": "2026-10-27T12:36:57.754Z"
+      }
+    }
+  ]
+}
