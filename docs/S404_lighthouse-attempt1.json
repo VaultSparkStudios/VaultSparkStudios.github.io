@@ -1,0 +1,28 @@
+{
+  "session": 404,
+  "candidate": "a569b1ed3df3abb738193c24d93da6b7a4832cab",
+  "workflowRunId": 40432262446,
+  "attempt": 1,
+  "state": "failed",
+  "failedStep": "Check Lighthouse route tiers",
+  "route": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
+  "performance": 0.88,
+  "requiredPerformance": 0.9,
+  "lcpMs": 3834,
+  "tbtMs": 26,
+  "baseline": {
+    "candidate": "c3e6baad4264681cc91ec6ef30a6df5d7db4a93b",
+    "workflowRunId": 40424685067,
+    "state": "passed",
+    "performance": 0.92,
+    "lcpMs": 3285,
+    "tbtMs": 0,
+    "routeAndAssetsByteUnchanged": true
+  },
+  "diagnosis": "The route, its assets, edge files and styles have zero Git diff between the two candidates. Measurement variation is plausible; this is not a passing result or a proven performance improvement.",
+  "action": "One exact-commit full Lighthouse workflow rerun, preserving the original floor and failed evidence. Repeated failure requires further investigation.",
+  "logs": [
+    ".cache/logs/S404-lighthouse-candidate-full1.log",
+    ".cache/logs/S404-lighthouse-baseline-c3.log"
+  ]
+}

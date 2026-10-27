@@ -1810,3 +1810,11 @@ SIL939/1000 unchanged; velocity1. Existing unrelated identity/provider and field
 
 
 S404 visual finding: before42screens reviewed with one mobile overlap finding. Actual pre-fix geometry failed. The bounded padding repair passes56geometry cells; current after captures and fresh215cell mobile audit remain required before release. Earlier interrupted117/215mobile run is not complete evidence.
+
+
+<!-- S404-final-release-acceptance -->
+### S404 static served-surface acceptance
+
+Full production a569b1ed3df3abb738193c24d93da6b7a4832cab accepted by workflow40435379890 and provider deployment89587749-d897-4033-b457-52ec2b56c93e. Current source547/547 and hosted3/3; staging11/11 and68/68 critical leaves; full static readback3607/3607 (3597 byte-identical,10 verified redirects), zero differences/unread. All5GitHub publishers and the owned nightly art task restored to their original states; uptime remained active. Ark cargo01K5THM0JDA067EE2251D9E1E0 sent; recipient adoption unverified. SIL939/1000 unchanged;2selected outcomes. No field/conversion/token gain claimed; existing independent identity/provider and field-vitals limitations remain.
+
+The static contract covers every resource selected by the committed positive deployment manifest, including unchanged binaries. Pages control files are provider configuration, and api/build-sha.json is a deployment stamp verified separately on both public origins. This does not claim acceptance of unrelated provider/identity journeys or field-performance gains.

@@ -62,3 +62,11 @@ CDR reviewed — no new creative direction. SIL939/1000 unchanged; velocity1.
 ### S404 rendered release correction
 
 S404 release pixel review found the fixed page-status ring crossing the News mobile kicker. Reserve54px inline-end clearance only on mobile article kickers. Existing44px status target remains visible and functional. Actual Chromium text-range geometry reproduced pre-fix collision and passes56theme/width/article cells after the fix; existing article CSS cases2/2 pass. Native shell assets and208HTML references carry the repair. Before42-view corpus retained with one defect; after42-view inspection and full release remain tracked in docs/RELEASE_S404.json. The original audit and secondary clearance audit are both part of S404.
+
+
+<!-- S404-final-release-acceptance -->
+### S404 final release acceptance
+
+Full production a569b1ed3df3abb738193c24d93da6b7a4832cab accepted by workflow40435379890 and provider deployment89587749-d897-4033-b457-52ec2b56c93e. Current source547/547 and hosted3/3; staging11/11 and68/68 critical leaves; full static readback3607/3607 (3597 byte-identical,10 verified redirects), zero differences/unread. All5GitHub publishers and the owned nightly art task restored to their original states; uptime remained active. Ark cargo01K5THM0JDA067EE2251D9E1E0 sent; recipient adoption unverified. SIL939/1000 unchanged;2selected outcomes. No field/conversion/token gain claimed; existing independent identity/provider and field-vitals limitations remain.
+
+Authoritative closing evidence: docs/RELEASE_S404.json. The dated served audit is an implementation checkpoint; this ledger records final production acceptance.

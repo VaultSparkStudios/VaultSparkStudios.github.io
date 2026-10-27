@@ -5,16 +5,15 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Complete asset verification and mobile News clearance locally verified; full release       ║
-║    checks in progress.                                                                        ║
+║    Complete asset verification and clearer mobile News are live.                              ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     █████░░░░░   50/100                                                       ║
 ║  ECOSYSTEM IMPACT   █░░░░░░░░░   10/100                                                       ║
 ║  SIL DELTA          939 → 939  (+0)                                                           ║
-║  LOCAL PROOF        3binary cases ·56geometry cells ·42reviewed after captures                ║
-║  SCAFFOLD           Wave1 done ·Wave2 done ·Wave3 in progress ·Wave4 pending                  ║
-║  DEPLOYMENT         Pending; authoritative ledger docs/RELEASE_S404.json                      ║
-║  HONESTY            No field/conversion/token gain claimed; existing independent holds retained  ║
+║  SOURCE / BROWSER   547/547 source ·215/215 mobile ·7themes desktop/mobile reviewed           ║
+║  RELEASE            Hosted3/3 ·staging11/11 ·3607/3607 all-served ·zero differences           ║
+║  PUBLISHERS         All6 original states restored; uptime active                              ║
+║  HONESTY            939→939 ·2selected outcomes ·existing independent limitations retained    ║
 ║                                                                                               ║
 ╚═════════════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -23,18 +22,17 @@
 
   [#1]  complete-served-asset-parity                              PROJ 6  ·  ECOS 1
          ── observability-honesty ───────────────────────────────────────────────────────────
-         The native release tool can now verify every static asset from the compared commit
-         deployment manifest, including binary images and fonts. A single Git object
-         inventory removes per-file process overhead. Independent review and actual HTTP
-         fixtures passed; full production acceptance remains pending.
+         Release verification now compares every static resource selected by the candidate
+         deployment manifest, including unchanged images and fonts. Production byte readback
+         passed after exact source, staging and hosted checks.
          → docs/AUDIT_2026-10-26-S404.json; docs/RELEASE_S404.json
 
   [#2]  news-kicker-sigil-clearance                               PROJ 4  ·  ECOS 1
          ── ui-ux-feedback ──────────────────────────────────────────────────────────────────
-         Actual release pixel review found a status marker crossing News kicker text. Mobile
-         inline clearance fixes it while retaining the status target and desktop
-         layout.56rendered geometry cells and42reviewed after viewports pass.
-         → docs/AUDIT_2026-10-26-S404-clearance.json; docs/S404_visual-acceptance.json
+         Mobile News kicker text now clears the fixed status target. All seven themes pass
+         the reviewed desktop and mobile states, with current geometry and mobile-runtime
+         checks.
+         → docs/S404_visual-current-acceptance.json; docs/RELEASE_S404.json
 
   ───────────────────────────────────────────────────────────────────────────────────────────
 
@@ -46,7 +44,7 @@
     (none)
 
   ACTION GATE
-    Existing authorization covers main publication and full deployment; current release checks remain pending.
+    Authorized full production verified. Publishers restored; final evidence-only remote check precedes native goal completion.
 
 ```
 

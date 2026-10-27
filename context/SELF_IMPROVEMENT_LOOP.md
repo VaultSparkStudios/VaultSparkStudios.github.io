@@ -2054,3 +2054,11 @@ Evidence: fresh typed premise2/2, actual new binary cases3/3, independent review
 ### S404 bounded release correction
 
 S404 release pixel review found the fixed page-status ring crossing the News mobile kicker. Reserve54px inline-end clearance only on mobile article kickers. Existing44px status target remains visible and functional. Actual Chromium text-range geometry reproduced pre-fix collision and passes56theme/width/article cells after the fix; existing article CSS cases2/2 pass. Native shell assets and208HTML references carry the repair. Local velocity2outcomes; SIL939/1000 unchanged. Full release intent remains pending in docs/RELEASE_S404.json; earlier interrupted mobile audit117/215was stopped because this observed source correction required a new current full run, not treated as passing.
+
+
+<!-- S404-final-release-acceptance -->
+### S404 final acceptance addendum
+
+Full production a569b1ed3df3abb738193c24d93da6b7a4832cab accepted by workflow40435379890 and provider deployment89587749-d897-4033-b457-52ec2b56c93e. Current source547/547 and hosted3/3; staging11/11 and68/68 critical leaves; full static readback3607/3607 (3597 byte-identical,10 verified redirects), zero differences/unread. All5GitHub publishers and the owned nightly art task restored to their original states; uptime remained active. Ark cargo01K5THM0JDA067EE2251D9E1E0 sent; recipient adoption unverified. SIL939/1000 unchanged;2selected outcomes. No field/conversion/token gain claimed; existing independent identity/provider and field-vitals limitations remain.
+
+The rolling session/score header and both future unselected task rows remain the same.

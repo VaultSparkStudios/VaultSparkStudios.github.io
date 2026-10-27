@@ -1,0 +1,14 @@
+{
+  "session": 404,
+  "candidate": "a569b1ed3df3abb738193c24d93da6b7a4832cab",
+  "state": "checker-assumption-rejected",
+  "finding": "The extra article assertion incorrectly required both the article bundle and the Desk-page bundle on article pages.",
+  "actualCandidateStyles": [
+    "../../../assets/style.shell-dafcbbf695.css",
+    "/assets/news-article.shell-ec97fc326d.css",
+    "/assets/desk-comments.css"
+  ],
+  "repair": "Compare the complete stylesheet href list of each served article with its exact committed candidate HTML; retain the repaired article-bundle assertion. No site or gate threshold changed.",
+  "independentEvidence": "Native all-served readback passed3607/3607 with zero differences/unread, including the article HTML.",
+  "supersedingAcceptance": "docs/S404_production-readback.json"
+}

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "session": 404,
-  "state": "corrected-source-staging-accepted-hosted-and-production-pending",
-  "releaseAccepted": false,
+  "state": "complete",
+  "releaseAccepted": true,
   "goal": {
     "threadId": "01a17a47-2667-73b1-b1d3-50bf728ec71a",
     "createdAt": 1793052877
@@ -19,28 +19,17 @@
     {
       "id": 2,
       "state": "complete",
-      "outcome": "Both selected L2 outcomes locally verified: complete manifest-based native parity with efficient Git object hashing; mobile News kicker clearance with56geometry cells and42individually reviewed after captures. Independent implementation reviews pass."
+      "outcome": "Both selected L2 outcomes implemented, independently reviewed and released: complete manifest-served static asset verification and mobile News kicker clearance."
     },
     {
       "id": 3,
-      "state": "in-progress",
-      "outcome": "Full current source/browser/staging/candidate/production acceptance pending.",
-      "verified": [
-        "Current complete547/547source996958387420ca437051d322",
-        "Current215/215mobile",
-        "Selected News56reviewed before cadence-only change; current focused cadence28before/after reviewed plus14identicalfinalrecaptures",
-        "Actual full corrected source staging and canonical11/11ceremony"
-      ],
-      "remaining": [
-        "Exact-candidate staging readback",
-        "Remote publication and3exact required hosted checks",
-        "Normal full production and complete all-served byte readback"
-      ]
+      "state": "complete",
+      "outcome": "Current547/547source,215/215mobile, reviewed7theme desktop/mobile pixels, full corrected staging11/11 and68/68, exact required hosted3/3, actual normal full production and complete all-served readback accepted."
     },
     {
       "id": 4,
-      "state": "pending",
-      "outcome": "Canonical closeout, publication, Ark and native completion."
+      "state": "complete",
+      "outcome": "Canonical closeout completed; publisher states restored and verified; Ark summary sent. Final nonserved proof publication and remote reachability are checked before native goal completion."
     }
   ],
   "localAcceptance": {
@@ -134,7 +123,7 @@
     "artifactRoot": "8dee8717d2830f424c0d915041f6b28d89214f6536883a4faf6f06f3bf1eb1e6",
     "receiptId": "29e14665ea723bd6da79431b",
     "steps": 11,
-    "currentness": "pending exact candidate readback"
+    "currentness": "docs/S404_staging-currentness.json"
   },
   "observationMerge": {
     "commit": "824c2ae75c",
@@ -152,9 +141,54 @@
     "currentVisual": "docs/S404_visual-current-acceptance.json",
     "mobile": "docs/S404_mobile-acceptance.json",
     "mobilePassed": 215,
-    "source": "passed new complete547run",
-    "staging": "passed actual complete corrected source deployment and canonical11/11ceremony",
+    "source": "passed current547/547",
+    "staging": "passed actual complete corrected source deployment",
     "rejectedPartialCapture": "docs/S404_rollover-visibility-partial.json",
     "sourceBefore": "docs/S404_source-before-rollover.json"
+  },
+  "acceptedAt": "2026-10-27T02:05:31.327Z",
+  "productionCandidate": "a569b1ed3df3abb738193c24d93da6b7a4832cab",
+  "productionTag": "s404-release-20261027-a569b1ed3d",
+  "production": {
+    "candidate": "a569b1ed3df3abb738193c24d93da6b7a4832cab",
+    "tag": "s404-release-20261027-a569b1ed3d",
+    "workflow": "docs/S404_production-workflow.json",
+    "actualSteps": "docs/S404_production-steps.json",
+    "provider": "docs/S404_provider-identity.json",
+    "readback": "docs/S404_production-readback.json",
+    "requiredHosted": "docs/S404_required-candidate.json",
+    "servedParity": "docs/S404_served-parity.json",
+    "scope": "all-served",
+    "checked": 3607,
+    "expected": 3607,
+    "identical": 3597,
+    "redirected": 10,
+    "differ": 0,
+    "unread": 0,
+    "providerDeploymentId": "89587749-d897-4033-b457-52ec2b56c93e"
+  },
+  "publisherRestoration": {
+    "evidence": "docs/S404_publisher-window.json",
+    "githubWorkflows": 5,
+    "localArtTask": 1,
+    "originalStatesVerified": true,
+    "uptimeMonitoringActive": true
+  },
+  "ark": {
+    "evidence": "docs/S404_ark-summary.json",
+    "cargoId": "01K5THM0JDA067EE2251D9E1E0",
+    "state": "sent",
+    "recipientAdoption": "unverified"
+  },
+  "finalPublication": {
+    "kind": "nonserved-evidence-only",
+    "productionCandidate": "a569b1ed3df3abb738193c24d93da6b7a4832cab",
+    "proofCommit": "The Git commit publishing this ledger; no self-referential SHA is embedded.",
+    "constraints": [
+      "No served paths or frozen source/projection inputs may be staged.",
+      "Remote reachability, own process hygiene and clean/owned working state checked before native goal completion."
+    ],
+    "postCandidateAutomation": "docs/S404_release-boundary.json",
+    "acceptanceScope": "Pinned production candidate a569b1ed3df3abb738193c24d93da6b7a4832cab; later automated monitoring/display projections are separate from this accepted release. Own final closeout changes zero served paths."
   }
 }

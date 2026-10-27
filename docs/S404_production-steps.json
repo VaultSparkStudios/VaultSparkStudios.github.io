@@ -1,0 +1,57 @@
+{
+  "session": 404,
+  "observedAt": "2026-10-27T02:03:15.729Z",
+  "candidate": "a569b1ed3df3abb738193c24d93da6b7a4832cab",
+  "runId": 40435379890,
+  "normalFull": true,
+  "steps": [
+    {
+      "name": "Run canonical release ceremony",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-10-27T01:57:27Z",
+      "completed_at": "2026-10-27T01:58:39Z"
+    },
+    {
+      "name": "Build clean dist (git-tracked files only)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15,
+      "started_at": "2026-10-27T01:58:39Z",
+      "completed_at": "2026-10-27T01:58:53Z"
+    },
+    {
+      "name": "Stamp honest deployed SHA into build-sha.json",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 16,
+      "started_at": "2026-10-27T01:58:53Z",
+      "completed_at": "2026-10-27T01:58:53Z"
+    },
+    {
+      "name": "Deploy to Cloudflare Pages",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 19,
+      "started_at": "2026-10-27T01:58:53Z",
+      "completed_at": "2026-10-27T01:59:06Z"
+    },
+    {
+      "name": "Purge edge HTML cache",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 20,
+      "started_at": "2026-10-27T01:59:06Z",
+      "completed_at": "2026-10-27T01:59:06Z"
+    },
+    {
+      "name": "Post-purge edge liveness check",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 22,
+      "started_at": "2026-10-27T01:59:06Z",
+      "completed_at": "2026-10-27T01:59:09Z"
+    }
+  ]
+}

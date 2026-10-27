@@ -179,7 +179,7 @@
       "innovation": 4,
       "effortHours": 3,
       "priority": 13.78,
-      "status": "pending",
+      "status": "implemented",
       "selectedDepth": "L2",
       "why": "The native CLI only enumerates TEXT_EXT. Recent releases separately compare changed images, leaving unchanged binary assets and fonts outside measured coverage.",
       "recipe": "Extend the existing byte comparator with an explicit all-served scope derived from the compared commit positive deployment manifest. Preserve text default compatibility, exclude provider control/stamp files, report exact scope, and verify binary mismatches, missing assets, committed inventory and invalid admission through actual HTTP/CLI fixtures.",
@@ -224,8 +224,19 @@
           "at": "2026-10-26T22:28:05.198Z",
           "status": "implemented",
           "note": "New complete inventory and binary hashing fixtures3/3 pass; independent review round2 approved after2 findings corrected. Native parity19/19 and prune44/44 self-tests pass. Full release acceptance pending, docs/RELEASE_S404.json."
+        },
+        {
+          "at": "2026-10-27T02:05:31.327Z",
+          "status": "implemented",
+          "note": "Exact current source, staging, hosted3/3, normal full production and complete all-served readback accepted; docs/RELEASE_S404.json."
         }
-      ]
+      ],
+      "releaseAcceptance": {
+        "state": "verified",
+        "at": "2026-10-27T02:05:31.327Z",
+        "candidate": "a569b1ed3df3abb738193c24d93da6b7a4832cab",
+        "ledger": "docs/RELEASE_S404.json"
+      }
     }
   ],
   "research": {
