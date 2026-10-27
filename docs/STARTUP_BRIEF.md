@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-26 (Session 404 closeout) -->
+<!-- generated-at: 2026-10-27 (Session 404 closeout) -->
 <!-- semantic-freshness: hash=d3ee66bfca199a5c next=405 silSession=404 silScore=939 handoff=404 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 404 closeout · 2026-10-26.
+> **Fast-boot brief** — generated at Session 404 closeout · 2026-10-27.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,7 +15,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 405 · 2026-10-26 · FOUNDER MODE                         ║
+║  Session 405 · 2026-10-27 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
 ║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2→                          ║
-║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
+║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest…   ║
 ║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -76,27 +76,27 @@
 ║  ✓  Tests         547/547 passing (2026-10-26)                   ║
 ║  ✓  Velocity      2 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ✓  Context age   1d                                             ║
+║  ✓  Context age   2d                                             ║
 ║  ✓  IGNIS         45412 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — selected release verified;…           ║
-║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
+║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.174  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  2d old (2026-10-24)                            ║
+║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
-║  ✓  Codex trust   trusted project active                         ║
+║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
+║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  4/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    64d · Authorize or decline immutable warm-origin migrati      ║
-║    64d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
+║    65d · Authorize or decline immutable warm-origin migrati      ║
+║    65d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -123,6 +123,9 @@
 ║   96  [PRODUCT]      Consider response-body streaming only if m  ║
 ║        Consider response-body streaming only if measured remote  ║
 ║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   93  [PRODUCT]      Consider native positive-manifest text par  ║
 ║        Consider native positive-manifest text parity as a separ  ║
 ║                                                                  ║
@@ -132,14 +135,11 @@
 ║   87  [PRODUCT]      Consider per-member byte verification only  ║
 ║        Consider per-member byte verification only if source mut  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Coordinate an evidence-backed distinction   ║
-║        Coordinate an evidence-backed distinction between format  ║
-║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ```
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 404 closeout · 2026-10-26*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 404 closeout · 2026-10-27*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*
