@@ -1,0 +1,24 @@
+{
+  "session": 405,
+  "observedAt": "2026-10-27T07:01:28.533Z",
+  "action": "routine full production promotion",
+  "candidate": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+  "state": "passed",
+  "source": "docs/S405_full-source-acceptance.json",
+  "hosted": "docs/S405_hosted-checks.json",
+  "staging": "docs/S405_staging-currentness.json",
+  "ceremony": "docs/S405_staging-ceremony.json",
+  "secrets": {
+    "settingsFindings": 0,
+    "stagedScanFindings": 0,
+    "deployCapabilitiesReady": true,
+    "advisoryGatewayLimitations": "Unchanged provider/identity capabilities and field-vitals holds remain separate; no identity flow changed."
+  },
+  "authorization": "Existing founder request explicitly authorizes normal main push and full deploy.",
+  "rollback": {
+    "previousFullProductionCandidate": "a569b1ed3df3abb738193c24d93da6b7a4832cab",
+    "stagingSnapshot": "/opt/studio/staging/website/.rollback/20261027062730",
+    "method": "Redeploy the retained prior full candidate; staging snapshot is independently retained by native deploy."
+  },
+  "scope": "Current routine promotion; no lifecycle, auth, pricing or public-launch change."
+}

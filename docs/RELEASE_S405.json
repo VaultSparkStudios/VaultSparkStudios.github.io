@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "session": 405,
-  "state": "staging-ceremony-passed-candidate-publication-pending",
-  "releaseAccepted": false,
+  "state": "complete",
+  "releaseAccepted": true,
   "goal": {
     "threadId": "01a17b3d-da8d-7a43-84d0-dbe8ca8ad147",
     "createdAt": 1793069028
@@ -18,17 +18,17 @@
     {
       "id": 2,
       "state": "complete",
-      "outcome": "Manifest-based text scope implemented; focused4/4 and native19/19 passed; independent review approved zero findings."
+      "outcome": "Both selected L2 outcomes independently reviewed and released: committed-manifest served-text scope and receipt-only browser isolation."
     },
     {
       "id": 3,
-      "state": "in-progress",
-      "outcome": "Current full source/staging/hosted/production required."
+      "state": "complete",
+      "outcome": "Both complete547/547source passes, mobile215/215,28 manually reviewed captures, full staging11/11 and68/68, hosted3/3, actual full production and all-served plus served-text readback accepted."
     },
     {
       "id": 4,
-      "state": "in-progress",
-      "outcome": "Canonical writeback, local autopilot, Ark and final remote completion required."
+      "state": "complete",
+      "outcome": "Canonical writebacks/native autopilot and independent final review passed; all publisher states restored, signed Ark impact sent. Final nonserved proof publication is this transaction; remote reachability is checked before native completion."
     }
   ],
   "limitations": [
@@ -87,11 +87,11 @@
   "additionalOutcome": {
     "slug": "receipt-only-browser-isolation",
     "audit": "docs/AUDIT_2026-10-27-S405-capture-startup.json",
-    "state": "locally-accepted",
+    "state": "released",
     "tests": 2,
     "captures": 28,
     "review": "PASS0",
-    "releaseAccepted": false
+    "releaseAccepted": true
   },
   "localSource": {
     "evidence": "docs/S405_full-source-acceptance.json",
@@ -106,7 +106,7 @@
     "exit": 0,
     "head": "9a50aeca5df09408eeb50338c3f29c71322732b3",
     "log": ".cache/logs/S405-closeout-autopilot-retry3.log",
-    "scope": "Canonical local closeout gates and commits only; staging/push/full production still required."
+    "scope": "Canonical local closeout gates and commits accepted; later staging, hosted and production acceptance recorded below."
   },
   "publisherWindow": "docs/S405_publisher-window.json",
   "staging": {
@@ -118,6 +118,71 @@
     "sourceFingerprint": "e52ce81a7adb46229b49ba7c",
     "artifactRoot": "bcf917aceeccc61e9733f6e79255bb83f0142b5d30296eb1ef32e12a1a02f79b",
     "files": 14775,
-    "currentness": "Exact final candidate readback still required before publication."
+    "currentness": "docs/S405_staging-currentness.json",
+    "finalCandidate": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+    "criticalMatched": 68
+  },
+  "verifiedAt": "2026-10-27T07:09:21.510Z",
+  "productionCandidate": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+  "hosted": {
+    "evidence": "docs/S405_hosted-checks.json",
+    "lane": "hosted-exact-sha",
+    "passed": 3,
+    "total": 3,
+    "candidate": "c06161b6aa3bd398bc7ced0a42d88979eb60697f"
+  },
+  "production": {
+    "identity": "docs/S405_production-identity.json",
+    "gate": "docs/S405_release-gate.json",
+    "candidate": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+    "runId": 40464609207,
+    "providerDeploymentId": "ee88c675-e2cb-4989-9e95-6bdf1dd83190",
+    "servedParity": "docs/S405_served-parity.json",
+    "scope": "all-served",
+    "checked": 3608,
+    "expected": 3608,
+    "identical": 3598,
+    "redirected": 10,
+    "differ": 0,
+    "unread": 0,
+    "coverageComplete": true,
+    "servedText": {
+      "evidence": "docs/S405_served-text-parity.json",
+      "checked": 1332,
+      "expected": 1332,
+      "identical": 1322,
+      "redirected": 10,
+      "differ": 0,
+      "unread": 0,
+      "coverageComplete": true
+    }
+  },
+  "publisherRestoration": {
+    "evidence": "docs/S405_publisher-window.json",
+    "nightly": "docs/S405_nightly-window.json",
+    "githubWorkflows": 5,
+    "localArtTask": 1,
+    "originalStatesVerified": true,
+    "uptimeMonitoringActive": true
+  },
+  "closeoutRecordedAt": "2026-10-27T07:14:31.787Z",
+  "ark": {
+    "evidence": "docs/S405_ark-summary.json",
+    "cargoId": "01K5U33N4H71F9ABC181047425",
+    "state": "sent",
+    "recipientAdoption": "unverified"
+  },
+  "finalReview": "docs/S405_final-review.json",
+  "finalPublication": {
+    "kind": "nonserved-evidence-only",
+    "productionCandidate": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+    "observationBase": "23a8d6f8b71d9a0a6787da9d98210b250ddd1b05",
+    "proofCommit": "The Git commit containing this ledger; no self-referential SHA is embedded.",
+    "postCandidateAutomation": "docs/S405_release-boundary.json",
+    "constraints": [
+      "No owned served path or frozen source input may be staged.",
+      "Normal push and remote reachability verified before native goal completion."
+    ],
+    "acceptanceScope": "Pinned full production candidate c06161b6aa3bd398bc7ced0a42d88979eb60697f; later automated monitoring/CI projections remain separate. Final owned closeout changes zero served paths."
   }
 }

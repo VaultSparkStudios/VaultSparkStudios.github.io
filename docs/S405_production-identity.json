@@ -1,0 +1,166 @@
+{
+  "session": 405,
+  "observedAt": "2026-10-27T07:06:04.211Z",
+  "candidate": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+  "run": {
+    "id": 40464609207,
+    "head_sha": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+    "event": "workflow_dispatch",
+    "status": "completed",
+    "conclusion": "success",
+    "path": ".github/workflows/pages-deploy.yml",
+    "html_url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/40464609207",
+    "created_at": "2026-10-27T07:01:35Z",
+    "updated_at": "2026-10-27T07:05:50Z",
+    "run_attempt": 1
+  },
+  "steps": [
+    {
+      "name": "Run canonical release ceremony",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-10-27T07:03:25Z",
+      "completed_at": "2026-10-27T07:04:21Z"
+    },
+    {
+      "name": "Build clean dist (git-tracked files only)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15,
+      "started_at": "2026-10-27T07:04:21Z",
+      "completed_at": "2026-10-27T07:04:37Z"
+    },
+    {
+      "name": "Stamp honest deployed SHA into build-sha.json",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 16,
+      "started_at": "2026-10-27T07:04:37Z",
+      "completed_at": "2026-10-27T07:04:37Z"
+    },
+    {
+      "name": "Deploy to Cloudflare Pages",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 19,
+      "started_at": "2026-10-27T07:04:37Z",
+      "completed_at": "2026-10-27T07:04:46Z"
+    },
+    {
+      "name": "Purge edge HTML cache",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 20,
+      "started_at": "2026-10-27T07:04:46Z",
+      "completed_at": "2026-10-27T07:04:46Z"
+    },
+    {
+      "name": "Post-purge edge liveness check",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 22,
+      "started_at": "2026-10-27T07:04:46Z",
+      "completed_at": "2026-10-27T07:04:49Z"
+    }
+  ],
+  "provider": {
+    "id": "ee88c675-e2cb-4989-9e95-6bdf1dd83190",
+    "url": "https://ee88c675.vaultsparkstudios-website.pages.dev",
+    "environment": "production",
+    "commit": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+    "branch": "main",
+    "latestStage": {
+      "name": "deploy",
+      "started_on": null,
+      "ended_on": "2026-10-27T07:04:45.64037Z",
+      "status": "success"
+    }
+  },
+  "stamps": [
+    {
+      "origin": "https://ee88c675.vaultsparkstudios-website.pages.dev",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-27",
+        "sha": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+        "builtAt": "2026-10-27T07:04:37.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-27",
+        "sha": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+        "builtAt": "2026-10-27T07:04:37.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-27",
+        "sha": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+        "builtAt": "2026-10-27T07:04:37.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    }
+  ],
+  "reads": [
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "agents.json",
+      "exact": true,
+      "sha256": "9e9c551d3c49e3babf2a241fac4b5c4f614c497334cdfba15aec8342ead8f205"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/public-status.json",
+      "exact": true,
+      "sha256": "2daf3cbe7d20239fd68912cd15ce62bf3a908a87ba9d73e5b8d66d8cefe2e0e9"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "audits/2026-10-27.json",
+      "exact": true,
+      "sha256": "9f0cbf40a0251c76f6dbd2e87be84cc776a58248df3d023ed5b0f8a063b14d8e"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "agents.json",
+      "exact": true,
+      "sha256": "9e9c551d3c49e3babf2a241fac4b5c4f614c497334cdfba15aec8342ead8f205"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/public-status.json",
+      "exact": true,
+      "sha256": "2daf3cbe7d20239fd68912cd15ce62bf3a908a87ba9d73e5b8d66d8cefe2e0e9"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "audits/2026-10-27.json",
+      "exact": true,
+      "sha256": "9f0cbf40a0251c76f6dbd2e87be84cc776a58248df3d023ed5b0f8a063b14d8e"
+    }
+  ],
+  "scope": "Actual normal full deploy steps, provider identity, immutable and both public stamps and selected exact public JSON bytes. Complete all-served static readback is separate."
+}

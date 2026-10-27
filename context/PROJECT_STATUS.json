@@ -42,13 +42,13 @@
       "url": "https://vaultsparkstudios.com/",
       "type": "production",
       "status": "green",
-      "note": "S403 release and closing evidence: docs/RELEASE_S403.json. Existing independent holds remain separate."
+      "note": "S405 exact-candidate accepted release: docs/RELEASE_S405.json; independent identity and field-vitals holds remain separate."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
       "type": "staging",
       "status": "green",
-      "note": "S403 release and closing evidence: docs/RELEASE_S403.json. Existing independent holds remain separate."
+      "note": "S405 exact-candidate accepted release: docs/RELEASE_S405.json; independent identity and field-vitals holds remain separate."
     },
     {
       "url": "https://vaultsparkstudios.com/?nav=sheet",
@@ -70,7 +70,7 @@
       "url": "https://website.staging.vaultsparkstudios.com/status/",
       "type": "staging",
       "status": "green",
-      "note": "S403 release and closing evidence: docs/RELEASE_S403.json. Existing independent holds remain separate."
+      "note": "S405 exact-candidate accepted release: docs/RELEASE_S405.json; independent identity and field-vitals holds remain separate."
     },
     {
       "command": "npm run build:check",
@@ -301,12 +301,12 @@
     "receipt": "docs/RELEASE_S400.json",
     "workflowRun": 40043209707
   },
-  "truthAuditSummary": "S404 manifest-based asset parity is locally verified; current full source/browser/staging/hosted/production acceptance remains pending in docs/RELEASE_S404.json. Prior S403 evidence is historical, not completion of this goal.",
+  "truthAuditSummary": "S405 two selected verifier repairs fully released; docs/RELEASE_S405.json is authoritative. Independent identity/provider and field-vitals holds remain.",
   "currentVerification": {
-    "session": 403,
+    "session": 405,
     "state": "release-verified",
-    "source": "docs/RELEASE_S403.json",
-    "lastCompleteTestsSession": 403
+    "source": "docs/RELEASE_S405.json",
+    "lastCompleteTestsSession": 405
   },
   "metadataPublication": {
     "session": 400,
@@ -317,26 +317,26 @@
     "scope": "Closing metadata transaction; production acceptance remains pinned"
   },
   "lastCompletedArc": {
-    "session": 401,
+    "session": 405,
     "phase": "complete-in-closing-publication-transaction",
-    "goalId": "01a16bcf-5329-7ce3-954f-c816bc504446",
-    "goalCreatedAt": 1792810128,
-    "audit": "docs/AUDIT_2026-10-24-S401.json",
-    "releaseEvidence": "docs/RELEASE_S401.json",
-    "candidate": "7348fc96f556d3223988eee1aa0b27a8678db483",
-    "releaseVerifiedAt": "2026-10-24T05:40:50.178Z",
-    "detail": "Selected archive outcome fully released; canonical closeout passed; verify normal remote publication before native goal completion",
-    "completedAt": "2026-10-24T06:15:54.641Z"
+    "goalId": "01a17b3d-da8d-7a43-84d0-dbe8ca8ad147",
+    "goalCreatedAt": 1793069028,
+    "audit": "docs/AUDIT_2026-10-27-S405.json",
+    "releaseEvidence": "docs/RELEASE_S405.json",
+    "candidate": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+    "releaseVerifiedAt": "2026-10-27T07:09:21.510Z",
+    "detail": "Both selected outcomes fully released; normal final proof publication and remote reachability checked before native completion.",
+    "completedAt": "2026-10-27T07:14:31.787Z"
   },
   "velocity": 2,
   "arcProgress": {
-    "session": 403,
-    "phase": "release-accepted-publication-pending",
-    "goalId": "01a173fb-dc92-75d0-9489-6832e36263f8",
-    "goalCreatedAt": 1792947304,
-    "audit": "docs/AUDIT_2026-10-25-S403.json",
-    "releaseEvidence": "docs/RELEASE_S403.json",
-    "candidate": "95cf0ccbada89ba1e7365dd00caf3bcfdac22ed6"
+    "session": 405,
+    "phase": "complete-in-closing-publication-transaction",
+    "goalId": "01a17b3d-da8d-7a43-84d0-dbe8ca8ad147",
+    "goalCreatedAt": 1793069028,
+    "audit": "docs/AUDIT_2026-10-27-S405.json",
+    "releaseEvidence": "docs/RELEASE_S405.json",
+    "candidate": "c06161b6aa3bd398bc7ced0a42d88979eb60697f"
   },
   "ignisLastScored": "2026-10-26",
   "historicalTests": {
@@ -347,7 +347,7 @@
     "testsSourceFingerprint": "f63c114996ab8e31ec84f7e0",
     "evidence": "docs/S403_full-source-acceptance.json"
   },
-  "testsSession": 400,
+  "testsSession": 405,
   "testsTotal": 547,
   "testsPassing": 547,
   "testsFailed": 0,
@@ -363,7 +363,7 @@
     "note": "Closing observations recorded; acceptance scope unchanged"
   },
   "nextMilestoneTracking": {
-    "source": "docs/RELEASE_S404.json",
+    "source": "docs/RELEASE_S405.json",
     "stateField": "state",
     "acceptanceField": "releaseAccepted",
     "kind": "evidence-reference",

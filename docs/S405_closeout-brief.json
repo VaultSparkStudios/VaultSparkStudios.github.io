@@ -4,7 +4,7 @@
   "date": "2026-10-27",
   "agent": "codex",
   "repo": "vaultsparkstudios-website",
-  "headline": "Manifest text verification locally accepted; full release remains pending.",
+  "headline": "Both verification repairs fully released; exact candidate and complete live readback accepted.",
   "silDelta": {
     "previous": 939,
     "current": 939
@@ -17,8 +17,18 @@
       "axis": "observability-honesty",
       "projectImpact": 5,
       "ecosystemImpact": 1,
-      "insight": "Public portfolio and audit JSON can now be selected through the committed deployment manifest without downloading binary assets. The legacy default stays compatible. Actual HTTP regressions and independent review passed; full production acceptance remains pending.",
+      "insight": "Committed-manifest known-text scope now covers public audit and portfolio JSON; legacy behavior preserved. Complete live served-text1332/1332 and all-served3608/3608 accepted with zero differences or unread files.",
       "evidence": "docs/RELEASE_S405.json"
+    },
+    {
+      "id": "#2",
+      "slug": "receipt-only-browser-isolation",
+      "title": "Receipt-only validation avoids browser loading",
+      "axis": "speed-organization-efficiency",
+      "projectImpact": 5,
+      "ecosystemImpact": 1,
+      "insight": "Observed15second timeout repaired through lazy browser import; deterministic before/after actual CLI tests and normal28-frame capture passed. No timeout increase.",
+      "evidence": "docs/AUDIT_2026-10-27-S405-capture-startup.json"
     }
   ],
   "followUps": [
