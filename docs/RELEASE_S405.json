@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 405,
-  "state": "full-closeout-retry3-running",
+  "state": "local-source-accepted-staging-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a17b3d-da8d-7a43-84d0-dbe8ca8ad147",
@@ -71,7 +71,7 @@
     "mobileCasesPassed": 215,
     "mobileProbes": 215,
     "mobileProbesExpected": 215,
-    "scope": "Current actual browser capture and complete mobile audit; first failed source attempt retained. Full source/staging/hosted/production still required."
+    "scope": "Local actual28 source-bound above-fold views across7themes and desktop/mobile plus complete215case mobile audit. No UI changes selected. Staging and hosted acceptance are scoped separately in this ledger."
   },
   "diagnosticTail": {
     "state": "passed-scoped-only",
@@ -92,5 +92,21 @@
     "captures": 28,
     "review": "PASS0",
     "releaseAccepted": false
-  }
+  },
+  "localSource": {
+    "evidence": "docs/S405_full-source-acceptance.json",
+    "passed": 547,
+    "total": 547,
+    "coverageComplete": true,
+    "sourceFingerprint": "e52ce81a7adb46229b49ba7c",
+    "receiptId": "000c5d827743d0ea6891eb68"
+  },
+  "localAutopilot": {
+    "command": "node scripts/closeout-autopilot.mjs --yes --skip-push",
+    "exit": 0,
+    "head": "9a50aeca5df09408eeb50338c3f29c71322732b3",
+    "log": ".cache/logs/S405-closeout-autopilot-retry3.log",
+    "scope": "Canonical local closeout gates and commits only; staging/push/full production still required."
+  },
+  "publisherWindow": "docs/S405_publisher-window.json"
 }
