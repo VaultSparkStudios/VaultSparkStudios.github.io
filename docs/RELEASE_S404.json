@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 404,
-  "state": "rollover-repaired-current-staging-hosted-pending",
+  "state": "current-rollover-source-and-browser-accepted-staging-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a17a47-2667-73b1-b1d3-50bf728ec71a",
@@ -114,8 +114,8 @@
     "passed": 547,
     "total": 547,
     "coverageComplete": true,
-    "sourceFingerprint": "ffc151f8e35ea3f7331d864f",
-    "receiptId": "7899a9d0dd8165682d1af281"
+    "sourceFingerprint": "996958387420ca437051d322",
+    "receiptId": "7c92daaa159acde022c236a2"
   },
   "localAutopilot": {
     "command": "node scripts/closeout-autopilot.mjs --yes --skip-push",
@@ -145,5 +145,16 @@
     "docs/S404_hosted-attempt1.json"
   ],
   "servedAuditCheckpoint": "audits/2026-10-26.json",
-  "closingPublicationContract": "After exact production acceptance, only nonserved docs/context/logs evidence may change. No served audit or portfolio correction remains deferred."
+  "closingPublicationContract": "Preserve served records, PROJECT_STATUS projection inputs, TASK_BOARD, DECISIONS and existing handoff public bullet projection after final candidate. Final acceptance uses only nonserved docs and prose addenda; no autopilot or broad generators after production.",
+  "rolloverPrerequisite": {
+    "trigger": "Hosted source gate failed News freshness after UTC midnight; native pre-push then correctly rejected stale homepage today copy.",
+    "repair": "Native freshness JSON regeneration and native homepage module builder; today→yesterday only in index.html.",
+    "currentVisual": "docs/S404_visual-current-acceptance.json",
+    "mobile": "docs/S404_mobile-acceptance.json",
+    "mobilePassed": 215,
+    "source": "passed new complete547run",
+    "staging": "pending current7da31f60de9f artifact",
+    "rejectedPartialCapture": "docs/S404_rollover-visibility-partial.json",
+    "sourceBefore": "docs/S404_source-before-rollover.json"
+  }
 }

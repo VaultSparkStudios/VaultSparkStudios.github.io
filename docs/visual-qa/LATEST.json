@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-10-26T22:52:52.608Z",
+  "capturedAt": "2026-10-27T00:48:42.836Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "cde1686b85fd7353a3a741b0db092248e540bad149da792a313cddefaeb67b72",
+    "sha256": "b5ba9f59dd20cc115db1b2ab70d72d24ad82d53b282743b53346a8f9a156ff9a",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -545,9 +545,6 @@
       "data/news-desk/days/2026-08-22.json",
       "data/news-desk/days/2026-08-23.json",
       "index.html",
-      "news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/index.html",
-      "news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/index.html",
-      "news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
       "scripts/capture-theme-matrix.mjs",
@@ -2678,22 +2675,7 @@
       },
       {
         "path": "index.html",
-        "sha256": "01311a001efa779c416c20f17585a3d5a3d47109ee3494468aaac999888daa4d"
-      },
-      {
-        "path": "news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/index.html",
-        "sha256": "a1383b77af0764a21a194cdcc66665b9d9a983653f5fec87f040255ff839516b",
-        "routineRegionSha256": "be7b526977230140635cb459783fd3870ef8205ee1f21d80a05058bf5cf25056"
-      },
-      {
-        "path": "news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/index.html",
-        "sha256": "485ae6e14db5fb0c2293a84ac9f2efc023ab2bae4416c5c482520e750b74ccc6",
-        "routineRegionSha256": "df42d617ec16e69d48789028551020dd86094b4c74299fdf02c31105a1dfacda"
-      },
-      {
-        "path": "news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/index.html",
-        "sha256": "0d963ee934d0058be7ced343ac1980fedd9f3d588010ac5e2ad28e9942169c25",
-        "routineRegionSha256": "9f30926a6b9100c3dd412038de47041c8388248c6a6d83eb478a3fc093e951d7"
+        "sha256": "fa61dfe3d3c8188c59352cb48116caba4ab7aef74f1337b9960019d29435524c"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -2755,16 +2737,13 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "ab04ef1e1d75380929b28963860a68ab6cc68a60ac32676bed45a7642e087c02",
+    "manifestSha256": "2bbad030a9b720185fae645e60afa14463ea023e44efa640c9c2cdfbb8f428bc",
     "candidateSha": "1dec8c19498fa168c88e18376dcd9d1bf64759e6",
-    "root": "8515baf436b9184aed07766ee474de6aededc33415ad37ef02ee5b8eccb533e4"
+    "root": "7da31f60de9fa90d44656f7a01f37c3e53684e975af722ef0f966442d9a69ae6"
   },
   "matrix": {
     "routes": [
-      "/",
-      "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/"
+      "/"
     ],
     "themes": [
       "dark",
@@ -2788,31 +2767,26 @@
       }
     ],
     "states": [
-      "page"
+      "changed-surface"
     ],
-    "expectedCaptures": 56,
-    "completedCaptures": 56
+    "expectedCaptures": 14,
+    "completedCaptures": 14
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 56,
-      "manuallyReviewed": 56,
+      "totalCaptures": 14,
+      "manuallyReviewed": 14,
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "codex-s404_mobile_pixels",
+    "reviewer": "s404_mobile_pixels",
     "findings": [
-      "Individually viewed all28 original after desktop PNGs. Headings, prose and controls remain legible in7themes across home and all3Oct26articles; no horizontal clipping, title/kicker overlap or obscured controls. Visible1366x900viewports only.",
-      "Individually viewed all28 original after mobile PNGs. SpaceX ARGUMENT wraps clear of status marker in all7themes; Anthropic kicker has clean clearance; homepage unchanged. No new visible overlap, horizontal clipping or readability defect. Visible390x844viewports only."
+      "All14final PNG SHA256 identities independently verified against the14individually reviewed AFTER images; identical pixels retain manual approval. Actual finalcapture follows exact source restoration; no timestamp backdating."
     ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
-    "limitation": null,
-    "limitations": [
-      "Visible viewport evidence only; no below-fold, numerical contrast or backend/interaction claim.",
-      "The current285cell mobile runtime matrix and staging/hosted checks are separate requirements."
-    ]
+    "limitation": null
   },
   "captures": [
     {
@@ -2828,79 +2802,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S404-late-home--dark--desktop.png",
-      "sha256": "2c3a6c26bb97b289d43521d154725d317741acf80775fbd24f2cf5ee1bb44ce6",
+      "file": "S404-cadence-final-home--dark--desktop--changed-surface.png",
+      "sha256": "8576653f66f801655359c1b3352a25a8da0b65d56cf44955adaddf387d0475b5",
       "page": "/",
-      "state": "page",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "dark",
-      "observedTheme": {
-        "stored": "dark",
-        "root": "dark",
-        "body": "dark"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-anthropics-claude-ai-model-accessed-georgia-voter-data-in--dark--desktop.png",
-      "sha256": "c0abb51220da03fce46d7807865978685a8d860238341801a6af70b3203f27c3",
-      "page": "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "dark",
-      "observedTheme": {
-        "stored": "dark",
-        "root": "dark",
-        "body": "dark"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-spacex-closes-40-billion-debt-deal-for-ai-chips--dark--desktop.png",
-      "sha256": "08c3971de4df748ded957ebc85b4536299e80b24f6808f6029e514a1ef3779cd",
-      "page": "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "dark",
-      "observedTheme": {
-        "stored": "dark",
-        "root": "dark",
-        "body": "dark"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-anthropic-set-to-make-stock-market-debut-as-questions--dark--desktop.png",
-      "sha256": "5ebd8199deb0774aa2da53d99464efa8f0ec482bfb736c47227308ee13e8e383",
-      "page": "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
+        "reviewer": "s404_mobile_pixels"
       }
     },
     {
@@ -2916,79 +2824,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S404-late-home--light--desktop.png",
-      "sha256": "3c67a96d1648bd184a3347fe4bda01cc9c2f27c0895ab90ecc31d2695039ef21",
+      "file": "S404-cadence-final-home--light--desktop--changed-surface.png",
+      "sha256": "e3f3eddfaac1cfbf9d48e197b1c70218fccda1eb1952654d8a60e9f5be1df215",
       "page": "/",
-      "state": "page",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-anthropics-claude-ai-model-accessed-georgia-voter-data-in--light--desktop.png",
-      "sha256": "c336c4e3c48fd2dfb1fcd17d8b2f89aed41f06ec7c91b3d8e18dbac99e4bce94",
-      "page": "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-spacex-closes-40-billion-debt-deal-for-ai-chips--light--desktop.png",
-      "sha256": "0ea45cdf951489835d6246e73b50782b47dfd40272b02cc65efa3e707f650093",
-      "page": "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-anthropic-set-to-make-stock-market-debut-as-questions--light--desktop.png",
-      "sha256": "13ed40dc14caaa4c84b73726cb968deb21b1c6833c243464f9e42515610aec7b",
-      "page": "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
+        "reviewer": "s404_mobile_pixels"
       }
     },
     {
@@ -3004,79 +2846,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S404-late-home--ambient--desktop.png",
-      "sha256": "cefca03af5596ec2ecfe1d8ee6f0b9fc1ece50076147f3b7559dd62fd5d70a4f",
+      "file": "S404-cadence-final-home--ambient--desktop--changed-surface.png",
+      "sha256": "ae87c5d49b1bf2e479a7e5e39cb42d5805e7b284a94db97186d398982c405114",
       "page": "/",
-      "state": "page",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "ambient",
-      "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient",
-        "body": "ambient"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-anthropics-claude-ai-model-accessed-georgia-voter-data-in--ambient--desktop.png",
-      "sha256": "8a222a3a8c020ba21a4bc4b8f2f2a4aa2f833acbbbef2c56b6152b558db9e47e",
-      "page": "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "ambient",
-      "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient",
-        "body": "ambient"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-spacex-closes-40-billion-debt-deal-for-ai-chips--ambient--desktop.png",
-      "sha256": "bd4a2821fcc9c1f10458add0d681abaf806e353c54dab4c724845ad474b7e085",
-      "page": "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "ambient",
-      "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient",
-        "body": "ambient"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-anthropic-set-to-make-stock-market-debut-as-questions--ambient--desktop.png",
-      "sha256": "cba18aa04dee1b935c833d54b943cdeb53dfce03e892a45d9f63a3031d9a542f",
-      "page": "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
+        "reviewer": "s404_mobile_pixels"
       }
     },
     {
@@ -3092,79 +2868,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S404-late-home--warm--desktop.png",
-      "sha256": "0ede47263a985a94f58b71489898550f6339f829f183550f4d3d3daa26f5304f",
+      "file": "S404-cadence-final-home--warm--desktop--changed-surface.png",
+      "sha256": "f9e3b71a328d52358caa552d44c251e57ff04fa8f275533813186200c8c4e1cb",
       "page": "/",
-      "state": "page",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "warm",
-      "observedTheme": {
-        "stored": "warm",
-        "root": "warm",
-        "body": "warm"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-anthropics-claude-ai-model-accessed-georgia-voter-data-in--warm--desktop.png",
-      "sha256": "3b8258f3e5cf2e52b15a61d167d26aa36d615b7dd583c63e4118e2b1ffc7c3e0",
-      "page": "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "warm",
-      "observedTheme": {
-        "stored": "warm",
-        "root": "warm",
-        "body": "warm"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-spacex-closes-40-billion-debt-deal-for-ai-chips--warm--desktop.png",
-      "sha256": "e4303ef018567882379d84f22e5b48264d42dd8d269998e1d6e1408861220363",
-      "page": "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "warm",
-      "observedTheme": {
-        "stored": "warm",
-        "root": "warm",
-        "body": "warm"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-anthropic-set-to-make-stock-market-debut-as-questions--warm--desktop.png",
-      "sha256": "114758ef595e26c390b3a48adabbd308e10ebb0edce6db464e5a993d758ea746",
-      "page": "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
+        "reviewer": "s404_mobile_pixels"
       }
     },
     {
@@ -3180,79 +2890,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S404-late-home--cool--desktop.png",
-      "sha256": "b9733d520f638b64ec3ff9f6abd533f0b836b949e513578a304da9d5663111e6",
+      "file": "S404-cadence-final-home--cool--desktop--changed-surface.png",
+      "sha256": "5de0ed8b7f4e619c273c83bbbc819dbf8e03df273fe415316268b7db5aa2d859",
       "page": "/",
-      "state": "page",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "cool",
-      "observedTheme": {
-        "stored": "cool",
-        "root": "cool",
-        "body": "cool"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-anthropics-claude-ai-model-accessed-georgia-voter-data-in--cool--desktop.png",
-      "sha256": "1b88519b10d449c4a30537780a525046900ab8ab51fc33adc8cdf52cbde51320",
-      "page": "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "cool",
-      "observedTheme": {
-        "stored": "cool",
-        "root": "cool",
-        "body": "cool"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-spacex-closes-40-billion-debt-deal-for-ai-chips--cool--desktop.png",
-      "sha256": "32cb74f61d4912f9b57aff47bb17c7744d0d869ddb5803553243176feb1c2f42",
-      "page": "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "cool",
-      "observedTheme": {
-        "stored": "cool",
-        "root": "cool",
-        "body": "cool"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-anthropic-set-to-make-stock-market-debut-as-questions--cool--desktop.png",
-      "sha256": "720d74c01cf7e8251073c228611bce1a6617abd691ab8012cb776d00a0ca2dd9",
-      "page": "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
+        "reviewer": "s404_mobile_pixels"
       }
     },
     {
@@ -3268,79 +2912,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S404-late-home--lava--desktop.png",
-      "sha256": "2ebaff0d84d3d0baf3b5ed55a5b8fee6896e99f57ed520ffc345869623f1ebf8",
+      "file": "S404-cadence-final-home--lava--desktop--changed-surface.png",
+      "sha256": "14365419da687ce550ec130b1a8536d381bf65729aed51bf9d614d41ef28c655",
       "page": "/",
-      "state": "page",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "lava",
-      "observedTheme": {
-        "stored": "lava",
-        "root": "lava",
-        "body": "lava"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-anthropics-claude-ai-model-accessed-georgia-voter-data-in--lava--desktop.png",
-      "sha256": "958fde57fba608db907fa4929c4e9bb2ca88301d1318d95a895ce01b83ec7f5d",
-      "page": "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "lava",
-      "observedTheme": {
-        "stored": "lava",
-        "root": "lava",
-        "body": "lava"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-spacex-closes-40-billion-debt-deal-for-ai-chips--lava--desktop.png",
-      "sha256": "2c8f9ee1040527665c369fc984727d50eb94fafc1727818e588f852a2b6de183",
-      "page": "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "lava",
-      "observedTheme": {
-        "stored": "lava",
-        "root": "lava",
-        "body": "lava"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-anthropic-set-to-make-stock-market-debut-as-questions--lava--desktop.png",
-      "sha256": "3b58a9135d1a3b8b5e9b1b003394179afac6460e4eedab305aae30e72416bd23",
-      "page": "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
+        "reviewer": "s404_mobile_pixels"
       }
     },
     {
@@ -3356,79 +2934,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S404-late-home--high-contrast--desktop.png",
-      "sha256": "de8b9fb26b7d9b23e27700ed08269f6585c050146d7f54eab8fe2f86ef8a60b1",
+      "file": "S404-cadence-final-home--high-contrast--desktop--changed-surface.png",
+      "sha256": "16fb7479b45ad23660b98c12c5b78841bfafc96e9dd8e05a30750b1d8252cc4f",
       "page": "/",
-      "state": "page",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "observedTheme": {
-        "stored": "high-contrast",
-        "root": "high-contrast",
-        "body": "high-contrast"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-anthropics-claude-ai-model-accessed-georgia-voter-data-in--high-contrast--desktop.png",
-      "sha256": "e6b4c9cd052f592841655fc14cc3c6450e7042c9e2f783ba814d1db6688fd5cf",
-      "page": "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "observedTheme": {
-        "stored": "high-contrast",
-        "root": "high-contrast",
-        "body": "high-contrast"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-spacex-closes-40-billion-debt-deal-for-ai-chips--high-contrast--desktop.png",
-      "sha256": "62eac73252ab54893f8bae6055ba412246c959b9b21bb8cec082533d2f6416b9",
-      "page": "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "observedTheme": {
-        "stored": "high-contrast",
-        "root": "high-contrast",
-        "body": "high-contrast"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S404-late-news-2026-10-26-anthropic-set-to-make-stock-market-debut-as-questions--high-contrast--desktop.png",
-      "sha256": "75739991f526c70765d395ee62bf4ca250abc526d2962ae978328ad3536eebe6",
-      "page": "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-review_s404"
+        "reviewer": "s404_mobile_pixels"
       }
     },
     {
@@ -3444,79 +2956,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "S404-late-home--dark--mobile.png",
-      "sha256": "bb3b7295771028dd81ee59654eb4d14f3d3efd4e14c7b157d9347333130d6a68",
+      "file": "S404-cadence-final-home--dark--mobile--changed-surface.png",
+      "sha256": "a14239dabe80a9614dccc76cc12dd5c16c2764c7ba576fbd8f515517334768c7",
       "page": "/",
-      "state": "page",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "dark",
-      "observedTheme": {
-        "stored": "dark",
-        "root": "dark",
-        "body": "dark"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-anthropics-claude-ai-model-accessed-georgia-voter-data-in--dark--mobile.png",
-      "sha256": "b5e07eb04e2543ca4b472e15556c94943f3b91c03c052324c6a03601237671b6",
-      "page": "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "dark",
-      "observedTheme": {
-        "stored": "dark",
-        "root": "dark",
-        "body": "dark"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-spacex-closes-40-billion-debt-deal-for-ai-chips--dark--mobile.png",
-      "sha256": "1271b81f5123ab559eb135a950ab2cfef93240a9d3d23f1b3941ba6d38a13ef0",
-      "page": "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "dark",
-      "observedTheme": {
-        "stored": "dark",
-        "root": "dark",
-        "body": "dark"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-anthropic-set-to-make-stock-market-debut-as-questions--dark--mobile.png",
-      "sha256": "b43fd4d0849b6ca4a8daf5c71dcd0b721a9cd41ee51bc1544cc26ce630ff189d",
-      "page": "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
+        "reviewer": "s404_mobile_pixels"
       }
     },
     {
@@ -3532,79 +2978,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "S404-late-home--light--mobile.png",
-      "sha256": "fd042680dda53f04fb49beceb4a0c41741d48e3dce480bac6612de5540e5a64c",
+      "file": "S404-cadence-final-home--light--mobile--changed-surface.png",
+      "sha256": "73f2a53461d9ea2692f8434be9af87d2166385c81eb5e2d0636f746d24d680f3",
       "page": "/",
-      "state": "page",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-anthropics-claude-ai-model-accessed-georgia-voter-data-in--light--mobile.png",
-      "sha256": "0cda61c88d5675c663dc820718912bb25d63658796a43d0ace488832b6bb1dd6",
-      "page": "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-spacex-closes-40-billion-debt-deal-for-ai-chips--light--mobile.png",
-      "sha256": "2414a9c6e6f8946dab77c6fb97e41b6fd35843977fe4f4d84abe616b4a081844",
-      "page": "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-anthropic-set-to-make-stock-market-debut-as-questions--light--mobile.png",
-      "sha256": "d1b55bb06fbe45f39613ebf3eff6b06a5aca372e44c91bfdff51ebcd70720668",
-      "page": "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
+        "reviewer": "s404_mobile_pixels"
       }
     },
     {
@@ -3620,79 +3000,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "S404-late-home--ambient--mobile.png",
-      "sha256": "24756717e07f249c8c699ac1dfc9c1a243e84f2d1a2e4c49f2b17425f766ac35",
+      "file": "S404-cadence-final-home--ambient--mobile--changed-surface.png",
+      "sha256": "0f33b1474c86070609e204c3cb67e605133695e8adba571de2cbec602cd49ea9",
       "page": "/",
-      "state": "page",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "ambient",
-      "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient",
-        "body": "ambient"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-anthropics-claude-ai-model-accessed-georgia-voter-data-in--ambient--mobile.png",
-      "sha256": "679afed2302a119ea66245487f8f2093cc68d67b9c73de7d259a88ff420a5ec8",
-      "page": "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "ambient",
-      "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient",
-        "body": "ambient"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-spacex-closes-40-billion-debt-deal-for-ai-chips--ambient--mobile.png",
-      "sha256": "2242b469b4eb9b5674d7615cd5e33425004ee77ebfe7712d85728b7bf5d81ce6",
-      "page": "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "ambient",
-      "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient",
-        "body": "ambient"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-anthropic-set-to-make-stock-market-debut-as-questions--ambient--mobile.png",
-      "sha256": "fdb222a9e175f6dd4534ef6799f9f0f03d0e76fe950f03b29f0f56296a37813a",
-      "page": "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
+        "reviewer": "s404_mobile_pixels"
       }
     },
     {
@@ -3708,79 +3022,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "S404-late-home--warm--mobile.png",
-      "sha256": "b7f82e03654351dd638347c589aeb94e192dfd40b996783dad9986799d98d42d",
+      "file": "S404-cadence-final-home--warm--mobile--changed-surface.png",
+      "sha256": "96ae6bbc1ab34a4b885022b30fc1160e0833bc8b76b8b15e38514bbd8a3d8d33",
       "page": "/",
-      "state": "page",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "warm",
-      "observedTheme": {
-        "stored": "warm",
-        "root": "warm",
-        "body": "warm"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-anthropics-claude-ai-model-accessed-georgia-voter-data-in--warm--mobile.png",
-      "sha256": "8898e91530f26d12b54fff711b4ce9c77b29635d5e6c87832b28f5850b28ad6a",
-      "page": "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "warm",
-      "observedTheme": {
-        "stored": "warm",
-        "root": "warm",
-        "body": "warm"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-spacex-closes-40-billion-debt-deal-for-ai-chips--warm--mobile.png",
-      "sha256": "74417d93b96c60b6aed858a59b41d39638d67b9e4fae3401fdbbe1e667b837b1",
-      "page": "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "warm",
-      "observedTheme": {
-        "stored": "warm",
-        "root": "warm",
-        "body": "warm"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-anthropic-set-to-make-stock-market-debut-as-questions--warm--mobile.png",
-      "sha256": "d45844ec549f9d28dded535cd44651056d5c3fc69e06dab0e4b570a5a431759c",
-      "page": "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
+        "reviewer": "s404_mobile_pixels"
       }
     },
     {
@@ -3796,79 +3044,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "S404-late-home--cool--mobile.png",
-      "sha256": "eb20b0cda6c5108be0acc44dc80d09915846227e578771188feb6c976cd5f4b3",
+      "file": "S404-cadence-final-home--cool--mobile--changed-surface.png",
+      "sha256": "85216d7c9fcac7ca7ae80c230feadc8f48063a390d78da33e977996d8025264c",
       "page": "/",
-      "state": "page",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "cool",
-      "observedTheme": {
-        "stored": "cool",
-        "root": "cool",
-        "body": "cool"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-anthropics-claude-ai-model-accessed-georgia-voter-data-in--cool--mobile.png",
-      "sha256": "8b2ea5c8c9c37a38e80eec0ed6373764b3ea59ec2006533465c492ed711ee816",
-      "page": "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "cool",
-      "observedTheme": {
-        "stored": "cool",
-        "root": "cool",
-        "body": "cool"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-spacex-closes-40-billion-debt-deal-for-ai-chips--cool--mobile.png",
-      "sha256": "a1d6babdf232382e2fecdbd04363b83d190a5eb9755688235390e972a28512ce",
-      "page": "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "cool",
-      "observedTheme": {
-        "stored": "cool",
-        "root": "cool",
-        "body": "cool"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-anthropic-set-to-make-stock-market-debut-as-questions--cool--mobile.png",
-      "sha256": "610bddebb4c30ee28cd5f84efd53e9b1c2ddaed9269f3ccce489516c3539e3f0",
-      "page": "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
+        "reviewer": "s404_mobile_pixels"
       }
     },
     {
@@ -3884,79 +3066,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "S404-late-home--lava--mobile.png",
-      "sha256": "e5a8a6d34c80d65b891b7af663a236af24e00461ebeee5d9e598b1cad02a4f67",
+      "file": "S404-cadence-final-home--lava--mobile--changed-surface.png",
+      "sha256": "f7640a9bdde869aee1c06feabb233a3dae03b9f2229514f130176f938a4c23b5",
       "page": "/",
-      "state": "page",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "lava",
-      "observedTheme": {
-        "stored": "lava",
-        "root": "lava",
-        "body": "lava"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-anthropics-claude-ai-model-accessed-georgia-voter-data-in--lava--mobile.png",
-      "sha256": "ed79647d462b531b9ba0ede5a654eaccb9a2d7091d601667d33bb03cf9535935",
-      "page": "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "lava",
-      "observedTheme": {
-        "stored": "lava",
-        "root": "lava",
-        "body": "lava"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-spacex-closes-40-billion-debt-deal-for-ai-chips--lava--mobile.png",
-      "sha256": "5604d75170fe899e6d8ed2dbe44895296a0499dbc30ddd478c550fd3e44d6230",
-      "page": "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "lava",
-      "observedTheme": {
-        "stored": "lava",
-        "root": "lava",
-        "body": "lava"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-anthropic-set-to-make-stock-market-debut-as-questions--lava--mobile.png",
-      "sha256": "63a611b0689deb5130c732818d61574769d9662b38088c3b35e4f5b2cb37d510",
-      "page": "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
+        "reviewer": "s404_mobile_pixels"
       }
     },
     {
@@ -3972,103 +3088,26 @@
         "width": 390,
         "height": 844
       },
-      "file": "S404-late-home--high-contrast--mobile.png",
-      "sha256": "7c56fd8d8c5e4570268664cf48331d962e9e79c455b83a9483665eb287d9739e",
+      "file": "S404-cadence-final-home--high-contrast--mobile--changed-surface.png",
+      "sha256": "a511f84098b1db489631616313e551bfbc7f260bae8734ba1acec9414ce55fd4",
       "page": "/",
-      "state": "page",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "observedTheme": {
-        "stored": "high-contrast",
-        "root": "high-contrast",
-        "body": "high-contrast"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-anthropics-claude-ai-model-accessed-georgia-voter-data-in--high-contrast--mobile.png",
-      "sha256": "7f1ad409301ad520e7b862a3e9174443bb84b4dc8ff9a5787cadaa6809d27ad5",
-      "page": "/news/2026-10-26/anthropics-claude-ai-model-accessed-georgia-voter-data-in/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "observedTheme": {
-        "stored": "high-contrast",
-        "root": "high-contrast",
-        "body": "high-contrast"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-spacex-closes-40-billion-debt-deal-for-ai-chips--high-contrast--mobile.png",
-      "sha256": "a60bad9defdf8eb8a2679c8f00b5ac5452028c47839d98ae5f8e48d048aeffea",
-      "page": "/news/2026-10-26/spacex-closes-40-billion-debt-deal-for-ai-chips/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "observedTheme": {
-        "stored": "high-contrast",
-        "root": "high-contrast",
-        "body": "high-contrast"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S404-late-news-2026-10-26-anthropic-set-to-make-stock-market-debut-as-questions--high-contrast--mobile.png",
-      "sha256": "0f769274f90723899eb8af11016ec7fa68a0259006222969c44a05db36b518d9",
-      "page": "/news/2026-10-26/anthropic-set-to-make-stock-market-debut-as-questions/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-s404_mobile_pixels"
+        "reviewer": "s404_mobile_pixels"
       }
     }
   ],
-  "captureSet": "S404-late",
-  "captureEvidence": {
-    "before": "docs/visual-qa/S404-before.json",
-    "adapter": ".cache/recovery-s404-late-capture.mjs",
-    "adapterSha256": "a118ba00a43e05fccaa928f952780f0cb3ef277acfb70b5cf2ba84f42c7f6863",
-    "changes": [
-      "Scratch import path",
-      "S404-late screenshot filename namespace only"
-    ],
-    "renderingChanges": false
-  },
-  "metadataReboundAt": "2026-10-26T23:56:54.630Z",
+  "captureSet": "S404-cadence-final",
   "metadataRebind": {
-    "reason": "Candidate metadata only; identical source and all56reviewed pixel hashes independently reverified",
     "previousCandidate": {
       "manifest": "api/candidate-artifact-manifest.json",
-      "manifestSha256": "ab04ef1e1d75380929b28963860a68ab6cc68a60ac32676bed45a7642e087c02",
+      "manifestSha256": "2bbad030a9b720185fae645e60afa14463ea023e44efa640c9c2cdfbb8f428bc",
       "candidateSha": "1dec8c19498fa168c88e18376dcd9d1bf64759e6",
-      "root": "8515baf436b9184aed07766ee474de6aededc33415ad37ef02ee5b8eccb533e4"
+      "root": "7da31f60de9fa90d44656f7a01f37c3e53684e975af722ef0f966442d9a69ae6"
     },
-    "originalCaptureTime": "2026-10-26T22:52:52.608Z",
-    "remeasured": false
+    "originalCaptureTime": "2026-10-27T00:48:42.836Z",
+    "remeasured": false,
+    "reason": "Only candidate metadata rebound after verifying exact source and14individually reviewed image hashes"
   }
 }
