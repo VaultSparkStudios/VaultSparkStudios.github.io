@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 404,
-  "state": "full-staging-accepted-exact-candidate-publication-pending",
+  "state": "rollover-repaired-current-staging-hosted-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a17a47-2667-73b1-b1d3-50bf728ec71a",
@@ -129,16 +129,21 @@
     "deploy": "docs/S404_staging-deploy.json",
     "ceremony": "docs/S404_staging-ceremony.json",
     "state": "passed",
-    "files": 14587,
+    "files": 14592,
     "sourceFingerprint": "ffc151f8e35ea3f7331d864f",
     "artifactRoot": "8515baf436b9184aed07766ee474de6aededc33415ad37ef02ee5b8eccb533e4",
-    "receiptId": "bf7ba6f5fd1e77077a7a95a0",
+    "receiptId": "c4abe9a0d94f165cf98c059c",
     "steps": 11,
-    "currentness": "pending exact candidate commit"
+    "currentness": "pending final candidate readback"
   },
   "observationMerge": {
     "commit": "824c2ae75c",
     "state": "preserved",
     "sourceFingerprintUnchanged": true
-  }
+  },
+  "hostedAttempts": [
+    "docs/S404_hosted-attempt1.json"
+  ],
+  "servedAuditCheckpoint": "audits/2026-10-26.json",
+  "closingPublicationContract": "After exact production acceptance, only nonserved docs/context/logs evidence may change. No served audit or portfolio correction remains deferred."
 }
