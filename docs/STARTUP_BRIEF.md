@@ -123,9 +123,6 @@
 ║   96  [PRODUCT]      Consider response-body streaming only if m  ║
 ║        Consider response-body streaming only if measured remote  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      Consider native positive-manifest text par  ║
 ║        Consider native positive-manifest text parity as a separ  ║
 ║                                                                  ║
@@ -134,6 +131,9 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Consider per-member byte verification only  ║
 ║        Consider per-member byte verification only if source mut  ║
+║                                                                  ║
+║   84  [PRODUCT]      Coordinate an evidence-backed distinction   ║
+║        Coordinate an evidence-backed distinction between format  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
