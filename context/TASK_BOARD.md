@@ -1,3 +1,14 @@
+<!-- S405-closeout-writeback -->
+## S405 selected outcome
+
+- [x] [S405] manifest-text-parity L2 implemented and independently reviewed. Deployment acceptance is separate in docs/RELEASE_S405.json.
+- [ ] [SIL][S405] Consider migration of scheduled text probes only after measuring coverage and compatibility for each caller; future, unselected.
+- [ ] [SIL][S405] Consider redirect-target body verification only if a real redirected destination failure is reproduced; future, unselected.
+
+Wave 1 complete: fresh startup, nine-axis audit, strict premise2/2 and pending admission.
+Wave 2 complete: selected L2 implementation, real HTTP regressions4/4, independent approval.
+Wave 3 release verification and Wave 4 final publication are tracked in docs/RELEASE_S405.json; that ledger owns their current state and final reconciliation. This section records implementation acceptance, not a production-completion claim.
+
 <!-- S404-closeout-writeback -->
 ## S404 selected outcomes
 
@@ -784,3 +795,5 @@ Both selected local outcomes are accepted. Whole-project and release checks rema
 
 - [ ] [SIL][S403] Assess the separate shard-ledger byte-offset path before generalizing dated-ledger UTF-8 planning; future, unselected.
 - [ ] [SIL][S403] Verify Studio Ops adoption of the rotated-ledger pattern after Ark delivery; transport alone does not prove adoption. Future, unselected.
+
+- [x] [S405] receipt-only-browser-isolation L2: deterministic CLI negative tests2/2 and normal28-frame capture independently reviewed. Complete release acceptance remains in docs/RELEASE_S405.json.

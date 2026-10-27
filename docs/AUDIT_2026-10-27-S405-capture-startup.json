@@ -1,0 +1,351 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-10-27",
+  "generatedAt": "2026-10-27T05:24:36.147Z",
+  "session": 405,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Additional observed S405 release prerequisite within the same bound arc.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "mode": "supported-release",
+    "audience": "public-live",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "receipt-only-browser-isolation",
+      "title": "Keep receipt-only validation independent of the browser runtime",
+      "axis": "speed-organization-efficiency",
+      "tier": "⚡",
+      "impact": 7,
+      "innovation": 3,
+      "effortHours": 1.5,
+      "priority": 11.62,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "why": "The reconciled complete-suite run hit the15second child timeout while receipt-only mode statically imported Playwright. The same test passed earlier; metadata validation does not need the browser runtime.",
+      "recipe": "Load Playwright inside actual capture mode. Extend the existing real CLI negative fixture with a deterministic ESM resolution tripwire that forbids the browser dependency during receipt-only validation. Retain observed-theme validation, file-copy refusal and timeout bounds.",
+      "acceptance": "The existing real CLI refuses missing/mismatched theme evidence before copying, and reaches the expected theme errors even with Playwright resolution forbidden. Actual capture mode still produces reviewed source-bound images; full source and deployment acceptance remain mandatory.",
+      "userOutcome": "Operators receive reliable fail-closed receipt validation without requiring a browser dependency to load.",
+      "readinessArea": "release-evidence reliability",
+      "stageRationale": "Repair an actually observed release prerequisite; no product UI, identity or pricing change.",
+      "premises": [
+        {
+          "claim": "The capture CLI statically imports the browser runtime",
+          "adapter": "file-content",
+          "target": "scripts/capture-theme-matrix.mjs",
+          "pattern": "import { chromium } from '@playwright/test';",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Receipt-only mode already has its own dispatch path",
+          "adapter": "file-content",
+          "target": "scripts/capture-theme-matrix.mjs",
+          "pattern": "if (argv.includes('--receipt-only'))",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Isolate the observed failure and preserve its original record."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Move browser import to capture mode, prove metadata-only isolation with actual CLI tripwire, renew changed-producer visual evidence and complete required release gates."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Separate CLI packages and runtime loader services; unselected."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-27T05:34:49.007Z",
+          "depth": "L2",
+          "state": "locally-accepted",
+          "evidence": [
+            "Deterministic real CLI tripwire reproduced eager browser import before repair; existing timeout unchanged.",
+            "Both focused receipt-only CLI tests passed after moving Playwright import into actual capture mode.",
+            "Independent review PASS zero findings.",
+            "Normal Chromium capture produced28 source-bound images; all28 manually inspected after repair."
+          ],
+          "releaseAcceptance": "Pending complete source, staging, hosted checks and full production; docs/RELEASE_S405.json is authoritative."
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "count": 1,
+    "priority": 11.62,
+    "top3": [
+      "receipt-only-browser-isolation"
+    ]
+  },
+  "skipped": [],
+  "research": {
+    "reuse": "Existing native capture CLI, negative HTTP/CLI fixture, Node ESM resolution hooks and source-bound visual proof. No dependency added.",
+    "coverage": "Additional observed prerequisite within the fresh S405 nine-axis survey; unchanged axes retain that survey evidence, and only this proven startup failure is newly selected."
+  },
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-27T05:24:41.157Z",
+    "head": "a3bde73282dbb359d1890ac021852c4f8d8025b7",
+    "sidecar": "docs/AUDIT_2026-10-27-S405-capture-startup.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "5fb511b688db2cbd3c8cfb25e28fe5e4aa95275c2dc89a90467e4d01adfd4fda",
+    "implementationDirty": [
+      "api/ai-discovery-health.json",
+      "api/analytics-summary.json",
+      "api/build-check-diagnostics.json",
+      "api/candidate-artifact-manifest.json",
+      "api/citation.json",
+      "api/field-win.json",
+      "api/heartbeat.json",
+      "api/intelligence-budget.json",
+      "api/intent-map.json",
+      "api/nervous-system.json",
+      "api/oracle-insights.json",
+      "api/promotion-receipt.json",
+      "api/proof-aware-projects.json",
+      "api/proof-surface-diagnostics.json",
+      "api/public-intelligence.json",
+      "api/release-dependencies.json",
+      "api/release-proof.json",
+      "api/status-proof.json",
+      "data/ignis-search-index.json",
+      "data/perf-history.ndjson",
+      "data/promotion-history.ndjson",
+      "data/stats-surface.json",
+      "docs/BUILD_CHECK_DIAGNOSTICS.md",
+      "docs/GENIUS_LIST.md",
+      "docs/INTELLIGENCE_BUDGET_LEDGER.md",
+      "docs/PROOF_SURFACE_DIAGNOSTICS.md",
+      "docs/performance/visual-qa-retention.json",
+      "docs/visual-qa/LATEST.json",
+      "ignis/output/pillar-repair-plan.json",
+      "ignis/output/unified-score.json",
+      "portfolio/compiled/FORECAST_LEDGER.json",
+      "portfolio/ops/review-loop-receipts.ndjson",
+      "scripts/check-served-parity.mjs",
+      "stats.json",
+      "tests/served-binary-parity.unit.spec.mjs",
+      "audits/2026-10-27.json",
+      "docs/IMPLEMENT_PLAN_S405_CAPTURE_STARTUP.md",
+      "docs/PLAN_BRIEF_405_2026-10-27.md",
+      "docs/RELEASE_S405.json",
+      "docs/S405_admission-rehearsal.json",
+      "docs/S405_audit-brief.json",
+      "docs/S405_capture-audit-brief.json",
+      "docs/S405_capture-plan-brief.json",
+      "docs/S405_closeout-brief.json",
+      "docs/S405_diagnostic-scope.json",
+      "docs/S405_diagnostic-tail.json",
+      "docs/S405_ignis-score.json",
+      "docs/S405_mobile-acceptance.json",
+      "docs/S405_plan-brief.json",
+      "docs/S405_public-safe-boundary.json",
+      "docs/S405_source-attempt1.json",
+      "docs/S405_source-attempt2.json",
+      "docs/S405_source-attempt3.json",
+      "docs/S405_source-first-complete.json",
+      "docs/S405_visual-acceptance.json",
+      "docs/S405_visual-initial-inspection.json",
+      "docs/visual-qa/S405-current-evidence--ambient--desktop.png",
+      "docs/visual-qa/S405-current-evidence--ambient--mobile.png",
+      "docs/visual-qa/S405-current-evidence--cool--desktop.png",
+      "docs/visual-qa/S405-current-evidence--cool--mobile.png",
+      "docs/visual-qa/S405-current-evidence--dark--desktop.png",
+      "docs/visual-qa/S405-current-evidence--dark--mobile.png",
+      "docs/visual-qa/S405-current-evidence--high-contrast--desktop.png",
+      "docs/visual-qa/S405-current-evidence--high-contrast--mobile.png",
+      "docs/visual-qa/S405-current-evidence--lava--desktop.png",
+      "docs/visual-qa/S405-current-evidence--lava--mobile.png",
+      "docs/visual-qa/S405-current-evidence--light--desktop.png",
+      "docs/visual-qa/S405-current-evidence--light--mobile.png",
+      "docs/visual-qa/S405-current-evidence--warm--desktop.png",
+      "docs/visual-qa/S405-current-evidence--warm--mobile.png",
+      "docs/visual-qa/S405-current-home--ambient--desktop.png",
+      "docs/visual-qa/S405-current-home--ambient--mobile.png",
+      "docs/visual-qa/S405-current-home--cool--desktop.png",
+      "docs/visual-qa/S405-current-home--cool--mobile.png",
+      "docs/visual-qa/S405-current-home--dark--desktop.png",
+      "docs/visual-qa/S405-current-home--dark--mobile.png",
+      "docs/visual-qa/S405-current-home--high-contrast--desktop.png",
+      "docs/visual-qa/S405-current-home--high-contrast--mobile.png",
+      "docs/visual-qa/S405-current-home--lava--desktop.png",
+      "docs/visual-qa/S405-current-home--lava--mobile.png",
+      "docs/visual-qa/S405-current-home--light--desktop.png",
+      "docs/visual-qa/S405-current-home--light--mobile.png",
+      "docs/visual-qa/S405-current-home--warm--desktop.png",
+      "docs/visual-qa/S405-current-home--warm--mobile.png",
+      "docs/visual-qa/S405-current.json",
+      "docs/visual-qa/S405-prior-LATEST.json"
+    ]
+  },
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 1,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 1,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-features-depth-0",
+          "premise": "New portfolio drilldown",
+          "evidence": "Existing projects/ and vault-portal/ surfaces already provide these journeys; no missing requirement reproduced."
+        },
+        {
+          "slug": "s405-features-depth-1",
+          "premise": "Additional member dashboard",
+          "evidence": "Existing projects/ and vault-portal/ surfaces already provide these journeys; no missing requirement reproduced."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-ui-ux-feedback-0",
+          "premise": "Navigation replacement",
+          "evidence": "Existing shell and seven-theme visual acceptance exist; no interface change is needed for the selected verifier gap."
+        },
+        {
+          "slug": "s405-ui-ux-feedback-1",
+          "premise": "Theme redesign",
+          "evidence": "Existing shell and seven-theme visual acceptance exist; no interface change is needed for the selected verifier gap."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-gamification-immersion-0",
+          "premise": "Rank rebalance",
+          "evidence": "Existing ranks and economy remain load-bearing; no measured failure permits rebalance."
+        },
+        {
+          "slug": "s405-gamification-immersion-1",
+          "premise": "New streak ladder",
+          "evidence": "Existing ranks and economy remain load-bearing; no measured failure permits rebalance."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-ai-intelligence-0",
+          "premise": "Proof provenance assistant",
+          "evidence": "Existing agents.json and evidence/ discovery suffice; deterministic inventory repair takes priority over new inference."
+        },
+        {
+          "slug": "s405-ai-intelligence-1",
+          "premise": "Automatic stale-proof explanation",
+          "evidence": "Existing agents.json and evidence/ discovery suffice; deterministic inventory repair takes priority over new inference."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-security-0",
+          "premise": "Identity migration",
+          "evidence": "Existing Obelisk integration and S401 archival controls inspected; unchanged identity limitations remain separate."
+        },
+        {
+          "slug": "s405-security-1",
+          "premise": "New archive validator",
+          "evidence": "Existing Obelisk integration and S401 archival controls inspected; unchanged identity limitations remain separate."
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "surviving": [
+        "receipt-only-browser-isolation"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-speed-organization-efficiency-0",
+          "premise": "Response streaming",
+          "evidence": "No measured memory or repeated-transfer threshold establishes a need; existing one-call blob inventory is reused."
+        },
+        {
+          "slug": "s405-speed-organization-efficiency-1",
+          "premise": "Incremental object cache",
+          "evidence": "No measured memory or repeated-transfer threshold establishes a need; existing one-call blob inventory is reused."
+        }
+      ]
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-token-cost-0",
+          "premise": "Inference memoization",
+          "evidence": "Selected work is deterministic and incurs no inference; no measured token-cost defect."
+        },
+        {
+          "slug": "s405-token-cost-1",
+          "premise": "Paid audit service",
+          "evidence": "Selected work is deterministic and incurs no inference; no measured token-cost defect."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-observability-honesty-0",
+          "premise": "New remote verifier service",
+          "evidence": "Live native selection excludes manifest-served audits/ and portfolio/; add a scope to the existing verifier instead of a service."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-sil-debt-0",
+          "premise": "Method-specific status expansion",
+          "evidence": "No new methods or source-mutation evidence reproduced; historical conditional follow-ups remain unselected."
+        },
+        {
+          "slug": "s405-sil-debt-1",
+          "premise": "Per-member archive byte verification",
+          "evidence": "No new methods or source-mutation evidence reproduced; historical conditional follow-ups remain unselected."
+        }
+      ]
+    }
+  },
+  "releaseAcceptance": {
+    "state": "pending",
+    "ledger": "docs/RELEASE_S405.json",
+    "statusSemantics": "shipped records local implementation acceptance; does not claim production deployment"
+  }
+}

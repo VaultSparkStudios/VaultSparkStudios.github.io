@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-10-27T00:48:42.836Z",
-  "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
+  "capturedAt": "2026-10-27T05:31:24.099Z",
+  "generatedBy": ".cache/s405-capture-current.mjs (native capture-theme-matrix; unique archival filename prefix and equivalent import path only) --receipt",
   "themes": [
     "dark",
     "light",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "b5ba9f59dd20cc115db1b2ab70d72d24ad82d53b282743b53346a8f9a156ff9a",
+    "sha256": "71bc3783bc1fad10ac4856e086fb0dbd520f6d14d0e0fbb9c41f886e48d2b599",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -544,6 +544,7 @@
       "data/news-desk/days/2026-08-21.json",
       "data/news-desk/days/2026-08-22.json",
       "data/news-desk/days/2026-08-23.json",
+      "evidence/index.html",
       "index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
@@ -2674,8 +2675,12 @@
         "sha256": "03da839472121835a27018b22ba8b20c6860b1f41745d07c88b13518558080a8"
       },
       {
+        "path": "evidence/index.html",
+        "sha256": "f0009ec36589033ef770ebcb5a8850cb6c6d1de8d22ccf123f32b5ec2a15d417"
+      },
+      {
         "path": "index.html",
-        "sha256": "fa61dfe3d3c8188c59352cb48116caba4ab7aef74f1337b9960019d29435524c"
+        "sha256": "9dccdd940bb7fd831070f70a908b719db01b72836ca62e714ae4b855e4c05e34"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -2687,7 +2692,7 @@
       },
       {
         "path": "scripts/capture-theme-matrix.mjs",
-        "sha256": "9c687ca7f6a11785797b2305ffbd426ddd69326e262001cedbaff0f79670205a"
+        "sha256": "f24aa9a0f3db66f5e524b1c3f9a10ce718269e665f3d996fa186002fd4ab712d"
       },
       {
         "path": "scripts/check-attention-surface-contract.mjs",
@@ -2737,13 +2742,14 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "a686c5f47b6eb4ac5d01d4e6490d608df548f80d0e6f34956c919cf9d43195b5",
+    "manifestSha256": "35621958eecd574055ef9d17cb4419bb6f57672a3cb1ee4ef3e4b5f470d2c7d8",
     "candidateSha": "9c416ed8b09a36ef939d63d1855805085b41c7fb",
-    "root": "8dee8717d2830f424c0d915041f6b28d89214f6536883a4faf6f06f3bf1eb1e6"
+    "root": "72436557faf3e3d83bf8f3c41bc37186e823f402c81d86c3847dda0c597de2d7"
   },
   "matrix": {
     "routes": [
-      "/"
+      "/",
+      "/evidence/"
     ],
     "themes": [
       "dark",
@@ -2767,22 +2773,22 @@
       }
     ],
     "states": [
-      "changed-surface"
+      "page"
     ],
-    "expectedCaptures": 14,
-    "completedCaptures": 14
+    "expectedCaptures": 28,
+    "completedCaptures": 28
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 14,
-      "manuallyReviewed": 14,
+      "totalCaptures": 28,
+      "manuallyReviewed": 28,
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "s404_mobile_pixels",
+    "reviewer": "codex-S405",
     "findings": [
-      "All14final PNG SHA256 identities independently verified against the14individually reviewed AFTER images; identical pixels retain manual approval. Actual finalcapture follows exact source restoration; no timestamp backdating."
+      "Inspected all 28 actual home/evidence above-fold captures across seven themes at desktop1366x900 and mobile390x844 after browser-import isolation; no visible clipping, overlap or unreadable text in captured states."
     ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
@@ -2802,13 +2808,35 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S404-cadence-final-home--dark--desktop--changed-surface.png",
-      "sha256": "8576653f66f801655359c1b3352a25a8da0b65d56cf44955adaddf387d0475b5",
+      "file": "S405-current-home--dark--desktop.png",
+      "sha256": "b4deba1a60982369461adb9bd1f3cbbe709f26d9ecd68167b3b15b7c5ec7cc3e",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "s404_mobile_pixels"
+        "reviewer": "codex-S405"
+      }
+    },
+    {
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S405-current-evidence--dark--desktop.png",
+      "sha256": "eb30d9b1e2ae3f15a8558d5c09558a4c38d2aba092eef6b004fc163162c5444b",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S405"
       }
     },
     {
@@ -2824,13 +2852,35 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S404-cadence-final-home--light--desktop--changed-surface.png",
-      "sha256": "e3f3eddfaac1cfbf9d48e197b1c70218fccda1eb1952654d8a60e9f5be1df215",
+      "file": "S405-current-home--light--desktop.png",
+      "sha256": "8d21daa412cfa4535a75ce9a1d81b26f5952d946be0f451c888b4abf8febefd7",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "s404_mobile_pixels"
+        "reviewer": "codex-S405"
+      }
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S405-current-evidence--light--desktop.png",
+      "sha256": "4f86fc0ca7a9101e498ba8e5648f271a050baedd3de8b8155d03ebeef47b83de",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S405"
       }
     },
     {
@@ -2846,13 +2896,35 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S404-cadence-final-home--ambient--desktop--changed-surface.png",
-      "sha256": "ae87c5d49b1bf2e479a7e5e39cb42d5805e7b284a94db97186d398982c405114",
+      "file": "S405-current-home--ambient--desktop.png",
+      "sha256": "cb2a310c9189c8390bba2789675336a2ffbb690044e9712fc1f2f96d4673c0c3",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "s404_mobile_pixels"
+        "reviewer": "codex-S405"
+      }
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S405-current-evidence--ambient--desktop.png",
+      "sha256": "baa9ac696e2d1c58d1b1b7b65f4f0c2d2007807306eb2aae5de74aba110d80c1",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S405"
       }
     },
     {
@@ -2868,13 +2940,35 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S404-cadence-final-home--warm--desktop--changed-surface.png",
-      "sha256": "f9e3b71a328d52358caa552d44c251e57ff04fa8f275533813186200c8c4e1cb",
+      "file": "S405-current-home--warm--desktop.png",
+      "sha256": "1c4b38e1934ba9d1dabc7885c8eab504a0cdfdc017410146c3b01967c15865fc",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "s404_mobile_pixels"
+        "reviewer": "codex-S405"
+      }
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S405-current-evidence--warm--desktop.png",
+      "sha256": "b3e41096a486df939a31c906c6b7ebbf4ee0a3581fe901624f603f4729c9b56e",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S405"
       }
     },
     {
@@ -2890,13 +2984,35 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S404-cadence-final-home--cool--desktop--changed-surface.png",
-      "sha256": "5de0ed8b7f4e619c273c83bbbc819dbf8e03df273fe415316268b7db5aa2d859",
+      "file": "S405-current-home--cool--desktop.png",
+      "sha256": "48d7ec56eead873c369b5849a724b373ee72676af11e3d3550a91b0322488097",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "s404_mobile_pixels"
+        "reviewer": "codex-S405"
+      }
+    },
+    {
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S405-current-evidence--cool--desktop.png",
+      "sha256": "7cd8689f20d5b7b25e0e439de418510a0d4fa0fc6f20f943bc7501122c901c74",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S405"
       }
     },
     {
@@ -2912,13 +3028,35 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S404-cadence-final-home--lava--desktop--changed-surface.png",
-      "sha256": "14365419da687ce550ec130b1a8536d381bf65729aed51bf9d614d41ef28c655",
+      "file": "S405-current-home--lava--desktop.png",
+      "sha256": "8f855267484b6c6017b04847b1e08b1040a31556507d9b307def7c88457d27cf",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "s404_mobile_pixels"
+        "reviewer": "codex-S405"
+      }
+    },
+    {
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S405-current-evidence--lava--desktop.png",
+      "sha256": "b8de1753f794938335c3f8108897b1bbcf70323d045f3a2ad6ea2d885e45e7de",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S405"
       }
     },
     {
@@ -2934,13 +3072,35 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S404-cadence-final-home--high-contrast--desktop--changed-surface.png",
-      "sha256": "16fb7479b45ad23660b98c12c5b78841bfafc96e9dd8e05a30750b1d8252cc4f",
+      "file": "S405-current-home--high-contrast--desktop.png",
+      "sha256": "574ab9ad7445f9a00c8dda6e342957ddae56599dbdfca092036792e0df11f14c",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "s404_mobile_pixels"
+        "reviewer": "codex-S405"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S405-current-evidence--high-contrast--desktop.png",
+      "sha256": "2a068e69a381005f2f77d725f3748b50b819f47e227ea5642829a9e5fe662a3d",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S405"
       }
     },
     {
@@ -2956,13 +3116,35 @@
         "width": 390,
         "height": 844
       },
-      "file": "S404-cadence-final-home--dark--mobile--changed-surface.png",
-      "sha256": "a14239dabe80a9614dccc76cc12dd5c16c2764c7ba576fbd8f515517334768c7",
+      "file": "S405-current-home--dark--mobile.png",
+      "sha256": "e3bdead89223cc89a0c0877c17d6dc0e82ab8b00b1a7308efad079dd30ec8491",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "s404_mobile_pixels"
+        "reviewer": "codex-S405"
+      }
+    },
+    {
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S405-current-evidence--dark--mobile.png",
+      "sha256": "eb66995abe603d9ad550f21a1d92c55ab24dcc1cad909df71d3c17abd2cd8dc1",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S405"
       }
     },
     {
@@ -2978,13 +3160,35 @@
         "width": 390,
         "height": 844
       },
-      "file": "S404-cadence-final-home--light--mobile--changed-surface.png",
-      "sha256": "73f2a53461d9ea2692f8434be9af87d2166385c81eb5e2d0636f746d24d680f3",
+      "file": "S405-current-home--light--mobile.png",
+      "sha256": "b67e4c709b9004b8277153ab91746592f0674454b51ee935d4d7cd2531e4a89c",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "s404_mobile_pixels"
+        "reviewer": "codex-S405"
+      }
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S405-current-evidence--light--mobile.png",
+      "sha256": "2f75fd3910326c8820ff9c5120da383c5175a436878c86c2c0b94990e069247e",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S405"
       }
     },
     {
@@ -3000,13 +3204,35 @@
         "width": 390,
         "height": 844
       },
-      "file": "S404-cadence-final-home--ambient--mobile--changed-surface.png",
-      "sha256": "0f33b1474c86070609e204c3cb67e605133695e8adba571de2cbec602cd49ea9",
+      "file": "S405-current-home--ambient--mobile.png",
+      "sha256": "5df0af4149ef9aa5d4afb74e690f5034efb5d9e179477a977a754eed7b1c7a7b",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "s404_mobile_pixels"
+        "reviewer": "codex-S405"
+      }
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S405-current-evidence--ambient--mobile.png",
+      "sha256": "700f294cf2b4f02c161886cf432a20c47b8a7fa77fe641a5961c0e41b2a479a2",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S405"
       }
     },
     {
@@ -3022,13 +3248,35 @@
         "width": 390,
         "height": 844
       },
-      "file": "S404-cadence-final-home--warm--mobile--changed-surface.png",
-      "sha256": "96ae6bbc1ab34a4b885022b30fc1160e0833bc8b76b8b15e38514bbd8a3d8d33",
+      "file": "S405-current-home--warm--mobile.png",
+      "sha256": "f063888706dbb73708fe6318e59ecdab1e6b06e2eaa53870e642190d03e67839",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "s404_mobile_pixels"
+        "reviewer": "codex-S405"
+      }
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S405-current-evidence--warm--mobile.png",
+      "sha256": "026b0a8bdf600c5d4e3777705107ee21e47e714925d31bad75f3c1cd407c3974",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S405"
       }
     },
     {
@@ -3044,13 +3292,35 @@
         "width": 390,
         "height": 844
       },
-      "file": "S404-cadence-final-home--cool--mobile--changed-surface.png",
-      "sha256": "85216d7c9fcac7ca7ae80c230feadc8f48063a390d78da33e977996d8025264c",
+      "file": "S405-current-home--cool--mobile.png",
+      "sha256": "7befb0edc9b6a925bf6509aac06035ded0bbb7485bd24f2fff10ab1fc4d2c671",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "s404_mobile_pixels"
+        "reviewer": "codex-S405"
+      }
+    },
+    {
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S405-current-evidence--cool--mobile.png",
+      "sha256": "8590ada95ef2eb10f844864ca422ed9c9541d3c4b74eb280d622af66edca9497",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S405"
       }
     },
     {
@@ -3066,13 +3336,35 @@
         "width": 390,
         "height": 844
       },
-      "file": "S404-cadence-final-home--lava--mobile--changed-surface.png",
-      "sha256": "f7640a9bdde869aee1c06feabb233a3dae03b9f2229514f130176f938a4c23b5",
+      "file": "S405-current-home--lava--mobile.png",
+      "sha256": "a465a40d658e79eff9c344a7601546406315ac73829289dcbb0475d2a74d766e",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "s404_mobile_pixels"
+        "reviewer": "codex-S405"
+      }
+    },
+    {
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S405-current-evidence--lava--mobile.png",
+      "sha256": "6547876398810e094dabdd04ac1989e539b3bd501002d327d89b61cb14f1d055",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S405"
       }
     },
     {
@@ -3088,26 +3380,36 @@
         "width": 390,
         "height": 844
       },
-      "file": "S404-cadence-final-home--high-contrast--mobile--changed-surface.png",
-      "sha256": "a511f84098b1db489631616313e551bfbc7f260bae8734ba1acec9414ce55fd4",
+      "file": "S405-current-home--high-contrast--mobile.png",
+      "sha256": "1d88e8bec686818e351feab33c0c2b55e801009c6f1133e74233468de0b3f6cb",
       "page": "/",
-      "state": "changed-surface",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "s404_mobile_pixels"
+        "reviewer": "codex-S405"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S405-current-evidence--high-contrast--mobile.png",
+      "sha256": "0f04809878c0ac4ae030d736b183b8cc484af1215fe2701555c9a49e85f5e5ce",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex-S405"
       }
     }
-  ],
-  "captureSet": "S404-cadence-final",
-  "metadataRebind": {
-    "previousCandidate": {
-      "manifest": "api/candidate-artifact-manifest.json",
-      "manifestSha256": "a686c5f47b6eb4ac5d01d4e6490d608df548f80d0e6f34956c919cf9d43195b5",
-      "candidateSha": "9c416ed8b09a36ef939d63d1855805085b41c7fb",
-      "root": "8dee8717d2830f424c0d915041f6b28d89214f6536883a4faf6f06f3bf1eb1e6"
-    },
-    "originalCaptureTime": "2026-10-27T00:48:42.836Z",
-    "remeasured": false,
-    "reason": "Only candidate metadata rebound after verifying exact source and14individually reviewed image hashes"
-  }
+  ]
 }

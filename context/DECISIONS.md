@@ -1080,3 +1080,19 @@ CANON-045 STRONG gap remains separately justified: this verifier repair changes 
 S404 release pixel review found the fixed page-status ring crossing the News mobile kicker. Reserve54px inline-end clearance only on mobile article kickers. Existing44px status target remains visible and functional. Actual Chromium text-range geometry reproduced pre-fix collision and passes56theme/width/article cells after the fix; existing article CSS cases2/2 pass. Native shell assets and208HTML references carry the repair.
 
 This is a separately premise-verified and admitted repair discovered by actual rendered-pixel release inspection. Before images retain the defect; after captures must be inspected. No redesign, identity, pricing or launch change. Revert the mobile padding rule for rollback. Current accepted state remains in docs/RELEASE_S404.json.
+
+<!-- S405-closeout-writeback -->
+## D-S405.1 — 2026-10-27 — explicit manifest text scope
+
+Reuse the existing positive manifest classifier and Git object inventory. Add served-text as manifest membership intersected with the existing case-insensitive known-text extension list, excluding provider configuration and deployed stamp. Preserve the legacy text default. Missing or invalid compared-commit manifests fail before resource comparison; dirty local manifests do not affect selection. Receipts identify source, digest and extensions. No new package, service or spending.
+
+CANON-045 STRONG gap remains separately justified: this verifier repair changes no identity/auth/trust flow and claims no provider acceptance. Strict typed premises passed before behavior edits; startup propagation paths remain separately visible in timing diagnostics. Rollback: normal bounded revert and prior accepted production a569b1ed3df3abb738193c24d93da6b7a4832cab. Full current release acceptance is tracked in docs/RELEASE_S405.json.
+
+
+S405 timing diagnostic: after-implementation for docs/GENIUS_LIST.md and two planning brief inputs; selected verifier/test edits followed the strict premise gate. Retained nonpassing. The delegated IGNIS touched-score helper resolved Studio Ops; its output is not website evidence. Recipient-owned scoreVerifiedProject was invoked explicitly for this project instead.
+
+S405 release evidence refresh: the first full-source run stopped at167/547 passing because prior visual/mobile receipts bind earlier homepage bytes. No gate was weakened or stale receipt relabelled. Renew current actual browser captures and the complete mobile matrix before rerunning. Exact imported Ark cargo is preserved in ignored local storage; its tracked inbox was restored to the pre-session baseline before any commit or push.
+
+### D-S405.2 — Isolate browser loading from receipt validation
+
+S405 observed release prerequisite: receipt-only capture validation now loads Playwright only in actual capture mode. The deterministic CLI tripwire failed before repair and both focused cases passed afterward without changing timeout bounds. Actual normal capture produced28 reviewed source-bound views after repair; independent review PASS0. Two selected outcomes are locally accepted; production acceptance remains governed by docs/RELEASE_S405.json. SIL939/1000 unchanged, implementation velocity2; no field or conversion gain claimed.

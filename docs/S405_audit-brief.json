@@ -1,0 +1,22 @@
+{
+  "kind": "audit",
+  "session": 405,
+  "date": "2026-10-27",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Add manifest-based served-text verification",
+  "items": [
+    {
+      "id": 1,
+      "slug": "manifest-text-parity",
+      "title": "Add manifest-based served-text verification",
+      "axis": "observability-honesty",
+      "leftScore": 7,
+      "rightScore": 3,
+      "insight": "The legacy text inventory excludes portfolio/ and audits/ even though the positive deployment manifest serves both. Operators cannot select manifest-complete known text without downloading binary assets.",
+      "evidence": "Actual HTTP/CLI fixtures detect corrupted manifest-served portfolio and audit JSON, exclude unserved and binary files, honor committed configuration despite dirty worktree changes, fail closed on missing/invalid manifests, and preserve legacy text and all-served modes. Full release readback uses all-served."
+    }
+  ],
+  "blockers": [],
+  "followUps": []
+}

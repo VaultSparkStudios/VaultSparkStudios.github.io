@@ -21,7 +21,6 @@ import http from 'node:http';
 import path from 'node:path';
 import url from 'node:url';
 import { createRequire } from 'node:module';
-import { chromium } from '@playwright/test';
 const require = createRequire(import.meta.url);
 const { candidateBinding, sourceBinding } = require('./lib/mobile-runtime-contract.cjs');
 
@@ -97,6 +96,7 @@ function serve() {
 const slug = (s) => s.replace(/\//g, '-').replace(/^-|-$/g, '') || 'home';
 
 async function main() {
+  const { chromium } = await import('@playwright/test');
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const server = await serve();
   const browser = await chromium.launch();

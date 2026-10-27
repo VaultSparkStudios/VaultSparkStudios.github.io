@@ -9,8 +9,9 @@
  * content lane withholds them by type. A lane's exit status says the lane ran; it
  * does not say what the origin serves. This measures that directly.
  *
- * By default it fetches tracked served text. --scope=all-served instead selects
- * all resource types from the compared commit's positive deployment manifest.
+ * By default it fetches legacy tracked text. --scope=served-text selects known
+ * text types from the compared commit's positive deployment manifest;
+ * --scope=all-served selects every resource type from that same manifest.
  * It compares each resource's bytes
  * with the committed blob, and groups the differences by the release lane that can
  * carry them (content lane, or full promotion only). Read-only: GET requests, no
@@ -33,7 +34,7 @@ import { parseDeployArgv } from './lib/deploy-argv.mjs';
 import { isServed } from './lib/served-surface.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const USAGE = 'Usage: node scripts/check-served-parity.mjs [--origin=URL] [--against=REF] [--scope=text|all-served] [--require=tree-current|content-current|content-lag|unverified] [--concurrency=1..64] [--json-out=PATH]\n       --help | --self-test';
+const USAGE = 'Usage: node scripts/check-served-parity.mjs [--origin=URL] [--against=REF] [--scope=text|served-text|all-served] [--require=tree-current|content-current|content-lag|unverified] [--concurrency=1..64] [--json-out=PATH]\n       --help | --self-test';
 
 export function parseArgs(args) {
   const parsed = parseDeployArgv(args, {
@@ -54,7 +55,7 @@ export function parseArgs(args) {
   if (required && !ORDER.includes(required)) throw new Error('unknown --require verdict');
   const against = values['--against'] ?? '';
   const scope = values['--scope'] ?? 'text';
-  if (!['text', 'all-served'].includes(scope)) throw new Error('--scope must be text or all-served');
+  if (!['text', 'served-text', 'all-served'].includes(scope)) throw new Error('--scope must be text, served-text or all-served');
   if (against && (!/^[A-Za-z0-9][A-Za-z0-9._/@~^{}-]*$/.test(against) || against.includes('..'))) throw new Error('invalid --against commit reference');
   return { mode: parsed.help || parsed.dry ? 'help' : 'run', origin: url.origin, concurrency, required, against, scope, jsonOut: values['--json-out'] ?? '' };
 }
@@ -69,17 +70,19 @@ const ROOT_NOT_SERVED = new Set(['package.json', 'package-lock.json', 'playwrigh
 export const PROVIDER_CONTROL = Object.freeze(['_headers', '_redirects']);
 const SERVED_MANIFEST_PATH = 'config/served-surface.json';
 
-/** Select from the compared commit, including binary and otherwise unknown types. */
+/** Manifest scopes share the deployment classifier; served-text limits types,
+ * never public prefixes. Legacy text retains its historical exclusions. */
 export function selectServedFiles(tracked, scope, manifest) {
   if (scope === 'text') return tracked.filter(isServedCandidate);
-  if (scope !== 'all-served') throw new Error('unknown parity scope');
+  if (!['served-text', 'all-served'].includes(scope)) throw new Error('unknown parity scope');
   for (const key of ['exact', 'prefixes', 'excludedPrefixes', 'keptInternalPrefixes']) {
     if (!Array.isArray(manifest?.[key]) || manifest[key].some(p => typeof p !== 'string' || !p || p.startsWith('/') || p.includes('\\') || p.split('/').some(part => part === '..' || part === '.'))) {
       throw new Error(`invalid served manifest ${key}`);
     }
   }
   if (!manifest.exact.length && !manifest.prefixes.length && !manifest.keptInternalPrefixes.length) throw new Error('empty served manifest');
-  return tracked.filter(file => isServed(file, manifest) && !PROVIDER_CONTROL.includes(file) && !DEPLOY_STAMPED.includes(file));
+  return tracked.filter(file => isServed(file, manifest) && !PROVIDER_CONTROL.includes(file) && !DEPLOY_STAMPED.includes(file)
+    && (scope === 'all-served' || TEXT_EXT.includes(path.extname(file).toLowerCase())));
 }
 
 /** Pages serves clean URLs: `x/index.html` answers at `x/` and `foo.html` at `foo`. */
@@ -254,7 +257,7 @@ export async function main(args = process.argv.slice(2), { root = ROOT } = {}) {
   const tracked = [...blobs.keys()];
   let manifestBytes;
   let manifest;
-  if (scope === 'all-served') {
+  if (scope !== 'text') {
     manifestBytes = git(['show', `${sha}:${SERVED_MANIFEST_PATH}`]);
     manifest = JSON.parse(manifestBytes.toString('utf8'));
   }
@@ -263,7 +266,10 @@ export async function main(args = process.argv.slice(2), { root = ROOT } = {}) {
   const rules = tracked.includes('_redirects') ? parsePagesRedirects(git(['show', `${sha}:_redirects`], { encoding: 'utf8' })) : [];
   const results = await compare(origin, sha, files, { width: concurrency, rules, git, blobs });
   const summary = summarize(results, files);
-  const report = { checkedAt: new Date().toISOString(), origin, against: sha, scope, inventory: scope === 'all-served' ? { source: SERVED_MANIFEST_PATH, sha256: sha256(manifestBytes), providerControlExcluded: PROVIDER_CONTROL, deployStampedExcluded: DEPLOY_STAMPED } : { source: 'tracked text extensions', extensions: TEXT_EXT }, deployedBy: reported?.deployedBy ?? null, ...summary, results };
+  const inventory = scope === 'text' ? { source: 'tracked text extensions', extensions: TEXT_EXT }
+    : { source: SERVED_MANIFEST_PATH, sha256: sha256(manifestBytes), providerControlExcluded: PROVIDER_CONTROL, deployStampedExcluded: DEPLOY_STAMPED,
+      ...(scope === 'served-text' ? { extensions: TEXT_EXT } : {}) };
+  const report = { checkedAt: new Date().toISOString(), origin, against: sha, scope, inventory, deployedBy: reported?.deployedBy ?? null, ...summary, results };
   if (jsonOut) await writeFile(path.resolve(jsonOut), `${JSON.stringify(report, null, 2)}\n`);
   console.log(`check-served-parity: ${summary.verdict} · scope=${scope} · ${origin} vs ${sha.slice(0, 12)} · ${summary.identical}/${summary.checked} identical · ${summary.differ} differ (${summary.contentLag.length} content-lane, ${summary.fullPromotionOnly.length} full-promotion-only) · ${summary.redirected} redirected · ${summary.notServed.length} not served · ${summary.unread} unread`);
   for (const file of summary.contentLag.slice(0, 20)) console.log(`  content-lane lag: ${file}`);

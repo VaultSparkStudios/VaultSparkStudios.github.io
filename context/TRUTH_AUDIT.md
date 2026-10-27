@@ -1,3 +1,8 @@
+<!-- S405-closeout-writeback -->
+## S405 — 2026-10-27 — known-text manifest scope
+
+Legacy text proof is not manifest-complete: public portfolio/audits JSON is omitted by historical exclusions. New served-text explicitly uses committed manifest membership and known-text types; all-served remains required for complete static production readback. Focused HTTP/CLI cases4/4 and native self-tests19/19 passed; independent review approved with zero findings. Full source, current staging, exact hosted checks and full production readback remain pending in docs/RELEASE_S405.json.
+
 <!-- S404-closeout-writeback -->
 ## S404 — 2026-10-26 — explicit readback scope
 
@@ -68,7 +73,7 @@ Overall status remains yellow for existing identity/field-evidence holds. Origin
 
 ## S395 — complete scoped release and closing publication verified
 
-Overall status: yellow — selected release verified; existing identity/field-vitals holds remain separate.
+Overall status: yellow — S405 implementation verified; release acceptance in docs/RELEASE_S405.json; independent identity/field-vitals holds retained.
 
 S395 complete: one selected served-text coverage outcome is verified and released. Productc931cc736f70b524509378c1e35e1a69e8b3927d (run39650067973) and closing14466ce38c0c0e6e1b33c6c6816a086e7b6e9085 (run39678958995) each passed their own complete nonempty served-text sweep, exact hosted checks/provider identity/full-normal steps/both build stamps,65 product critical leaves and66 closing critical leaves on Pages/apex,12 incoming image variants per origin and source-bound shell readback. Closing source passed actual545/545 and current staging11/11. This is fresh whole-text closing evidence, not a baseline-plus-delta substitute. Binary scope remains12 incoming variants, and apex critical transport normalization remains narrowly declared. Original timing failure, absent original instrumentation, retired failed candidates and actual performance-attempt history remain retained. SIL935/1000 and velocity1 are unchanged; two future SIL rows remain unselected.
 
@@ -1818,3 +1823,5 @@ S404 visual finding: before42screens reviewed with one mobile overlap finding. A
 Full production a569b1ed3df3abb738193c24d93da6b7a4832cab accepted by workflow40435379890 and provider deployment89587749-d897-4033-b457-52ec2b56c93e. Current source547/547 and hosted3/3; staging11/11 and68/68 critical leaves; full static readback3607/3607 (3597 byte-identical,10 verified redirects), zero differences/unread. All5GitHub publishers and the owned nightly art task restored to their original states; uptime remained active. Ark cargo01K5THM0JDA067EE2251D9E1E0 sent; recipient adoption unverified. SIL939/1000 unchanged;2selected outcomes. No field/conversion/token gain claimed; existing independent identity/provider and field-vitals limitations remain.
 
 The static contract covers every resource selected by the committed positive deployment manifest, including unchanged binaries. Pages control files are provider configuration, and api/build-sha.json is a deployment stamp verified separately on both public origins. This does not claim acceptance of unrelated provider/identity journeys or field-performance gains.
+
+S405 observed release prerequisite: receipt-only capture validation now loads Playwright only in actual capture mode. The deterministic CLI tripwire failed before repair and both focused cases passed afterward without changing timeout bounds. Actual normal capture produced28 reviewed source-bound views after repair; independent review PASS0. Two selected outcomes are locally accepted; production acceptance remains governed by docs/RELEASE_S405.json. SIL939/1000 unchanged, implementation velocity2; no field or conversion gain claimed.

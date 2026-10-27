@@ -1,0 +1,29 @@
+{
+  "kind": "closeout",
+  "session": "S405",
+  "date": "2026-10-27",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Manifest text verification locally accepted; full release remains pending.",
+  "silDelta": {
+    "previous": 939,
+    "current": 939
+  },
+  "items": [
+    {
+      "id": "#1",
+      "slug": "manifest-text-parity",
+      "title": "Manifest-based known-text parity",
+      "axis": "observability-honesty",
+      "projectImpact": 5,
+      "ecosystemImpact": 1,
+      "insight": "Public portfolio and audit JSON can now be selected through the committed deployment manifest without downloading binary assets. The legacy default stays compatible. Actual HTTP regressions and independent review passed; full production acceptance remains pending.",
+      "evidence": "docs/RELEASE_S405.json"
+    }
+  ],
+  "followUps": [
+    "Future unselected: evidence-led scheduled caller migration.",
+    "Future unselected: redirect-destination verification after a reproduced failure."
+  ],
+  "blockers": []
+}

@@ -1,0 +1,328 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-10-27",
+  "generatedAt": "2026-10-27T02:48:31.489Z",
+  "session": 405,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S405 nine-axis supported-release audit and authorized full deployment.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 1,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 1,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-features-depth-0",
+          "premise": "New portfolio drilldown",
+          "evidence": "Existing projects/ and vault-portal/ surfaces already provide these journeys; no missing requirement reproduced."
+        },
+        {
+          "slug": "s405-features-depth-1",
+          "premise": "Additional member dashboard",
+          "evidence": "Existing projects/ and vault-portal/ surfaces already provide these journeys; no missing requirement reproduced."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-ui-ux-feedback-0",
+          "premise": "Navigation replacement",
+          "evidence": "Existing shell and seven-theme visual acceptance exist; no interface change is needed for the selected verifier gap."
+        },
+        {
+          "slug": "s405-ui-ux-feedback-1",
+          "premise": "Theme redesign",
+          "evidence": "Existing shell and seven-theme visual acceptance exist; no interface change is needed for the selected verifier gap."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-gamification-immersion-0",
+          "premise": "Rank rebalance",
+          "evidence": "Existing ranks and economy remain load-bearing; no measured failure permits rebalance."
+        },
+        {
+          "slug": "s405-gamification-immersion-1",
+          "premise": "New streak ladder",
+          "evidence": "Existing ranks and economy remain load-bearing; no measured failure permits rebalance."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-ai-intelligence-0",
+          "premise": "Proof provenance assistant",
+          "evidence": "Existing agents.json and evidence/ discovery suffice; deterministic inventory repair takes priority over new inference."
+        },
+        {
+          "slug": "s405-ai-intelligence-1",
+          "premise": "Automatic stale-proof explanation",
+          "evidence": "Existing agents.json and evidence/ discovery suffice; deterministic inventory repair takes priority over new inference."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-security-0",
+          "premise": "Identity migration",
+          "evidence": "Existing Obelisk integration and S401 archival controls inspected; unchanged identity limitations remain separate."
+        },
+        {
+          "slug": "s405-security-1",
+          "premise": "New archive validator",
+          "evidence": "Existing Obelisk integration and S401 archival controls inspected; unchanged identity limitations remain separate."
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-speed-organization-efficiency-0",
+          "premise": "Response streaming",
+          "evidence": "No measured memory or repeated-transfer threshold establishes a need; existing one-call blob inventory is reused."
+        },
+        {
+          "slug": "s405-speed-organization-efficiency-1",
+          "premise": "Incremental object cache",
+          "evidence": "No measured memory or repeated-transfer threshold establishes a need; existing one-call blob inventory is reused."
+        }
+      ]
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-token-cost-0",
+          "premise": "Inference memoization",
+          "evidence": "Selected work is deterministic and incurs no inference; no measured token-cost defect."
+        },
+        {
+          "slug": "s405-token-cost-1",
+          "premise": "Paid audit service",
+          "evidence": "Selected work is deterministic and incurs no inference; no measured token-cost defect."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [
+        "manifest-text-parity"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-observability-honesty-0",
+          "premise": "New remote verifier service",
+          "evidence": "Live native selection excludes manifest-served audits/ and portfolio/; add a scope to the existing verifier instead of a service."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s405-sil-debt-0",
+          "premise": "Method-specific status expansion",
+          "evidence": "No new methods or source-mutation evidence reproduced; historical conditional follow-ups remain unselected."
+        },
+        {
+          "slug": "s405-sil-debt-1",
+          "premise": "Per-member archive byte verification",
+          "evidence": "No new methods or source-mutation evidence reproduced; historical conditional follow-ups remain unselected."
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "manifest-text-parity",
+      "title": "Add manifest-based served-text verification",
+      "axis": "observability-honesty",
+      "tier": "⚡",
+      "impact": 7,
+      "innovation": 3,
+      "effortHours": 2,
+      "priority": 10.5,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "why": "The legacy text inventory excludes portfolio/ and audits/ even though the positive deployment manifest serves both. Operators cannot select manifest-complete known text without downloading binary assets.",
+      "recipe": "Reuse selectServedFiles and committed manifest; add served-text as the manifest inventory intersected with TEXT_EXT. Name scope and manifest hash in receipts. Extend existing real CLI fixtures and register coverage in the existing suite.",
+      "acceptance": "Actual HTTP/CLI fixtures detect corrupted manifest-served portfolio and audit JSON, exclude unserved and binary files, honor committed configuration despite dirty worktree changes, fail closed on missing/invalid manifests, and preserve legacy text and all-served modes. Full release readback uses all-served.",
+      "userOutcome": "Public proof and portfolio JSON receive explicit release verification without requiring a binary download sweep.",
+      "readinessArea": "supported-release artifact reliability",
+      "stageRationale": "Stabilize deployed evidence verification without interface or identity changes.",
+      "premises": [
+        {
+          "claim": "Legacy text candidate classifier explicitly excludes public portfolio and audits paths",
+          "adapter": "file-content",
+          "target": "scripts/check-served-parity.mjs",
+          "pattern": "'portfolio/', 'config/'",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Deployment manifest serves portfolio JSON",
+          "adapter": "file-content",
+          "target": "config/served-surface.json",
+          "pattern": "\"portfolio/\"",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Document legacy text scope limitations only."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Add explicit manifest-backed known-text scope with committed inventory and fail-closed HTTP/CLI regressions."
+        },
+        "L3": {
+          "effortHours": 7,
+          "recipe": "Content-type sniffing and remote incremental cache; unselected."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-27T02:52:09.237Z",
+          "status": "shipped",
+          "note": "Focused actual CLI4/4; native19/19; independent review pass zero findings. Release acceptance pending in docs/RELEASE_S405.json."
+        }
+      ],
+      "releaseAcceptance": {
+        "state": "pending",
+        "ledger": "docs/RELEASE_S405.json"
+      }
+    }
+  ],
+  "research": {
+    "survey": "Current verifier, committed manifest, real CLI fixtures, served classifier, startup brief, soul, project brief, latest decisions and bounded task projection.",
+    "reuse": "Existing native verifier, positive classifier and Git inventory; internal registry consulted, no dependency/service needed.",
+    "novelCandidates": [
+      "Known-text positive manifest intersection",
+      "Receipt scope fingerprint for selective parity",
+      "Manifest-excluded canary path despite legacy extension match"
+    ],
+    "market": {
+      "state": "absent",
+      "path": "docs/market/MARKET.json",
+      "candidate": "Run /studio-market",
+      "disposition": "future-unselected",
+      "reason": "No competitor claim or market intervention selected in this supported-release stabilization arc. Market baseline work is separate from the reproduced release-verifier defect; no market-readiness claim is made."
+    }
+  },
+  "totals": {
+    "count": 1,
+    "priority": 10.5,
+    "top3": [
+      "manifest-text-parity"
+    ]
+  },
+  "skipped": [],
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-27T02:48:37.573Z",
+    "head": "a3bde73282dbb359d1890ac021852c4f8d8025b7",
+    "sidecar": "docs/AUDIT_2026-10-27-S405.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "c3caedf1f1859a7ef6596541967a91abfe6734e6d99101ef08ac660fe930754c",
+    "implementationDirty": [
+      "docs/GENIUS_LIST.md",
+      "docs/S405_audit-brief.json",
+      "docs/S405_plan-brief.json"
+    ]
+  },
+  "timingNote": "Strict2/2 typed premises passed before verifier/test edits. Timing checker retains after-implementation verdict for docs/GENIUS_LIST.md and two audit/plan brief inputs, which were written during startup/planning before the gate. This is not claimed as timing acceptance.",
+  "statusSemantics": "Item shipped is canonical implementation disposition after local acceptance; production acceptance is separately pending in releaseAcceptance and docs/RELEASE_S405.json.",
+  "canonicalAxisCoverage": {
+    "feature-depth": {
+      "coverage": "features-depth",
+      "evidence": "Existing projects/ and vault-portal/ journeys retained; no additional depth failure reproduced."
+    },
+    "new-innovative-features": {
+      "coverage": "ai-intelligence",
+      "candidates": [
+        "Proof provenance assistant",
+        "Automatic stale-proof explanation"
+      ],
+      "disposition": "unselected",
+      "evidence": "Existing agents.json and evidence/ proof discovery remain available. No observed user failure establishes a need for another inference surface."
+    },
+    "ux": {
+      "coverage": "ui-ux-feedback",
+      "evidence": "Seven-theme home/evidence desktop/mobile captures inspected; no new interface defect selected."
+    },
+    "feedback-loop": {
+      "candidates": [
+        "Visible resolution inbox",
+        "Privacy-preserving topic backlog"
+      ],
+      "disposition": "already-supported",
+      "evidence": [
+        "scripts/build-you-asked-shipped.mjs already renders the closed-loop ship receipt box at first paint.",
+        "scripts/build-oracle-feedback-themes.mjs already derives topic-attributed feedback priorities with an insufficient-signal threshold and no raw free-text transmission."
+      ]
+    },
+    "gamification-engagement": {
+      "coverage": "gamification-immersion",
+      "evidence": "Existing rank economy preserved; no measured failure permits a rebalance."
+    },
+    "ai-integration": {
+      "coverage": "ai-intelligence",
+      "evidence": "Existing deterministic Oracle/discovery surfaces retained; selected verifier requires no inference."
+    },
+    "security": {
+      "coverage": "security",
+      "evidence": "Existing identity and archive safeguards retained; unchanged integration acceptance limits remain explicit."
+    },
+    "speed-organization": {
+      "coverage": "speed-organization-efficiency",
+      "evidence": "Native one-call committed blob inventory reused. Streaming/cache expansion lacks a measured pressure premise."
+    },
+    "token-api-reduction": {
+      "coverage": "token-cost",
+      "evidence": "No measured token-cost defect or savings claim. No new paid provider selected."
+    }
+  },
+  "coverageAddendum": {
+    "at": "2026-10-27T03:33:24.469Z",
+    "scope": "Makes canonical nine-axis mapping and inspected feedback-loop evidence explicit; selected outcome, premises, ladder and original admission unchanged. Observability and SIL debt remain supplementary lenses."
+  }
+}

@@ -1,3 +1,10 @@
+<!-- S405-closeout-writeback -->
+## Session 405 — manifest-based text verification
+
+Native --scope=served-text verifies known text extensions selected by the compared commit positive deployment manifest. Public portfolio/audits/proof JSON is covered; binary and manifest-excluded paths are omitted. Receipts bind the manifest digest and extension list. Legacy text default and complete all-served mode remain compatible.
+
+Focused HTTP/CLI cases4/4 and native self-tests19/19 passed; independent review approved with zero findings. Full source, current staging, exact hosted checks and full production readback remain pending in docs/RELEASE_S405.json.
+
 <!-- S404-closeout-writeback -->
 ## Session 404 — complete served asset parity
 
@@ -70,3 +77,5 @@ S404 release pixel review found the fixed page-status ring crossing the News mob
 Full production a569b1ed3df3abb738193c24d93da6b7a4832cab accepted by workflow40435379890 and provider deployment89587749-d897-4033-b457-52ec2b56c93e. Current source547/547 and hosted3/3; staging11/11 and68/68 critical leaves; full static readback3607/3607 (3597 byte-identical,10 verified redirects), zero differences/unread. All5GitHub publishers and the owned nightly art task restored to their original states; uptime remained active. Ark cargo01K5THM0JDA067EE2251D9E1E0 sent; recipient adoption unverified. SIL939/1000 unchanged;2selected outcomes. No field/conversion/token gain claimed; existing independent identity/provider and field-vitals limitations remain.
 
 Authoritative closing evidence: docs/RELEASE_S404.json. The dated served audit is an implementation checkpoint; this ledger records final production acceptance.
+
+S405 observed release prerequisite: receipt-only capture validation now loads Playwright only in actual capture mode. The deterministic CLI tripwire failed before repair and both focused cases passed afterward without changing timeout bounds. Actual normal capture produced28 reviewed source-bound views after repair; independent review PASS0. Two selected outcomes are locally accepted; production acceptance remains governed by docs/RELEASE_S405.json. SIL939/1000 unchanged, implementation velocity2; no field or conversion gain claimed.

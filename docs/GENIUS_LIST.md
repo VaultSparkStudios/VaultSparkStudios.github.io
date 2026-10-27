@@ -1,4 +1,4 @@
-# Genius Hit List — Session 404
+# Genius Hit List — Session 405
 
 Generated: 2026-10-27
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **81/100**
+- Overall opportunity pressure: **79/100**
 - Health: **yellow**
 - Current SIL: **939/1000**
 - CI health: **check gh run list**
-- Current focus: S404 complete asset parity and rendered mobile kicker clearance; acceptance in docs/RELEASE_S404.json
+- Current focus: S405 served-text verification and receipt-only browser isolation; acceptance in docs/RELEASE_S405.json
 
 ## Strategic Read
 
@@ -22,75 +22,73 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Consider response-body streaming only if measured remote readback mem…
+#### 1. [PRODUCT] Consider migration of scheduled text probes only after measuring cove…
 Final score: **96**
+[SIL][S405] Consider migration of scheduled text probes only after measuring coverage and compatibility for each caller; future, unselected.
+Why it matters: Consider migration of scheduled text probes only after measuring cover is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Consider redirect-target body verification only if a real redirected …
+Final score: **93**
+[SIL][S405] Consider redirect-target body verification only if a real redirected destination failure is reproduced; future, unselected.
+Why it matters: Consider redirect-target body verification only if a real redirected d is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Consider response-body streaming only if measured remote readback mem…
+Final score: **90**
 [SIL][S404] Consider response-body streaming only if measured remote readback memory pressure justifies it; future, unselected.
 Why it matters: Consider response-body streaming only if measured remote readback memo is open, local, and unblocked — can ship this session.
 
-#### 2. [VERIFY] Post-push CI confirmation
-Final score: **96**
-Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
-Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
-
-First command: `gh run list --limit 10`
-
-#### 3. [PRODUCT] Consider native positive-manifest text parity as a separately reviewe…
-Final score: **93**
+#### 4. [PRODUCT] Consider native positive-manifest text parity as a separately reviewe…
+Final score: **87**
 [SIL][S404] Consider native positive-manifest text parity as a separately reviewed default migration; preserve legacy default in this session. Future, unselected.
 Why it matters: Consider native positive-manifest text parity as a separately reviewed is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Extend method-specific corroboration coverage if additional signals a…
-Final score: **90**
+### NEXT
+
+#### 1. [PRODUCT] Extend method-specific corroboration coverage if additional signals a…
+Final score: **84**
 [SIL][S402] Extend method-specific corroboration coverage if additional signals are introduced; future, unselected.
 Why it matters: Extend method-specific corroboration coverage if additional signals ar is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [PRODUCT] Consider per-member byte verification only if source mutation during …
-Final score: **87**
+#### 2. [PRODUCT] Consider per-member byte verification only if source mutation during …
+Final score: **81**
 [SIL][S401] Consider per-member byte verification only if source mutation during packaging is observed; not selected in this arc.
 Why it matters: Consider per-member byte verification only if source mutation during p is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Coordinate an evidence-backed distinction between formatting-only sou…
-Final score: **84**
+#### 3. [PRODUCT] Coordinate an evidence-backed distinction between formatting-only sou…
+Final score: **78**
 [SIL][S400] Coordinate an evidence-backed distinction between formatting-only source writes and actual pixel changes in visual freshness; existing mandatory gate remains enforced. Future selection only.
 Why it matters: Coordinate an evidence-backed distinction between formatting-only sour is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Staging lineage tolerant of publisher data drift.
-Final score: **78**
+#### 4. [PRODUCT] Staging lineage tolerant of publisher data drift.
+Final score: **72**
 [SIL][S398] Staging lineage tolerant of publisher data drift.
 Why it matters: Staging lineage tolerant of publisher data drift. is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Gate srcset, CSS url(), redirect targets. Future only.
-Final score: **75**
+#### 5. [PRODUCT] Gate srcset, CSS url(), redirect targets. Future only.
+Final score: **69**
 [SIL][S396] Gate srcset, CSS url(), redirect targets. Future only.
 Why it matters: Gate srcset, CSS url(), redirect targets. Future only. is open, local, and unblocked — can ship this session.
 
-#### 5. [PRODUCT] Investigate timing classification of incoming pre-session same-identi…
-Final score: **72**
+### LATER
+
+#### 1. [PRODUCT] Investigate timing classification of incoming pre-session same-identi…
+Final score: **66**
 [SIL][S395][PROTOCOL/P2] Investigate timing classification of incoming pre-session same-identity automation after a pre-sync lock; preserve original failure. Future selection only.
 Why it matters: Investigate timing classification of incoming pre-session same-identit is open, local, and unblocked — can ship this session.
 
-### LATER
-
-#### 1. [VERIFY] Verify Studio Ops acceptance of the planning-artifact timing classifi…
-Final score: **71**
+#### 2. [VERIFY] Verify Studio Ops acceptance of the planning-artifact timing classifi…
+Final score: **65**
 [SIL][S399] Verify Studio Ops acceptance of the planning-artifact timing classification reproduction; delivered cargo does not prove an applied fix. Future only.
-Why it matters: Verify Studio Ops acceptance of the planning-artifact timing classific is a 5-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Verify Studio Ops acceptance of the planning-artifact timing classific is a 6-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check`
 
-#### 2. [INTELLIGENCE] Keep startup-generated genius-list drift distinguishable from selecte…
-Final score: **69**
+#### 3. [INTELLIGENCE] Keep startup-generated genius-list drift distinguishable from selecte…
+Final score: **63**
 [SIL][S394][PROTOCOL/P2] Keep startup-generated genius-list drift distinguishable from selected implementation in premise timing; preserve the original nonpassing receipt. Future selection only.
 Why it matters: Keep startup-generated genius-list drift distinguishable from selected keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
-
-#### 3. [PRODUCT] Assess cross-origin redirect handling in diagnostic HTTP commands wit…
-Final score: **63**
-[SIL][S394][RELIABILITY/P2] Assess cross-origin redirect handling in diagnostic HTTP commands with measured caller compatibility. Future selection only.
-Why it matters: Assess cross-origin redirect handling in diagnostic HTTP commands with is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -136,18 +134,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Consider response-body streaming only if measured remote readback mem…
-2. Post-push CI confirmation
-3. Consider native positive-manifest text parity as a separately reviewe…
-4. Extend method-specific corroboration coverage if additional signals a…
-5. Consider per-member byte verification only if source mutation during …
-6. Coordinate an evidence-backed distinction between formatting-only sou…
-7. Staging lineage tolerant of publisher data drift.
-8. Gate srcset, CSS url(), redirect targets. Future only.
-9. Investigate timing classification of incoming pre-session same-identi…
-10. Verify Studio Ops acceptance of the planning-artifact timing classifi…
-11. Keep startup-generated genius-list drift distinguishable from selecte…
-12. Assess cross-origin redirect handling in diagnostic HTTP commands wit…
+1. Consider migration of scheduled text probes only after measuring cove…
+2. Consider redirect-target body verification only if a real redirected …
+3. Consider response-body streaming only if measured remote readback mem…
+4. Consider native positive-manifest text parity as a separately reviewe…
+5. Extend method-specific corroboration coverage if additional signals a…
+6. Consider per-member byte verification only if source mutation during …
+7. Coordinate an evidence-backed distinction between formatting-only sou…
+8. Staging lineage tolerant of publisher data drift.
+9. Gate srcset, CSS url(), redirect targets. Future only.
+10. Investigate timing classification of incoming pre-session same-identi…
+11. Verify Studio Ops acceptance of the planning-artifact timing classifi…
+12. Keep startup-generated genius-list drift distinguishable from selecte…
 
 ## Best Immediate Move
 

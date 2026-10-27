@@ -11,8 +11,8 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last5 available totals):939 →939 →939 →939 →939
 Avgs (available rolling totals) —3:939.0 |5:939.0 |10:unmeasured |25:unmeasured |all:unmeasured
 Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session:2026-10-26 | Session 404 | Total:939/1000 | Velocity:2
-  └ Complete asset parity implemented; full release and closing state: docs/RELEASE_S404.json.
+Last session:2026-10-27 | Session 405 | Total:939/1000 | Velocity:1
+  └ Manifest text parity implemented; release and closing state: docs/RELEASE_S405.json.
 <!-- rolling-status-end -->
 
 > Older entries through S401 live verbatim in `context/archive/SIL_S1-S401.md` (exact committed pre-rotation snapshot). Recent complete entries follow.
@@ -2062,3 +2062,19 @@ S404 release pixel review found the fixed page-status ring crossing the News mob
 Full production a569b1ed3df3abb738193c24d93da6b7a4832cab accepted by workflow40435379890 and provider deployment89587749-d897-4033-b457-52ec2b56c93e. Current source547/547 and hosted3/3; staging11/11 and68/68 critical leaves; full static readback3607/3607 (3597 byte-identical,10 verified redirects), zero differences/unread. All5GitHub publishers and the owned nightly art task restored to their original states; uptime remained active. Ark cargo01K5THM0JDA067EE2251D9E1E0 sent; recipient adoption unverified. SIL939/1000 unchanged;2selected outcomes. No field/conversion/token gain claimed; existing independent identity/provider and field-vitals limitations remain.
 
 The rolling session/score header and both future unselected task rows remain the same.
+
+<!-- S405-closeout-writeback -->
+## Session 405 — 2026-10-27 — manifest text verification
+
+Intent: fresh arc with authorized main push and full deployment. Native --scope=served-text verifies known text extensions selected by the compared commit positive deployment manifest. Public portfolio/audits/proof JSON is covered; binary and manifest-excluded paths are omitted. Receipts bind the manifest digest and extension list. Legacy text default and complete all-served mode remain compatible.
+
+Focused HTTP/CLI cases4/4 and native self-tests19/19 passed; independent review approved with zero findings. Full source, current staging, exact hosted checks and full production readback remain pending in docs/RELEASE_S405.json.
+
+SIL v3.0 product rubric: devHealth:95 · creativeAlignment:94 · momentum:92 · engagement:96 · processQuality:88 · crossRepoCoherence:94 · securityPosture:97 · ecosystemIntegration:91 · capitalEfficiency:95 · automationCoverage:97. Total:939/1000; previous939 →939 (delta0); velocity1 implemented outcome. No measured product, conversion, field-performance or token-cost gain. Full end-to-end completion remains unproven until the release ledger is complete.
+
+Brainstorm commitments: evidence-led scheduled-caller migration and redirect-destination failure coverage. Both are future unselected SIL rows in TASK_BOARD. No new human creative direction; CDR reviewed without append.
+
+
+Website assessment S405: no UI or conversion flow changed; content freshness and polish remain subject to current release checks. Lab and field metrics are not interchangeable; no new field Core Web Vitals or conversion gain is claimed.
+
+S405 observed release prerequisite: receipt-only capture validation now loads Playwright only in actual capture mode. The deterministic CLI tripwire failed before repair and both focused cases passed afterward without changing timeout bounds. Actual normal capture produced28 reviewed source-bound views after repair; independent review PASS0. Two selected outcomes are locally accepted; production acceptance remains governed by docs/RELEASE_S405.json. SIL939/1000 unchanged, implementation velocity2; no field or conversion gain claimed.

@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S404 complete asset parity and rendered mobile kicker clearance; acceptance in docs/RELEASE_S404.json",
+  "currentFocus": "S405 served-text verification and receipt-only browser isolation; acceptance in docs/RELEASE_S405.json",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Verify current full source, browser, staging, exact hosted candidate and normal production; then finish canonical closeout.",
+  "nextMilestone": "Maintain the supported release; independent identity/provider and field-vitals gaps remain separate. Selected release acceptance is authoritative in docs/RELEASE_S405.json.",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -26,15 +26,15 @@
     "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action.",
     "Shared account KV write budget remains a risk from other writers. S387 isolates Trusted Types diagnostics; actual release and usage evidence is in docs/RELEASE_S387.json."
   ],
-  "lastUpdated": "2026-10-26",
-  "currentSession": 404,
+  "lastUpdated": "2026-10-27",
+  "currentSession": 405,
   "truthAuditStatus": "yellow",
-  "truthAuditLastRun": "2026-10-26",
+  "truthAuditLastRun": "2026-10-27",
   "silScore": 939,
   "silAvg3": 939,
   "silVelocity": 2,
   "silDebt": "stable",
-  "silLastSession": 404,
+  "silLastSession": 405,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -80,12 +80,12 @@
     }
   ],
   "vaultStatus": "SPARKED",
-  "ignisScore": 45412,
-  "ignisScoreDelta": 2,
+  "ignisScore": 45169,
+  "ignisScoreDelta": -243,
   "ignisGrade": "FORGE",
-  "ignisLastComputed": "2026-10-26T22:34:30.207Z",
-  "entropyScore": 0.174,
-  "entropyLastComputed": "2026-10-24",
+  "ignisLastComputed": "2026-10-27T02:57:54.018Z",
+  "entropyScore": 0.17,
+  "entropyLastComputed": "2026-10-27",
   "sessionMode": "founder",
   "sessionModeAutoShiftedAt": "2026-10-21T22:44:27.311Z",
   "silRubricVersion": "3.0",
@@ -255,7 +255,7 @@
     "docs/visual-qa/SPARK_HELD_MEMBERSHIP.json"
   ],
   "truthGenome": "23/25",
-  "lastSessionSummary": "S404 two local repairs; current full release acceptance pending in docs/RELEASE_S404.json",
+  "lastSessionSummary": "S405 two release-verification repairs locally accepted and independently reviewed; complete release evidence is authoritative in docs/RELEASE_S405.json.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
     "session": 403,
@@ -273,13 +273,13 @@
     "validation": "S395 served-text parity requires complete nonempty exactly-once coverage, committed redirect status/destination and strict CLI admission. Focused fixtures3/3, self-test19/19, existing regressions9/9 and independent review pass. The earlier actual npm full build/postbuild26/26 is retained as preintegration evidence. Fresh integrated36-node native-owner closure, declared news checks and two complete 545/545 runs plus current staging11/11 pass;84 manually inspected news captures across7themes at1440/390px and215 automated device probes retain their stated limits. Retired8442f8f4 failed hosted compliance atstep143 because WORK_LOG measured251KB against the250KB cap; native rotation moved0 for session-first headings, so older history was archived verbatim before corrected candidate16f6938f. Normal full production candidate c931cc736f70b524509378c1e35e1a69e8b3927d (run 39650067973) is verified by hosted checks, provider identity, both build stamps, complete served text,65 critical leaves on Pages/apex and exactly12 incoming news-image variants on both origins. This does not certify all binary assets. Original premise timing remains nonpassing; original baseline trace/context usage is unmeasured. Existing identity and field-vitals holds remain separate; no measured visitor or performance gain is claimed.",
     "releaseEvidence": "docs/RELEASE_S395.json"
   },
-  "lastSession": 404,
+  "lastSession": 405,
   "sessionState": {
     "version": 1,
-    "durableSession": 404,
-    "currentFocus": "S404 complete asset parity and rendered mobile kicker clearance; acceptance in docs/RELEASE_S404.json",
-    "nextMilestone": "Verify current full source, browser, staging, exact hosted candidate and normal production; then finish canonical closeout.",
-    "lastSessionSummary": "S404 two local repairs; current full release acceptance pending in docs/RELEASE_S404.json"
+    "durableSession": 405,
+    "currentFocus": "S405 served-text verification and receipt-only browser isolation; acceptance in docs/RELEASE_S405.json",
+    "nextMilestone": "Maintain the supported release; independent identity/provider and field-vitals gaps remain separate. Selected release acceptance is authoritative in docs/RELEASE_S405.json.",
+    "lastSessionSummary": "S405 two release-verification repairs locally accepted and independently reviewed; complete release evidence is authoritative in docs/RELEASE_S405.json."
   },
   "s378RecordRecovery": {
     "date": "2026-10-14",
@@ -328,7 +328,7 @@
     "detail": "Selected archive outcome fully released; canonical closeout passed; verify normal remote publication before native goal completion",
     "completedAt": "2026-10-24T06:15:54.641Z"
   },
-  "velocity": 1,
+  "velocity": 2,
   "arcProgress": {
     "session": 403,
     "phase": "release-accepted-publication-pending",
@@ -351,11 +351,11 @@
   "testsTotal": 547,
   "testsPassing": 547,
   "testsFailed": 0,
-  "testsLastRun": "2026-10-26",
+  "testsLastRun": "2026-10-27",
   "testsLabel": "measured build:check steps",
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "168aca2fd421335ab1ba63e7",
-  "testsSourceFingerprint": "ffc151f8e35ea3f7331d864f",
+  "testsSourceFingerprint": "e52ce81a7adb46229b49ba7c",
   "closeoutObservationAddendum": {
     "session": 400,
     "through": "35e5d5f181",
