@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 406,
-  "state": "local-source-accepted-staging-pending",
+  "state": "source548-and-metadata-accepted-staging-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
@@ -167,5 +167,21 @@
     "conflictsResolved": "Seven generated reports only; native producers recomputed from merged inputs. Both original local commits and upstream history retained.",
     "browser": "Fresh current70 manually reviewed views and215/215 mobile, with28premerge News baseline captures retained separately."
   },
-  "buildBatchPrerequisite": "docs/S406_build-batch-prerequisite.json"
+  "buildBatchPrerequisite": "docs/S406_build-batch-prerequisite.json",
+  "metadataReconciliation": {
+    "evidence": "docs/S406_uptime-reconciliation.json",
+    "mergeHead": "43b88bc7e68e82f008cb5aa0b0e8c2840dee5bb6",
+    "sourceUnchanged": true,
+    "sourceFingerprint": "1fc2aba6e8db81a6123bb43b",
+    "proofPassed": 109
+  },
+  "buildBatchVerification": {
+    "first": "docs/S406_first548-source.json",
+    "final": "docs/S406_full-source-acceptance.json",
+    "completeCommandsPerPass": 548,
+    "firstMaximumShare": 0.1883,
+    "finalMaximumShare": 0.1598,
+    "unchangedMaximumShare": 0.3,
+    "autopilotExit": 0
+  }
 }
