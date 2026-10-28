@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 406,
-  "state": "implementation-verified-release-pending",
+  "state": "local-source-accepted-staging-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
@@ -110,5 +110,20 @@
       }
     ],
     "acceptance": "Entire native547-command run and canonical autopilot still required; diagnostic rows never combined into complete proof."
+  },
+  "localSource": {
+    "evidence": "docs/S406_full-source-acceptance.json",
+    "passed": 547,
+    "total": 547,
+    "coverageComplete": true,
+    "sourceFingerprint": "e5fef8db0748fbb38bda66af",
+    "receiptId": "df2a54e907b8f674867db608"
+  },
+  "localAutopilot": {
+    "command": "node scripts/closeout-autopilot.mjs --yes --skip-push",
+    "exit": 0,
+    "head": "d22a9b51e44252298df0535f7541bb8e324eb891",
+    "log": ".cache/logs/S406-closeout-autopilot-attempt5.log",
+    "scope": "Canonical local closeout checks and commits; staging/push/full production still required."
   }
 }
