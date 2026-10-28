@@ -22,3 +22,11 @@ S406 source attempt1 retained in docs/S406_source-attempt1.json:125passing/126ex
 S406 observed release prerequisite: both canonical full and refresh-live-data profiles now run the existing Open Graph (OG) inventory producer before public status and candidate sealing. Actual inventory337/337eligible public pages carded,18dark,0untriaged; age0.0days and unchanged2day limit. Existing build-order43/43, invocation-mode10/10 and generator6/6 checks passed; independent review PASS0. Complete source/staging/hosted/production acceptance remains pending in docs/RELEASE_S406.json.
 
 Source attempt2 remains failed evidence:167passing of168executed/547planned. No timestamp-only repair, gate relaxation or skipped acceptance. Native OG recomputation and both profile entries fix the omitted producer. No UI, identity, pricing, lifecycle, trust-policy or dependency change. Rollback: bounded revert of the two profile entries. Local implementation velocity2; SIL939/1000unchanged, no product/conversion/field-performance or token-cost gain claimed.
+
+
+### S406 combined-candidate continuation
+
+Both premerge full547-command runs and the eleven-step staging ceremony passed; immutable intermediate evidence is retained under docs/S406_premerge-*.json. A completed independent Desk-art publisher and uptime commits advanced remote main, so normal merge4a9ef41d17 preserved them. Fresh current70 manually inspected theme/viewport captures and215/215 mobile checks now cover the combined candidate. Complete combined source, new staging/currentness, exact hosted checks, full production, all-served readback and publisher restoration remain pending in docs/RELEASE_S406.json. No remote push or production deployment has yet been claimed.
+
+S406 verification continuation: the second combined547-command run passed every command but failed the unchanged30% concentration ratchet at32.0% for its first16-file batch. The native plan now has548commands after a coverage-preserving8+8 split; unit parity and runner self-tests pass, independent review PASS0. Current70visual and215mobile bindings remain valid because no browser source changed. Complete548source/autopilot, current staging, exact hosted checks, full production/readback and publisher restoration remain pending in docs/RELEASE_S406.json.
+

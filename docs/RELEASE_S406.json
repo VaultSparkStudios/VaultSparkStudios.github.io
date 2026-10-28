@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 406,
-  "state": "upstream-reconciliation-required",
+  "state": "combined-batch-scheduling-repair-full548-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
@@ -39,11 +39,17 @@
   ],
   "browser": {
     "visual": "docs/S406_visual-acceptance.json",
-    "nativeVisual": "docs/visual-qa/S406-current.json",
-    "manuallyReviewed": 28,
+    "nativeVisual": "docs/visual-qa/S406-combined-news-tall.json",
+    "manuallyReviewed": 70,
     "mobile": "docs/S406_mobile-acceptance.json",
     "mobileCasesPassed": 215,
-    "mobileProbesExpected": 215
+    "mobileProbesExpected": 215,
+    "currentReceipts": [
+      "docs/visual-qa/S406-combined-home.json",
+      "docs/visual-qa/S406-combined-news-tall.json",
+      "docs/visual-qa/S406-combined-satire-tall.json"
+    ],
+    "before": "docs/visual-qa/S406-combined-before-news.json"
   },
   "sourceAttempts": [
     {
@@ -82,6 +88,19 @@
       "planned": 547,
       "failure": "Local closeout boundary required .cache/closeout-brief-406.json; current checkpoint existed under docs but local cache copy was absent.",
       "repair": "Restore exact current two-item checkpoint contract to its required ignored cache path. Pending-release wording preserved; focused boundary and remaining diagnostic commands then complete rerun required."
+    },
+    {
+      "state": "failed",
+      "evidence": "docs/S406_source-attempt6.json",
+      "passed": 547,
+      "failedCommands": 0,
+      "executed": 547,
+      "planned": 547,
+      "coverageComplete": true,
+      "concentrationBreached": true,
+      "autopilotExit": 1,
+      "failure": "All commands passed, but native concentration ratchet rejected the first monolithic unit batch at32.0% above30%.",
+      "repair": "Split exactly16existing unit files into two8-file native commands; preserve order, every subsequent command, tests, deadlines and ratchet. New complete plan548 must pass; no source acceptance from the rejected run."
     }
   ],
   "selectedAudits": [
@@ -143,6 +162,11 @@
   "upstreamReconciliation": {
     "observedRemote": "ebd13b6824762e67690ae548a7addfa867148b06",
     "reason": "Completed independent routine art publisher and uptime updates changed served files during local verification.",
-    "policy": "Preserve upstream via normal merge; no force-push. Combined source and affected browser bindings must be freshly verified before exact-candidate release."
-  }
+    "policy": "Preserve upstream via normal merge; no force-push. Combined source and affected browser bindings must be freshly verified before exact-candidate release.",
+    "mergeHead": "4a9ef41d179b6f04f160e96a5740074265057240",
+    "state": "normal-merge-complete-combined-source-and-release-pending",
+    "conflictsResolved": "Seven generated reports only; native producers recomputed from merged inputs. Both original local commits and upstream history retained.",
+    "browser": "Fresh current70 manually reviewed views and215/215 mobile, with28premerge News baseline captures retained separately."
+  },
+  "buildBatchPrerequisite": "docs/S406_build-batch-prerequisite.json"
 }

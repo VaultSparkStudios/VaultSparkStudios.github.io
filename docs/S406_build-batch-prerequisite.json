@@ -1,0 +1,50 @@
+{
+  "session": 406,
+  "observedAt": "2026-10-28T22:01:42.705Z",
+  "scope": "Required release-verification scheduling repair; no new product feature or independent selected L2 outcome.",
+  "premise": {
+    "artifact": "docs/S406_source-attempt6.json",
+    "allCommandsPassed": 547,
+    "failedCommands": 0,
+    "overallAutopilotExit": 1,
+    "concentrationBreached": true,
+    "dominantStep": 1,
+    "dominantDurationMs": 309163,
+    "dominantShare": 0.32,
+    "unchangedMaximumShare": 0.3
+  },
+  "change": {
+    "file": "package.json",
+    "script": "build:check:steps",
+    "beforeCommands": 547,
+    "afterCommands": 548,
+    "beforeFirstBatchFiles": [
+      "tests/ledger-rotation.unit.spec.mjs",
+      "tests/staging-archive.unit.spec.mjs",
+      "tests/offline-recovery.unit.spec.mjs",
+      "tests/offline-navigation.unit.spec.mjs",
+      "tests/deploy-parity.unit.spec.mjs",
+      "tests/news-article-css.unit.spec.mjs",
+      "tests/news-kicker-clearance.unit.spec.mjs",
+      "tests/served-parity.unit.spec.mjs",
+      "tests/served-binary-parity.unit.spec.mjs",
+      "tests/operational-admission.unit.spec.mjs",
+      "tests/moderation-admission.unit.spec.mjs",
+      "tests/public-rest-canary.unit.spec.mjs",
+      "tests/metadata-backfill.unit.spec.mjs",
+      "tests/heartbeat-snapshot.unit.spec.mjs",
+      "tests/rollback-archive.unit.spec.mjs",
+      "tests/diagnostic-help.unit.spec.mjs"
+    ],
+    "afterFirstTwoBatches": [
+      "node --test tests/ledger-rotation.unit.spec.mjs tests/staging-archive.unit.spec.mjs tests/offline-recovery.unit.spec.mjs tests/offline-navigation.unit.spec.mjs tests/deploy-parity.unit.spec.mjs tests/news-article-css.unit.spec.mjs tests/news-kicker-clearance.unit.spec.mjs tests/served-parity.unit.spec.mjs",
+      "node --test tests/served-binary-parity.unit.spec.mjs tests/operational-admission.unit.spec.mjs tests/moderation-admission.unit.spec.mjs tests/public-rest-canary.unit.spec.mjs tests/metadata-backfill.unit.spec.mjs tests/heartbeat-snapshot.unit.spec.mjs tests/rollback-archive.unit.spec.mjs tests/diagnostic-help.unit.spec.mjs"
+    ],
+    "allOriginalFilesRetainedOnceAndInOrder": true,
+    "allFollowingCommandsByteIdentical": true,
+    "testUnitScriptUnchanged": true,
+    "timeLimitsUnchanged": true,
+    "ratchetUnchanged": true
+  },
+  "acceptance": "Both new batches must pass; existing plan and unit parity checks must pass; fresh complete548-command source and native autopilot exit0 still required. No complete proof is assembled from partial runs."
+}

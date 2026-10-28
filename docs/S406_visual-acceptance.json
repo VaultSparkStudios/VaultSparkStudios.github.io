@@ -1,10 +1,91 @@
 {
   "session": 406,
-  "capturedAt": "2026-10-28T16:57:58.153Z",
-  "reviewedAt": "2026-10-28T17:07:41.909Z",
-  "sourceSha256": "c7d14997f4b30dc88712681d2683b34fafb65857a63de56ad9d2d8044afac5b2",
-  "nativeReceipt": "docs/visual-qa/S406-current.json",
-  "manuallyReviewed": 28,
+  "reviewedAt": "2026-10-28T21:10:16.867Z",
+  "nativeReceipt": "docs/visual-qa/S406-combined-news-tall.json",
+  "currentReceipts": [
+    {
+      "name": "home",
+      "nativeReceipt": "docs/visual-qa/S406-combined-home.json",
+      "originalCaptureAt": "2026-10-28T21:00:45.214Z",
+      "reviewedAt": "2026-10-28T21:10:06.960Z",
+      "count": 28,
+      "reviewer": "/root/review_help",
+      "sourceSha256": "21cc42a5387f17de5c4df6ff6d3e0a9cf518b1f03d35aba450012403f48893e9",
+      "candidate": {
+        "manifest": "api/candidate-artifact-manifest.json",
+        "manifestSha256": "09018cb8fcb74a3bac7f4335b8c703f9e224fec5b86ac5f61b8bfae89e9a41fb",
+        "candidateSha": "39f37e36f8e2b0ae8f602201a4ee79afe338df67",
+        "root": "b2554f1798fdbab25d090c2a81b72f713d2dfb0c17c47094fd97343ae40fdfbe"
+      },
+      "viewports": [
+        {
+          "name": "desktop",
+          "width": 1366,
+          "height": 900
+        },
+        {
+          "name": "mobile",
+          "width": 390,
+          "height": 844
+        }
+      ]
+    },
+    {
+      "name": "news",
+      "nativeReceipt": "docs/visual-qa/S406-combined-news-tall.json",
+      "originalCaptureAt": "2026-10-28T21:07:20.248Z",
+      "reviewedAt": "2026-10-28T21:10:07.961Z",
+      "count": 28,
+      "reviewer": "/root",
+      "sourceSha256": "b0d7eb87a22390164f5b2b7e499fa6289e0ff84b6fce4bf650738ba989188c9a",
+      "candidate": {
+        "manifest": "api/candidate-artifact-manifest.json",
+        "manifestSha256": "09018cb8fcb74a3bac7f4335b8c703f9e224fec5b86ac5f61b8bfae89e9a41fb",
+        "candidateSha": "39f37e36f8e2b0ae8f602201a4ee79afe338df67",
+        "root": "b2554f1798fdbab25d090c2a81b72f713d2dfb0c17c47094fd97343ae40fdfbe"
+      },
+      "viewports": [
+        {
+          "name": "desktop",
+          "width": 1366,
+          "height": 1400
+        },
+        {
+          "name": "mobile",
+          "width": 390,
+          "height": 1600
+        }
+      ]
+    },
+    {
+      "name": "satire",
+      "nativeReceipt": "docs/visual-qa/S406-combined-satire-tall.json",
+      "originalCaptureAt": "2026-10-28T21:06:58.949Z",
+      "reviewedAt": "2026-10-28T21:10:08.595Z",
+      "count": 14,
+      "reviewer": "/root",
+      "sourceSha256": "6504b27127bf11366b9e3eddf31dea9e8a711f5a81c207c83386430134764e0b",
+      "candidate": {
+        "manifest": "api/candidate-artifact-manifest.json",
+        "manifestSha256": "09018cb8fcb74a3bac7f4335b8c703f9e224fec5b86ac5f61b8bfae89e9a41fb",
+        "candidateSha": "39f37e36f8e2b0ae8f602201a4ee79afe338df67",
+        "root": "b2554f1798fdbab25d090c2a81b72f713d2dfb0c17c47094fd97343ae40fdfbe"
+      },
+      "viewports": [
+        {
+          "name": "desktop",
+          "width": 1366,
+          "height": 1400
+        },
+        {
+          "name": "mobile",
+          "width": 390,
+          "height": 1600
+        }
+      ]
+    }
+  ],
+  "manuallyReviewed": 70,
   "themes": [
     "dark",
     "light",
@@ -14,46 +95,51 @@
     "lava",
     "high-contrast"
   ],
-  "routes": [
-    "/",
-    "/evidence/"
-  ],
-  "viewports": [
-    {
-      "name": "desktop",
-      "width": 1366,
-      "height": 900
-    },
-    {
-      "name": "mobile",
-      "width": 390,
-      "height": 844
-    }
-  ],
-  "method": "Inspected all28 actual captured views in seven per-theme contact sheets with original image detail; additionally inspected full light desktop home. Labels are contact-sheet overlays only; source PNGs unchanged.",
-  "observations": [
-    "Home and Evidence headings and body copy are readable in all seven themes.",
-    "Mobile header, controls and hero content have no observed overlap or horizontal clipping.",
-    "Evidence navigation and cards remain visually distinct."
-  ],
-  "blockingDefectsObserved": 0,
-  "scope": "Current above-fold page states; no new UI changes and no claim to all below-fold/modal states. Full215case mobile contract is separate.",
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "6ea0316b786b69676cc44758038a1c823b9e875506154155d103978b16fc8396",
+    "manifestSha256": "09018cb8fcb74a3bac7f4335b8c703f9e224fec5b86ac5f61b8bfae89e9a41fb",
     "candidateSha": "39f37e36f8e2b0ae8f602201a4ee79afe338df67",
     "root": "b2554f1798fdbab25d090c2a81b72f713d2dfb0c17c47094fd97343ae40fdfbe"
   },
-  "metadataRebind": {
-    "reason": "Committed-source staging stamp refreshed; source bytes and all28 manually reviewed pixel hashes independently reverified unchanged.",
-    "previousCandidate": {
+  "blockingDefectsObserved": 0,
+  "before": {
+    "name": "before",
+    "nativeReceipt": "docs/visual-qa/S406-combined-before-news.json",
+    "originalCaptureAt": "2026-10-28T21:01:36.373Z",
+    "reviewedAt": "2026-10-28T21:10:10.451Z",
+    "count": 28,
+    "reviewer": "/root/review_help",
+    "sourceSha256": "f6b9f85a5ddb958eccf6b1c2d3229559956790096ac9f997be43222d787d6bcd",
+    "candidate": {
       "manifest": "api/candidate-artifact-manifest.json",
-      "manifestSha256": "d2129cd229fd62856e4ccec767cbfb95222fa42e8f7fae226874a68ac4269c3d",
-      "candidateSha": "ac84b49477206927908368812dd0684e1a78da63",
-      "root": "00cbb677b1ac91b7f3da302285290a3fb7cbd8dd5ae4ecbadf71b684abcb67f0"
+      "manifestSha256": "6ea0316b786b69676cc44758038a1c823b9e875506154155d103978b16fc8396",
+      "candidateSha": "39f37e36f8e2b0ae8f602201a4ee79afe338df67",
+      "root": "b2554f1798fdbab25d090c2a81b72f713d2dfb0c17c47094fd97343ae40fdfbe"
     },
-    "originalCaptureTime": "2026-10-28T17:07:32.568Z",
-    "remeasured": false
+    "viewports": [
+      {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "baselineCommit": "01c148e5e6",
+    "scope": "Actual new renders of the committed premerge variant at their recorded times; not earlier observation timestamps. Existing S406-current28captures separately preserve Home/Evidence before evidence."
   },
-  "metadataReboundAt": "2026-10-28T20:40:57.626Z"
+  "renderedLoop": {
+    "observation": "Initial focused satire crops included fixed navigation over part of the panel.",
+    "correction": "Recaptured focused News/art/satire at desktop1366x1400 and mobile390x1600 so the complete panels fit below navigation. Standard Home/Evidence and215-case mobile audit retain their native heights.",
+    "after": "All42 taller current focused captures inspected directly at original detail; no blocking defect observed. Initial crops remain archived, automated-only."
+  },
+  "method": "Actual view_image original-detail inspection of all70 accepted current PNGs through native-pixel contact sheets: reviewer Home/Evidence28, root News28+satire14; reviewer also inspected28premerge News baseline captures. Native receipt-only marks only these named, hash-checked files.",
+  "limitations": [
+    "Only captured page/panel states are accepted; open comment/modal and whole-app coverage are not claimed.",
+    "Lead-card cover treatment trims poster edge decorations; the full illustration is visible in its story panel.",
+    "No new art generation or creative/IP approval is claimed; upstream reviewed artwork was preserved by normal merge."
+  ]
 }

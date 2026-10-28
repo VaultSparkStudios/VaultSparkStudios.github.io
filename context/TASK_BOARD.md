@@ -5,8 +5,9 @@
 Session Intent: fresh /arc, authorized direct main commit/push and full deployment.
 
 - [x] Wave 1: Fresh startup and nine-axis supported-release audit; typed premises2/2 and pending admission/rehearsal accepted.
-- [x] Wave 2: diagnostic-help-safety L2; process checks8/8, independent review PASS0.
-- [ ] Wave 3: Canonical closeout, complete current source, staging, exact hosted checks, full production and all-served readback; authoritative docs/RELEASE_S406.json.
+- [x] Wave 2: Two L2 reliability repairs locally verified: diagnostic-help safety and canonical OG inventory refresh; focused checks and independent reviews PASS0. Deployment acceptance remains separate.
+
+Wave 3 live state and final reconciliation are owned by `docs/RELEASE_S406.json`. Canonical closeout, current complete source, staging, exact hosted checks, full production, all-served readback and publisher restoration are all required there; an intermediate source or staging pass alone is not completion. This board delegates the phase's current completion status to that ledger.
 
 Future unselected SIL commitments:
 - [ ] [S406][SIL] Consider extending help-only process fixtures to another operator CLI only after reproducing its side effects.

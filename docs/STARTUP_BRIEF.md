@@ -73,7 +73,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         547/547 passing (2026-10-27)                   ║
+║  ✓  Tests         547/547 passing (2026-10-28)                   ║
 ║  ✓  Velocity      2 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   3d                                             ║
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Wave 3: Canonical closeout, complete curre  ║
-║        Wave 3: Canonical closeout, complete current source, sta  ║
-║                                                                  ║
-║   96  [SECURITY]     Measure help startup separately from probe  ║
+║   99  [SECURITY]     Measure help startup separately from probe  ║
 ║        Measure help startup separately from probe execution bef  ║
+║                                                                  ║
+║   96  [PRODUCT]      Consider extending help-only process fixtu  ║
+║        Consider extending help-only process fixtures to another  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Consider extending help-only process fixtu  ║
-║        Consider extending help-only process fixtures to another  ║
-║                                                                  ║
-║   87  [PRODUCT]      Consider migration of scheduled text probe  ║
+║   90  [PRODUCT]      Consider migration of scheduled text probe  ║
 ║        Consider migration of scheduled text probes only after m  ║
+║                                                                  ║
+║   87  [PRODUCT]      Consider redirect-target body verification  ║
+║        Consider redirect-target body verification only if a rea  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
