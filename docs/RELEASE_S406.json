@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 406,
-  "state": "local-source-accepted-staging-pending",
+  "state": "upstream-reconciliation-required",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
@@ -117,7 +117,8 @@
     "total": 547,
     "coverageComplete": true,
     "sourceFingerprint": "e5fef8db0748fbb38bda66af",
-    "receiptId": "df2a54e907b8f674867db608"
+    "receiptId": "df2a54e907b8f674867db608",
+    "state": "premerge-only-combined-candidate-reverification-required"
   },
   "localAutopilot": {
     "command": "node scripts/closeout-autopilot.mjs --yes --skip-push",
@@ -125,5 +126,23 @@
     "head": "d22a9b51e44252298df0535f7541bb8e324eb891",
     "log": ".cache/logs/S406-closeout-autopilot-attempt5.log",
     "scope": "Canonical local closeout checks and commits; staging/push/full production still required."
+  },
+  "premerge": {
+    "head": "469f18efa5500b4346fef92a3d7bc0605c50c0e5",
+    "sourcePasses": [
+      "docs/S406_premerge-first-source-pass.json",
+      "docs/S406_premerge-full-source.json"
+    ],
+    "fullCommandsPerPass": 547,
+    "staging": "docs/S406_premerge-staging-deploy.json",
+    "ceremony": "docs/S406_premerge-staging-ceremony.json",
+    "ceremonyPassed": 11,
+    "localPipelineExit": 0,
+    "scope": "Verified local source and staging before independent upstream art/uptime publications. Not acceptance for the combined candidate."
+  },
+  "upstreamReconciliation": {
+    "observedRemote": "ebd13b6824762e67690ae548a7addfa867148b06",
+    "reason": "Completed independent routine art publisher and uptime updates changed served files during local verification.",
+    "policy": "Preserve upstream via normal merge; no force-push. Combined source and affected browser bindings must be freshly verified before exact-candidate release."
   }
 }
