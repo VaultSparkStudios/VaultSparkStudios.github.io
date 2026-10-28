@@ -1096,3 +1096,19 @@ S405 release evidence refresh: the first full-source run stopped at167/547 passi
 ### D-S405.2 — Isolate browser loading from receipt validation
 
 S405 observed release prerequisite: receipt-only capture validation now loads Playwright only in actual capture mode. The deterministic CLI tripwire failed before repair and both focused cases passed afterward without changing timeout bounds. Actual normal capture produced28 reviewed source-bound views after repair; independent review PASS0. Two selected outcomes are locally accepted; production acceptance remains governed by docs/RELEASE_S405.json. SIL939/1000 unchanged, implementation velocity2; no field or conversion gain claimed.
+
+
+<!-- S406-closeout-writeback -->
+## D-S406.1 — 2026-10-28 — help before diagnostic effects
+
+Reuse printHelpIfRequested from the existing local cli-contract library. Both aliases take precedence over other flags before health checks/self-tests, remediation, status writes or Git/worktree operations. Actual copied CLI processes use a throwing child-process boundary, filesystem snapshots and both operational/self-test controls;8/8pass. Existing normal behavior remains. Rollback is a bounded revert; no dependency or service is introduced.
+
+CANON-045 STRONG gap remains separately justified: unchanged identity/auth/trust contracts, no provider acceptance claimed. Full release remains in docs/RELEASE_S406.json. Canon-sync transport timeouts were retained and subject-correct direct pending propagation/adoption suggestion subsequently completed. Context remains unmeasured, never inferred green. Strict premises and pending admission preceded behavior edits; planning/startup dirty paths stay in timing diagnostics.
+
+
+<!-- S406-og-freshness -->
+### S406 coverage freshness release prerequisite
+
+S406 observed release prerequisite: both canonical full and refresh-live-data profiles now run the existing Open Graph (OG) inventory producer before public status and candidate sealing. Actual inventory337/337eligible public pages carded,18dark,0untriaged; age0.0days and unchanged2day limit. Existing build-order43/43, invocation-mode10/10 and generator6/6 checks passed; independent review PASS0. Complete source/staging/hosted/production acceptance remains pending in docs/RELEASE_S406.json.
+
+Source attempt2 remains failed evidence:167passing of168executed/547planned. No timestamp-only repair, gate relaxation or skipped acceptance. Native OG recomputation and both profile entries fix the omitted producer. No UI, identity, pricing, lifecycle, trust-policy or dependency change. Rollback: bounded revert of the two profile entries. Local implementation velocity2; SIL939/1000unchanged, no product/conversion/field-performance or token-cost gain claimed.

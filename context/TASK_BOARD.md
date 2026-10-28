@@ -1,3 +1,19 @@
+<!-- S406-closeout-writeback -->
+
+## S406 selected arc outcome
+
+Session Intent: fresh /arc, authorized direct main commit/push and full deployment.
+
+- [x] Wave 1: Fresh startup and nine-axis supported-release audit; typed premises2/2 and pending admission/rehearsal accepted.
+- [x] Wave 2: diagnostic-help-safety L2; process checks8/8, independent review PASS0.
+- [ ] Wave 3: Canonical closeout, complete current source, staging, exact hosted checks, full production and all-served readback; authoritative docs/RELEASE_S406.json.
+
+Future unselected SIL commitments:
+- [ ] [S406][SIL] Consider extending help-only process fixtures to another operator CLI only after reproducing its side effects.
+- [ ] [S406][SIL] Measure help startup separately from probe execution before attempting runtime optimization. No performance or token saving is currently claimed.
+
+---
+
 <!-- S405-closeout-writeback -->
 ## S405 selected outcome
 
@@ -20,19 +36,6 @@ Wave 3 release verification and Wave 4 final publication are tracked in docs/REL
 Wave 1 complete: new invocation startup, fresh nine-axis audit, strict typed premises and candidate admission.
 Wave 2 complete locally: complete inventory, efficient binary hashing, real HTTP/CLI fixtures and corrected independent review.
 Wave 3 release and Wave 4 closeout/publication acceptance have their authoritative state in docs/RELEASE_S404.json. Local verification alone proves neither.
-
-
-
-## S403 outcome and release evidence — preservation-safe ledger rotation
-
-- [x] [S403] Session-headed ledger rotation: focused 4/4 and existing 19/19 checks pass; independent review round2 approved. Full release verified; canonical closing state is authoritative in docs/RELEASE_S403.json.
-
-Wave 1 complete: startup, fresh nine-axis audit, strict premises and candidate admission.
-Wave 2 complete locally: dated heading recognition, UTF-8 budgets, exact preimage archives and retention regressions.
-Wave 3 complete: full source checks, staging and authorized full production release.
-Wave 4 canonical closeout and publication: authoritative state in docs/RELEASE_S403.json, waves[3].
-
-<!-- S402-closeout-writeback -->
 ## Session 402 selected outcome
 
 - [x] [S402] Recovered-route duration and method-scoped corroboration fully accepted; docs/RELEASE_S402.json.
@@ -44,7 +47,6 @@ Waves1–3 complete. Wave4 canonical closeout and publication have their authori
 
 - [x] [S401] Archive membership and gzip integrity fully accepted: 10/10 fixtures, independent CRC correction,13934-file staging,547/547 source checks, hosted3/3 and normal full production. docs/RELEASE_S401.json.
 - [ ] [SIL][S401] Consider per-member byte verification only if source mutation during packaging is observed; not selected in this arc.
-
 ## S400 — reference integrity and persona readability
 
 Wave 1 · Startup and fresh audits — complete.
@@ -59,7 +61,6 @@ Release and closeout are complete only when the corresponding ledger waves are c
 
 - [x] [SIL][S400][S401] Pre-upload archive membership verification implemented in both staging publishers, with streaming gzip integrity and 10 actual-tar regressions. Original S400 omission retained; real deployment acceptance tracked in docs/RELEASE_S401.json.
 - [ ] [SIL][S400] Coordinate an evidence-backed distinction between formatting-only source writes and actual pixel changes in visual freshness; existing mandatory gate remains enforced. Future selection only.
-
 ## S399
 
 Wave 1 · Spark reading clearance — done.
@@ -71,13 +72,11 @@ Wave 4 · S399 closeout records, checks, publication and cleanup — done. Relea
 
 - [x] Both fixes: docs/AUDIT_2026-10-23-S399.md.
 - [x] Full deployment and canonical closeout verified: docs/RELEASE_S399.json.
-
 ## S398 — SI, offline gate
 
 - [x] [S398] SI, bare-si gate, offline test; docs/RELEASE_S398.json.
 - [x] [SIL][S398] Spark buddy overlap repaired and browser-gated in S399.
 - [ ] [SIL][S398] Staging lineage tolerant of publisher data drift.
-
 ## S397 — offline reliability
 
 - [x] [S397 #1-2] Origin-confirmed recovery and public precache navigation; docs/AUDIT_2026-10-22-S397.md.
@@ -85,18 +84,14 @@ Wave 4 · S399 closeout records, checks, publication and cleanup — done. Relea
 - [x] [SIL][S397] Origin-down test, S398.
 
 - [ ] [SIL][S397] Reuse the canonical Pages broker in deploy-currency provider observations; the current Worker-token Pages probe returns403. Future selection only.
-
 ## S396 — dead internal references fixed and gated
 
 Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
 
 - [ ] [SIL][S396] Gate srcset, CSS url(), redirect targets. Future only.
-
 ## S395 — complete served coverage and full deployment
 
 Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
-
-
 
 - [ ] [SIL][S395][PROTOCOL/P2] Investigate timing classification of incoming pre-session same-identity automation after a pre-sync lock; preserve original failure. Future selection only.
 - [ ] [SIL][S395][VERIFY/P2] Separately assess served binary coverage against real release risk; current verifier explicitly measures tracked served text. Future selection only.
@@ -104,20 +99,14 @@ Session Intent: /arc then I authorize a direct push/commit to main/remote and fu
 Waves1–3 product outcomes verified. Closing acceptance is recorded in docs/RELEASE_S395.json. Existing future SIL rows remain unselected.
 
 The closing release also carries the article stylesheet correction. Its acceptance and retained prior hosted failures are recorded in docs/RELEASE_S395.json.
-
 ## S394 — truthful shell parity and full release
 
 Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
-
-
 
 - [ ] [SIL][S394][PROTOCOL/P2] Keep startup-generated genius-list drift distinguishable from selected implementation in premise timing; preserve the original nonpassing receipt. Future selection only.
 - [ ] [SIL][S394][RELIABILITY/P2] Assess cross-origin redirect handling in diagnostic HTTP commands with measured caller compatibility. Future selection only.
 
 Waves 1–4 product outcomes verified. Closing status publication is recorded in docs/RELEASE_S394.json. Future SIL items are unselected.
-
-
-
 ## S393 — rank-report integrity and authorized full release
 
 Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
@@ -750,10 +739,7 @@ Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
 
 ### S369 — Expanded Desk delivery
 
-
 ### S369 closeout record reconciliation
-
-
 
 ### S369 requested newsletter experience
 
@@ -764,10 +750,7 @@ Eight older completed technical tasks are preserved in context/archive/TASK_BOAR
 
 ### 2026-10-07 requested follow-through
 
-
 ### S370 explicit final closeout
-
-
 
 - [ ] **[SIL/P2 · future maintenance]** Make candidate-manifest changes select the existing receipt-ordering check before push, including metadata-only rebuilds; retain source/image guards and original review dates.
 
@@ -788,7 +771,6 @@ Wave 1 ✔ fresh audit. Wave 2 ✔ two input-boundary fixes. Wave 3 ◻ release 
 
 ### S393 release-dependent theme outcome
 
-
 Both selected local outcomes are accepted. Whole-project and release checks remain pending; no prior-session acceptance is borrowed.
 
 - [ ] [S401 FOLLOW-UP] Diagnose live-browser simulated origin-outage ERR_FAILED and Sparked QA entitlement mismatch; both reproduce on prior immutable release with unchanged code. Retained in docs/RELEASE_S401.json; not selected for this archive-integrity arc.
@@ -797,3 +779,11 @@ Both selected local outcomes are accepted. Whole-project and release checks rema
 - [ ] [SIL][S403] Verify Studio Ops adoption of the rotated-ledger pattern after Ark delivery; transport alone does not prove adoption. Future, unselected.
 
 - [x] [S405] receipt-only-browser-isolation L2: deterministic CLI negative tests2/2 and normal28-frame capture independently reviewed. Complete release acceptance remains in docs/RELEASE_S405.json.
+
+
+<!-- S406-og-freshness -->
+### S406 coverage freshness release prerequisite
+
+S406 observed release prerequisite: both canonical full and refresh-live-data profiles now run the existing Open Graph (OG) inventory producer before public status and candidate sealing. Actual inventory337/337eligible public pages carded,18dark,0untriaged; age0.0days and unchanged2day limit. Existing build-order43/43, invocation-mode10/10 and generator6/6 checks passed; independent review PASS0. Complete source/staging/hosted/production acceptance remains pending in docs/RELEASE_S406.json.
+
+Source attempt2 remains failed evidence:167passing of168executed/547planned. No timestamp-only repair, gate relaxation or skipped acceptance. Native OG recomputation and both profile entries fix the omitted producer. No UI, identity, pricing, lifecycle, trust-policy or dependency change. Rollback: bounded revert of the two profile entries. Local implementation velocity2; SIL939/1000unchanged, no product/conversion/field-performance or token-cost gain claimed.

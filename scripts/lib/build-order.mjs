@@ -41,6 +41,7 @@ export const DERIVED_BUILD_ORDER = [
   { script: 'build-nervous-system.mjs',        timeout: 30000, why: 'reads api/ outputs refreshed above' },
   { script: 'build-ignis-search-index.mjs',    timeout: 30000, why: 'indexes content refreshed above' },
   { script: 'build-analytics-summary.mjs',     timeout: 30000, why: 'reads RUM/event data' },
+  { script: 'build-og-coverage.mjs',           timeout: 60000, why: 'recomputes share-card inventory before status and proof freshness checks' },
   // S335: `full` was a strict subset of `refresh-live-data` and omitted this
   // step, so a closeout cascade left api/public-status.json stale and
   // build:check failed one step later. A profile named full must be full.
@@ -67,6 +68,7 @@ export const REFRESH_LIVE_DATA_ORDER = [
   { script: 'build-public-ecosystem.mjs', timeout: 30000, why: 'projects the refreshed public catalog into the canonical ecosystem feed' },
   { script: 'probe-canonical-destinations.mjs', timeout: 30000, why: 'samples destinations from the refreshed ecosystem feed' },
   { script: 'build-llms-full-shards.mjs', timeout: 60000, why: 'rebuilds agent discovery shards from the refreshed ecosystem feed' },
+  { script: 'build-og-coverage.mjs', timeout: 60000, why: 'keeps share-card inventory current between full closeouts, before public status and sealing' },
   { script: 'build-public-status.mjs', timeout: 30000, why: 'projects public intelligence into public status' },
   { script: 'build-commit-map.mjs', timeout: 30000, why: 'refreshes git-history activity' },
   { script: 'build-feedback-provenance.mjs', timeout: 30000, why: 'projects the refreshed commit map into feedback evidence' },

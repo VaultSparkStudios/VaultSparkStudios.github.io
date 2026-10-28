@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-28 (Session 405 closeout) -->
-<!-- semantic-freshness: hash=e4733fc3d65492c2 next=406 silSession=405 silScore=939 handoff=405 tests=- -->
+<!-- generated-at: 2026-10-28 (Session 406 closeout) -->
+<!-- semantic-freshness: hash=475f5cc8352ac49d next=407 silSession=406 silScore=939 handoff=406 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 405 closeout · 2026-10-28.
+> **Fast-boot brief** — generated at Session 406 closeout · 2026-10-28.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 406 · 2026-10-28 · FOUNDER MODE                         ║
+║  Session 407 · 2026-10-28 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S405) - WHAT SHIPPED ══════════════════════════╗
-║  S405 two release-verification repairs locally accepted and ind  ║
+╔══ LAST SESSION (S406) - WHAT SHIPPED ══════════════════════════╗
+║  S406 two bounded reliability outcomes locally verified and ind  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
 ║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2→                          ║
-║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest…   ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
 ║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -61,14 +61,14 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 405 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 406 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    547/547 passing  ·  Deploy: verified                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -77,18 +77,18 @@
 ║  ✓  Velocity      2 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   3d                                             ║
-║  ✓  IGNIS         45169 FORGE  ·  1d old                         ║
-║  ⛔  Truth         yellow — S405 implementation verified;…        ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
+║  ✓  IGNIS         44828 FORGE  ·  0d old                         ║
+║  ⛔  Truth         yellow — S406 implementation verified; full…   ║
+║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.170  (healthy)                               ║
+║  ✓  Entropy       0.173  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ✓  Revenue sig.  4d old (2026-10-24)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
+║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
+║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  4/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Consider migration of scheduled text probe  ║
+║   96  [PRODUCT]      Wave 3: Canonical closeout, complete curre  ║
+║        Wave 3: Canonical closeout, complete current source, sta  ║
+║                                                                  ║
+║   96  [SECURITY]     Measure help startup separately from probe  ║
+║        Measure help startup separately from probe execution bef  ║
+║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
+║   93  [PRODUCT]      Consider extending help-only process fixtu  ║
+║        Consider extending help-only process fixtures to another  ║
+║                                                                  ║
+║   87  [PRODUCT]      Consider migration of scheduled text probe  ║
 ║        Consider migration of scheduled text probes only after m  ║
-║                                                                  ║
-║   93  [PRODUCT]      Consider redirect-target body verification  ║
-║        Consider redirect-target body verification only if a rea  ║
-║                                                                  ║
-║   90  [PRODUCT]      Consider response-body streaming only if m  ║
-║        Consider response-body streaming only if measured remote  ║
-║                                                                  ║
-║   87  [PRODUCT]      Consider native positive-manifest text par  ║
-║        Consider native positive-manifest text parity as a separ  ║
-║                                                                  ║
-║   84  [PRODUCT]      Extend method-specific corroboration cover  ║
-║        Extend method-specific corroboration coverage if additio  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 405 closeout · 2026-10-28*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 406 closeout · 2026-10-28*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

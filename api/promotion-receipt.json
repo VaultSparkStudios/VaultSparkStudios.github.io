@@ -4,19 +4,19 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "9c416ed8b09a36ef939d63d1855805085b41c7fb",
+    "sha": "ac84b49477206927908368812dd0684e1a78da63",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "a569b1ed3df3abb738193c24d93da6b7a4832cab",
-    "contentLaneHead": null,
+    "sha": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+    "contentLaneHead": "59abdec9314eb61be1427af655e60d8a15e5ea84",
     "reachable": true,
-    "reconciliation": "ahead",
+    "reconciliation": "content-lane-match",
     "shellParity": {
       "state": "matched",
-      "observedAt": "2026-10-27T02:25:48.717Z",
-      "ageHours": 3.2,
+      "observedAt": "2026-10-28T15:37:48.689Z",
+      "ageHours": 4.1,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -89,10 +89,10 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production serves a569b1ed, newer than the recorded promoted 9c416ed8 (benign — a later rebuild moved on)",
+    "production build sha c06161b6 is the content-lane baseline; served contentLaneHead 59abdec9 is at/after promoted ac84b494 and shell parity was observed 'matched' at 2026-10-28T15:37:48.689Z (current)",
     "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-10-27T05:37:36.617Z",
+  "generatedAt": "2026-10-28T19:43:01.835Z",
   "history": {
     "window": 20,
     "gradable": 20,
@@ -100,7 +100,7 @@
     "reconciledPct": 0,
     "lastStrandedAt": "2026-10-25T23:13:02.653Z",
     "currentBehindStreak": 0,
-    "newestGradableAt": "2026-10-27T05:37:36.617Z",
+    "newestGradableAt": "2026-10-28T19:43:01.835Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,

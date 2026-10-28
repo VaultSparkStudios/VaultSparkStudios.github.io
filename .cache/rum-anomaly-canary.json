@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-10-01T00:00:00.000Z",
+  "generatedAt": "2026-10-02T00:00:00.000Z",
   "windowDays": 7,
   "minSamples": 50,
   "evidenceState": "stale",
@@ -8,29 +8,47 @@
   "status": "stale",
   "ok": null,
   "coverage": {
-    "totalRows": 307,
-    "observedRoutes": 16,
+    "totalRows": 304,
+    "observedRoutes": 15,
     "sufficientRoutes": 0,
-    "latestDay": "2026-10-01",
+    "latestDay": "2026-10-02",
     "latestAgeDays": 26,
     "freshnessMaxDays": 7,
     "currentFresh": false
   },
   "comparison": {
     "basis": "last-known-observation",
-    "latestStart": "2026-09-25",
-    "latestEndExclusive": "2026-10-02",
-    "previousStart": "2026-09-18"
+    "latestStart": "2026-09-26",
+    "latestEndExclusive": "2026-10-03",
+    "previousStart": "2026-09-19"
   },
   "routes": {
     "/": {
-      "currentSamples": 8,
+      "currentSamples": 7,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 2156,
-        "clsP75": 0.0131,
+        "lcpP75": 3642,
+        "clsP75": 0.01175,
         "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/": {
+      "currentSamples": 10,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 540,
+        "clsP75": 0.0024000000000000002,
+        "inpP75": 96
       },
       "previous": {
         "lcpP75": null,
@@ -42,48 +60,12 @@
       "status": "insufficient"
     },
     "/games/gridiron-gm/": {
-      "currentSamples": 51,
+      "currentSamples": 49,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 1280,
-        "clsP75": 0.0031999999999999997,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/vaultfront/": {
-      "currentSamples": 2,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 568,
-        "clsP75": 0.00025,
-        "inpP75": 40
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/security/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 1596,
-        "clsP75": 0,
+        "lcpP75": 1340,
+        "clsP75": 0.0035,
         "inpP75": 0
       },
       "previous": {
@@ -100,27 +82,9 @@
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 1468,
-        "clsP75": 0.0041,
-        "inpP75": 48
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/": {
-      "currentSamples": 7,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 516,
-        "clsP75": 0.0022,
-        "inpP75": 88
+        "lcpP75": 1556,
+        "clsP75": 0.00405,
+        "inpP75": 56
       },
       "previous": {
         "lcpP75": null,
@@ -240,13 +204,31 @@
       "status": "insufficient"
     },
     "/games/call-of-doodie/": {
-      "currentSamples": 6,
+      "currentSamples": 11,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 2204,
-        "clsP75": 0.0323,
-        "inpP75": 104
+        "lcpP75": 1770,
+        "clsP75": 0.0312,
+        "inpP75": 52
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/vaultfront/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 652,
+        "clsP75": 0.0005,
+        "inpP75": 80
       },
       "previous": {
         "lcpP75": null,

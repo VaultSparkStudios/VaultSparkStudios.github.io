@@ -1,0 +1,292 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-10-28",
+  "generatedAt": "2026-10-28T16:30:17.334Z",
+  "session": 406,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S406 supported-release audit, implement selected diagnostic safety outcome and authorized full deployment.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 1,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s406-features-depth-0",
+          "premise": "Portfolio drilldown",
+          "evidence": "projects/ already exposes project details; no reproduced missing journey."
+        },
+        {
+          "slug": "s406-features-depth-1",
+          "premise": "New member dashboard",
+          "evidence": "vault-portal/ already owns member journeys; no demonstrated missing outcome."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s406-ui-ux-feedback-0",
+          "premise": "Navigation replacement",
+          "evidence": "Existing assets shell, theme and mobile contracts retained; no demonstrated interface failure in sampled pages."
+        },
+        {
+          "slug": "s406-ui-ux-feedback-1",
+          "premise": "New feedback inbox",
+          "evidence": "Existing page-feedback payload and Desk comments have dedicated tests and routes; no missing collection path reproduced."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s406-gamification-immersion-0",
+          "premise": "Rank rebalance",
+          "evidence": "Existing membership tiers and portal logic are covered; no evidence authorizes economy changes."
+        },
+        {
+          "slug": "s406-gamification-immersion-1",
+          "premise": "New streak feature",
+          "evidence": "No measured retention failure or requested economy expansion; preserve SOUL non-negotiables."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s406-ai-intelligence-0",
+          "premise": "Proof-aware search explanation",
+          "evidence": "Novel candidate; existing agents.json and evidence discovery already expose proof; no demonstrated information gap."
+        },
+        {
+          "slug": "s406-ai-intelligence-1",
+          "premise": "Adaptive portfolio route",
+          "evidence": "Novel candidate; pathways and intent-map builders already cover route discovery without paid inference."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s406-security-0",
+          "premise": "Identity replacement",
+          "evidence": "Existing STRONG CANON-045 gap is known and unchanged; security-flow changes require escalation and are outside this routine stabilization."
+        },
+        {
+          "slug": "s406-security-1",
+          "premise": "Archive validation",
+          "evidence": "Existing rollback archive and deployment admission fixtures cover traversal and provenance; no new defect reproduced."
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s406-speed-organization-efficiency-0",
+          "premise": "Response-body streaming",
+          "evidence": "No measured memory threshold; recent one-call Git inventory already reduces startup cost."
+        }
+      ]
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s406-token-cost-0",
+          "premise": "Audit context compression",
+          "evidence": "Existing task-slice bounded audit context is present and exercised this session; no new token claim."
+        },
+        {
+          "slug": "s406-token-cost-1",
+          "premise": "Cross-run inference memoization",
+          "evidence": "Novel candidate; selected deterministic repair has no paid inference or measured repeated inference workload."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s406-observability-honesty-0",
+          "premise": "Manifest text parity",
+          "evidence": "Already shipped S405; inspected served-text and all-served selectors; no repeat implementation."
+        },
+        {
+          "slug": "s406-observability-honesty-1",
+          "premise": "Method-aware corroboration",
+          "evidence": "Conditional historical SIL item; no new method or source mutation evidence reproduced."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s406-sil-debt-0",
+          "premise": "Redirect target bodies",
+          "evidence": "Conditional follow-up lacks reproduced target failure; do not expand verifier spec without evidence."
+        },
+        {
+          "slug": "s406-sil-debt-1",
+          "premise": "Worktree diagnostics help",
+          "evidence": "Consolidated into selected help-safety outcome; same actual CLI defect and shared acceptance boundary."
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "diagnostic-help-safety",
+      "title": "Make diagnostic help side-effect free",
+      "axis": "speed-organization-efficiency",
+      "tier": "⚡",
+      "impact": 6,
+      "innovation": 3,
+      "effortHours": 1.5,
+      "priority": 9.95930560197202,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "why": "Both run-doctor and verify-clean-checkout ignore --help. Usage lookup starts probes or worktree verification; mutation flags can write status or invoke remediation.",
+      "recipe": "Add early --help/-h dispatch to both existing CLIs before probes, self-test or mutations. Add actual CLI fixture tests with throwing spawn boundary and filesystem sentinels. Register in native unit/build lane; preserve normal health, self-test and worktree behavior.",
+      "acceptance": "Both help aliases exit 0 with accurate usage, with no subprocesses or writes, including alongside --fix --loop --update-json --json --self-test and --keep --ref --from. Existing self-tests pass and normal CLI execution still crosses the probe boundary.",
+      "userOutcome": "Operators can find the supported diagnostic/release commands without starting checks, mutating status or creating a worktree; public release reliability is preserved.",
+      "readinessArea": "supported-release operator safety",
+      "stageRationale": "Fix a reproduced operational regression before adding product breadth.",
+      "premises": [
+        {
+          "claim": "Doctor CLI has no long help dispatch",
+          "adapter": "file-content",
+          "target": "scripts/run-doctor.mjs",
+          "pattern": "includes('--help')",
+          "operator": "eq",
+          "expected": false
+        },
+        {
+          "claim": "Clean checkout CLI has no long help dispatch",
+          "adapter": "file-content",
+          "target": "scripts/verify-clean-checkout.mjs",
+          "pattern": "includes('--help')",
+          "operator": "eq",
+          "expected": false
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Add explicit usage guards to both scripts."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Guard help before side effects and exercise actual processes, conflicting flags and normal/self-test compatibility in existing native lanes."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Extend bounded CLI help contract to all deployer families after separately verifying their current dispatch; not selected."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-28T16:47:21.238Z",
+          "status": "shipped",
+          "depth": "L2",
+          "note": "Local process8/8, both before tripwires reproduced, native unit/build lane registered; independent studio-reviewer PASS0. Full deployment remains separate in docs/RELEASE_S406.json.",
+          "verification": "docs/S406_implementation.json",
+          "ignis": "No inferred score gain; recipient-owned refresh follows."
+        }
+      ]
+    }
+  ],
+  "executionLog": [],
+  "research": {
+    "internalFirst": "Existing run-doctor/verify-clean-checkout, safe-spawn and Node built-in test runner reused. Studio Ops INTERNAL_TOOLS inspected; no new tool or dependency needed.",
+    "market": "No docs/market/MARKET.json exists. No competitor claims; market research remains a separate recommendation and is not selected for this operational repair.",
+    "sourceSample": [
+      "scripts/run-doctor.mjs",
+      "scripts/verify-clean-checkout.mjs",
+      "scripts/check-served-parity.mjs",
+      "scripts/check-audit-premises.mjs",
+      "scripts/check-production-promotion-gate.mjs",
+      "scripts/lib/safe-spawn.mjs",
+      "scripts/lib/skill-brief.mjs",
+      "package.json",
+      "config/served-surface.json",
+      "projects/index.html",
+      "vault-portal/index.html",
+      "agents.json",
+      "tests/membership-tiers.unit.spec.mjs",
+      "tests/portal-logic.unit.spec.mjs",
+      "tests/page-feedback-payload.unit.spec.js",
+      "tests/rollback-archive.unit.spec.mjs",
+      "tests/deployment-admission.unit.spec.mjs",
+      "assets/theme-toggle.js"
+    ],
+    "liveReproduction": "docs/S406_help-before.json"
+  },
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-28T16:31:59.292Z",
+    "head": "310a17514618abb630cb0620c8d4423bc9483670",
+    "sidecar": "docs/AUDIT_2026-10-28-S406.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "d003316163116fb18c365fa0b92d43022282b9cd5e6b0bef772b30399df5a264",
+    "implementationDirty": [
+      "docs/S406_admission.json",
+      "docs/S406_audit-brief.json",
+      "docs/S406_audit-brief.md",
+      "docs/S406_help-before.json",
+      "docs/S406_plan-brief.json",
+      "docs/S406_plan-brief.md"
+    ]
+  },
+  "totals": {
+    "count": 1,
+    "priority": 9.95930560197202,
+    "top3": [
+      "diagnostic-help-safety"
+    ]
+  },
+  "canonicalAxisMapping": {
+    "feature-depth": "features-depth",
+    "new-innovative-features": "ai-intelligence",
+    "ux": "ui-ux-feedback",
+    "feedback-loop": "ui-ux-feedback",
+    "gamification-engagement": "gamification-immersion",
+    "ai-integration": "ai-intelligence",
+    "security": "security",
+    "speed-organization": "speed-organization-efficiency",
+    "token-api-reduction": "token-cost"
+  }
+}

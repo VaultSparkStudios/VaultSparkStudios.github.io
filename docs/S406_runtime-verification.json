@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "session": 406,
+  "observedAt": "2026-10-28T19:07:28.981Z",
+  "failedAttempt": "docs/S406_source-attempt3.json",
+  "failure": "One unchanged isolated-compactor child exceeded its existing10000ms deadline; first source command passed, second failed. Full source remains unaccepted.",
+  "isolation": {
+    "originalRuntime": "Targeted compactor test passed unchanged in isolation,1/1; same child deadlines.",
+    "existingRuntimeOption": "VAULTSPARK_FAST_NODE=1",
+    "completeFile": {
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0
+    },
+    "compatibilityReview": "Independent static caller audit PASS0; exact executable substitution preserves arguments, guards and deadlines. No adjacent npm/npx assumption found in project callers."
+  },
+  "identity": {
+    "version": "v24.14.0",
+    "sha256": "63c259c81e5d472b5f11c8d506070130cb04a1ecf84b80377a34ed6ec9048088",
+    "bothExecutablesRehashed": true,
+    "downloadOrInstall": false
+  },
+  "measurement": {
+    "state": "path-tax",
+    "measured": true,
+    "samples": 5,
+    "installedMs": 1286.5861,
+    "controlMs": 210.9078,
+    "floorMs": 50.7754,
+    "taxMs": 1075.6783,
+    "ratio": 6.100230053132221,
+    "scope": "Separate sequential benchmark after focused trial completed; startup timing only, no cause attribution or suite savings inferred."
+  },
+  "bounds": "No test/source edits, deadline increases, AV changes, persistent environment changes or acceptance from focused results. Entire native547-command verification must pass."
+}

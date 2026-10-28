@@ -1463,3 +1463,17 @@ Wave 1 complete: startup and fresh audit. Wave 2 complete: both selected L2 outc
 
 ## S400 addendum — 2026-10-24: recovered closing observation updates through 35e5d5f181. Five post-closeout commits reconcile heartbeat/status projections, cadence wording and UTC day counters. Production remains the independently accepted 06d632056f candidate; later main observations were not redeployed. No new behavior, score or acceptance claim is introduced. Recovery is separate from the fresh S401 arc.
 
+
+
+<!-- rotated 2026-10-28 · sessions < 404 · 1 block(s) -->
+
+## S403 outcome and release evidence — preservation-safe ledger rotation
+
+- [x] [S403] Session-headed ledger rotation: focused 4/4 and existing 19/19 checks pass; independent review round2 approved. Full release verified; canonical closing state is authoritative in docs/RELEASE_S403.json.
+
+Wave 1 complete: startup, fresh nine-axis audit, strict premises and candidate admission.
+Wave 2 complete locally: dated heading recognition, UTF-8 budgets, exact preimage archives and retention regressions.
+Wave 3 complete: full source checks, staging and authorized full production release.
+Wave 4 canonical closeout and publication: authoritative state in docs/RELEASE_S403.json, waves[3].
+
+<!-- S402-closeout-writeback -->

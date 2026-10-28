@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "session": 406,
+  "state": "implementation-verified-release-pending",
+  "releaseAccepted": false,
+  "goal": {
+    "threadId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
+    "createdAt": 1793204515
+  },
+  "audit": "docs/AUDIT_2026-10-28-S406.json",
+  "startHead": "310a17514618abb630cb0620c8d4423bc9483670",
+  "waves": [
+    {
+      "id": 1,
+      "state": "complete",
+      "outcome": "Fresh startup and nine-axis audit; typed premises2/2, pending admission and fixture rehearsal accepted."
+    },
+    {
+      "id": 2,
+      "state": "complete",
+      "outcome": "Two bounded L2 reliability outcomes locally verified: help safety and missing OG inventory producer; independent review PASS0 for both. Full source and release acceptance remain separate."
+    },
+    {
+      "id": 3,
+      "state": "in-progress",
+      "outcome": "Full canonical closeout, current source, staging, exact hosted checks, authorized full production, all-served readback and publisher restoration pending."
+    }
+  ],
+  "implementation": "docs/S406_implementation.json",
+  "publishers": "docs/S406_publisher-window.json",
+  "rollback": {
+    "candidate": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+    "procedure": "Normal bounded revert and redeploy prior accepted production; never force-push."
+  },
+  "limitations": [
+    "No UI/auth/pricing/lifecycle/trust-policy changes.",
+    "No field-performance, conversion, availability or token-cost gain claimed.",
+    "Existing independent identity/provider and field-vitals limits remain separate."
+  ],
+  "browser": {
+    "visual": "docs/S406_visual-acceptance.json",
+    "nativeVisual": "docs/visual-qa/S406-current.json",
+    "manuallyReviewed": 28,
+    "mobile": "docs/S406_mobile-acceptance.json",
+    "mobileCasesPassed": 215,
+    "mobileProbesExpected": 215
+  },
+  "sourceAttempts": [
+    {
+      "state": "failed",
+      "evidence": "docs/S406_source-attempt1.json",
+      "passed": 125,
+      "executed": 126,
+      "planned": 547,
+      "failure": "New test was named in both native lanes but not yet staged, so the tracked-file parity gate correctly refused it at step126.",
+      "repair": "Stage the actual test and current authorized changes; targeted parity check and complete rerun required. No gate or test is removed."
+    },
+    {
+      "state": "failed",
+      "evidence": "docs/S406_source-attempt2.json",
+      "passed": 167,
+      "executed": 168,
+      "planned": 547,
+      "failure": "Step168 proof-surface gate rejected OG coverage aged3days against2day freshness requirement.",
+      "repair": "Recompute actual image inventory and include its existing generator in both canonical closeout/refresh profiles before status and candidate sealing. No timestamp edit or freshness relaxation."
+    },
+    {
+      "state": "failed",
+      "evidence": "docs/S406_source-attempt3.json",
+      "passed": 1,
+      "executed": 2,
+      "planned": 547,
+      "failure": "Unchanged compactor fixture child exceeded10000ms spawn deadline.",
+      "repair": "Use existing hash-verified same-binary runtime opt-in for command only; original fixture deadlines retained. Isolated original test1/1 and opted-in entire file8/8 pass; full rerun required.",
+      "runtimeEvidence": "docs/S406_runtime-verification.json"
+    },
+    {
+      "state": "failed",
+      "evidence": "docs/S406_source-attempt4.json",
+      "passed": 233,
+      "executed": 234,
+      "planned": 547,
+      "failure": "Local closeout boundary required .cache/closeout-brief-406.json; current checkpoint existed under docs but local cache copy was absent.",
+      "repair": "Restore exact current two-item checkpoint contract to its required ignored cache path. Pending-release wording preserved; focused boundary and remaining diagnostic commands then complete rerun required."
+    }
+  ],
+  "selectedAudits": [
+    "docs/AUDIT_2026-10-28-S406.json",
+    "docs/AUDIT_2026-10-28-S406-og-freshness.json"
+  ],
+  "ogFreshness": "docs/S406_og-implementation.json",
+  "ogFocusedPreflight": "docs/S406_og-proof-preflight.json",
+  "remainingDiagnostics": {
+    "state": "completed-with-repairs-not-full-acceptance",
+    "first": "docs/S406_remaining-attempt1.json",
+    "last": "docs/S406_remaining-diagnostic.json",
+    "lastPassed": 111,
+    "lastFirstStep": 437,
+    "fullCoverage": false,
+    "repairs": [
+      {
+        "issue": "Missing ignored closeout cache",
+        "evidence": "Exact current docs/S406_closeout-brief.json copied to .cache/closeout-brief-406.json; native boundary passes. Pending-release wording retained."
+      },
+      {
+        "issue": "Rank report74h exceeds unchanged48h freshness gate",
+        "action": "Existing build-rank-climbers.mjs performed actual successful provider query; original identity/opt-in filters retained.",
+        "observedAt": "2026-10-28T19:32:36.513Z",
+        "publicClimbers": 0
+      }
+    ],
+    "acceptance": "Entire native547-command run and canonical autopilot still required; diagnostic rows never combined into complete proof."
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "kind": "audit",
+  "session": 406,
+  "date": "2026-10-28",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Make diagnostic help side-effect free",
+  "items": [
+    {
+      "id": 1,
+      "slug": "diagnostic-help-safety",
+      "title": "Make diagnostic help side-effect free",
+      "axis": "speed-organization-efficiency",
+      "leftScore": 6,
+      "rightScore": 3,
+      "insight": "Both run-doctor and verify-clean-checkout ignore --help. Usage lookup starts probes or worktree verification; mutation flags can write status or invoke remediation.",
+      "evidence": "Both help aliases exit 0 with accurate usage, with no subprocesses or writes, including alongside --fix --loop --update-json --json --self-test and --keep --ref --from. Existing self-tests pass and normal CLI execution still crosses the probe boundary."
+    }
+  ],
+  "blockers": [],
+  "followUps": []
+}

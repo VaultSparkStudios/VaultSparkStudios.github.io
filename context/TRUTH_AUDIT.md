@@ -73,7 +73,7 @@ Overall status remains yellow for existing identity/field-evidence holds. Origin
 
 ## S395 — complete scoped release and closing publication verified
 
-Overall status: yellow — S405 implementation verified; release acceptance in docs/RELEASE_S405.json; independent identity/field-vitals holds retained.
+Overall status: yellow — S406 implementation verified; full release pending in docs/RELEASE_S406.json; independent identity/field-vitals holds retained.
 
 S395 complete: one selected served-text coverage outcome is verified and released. Productc931cc736f70b524509378c1e35e1a69e8b3927d (run39650067973) and closing14466ce38c0c0e6e1b33c6c6816a086e7b6e9085 (run39678958995) each passed their own complete nonempty served-text sweep, exact hosted checks/provider identity/full-normal steps/both build stamps,65 product critical leaves and66 closing critical leaves on Pages/apex,12 incoming image variants per origin and source-bound shell readback. Closing source passed actual545/545 and current staging11/11. This is fresh whole-text closing evidence, not a baseline-plus-delta substitute. Binary scope remains12 incoming variants, and apex critical transport normalization remains narrowly declared. Original timing failure, absent original instrumentation, retired failed candidates and actual performance-attempt history remain retained. SIL935/1000 and velocity1 are unchanged; two future SIL rows remain unselected.
 
@@ -1827,3 +1827,21 @@ The static contract covers every resource selected by the committed positive dep
 S405 observed release prerequisite: receipt-only capture validation now loads Playwright only in actual capture mode. The deterministic CLI tripwire failed before repair and both focused cases passed afterward without changing timeout bounds. Actual normal capture produced28 reviewed source-bound views after repair; independent review PASS0. Two selected outcomes are locally accepted; production acceptance remains governed by docs/RELEASE_S405.json. SIL939/1000 unchanged, implementation velocity2; no field or conversion gain claimed.
 
 S405 final release acceptance — 2026-10-27T07:09:21.510Z: both selected L2 outcomes released at c06161b6aa3bd398bc7ced0a42d88979eb60697f. Native closeout completed with two full547/547passes (source e52ce81a7adb46229b49ba7c); mobile215/215 and28 manually reviewed seven-theme desktop/mobile captures; canonical full staging11/11 and final candidate68/68; required hosted3/3; successful full production run40464609207 with six actual deployment steps. Complete canonical readback3608/3608,3598byte-identical plus10verified redirects,0differences/0unread; new served-text scope1332/1332,1322identical plus10redirects. Provider and immutable/pages.dev/apex stamps verified. All5GitHub publishers and the owned nightly art task restored; uptime active. SIL939/1000 unchanged, implementation velocity2. Existing identity/provider and field-vitals holds stay separate; no new field, conversion or token-savings claim. Final authoritative evidence: docs/RELEASE_S405.json.
+
+
+<!-- S406-closeout-writeback -->
+## S406 verification posture — 2026-10-28
+
+Both diagnostic CLIs now show help before health probes, self-tests, remediation, status writes or temporary-worktree operations. The existing shared helper is reused. Actual process tests8/8 passed, including throwing spawn boundaries, unchanged filesystem snapshots, both aliases and conflicting flags. Independent review PASS0. Full-source, current staging, exact hosted checks, full deployment and complete live readback remain pending in docs/RELEASE_S406.json.
+
+The earlier --help observation actually ran the full Doctor lane; it completed15/17with0blocking failures and2advisories. This is observed behavior, not usage output. Both pre-repair copied CLI processes failed at the child-spawn tripwire. The initial broader test run overlapped the edit and is not claimed as a complete before baseline; the independent before receipt and current8/8after pass are authoritative.
+
+No ABSOLUTE canon gap; unchanged CANON-045 STRONG gap remains justified. Original sync's timeouts are not passes: direct subsequent propagation and adoption suggestion/check completed. Future SIL ideas are unselected; native goal completion remains unproven until full release and closeout evidence are accepted.
+
+
+<!-- S406-og-freshness -->
+### S406 coverage freshness release prerequisite
+
+S406 observed release prerequisite: both canonical full and refresh-live-data profiles now run the existing Open Graph (OG) inventory producer before public status and candidate sealing. Actual inventory337/337eligible public pages carded,18dark,0untriaged; age0.0days and unchanged2day limit. Existing build-order43/43, invocation-mode10/10 and generator6/6 checks passed; independent review PASS0. Complete source/staging/hosted/production acceptance remains pending in docs/RELEASE_S406.json.
+
+Source attempt2 remains failed evidence:167passing of168executed/547planned. No timestamp-only repair, gate relaxation or skipped acceptance. Native OG recomputation and both profile entries fix the omitted producer. No UI, identity, pricing, lifecycle, trust-policy or dependency change. Rollback: bounded revert of the two profile entries. Local implementation velocity2; SIL939/1000unchanged, no product/conversion/field-performance or token-cost gain claimed.

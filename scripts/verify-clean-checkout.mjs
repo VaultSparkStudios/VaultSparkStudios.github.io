@@ -32,6 +32,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from './lib/safe-spawn.mjs';
+import { printHelpIfRequested } from './lib/cli-contract.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
@@ -108,6 +109,17 @@ function selfTest() {
 }
 
 function main() {
+  if (printHelpIfRequested(args, [
+    'Usage: node scripts/verify-clean-checkout.mjs [--ref=COMMIT] [--from=STEP] [--keep]',
+    '       node scripts/verify-clean-checkout.mjs --self-test',
+    '       node scripts/verify-clean-checkout.mjs --help | -h',
+    '',
+    'Runs build:check in a detached temporary worktree (default ref: HEAD).',
+    '--from=STEP  Start at a build-check step; this is partial verification.',
+    '--keep       Keep the temporary worktree for inspection.',
+    '--self-test  Exercise path and teardown safety without a build.',
+    'Help takes precedence over all other flags and creates no worktree or files.',
+  ].join('\n'))) return;
   if (args.includes('--self-test')) return selfTest();
   const ref = option('--ref', 'HEAD');
   const resolved = git(['rev-parse', '--verify', `${ref}^{commit}`]);

@@ -1,3 +1,12 @@
+<!-- S406-closeout-writeback -->
+## S406 diagnostic help safety
+
+Both diagnostic CLIs now show help before health probes, self-tests, remediation, status writes or temporary-worktree operations. The existing shared helper is reused. Actual process tests8/8 passed, including throwing spawn boundaries, unchanged filesystem snapshots, both aliases and conflicting flags. Independent review PASS0. Full-source, current staging, exact hosted checks, full deployment and complete live readback remain pending in docs/RELEASE_S406.json.
+
+No UI, identity, pricing, lifecycle or trust-policy changes. Existing independent identity/provider and field-vitals limits remain separate.
+
+---
+
 <!-- S405-final-release-writeback -->
 ## S405 final release acceptance
 
@@ -87,3 +96,11 @@ Full production a569b1ed3df3abb738193c24d93da6b7a4832cab accepted by workflow404
 Authoritative closing evidence: docs/RELEASE_S404.json. The dated served audit is an implementation checkpoint; this ledger records final production acceptance.
 
 S405 observed release prerequisite: receipt-only capture validation now loads Playwright only in actual capture mode. The deterministic CLI tripwire failed before repair and both focused cases passed afterward without changing timeout bounds. Actual normal capture produced28 reviewed source-bound views after repair; independent review PASS0. Two selected outcomes are locally accepted; production acceptance remains governed by docs/RELEASE_S405.json. SIL939/1000 unchanged, implementation velocity2; no field or conversion gain claimed.
+
+
+<!-- S406-og-freshness -->
+### S406 coverage freshness release prerequisite
+
+S406 observed release prerequisite: both canonical full and refresh-live-data profiles now run the existing Open Graph (OG) inventory producer before public status and candidate sealing. Actual inventory337/337eligible public pages carded,18dark,0untriaged; age0.0days and unchanged2day limit. Existing build-order43/43, invocation-mode10/10 and generator6/6 checks passed; independent review PASS0. Complete source/staging/hosted/production acceptance remains pending in docs/RELEASE_S406.json.
+
+Source attempt2 remains failed evidence:167passing of168executed/547planned. No timestamp-only repair, gate relaxation or skipped acceptance. Native OG recomputation and both profile entries fix the omitted producer. No UI, identity, pricing, lifecycle, trust-policy or dependency change. Rollback: bounded revert of the two profile entries. Local implementation velocity2; SIL939/1000unchanged, no product/conversion/field-performance or token-cost gain claimed.

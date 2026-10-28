@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "2.0",
+  "generatedAt": "2026-10-28T18:53:25.046Z",
+  "publicSafe": true,
+  "source": "scripts/run-build-check.mjs",
+  "commandCount": 2,
+  "plannedCommandCount": 547,
+  "firstStep": 1,
+  "coverageComplete": false,
+  "planFingerprint": "4ef2c48398b8033f11eb34b9",
+  "sourceFingerprint": "e5fef8db0748fbb38bda66af",
+  "passed": 1,
+  "failed": 1,
+  "totalDurationMs": 655472,
+  "startedAt": "2026-10-28T18:42:11.468Z",
+  "finishedAt": "2026-10-28T18:53:25.046Z",
+  "slowest": [
+    {
+      "step": 2,
+      "command": "node --test tests/deployment-admission.unit.spec.mjs",
+      "status": 1,
+      "durationMs": 369001,
+      "error": null
+    },
+    {
+      "step": 1,
+      "command": "node --test tests/ledger-rotation.unit.spec.mjs tests/staging-archive.unit.spec.mjs tests/offline-recovery.unit.spec.mjs tests/offline-navigation.unit.spec.mjs tests/deploy-parity.unit.spec.mjs tests/news-article-css.unit.spec.mjs tests/news-kicker-clearance.unit.spec.mjs tests/served-parity.unit.spec.mjs tests/served-binary-parity.unit.spec.mjs tests/operational-admission.unit.spec.mjs tests/moderation-admission.unit.spec.mjs tests/public-rest-canary.unit.spec.mjs tests/metadata-backfill.unit.spec.mjs tests/heartbeat-snapshot.unit.spec.mjs tests/rollback-archive.unit.spec.mjs tests/diagnostic-help.unit.spec.mjs",
+      "status": 0,
+      "durationMs": 286471,
+      "error": null
+    }
+  ],
+  "concentration": {
+    "maxStepShare": 0.3,
+    "minActionableStepMs": 45000,
+    "dominantStep": 2,
+    "dominantCommand": "node --test tests/deployment-admission.unit.spec.mjs",
+    "dominantDurationMs": 369001,
+    "dominantShare": 0.563,
+    "breached": true
+  },
+  "failures": [
+    {
+      "step": 2,
+      "command": "node --test tests/deployment-admission.unit.spec.mjs",
+      "status": 1,
+      "durationMs": 369001,
+      "error": null
+    }
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "command": "node --test tests/ledger-rotation.unit.spec.mjs tests/staging-archive.unit.spec.mjs tests/offline-recovery.unit.spec.mjs tests/offline-navigation.unit.spec.mjs tests/deploy-parity.unit.spec.mjs tests/news-article-css.unit.spec.mjs tests/news-kicker-clearance.unit.spec.mjs tests/served-parity.unit.spec.mjs tests/served-binary-parity.unit.spec.mjs tests/operational-admission.unit.spec.mjs tests/moderation-admission.unit.spec.mjs tests/public-rest-canary.unit.spec.mjs tests/metadata-backfill.unit.spec.mjs tests/heartbeat-snapshot.unit.spec.mjs tests/rollback-archive.unit.spec.mjs tests/diagnostic-help.unit.spec.mjs",
+      "status": 0,
+      "durationMs": 286471,
+      "error": null
+    },
+    {
+      "step": 2,
+      "command": "node --test tests/deployment-admission.unit.spec.mjs",
+      "status": 1,
+      "durationMs": 369001,
+      "error": null
+    }
+  ],
+  "note": "Public-safe build gate timing, plan identity, coverage, and direct exit-code summary. Command output is intentionally excluded.",
+  "receiptId": "20e97ff69466b4bef0adf200"
+}

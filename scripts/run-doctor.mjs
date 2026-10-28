@@ -14,9 +14,24 @@
 
 import { spawnSync } from './lib/safe-spawn.mjs';
 import { parseScheduledProbe } from './lib/scheduled-probe-result.mjs';
+import { printHelpIfRequested } from './lib/cli-contract.mjs';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+
+if (printHelpIfRequested(process.argv.slice(2), [
+  'Usage: node scripts/run-doctor.mjs [--json] [--update-json] [--fix | --loop]',
+  '       node scripts/run-doctor.mjs --self-test',
+  '       node scripts/run-doctor.mjs --help | -h',
+  '',
+  'Runs project health checks; exits nonzero on blocking failures.',
+  '--json         Print structured results (suppresses remediation).',
+  '--update-json  Write doctorScore to context/PROJECT_STATUS.json.',
+  '--fix          Attempt known remedies after checking.',
+  '--loop         Check and attempt remedies up to five times.',
+  '--self-test    Run parser self-tests without health probes.',
+  'Help takes precedence over all other flags and performs no checks or writes.',
+].join('\n'))) process.exit(0);
 
 const __dirname  = path.dirname(fileURLToPath(import.meta.url));
 const ROOT       = path.resolve(__dirname, '..');
