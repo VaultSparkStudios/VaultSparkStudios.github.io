@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-28T06:42:57.208Z",
+  "generatedAt": "2026-10-28T06:43:54.678Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -178,7 +178,7 @@
       "value": 78,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-10-28T06:42:57.208Z",
+      "computedAt": "2026-10-28T06:43:53.996Z",
       "source": "/api/status-proof.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/status-proof.json",
@@ -187,7 +187,7 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-10-28T06:42:57.208Z",
+      "observedThrough": "2026-10-28T06:43:53.996Z",
       "freshnessState": "fresh",
       "category": "trust",
       "format": "percent",
@@ -199,7 +199,7 @@
       "value": 0,
       "unitOrDenominator": "accepted anonymous route-performance observations",
       "period": "7 complete UTC days",
-      "computedAt": "2026-10-27T06:01:38.106Z",
+      "computedAt": "2026-10-28T06:43:54.678Z",
       "source": "/api/analytics-summary.json",
       "sourceType": "vaultspark-rum",
       "sourceDataset": "data/rum-history.ndjson",
@@ -208,14 +208,14 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-10-27",
+      "observedThrough": "2026-10-28",
       "freshnessState": "fresh",
       "category": "performance",
       "format": "integer",
       "privacySafe": true,
       "window": {
-        "start": "2026-10-20",
-        "endExclusive": "2026-10-27",
+        "start": "2026-10-21",
+        "endExclusive": "2026-10-28",
         "days": 7,
         "timezone": "UTC"
       },
@@ -234,7 +234,7 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-10-28T06:42:57.208Z",
+      "computedAt": "2026-10-28T06:43:53.996Z",
       "values": {
         "fresh": 14,
         "stale": 4,
@@ -255,10 +255,6 @@
   "history": {
     "performanceSamplesDaily": [
       {
-        "day": "2026-09-27",
-        "samples": 3
-      },
-      {
         "day": "2026-09-28",
         "samples": 21
       },
@@ -272,11 +268,15 @@
       },
       {
         "day": "2026-10-01",
-        "samples": 33
+        "samples": 35
+      },
+      {
+        "day": "2026-10-02",
+        "samples": 11
       }
     ],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-10-27T06:01:38.106Z",
+    "computedAt": "2026-10-28T06:43:54.678Z",
     "warning": "Performance samples are not an audience trend."
   },
   "reconciliation": {
