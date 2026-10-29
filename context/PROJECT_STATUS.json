@@ -302,37 +302,43 @@
     "workflowRun": 40840096846,
     "verifiedAt": "2026-10-29T08:34:27.093Z"
   },
-  "truthAuditSummary": "S406 production, complete served parity, factual briefing and publisher restoration verified. Final metadata publication remains separate; identity/provider and field-vitals limitations retained.",
+  "truthAuditSummary": "S406 full production, final baseline-plus-metadata-overlay parity, passive factual briefings, publisher restoration and closing publication verified. Source execution remains separately pinned; identity/provider and field-vitals limits retained.",
   "currentVerification": {
     "session": 406,
-    "state": "release-verified-closing-publication-pending",
+    "state": "accepted-application-and-metadata-overlay",
     "source": "docs/RELEASE_S406.json",
     "lastCompleteTestsSession": 406,
     "sourceExecutionHead": "542905dfea3ac7ce7a644429c161beabd0e18092",
-    "sourceFingerprint": "390c624684008bd329af693a"
+    "sourceFingerprint": "390c624684008bd329af693a",
+    "applicationBaseline": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+    "metadataHead": "b0e4d7f2082461a82a1d8638b455690e85f9c83b",
+    "finalParity": "docs/S406_final-served-parity.json"
   },
   "metadataPublication": {
     "session": 406,
-    "state": "pending",
-    "productionCandidate": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
-    "scope": "Closing metadata has not yet been committed/pushed and independently checked for remote reachability."
+    "state": "verified",
+    "publishedCommit": "b0e4d7f2082461a82a1d8638b455690e85f9c83b",
+    "remoteObservedHead": "bba034b129e83a765321b9bce8fbb4027886f41e",
+    "observedAt": "2026-10-29T08:59:22.395Z",
+    "scope": "Accepted full application baseline plus explicit verified closing metadata overlay; no whole-main production identity claim."
   },
   "lastCompletedArc": {
-    "session": 405,
+    "session": 406,
     "phase": "complete-in-closing-publication-transaction",
-    "goalId": "01a17b3d-da8d-7a43-84d0-dbe8ca8ad147",
-    "goalCreatedAt": 1793069028,
-    "audit": "docs/AUDIT_2026-10-27-S405.json",
-    "releaseEvidence": "docs/RELEASE_S405.json",
-    "candidate": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
-    "releaseVerifiedAt": "2026-10-27T07:09:21.510Z",
-    "detail": "Both selected outcomes fully released; normal final proof publication and remote reachability checked before native completion.",
-    "completedAt": "2026-10-27T07:14:31.787Z"
+    "goalId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
+    "goalCreatedAt": 1793204515,
+    "audit": "docs/AUDIT_2026-10-28-S406-website-refresh.json",
+    "releaseEvidence": "docs/RELEASE_S406.json",
+    "candidate": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+    "metadataHead": "b0e4d7f2082461a82a1d8638b455690e85f9c83b",
+    "releaseVerifiedAt": "2026-10-29T08:56:48.686Z",
+    "completedAt": "2026-10-29T08:59:22.395Z",
+    "detail": "Six selected outcomes released, complete baseline-plus-overlay parity verified; final remote push independently checked before native completion."
   },
   "velocity": 2,
   "arcProgress": {
     "session": 406,
-    "phase": "release-verified-closing-publication-pending",
+    "phase": "complete-in-closing-publication-transaction",
     "goalId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
     "goalCreatedAt": 1793204515,
     "audit": "docs/AUDIT_2026-10-28-S406-website-refresh.json",

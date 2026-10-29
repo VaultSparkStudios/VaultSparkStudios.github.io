@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 406,
-  "state": "production-verified-closing-publication-pending",
+  "state": "complete-in-closing-publication-transaction",
   "releaseAccepted": true,
   "goal": {
     "threadId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
@@ -22,8 +22,8 @@
     },
     {
       "id": 3,
-      "state": "in-progress",
-      "outcome": "Full canonical closeout, current source, staging, exact hosted checks, authorized full production, all-served readback and publisher restoration pending."
+      "state": "complete",
+      "outcome": "Native closeout, two complete source passes, current full staging and ceremony, exact hosted checks, normal full production, complete readback, passive factual briefings, publisher restoration, signed Ark summary and metadata follow-through verified."
     }
   ],
   "implementation": "docs/S406_implementation.json",
@@ -151,7 +151,8 @@
     "total": 548,
     "coverageComplete": true,
     "sourceFingerprint": "390c624684008bd329af693a",
-    "receiptId": "fb47b92f2d6e9330600a26d2"
+    "receiptId": "fb47b92f2d6e9330600a26d2",
+    "scope": "Measured application implementation at542905dfea3ac7ce7a644429c161beabd0e18092/390c624684008bd329af693a; closing metadata is separately accepted and never rebound to this source measurement."
   },
   "localAutopilot": {
     "command": "node scripts/closeout-autopilot.mjs --yes --skip-push",
@@ -416,8 +417,11 @@
     "privateIdentifiersCommitted": false
   },
   "finalClosingPublication": {
-    "state": "pending",
-    "scope": "Final canonical records, Ark impact summary and remote metadata publication remain required before native goal completion."
+    "state": "verified",
+    "publishedMetadataCommit": "b0e4d7f2082461a82a1d8638b455690e85f9c83b",
+    "remoteObservedHead": "bba034b129e83a765321b9bce8fbb4027886f41e",
+    "observedAt": "2026-10-29T08:59:22.395Z",
+    "finalReceiptPublication": "Included in this closing publication; final push reachability is independently checked before native goal completion."
   },
   "impactTransport": {
     "type": "session-impact-summary",
@@ -435,5 +439,25 @@
     "reviewer": "review_help",
     "result": "PASS0",
     "scope": "Actual generated production and full served parity receipts reviewed; private authenticated access remains unproven."
+  },
+  "completedAt": "2026-10-29T08:59:22.395Z",
+  "metadataOverlay": {
+    "receipt": "docs/S406_metadata-overlay.json",
+    "metadataHead": "b0e4d7f2082461a82a1d8638b455690e85f9c83b",
+    "applicationBaseline": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+    "paths": 25,
+    "runId": 40845334976,
+    "state": "verified"
+  },
+  "finalServedParity": {
+    "receipt": "docs/S406_final-served-parity.json",
+    "scope": "accepted application baseline plus explicit metadata overlay",
+    "expectedCompositeCommit": "e950f03cb5e27816c70a0152fe4e1fc94f8ed3b0",
+    "checked": 3668,
+    "identical": 3658,
+    "redirected": 10,
+    "differ": 0,
+    "unread": 0,
+    "coverageComplete": true
   }
 }

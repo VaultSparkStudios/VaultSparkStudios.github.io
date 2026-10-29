@@ -1,0 +1,581 @@
+{
+  "session": 406,
+  "state": "verified",
+  "applicationBaseline": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+  "metadataHead": "b0e4d7f2082461a82a1d8638b455690e85f9c83b",
+  "stagingBaseline": "87f147027f814be9ec78dd9960132f142945e178",
+  "paths": [
+    "api/ai-discovery-health.json",
+    "api/analytics-summary.json",
+    "api/candidate-artifact-manifest.json",
+    "api/ci-status.json",
+    "api/citation.json",
+    "api/deploy-currency.json",
+    "api/field-win.json",
+    "api/geo-vitals.json",
+    "api/intelligence-budget.json",
+    "api/intent-map.json",
+    "api/nervous-system.json",
+    "api/newsroom-run.json",
+    "api/og-coverage.json",
+    "api/oracle-insights.json",
+    "api/proof-aware-projects.json",
+    "api/public-intelligence.json",
+    "api/release-dependencies.json",
+    "api/release-proof.json",
+    "api/staging-health.json",
+    "api/status-proof.json",
+    "api/uptime.json",
+    "api/worker-route-provenance.json",
+    "data/stats-surface.json",
+    "data/uptime-history.ndjson",
+    "stats.json"
+  ],
+  "staging": {
+    "verifiedAt": "2026-10-29T08:50:48.758Z",
+    "nativeExit": 0,
+    "exactReads": 25
+  },
+  "scope": "Accepted full application baseline plus exactly25 staged generated metadata files.60 exact reads include50 overlay reads and10 unchanged application asset reads. Composite commit is a local verification object, never a production commit claim. Complete served parity against that explicit tree remains separate.",
+  "verifiedAt": "2026-10-29T08:56:48.686Z",
+  "run": {
+    "id": 40845334976,
+    "headSha": "b0e4d7f2082461a82a1d8638b455690e85f9c83b",
+    "conclusion": "success",
+    "event": "workflow_dispatch",
+    "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/40845334976"
+  },
+  "steps": [
+    {
+      "name": "Evaluate content hotfix gate",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-10-29T08:54:11Z",
+      "completed_at": "2026-10-29T08:54:11Z"
+    },
+    {
+      "name": "Build hotfix dist (deployed tree + authorised content overlay)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 17,
+      "started_at": "2026-10-29T08:54:11Z",
+      "completed_at": "2026-10-29T08:54:36Z"
+    },
+    {
+      "name": "Deploy to Cloudflare Pages",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 19,
+      "started_at": "2026-10-29T08:54:36Z",
+      "completed_at": "2026-10-29T08:54:52Z"
+    },
+    {
+      "name": "Purge edge HTML cache",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 20,
+      "started_at": "2026-10-29T08:54:52Z",
+      "completed_at": "2026-10-29T08:54:53Z"
+    },
+    {
+      "name": "Post-purge edge liveness check",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 22,
+      "started_at": "2026-10-29T08:54:53Z",
+      "completed_at": "2026-10-29T08:54:56Z"
+    }
+  ],
+  "provider": {
+    "id": "afc18a48-3d5c-4a4c-9e75-b06a0a08c031",
+    "url": "https://afc18a48.vaultsparkstudios-website.pages.dev",
+    "environment": "production",
+    "commit": "b0e4d7f2082461a82a1d8638b455690e85f9c83b",
+    "status": "success"
+  },
+  "stamps": [
+    {
+      "origin": "https://afc18a48.vaultsparkstudios-website.pages.dev",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-29",
+        "sha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+        "builtAt": "2026-10-29T08:54:36.000Z",
+        "deployedBy": "pages-deploy-content-hotfix",
+        "baselineSha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null,
+        "hotfixPaths": "api/ai-discovery-health.json api/analytics-summary.json api/candidate-artifact-manifest.json api/ci-status.json api/citation.json api/deploy-currency.json api/field-win.json api/geo-vitals.json api/intelligence-budget.json api/intent-map.json api/nervous-system.json api/newsroom-run.json api/og-coverage.json api/oracle-insights.json api/proof-aware-projects.json api/public-intelligence.json api/release-dependencies.json api/release-proof.json api/staging-health.json api/status-proof.json api/uptime.json api/worker-route-provenance.json data/stats-surface.json data/uptime-history.ndjson stats.json"
+      }
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-29",
+        "sha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+        "builtAt": "2026-10-29T08:54:36.000Z",
+        "deployedBy": "pages-deploy-content-hotfix",
+        "baselineSha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null,
+        "hotfixPaths": "api/ai-discovery-health.json api/analytics-summary.json api/candidate-artifact-manifest.json api/ci-status.json api/citation.json api/deploy-currency.json api/field-win.json api/geo-vitals.json api/intelligence-budget.json api/intent-map.json api/nervous-system.json api/newsroom-run.json api/og-coverage.json api/oracle-insights.json api/proof-aware-projects.json api/public-intelligence.json api/release-dependencies.json api/release-proof.json api/staging-health.json api/status-proof.json api/uptime.json api/worker-route-provenance.json data/stats-surface.json data/uptime-history.ndjson stats.json"
+      }
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-29",
+        "sha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+        "builtAt": "2026-10-29T08:54:36.000Z",
+        "deployedBy": "pages-deploy-content-hotfix",
+        "baselineSha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null,
+        "hotfixPaths": "api/ai-discovery-health.json api/analytics-summary.json api/candidate-artifact-manifest.json api/ci-status.json api/citation.json api/deploy-currency.json api/field-win.json api/geo-vitals.json api/intelligence-budget.json api/intent-map.json api/nervous-system.json api/newsroom-run.json api/og-coverage.json api/oracle-insights.json api/proof-aware-projects.json api/public-intelligence.json api/release-dependencies.json api/release-proof.json api/staging-health.json api/status-proof.json api/uptime.json api/worker-route-provenance.json data/stats-surface.json data/uptime-history.ndjson stats.json"
+      }
+    }
+  ],
+  "reads": [
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/ai-discovery-health.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "2d8fee84bdc7e004219138901eef768f355083502adde14d6671651e79b49c3b"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/ci-status.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "de69f72ba4d53cdcb114bd1e4e32704b982492e8f650d903f35ce3aad5a752c6"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/candidate-artifact-manifest.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "26b6f33e79eb691202aecacff11688f0e1495137952b3d5f0b05b53db67e27f3"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/analytics-summary.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "a7500d97e50656c85d0f006849c49c38520d18aaea870e7b456478f2acb9f16b"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/citation.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "67285e9214a6c1dcfa8dd030e28c82ab1260b7469d70db345caf67f6eddd8fc6"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/deploy-currency.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "cc77a23788fe991b640488208f69367ad9ba25e7ffc7bbda19e159815f6e39a7"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/field-win.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "d96ed8c0a487c4811942355d8d6a6915ece28c1850a8bd5d5a3caa05fe2673c1"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/intelligence-budget.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "14ce7a80d763abdd70fdbaa7083a179358cef3fc4817a128d36de1a53532f920"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/geo-vitals.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "f778c96cd608b9009ee01cab68ea34d7000becb48ae3b323629c1d7085ace1f0"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/intent-map.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "9332444d2dff666b9fe499f01c38a04e54f2033e7b0c8bda4f5ef39b24401112"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/newsroom-run.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "8848b7e3c58eba273db0a04332e8157fcb054b038c9757604920ea41e6cf50df"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/nervous-system.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "6fcd2aeef28e4ffd262eb66de5324c9f741afea322b230f7bba441923a115c63"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/proof-aware-projects.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "84f577b7d1ddec6077761581e06f57ac568ffd4498e995b2eba937696314a120"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/oracle-insights.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "dbe0ef6800cad2dfc911b53a5beb0869a2373d5c54a202633c79ec6fc2deea09"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/public-intelligence.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "30011f67f420c782cabf1a3cf02558409170f7434c9cf3bf644c3126d75f768d"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/release-dependencies.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "5cbad699291d2030df93a8225ae360286db2e126d04b965afa18b4c9532385fe"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/og-coverage.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "8e76882e44e5905f30e69c1276461d5e144d31fad0934f9065004e86a085754e"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/release-proof.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "ab83751b763509031c5e792bb0c9dcb25c12e635f5f0634787fc356cf77ccac5"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/staging-health.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "78d8f52abdbacef1044c3bf9d03f145b972a42e40ded8c9a3cb32af89e401b4e"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/status-proof.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "c87193cbd5a104b13984e14c21fff0e386c44d03a2b13585bbc3487e0f014aea"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/worker-route-provenance.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "0c195436ed4ea27bcf3fc62f26a9abaed379986e0ad5e2cd8ba2d76f2baa519e"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "data/stats-surface.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "5cef5c330b986aae129941ee2934a999424b44a3b32691c2ce31d3c770471370"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "vault-member/portal-logic.shell-7928261818.js",
+      "kind": "unchanged-application-asset",
+      "exact": true,
+      "sha256": "79282618183c02fbe5cee1f7a8603b9a7bf798d245e59afdaaced1083fd348cb"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/uptime.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "76f9eca793620f6a8c8455d0bd16921a9ca427f07a837d4f67f17c96feb27c02"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "stats.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "5cef5c330b986aae129941ee2934a999424b44a3b32691c2ce31d3c770471370"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/investor-experience.shell-f72aa84b07.js",
+      "kind": "unchanged-application-asset",
+      "exact": true,
+      "sha256": "f72aa84b0720b23ebda5988f05c68a141fb65a9f8d615ef395a80ae45a5168cb"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/investor-theme.shell-9ce155cfc3.css",
+      "kind": "unchanged-application-asset",
+      "exact": true,
+      "sha256": "9ce155cfc3a72c00bbdd1640391d61086ccfc6912fcab7d722a9e0e02b666784"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "vault-member/portal-dashboard.shell-c353dfa54a.js",
+      "kind": "unchanged-application-asset",
+      "exact": true,
+      "sha256": "c353dfa54a970530721a429b06b12b797ea2e6f93405f48c4ba1a0321e8080d1"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "data/uptime-history.ndjson",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "2834616eaabbb91ad9d7315cfc99844d8277485dbaa90d6bfda91e11bf2cac25"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "vault-member/portal.shell-0007bdfdfe.css",
+      "kind": "unchanged-application-asset",
+      "exact": true,
+      "sha256": "0007bdfdfe090e773ddf85671fb73659dc49856146703a7a4809dbb3a2c64e3c"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/candidate-artifact-manifest.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "26b6f33e79eb691202aecacff11688f0e1495137952b3d5f0b05b53db67e27f3"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/citation.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "67285e9214a6c1dcfa8dd030e28c82ab1260b7469d70db345caf67f6eddd8fc6"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/ai-discovery-health.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "2d8fee84bdc7e004219138901eef768f355083502adde14d6671651e79b49c3b"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/deploy-currency.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "cc77a23788fe991b640488208f69367ad9ba25e7ffc7bbda19e159815f6e39a7"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/geo-vitals.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "f778c96cd608b9009ee01cab68ea34d7000becb48ae3b323629c1d7085ace1f0"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/field-win.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "d96ed8c0a487c4811942355d8d6a6915ece28c1850a8bd5d5a3caa05fe2673c1"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/ci-status.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "de69f72ba4d53cdcb114bd1e4e32704b982492e8f650d903f35ce3aad5a752c6"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/intent-map.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "9332444d2dff666b9fe499f01c38a04e54f2033e7b0c8bda4f5ef39b24401112"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/intelligence-budget.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "14ce7a80d763abdd70fdbaa7083a179358cef3fc4817a128d36de1a53532f920"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/analytics-summary.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "a7500d97e50656c85d0f006849c49c38520d18aaea870e7b456478f2acb9f16b"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/nervous-system.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "6fcd2aeef28e4ffd262eb66de5324c9f741afea322b230f7bba441923a115c63"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/release-dependencies.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "5cbad699291d2030df93a8225ae360286db2e126d04b965afa18b4c9532385fe"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/newsroom-run.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "8848b7e3c58eba273db0a04332e8157fcb054b038c9757604920ea41e6cf50df"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/oracle-insights.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "dbe0ef6800cad2dfc911b53a5beb0869a2373d5c54a202633c79ec6fc2deea09"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/proof-aware-projects.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "84f577b7d1ddec6077761581e06f57ac568ffd4498e995b2eba937696314a120"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/og-coverage.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "8e76882e44e5905f30e69c1276461d5e144d31fad0934f9065004e86a085754e"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/release-proof.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "ab83751b763509031c5e792bb0c9dcb25c12e635f5f0634787fc356cf77ccac5"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/public-intelligence.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "30011f67f420c782cabf1a3cf02558409170f7434c9cf3bf644c3126d75f768d"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/staging-health.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "78d8f52abdbacef1044c3bf9d03f145b972a42e40ded8c9a3cb32af89e401b4e"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/status-proof.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "c87193cbd5a104b13984e14c21fff0e386c44d03a2b13585bbc3487e0f014aea"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "data/stats-surface.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "5cef5c330b986aae129941ee2934a999424b44a3b32691c2ce31d3c770471370"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/uptime.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "76f9eca793620f6a8c8455d0bd16921a9ca427f07a837d4f67f17c96feb27c02"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "vault-member/portal-logic.shell-7928261818.js",
+      "kind": "unchanged-application-asset",
+      "exact": true,
+      "sha256": "79282618183c02fbe5cee1f7a8603b9a7bf798d245e59afdaaced1083fd348cb"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/worker-route-provenance.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "0c195436ed4ea27bcf3fc62f26a9abaed379986e0ad5e2cd8ba2d76f2baa519e"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "stats.json",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "5cef5c330b986aae129941ee2934a999424b44a3b32691c2ce31d3c770471370"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/investor-theme.shell-9ce155cfc3.css",
+      "kind": "unchanged-application-asset",
+      "exact": true,
+      "sha256": "9ce155cfc3a72c00bbdd1640391d61086ccfc6912fcab7d722a9e0e02b666784"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "vault-member/portal-dashboard.shell-c353dfa54a.js",
+      "kind": "unchanged-application-asset",
+      "exact": true,
+      "sha256": "c353dfa54a970530721a429b06b12b797ea2e6f93405f48c4ba1a0321e8080d1"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "vault-member/portal.shell-0007bdfdfe.css",
+      "kind": "unchanged-application-asset",
+      "exact": true,
+      "sha256": "0007bdfdfe090e773ddf85671fb73659dc49856146703a7a4809dbb3a2c64e3c"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "data/uptime-history.ndjson",
+      "kind": "metadata-overlay",
+      "exact": true,
+      "sha256": "2834616eaabbb91ad9d7315cfc99844d8277485dbaa90d6bfda91e11bf2cac25"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/investor-experience.shell-f72aa84b07.js",
+      "kind": "unchanged-application-asset",
+      "exact": true,
+      "sha256": "f72aa84b0720b23ebda5988f05c68a141fb65a9f8d615ef395a80ae45a5168cb"
+    }
+  ],
+  "expectedCompositeCommit": "e950f03cb5e27816c70a0152fe4e1fc94f8ed3b0",
+  "expectedCompositeTree": "7ec8770320c9314933dd0b80117cdb8392ee97de",
+  "completeServedParity": {
+    "receipt": "docs/S406_final-served-parity.json",
+    "expectedCompositeCommit": "e950f03cb5e27816c70a0152fe4e1fc94f8ed3b0",
+    "checked": 3668,
+    "identical": 3658,
+    "redirected": 10,
+    "differ": 0,
+    "unread": 0,
+    "coverageComplete": true
+  }
+}

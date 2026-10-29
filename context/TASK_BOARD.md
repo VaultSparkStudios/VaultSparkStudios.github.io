@@ -6,7 +6,7 @@
 - [x] Returning-browser delivery, current392 visual captures and215 mobile checks accepted.
 - [x] Two native548-command source passes, current staging11/11 and exact hosted3/3 accepted.
 - [x] Normal full production 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74, complete all-served readback, two passive factual briefing rows and all5 publisher restorations verified.
-- [ ] Final closing metadata commit/push, remote reachability and native goal completion; root owns final evidence.
+- [x] Closing metadata published, explicit metadata overlay staged/deployed and complete final served parity verified. Final push reachability is checked before the native goal status is completed.
 
 Evidence: docs/RELEASE_S406.json; docs/S406_full-source-acceptance.json; docs/S406_hosted-candidate.json; docs/S406_production-identity.json; docs/S406_served-parity.json; docs/S406_publisher-window.json. Private database row identifiers/readback stay in ignored storage.
 
