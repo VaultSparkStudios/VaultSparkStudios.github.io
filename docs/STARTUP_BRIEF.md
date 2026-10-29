@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S406) - WHAT SHIPPED ══════════════════════════╗
-║  S406 original reliability repairs preserved; portal and public  ║
+║  S406 six selected outcomes released at 94fe9ea36566d4ba63fb78f  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
 ║    SIL v3.0  ·  Avg3: ?  ·  Velocity 6→                          ║
-║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
 ║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -77,8 +77,8 @@
 ║  ✓  Velocity      6 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   4d                                             ║
-║  ✓  IGNIS         44828 FORGE  ·  0d old                         ║
-║  ⛔  Truth         yellow — S406 implementation verified; full…   ║
+║  ✓  IGNIS         44828 FORGE  ·  1d old                         ║
+║  ⛔  Truth         yellow — prior S406 application and…           ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.173  (healthy)                               ║

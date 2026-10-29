@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **939/1000**
 - CI health: **check gh run list**
-- Current focus: Refining member and investor workspaces and making the studio’s public feeds easier to use.
+- Current focus: Current investor and member workspaces, useful public feeds, and dated studio updates.
 
 ## Strategic Read
 

@@ -1,0 +1,36 @@
+{
+  "session": 406,
+  "kind": "explicit-closeout-and-full-deployment",
+  "requestedAt": "2026-10-29T18:26:07.857Z",
+  "initialHead": "bc670dc2dbda915e74865168ee81b1f852367922",
+  "priorArcComplete": true,
+  "state": "reconciling-current-generated-data",
+  "shippedOutcomes": 6,
+  "newProductChanges": 0,
+  "score": 939,
+  "priorRelease": "docs/RELEASE_S406.json",
+  "audit": "audits/2026-10-29.json",
+  "writebacks": {
+    "canonicalContext": true,
+    "taskBoard": true,
+    "CDR": true,
+    "agentMemory": true
+  },
+  "freshAcceptanceRequired": [
+    "native-closeout",
+    "staging",
+    "exact-required-checks",
+    "normal-full-production",
+    "complete-served-readback",
+    "main-publication",
+    "publisher-restoration"
+  ],
+  "attempts": [
+    {
+      "log": ".cache/logs/S406-explicit-closeout-autopilot-attempt1.log",
+      "state": "intentionally-interrupted",
+      "sourceAcceptance": false,
+      "reason": "Scheduled upstream feed updates since the prior release were discovered before the full source gate; synchronize before measuring the combined candidate."
+    }
+  ]
+}

@@ -11,8 +11,8 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last5 available totals):939 →939 →939 →939 →939
 Avgs (available rolling totals) —3:939.0 |5:939.0 |10:unmeasured |25:unmeasured |all:unmeasured
 Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session:2026-10-28 | Session 406 | Total:939/1000 | Velocity:6
-  └ Six selected outcomes released; final closing publication remains separately verified in docs/RELEASE_S406.json.
+Last session:2026-10-29 | Session 406 | Total:939/1000 | Velocity:6
+  └ Six selected outcomes released; explicit closeout and full redeployment tracked in docs/CLOSEOUT_S406_2026-10-29.json.
 <!-- rolling-status-end -->
 
 > Older entries through S401 live verbatim in `context/archive/SIL_S1-S401.md` (exact committed pre-rotation snapshot). Recent complete entries follow.
@@ -2135,3 +2135,15 @@ Closing records were published at b0e4d7f2082461a82a1d8638b455690e85f9c83b. The 
 Evidence: docs/RELEASE_S406.json; docs/S406_full-source-acceptance.json; docs/S406_hosted-candidate.json; docs/S406_production-identity.json; docs/S406_served-parity.json; docs/S406_publisher-window.json. Private database row identifiers/readback stay in ignored storage.
 
 SIL939/1000 unchanged, velocity6; retain all ten existing category scores and existing rolling averages. No score uplift is inferred from release. Existing two future SIL commitments remain unselected; no unrelated work added. Founder direction remains in the existing additive Creative Direction Record.
+
+
+<!-- S406-explicit-closeout-2026-10-29 -->
+## S406 explicit closeout — 2026-10-29
+
+The six selected S406 improvements are released: diagnostic help safety, canonical share-card coverage refresh, current member return information, a decision-ready investor workspace, purpose-led developer resources and factual studio updates. The prior arc is complete. The founder now explicitly requests a fresh closeout, all context/memory/CDR/task-board updates, normal main commit/push and a full deployment of the resulting candidate.
+
+Prior accepted application baseline: 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74; verified 25-file metadata overlay: b0e4d7f2082461a82a1d8638b455690e85f9c83b. Final prior publication: bc670dc2dbda915e74865168ee81b1f852367922. Prior complete served verification: 3,668 resources, zero differences or unread files. This invocation records new acceptance separately in `docs/CLOSEOUT_S406_2026-10-29.json`; earlier source and deployment proofs are historical evidence, never re-dated.
+
+Status: records reconciled; fresh native closeout verification, current staging, exact required checks, full production and readback remain pending for this explicit request. Existing identity/provider and field-vitals limitations remain separate. No new product features, prices, entitlements, creative direction, financial figures or growth claims are introduced.
+
+SIL remains 939/1000 across the same ten website/product categories; velocity remains six shipped improvements, with zero additional product changes in this closeout. No duplicate session or score uplift is counted. The two existing future SIL commitments remain unselected.
