@@ -4,7 +4,7 @@
   "requestedAt": "2026-10-29T18:26:07.857Z",
   "initialHead": "bc670dc2dbda915e74865168ee81b1f852367922",
   "priorArcComplete": true,
-  "state": "focused-repairs-passed-fresh-complete-native-run-pending",
+  "state": "native-source-verified-full-staging-pending",
   "shippedOutcomes": 6,
   "newProductChanges": 0,
   "score": 939,
@@ -102,5 +102,23 @@
     "planned": 548,
     "coverageComplete": false,
     "sourceAcceptance": false
+  },
+  "nativeCloseout": {
+    "command": "node scripts/closeout-autopilot.mjs --yes --skip-push",
+    "startedAt": "2026-10-29T19:46:12.811Z",
+    "finishedAt": "2026-10-29T20:27:55.626Z",
+    "exit": 0,
+    "log": ".cache/logs/S406-explicit-closeout-autopilot-attempt4.log",
+    "error": null
+  },
+  "source": {
+    "receipt": "docs/S406_explicit-closeout-source.json",
+    "passed": 548,
+    "total": 548,
+    "failed": 0,
+    "sourceFingerprint": "130c1ee187b6c143a15cf2ed",
+    "planFingerprint": "3cd18438e9dd1c3a99843d24",
+    "acceptedHeadAfterAutopilot": "0c83024087ca665f7e771a3bca32659dc7cbe186",
+    "scope": "Actual fresh native source execution in this explicit closeout. Prior arc source proofs remain historical; accepted head is recorded after native closeout metadata commits."
   }
 }
