@@ -1127,3 +1127,9 @@ The founder explicitly requested current, improved portals, website pages, chang
 
 <!-- S406-cache-follow-through -->
 The final delivery check found week-long caching on mutable portal assets. The existing shell builder now fingerprints five member/investor resources, resolves registered member assets relative to each page, preserves defer order and leaves unrelated/external URLs intact. Focused shell tests15/15, real persistent-browser warm-cache proof, current portal20/message46 interactions, native mobile215/215, and392 freshly captured/reviewed all-theme desktop/mobile views passed. Earlier full548 source acceptance at d161f7 is preserved as pre-cache-fix evidence; this source still requires fresh complete verification, staging, hosted checks and production/readback. No authentication, membership, pricing, financial document or outbound-message change was made. Release state remains docs/RELEASE_S406.json.
+
+
+<!-- S406-final-release-acceptance -->
+## S406 final evidence separation — 2026-10-29
+
+Preserve implementation execution HEAD 542905dfea3ac7ce7a644429c161beabd0e18092/fingerprint 390c624684008bd329af693a separately from immutable production 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74 and subsequent closing metadata. Publisher restoration and the passive factual studio briefing require actual successful receipts, not planned actions. Closing publication cannot borrow earlier source-run identity. Existing auth/tier/pricing/rights and independent provider/field limits remain unchanged.

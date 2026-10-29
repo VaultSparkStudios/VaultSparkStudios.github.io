@@ -1,11 +1,16 @@
-<!-- S406-website-refresh-checkpoint -->
-## S406 founder-expanded website refresh
+<!-- S406-final-release-acceptance -->
+## S406 final release acceptance — 2026-10-29
 
-Six S406 L2 outcomes are locally verified: diagnostic help safety, canonical Open Graph inventory refresh, current member return/release experience, decision-ready investor workspace, purpose-led developer integrations, and factual public content freshness. Actual Chromium behavior20/20 plus message46/46, mobile215/215, and all392 current desktop/mobile captures across seven themes passed review. Full current source verification, staging, hosted checks, production/readback, passive investor briefing and publisher restoration remain pending in docs/RELEASE_S406.json. No measured growth, conversion or field-performance uplift is claimed.
+S406 released six selected outcomes at 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74: diagnostic-help safety, canonical Open Graph inventory freshness, current member return/release information, decision-ready investor workspace, purpose-led developer feeds/contracts, and factual reader updates. Returning-browser cache delivery is covered by five content-addressed portal assets and the real persistent-browser proof. Current behavior20/20 plus message46/46, mobile215/215 and392 reviewed desktop/mobile captures across seven themes passed. Two complete548-command native passes are preserved at source execution HEAD 542905dfea3ac7ce7a644429c161beabd0e18092, fingerprint 390c624684008bd329af693a; those historical source measurements are never rebound to closing metadata. Staging11/11, exact hosted3/3, normal full production run40840096846, provider/three stamps,64 exact asset reads, 16 served HTML checks with 26 portal references, six existing apex access guards, and two configured journal redirects passed. These anonymous checks do not prove positive private-data access. Complete all-served readback3668/3668: 3658 byte-identical and10 verified redirects,0 differences/0 unread. Both passive factual briefing rows were published and all5 held GitHub publishers restored to their original states. No email, notification, financial forecast, price, entitlement or authentication change is claimed. No measured growth, conversion, field-performance or token-cost uplift is claimed. Existing identity/provider and field-vitals limits remain separate.
 
-Earlier “no UI changes” statements below describe the original bounded reliability checkpoint. They do not describe this later founder-authorized scope. No price, rank, entitlement, identity or launch policy changed. Private financial content is never invented, and historical archive dates remain intact. No growth, conversion or field-performance uplift is claimed.
+Final closing metadata commit/push and remote reachability are still required before native goal completion. Production acceptance remains pinned to the immutable deployed candidate; it is separate from that later metadata publication.
+
+Evidence: docs/RELEASE_S406.json; docs/S406_full-source-acceptance.json; docs/S406_hosted-candidate.json; docs/S406_production-identity.json; docs/S406_served-parity.json; docs/S406_publisher-window.json. Private database row identifiers/readback stay in ignored storage.
 
 ---
+
+Earlier S406 checkpoints below are historical observations; the final acceptance above owns current release truth.
+
 
 <!-- S406-closeout-writeback -->
 ## S406 diagnostic help safety

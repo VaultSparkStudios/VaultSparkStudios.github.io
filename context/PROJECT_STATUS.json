@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "Refining member and investor workspaces and making the studio’s public feeds easier to use.",
+  "currentFocus": "Current investor and member workspaces, useful public feeds, and dated studio updates.",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Verify and deploy the refreshed portals, reader updates and developer resources.",
+  "nextMilestone": "Verify final S406 closing-record publication and remote reachability; independent identity/provider and field-vitals follow-ups remain separate.",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -29,10 +29,10 @@
   "lastUpdated": "2026-10-29",
   "currentSession": 406,
   "truthAuditStatus": "yellow",
-  "truthAuditLastRun": "2026-10-28",
+  "truthAuditLastRun": "2026-10-29",
   "silScore": 939,
   "silAvg3": 939,
-  "silVelocity": 2,
+  "silVelocity": 6,
   "silDebt": "stable",
   "silLastSession": 406,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
@@ -42,13 +42,13 @@
       "url": "https://vaultsparkstudios.com/",
       "type": "production",
       "status": "green",
-      "note": "S405 exact-candidate accepted release: docs/RELEASE_S405.json; independent identity and field-vitals holds remain separate."
+      "note": "S406 exact-candidate accepted release 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74; docs/RELEASE_S406.json. Existing identity/provider and field-vitals limits stay separate."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
       "type": "staging",
       "status": "green",
-      "note": "S405 exact-candidate accepted release: docs/RELEASE_S405.json; independent identity and field-vitals holds remain separate."
+      "note": "S406 exact-candidate accepted release 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74; docs/RELEASE_S406.json. Existing identity/provider and field-vitals limits stay separate."
     },
     {
       "url": "https://vaultsparkstudios.com/?nav=sheet",
@@ -70,13 +70,13 @@
       "url": "https://website.staging.vaultsparkstudios.com/status/",
       "type": "staging",
       "status": "green",
-      "note": "S405 exact-candidate accepted release: docs/RELEASE_S405.json; independent identity and field-vitals holds remain separate."
+      "note": "S406 exact-candidate accepted release 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74; docs/RELEASE_S406.json. Existing identity/provider and field-vitals limits stay separate."
     },
     {
       "command": "npm run build:check",
       "type": "tests",
       "status": "green",
-      "note": "Historical S402 implementation measurement:547/547, docs/S402_full-source-acceptance.json. Closing metadata requires its own measured suite."
+      "note": "Two actual native548/548 implementation-source passes; execution 542905dfea3ac7ce7a644429c161beabd0e18092, fingerprint 390c624684008bd329af693a. Closing metadata is a later scope, not a rebind."
     }
   ],
   "vaultStatus": "SPARKED",
@@ -255,7 +255,7 @@
     "docs/visual-qa/SPARK_HELD_MEMBERSHIP.json"
   ],
   "truthGenome": "23/25",
-  "lastSessionSummary": "S406 original reliability repairs preserved; portal and public-resource refresh implemented. Final source, browser and deployment acceptance remains pending.",
+  "lastSessionSummary": "S406 six selected outcomes released at 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74;392 reviewed views,215 mobile cells, source548/548, staging11/11, hosted3/3 and complete3668-path readback passed. Five publishers restored; passive factual investor briefing and studio pulse published. Closing metadata publication remains separate.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
     "session": 403,
@@ -277,9 +277,9 @@
   "sessionState": {
     "version": 1,
     "durableSession": 406,
-    "currentFocus": "Refining member and investor workspaces and making the studio’s public feeds easier to use.",
-    "nextMilestone": "Verify and deploy the refreshed portals, reader updates and developer resources.",
-    "lastSessionSummary": "S406 original reliability repairs preserved; portal and public-resource refresh implemented. Final source, browser and deployment acceptance remains pending."
+    "currentFocus": "Current investor and member workspaces, useful public feeds, and dated studio updates.",
+    "nextMilestone": "Verify final S406 closing-record publication and remote reachability; independent identity/provider and field-vitals follow-ups remain separate.",
+    "lastSessionSummary": "S406 six selected outcomes released at 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74;392 reviewed views,215 mobile cells, source548/548, staging11/11, hosted3/3 and complete3668-path readback passed. Five publishers restored; passive factual investor briefing and studio pulse published. Closing metadata publication remains separate."
   },
   "s378RecordRecovery": {
     "date": "2026-10-14",
@@ -292,29 +292,30 @@
   },
   "currentBuildState": "passed",
   "currentBuildNote": "Source547/547 receipt23971be3a92d66332bea44e6; production06d632056f accepted withhosted3/3,staging11/11,canonical1143file readback andlive23/23browser checks.",
-  "lastDeploySession": 400,
+  "lastDeploySession": 406,
   "lastDeployStatus": "verified",
   "silAvg5": 938.2,
   "lastReleaseAcceptance": {
-    "session": 400,
-    "candidate": "06d632056f3cd51b03f09a6a4fd08378877bc359",
-    "receipt": "docs/RELEASE_S400.json",
-    "workflowRun": 40043209707
+    "session": 406,
+    "candidate": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+    "receipt": "docs/RELEASE_S406.json",
+    "workflowRun": 40840096846,
+    "verifiedAt": "2026-10-29T08:34:27.093Z"
   },
-  "truthAuditSummary": "S406 implementation verified; full release acceptance pending in docs/RELEASE_S406.json. Existing independent identity/provider and field-vitals holds retained.",
+  "truthAuditSummary": "S406 production, complete served parity, factual briefing and publisher restoration verified. Final metadata publication remains separate; identity/provider and field-vitals limitations retained.",
   "currentVerification": {
-    "session": 405,
-    "state": "release-verified",
-    "source": "docs/RELEASE_S405.json",
-    "lastCompleteTestsSession": 405
+    "session": 406,
+    "state": "release-verified-closing-publication-pending",
+    "source": "docs/RELEASE_S406.json",
+    "lastCompleteTestsSession": 406,
+    "sourceExecutionHead": "542905dfea3ac7ce7a644429c161beabd0e18092",
+    "sourceFingerprint": "390c624684008bd329af693a"
   },
   "metadataPublication": {
-    "session": 400,
-    "candidate": "06d632056f3cd51b03f09a6a4fd08378877bc359",
-    "workflowRun": 40043209707,
-    "state": "verified",
-    "receipt": "docs/RELEASE_S400.json",
-    "scope": "Closing metadata transaction; production acceptance remains pinned"
+    "session": 406,
+    "state": "pending",
+    "productionCandidate": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+    "scope": "Closing metadata has not yet been committed/pushed and independently checked for remote reachability."
   },
   "lastCompletedArc": {
     "session": 405,
@@ -330,13 +331,13 @@
   },
   "velocity": 2,
   "arcProgress": {
-    "session": 405,
-    "phase": "complete-in-closing-publication-transaction",
-    "goalId": "01a17b3d-da8d-7a43-84d0-dbe8ca8ad147",
-    "goalCreatedAt": 1793069028,
-    "audit": "docs/AUDIT_2026-10-27-S405.json",
-    "releaseEvidence": "docs/RELEASE_S405.json",
-    "candidate": "c06161b6aa3bd398bc7ced0a42d88979eb60697f"
+    "session": 406,
+    "phase": "release-verified-closing-publication-pending",
+    "goalId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
+    "goalCreatedAt": 1793204515,
+    "audit": "docs/AUDIT_2026-10-28-S406-website-refresh.json",
+    "releaseEvidence": "docs/RELEASE_S406.json",
+    "candidate": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74"
   },
   "ignisLastScored": "2026-10-26",
   "historicalTests": {
@@ -347,13 +348,13 @@
     "testsSourceFingerprint": "f63c114996ab8e31ec84f7e0",
     "evidence": "docs/S403_full-source-acceptance.json"
   },
-  "testsSession": 405,
+  "testsSession": 406,
   "testsTotal": 548,
   "testsPassing": 548,
   "testsFailed": 0,
   "testsLastRun": "2026-10-29",
-  "testsLabel": "measured build:check steps",
-  "testsEvidence": "api/build-check-diagnostics.json",
+  "testsLabel": "548 implementation-source build:check steps; prior to closing metadata",
+  "testsEvidence": "docs/S406_full-source-acceptance.json",
   "testsPlanFingerprint": "3cd18438e9dd1c3a99843d24",
   "testsSourceFingerprint": "390c624684008bd329af693a",
   "closeoutObservationAddendum": {

@@ -1,20 +1,14 @@
-<!-- S406-closeout-writeback -->
+<!-- S406-final-release-acceptance -->
+## S406 selected arc outcomes — release verified
 
-## S406 selected arc outcome
+- [x] Fresh startup/audits and admitted founder-expanded scope in the same bound goal.
+- [x] All six selected L2 outcomes implemented, independently reviewed and locally verified.
+- [x] Returning-browser delivery, current392 visual captures and215 mobile checks accepted.
+- [x] Two native548-command source passes, current staging11/11 and exact hosted3/3 accepted.
+- [x] Normal full production 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74, complete all-served readback, two passive factual briefing rows and all5 publisher restorations verified.
+- [ ] Final closing metadata commit/push, remote reachability and native goal completion; root owns final evidence.
 
-Session Intent: fresh /arc, authorized direct main commit/push and full deployment.
-
-Founder-expanded scope in the same S406 goal: refresh both portals and assess the whole website, including developer resources, APIs, feeds and integrations that support discovery, The Desk readership and membership. Investor direction: both a private studio experience and decision-ready information, with decision-ready information first. Selected audit: `docs/AUDIT_2026-10-28-S406-website-refresh.json`; plan: `docs/IMPLEMENT_PLAN_S406_WEBSITE.md`.
-
-- [x] Expansion Wave 1: Reproduced April 13 member release sentinel, investor theme contrast failure, stale curated changelog and feed discovery gaps; strict premises4/4 and fixture/candidate admission passed. Pre-expansion source548 and staging11 evidence preserved separately.
-- [x] Expansion Wave 2: Current member updates and useful return actions; premium investor briefing with honest freshness and evidence.
-- [x] Expansion Wave 3: Usable developer/feed/action documentation, reader-first dispatches and sitewide freshness reconciliation.
-Expansion Wave 4 local review complete: all392 current visual captures manually inspected and mobile215/215 passed. Final source, staging, hosted checks, deployment/readback, closeout and publisher restoration are delegated to `docs/RELEASE_S406.json`; production acceptance remains pending.
-
-- [x] Wave 1: Fresh startup and nine-axis supported-release audit; typed premises2/2 and pending admission/rehearsal accepted.
-- [x] Wave 2: Two L2 reliability repairs locally verified: diagnostic-help safety and canonical OG inventory refresh; focused checks and independent reviews PASS0. Deployment acceptance remains separate.
-
-Wave 3 live state and final reconciliation are owned by `docs/RELEASE_S406.json`. Canonical closeout, current complete source, staging, exact hosted checks, full production, all-served readback and publisher restoration are all required there; an intermediate source or staging pass alone is not completion. This board delegates the phase's current completion status to that ledger.
+Evidence: docs/RELEASE_S406.json; docs/S406_full-source-acceptance.json; docs/S406_hosted-candidate.json; docs/S406_production-identity.json; docs/S406_served-parity.json; docs/S406_publisher-window.json. Private database row identifiers/readback stay in ignored storage.
 
 Future unselected SIL commitments:
 - [ ] [S406][SIL] Consider extending help-only process fixtures to another operator CLI only after reproducing its side effects.

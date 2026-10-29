@@ -1,0 +1,837 @@
+{
+  "session": 406,
+  "observedAt": "2026-10-29T08:34:27.093Z",
+  "candidate": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+  "run": {
+    "id": 40840096846,
+    "head_sha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+    "event": "workflow_dispatch",
+    "status": "completed",
+    "conclusion": "success",
+    "path": ".github/workflows/pages-deploy.yml",
+    "html_url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/40840096846",
+    "created_at": "2026-10-29T08:09:10Z",
+    "updated_at": "2026-10-29T08:20:05Z",
+    "run_attempt": 1
+  },
+  "steps": [
+    {
+      "name": "Run canonical release ceremony",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-10-29T08:14:36Z",
+      "completed_at": "2026-10-29T08:15:57Z"
+    },
+    {
+      "name": "Build clean dist (git-tracked files only)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15,
+      "started_at": "2026-10-29T08:15:57Z",
+      "completed_at": "2026-10-29T08:16:16Z"
+    },
+    {
+      "name": "Stamp honest deployed SHA into build-sha.json",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 16,
+      "started_at": "2026-10-29T08:16:16Z",
+      "completed_at": "2026-10-29T08:16:16Z"
+    },
+    {
+      "name": "Deploy to Cloudflare Pages",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 19,
+      "started_at": "2026-10-29T08:16:16Z",
+      "completed_at": "2026-10-29T08:16:28Z"
+    },
+    {
+      "name": "Purge edge HTML cache",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 20,
+      "started_at": "2026-10-29T08:16:28Z",
+      "completed_at": "2026-10-29T08:16:28Z"
+    },
+    {
+      "name": "Post-purge edge liveness check",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 22,
+      "started_at": "2026-10-29T08:16:28Z",
+      "completed_at": "2026-10-29T08:16:32Z"
+    }
+  ],
+  "provider": {
+    "id": "6877ed52-7b5d-4f7f-9e30-aea63008c14c",
+    "url": "https://6877ed52.vaultsparkstudios-website.pages.dev",
+    "environment": "production",
+    "commit": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+    "branch": "main",
+    "latestStage": {
+      "name": "deploy",
+      "started_on": null,
+      "ended_on": "2026-10-29T08:16:27.975466Z",
+      "status": "success"
+    }
+  },
+  "stamps": [
+    {
+      "origin": "https://6877ed52.vaultsparkstudios-website.pages.dev",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-29",
+        "sha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+        "builtAt": "2026-10-29T08:16:16.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-29",
+        "sha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+        "builtAt": "2026-10-29T08:16:16.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-29",
+        "sha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+        "builtAt": "2026-10-29T08:16:16.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    }
+  ],
+  "reads": [
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "agents.json",
+      "exact": true,
+      "sha256": "9e9c551d3c49e3babf2a241fac4b5c4f614c497334cdfba15aec8342ead8f205"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/public-status.json",
+      "exact": true,
+      "sha256": "794f67968df059401399c6b0126a808bc4b869ebf06cd1eb1cc17b99fe128004"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "audits/2026-10-28.json",
+      "exact": true,
+      "sha256": "e83d88d478d80e5ebb06fbf20ad13b20217bad0fba48b01cdf15a93eb851f655"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/public-intelligence.json",
+      "exact": true,
+      "sha256": "6b312ac469db4e937829c54ab48bddc6eeb4fd12b0817a64c1662d1a7cc55516"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme--128.avif",
+      "exact": true,
+      "sha256": "bfd078e0293b44a95b676328a67f76915d2d329f623e97f54f92a4493b3cef4c"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme--640.avif",
+      "exact": true,
+      "sha256": "e05861f43d53eaea2dbf31df5e5955f4be7316029f03ce8c153a776c6f436186"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme--640.webp",
+      "exact": true,
+      "sha256": "1bb0f6f426cd8b9dab248276227185172c31e2fc5f50c1a740c4933217c593fc"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme.avif",
+      "exact": true,
+      "sha256": "caea420f99b78705ffdc86be4c98e26fb1c10cf4a9fe9d714d1d3a4f4e824650"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme.png",
+      "exact": true,
+      "sha256": "2208156d1e722a8eb1987a9f32d7b3f9a1aaa443137e26b509c312808ac62bcd"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme.webp",
+      "exact": true,
+      "sha256": "556973287698882d64c3eee18abe99f710a0ec5e101f4f54ddb53cdcb355b239"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire--640.avif",
+      "exact": true,
+      "sha256": "8795b649d7c77bf9bec22e6c3347e67976f2e9ffdf97eda39fd0d7b37f6ed759"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire--640.webp",
+      "exact": true,
+      "sha256": "33d919c058bea3a7fa505d2bee6179ccc22d60e58ed17cc154e5057b6a95335a"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire.avif",
+      "exact": true,
+      "sha256": "31010f04557fc0d50458b192039bdea8a3351809ac2a70f69bdb3e4a05b7a216"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire.png",
+      "exact": true,
+      "sha256": "67e6f199fe0cc6a404dc0ff181b6c1e9c6729e0a7c0b09fbc7b07a27b500626d"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire.webp",
+      "exact": true,
+      "sha256": "06dc66736be9d3385fd58a7673c82dd301bb6b2548a8d70a9e196a4527228ee8"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how.png",
+      "exact": true,
+      "sha256": "1bb4b6f96fb796c9f9009d357858b27c0212ec0696ff3c7e004123d26cd442dd"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/investor-experience.js",
+      "exact": true,
+      "sha256": "f72aa84b0720b23ebda5988f05c68a141fb65a9f8d615ef395a80ae45a5168cb"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/investor-theme.css",
+      "exact": true,
+      "sha256": "deeb8ac168cee9d2b51e5c1da468397955c76e4affb240ad021ef9f2e6283976"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "vault-member/portal-dashboard.js",
+      "exact": true,
+      "sha256": "c353dfa54a970530721a429b06b12b797ea2e6f93405f48c4ba1a0321e8080d1"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "vault-member/portal-logic.js",
+      "exact": true,
+      "sha256": "79282618183c02fbe5cee1f7a8603b9a7bf798d245e59afdaaced1083fd348cb"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "vault-member/portal.css",
+      "exact": true,
+      "sha256": "22bd3d1b0505a3548c3887324c48b2ed7238eebb98b4e779f9ce60609b1aab5e"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/changelog-narrative.json",
+      "exact": true,
+      "sha256": "765d2e1202159e8843b36c263c51f5196cabb52f79426079b8a6d05fc73fe309"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "data/consumer-changelog.json",
+      "exact": true,
+      "sha256": "80de518e576daee93799f0729c94244aa58617803f40e338b7f34bb2e0576ad8"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/intent-map.json",
+      "exact": true,
+      "sha256": "33848e336dd72d5adc2965f25deb5a2152c9561207343020bbbded5e741afa32"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/vault-narrative.json",
+      "exact": true,
+      "sha256": "8376d3d876b29b33580ef02be036f6c0a9317fd30c450f6cdf1791e7ba914985"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/vault-narrative-history.json",
+      "exact": true,
+      "sha256": "1f023932fafb74bc4ffe7bcbb235c1733b2628ee4e8034ef02b5dadb4d5952e9"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "journal/dispatches/feed.xml",
+      "exact": true,
+      "sha256": "fd820ac48d69a2d8b5070ade5cf288d683fdac605bd3ff4224bc9ec855c9f987"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "vault-member/portal-logic.shell-7928261818.js",
+      "exact": true,
+      "sha256": "79282618183c02fbe5cee1f7a8603b9a7bf798d245e59afdaaced1083fd348cb"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "vault-member/portal-dashboard.shell-c353dfa54a.js",
+      "exact": true,
+      "sha256": "c353dfa54a970530721a429b06b12b797ea2e6f93405f48c4ba1a0321e8080d1"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "vault-member/portal.shell-0007bdfdfe.css",
+      "exact": true,
+      "sha256": "0007bdfdfe090e773ddf85671fb73659dc49856146703a7a4809dbb3a2c64e3c"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/investor-theme.shell-9ce155cfc3.css",
+      "exact": true,
+      "sha256": "9ce155cfc3a72c00bbdd1640391d61086ccfc6912fcab7d722a9e0e02b666784"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "assets/investor-experience.shell-f72aa84b07.js",
+      "exact": true,
+      "sha256": "f72aa84b0720b23ebda5988f05c68a141fb65a9f8d615ef395a80ae45a5168cb"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "agents.json",
+      "exact": true,
+      "sha256": "9e9c551d3c49e3babf2a241fac4b5c4f614c497334cdfba15aec8342ead8f205"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/public-status.json",
+      "exact": true,
+      "sha256": "794f67968df059401399c6b0126a808bc4b869ebf06cd1eb1cc17b99fe128004"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "audits/2026-10-28.json",
+      "exact": true,
+      "sha256": "e83d88d478d80e5ebb06fbf20ad13b20217bad0fba48b01cdf15a93eb851f655"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/public-intelligence.json",
+      "exact": true,
+      "sha256": "6b312ac469db4e937829c54ab48bddc6eeb4fd12b0817a64c1662d1a7cc55516"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme--128.avif",
+      "exact": true,
+      "sha256": "bfd078e0293b44a95b676328a67f76915d2d329f623e97f54f92a4493b3cef4c"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme--640.avif",
+      "exact": true,
+      "sha256": "e05861f43d53eaea2dbf31df5e5955f4be7316029f03ce8c153a776c6f436186"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme--640.webp",
+      "exact": true,
+      "sha256": "1bb0f6f426cd8b9dab248276227185172c31e2fc5f50c1a740c4933217c593fc"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme.avif",
+      "exact": true,
+      "sha256": "caea420f99b78705ffdc86be4c98e26fb1c10cf4a9fe9d714d1d3a4f4e824650"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme.png",
+      "exact": true,
+      "sha256": "2208156d1e722a8eb1987a9f32d7b3f9a1aaa443137e26b509c312808ac62bcd"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme.webp",
+      "exact": true,
+      "sha256": "556973287698882d64c3eee18abe99f710a0ec5e101f4f54ddb53cdcb355b239"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire--640.avif",
+      "exact": true,
+      "sha256": "8795b649d7c77bf9bec22e6c3347e67976f2e9ffdf97eda39fd0d7b37f6ed759"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire--640.webp",
+      "exact": true,
+      "sha256": "33d919c058bea3a7fa505d2bee6179ccc22d60e58ed17cc154e5057b6a95335a"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire.avif",
+      "exact": true,
+      "sha256": "31010f04557fc0d50458b192039bdea8a3351809ac2a70f69bdb3e4a05b7a216"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire.png",
+      "exact": true,
+      "sha256": "67e6f199fe0cc6a404dc0ff181b6c1e9c6729e0a7c0b09fbc7b07a27b500626d"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire.webp",
+      "exact": true,
+      "sha256": "06dc66736be9d3385fd58a7673c82dd301bb6b2548a8d70a9e196a4527228ee8"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how.png",
+      "exact": true,
+      "sha256": "1bb4b6f96fb796c9f9009d357858b27c0212ec0696ff3c7e004123d26cd442dd"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/investor-experience.js",
+      "exact": true,
+      "sha256": "f72aa84b0720b23ebda5988f05c68a141fb65a9f8d615ef395a80ae45a5168cb"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/investor-theme.css",
+      "exact": true,
+      "sha256": "deeb8ac168cee9d2b51e5c1da468397955c76e4affb240ad021ef9f2e6283976"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "vault-member/portal-dashboard.js",
+      "exact": true,
+      "sha256": "c353dfa54a970530721a429b06b12b797ea2e6f93405f48c4ba1a0321e8080d1"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "vault-member/portal-logic.js",
+      "exact": true,
+      "sha256": "79282618183c02fbe5cee1f7a8603b9a7bf798d245e59afdaaced1083fd348cb"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "vault-member/portal.css",
+      "exact": true,
+      "sha256": "22bd3d1b0505a3548c3887324c48b2ed7238eebb98b4e779f9ce60609b1aab5e"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/changelog-narrative.json",
+      "exact": true,
+      "sha256": "765d2e1202159e8843b36c263c51f5196cabb52f79426079b8a6d05fc73fe309"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "data/consumer-changelog.json",
+      "exact": true,
+      "sha256": "80de518e576daee93799f0729c94244aa58617803f40e338b7f34bb2e0576ad8"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/intent-map.json",
+      "exact": true,
+      "sha256": "33848e336dd72d5adc2965f25deb5a2152c9561207343020bbbded5e741afa32"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/vault-narrative.json",
+      "exact": true,
+      "sha256": "8376d3d876b29b33580ef02be036f6c0a9317fd30c450f6cdf1791e7ba914985"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/vault-narrative-history.json",
+      "exact": true,
+      "sha256": "1f023932fafb74bc4ffe7bcbb235c1733b2628ee4e8034ef02b5dadb4d5952e9"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "journal/dispatches/feed.xml",
+      "exact": true,
+      "sha256": "fd820ac48d69a2d8b5070ade5cf288d683fdac605bd3ff4224bc9ec855c9f987"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "vault-member/portal-logic.shell-7928261818.js",
+      "exact": true,
+      "sha256": "79282618183c02fbe5cee1f7a8603b9a7bf798d245e59afdaaced1083fd348cb"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "vault-member/portal-dashboard.shell-c353dfa54a.js",
+      "exact": true,
+      "sha256": "c353dfa54a970530721a429b06b12b797ea2e6f93405f48c4ba1a0321e8080d1"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "vault-member/portal.shell-0007bdfdfe.css",
+      "exact": true,
+      "sha256": "0007bdfdfe090e773ddf85671fb73659dc49856146703a7a4809dbb3a2c64e3c"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/investor-theme.shell-9ce155cfc3.css",
+      "exact": true,
+      "sha256": "9ce155cfc3a72c00bbdd1640391d61086ccfc6912fcab7d722a9e0e02b666784"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/investor-experience.shell-f72aa84b07.js",
+      "exact": true,
+      "sha256": "f72aa84b0720b23ebda5988f05c68a141fb65a9f8d615ef395a80ae45a5168cb"
+    }
+  ],
+  "htmlReads": [
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "route": "/investor-portal/",
+      "status": 200,
+      "marker": "investor-portal",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": [
+        "/assets/investor-theme.shell-9ce155cfc3.css",
+        "/assets/investor-experience.shell-f72aa84b07.js"
+      ]
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "route": "/investor-portal/login/",
+      "status": 200,
+      "marker": "investor-portal",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": [
+        "/assets/investor-theme.shell-9ce155cfc3.css",
+        "/assets/investor-experience.shell-f72aa84b07.js"
+      ]
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "route": "/investor-portal/updates/",
+      "status": 200,
+      "marker": "investor-portal",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": [
+        "/assets/investor-theme.shell-9ce155cfc3.css",
+        "/assets/investor-experience.shell-f72aa84b07.js"
+      ]
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "route": "/investor-portal/documents/",
+      "status": 200,
+      "marker": "investor-portal",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": [
+        "/assets/investor-theme.shell-9ce155cfc3.css",
+        "/assets/investor-experience.shell-f72aa84b07.js"
+      ]
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "route": "/investor-portal/message/",
+      "status": 200,
+      "marker": "investor-portal",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": [
+        "/assets/investor-theme.shell-9ce155cfc3.css",
+        "/assets/investor-experience.shell-f72aa84b07.js"
+      ]
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "route": "/investor-portal/profile/",
+      "status": 200,
+      "marker": "investor-portal",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": [
+        "/assets/investor-theme.shell-9ce155cfc3.css",
+        "/assets/investor-experience.shell-f72aa84b07.js"
+      ]
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "route": "/investor-portal/apply/",
+      "status": 200,
+      "marker": "investor-portal",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": [
+        "/assets/investor-theme.shell-9ce155cfc3.css",
+        "/assets/investor-experience.shell-f72aa84b07.js"
+      ]
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "route": "/investor-portal/admin/",
+      "status": 200,
+      "marker": "investor-portal",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": [
+        "/assets/investor-theme.shell-9ce155cfc3.css",
+        "/assets/investor-experience.shell-f72aa84b07.js"
+      ]
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "route": "/vault-member/",
+      "status": 200,
+      "marker": "vault-member",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": [
+        "/vault-member/portal-logic.shell-7928261818.js",
+        "/vault-member/portal-dashboard.shell-c353dfa54a.js",
+        "/vault-member/portal.shell-0007bdfdfe.css"
+      ]
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "route": "/api/",
+      "status": 200,
+      "marker": "Actions and integration contracts",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": []
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "route": "/changelog/",
+      "status": 200,
+      "marker": "A clearer studio, from the Vault to the investor room",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": []
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "route": "/journal/",
+      "status": 301,
+      "present": true,
+      "kind": "legacy-journal-redirect",
+      "location": "https://vaultsparkstudios-website.pages.dev/changelog/#stories",
+      "destinationStatus": 200,
+      "currentChangelog": true,
+      "assetRefs": []
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "route": "/investor-portal/",
+      "status": 302,
+      "present": true,
+      "kind": "existing-auth-wall",
+      "location": "https://vaultsparkstudios.com/login?intent=signin&return=%2Finvestor-portal%2F",
+      "loginStatus": 200,
+      "exactReturn": true,
+      "obeliskSignIn": true,
+      "identityProviderOrigin": "https://obeliskgate.com",
+      "identityProviderPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true,
+      "assetRefs": []
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "route": "/investor-portal/login/",
+      "status": 200,
+      "marker": "investor-portal",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": [
+        "/assets/investor-theme.shell-9ce155cfc3.css",
+        "/assets/investor-experience.shell-f72aa84b07.js"
+      ]
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "route": "/investor-portal/updates/",
+      "status": 302,
+      "present": true,
+      "kind": "existing-auth-wall",
+      "location": "https://vaultsparkstudios.com/login?intent=signin&return=%2Finvestor-portal%2Fupdates%2F",
+      "loginStatus": 200,
+      "exactReturn": true,
+      "obeliskSignIn": true,
+      "identityProviderOrigin": "https://obeliskgate.com",
+      "identityProviderPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true,
+      "assetRefs": []
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "route": "/investor-portal/documents/",
+      "status": 302,
+      "present": true,
+      "kind": "existing-auth-wall",
+      "location": "https://vaultsparkstudios.com/login?intent=signin&return=%2Finvestor-portal%2Fdocuments%2F",
+      "loginStatus": 200,
+      "exactReturn": true,
+      "obeliskSignIn": true,
+      "identityProviderOrigin": "https://obeliskgate.com",
+      "identityProviderPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true,
+      "assetRefs": []
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "route": "/investor-portal/message/",
+      "status": 302,
+      "present": true,
+      "kind": "existing-auth-wall",
+      "location": "https://vaultsparkstudios.com/login?intent=signin&return=%2Finvestor-portal%2Fmessage%2F",
+      "loginStatus": 200,
+      "exactReturn": true,
+      "obeliskSignIn": true,
+      "identityProviderOrigin": "https://obeliskgate.com",
+      "identityProviderPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true,
+      "assetRefs": []
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "route": "/investor-portal/profile/",
+      "status": 302,
+      "present": true,
+      "kind": "existing-auth-wall",
+      "location": "https://vaultsparkstudios.com/login?intent=signin&return=%2Finvestor-portal%2Fprofile%2F",
+      "loginStatus": 200,
+      "exactReturn": true,
+      "obeliskSignIn": true,
+      "identityProviderOrigin": "https://obeliskgate.com",
+      "identityProviderPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true,
+      "assetRefs": []
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "route": "/investor-portal/apply/",
+      "status": 200,
+      "marker": "investor-portal",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": [
+        "/assets/investor-theme.shell-9ce155cfc3.css",
+        "/assets/investor-experience.shell-f72aa84b07.js"
+      ]
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "route": "/investor-portal/admin/",
+      "status": 302,
+      "present": true,
+      "kind": "existing-auth-wall",
+      "location": "https://vaultsparkstudios.com/login?intent=signin&return=%2Finvestor-portal%2Fadmin%2F",
+      "loginStatus": 200,
+      "exactReturn": true,
+      "obeliskSignIn": true,
+      "identityProviderOrigin": "https://obeliskgate.com",
+      "identityProviderPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true,
+      "assetRefs": []
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "route": "/vault-member/",
+      "status": 200,
+      "marker": "vault-member",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": [
+        "/vault-member/portal-logic.shell-7928261818.js",
+        "/vault-member/portal-dashboard.shell-c353dfa54a.js",
+        "/vault-member/portal.shell-0007bdfdfe.css"
+      ]
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "route": "/api/",
+      "status": 200,
+      "marker": "Actions and integration contracts",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": []
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "route": "/changelog/",
+      "status": 200,
+      "marker": "A clearer studio, from the Vault to the investor room",
+      "present": true,
+      "kind": "served-html",
+      "assetRefs": []
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "route": "/journal/",
+      "status": 301,
+      "present": true,
+      "kind": "legacy-journal-redirect",
+      "location": "https://vaultsparkstudios.com/changelog/#stories",
+      "destinationStatus": 200,
+      "currentChangelog": true,
+      "assetRefs": []
+    }
+  ],
+  "portalAssets": {
+    "memberPortalLogic": "vault-member/portal-logic.shell-7928261818.js",
+    "memberPortalDashboard": "vault-member/portal-dashboard.shell-c353dfa54a.js",
+    "memberPortalStyle": "vault-member/portal.shell-0007bdfdfe.css",
+    "investorTheme": "assets/investor-theme.shell-9ce155cfc3.css",
+    "investorExperience": "assets/investor-experience.shell-f72aa84b07.js"
+  },
+  "changedArtPaths": [
+    "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme--128.avif",
+    "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme--640.avif",
+    "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme--640.webp",
+    "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme.avif",
+    "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme.png",
+    "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--meme.webp",
+    "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire--640.avif",
+    "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire--640.webp",
+    "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire.avif",
+    "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire.png",
+    "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how--satire.webp",
+    "assets/og/news/2026-10-28--anthropic-investors-arent-just-buying-a-chatbot-heres-how.png"
+  ],
+  "scope": "Actual normal full deploy, provider and three stamps,64 exact reads of32 assets/data paths,16 served HTML checks with26 fingerprint references,6 existing apex auth-wall checks and2 configured journal redirects to the current changelog. Complete all-served artifact readback is separate. Anonymous access guards do not prove positive authenticated private-data access."
+}

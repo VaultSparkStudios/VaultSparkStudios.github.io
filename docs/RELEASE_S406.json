@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "session": 406,
-  "state": "hosted-checks-pending",
-  "releaseAccepted": false,
+  "state": "production-verified-closing-publication-pending",
+  "releaseAccepted": true,
   "goal": {
     "threadId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
     "createdAt": 1793204515
@@ -203,15 +203,15 @@
     "at": "2026-10-28T23:34:14.835Z",
     "audit": "docs/AUDIT_2026-10-28-S406-website-refresh.json",
     "plan": "docs/IMPLEMENT_PLAN_S406_WEBSITE.md",
-    "sourceAcceptanceCurrent": false,
+    "sourceAcceptanceCurrent": true,
     "priorSource": "docs/S406_pre-portal-full-source.json",
     "priorStaging": "docs/S406_pre-portal-staging.json",
     "priorCeremony": "docs/S406_pre-portal-ceremony.json",
-    "note": "All four added outcomes pending; do not borrow prior fingerprint acceptance for the final website refresh."
+    "note": "All four added outcomes accepted by current source, browser, staging, exact hosted and production evidence. Earlier pre-expansion receipts remain historical."
   },
   "websiteCheckpoint": {
     "at": "2026-10-29T00:28:24.497Z",
-    "summary": "The founder expanded the same S406 goal to both portals and all website resources, developer APIs, feeds and integrations. Four added L2 outcomes are implemented: content-keyed member updates and a useful return briefing; a theme-aware investor workspace with honest private-data states and public evidence; purpose-led developer feed/action documentation; and factual reader updates with source-identity dispatch deduplication. The original two reliability outcomes remain preserved. Actual Chromium interaction20/20 and native package prebuild/build/postbuild passed. Final source-bound visual review, fresh full source/mobile verification and full staging/production acceptance remain pending in docs/RELEASE_S406.json.",
+    "summary": "All four website outcomes released and verified: current member briefings, decision-ready investor workspace, useful developer feed/contracts directory and factual reader updates. The two original reliability outcomes are also preserved. Source execution, immutable production and later closing metadata remain separate.",
     "behavior": "docs/S406_portal-behavior.json",
     "nativeBuild": {
       "exit": 0,
@@ -229,20 +229,20 @@
     "sourceAcceptanceCurrent": true,
     "visualAcceptanceCurrent": true,
     "mobileAcceptanceCurrent": true,
-    "privateContent": "Honest empty/unavailable states; a passive factual investor studio briefing is planned only after this candidate is actually deployed and verified. No private financial documents are fabricated.",
+    "privateContent": "One factual product and resource briefing and one member studio pulse published with actual transaction readback. No financial documents or projections fabricated.",
     "implemented": 4,
     "locallyVerified": 4,
     "visualCurrent": true,
     "mobileCurrent": true,
     "fullSourceCurrent": true,
-    "productionCurrent": false
+    "productionCurrent": true
   },
   "expandedOutcomes": {
     "original": 2,
     "website": 4,
     "totalLocallyVerified": 6,
     "audit": "docs/AUDIT_2026-10-28-S406-website-refresh.json",
-    "releaseAccepted": false
+    "releaseAccepted": true
   },
   "websiteSourceAttempt1": {
     "evidence": "docs/S406_website-source-attempt1-failed.json",
@@ -310,7 +310,7 @@
     },
     "warmBrowser": "docs/S406_portal-warm-cache.json",
     "currentSource": "docs/S406_full-source-acceptance.json",
-    "production": "pending",
+    "production": "docs/S406_production-identity.json",
     "visual": "docs/S406_visual-acceptance.json",
     "mobile": "docs/S406_mobile-acceptance.json",
     "portalBehavior20": true,
@@ -367,5 +367,73 @@
     "stagingCeremonyPassed": 11,
     "sourceExecutionHead": "542905dfea3ac7ce7a644429c161beabd0e18092",
     "scope": "Same verified application source and declared critical artifact root after normal merges of generated observations. Exact hosted checks and full production still pending."
+  },
+  "hosted": {
+    "receipt": "docs/S406_hosted-candidate.json",
+    "candidate": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+    "passed": 3,
+    "total": 3,
+    "lane": "hosted-exact-sha"
+  },
+  "production": {
+    "receipt": "docs/S406_production-identity.json",
+    "candidate": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+    "run": 40840096846,
+    "verifiedAt": "2026-10-29T08:34:27.093Z",
+    "normalFullPromotion": true,
+    "exactReads": 64,
+    "servedHtmlChecks": 16,
+    "legacyJournalRedirects": 2,
+    "existingAuthWallChecks": 6,
+    "portalAssetReferences": 26,
+    "positivePrivateJourneyProven": false
+  },
+  "servedParity": {
+    "receipt": "docs/S406_served-parity.json",
+    "candidate": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+    "scope": "all-served",
+    "verdict": "tree-current",
+    "checked": 3668,
+    "expected": 3668,
+    "identical": 3658,
+    "redirected": 10,
+    "differ": 0,
+    "unread": 0,
+    "coverageComplete": true
+  },
+  "publisherRestoration": {
+    "receipt": "docs/S406_publisher-window.json",
+    "restored": true,
+    "count": 5,
+    "observedAt": "2026-10-29T08:36:14.528Z"
+  },
+  "passivePublication": {
+    "verifiedAt": "2026-10-29T08:35:54.957Z",
+    "investorBriefing": true,
+    "studioPulse": true,
+    "readbackRows": 2,
+    "outboundMessages": false,
+    "privateIdentifiersCommitted": false
+  },
+  "finalClosingPublication": {
+    "state": "pending",
+    "scope": "Final canonical records, Ark impact summary and remote metadata publication remain required before native goal completion."
+  },
+  "impactTransport": {
+    "type": "session-impact-summary",
+    "cargoId": "01K63CUBBQ68D607C5D6DE8423",
+    "scope": "Signed internal Ark broadcast delivered; no recipient adoption claimed."
+  },
+  "cleanup": {
+    "ownedBaselineRemoved": true,
+    "preservedBeforeFiles": 29,
+    "hashMismatches": 0,
+    "ownedPreviewStopped": true,
+    "foreignWorktreesUntouched": true
+  },
+  "independentFinalReview": {
+    "reviewer": "review_help",
+    "result": "PASS0",
+    "scope": "Actual generated production and full served parity receipts reviewed; private authenticated access remains unproven."
   }
 }
