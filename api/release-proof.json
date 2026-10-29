@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-29T08:38:36.767Z",
+  "generatedAt": "2026-10-29T09:12:33.348Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -24,9 +24,9 @@
     "deployedBuildSha": "87f147027f814be9ec78dd9960132f142945e178",
     "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "beb4c1d8ac50438deb32daa76744e4719f2c34ec962d80df091c520aff7cef36",
+      "candidateRoot": "46b2abcca0514094c24cd010f4beca563b4e28806840088f0200795555d63bdb",
       "candidateLeafCount": 70,
-      "stagingRoot": "beb4c1d8ac50438deb32daa76744e4719f2c34ec962d80df091c520aff7cef36",
+      "stagingRoot": "46b2abcca0514094c24cd010f4beca563b4e28806840088f0200795555d63bdb",
       "stagingLeafCount": 70,
       "matched": true
     },
@@ -68,13 +68,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 5,
-    "ageHours": 0.4,
-    "observedAt": "2026-10-29T08:38:36.767Z",
+    "commitsBehind": 8,
+    "ageHours": 0.3,
+    "observedAt": "2026-10-29T09:12:25.058Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-29T08:38:36.767Z",
+      "observedAt": "2026-10-29T09:12:25.058Z",
       "expectedFrom": "fdb7f729a7f8ab525b82c6bb04867a2665ef0517221a86dbbc9233edde97a584",
       "supersededBy": null,
       "ageHours": 0,
@@ -180,7 +180,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": false,
+    "stagingArtifactManifestBound": true,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -194,7 +194,6 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
-    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
