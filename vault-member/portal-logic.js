@@ -246,7 +246,28 @@
     return (space > limit * 0.6 ? cut.slice(0, space) : cut).replace(/[,.;:\s]+$/, '') + '…';
   }
 
+  // Published reader updates own their identity. A deployment number or feed
+  // regeneration timestamp must never hide a later update or create a new one.
+  function publishedRelease(feed) {
+    var entries = ((feed && feed.entries) || []).filter(function(e) {
+      return e && typeof e.title === 'string' && e.title.trim() &&
+        /^\d{4}-\d{2}-\d{2}$/.test(String(e.date || '')) &&
+        Number.isFinite(Date.parse(e.date + 'T00:00:00Z')) &&
+        new Date(e.date + 'T00:00:00Z').toISOString().slice(0,10) === e.date;
+    }).slice().sort(function(a,b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
+    if (!entries.length) return null;
+    var latest = entries[0];
+    var highlights = (Array.isArray(latest.highlights) ? latest.highlights : []).filter(function(s) { return typeof s === 'string' && s.trim(); }).slice(0,5);
+    return {
+      key: JSON.stringify([latest.id || '', latest.date, latest.title, highlights]),
+      date: latest.date,
+      title: latest.title,
+      items: (highlights.length ? highlights : [latest.title]).map(function(message) { return {type:'update',message:message}; }),
+    };
+  }
+
   var api = {
+    publishedRelease: publishedRelease,
     RANK_THRESHOLDS: RANK_THRESHOLDS,
     rankIndexFor: rankIndexFor,
     isMissingRpc: isMissingRpc,

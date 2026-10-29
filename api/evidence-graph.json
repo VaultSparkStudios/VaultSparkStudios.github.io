@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-10-02",
-  "contractSha256": "9df74d4d479c2ed2b3b17cf59c28f82c720e9ebc99b129450f7ef02cc70adfd8",
+  "contractSha256": "9a74df784199d1484206b1ca5d26385e8f1075fa7fe632a21224e1c2624c8328",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
@@ -246,10 +246,15 @@
       "verify": "node scripts/build-api-index.mjs --check",
       "publishCascade": false,
       "dependsOn": [
-        "agents.json"
+        "agents.json",
+        "feed/forge-ledger.json"
       ],
       "feeds": [],
-      "externalSources": []
+      "externalSources": [
+        "api/news-desk-feed.json",
+        "feed.xml",
+        "journal/dispatches/feed.xml"
+      ]
     },
     {
       "id": "ark-signature-dossier",
@@ -602,7 +607,9 @@
       "dependsOn": [
         "api/commit-map.json"
       ],
-      "feeds": [],
+      "feeds": [
+        "api/index.html"
+      ],
       "externalSources": []
     },
     {

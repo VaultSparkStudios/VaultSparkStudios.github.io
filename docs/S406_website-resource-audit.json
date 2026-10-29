@@ -1,0 +1,514 @@
+{
+  "session": 406,
+  "observedAt": "2026-10-29T00:05:09.096Z",
+  "scope": "All377 source pages and70805 anchor links in existing native audit; redirects resolved and anchor destinations checked locally. Public feeds read live with no credentials. No POST action, subscription, private data, inference or traffic uplift claim.",
+  "sourceAudit": {
+    "scannedFiles": 377,
+    "scannedLinks": 70805,
+    "rawFindings": 36,
+    "truthGaps": 0
+  },
+  "redirectReconciliation": [
+    {
+      "href": "/ranks/",
+      "target": "/leaderboards/#ranks",
+      "redirect": true,
+      "fileExists": true,
+      "anchorExists": true
+    },
+    {
+      "href": "/vaultsparked/",
+      "target": "/membership/#tiers",
+      "redirect": true,
+      "fileExists": true,
+      "anchorExists": true
+    },
+    {
+      "href": "/stats/",
+      "target": "/evidence/#numbers",
+      "redirect": true,
+      "fileExists": true,
+      "anchorExists": true
+    },
+    {
+      "href": "/notebook/",
+      "target": "/studio-pulse/#forge-ledger",
+      "redirect": true,
+      "fileExists": true,
+      "anchorExists": true
+    },
+    {
+      "href": "/membership-value/",
+      "target": "/membership/#benefits",
+      "redirect": true,
+      "fileExists": true,
+      "anchorExists": true
+    },
+    {
+      "href": "/members/",
+      "target": "/community/#members",
+      "redirect": true,
+      "fileExists": true,
+      "anchorExists": true
+    },
+    {
+      "href": "/join/",
+      "target": "/vault-member/#register",
+      "redirect": true,
+      "fileExists": true,
+      "anchorExists": true
+    }
+  ],
+  "sitemapExclusions": [
+    {
+      "file": "projects/atlas/index.html",
+      "intentionallyNoindex": true
+    },
+    {
+      "file": "projects/canon/index.html",
+      "intentionallyNoindex": true
+    },
+    {
+      "file": "projects/ideaforge/index.html",
+      "intentionallyNoindex": true
+    },
+    {
+      "file": "projects/scriptorium/index.html",
+      "intentionallyNoindex": true
+    },
+    {
+      "file": "projects/signal-log/index.html",
+      "intentionallyNoindex": true
+    },
+    {
+      "file": "projects/statvault/index.html",
+      "intentionallyNoindex": true
+    },
+    {
+      "file": "projects/the-living-protocol/index.html",
+      "intentionallyNoindex": true
+    },
+    {
+      "file": "projects/vault-pipeline/index.html",
+      "intentionallyNoindex": true
+    }
+  ],
+  "localChecks": [
+    {
+      "command": "scripts/check-project-links.mjs --json",
+      "exit": 0,
+      "summary": {
+        "ok": true,
+        "total": 21,
+        "errors": [],
+        "warns": [
+          {
+            "id": "voidfall",
+            "level": "warn",
+            "msg": "no on-site page and no live URL → falls back to generic /games/"
+          }
+        ],
+        "results": [
+          {
+            "id": "veilos",
+            "primary": "https://veilos.io",
+            "page": "/projects/veilos/",
+            "live": "https://veilos.io",
+            "issues": []
+          },
+          {
+            "id": "vorn",
+            "primary": "https://joinvorn.com",
+            "page": "/projects/vorn/",
+            "live": "https://joinvorn.com",
+            "issues": []
+          },
+          {
+            "id": "football-gm",
+            "primary": "https://playfranchisearchitect.com/",
+            "page": null,
+            "live": "https://playfranchisearchitect.com/",
+            "issues": []
+          },
+          {
+            "id": "call-of-doodie",
+            "primary": "/games/call-of-doodie/",
+            "page": "/games/call-of-doodie/",
+            "live": "https://callofdoodie.wtf/",
+            "issues": []
+          },
+          {
+            "id": "promogrind",
+            "primary": "/projects/promogrind/",
+            "page": "/projects/promogrind/",
+            "live": "https://promogrind.bet",
+            "issues": []
+          },
+          {
+            "id": "mindframe",
+            "primary": "/games/mindframe/",
+            "page": "/games/mindframe/",
+            "live": "https://usemindframe.com/",
+            "issues": []
+          },
+          {
+            "id": "velaxis",
+            "primary": "/projects/velaxis/",
+            "page": "/projects/velaxis/",
+            "live": "https://velaxis.markets/",
+            "issues": []
+          },
+          {
+            "id": "obelisk",
+            "primary": "/projects/obelisk/",
+            "page": "/projects/obelisk/",
+            "live": null,
+            "issues": []
+          },
+          {
+            "id": "solara",
+            "primary": "/games/solara/",
+            "page": "/games/solara/",
+            "live": null,
+            "issues": []
+          },
+          {
+            "id": "hashmark",
+            "primary": "/projects/hashmark/",
+            "page": "/projects/hashmark/",
+            "live": null,
+            "issues": []
+          },
+          {
+            "id": "shadow",
+            "primary": "/projects/shadow/",
+            "page": "/projects/shadow/",
+            "live": null,
+            "issues": []
+          },
+          {
+            "id": "sparkraid",
+            "primary": "/projects/sparkraid/",
+            "page": "/projects/sparkraid/",
+            "live": null,
+            "issues": []
+          },
+          {
+            "id": "voidfall",
+            "primary": "/games/",
+            "page": null,
+            "live": null,
+            "issues": [
+              {
+                "level": "warn",
+                "msg": "no on-site page and no live URL → falls back to generic /games/"
+              }
+            ]
+          },
+          {
+            "id": "vaultfront",
+            "primary": "/games/vaultfront/",
+            "page": "/games/vaultfront/",
+            "live": null,
+            "issues": []
+          },
+          {
+            "id": "the-exodus",
+            "primary": "/games/the-exodus/",
+            "page": "/games/the-exodus/",
+            "live": null,
+            "issues": []
+          },
+          {
+            "id": "seamline",
+            "primary": "/projects/seamline/",
+            "page": "/projects/seamline/",
+            "live": null,
+            "issues": []
+          },
+          {
+            "id": "concurrent",
+            "primary": "/projects/concurrent/",
+            "page": "/projects/concurrent/",
+            "live": null,
+            "issues": []
+          },
+          {
+            "id": "ouren",
+            "primary": "/projects/ouren/",
+            "page": "/projects/ouren/",
+            "live": null,
+            "issues": []
+          },
+          {
+            "id": "syntha",
+            "primary": "/projects/syntha/",
+            "page": "/projects/syntha/",
+            "live": null,
+            "issues": []
+          },
+          {
+            "id": "vaultspark-forge",
+            "primary": "/games/vaultspark-forge/",
+            "page": "/games/vaultspark-forge/",
+            "live": null,
+            "issues": []
+          },
+          {
+            "id": "gridiron-gm",
+            "primary": "/games/gridiron-gm/",
+            "page": "/games/gridiron-gm/",
+            "live": null,
+            "issues": []
+          }
+        ]
+      }
+    },
+    {
+      "command": "scripts/generate-sitemap.mjs --check",
+      "exit": 0,
+      "summary": "generate-sitemap: check passed · 309 indexable routes"
+    },
+    {
+      "command": "scripts/check-content-coherence.mjs",
+      "exit": 0,
+      "summary": "check-content-coherence: all public surfaces coherent ✓ (voice-leak patrol: 354 served pages clean)"
+    }
+  ],
+  "publicReads": [
+    {
+      "path": "/api/build-check-diagnostics.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.374Z"
+    },
+    {
+      "path": "/api/build-sha.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.636Z"
+    },
+    {
+      "path": "/api/citation.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.228Z"
+    },
+    {
+      "path": "/api/deploy-currency.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.531Z"
+    },
+    {
+      "path": "/api/ecosystem-analytics.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:07.912Z"
+    },
+    {
+      "path": "/api/ecosystem-stats.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:07.819Z"
+    },
+    {
+      "path": "/api/evidence-graph.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.410Z"
+    },
+    {
+      "path": "/api/feed-publishers.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.357Z"
+    },
+    {
+      "path": "/api/identity-migration-receipt.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.673Z"
+    },
+    {
+      "path": "/api/intent-map.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.830Z"
+    },
+    {
+      "path": "/api/membership-tiers.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.749Z"
+    },
+    {
+      "path": "/api/nervous-system.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.219Z"
+    },
+    {
+      "path": "/api/news-desk-engagement.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:07.902Z"
+    },
+    {
+      "path": "/api/news-desk-feed.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.912Z"
+    },
+    {
+      "path": "/api/news-desk-freshness.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:07.989Z"
+    },
+    {
+      "path": "/api/news-desk-reactions.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.090Z"
+    },
+    {
+      "path": "/api/newsroom-run.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.022Z"
+    },
+    {
+      "path": "/api/oracle-query-insights.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.530Z"
+    },
+    {
+      "path": "/api/proof-surface-diagnostics.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.543Z"
+    },
+    {
+      "path": "/api/public-intelligence.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.058Z"
+    },
+    {
+      "path": "/api/public-status.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.168Z"
+    },
+    {
+      "path": "/api/release-proof.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.665Z"
+    },
+    {
+      "path": "/api/status-proof.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.314Z"
+    },
+    {
+      "path": "/api/supabase-control-plane.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.764Z"
+    },
+    {
+      "path": "/api/velocity-series.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.238Z"
+    },
+    {
+      "path": "/api/worker-route-history.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.508Z"
+    },
+    {
+      "path": "/feed.xml",
+      "status": 200,
+      "type": "application/xml",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:09.096Z"
+    },
+    {
+      "path": "/feed/forge-ledger.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:09.009Z"
+    },
+    {
+      "path": "/feed/forge-ledger.xml",
+      "status": 200,
+      "type": "application/xml",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:09.073Z"
+    },
+    {
+      "path": "/journal/dispatches/feed.xml",
+      "status": 200,
+      "type": "application/xml",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:09.045Z"
+    },
+    {
+      "path": "/oracle/answers/index.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:08.654Z"
+    },
+    {
+      "path": "/stats.json",
+      "status": 200,
+      "type": "application/json",
+      "valid": true,
+      "observedAt": "2026-10-29T00:05:07.813Z"
+    }
+  ],
+  "remaining": [
+    {
+      "surface": "curated journal essays",
+      "state": "dated archive; original dates retained, entry points now route current readers to The Desk/changelog/API"
+    },
+    {
+      "surface": "Voidfall project checker",
+      "state": "advisory generic game catalog fallback; existing lore page is not represented as a released/playable game"
+    }
+  ]
+}

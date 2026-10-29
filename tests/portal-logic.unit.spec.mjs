@@ -19,6 +19,19 @@ const S = require(path.join(ROOT, 'assets/seasons-rivals.js'));
 const registry = JSON.parse(read('data/game-registry.json'));
 const seasons = JSON.parse(read('data/seasons.json'));
 
+test('published release identity follows content rather than a deployment or regeneration timestamp', () => {
+  const entry={id:'release-a',date:'2026-10-20',title:'Reader update',highlights:['Read the new edition']};
+  const before=L.publishedRelease({generatedAt:'2026-10-21',entries:[entry]});
+  assert.equal(before.date,entry.date);
+  assert.equal(L.publishedRelease({generatedAt:'2026-10-28',entries:[entry]}).key,before.key);
+  assert.notEqual(L.publishedRelease({entries:[{...entry,highlights:['An updated reader feature']}]}).key,before.key);
+  assert.notEqual(L.publishedRelease({entries:[entry,{id:'b',date:'2026-10-28',title:'Newer release',highlights:[]}]}).key,before.key);
+  assert.equal(L.publishedRelease({entries:[]}),null);
+  assert.equal(L.publishedRelease({entries:[{title:'Unknown date'}]}),null);
+  assert.equal(L.publishedRelease({entries:[{date:'2026-02-31',title:'Invalid calendar date'}]}),null);
+  assert.deepEqual(L.publishedRelease({entries:[{date:'2026-10-28',title:'Only a title',highlights:[null,42]}]}).items,[{type:'update',message:'Only a title'}]);
+});
+
 function membershipConfig() {
   const sandbox = {};
   vm.runInNewContext(read('assets/membership-access.js'), { globalThis: sandbox });

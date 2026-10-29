@@ -4,6 +4,13 @@
 
 Session Intent: fresh /arc, authorized direct main commit/push and full deployment.
 
+Founder-expanded scope in the same S406 goal: refresh both portals and assess the whole website, including developer resources, APIs, feeds and integrations that support discovery, The Desk readership and membership. Investor direction: both a private studio experience and decision-ready information, with decision-ready information first. Selected audit: `docs/AUDIT_2026-10-28-S406-website-refresh.json`; plan: `docs/IMPLEMENT_PLAN_S406_WEBSITE.md`.
+
+- [x] Expansion Wave 1: Reproduced April 13 member release sentinel, investor theme contrast failure, stale curated changelog and feed discovery gaps; strict premises4/4 and fixture/candidate admission passed. Pre-expansion source548 and staging11 evidence preserved separately.
+- [ ] Expansion Wave 2: Current member updates and useful return actions; premium investor briefing with honest freshness and evidence.
+- [ ] Expansion Wave 3: Usable developer/feed/action documentation, reader-first dispatches and sitewide freshness reconciliation.
+- [ ] Expansion Wave 4: Independent review and fresh real-browser all-theme evidence; final source, staging, hosted checks, deployment/readback, closeout and publisher restoration. Current acceptance is owned by `docs/RELEASE_S406.json`.
+
 - [x] Wave 1: Fresh startup and nine-axis supported-release audit; typed premises2/2 and pending admission/rehearsal accepted.
 - [x] Wave 2: Two L2 reliability repairs locally verified: diagnostic-help safety and canonical OG inventory refresh; focused checks and independent reviews PASS0. Deployment acceptance remains separate.
 

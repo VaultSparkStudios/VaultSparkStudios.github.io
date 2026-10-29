@@ -18,6 +18,7 @@ const DEFINITIONS = [
   { id: 'invest', label: 'Review the investor path', aliases: ['invest', 'investor', 'portfolio', 'due diligence'], audience: ['investor'], primary: '/investor-portal/', fallback: '/contact/', action: 'identity.begin', evidence: ['api/public-intelligence.json', 'api/public-status.json'], maxAgeHours: 168 },
   { id: 'press', label: 'Find press facts and assets', aliases: ['press', 'media', 'brand kit', 'citation'], audience: ['press', 'agent'], primary: '/press/', fallback: '/brand/', action: 'navigate', evidence: ['api/public-intelligence.json', 'api/og-coverage.json'], maxAgeHours: 168 },
   { id: 'build', label: 'Explore what the studio builds', aliases: ['build', 'projects', 'tools', 'platforms'], audience: ['builder', 'agent'], primary: '/projects/', fallback: '/studio-pulse/', action: 'navigate', evidence: ['api/public-intelligence.json', 'api/public-status.json'], maxAgeHours: 168 },
+  { id: 'integrate', label: 'Use public feeds and integration contracts', aliases: ['integrate', 'developer', 'api', 'use the news feed', 'integrate public data', 'rss'], audience: ['builder', 'agent', 'reader'], primary: '/api/', fallback: '/contact/', action: 'navigate', evidence: ['api/public-intelligence.json', 'api/news-desk-feed.json'], maxAgeHours: 168 },
   { id: 'news', label: 'Read The Desk', aliases: ['news', 'the desk', 'ai news', 'daily signal'], audience: ['reader', 'press', 'agent'], primary: '/news/', fallback: '/journal/', action: 'navigate', evidence: ['api/news-desk.json'], maxAgeHours: 72 },
 ];
 
@@ -130,12 +131,13 @@ function selfTest() {
   const values = Object.fromEntries(DEFINITIONS.flatMap((definition) => definition.evidence).map((path) => [path, { generatedAt: '2026-01-01T00:00:00Z' }]));
   const map = deriveIntentMap({ values, newsPreview: true });
   const cases = [
-    ['seven bounded intents', map.intents.length === 7],
+    ['eight bounded intents', map.intents.length === 8],
     ['canonical six present', ['play', 'join', 'verify', 'invest', 'press', 'build'].every((id) => map.intents.some((intent) => intent.id === id))],
     ['news preview abstains honestly', map.intents.find((intent) => intent.id === 'news')?.abstentionReason === 'preview-dark-run-not-navigation-promoted'],
     ['zero runtime AI cost', map.runtimeAiCost === 0],
     ['freshness graph has no post-seal cycle', !DEFINITIONS.flatMap((definition) => definition.evidence).some((path) => ['agents.json', 'api/candidate-artifact-manifest.json', 'api/release-proof.json', 'api/status-proof.json', 'api/citation.json'].includes(path))],
-    ['all intents are route-resolvable', map.summary.resolvable === 7],
+    ['all intents are route-resolvable', map.summary.resolvable === 8],
+    ['integration discovery is distinct from project browsing', map.intents.find((intent) => intent.id === 'integrate')?.primary.path === '/api/' && map.intents.find((intent) => intent.id === 'build')?.primary.path === '/projects/'],
     ['schema validates', validateIntentMap(map).length === 0],
   ];
   const failed = cases.filter(([, ok]) => !ok);

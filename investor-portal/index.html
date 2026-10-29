@@ -187,8 +187,11 @@
   <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
+<script src="/assets/theme-toggle.shell-8221605898.js" defer></script>
+<script src="/assets/investor-experience.js" defer></script>
 </head>
 <body class="investor-portal dark-mode" data-theme="dark">
+<script>!function(){try{var t=localStorage.getItem('vs_theme')||'dark',m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(m[t]){var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement.classList,r);document.body.classList.remove.apply(document.body.classList,r);var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}var mo=localStorage.getItem('vs_motion');if(mo==='reduced'){document.documentElement.dataset.motion='reduced';document.body.dataset.motion='reduced';}}catch(e){}}();</script>
 
   <!-- Nav -->
   <nav class="inv-nav">
@@ -228,12 +231,19 @@
   <!-- Content -->
   <div class="inv-page">
     <div class="container">
+<div class="inv-utility"><a href="https://vaultsparkstudios.com/">← VaultSpark Studios</a><label for="investor-theme">Theme <select id="investor-theme"><option value="dark">Dark</option><option value="light">Light</option><option value="ambient">Ambient</option><option value="warm">Warm</option><option value="cool">Cool</option><option value="lava">Lava</option><option value="high-contrast">High contrast</option></select></label></div>
 
       <!-- Header -->
+      <div class="inv-eyebrow">VaultSpark Studios · Investor relations</div>
       <div class="inv-header">
         <h1 id="welcomeHeading">Investor Dashboard</h1>
         <p id="welcomeSub">Loading your portfolio overview…</p>
       </div>
+
+      <section class="inv-briefing" aria-labelledby="investor-briefing-title">
+        <div class="inv-briefing-main"><span class="inv-eyebrow">Your private studio briefing</span><h2 id="investor-briefing-title">The studio,<br>in focus.</h2><p>A clear view of your relationship with the studio: published updates, the documents available to you, and the evidence behind the work.</p><div class="inv-briefing-actions"><a class="inv-btn inv-btn-primary" href="/investor-portal/updates/">Read investor updates →</a><a class="inv-btn inv-btn-ghost" href="/investor-portal/documents/">Open documents</a></div></div>
+        <div class="inv-briefing-record" aria-label="Briefing freshness"><div><span class="inv-eyebrow">Private update</span><p id="investor-brief-update">Checking the latest published update…</p></div><div><span class="inv-eyebrow">Document room</span><p id="investor-brief-docs">Checking available documents…</p></div><a class="inv-briefing-contact" href="/investor-portal/message/">A direct line to the studio ↗</a></div>
+      </section>
 
       <!-- Stat strip -->
       <div class="inv-stat-strip" id="statStrip">
@@ -244,7 +254,7 @@
 
       <!-- Studio KPIs -->
       <div class="inv-card" style="margin-bottom:2rem;">
-        <div class="inv-card-title" style="margin-bottom:1rem;">Studio KPIs</div>
+        <div class="inv-card-title" style="margin-bottom:1rem;">Studio activity indicators</div><p class="inv-data-note" id="investor-kpi-status">Checking the available live measurements. These activity counts are separate from financial performance.</p>
         <div class="inv-kpi-strip" id="kpiStrip">
           <div class="inv-kpi-card">
             <span class="inv-kpi-value loading" id="kpiMembers" aria-label="Loading"></span>
@@ -268,6 +278,8 @@
           </div>
         </div>
       </div>
+
+      <section class="inv-evidence-room" aria-labelledby="investor-evidence-heading"><div><span class="inv-eyebrow">The studio beyond the numbers</span><h2 id="investor-evidence-heading">Explore the work. Inspect the record.</h2><p>Private updates remain in this portal. The public portfolio, roadmap and evidence offer a wider view of what VaultSpark is building.</p></div><div class="inv-evidence-links"><a href="/projects/"><strong>Portfolio &amp; flagship work</strong><span>Explore the projects and their public status →</span></a><a href="/roadmap/"><strong>Direction &amp; milestones</strong><span>See the published roadmap →</span></a><a href="/evidence/"><strong>Evidence &amp; public numbers</strong><span>Check timestamps, sources and measurement limits →</span></a><a href="/changelog/"><strong id="investor-public-signal">Published studio updates</strong><span id="investor-public-signal-date">Loading the public record…</span></a></div></section>
 
       <!-- Main grid -->
       <div class="inv-dashboard-grid">
@@ -364,29 +376,36 @@
         </div>`;
 
       // Load latest update
-      loadLatestUpdate(profile);
+      loadLatestUpdate(profile).catch(() => investorPanelError("latestUpdateArea", "investor-brief-update"));
 
       // Load recent documents
-      loadRecentDocs();
+      loadRecentDocs().catch(() => investorPanelError("recentDocsArea", "investor-brief-docs"));
 
       // Load activity
-      loadActivity();
+      loadActivity().catch(() => investorPanelError('activityArea'));
 
       // Load studio KPIs
-      loadKPIs();
+      loadKPIs().catch(() => { document.getElementById("investor-kpi-status").textContent="Live activity measurements could not be loaded. No zero or estimate is substituted."; document.querySelectorAll(".inv-kpi-value").forEach(el=>{el.classList.remove("loading");el.textContent="—";}); });
 
       // Realtime: new updates
       sb.channel('investor-updates-rt')
         .on('postgres_changes', {
           event: 'INSERT', schema: 'public', table: 'investor_updates'
         }, (payload) => {
-          if (payload.new.is_published) loadLatestUpdate(profile);
+          if (payload.new.is_published) loadLatestUpdate(profile).catch(() => investorPanelError('latestUpdateArea', 'investor-brief-update'));
         })
         .subscribe();
     });
 
+    function investorPanelError(areaId, statusId) {
+      const area=document.getElementById(areaId);
+      if(area) area.textContent='This part of your briefing could not be loaded. Reload the page to try again.';
+      const status=document.getElementById(statusId);
+      if(status) status.textContent='Unavailable — no publication date assumed.';
+    }
+
     async function loadLatestUpdate(profile) {
-      const { data: updates } = await sb
+      const { data: updates, error } = await sb
         .from('investor_updates')
         .select('id, title, update_type, visibility_tier, published_at, body_html')
         .eq('is_published', true)
@@ -394,12 +413,15 @@
         .limit(1);
 
       const area = document.getElementById('latestUpdateArea');
+      if (error) { investorPanelError('latestUpdateArea','investor-brief-update'); return; }
       if (!updates || updates.length === 0) {
-        area.innerHTML = '<div class="inv-empty">No updates published yet.</div>';
+        document.getElementById('investor-brief-update').textContent='No private update has been published for this access yet.';
+        area.innerHTML = '<div class="inv-empty"><p>No updates have been published for your access yet.</p><a class="inv-btn inv-btn-ghost inv-btn-sm" href="/investor-portal/message/">Request a studio briefing</a></div>';
         return;
       }
 
       const u = updates[0];
+      document.getElementById('investor-brief-update').textContent=UI.formatDateShort(u.published_at) + ' · ' + u.title;
       area.innerHTML = `
         <div class="inv-update-row">
           <div class="inv-update-row-meta">
@@ -436,7 +458,7 @@
     }
 
     async function loadRecentDocs() {
-      const { data: docs } = await sb
+      const { data: docs, error } = await sb
         .from('investor_documents')
         .select('id, title, document_type, version, uploaded_at, file_size_bytes, visibility_scope')
         .eq('is_active', true)
@@ -444,11 +466,14 @@
         .limit(4);
 
       const area = document.getElementById('recentDocsArea');
+      if (error) { investorPanelError('recentDocsArea','investor-brief-docs'); return; }
       if (!docs || docs.length === 0) {
-        area.innerHTML = '<div class="inv-empty">No documents available yet.</div>';
+        document.getElementById('investor-brief-docs').textContent='No active document is available to this account yet.';
+        area.innerHTML = '<div class="inv-empty"><p>No active documents are available to this account yet.</p><a class="inv-btn inv-btn-ghost inv-btn-sm" href="/investor-portal/message/">Request a document</a></div>';
         return;
       }
 
+      document.getElementById('investor-brief-docs').textContent='Latest upload ' + UI.formatDateShort(docs[0].uploaded_at) + ' · ' + docs[0].title;
       area.innerHTML = `
         <div class="inv-table-scroll">
           <table class="inv-doc-table">
@@ -483,13 +508,14 @@
     }
 
     async function loadActivity() {
-      const { data: events } = await sb
+      const { data: events, error } = await sb
         .from('investor_activity')
         .select('action, target_label, created_at')
         .order('created_at', { ascending: false })
         .limit(8);
 
       const area = document.getElementById('activityArea');
+      if (error) { investorPanelError('activityArea'); return; }
       if (!events || events.length === 0) {
         area.innerHTML = '<div class="inv-empty" style="padding:1rem 0;">No activity yet.</div>';
         return;
@@ -541,6 +567,8 @@
         growthEl.classList.remove('loading');
         growthEl.textContent = fmtNum(kpiGrowth);
       }
+
+      document.getElementById('investor-kpi-status').textContent = [membersRes,sessionsRes,challengesRes,growthRes].some(r=>r.error || r.count == null) ? 'Some live measurements are unavailable for this access. A dash means unavailable, not zero.' : 'Queried ' + new Date().toLocaleString() + '. Counts reflect the available activity records; they are not financial performance.';
 
       // Load sparklines async (non-blocking)
       loadKPISparklines();
@@ -638,13 +666,8 @@
           renderSparkline('sparkSessions', buckets);
         }
 
-        // Challenges — just show flat line since it doesn't have time series
-        // Use a static placeholder showing current count as flat
-        const challengesEl = document.getElementById('kpiChallenges');
-        const n = parseInt(challengesEl?.textContent) || 0;
-        if (n > 0) {
-          renderSparkline('sparkChallenges', new Array(14).fill(n));
-        }
+        // No challenge history is published: omit the chart instead of
+        // repeating today's count as a fabricated historical series.
 
       } catch (_) {
         // Non-critical — sparklines are best-effort

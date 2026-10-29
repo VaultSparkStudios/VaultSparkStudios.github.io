@@ -7,19 +7,19 @@
   <link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Developer API & Public Feeds | VaultSpark Studios</title>
-  <meta name="description" content="Every public, machine-readable feed VaultSpark Studios publishes — portfolio, status, evidence and newsroom JSON, plus agents.json, llms.txt and the sitemap — each with a one-line description." />
+  <meta name="description" content="Follow The Desk, studio dispatches and the Forge Ledger. Explore public data feeds, copy a read-only API example, and inspect existing integration contracts." />
   <link rel="canonical" href="https://vaultsparkstudios.com/api/" />
   <meta name="theme-color" content="#000000" />
   <meta name="robots" content="index, follow" />
   <meta property="og:title" content="Developer API &amp; Public Feeds | VaultSpark Studios" />
-  <meta property="og:description" content="Every public, machine-readable feed VaultSpark Studios publishes — portfolio, status, evidence and newsroom JSON, plus agents.json, llms.txt and the sitemap — each with a one-line description." />
+  <meta property="og:description" content="Follow The Desk, studio dispatches and the Forge Ledger. Explore public data feeds, copy a read-only API example, and inspect existing integration contracts." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://vaultsparkstudios.com/api/" />
   <meta property="og:image" content="https://vaultsparkstudios.com/assets/og/og-home.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@VaultSparkStudios" />
   <meta name="twitter:title" content="Developer API &amp; Public Feeds | VaultSpark Studios" />
-  <meta name="twitter:description" content="Every public, machine-readable feed VaultSpark Studios publishes — portfolio, status, evidence and newsroom JSON, plus agents.json, llms.txt and the sitemap — each with a one-line description." />
+  <meta name="twitter:description" content="Follow The Desk, studio dispatches and the Forge Ledger. Explore public data feeds, copy a read-only API example, and inspect existing integration contracts." />
   <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og/og-home.png" />
   <link rel="icon" type="image/png" href="../assets/icon-32.png" />
   <link rel="apple-touch-icon" href="../assets/icon-256.png" />
@@ -50,7 +50,22 @@
     .api-feed p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; margin: 0.25rem 0 0; }
     .api-discovery strong { font-size: 1rem; color: var(--text); }
     .api-count { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.9rem; color: var(--dim); letter-spacing: 0; }
-    @media (max-width: 720px) { .api-feed { grid-template-columns: 1fr; } }
+    .api-subscriptions, .api-examples { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .api-subscription, .api-examples article, .api-action { padding: 1.4rem; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); min-width: 0; }
+    .api-subscription h3, .api-examples h3, .api-action h3 { font-size: 1.2rem; margin: .55rem 0; }
+    .api-subscription p, .api-action p { color: var(--muted); line-height: 1.65; }
+    .api-label { color: var(--gold); font-size: .73rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .api-publication-date { margin-top: .8rem; font-size: .85rem; }
+    .api-links, .api-next { display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; margin-top: 1rem; }
+    .api-links a, .api-next a { color: var(--gold); min-height: 44px; display: inline-flex; align-items: center; text-decoration: underline; text-underline-offset: .2em; }
+    .api-group { margin-top: 2rem; }
+    .api-group > h3 { margin-bottom: .8rem; font-size: 1.15rem; }
+    .api-actions { list-style: none; padding: 0; margin: 1rem 0; display: grid; gap: 1rem; }
+    .api-action code { overflow-wrap: anywhere; font-size: .86rem; }
+    .api-action summary { cursor: pointer; min-height: 44px; padding-top: .7rem; color: var(--text); }
+    .np-section pre { padding: 1rem; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--text); white-space: pre-wrap; overflow-wrap: anywhere; font-size: .86rem; line-height: 1.6; }
+    .np-section a:focus-visible, .api-action summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+    @media (max-width: 720px) { .api-feed, .api-subscriptions, .api-examples { grid-template-columns: 1fr; } .api-subscription, .api-examples article, .api-action { padding: 1.1rem; } }
   </style>
 
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -144,11 +159,28 @@
     <section class="np-hero" aria-labelledby="api-heading">
       <div class="container">
         <span class="eyebrow">VaultSpark Studios &nbsp;·&nbsp; Developers &amp; agents</span>
-        <h1 id="api-heading">Every public feed,<br>in one place.</h1>
-        <p class="np-lede">The studio publishes its own status, numbers and receipts as plain JSON (JavaScript Object Notation) files. Nothing here needs a key: fetch them, cite them, build on them. Each feed carries a <code>generatedAt</code> timestamp, so you can tell fresh from stale.</p>
+        <h1 id="api-heading">Follow the signal.<br>Build with the evidence.</h1>
+        <p class="np-lede">Read The Desk in your feed reader, explore the project catalog or verify a studio claim. Public JSON (JavaScript Object Notation) feeds need no key. The application programming interface (API) contracts below explain where consent or authentication is required.</p>
+        <div class="np-row"><a class="button" href="#api-follow-heading">Choose a feed</a><a class="button-secondary" href="#api-quickstart-heading">Make your first read</a></div>
       </div>
     </section>
     <div class="container"><!-- api-index:start -->
+    <section class="np-section" aria-labelledby="api-follow-heading">
+      <h2 id="api-follow-heading">Choose what reaches your reader</h2>
+      <p>Follow the news, the builds or the studio dispatches. JSON Feed and RSS (Really Simple Syndication) links are public reads; email subscriptions use a separate confirmation step.</p>
+      <div class="api-subscriptions"><article class="api-subscription"><span class="api-label">Follow this publication</span><h3><a href="/news/">The Desk</a></h3><p>Source-bound AI news, named arguments and a public prediction record.</p><p class="api-publication-date">Latest item: <time datetime="2026-10-28T12:26:11.000Z">2026-10-28 UTC</time></p><div class="api-links"><a href="/api/news-desk-feed.json">JSON Feed ↗</a></div></article>
+<article class="api-subscription"><span class="api-label">Follow this publication</span><h3><a href="/studio-pulse/">Forge Ledger</a></h3><p>Public build activity: what the studio shipped, fixed and refined.</p><p class="api-publication-date">Latest item: <time datetime="2026-10-28T22:58:09.000Z">2026-10-28 UTC</time></p><div class="api-links"><a href="/feed/forge-ledger.xml">RSS ↗</a><a href="/feed/forge-ledger.json">JSON Feed ↗</a></div></article>
+<article class="api-subscription"><span class="api-label">Follow this publication</span><h3><a href="/journal/dispatches/">Daily Dispatches</a></h3><p>AI-authored studio dispatches from the forge. Read the archive before subscribing.</p><p class="api-publication-date">Latest item: <time datetime="2026-10-29T00:09:43.000Z">2026-10-29 UTC</time></p><div class="api-links"><a href="/journal/dispatches/feed.xml">RSS ↗</a></div></article>
+<article class="api-subscription"><span class="api-label">Historical archive</span><h3><a href="/journal/">Signal Log archive</a></h3><p>Historical journal posts. This archive is separate from current Desk news and build activity.</p><p class="api-publication-date">Latest item: <time datetime="2026-03-22T00:00:00.000Z">2026-03-22 UTC</time></p><div class="api-links"><a href="/feed.xml">Archive RSS ↗</a></div></article></div>
+      <div class="api-next"><a href="/news/">Read the latest Desk edition →</a><a href="/news/#desk-dispatch">Get the Desk by email →</a><a href="/membership/#benefits">Explore Vault membership →</a></div>
+    </section>
+    <section class="np-section" aria-labelledby="api-quickstart-heading">
+      <h2 id="api-quickstart-heading">Your first public read</h2>
+      <p>Copy either command into a terminal. These examples only GET public files: they do not subscribe anyone, create an account or invoke a model.</p>
+      <div class="api-examples"><article><h3>Read the latest Desk feed</h3><pre><code>curl --fail --silent --show-error 'https://vaultsparkstudios.com/api/news-desk-feed.json'</code></pre><p class="np-note">JSON Feed returns <code>items</code> with article titles, URLs and publication dates. Follow each article URL for its full story and evidence.</p></article>
+      <article><h3>Read the project catalog</h3><pre><code>curl --fail --silent --show-error 'https://vaultsparkstudios.com/api/public-intelligence.json'</code></pre><p class="np-note">Use the catalog's source timestamp and project records. A generated timestamp is not a promise that every underlying measurement is current.</p></article></div>
+      <p class="np-note">Use server-side requests for integrations; these examples make no cross-origin browser access promise. Cache responses and inspect the published timestamps and measurement states. No availability guarantee or new reuse license is implied; see <a href="/rights/">Technology &amp; Rights</a>.</p>
+    </section>
     <section class="np-section" aria-labelledby="api-discovery-heading">
       <h2 id="api-discovery-heading">Start here</h2>
       <p>The files any crawler, assistant or integration should read first.</p>
@@ -159,43 +191,140 @@
           <li><a href="/sitemap.xml"><code>/sitemap.xml</code><strong>sitemap.xml</strong><span>Every indexable page with its last content date.</span></a></li>
           <li><a href="/robots.txt"><code>/robots.txt</code><strong>robots.txt</strong><span>Crawler policy: search and answer agents allowed, training crawlers blocked.</span></a></li>
           <li><a href="/.well-known/entity-graph.json"><code>/.well-known/entity-graph.json</code><strong>Entity graph</strong><span>The studio, its projects and their relationships as linked data.</span></a></li>
-          <li><a href="/feed.xml"><code>/feed.xml</code><strong>RSS feed</strong><span>Site updates as an RSS (Really Simple Syndication) feed.</span></a></li>
-          <li><a href="/api/news-desk-feed.json"><code>/api/news-desk-feed.json</code><strong>The Desk JSON Feed</strong><span>Newsroom editions in JSON Feed format.</span></a></li>
       </ul>
     </section>
     <section class="np-section" aria-labelledby="api-feeds-heading">
-      <h2 id="api-feeds-heading">Public JSON feeds <small class="api-count">(27)</small></h2>
-      <p>The same curated catalog agents.json advertises. Every feed is public, privacy-safe and stamped with the time it was generated.</p>
-      <ul class="api-feeds">
-          <li class="api-feed"><h3>Public Analytica statistics</h3><div><a href="/stats.json"><code>/stats.json</code></a><p>Source-dated portfolio, audience, editorial, proof-freshness, and performance aggregates rendered at /evidence/#numbers.</p></div></li>
-          <li class="api-feed"><h3>Studio ecosystem analytics</h3><div><a href="/api/ecosystem-stats.json"><code>/api/ecosystem-stats.json</code></a><p>Production-only audience estimates, edge traffic, project coverage, and measurement states used by /stats/ecosystem/.</p></div></li>
-          <li class="api-feed"><h3>Cloudflare analytics receipt</h3><div><a href="/api/ecosystem-analytics.json"><code>/api/ecosystem-analytics.json</code></a><p>Source-window-sampling provenance and per-project aggregates from Cloudflare Web Analytics and zone Traffic Analytics.</p></div></li>
+      <h2 id="api-feeds-heading">Public JSON catalog <small class="api-count">(27)</small></h2>
+      <p>The complete curated feed catalog from agents.json, grouped by what you want to do. Inspect each feed's timestamps and measurement limits before using its claims.</p>
+      <div class="api-group"><h3>Read The Desk</h3><ul class="api-feeds">
           <li class="api-feed"><h3>The Desk engagement receipt</h3><div><a href="/api/news-desk-engagement.json"><code>/api/news-desk-engagement.json</code></a><p>Per-article visible-and-focused reading time with privacy floors, plus the live-presence measurement contract.</p></div></li>
           <li class="api-feed"><h3>The Desk editorial freshness</h3><div><a href="/api/news-desk-freshness.json"><code>/api/news-desk-freshness.json</code></a><p>Latest-edition observed-through date, evidence-backed cadence label, overdue state, and the automatic scheduled-publication policy.</p></div></li>
           <li class="api-feed"><h3>The Desk automation receipt</h3><div><a href="/api/newsroom-run.json"><code>/api/newsroom-run.json</code></a><p>Privacy-safe scheduled-run evidence, latest public edition, next expected UTC slot, and explicit abstention when CI has not observed a run.</p></div></li>
-          <li class="api-feed"><h3>The Desk reader-signal receipt</h3><div><a href="/api/news-desk-reactions.json"><code>/api/news-desk-reactions.json</code></a><p>Per-article reader reactions and per-voice votes, suppressed below five signals, with declared reset semantics for cumulative edge counters.</p></div></li>
+          <li class="api-feed"><h3>The Desk reader-signal receipt</h3><div><a href="/api/news-desk-reactions.json"><code>/api/news-desk-reactions.json</code></a><p>Per-article reader reactions and per-voice votes, suppressed below five signals, with declared reset semantics for cumulative edge counters.</p></div></li></ul></div>
+<div class="api-group"><h3>Explore projects and the Vault</h3><ul class="api-feeds">
           <li class="api-feed"><h3>Portfolio intelligence</h3><div><a href="/api/public-intelligence.json"><code>/api/public-intelligence.json</code></a><p>Full project catalog with live VaultStatus (SPARKED/FORGE/VAULTED), mediums, and notes.</p></div></li>
           <li class="api-feed"><h3>Studio status</h3><div><a href="/api/public-status.json"><code>/api/public-status.json</code></a><p>Nervous-system snapshot: repos online, sparked/forge/vaulted counts, last shipped session.</p></div></li>
           <li class="api-feed"><h3>Live signal digest</h3><div><a href="/api/nervous-system.json"><code>/api/nervous-system.json</code></a><p>Aggregated live activity tiles (continuous integration, uptime, motion) rendered inside /studio-pulse/#signal-digest.</p></div></li>
           <li class="api-feed"><h3>Shipping velocity</h3><div><a href="/api/velocity-series.json"><code>/api/velocity-series.json</code></a><p>24-week shipping cadence derived from git history (no private data).</p></div></li>
+          <li class="api-feed"><h3>Top questions</h3><div><a href="/api/oracle-query-insights.json"><code>/api/oracle-query-insights.json</code></a><p>What humans + agents most ask the Oracle, with answer coverage.</p></div></li>
+          <li class="api-feed"><h3>Oracle prebaked answers</h3><div><a href="/oracle/answers/index.json"><code>/oracle/answers/index.json</code></a><p>Deploy-time, source-backed Oracle answers for common studio, game, rank, and membership questions.</p></div></li>
+          <li class="api-feed"><h3>Membership pricing</h3><div><a href="/api/membership-tiers.json"><code>/api/membership-tiers.json</code></a><p>Canonical tier facts: Free / VaultSparked ($4.99/mo) / VaultSparked Eternal ($29.99/mo), monthly only — enforced perks and themes.</p></div></li>
+          <li class="api-feed"><h3>Outcome-first intent map</h3><div><a href="/api/intent-map.json"><code>/api/intent-map.json</code></a><p>Maps play, join, verify, invest, press, build, and news goals to resolvable routes, evidence freshness, action capability, fallback, and honest abstention.</p></div></li></ul></div>
+<div class="api-group"><h3>Verify the claims</h3><ul class="api-feeds">
+          <li class="api-feed"><h3>Public Analytica statistics</h3><div><a href="/stats.json"><code>/stats.json</code></a><p>Source-dated portfolio, audience, editorial, proof-freshness, and performance aggregates rendered at /evidence/#numbers.</p></div></li>
+          <li class="api-feed"><h3>Studio ecosystem analytics</h3><div><a href="/api/ecosystem-stats.json"><code>/api/ecosystem-stats.json</code></a><p>Production-only audience estimates, edge traffic, project coverage, and measurement states used by /stats/ecosystem/.</p></div></li>
+          <li class="api-feed"><h3>Cloudflare analytics receipt</h3><div><a href="/api/ecosystem-analytics.json"><code>/api/ecosystem-analytics.json</code></a><p>Source-window-sampling provenance and per-project aggregates from Cloudflare Web Analytics and zone Traffic Analytics.</p></div></li>
           <li class="api-feed"><h3>Cite-ready facts</h3><div><a href="/api/citation.json"><code>/api/citation.json</code></a><p>Authoritative, refresh-on-deploy facts about the studio for AI summarization.</p></div></li>
           <li class="api-feed"><h3>Status provenance</h3><div><a href="/api/status-proof.json"><code>/api/status-proof.json</code></a><p>Signed/derived provenance for the public status claims (anti-fabrication).</p></div></li>
           <li class="api-feed"><h3>Trust-feed provenance</h3><div><a href="/api/feed-publishers.json"><code>/api/feed-publishers.json</code></a><p>Every public trust feed mapped to its generator script, exact recovery command, scheduled workflow, and freshness ceilings — so an agent can verify (or recover) any stale studio signal.</p></div></li>
           <li class="api-feed"><h3>Evidence dependency graph</h3><div><a href="/api/evidence-graph.json"><code>/api/evidence-graph.json</code></a><p>Resolved relation view of every derived public artifact: which feed is built from which, the builder that produces it, and the exact command that verifies its bytes. Lets an agent reason about how any published number was produced.</p></div></li>
+          <li class="api-feed"><h3>Deploy pointer</h3><div><a href="/api/build-sha.json"><code>/api/build-sha.json</code></a><p>The exact commit SHA currently served in production.</p></div></li>
+          <li class="api-feed"><h3>Release proof</h3><div><a href="/api/release-proof.json"><code>/api/release-proof.json</code></a><p>Source-derived staging parity, deploy pointer, canonical favicon, and automatic rollback readiness.</p></div></li></ul></div>
+<div class="api-group"><h3>Inspect operational evidence</h3><ul class="api-feeds">
           <li class="api-feed"><h3>Build verification receipt</h3><div><a href="/api/build-check-diagnostics.json"><code>/api/build-check-diagnostics.json</code></a><p>Integrity-bound receipt for the complete current build plan: plan fingerprint, executed/planned coverage, direct exit codes, timings, and zero command output.</p></div></li>
           <li class="api-feed"><h3>Proof-surface verification receipt</h3><div><a href="/api/proof-surface-diagnostics.json"><code>/api/proof-surface-diagnostics.json</code></a><p>Integrity-bound blocking/advisory substep receipt with planned coverage, direct exit codes, timings, and owner/class failure attribution.</p></div></li>
           <li class="api-feed"><h3>Edge route incident history</h3><div><a href="/api/worker-route-history.json"><code>/api/worker-route-history.json</code></a><p>Append-only semantic route history with source-labelled onset bounds and self-validating recovery transitions. Records status codes and verdicts only — no response bodies or identifiers.</p></div></li>
           <li class="api-feed"><h3>Production deploy parity</h3><div><a href="/api/deploy-currency.json"><code>/api/deploy-currency.json</code></a><p>Probe-frozen production SHA age plus route-local fingerprinted-shell parity. Distinguishes a current artifact from stale or shell-drifted production without retaining response bodies.</p></div></li>
-          <li class="api-feed"><h3>Top questions</h3><div><a href="/api/oracle-query-insights.json"><code>/api/oracle-query-insights.json</code></a><p>What humans + agents most ask the Oracle, with answer coverage.</p></div></li>
-          <li class="api-feed"><h3>Oracle prebaked answers</h3><div><a href="/oracle/answers/index.json"><code>/oracle/answers/index.json</code></a><p>Deploy-time, source-backed Oracle answers for common studio, game, rank, and membership questions.</p></div></li>
-          <li class="api-feed"><h3>Deploy pointer</h3><div><a href="/api/build-sha.json"><code>/api/build-sha.json</code></a><p>The exact commit SHA currently served in production.</p></div></li>
-          <li class="api-feed"><h3>Release proof</h3><div><a href="/api/release-proof.json"><code>/api/release-proof.json</code></a><p>Source-derived staging parity, deploy pointer, canonical favicon, and automatic rollback readiness.</p></div></li>
           <li class="api-feed"><h3>Identity migration receipt</h3><div><a href="/api/identity-migration-receipt.json"><code>/api/identity-migration-receipt.json</code></a><p>Privacy-safe Obelisk migration evidence: issuer/callback binding, staged Worker, runtime updates, role/revocation proof, rollback, and explicit honest-dark blockers.</p></div></li>
-          <li class="api-feed"><h3>Supabase authority receipt</h3><div><a href="/api/supabase-control-plane.json"><code>/api/supabase-control-plane.json</code></a><p>Read-only, public-safe proof that distinguishes REST data administration from management API, SQL migration, and Edge Function deployment authority.</p></div></li>
-          <li class="api-feed"><h3>Membership pricing</h3><div><a href="/api/membership-tiers.json"><code>/api/membership-tiers.json</code></a><p>Canonical tier facts: Free / VaultSparked ($4.99/mo) / VaultSparked Eternal ($29.99/mo), monthly only — enforced perks and themes.</p></div></li>
-          <li class="api-feed"><h3>Outcome-first intent map</h3><div><a href="/api/intent-map.json"><code>/api/intent-map.json</code></a><p>Maps play, join, verify, invest, press, build, and news goals to resolvable routes, evidence freshness, action capability, fallback, and honest abstention.</p></div></li>
-      </ul>
+          <li class="api-feed"><h3>Supabase authority receipt</h3><div><a href="/api/supabase-control-plane.json"><code>/api/supabase-control-plane.json</code></a><p>Read-only, public-safe proof that distinguishes REST data administration from management API, SQL migration, and Edge Function deployment authority.</p></div></li></ul></div>
       <p class="np-note">Want to check these claims rather than read them? The <a href="/evidence/">Evidence</a> page re-computes the deploy ledger in your browser. Questions or a feed you need: <a href="/contact/">contact the studio</a>.</p>
+    </section>
+    <section class="np-section" aria-labelledby="api-actions-heading">
+      <h2 id="api-actions-heading">Actions and integration contracts</h2>
+      <p>These are the actions already advertised in <a href="/agents.json">agents.json</a>. Reading public files is separate from submitting a request. No action runs from this reference page.</p>
+      <p class="np-note">Desk email signup requires the existing anti-forgery token and inbox confirmation. Pending is not subscribed. Authenticated feedback requires the declared Obelisk scope and idempotency key. Existing access rules apply.</p>
+      <ul class="api-actions"><li class="api-action"><h3>feedback.submit</h3><p>Submit a fixed-vocabulary, anonymous page-usefulness signal. The action is deny-by-default, scope-bound, idempotent, and returns a signed receipt.</p>
+      <p><code>POST https://vaultsparkstudios.com/api/agent-actions/v1</code></p><p class="np-note">Obelisk: vaultspark:feedback:write</p>
+      <details><summary>Request, consent and response contract</summary><pre><code>{
+  &quot;auth&quot;: {
+    &quot;authority&quot;: &quot;Obelisk&quot;,
+    &quot;scope&quot;: &quot;vaultspark:feedback:write&quot;
+  },
+  &quot;idempotency&quot;: {
+    &quot;header&quot;: &quot;Idempotency-Key&quot;,
+    &quot;required&quot;: true,
+    &quot;retentionSeconds&quot;: 86400
+  },
+  &quot;receipt&quot;: {
+    &quot;format&quot;: &quot;application/json&quot;,
+    &quot;signature&quot;: &quot;HMAC-SHA256&quot;
+  }
+}</code></pre></details></li>
+<li class="api-action"><h3>site.search</h3><p>Open the site search for a query. Returns an HTML results page drawn from the public search index; the same target is declared as the WebSite SearchAction in the entity graph.</p>
+      <p><code>GET https://vaultsparkstudios.com/search/?q={query}</code></p><p class="np-note">Public; no account token required</p>
+      <details><summary>Request, consent and response contract</summary><pre><code>{
+  &quot;parameters&quot;: {
+    &quot;q&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;required&quot;: true,
+      &quot;description&quot;: &quot;Search terms.&quot;
+    }
+  },
+  &quot;auth&quot;: &quot;none&quot;
+}</code></pre></details></li>
+<li class="api-action"><h3>Ask the Vault</h3><p>One grounded, cited answer. Retrieval runs over the canonical facts source, llms-full.txt and The Desk feed; when no passage supports an answer it returns noAnswer with suggested pages instead of guessing. Cite the returned URLs, not the endpoint.</p>
+      <p><code>POST https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/semantic-search</code></p><p class="np-note">Public; no account token required</p>
+      <details><summary>Request, consent and response contract</summary><pre><code>{
+  &quot;contentType&quot;: &quot;application/json&quot;,
+  &quot;body&quot;: {
+    &quot;query&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;required&quot;: true,
+      &quot;minLength&quot;: 3,
+      &quot;maxLength&quot;: 200,
+      &quot;description&quot;: &quot;A plain-language question about VaultSpark Studios, its projects or The Desk.&quot;
+    }
+  },
+  &quot;auth&quot;: &quot;none&quot;,
+  &quot;limits&quot;: {
+    &quot;cost&quot;: &quot;Fails closed under a shared daily spend cap; when it trips the endpoint answers 503 with Retry-After instead of a model reply.&quot;,
+    &quot;cache&quot;: &quot;Identical questions are answered from a 24-hour cache keyed to the corpus version, at no model cost.&quot;
+  },
+  &quot;response&quot;: {
+    &quot;format&quot;: &quot;application/json&quot;,
+    &quot;fields&quot;: [
+      &quot;answer (prose with [n] markers)&quot;,
+      &quot;citations [{ n, title, url }]&quot;,
+      &quot;noAnswer&quot;,
+      &quot;suggestions [{ title, url }]&quot;,
+      &quot;corpusVersion&quot;
+    ]
+  },
+  &quot;grounding&quot;: &quot;https://vaultsparkstudios.com/api/public-intelligence.json&quot;
+}</code></pre></details></li>
+<li class="api-action"><h3>Subscribe to The Desk Dispatch</h3><p>Humans and agents may request an invitation for an inbox they control or are authorized to manage. GET /_csrf, POST JSON email with X-CSRF-Token, then follow the signed confirmation link from that inbox. Pending is not subscribed.</p>
+      <p><code>POST https://vaultsparkstudios.com/desk/dispatch/subscribe</code></p><p class="np-note">Public; no account token required</p>
+      <details><summary>Request, consent and response contract</summary><pre><code>{
+  &quot;contentType&quot;: &quot;application/json&quot;,
+  &quot;body&quot;: {
+    &quot;email&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;required&quot;: true,
+      &quot;description&quot;: &quot;The subscriber’s own email address.&quot;
+    }
+  },
+  &quot;auth&quot;: &quot;none&quot;,
+  &quot;humanVerification&quot;: {
+    &quot;required&quot;: false,
+    &quot;method&quot;: &quot;Email double opt-in for humans and agents.&quot;
+  },
+  &quot;limits&quot;: {
+    &quot;rate&quot;: &quot;Three submissions per hour per network address; one invitation per recipient per day; bounded daily send budget.&quot;
+  },
+  &quot;contract&quot;: &quot;https://vaultsparkstudios.com/api/desk-dispatch-contract.json&quot;,
+  &quot;csrf&quot;: {
+    &quot;tokenUrl&quot;: &quot;https://vaultsparkstudios.com/_csrf&quot;,
+    &quot;header&quot;: &quot;X-CSRF-Token&quot;
+  },
+  &quot;humanHandoff&quot;: &quot;https://vaultsparkstudios.com/news/&quot;
+}</code></pre></details></li>
+<li class="api-action"><h3>oracle.answer.lookup</h3><p>Fetch committed, public-safe Oracle answers before scraping pages. Runtime cost is zero; every answer cites public sources.</p>
+      <p><code>GET https://vaultsparkstudios.com/oracle/answers/index.json</code></p><p class="np-note">Read the contract below</p>
+      <details><summary>Request, consent and response contract</summary><pre><code>{}</code></pre></details></li>
+<li class="api-action"><h3>evidence.ledger.verify</h3><p>Independently verify the deploy ledger: (1) SHA-256 the served NDJSON bytes and compare to bytes.sha256 in /api/staging-deploy-continuity.json; (2) for each row, SHA-256(JSON.stringify(row minus rowId)).slice(0,24) must equal rowId; (3) each row’s previousReceiptId must equal the prior row’s receiptId with strictly increasing generatedAt; (4) final receiptId and row count must match the anchor’s ledger.head/depth. Human-facing walkthrough: https://vaultsparkstudios.com/evidence/#verify</p>
+      <p><code>GET https://vaultsparkstudios.com/data/staging-deploy-history.ndjson</code></p><p class="np-note">Read the contract below</p>
+      <details><summary>Request, consent and response contract</summary><pre><code>{}</code></pre></details></li></ul>
+      <div class="api-next"><a href="/news/#desk-dispatch">Use the email signup form →</a><a href="/contact/?topic=collaborate">Discuss an integration →</a></div>
     </section>
     <!-- api-index:end --></div>
   </main>

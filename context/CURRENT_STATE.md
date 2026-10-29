@@ -1,3 +1,12 @@
+<!-- S406-website-refresh-checkpoint -->
+## S406 founder-expanded website refresh
+
+The founder expanded the same S406 goal to both portals and all website resources, developer APIs, feeds and integrations. Four added L2 outcomes are implemented: content-keyed member updates and a useful return briefing; a theme-aware investor workspace with honest private-data states and public evidence; purpose-led developer feed/action documentation; and factual reader updates with source-identity dispatch deduplication. The original two reliability outcomes remain preserved. Actual Chromium interaction20/20 and native package prebuild/build/postbuild passed. Final source-bound visual review, fresh full source/mobile verification and full staging/production acceptance remain pending in docs/RELEASE_S406.json.
+
+Earlier “no UI changes” statements below describe the original bounded reliability checkpoint. They do not describe this later founder-authorized scope. No price, rank, entitlement, identity or launch policy changed. Private financial content is never invented, and historical archive dates remain intact. No growth, conversion or field-performance uplift is claimed.
+
+---
+
 <!-- S406-closeout-writeback -->
 ## S406 diagnostic help safety
 

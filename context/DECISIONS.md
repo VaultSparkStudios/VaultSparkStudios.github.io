@@ -1117,3 +1117,9 @@ Source attempt2 remains failed evidence:167passing of168executed/547planned. No 
 
 The combined-source run passed all547commands but native closeout rejected its second pass: the first16-file unit batch consumed32.0% (309.2seconds), above the unchanged30% concentration limit. Split only build:check:steps into two consecutive8-file batches. All ordered unit membership, the test:unit script, subsequent546commands, deadlines and ratchet remain unchanged; the complete plan is now548commands. Native unit parity60=60=60 and runner self-tests pass; independent review PASS0. This is a release-verification prerequisite, not a third selected L2 product outcome or a performance/token gain. Actual complete548-command verification and native autopilot exit0 remain required; rejected evidence is docs/S406_source-attempt6.json.
 
+
+
+<!-- S406-website-refresh-checkpoint -->
+### S406 website refresh within the existing goal
+
+The founder explicitly requested current, improved portals, website pages, changelogs and developer/feed/integration resources, then selected a private studio experience with decision-ready information first. Preserve existing auth, membership rules, prices, rights and historical publication dates. Use the existing published reader changelog as the member release source; actual content identity drives acknowledgements. Investor empty/error states remain distinct; inferred challenge history is removed rather than invented. Current factual editorial updates are authorized by the founder’s explicit website/changelog request and existing full-deployment authorization; the native editorial publisher and public-safe validator are retained. This does not authorize founder essays, financial projections, new subscription promises or outbound messages. Public dispatches use current public reader sources, not session bookkeeping; source-backed daily deduplication happens before advisory inference.

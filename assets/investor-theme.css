@@ -8,7 +8,11 @@
 /* ── Theme overrides ──────────────────────────────────────────── */
 
 body.investor-portal {
-  background: linear-gradient(180deg, #020408 0%, #060a16 60%, #080c1a 100%);
+  --inv-accent: #83cfff;
+  --inv-primary: #1fa2ff;
+  --inv-primary-text: #04101c;
+  --inv-line: var(--portal-border-strong);
+  background: var(--page-bg);
 }
 
 body.investor-portal::before,
@@ -55,7 +59,7 @@ body.investor-portal::after {
   padding-top: env(safe-area-inset-top, 0);
   padding-left: env(safe-area-inset-left, 0);
   padding-right: env(safe-area-inset-right, 0);
-  background: rgba(2, 4, 8, 0.96);
+  background: var(--header-bg);
   border-bottom: 1px solid rgba(31, 162, 255, 0.1);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -123,7 +127,7 @@ body.investor-portal::after {
 /* ── Cards / panels ───────────────────────────────────────────── */
 
 .inv-card {
-  background: rgba(6, 10, 22, 0.97);
+  background: var(--portal-surface);
   border: 1px solid rgba(31, 162, 255, 0.12);
   border-radius: 16px;
   padding: 1.75rem;
@@ -942,3 +946,68 @@ body.investor-portal.inv-loading {
   color: var(--muted);
   line-height: 1.65;
 }
+
+/* Investor presentation follows the same seven palettes as the studio. */
+body.investor-portal.light-mode { --inv-accent:#075c8a; --inv-primary:#075c8a; --inv-primary-text:#fff; }
+body.investor-portal.high-contrast-mode { --inv-accent:#9ddfff; --inv-primary:#9ddfff; --inv-primary-text:#000; --portal-border-strong:#a4aec1; }
+body.investor-portal .inv-card, body.investor-portal .inv-update-row,
+body.investor-portal .login-card, body.investor-portal .apply-card { background:var(--portal-surface); border-color:var(--inv-line); box-shadow:var(--portal-shadow-sm); }
+body.investor-portal .login-card, body.investor-portal .apply-card { border-radius:24px; }
+body.investor-portal .inv-nav { border-color:var(--inv-line); }
+body.investor-portal .inv-nav-brand { font-family:Inter,ui-sans-serif,system-ui,sans-serif; letter-spacing:.03em; }
+body.investor-portal .inv-page { max-width:1500px; margin-inline:auto; padding-bottom:4rem; }
+body.investor-portal .inv-header { padding:1.1rem 0 1.7rem; margin-bottom:1.8rem; border-color:var(--inv-line); }
+body.investor-portal .inv-header h1 { font-size:clamp(1.6rem,3vw,2.5rem); }
+body.investor-portal .inv-card-title, body.investor-portal .inv-kpi-label { color:var(--muted); }
+body.investor-portal .inv-btn-primary { background:var(--inv-primary); color:var(--inv-primary-text); }
+body.investor-portal .inv-btn-primary:hover:not(:disabled) { background:var(--inv-primary); filter:brightness(1.08); }
+body.investor-portal .inv-btn-ghost, body.investor-portal .inv-update-expand-btn { color:var(--inv-accent); border-color:var(--inv-line); }
+body.investor-portal input, body.investor-portal textarea, body.investor-portal select { background:var(--portal-surface-2); color:var(--text); border-color:var(--inv-line); }
+body.investor-portal .inv-notice-info, body.investor-portal .inv-notice-success { color:var(--text); }
+body.investor-portal .inv-empty { color:var(--muted); padding:1.5rem; border:1px dashed var(--inv-line); border-radius:16px; line-height:1.6; }
+body.investor-portal a:focus-visible, body.investor-portal button:focus-visible, body.investor-portal select:focus-visible { outline:3px solid var(--inv-accent); outline-offset:4px; }
+.inv-utility { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; padding:1.2rem 0; font-size:.78rem; color:var(--muted); }
+.inv-utility a { display:inline-flex; align-items:center; min-height:44px; }
+.inv-utility label { display:flex; align-items:center; gap:.6rem; }
+.inv-utility select { width:auto; min-height:44px; border:1px solid var(--inv-line); border-radius:10px; padding:.5rem .7rem; font:inherit; }
+.inv-eyebrow { display:block; margin-bottom:.7rem; font:700 .68rem/1.5 Inter,ui-sans-serif,system-ui,sans-serif; letter-spacing:.15em; text-transform:uppercase; color:var(--inv-accent); }
+.inv-briefing { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(250px,1fr); gap:2rem; padding:clamp(1.5rem,4vw,3rem); margin:0 0 1.75rem; border:1px solid var(--inv-line); border-radius:26px; background:radial-gradient(ellipse at 0 0,rgba(31,162,255,.12),transparent 65%),var(--portal-surface); box-shadow:var(--portal-shadow-md); }
+.inv-briefing-main h2 { font-size:clamp(2.6rem,5.4vw,4.5rem); letter-spacing:-.04em; line-height:1.04; font-weight:400; margin-bottom:1.25rem; }
+.inv-briefing-main p { max-width:48ch; color:var(--muted); font-size:1rem; line-height:1.75; }
+.inv-briefing-actions { display:flex; flex-wrap:wrap; gap:.75rem; margin-top:1.7rem; }
+.inv-briefing-record { display:flex; flex-direction:column; justify-content:space-between; gap:1.5rem; padding-left:2rem; border-left:1px solid var(--inv-line); }
+.inv-briefing-record p { font-size:.92rem; color:var(--text); line-height:1.65; overflow-wrap:anywhere; }
+.inv-briefing-contact { display:flex; align-items:center; min-height:44px; color:var(--inv-accent); font-weight:700; font-size:.86rem; text-decoration:underline; text-underline-offset:.3em; }
+.inv-data-note { font-size:.8rem; color:var(--muted); line-height:1.65; margin-bottom:1.2rem; }
+.inv-evidence-room { padding:1.5rem 0 2.5rem; }
+.inv-evidence-room h2 { font-size:clamp(1.55rem,3vw,2.1rem); margin-bottom:.75rem; font-weight:400; }
+.inv-evidence-room>div>p { color:var(--muted); line-height:1.7; max-width:70ch; font-size:.92rem; }
+.inv-evidence-links { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin-top:1.3rem; }
+.inv-evidence-links a { display:flex; flex-direction:column; gap:.55rem; padding:1.3rem; border:1px solid var(--inv-line); border-radius:16px; background:var(--portal-surface); }
+.inv-evidence-links strong { color:var(--text); font-size:.95rem; line-height:1.45; }
+.inv-evidence-links span { color:var(--muted); font-size:.82rem; line-height:1.6; }
+.inv-evidence-links a:hover { border-color:var(--inv-accent); }
+body.investor-portal.light-mode .tier-standard, body.investor-portal.light-mode .type-milestone { color:#075c8a; }
+body.investor-portal.light-mode .tier-lead, body.investor-portal.light-mode .type-product { color:#6241a3; }
+body.investor-portal.light-mode .tier-strategic { color:#725700; }
+body.investor-portal.light-mode .type-financial { color:#076144; }
+body.investor-portal.light-mode .type-legal { color:#a32626; }
+body.investor-portal.light-mode .login-footer a,
+body.investor-portal.light-mode .login-footer a:hover,
+body.investor-portal.light-mode .apply-section-title,
+body.investor-portal.light-mode .inv-tab.active { color:var(--inv-accent); }
+.inv-admin-portal { display:none; }
+@media(max-width:767px) {
+  body.investor-portal .inv-admin-portal { display:inline-flex; align-items:center; min-height:44px; color:var(--inv-accent); font-size:.8rem; font-weight:700; padding:0 .5rem; }
+  body.investor-portal .inv-nav-user { display:none; }
+  body.investor-portal .inv-nav-brand { font-size:.71rem; }
+  body.investor-portal .inv-nav-actions { gap:.4rem; }
+  body.investor-portal .inv-nav-mobile-toggle { width:44px; height:44px; }
+  body.investor-portal #signOutBtn { white-space:nowrap; min-height:44px; }
+  .inv-briefing { grid-template-columns:1fr; gap:1.5rem; padding:1.4rem; border-radius:20px; }
+  .inv-briefing-record { padding-left:0; padding-top:1.5rem; border-left:0; border-top:1px solid var(--inv-line); }
+  .inv-evidence-links { grid-template-columns:1fr; }
+  .inv-briefing-actions { flex-direction:column; }
+  .inv-briefing-actions a { justify-content:center; white-space:normal; text-align:center; }
+}
+@media(prefers-reduced-motion:reduce) { .inv-skeleton, .inv-kpi-value.loading { animation:none; } }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 406,
-  "state": "source548-and-metadata-accepted-staging-pending",
+  "state": "website-implemented-final-verification-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
@@ -105,7 +105,8 @@
   ],
   "selectedAudits": [
     "docs/AUDIT_2026-10-28-S406.json",
-    "docs/AUDIT_2026-10-28-S406-og-freshness.json"
+    "docs/AUDIT_2026-10-28-S406-og-freshness.json",
+    "docs/AUDIT_2026-10-28-S406-website-refresh.json"
   ],
   "ogFreshness": "docs/S406_og-implementation.json",
   "ogFocusedPreflight": "docs/S406_og-proof-preflight.json",
@@ -183,5 +184,37 @@
     "finalMaximumShare": 0.1598,
     "unchangedMaximumShare": 0.3,
     "autopilotExit": 0
+  },
+  "founderExpandedScope": {
+    "at": "2026-10-28T23:34:14.835Z",
+    "audit": "docs/AUDIT_2026-10-28-S406-website-refresh.json",
+    "plan": "docs/IMPLEMENT_PLAN_S406_WEBSITE.md",
+    "sourceAcceptanceCurrent": false,
+    "priorSource": "docs/S406_pre-portal-full-source.json",
+    "priorStaging": "docs/S406_pre-portal-staging.json",
+    "priorCeremony": "docs/S406_pre-portal-ceremony.json",
+    "note": "All four added outcomes pending; do not borrow prior fingerprint acceptance for the final website refresh."
+  },
+  "websiteCheckpoint": {
+    "at": "2026-10-29T00:28:24.497Z",
+    "summary": "The founder expanded the same S406 goal to both portals and all website resources, developer APIs, feeds and integrations. Four added L2 outcomes are implemented: content-keyed member updates and a useful return briefing; a theme-aware investor workspace with honest private-data states and public evidence; purpose-led developer feed/action documentation; and factual reader updates with source-identity dispatch deduplication. The original two reliability outcomes remain preserved. Actual Chromium interaction20/20 and native package prebuild/build/postbuild passed. Final source-bound visual review, fresh full source/mobile verification and full staging/production acceptance remain pending in docs/RELEASE_S406.json.",
+    "behavior": "docs/S406_portal-behavior.json",
+    "nativeBuild": {
+      "exit": 0,
+      "log": ".cache/logs/S406-website-build.log",
+      "phases": [
+        "prebuild",
+        "build",
+        "postbuild"
+      ]
+    },
+    "resourceAudit": "docs/S406_website-resource-audit.json",
+    "originalOutcomes": 2,
+    "addedImplemented": 4,
+    "addedVerified": 0,
+    "sourceAcceptanceCurrent": false,
+    "visualAcceptanceCurrent": false,
+    "mobileAcceptanceCurrent": false,
+    "privateContent": "Honest empty/unavailable states; a passive factual investor studio briefing is planned only after this candidate is actually deployed and verified. No private financial documents are fabricated."
   }
 }

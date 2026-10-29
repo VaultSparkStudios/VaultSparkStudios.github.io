@@ -632,6 +632,25 @@ body .auth-tab.active {
   display: none;
 }
 
+.member-return-briefing { margin: 0 0 1.75rem; padding: 1.4rem; border: 1px solid var(--portal-border-strong); border-radius: 22px; background: var(--portal-surface); }
+.member-return-heading { max-width: 52rem; margin-bottom: 1.25rem; }
+.member-return-eyebrow { display: block; margin-bottom: .55rem; color: var(--gold); font-size: .7rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.member-return-heading h2 { margin: 0 0 .55rem; font-size: clamp(1.5rem, 3vw, 2rem); }
+.member-return-heading p, .member-return-grid p { color: var(--muted); font-size: .88rem; line-height: 1.65; }
+.member-return-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; }
+.member-return-grid article { min-width: 0; display: flex; flex-direction: column; gap: .65rem; padding: 1.2rem; border-radius: 15px; background: var(--portal-surface-2); border: 1px solid var(--portal-border); }
+.member-return-grid h3 { font-size: 1.08rem; line-height: 1.4; overflow-wrap: anywhere; }
+.member-return-grid h3 a:hover { text-decoration: underline; }
+.member-return-link, .member-return-actions { margin-top: auto; padding-top: .5rem; font-size: .83rem; font-weight: 700; }
+.member-return-link, .member-return-actions a { display: inline-flex; align-items: center; min-height: 44px; color: var(--text); text-decoration: underline; text-underline-offset: .25em; }
+.member-return-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; }
+.member-return-actions button { min-height: 44px; padding: .5rem .85rem; border: 1px solid var(--portal-border-strong); border-radius: 10px; background: var(--portal-surface-hover); color: var(--text); font: inherit; font-weight: 700; font-size: .83rem; cursor: pointer; }
+.member-return-actions button:focus-visible, .member-return-briefing a:focus-visible { outline: 3px solid var(--portal-info); outline-offset: 3px; }
+.whats-new-version a { display:inline-flex; align-items:center; min-height:44px; padding-inline:.4rem; font-size:.78rem; color:var(--text); text-decoration:underline; }
+body.light-mode .whats-new-close-btn { color:#fff; }
+@media (max-width: 860px) { .member-return-grid { grid-template-columns: 1fr; } }
+@media (max-width: 430px) { .member-return-briefing { padding: 1rem; } }
+
 .dashboard-header {
   padding: 2.5rem 0;
   position: relative;

@@ -51,6 +51,7 @@ flowchart LR
     n_external_production_pages["external:production-pages"]
     n_external_production_worker_routes["external:production-worker-routes"]
     n_external_studio_ops_ark_log["external:studio-ops-ark-log"]
+    n_feed_xml["feed.xml"]
     n_games_["games/"]
     n_ignis_["ignis/"]
     n_journal_["journal/"]
@@ -189,6 +190,7 @@ flowchart LR
   n_api_ --> n_api_candidate_artifact_manifest_json
   n_api_ --> n_api_deploy_currency_json
   n_api_ --> n_api_identity_migration_receipt_json
+  n_api_ --> n_api_index_html
   n_api_ --> n_api_intent_map_json
   n_api_ --> n_api_nervous_system_json
   n_api_ --> n_api_news_critique_packets_json
@@ -363,6 +365,8 @@ flowchart LR
   n_external_production_pages --> n_api_promotion_receipt_json
   n_external_production_worker_routes --> n_api_worker_route_provenance_json
   n_external_studio_ops_ark_log --> n_api_release_dependencies_json
+  n_feed_forge_ledger_json --> n_api_index_html
+  n_feed_xml --> n_api_index_html
   n_games_ --> n_api_ai_discovery_health_json
   n_games_ --> n_api_spark_manifest_json
   n_games_ --> n_data_ignis_search_index_json
@@ -370,6 +374,7 @@ flowchart LR
   n_ignis_ --> n_api_ecosystem_state_json
   n_index_html --> n_api_candidate_artifact_manifest_json
   n_index_html --> n_api_deploy_currency_json
+  n_journal_ --> n_api_index_html
   n_journal_ --> n_evidence_index_html
   n_journal_ --> n_pathways_builders_index_html
   n_llms_full_txt --> n_data_ignis_search_index_json
@@ -421,7 +426,7 @@ flowchart LR
 | `ambient-bundles` | `assets/ambient-core.bundle.js` | — | — | `assets/shell-manifest.json` |
 | `ambient-ledger` | `context/ambient-ledger.json` | — | — | — |
 | `analytics-summary` | `api/analytics-summary.json` | — | — | `data/stats-surface.json` |
-| `api-index` | `api/index.html` | — | `agents.json` | — |
+| `api-index` | `api/index.html` | — | `agents.json`<br>`feed/forge-ledger.json` | — |
 | `ark-signature-dossier` | `docs/ARK_SIGNATURE_FAILURE_DOSSIER_2026-06-04.md` | — | — | — |
 | `attention-pressure` | `api/attention-pressure.json` | yes | — | `api/status-proof.json` |
 | `brand-assets` | `brand/assets.json` | — | — | — |
@@ -444,7 +449,7 @@ flowchart LR
 | `feedback-provenance` | `api/feedback-provenance.json` | yes | `api/commit-map.json` | `api/intelligence-budget.json`<br>`api/nervous-system.json`<br>`api/ship-receipts.json`<br>`api/ux-decision-ledger.json`<br>`data/ignis-search-index.json` |
 | `field-win-proof` | `api/field-win.json` | yes | — | `api/proof-aware-projects.json`<br>`api/status-proof.json` |
 | `flight-director` | `membership/index.html` | yes | — | `api/candidate-artifact-manifest.json`<br>`data/ignis-search-index.json` |
-| `forge-feed` | `feed/forge-ledger.json` | yes | `api/commit-map.json` | — |
+| `forge-feed` | `feed/forge-ledger.json` | yes | `api/commit-map.json` | `api/index.html` |
 | `geo-vitals` | `api/geo-vitals.json` | — | — | `api/status-proof.json` |
 | `heartbeat` | `api/heartbeat.json` | — | — | `api/public-status.json` |
 | `home-desk-module` | `index.html` | yes | `api/news-desk-freshness.json`<br>`api/news-desk.json` | `api/candidate-artifact-manifest.json`<br>`api/deploy-currency.json` |
@@ -610,7 +615,7 @@ flowchart LR
 - `.github/` → `newsroom-run`, `release-proof`
 - `.well-known/` → `security-posture`
 - `_redirects` → `spark-manifest`
-- `api/` → `attention-pressure`, `candidate-artifact-manifest`, `cta-readiness`, `deploy-currency`, `identity-migration-receipt`, `intent-map`, `membership-access`, `nervous-system`, `news-critique-packets`, `newsroom-run`, `oracle-answers`, `oracle-query-clusters`, `promotion-receipt`, `release-proof`, `site-health`, `staging-deploy-receipt`, `stats-surface`, `status-proof`, `ux-decision-ledger`
+- `api/` → `api-index`, `attention-pressure`, `candidate-artifact-manifest`, `cta-readiness`, `deploy-currency`, `identity-migration-receipt`, `intent-map`, `membership-access`, `nervous-system`, `news-critique-packets`, `newsroom-run`, `oracle-answers`, `oracle-query-clusters`, `promotion-receipt`, `release-proof`, `site-health`, `staging-deploy-receipt`, `stats-surface`, `status-proof`, `ux-decision-ledger`
 - `assets/` → `ambient-bundles`, `candidate-artifact-manifest`, `dispatch-desk-panel`, `favicon`, `home-desk-module`, `lqip-map`, `security-posture`, `shell-assets`
 - `cloudflare/` → `identity-migration-receipt`, `security-posture`, `worker-route-provenance`
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `membership-access`, `release-dependencies`, `security-posture`, `shell-assets`
@@ -624,9 +629,10 @@ flowchart LR
 - `external:production-pages` → `promotion-receipt`
 - `external:production-worker-routes` → `worker-route-provenance`
 - `external:studio-ops-ark-log` → `release-dependencies`
+- `feed.xml` → `api-index`
 - `games/` → `ai-canonical-pages`, `ai-discovery-health`, `ignis-search-index`, `spark-manifest`
 - `ignis/` → `public-ecosystem`
-- `journal/` → `evidence-hub`, `pathways-pages`
+- `journal/` → `api-index`, `evidence-hub`, `pathways-pages`
 - `llms-full.txt` → `ignis-search-index`
 - `news/` → `early-hints-headers`, `news-visual-receipts`, `sitemap`
 - `oracle/` → `ignis-search-index`

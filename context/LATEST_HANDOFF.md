@@ -1,3 +1,12 @@
+<!-- S406-website-refresh-checkpoint -->
+## S406 expanded scope in progress
+
+The founder expanded the same S406 goal to both portals and all website resources, developer APIs, feeds and integrations. Four added L2 outcomes are implemented: content-keyed member updates and a useful return briefing; a theme-aware investor workspace with honest private-data states and public evidence; purpose-led developer feed/action documentation; and factual reader updates with source-identity dispatch deduplication. The original two reliability outcomes remain preserved. Actual Chromium interaction20/20 and native package prebuild/build/postbuild passed. Final source-bound visual review, fresh full source/mobile verification and full staging/production acceptance remain pending in docs/RELEASE_S406.json.
+
+Resume native goal01a18350-c2d7-7c32-a786-c2bd05199c33 createdAt1793204515, bound session406. Do not start another arc. Current selected website addendum: docs/AUDIT_2026-10-28-S406-website-refresh.json; four typed premises and candidate/fixture admission passed before edits. Original full548 and staging11 evidence are historical pre-portal checkpoints, not acceptance for this new source. Five GitHub publishers still require original-state restoration before completion.
+
+---
+
 <!-- S406-closeout-writeback -->
 ## Where We Left Off (Session 406)
 

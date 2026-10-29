@@ -1,5 +1,7 @@
-    // ── S66: Portal version — drives What's New deduplication ────
-    const PORTAL_VERSION = '2026-04-13-s66';
+    // Reader-visible releases come from the published changelog, not the
+    // deployment date. Fetch on return so an acknowledged release cannot hide
+    // a later one indefinitely.
+    let _portalRelease = null;
 
     // ── Phase 2: XP chip notification ────────────────────────────
     function showXpChip(pts, label) {
@@ -1338,57 +1340,59 @@
     // (portal-loop.js renderRival, public profiles only).
 
     // ── Phase 14: What's New modal — S66 enhanced ────────────────
-    // S66 hardcoded fallback changelog items
-    const _WN_FALLBACK = [
-      { type: 'update',    message: 'Scroll depth analytics — now tracking how far you explore key pages' },
-      { type: 'milestone', message: 'Achievement Share Cards — earn a badge? Share it from the Vault' },
-      { type: 'info',      message: "What's New modal — you're reading it right now ⚡" },
-      { type: 'update',    message: 'Resource hints — pages load faster with DNS prefetch for all third-party domains' },
-    ];
+    async function loadPublishedPortalRelease() {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 5000);
+      try {
+        const response = await fetch('/api/changelog-narrative.json', { cache: 'no-store', signal: controller.signal });
+        if (!response.ok) throw new Error('Published updates unavailable');
+        _portalRelease = VSPortalLogic.publishedRelease(await response.json());
+        const title = document.getElementById('member-release-title');
+        const date = document.getElementById('member-release-date');
+        if (title) title.textContent = _portalRelease ? _portalRelease.title : 'No published update is available yet.';
+        if (date) date.textContent = _portalRelease ? 'Published ' + _portalRelease.date : 'The changelog keeps the complete public record.';
+        return _portalRelease;
+      } catch (_) {
+        const title = document.getElementById('member-release-title');
+        if (title) title.textContent = 'Updates could not be loaded. Open the changelog to check the record.';
+        return null;
+      } finally { clearTimeout(timer); }
+    }
 
     async function checkWhatsNew() {
-      // Skip if this portal version has already been acknowledged
-      if (localStorage.getItem('vs_portal_last_seen') === PORTAL_VERSION) return;
-
-      try {
-        const { data: pulses } = await VSSupabase
-          .from('studio_pulse')
-          .select('id,message,type,created_at')
-          .order('created_at', { ascending: false })
-          .limit(5);
-
-        if (!pulses || pulses.length === 0) {
-          // No Supabase data — show fallback if not seen
-          _showWhatsNewBellBadge();
-          if (!window.VSPortalAttention || window.VSPortalAttention.claim('whats-new')) {
-            showWhatsNewModal(_WN_FALLBACK, null);
-          }
-          return;
-        }
-
-        const lastSeenDate = localStorage.getItem('vs_portal_last_seen_date') || '1970-01-01';
-        const unseen = pulses.filter(p => p.created_at > lastSeenDate);
-
-        if (unseen.length === 0) {
-          // All seen — mark version so we skip next time too
-          localStorage.setItem('vs_portal_last_seen', PORTAL_VERSION);
-          return;
-        }
-
-        _showWhatsNewBellBadge();
-        if (!window.VSPortalAttention || window.VSPortalAttention.claim('whats-new')) {
-          showWhatsNewModal(unseen, pulses[0].created_at);
-        }
-      } catch (_) {
-        // Network/Supabase failure — show fallback changelog
-        if (localStorage.getItem('vs_portal_last_seen') !== PORTAL_VERSION) {
-          _showWhatsNewBellBadge();
-          if (!window.VSPortalAttention || window.VSPortalAttention.claim('whats-new')) {
-            showWhatsNewModal(_WN_FALLBACK, null);
-          }
-        }
+      const release = await loadPublishedPortalRelease();
+      if (!release) return;
+      let seen = null;
+      try { seen = localStorage.getItem('vs_portal_release_seen'); } catch (_) {}
+      if (seen === release.key) return;
+      _showWhatsNewBellBadge();
+      if (!window.VSPortalAttention || window.VSPortalAttention.claim('whats-new')) {
+        showWhatsNewModal(release.items, release.date);
       }
     }
+
+    async function initMemberReturnBriefing() {
+      const open = document.getElementById('member-updates-open');
+      if (open) open.addEventListener('click', async () => {
+        const release = await loadPublishedPortalRelease();
+        if (release) showWhatsNewModal(release.items, release.date);
+      });
+      // This is public reading, independent of membership level and points.
+      try {
+        const response = await fetch('/api/news-desk-feed.json');
+        if (!response.ok) return;
+        const feed = await response.json();
+        const item = Array.isArray(feed.items) ? feed.items[0] : null;
+        if (!item || !item.title) return;
+        const url = new URL(item.url, location.origin);
+        if ((url.origin !== location.origin && url.origin !== 'https://vaultsparkstudios.com') || !url.pathname.startsWith('/news/')) return;
+        const title = document.getElementById('member-desk-title');
+        const date = document.getElementById('member-desk-date');
+        if (title) { title.textContent = item.title; title.href = url.pathname + url.search + url.hash; }
+        if (date && Number.isFinite(Date.parse(item.date_published))) date.textContent = 'Published ' + item.date_published.slice(0,10);
+      } catch (_) { /* The direct Desk link remains useful when the feed is offline. */ }
+    }
+    initMemberReturnBriefing();
 
     function _showWhatsNewBellBadge() {
       const badge = document.getElementById('whats-new-bell-badge');
@@ -1402,16 +1406,17 @@
 
     function showWhatsNewModal(items, latestTs) {
       if (document.getElementById('whats-new-modal')) return;
+      const releaseKey = _portalRelease ? _portalRelease.key : null;
       const modal = document.createElement('div');
       modal.id = 'whats-new-modal';
       modal.className = 'whats-new-overlay';
       const typeEmoji = { info:'ℹ️', update:'🔔', lore:'📁', alert:'⚡', milestone:'🏆' };
-      const safeTs = latestTs ? latestTs.replace(/'/g, '') : null;
+      const safeTs = /^\d{4}-\d{2}-\d{2}$/.test(latestTs || '') ? latestTs : null;
       const displayItems = items.slice(0, 5);
       const itemsHtml = displayItems.map(p =>
         '<div class="whats-new-item">'
         + '<span class="whats-new-item-icon">' + (typeEmoji[p.type] || '⚡') + '</span>'
-        + '<div class="whats-new-item-text">' + p.message + '</div>'
+        + '<div class="whats-new-item-text">' + escHtml(p.message) + '</div>'
         + '</div>'
       ).join('');
 
@@ -1423,7 +1428,7 @@
         + '</div>'
         + '<div class="whats-new-body">' + itemsHtml + '</div>'
         + '<button id="whats-new-close-btn" class="whats-new-close-btn">Got it — I\'m up to speed</button>'
-        + '<div class="whats-new-version">Portal ' + PORTAL_VERSION + '</div>'
+        + '<div class="whats-new-version">' + (safeTs ? 'Published ' + safeTs : 'Published reader updates') + ' · <a href="/changelog/">Full changelog</a></div>'
         + '</div>';
 
       const _wnPrev = document.activeElement;
@@ -1437,10 +1442,11 @@
         _hideWhatsNewBellBadge();
         try { _wnPrev?.focus(); } catch(_) {}
         // Persist: mark version seen and record the latest pulse timestamp
-        localStorage.setItem('vs_portal_last_seen', PORTAL_VERSION);
-        if (safeTs) localStorage.setItem('vs_portal_last_seen_date', safeTs);
-        // Also update legacy key for backward compat
-        if (safeTs) localStorage.setItem('vs_last_pulse_seen_ts', safeTs);
+        try {
+          if (releaseKey) localStorage.setItem('vs_portal_release_seen', releaseKey);
+          if (safeTs) localStorage.setItem('vs_portal_last_seen_date', safeTs);
+          if (safeTs) localStorage.setItem('vs_last_pulse_seen_ts', safeTs);
+        } catch (_) {}
       };
 
       if (closeBtn) closeBtn.addEventListener('click', closeModal);

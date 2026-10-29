@@ -455,3 +455,11 @@ Fresh goal bound to S406; startup, nine-axis audit, strict premises2/2, pending 
 S406 observed release prerequisite: both canonical full and refresh-live-data profiles now run the existing Open Graph (OG) inventory producer before public status and candidate sealing. Actual inventory337/337eligible public pages carded,18dark,0untriaged; age0.0days and unchanged2day limit. Existing build-order43/43, invocation-mode10/10 and generator6/6 checks passed; independent review PASS0. Complete source/staging/hosted/production acceptance remains pending in docs/RELEASE_S406.json.
 
 Source attempt2 remains failed evidence:167passing of168executed/547planned. No timestamp-only repair, gate relaxation or skipped acceptance. Native OG recomputation and both profile entries fix the omitted producer. No UI, identity, pricing, lifecycle, trust-policy or dependency change. Rollback: bounded revert of the two profile entries. Local implementation velocity2; SIL939/1000unchanged, no product/conversion/field-performance or token-cost gain claimed.
+
+
+<!-- S406-website-refresh-checkpoint -->
+### S406 founder-expanded website checkpoint
+
+The founder expanded the same S406 goal to both portals and all website resources, developer APIs, feeds and integrations. Four added L2 outcomes are implemented: content-keyed member updates and a useful return briefing; a theme-aware investor workspace with honest private-data states and public evidence; purpose-led developer feed/action documentation; and factual reader updates with source-identity dispatch deduplication. The original two reliability outcomes remain preserved. Actual Chromium interaction20/20 and native package prebuild/build/postbuild passed. Final source-bound visual review, fresh full source/mobile verification and full staging/production acceptance remain pending in docs/RELEASE_S406.json.
+
+Independent source reviews found and corrected unavailable activity handling and same-day dispatch identity loss. The first all-theme investor review found two additional visual defects (light legacy accents and mobile Admin return navigation); final recapture/review is pending. All claims remain local until actual release acceptance.

@@ -1,0 +1,137 @@
+{
+  "session": 406,
+  "startedAt": "2026-10-29T00:27:00.772Z",
+  "scope": "Real Chromium interaction with local mocked public feeds and empty/error private data. No real authenticated investor/member session, private data, authorization decision, subscription or delivery tested.",
+  "source": {
+    "algorithm": "sha256",
+    "sha256": "3c49dd3feb04be424b5636109b10efae51e02536635df1756f1bb8a31bf3641e",
+    "files": [
+      "assets/investor-experience.js",
+      "assets/investor-theme.css",
+      "investor-portal/admin/index.html",
+      "investor-portal/index.html",
+      "vault-member/index.html",
+      "vault-member/portal-dashboard.js",
+      "vault-member/portal-logic.js",
+      "vault-member/portal.css"
+    ],
+    "entries": [
+      {
+        "path": "assets/investor-experience.js",
+        "sha256": "f72aa84b0720b23ebda5988f05c68a141fb65a9f8d615ef395a80ae45a5168cb"
+      },
+      {
+        "path": "assets/investor-theme.css",
+        "sha256": "deeb8ac168cee9d2b51e5c1da468397955c76e4affb240ad021ef9f2e6283976"
+      },
+      {
+        "path": "investor-portal/admin/index.html",
+        "sha256": "81aa768d418d8aef87b2aaeff3ac65db7dc8072bef25ea392f5890991f2d4e0c"
+      },
+      {
+        "path": "investor-portal/index.html",
+        "sha256": "c7cf9638bb3072d5dd9621d7159f2e81a86c61b889788524ec00b1c3e5ccfcaf"
+      },
+      {
+        "path": "vault-member/index.html",
+        "sha256": "8b697db4278e6e632a36175ce4228e2687c5e759185f0ad3a01e52627c7f2a6f"
+      },
+      {
+        "path": "vault-member/portal-dashboard.js",
+        "sha256": "c353dfa54a970530721a429b06b12b797ea2e6f93405f48c4ba1a0321e8080d1"
+      },
+      {
+        "path": "vault-member/portal-logic.js",
+        "sha256": "79282618183c02fbe5cee1f7a8603b9a7bf798d245e59afdaaced1083fd348cb"
+      },
+      {
+        "path": "vault-member/portal.css",
+        "sha256": "22bd3d1b0505a3548c3887324c48b2ed7238eebb98b4e779f9ce60609b1aab5e"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "canonical Desk URL works on local/staging origins without linking away",
+      "state": "passed"
+    },
+    {
+      "name": "first actual release opens the existing modal",
+      "state": "passed"
+    },
+    {
+      "name": "feed text is escaped rather than executed",
+      "state": "passed"
+    },
+    {
+      "name": "modal identifies actual publication date",
+      "state": "passed"
+    },
+    {
+      "name": "acknowledgement records actual content identity",
+      "state": "passed"
+    },
+    {
+      "name": "an acknowledged release is checked again but stays closed",
+      "state": "passed"
+    },
+    {
+      "name": "a later release remains discoverable after an earlier acknowledgement",
+      "state": "passed"
+    },
+    {
+      "name": "later release has a different acknowledgement identity",
+      "state": "passed"
+    },
+    {
+      "name": "regeneration timestamp alone does not announce the same content again",
+      "state": "passed"
+    },
+    {
+      "name": "failed feed stays unavailable without a fabricated announcement",
+      "state": "passed"
+    },
+    {
+      "name": "successful empty feed remains honestly empty",
+      "state": "passed"
+    },
+    {
+      "name": "private empty state offers a real next action",
+      "state": "passed"
+    },
+    {
+      "name": "investor theme selector changes the actual page palette",
+      "state": "passed"
+    },
+    {
+      "name": "theme selection persists through reload",
+      "state": "passed"
+    },
+    {
+      "name": "private query errors stay distinct from empty updates/documents",
+      "state": "passed"
+    },
+    {
+      "name": "activity error is unavailable rather than no activity",
+      "state": "passed"
+    },
+    {
+      "name": "unavailable metrics render dashes rather than invented zeros",
+      "state": "passed"
+    },
+    {
+      "name": "rejected activity request resolves to an explicit unavailable state",
+      "state": "passed"
+    },
+    {
+      "name": "returned and rejected private queries cause no unhandled page exception",
+      "state": "passed"
+    },
+    {
+      "name": "mobile admin retains a visible portal return link",
+      "state": "passed"
+    }
+  ],
+  "state": "passed",
+  "finishedAt": "2026-10-29T00:27:07.186Z"
+}
