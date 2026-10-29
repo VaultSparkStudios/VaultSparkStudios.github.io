@@ -40,20 +40,20 @@
     "directPublisherDeploys": false,
     "note": "Scheduled [skip ci] publisher commits may be repository-fresh before production; refresh-live-data coalesces and dispatches pages-deploy within four hours."
   },
-  "retainedForHours": null,
+  "retainedForHours": 0.4,
   "quorum": {
-    "state": "agreed",
+    "state": "disagreed",
     "required": 2,
-    "agreementCount": 2,
-    "observedAt": "2026-10-29T18:13:39.608Z",
-    "agreedShaShort": "b0e4d7f20824",
-    "agreedSha256": "0638601e6e18b1d7490c9556d5667b22d7cd606db47d42313e08d4df0f369726",
+    "agreementCount": 1,
+    "observedAt": "2026-10-29T18:39:21.882Z",
+    "agreedShaShort": null,
+    "agreedSha256": null,
     "evidence": [
       {
         "id": "routed-apex",
         "evidenceClass": "routed-http",
         "state": "challenged",
-        "observedAt": "2026-10-29T18:13:39.608Z",
+        "observedAt": "2026-10-29T18:39:21.882Z",
         "shaShort": null,
         "sha256": null,
         "httpStatus": 403,
@@ -67,7 +67,7 @@
         "id": "provider-origin",
         "evidenceClass": "provider-origin-http",
         "state": "observed",
-        "observedAt": "2026-10-29T18:13:39.639Z",
+        "observedAt": "2026-10-29T18:39:21.913Z",
         "shaShort": "94fe9ea36566",
         "sha256": "4ccfb688faf770949ec80bd517046ec464451de5ef70e81819778ed7a7e233b9",
         "httpStatus": 200,
@@ -81,7 +81,7 @@
         "id": "cloudflare-pages-api",
         "evidenceClass": "provider-metadata",
         "state": "observed",
-        "observedAt": "2026-10-29T18:13:39.640Z",
+        "observedAt": "2026-10-29T18:39:21.914Z",
         "shaShort": "b0e4d7f20824",
         "sha256": "0638601e6e18b1d7490c9556d5667b22d7cd606db47d42313e08d4df0f369726",
         "httpStatus": 200,
@@ -94,13 +94,13 @@
       {
         "id": "github-deploy-step",
         "evidenceClass": "workflow-attestation",
-        "state": "observed",
-        "observedAt": "2026-10-29T18:13:39.642Z",
-        "shaShort": "b0e4d7f20824",
-        "sha256": "0638601e6e18b1d7490c9556d5667b22d7cd606db47d42313e08d4df0f369726",
-        "httpStatus": 200,
-        "reason": null,
-        "evidenceIdSha256": "060380eeb309c4634703ae9a3f0484e9ff45ed36f0d581a3a9844253036e795a",
+        "state": "unobserved",
+        "observedAt": "2026-10-29T18:39:21.916Z",
+        "shaShort": null,
+        "sha256": null,
+        "httpStatus": 403,
+        "reason": "http-403",
+        "evidenceIdSha256": null,
         "contentLaneHeadShort": null,
         "contentLaneHeadSha256": null,
         "contentLanePathSetSha256": null
@@ -108,13 +108,13 @@
     ],
     "disagreements": [
       {
-        "shaShort": "b0e4d7f20824",
-        "sha256": "0638601e6e18b1d7490c9556d5667b22d7cd606db47d42313e08d4df0f369726",
-        "count": 2
-      },
-      {
         "shaShort": "94fe9ea36566",
         "sha256": "4ccfb688faf770949ec80bd517046ec464451de5ef70e81819778ed7a7e233b9",
+        "count": 1
+      },
+      {
+        "shaShort": "b0e4d7f20824",
+        "sha256": "0638601e6e18b1d7490c9556d5667b22d7cd606db47d42313e08d4df0f369726",
         "count": 1
       }
     ]
@@ -122,7 +122,7 @@
   "shellParity": {
     "state": "matched",
     "route": "/",
-    "observedAt": "2026-10-29T18:13:39.608Z",
+    "observedAt": "2026-10-29T18:39:21.882Z",
     "expectedFrom": "fdb7f729a7f8ab525b82c6bb04867a2665ef0517221a86dbbc9233edde97a584",
     "supersededBy": null,
     "ageHours": 0,
@@ -176,8 +176,8 @@
   "honesty": {
     "frozenAtProbeTime": true,
     "note": "commitsBehind and ageHours are recorded at probe time against the then-current repo tip, not recomputed against a moving HEAD. An unobserved state means no probe has run — it is never reported as current.",
-    "challengedAt": null,
-    "challengeError": null,
+    "challengedAt": "2026-10-29T18:39:21.882Z",
+    "challengeError": "deploy quorum disagreed",
     "challengeIsNotAnObservation": true,
     "retentionExpires": true,
     "observationMaxAgeHours": 12,
