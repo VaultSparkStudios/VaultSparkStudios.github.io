@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 406,
-  "state": "cache-follow-through-locally-verified-full-source-pending",
+  "state": "final-cache-source-verification-running",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
@@ -282,14 +282,15 @@
     "reason": "Visual retention report stale after final42 message captures; native producer and whole canonical proof cascade refreshed."
   },
   "proofPrerequisites": {
-    "observedAt": "2026-10-29T02:08:53.886Z",
-    "log": ".cache/logs/S406-final-proof-refresh.log",
+    "observedAt": "2026-10-29T06:03:55.848Z",
+    "log": ".cache/logs/S406-cache-proof-refresh.log",
     "exit": 0,
     "blockingPassed": 92,
     "blockingTotal": 92,
     "advisoryFindings": 0,
     "visualSourcePixelsUnchanged": 392,
-    "fullSourceAccepted": false
+    "currentMatrices": 17,
+    "currentSourceAccepted": false
   },
   "preCacheSource": {
     "evidence": "docs/S406_pre-cache-fix-source.json",
@@ -322,6 +323,15 @@
         "postbuild"
       ],
       "log": ".cache/logs/S406-cache-build.log"
+    },
+    "portalLogicTests": {
+      "passed": 25,
+      "total": 25
+    },
+    "attentionContract": {
+      "passed": 15,
+      "total": 15
     }
-  }
+  },
+  "latestUptimeMerge": "docs/S406_website-uptime-merge.json"
 }

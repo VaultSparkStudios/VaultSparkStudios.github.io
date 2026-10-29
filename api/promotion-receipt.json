@@ -4,7 +4,7 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "bcf232f1fc28b4306b8ccb782c103681974dc4c6",
+    "sha": "d161f7fe1ae082516d0f4a26cf813df44d022250",
     "source": "api/build-sha.json"
   },
   "production": {
@@ -15,8 +15,8 @@
     "reconciliation": "behind",
     "shellParity": {
       "state": "matched",
-      "observedAt": "2026-10-28T23:37:43.194Z",
-      "ageHours": 2.6,
+      "observedAt": "2026-10-29T05:36:38.227Z",
+      "ageHours": 0.5,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -33,7 +33,7 @@
   "browser": {
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
-    "consoleErrors": 7,
+    "consoleErrors": 8,
     "workerRouteErrors": 7,
     "signalCardinality": 7,
     "signalEndpoints": [
@@ -76,7 +76,7 @@
         "route": "/games/franchise-architect/",
         "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
         "captured": true,
-        "consoleErrors": 1,
+        "consoleErrors": 2,
         "workerRouteErrors": 1,
         "signalCardinality": 2,
         "signalEndpoints": [
@@ -89,18 +89,18 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "the repo has advanced past the last promotion: production serves c06161b6, repo build-sha is bcf232f1 — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
-    "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
+    "the repo has advanced past the last promotion: production serves c06161b6, repo build-sha is d161f7fe — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
+    "8 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 1 unexplained"
   ],
-  "generatedAt": "2026-10-29T02:11:15.441Z",
+  "generatedAt": "2026-10-29T06:06:31.565Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-10-29T02:11:15.441Z",
-    "currentBehindStreak": 3,
-    "newestGradableAt": "2026-10-29T02:11:15.441Z",
+    "lastStrandedAt": "2026-10-29T06:06:31.565Z",
+    "currentBehindStreak": 4,
+    "newestGradableAt": "2026-10-29T06:06:31.565Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,
