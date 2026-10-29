@@ -78,7 +78,7 @@
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   4d                                             ║
 ║  ✓  IGNIS         45136 FORGE  ·  0d old                         ║
-║  ⛔  Truth         yellow — explicit S406 closeout full…          ║
+║  ⛔  Truth         yellow — explicit S406 full application…       ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.174  (healthy)                               ║
@@ -120,19 +120,19 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   97  [VERIFY]       Reproduce the34 optional E2E failures befo  ║
+║  100  [VERIFY]       Reproduce the34 optional E2E failures befo  ║
 ║        Reproduce the34 optional E2E failures before changing im  ║
 ║                                                                  ║
-║   93  [SECURITY]     Measure help startup separately from probe  ║
+║   96  [SECURITY]     Measure help startup separately from probe  ║
 ║        Measure help startup separately from probe execution bef  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Consider extending help-only process fixtu  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
+║   93  [PRODUCT]      Consider extending help-only process fixtu  ║
 ║        Consider extending help-only process fixtures to another  ║
 ║                                                                  ║
-║   86  [VERIFY]       Publish closing records to main and verify  ║
-║        Publish closing records to main and verify remote reacha  ║
-║                                                                  ║
-║   84  [PRODUCT]      Consider migration of scheduled text probe  ║
+║   87  [PRODUCT]      Consider migration of scheduled text probe  ║
 ║        Consider migration of scheduled text probes only after m  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝

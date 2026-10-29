@@ -4,7 +4,7 @@
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   4d                                             ║
 ║  ✓  IGNIS         45136 FORGE  ·  0d old                         ║
-║  ⛔  Truth         yellow — explicit S406 closeout full…          ║
+║  ⛔  Truth         yellow — explicit S406 full application…       ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.174  (healthy)                               ║
