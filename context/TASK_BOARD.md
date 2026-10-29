@@ -5,7 +5,7 @@
 - [x] Prior six product outcomes released; historical acceptance: `docs/RELEASE_S406.json`.
 - [x] Fresh native548/548 and full staging plus exact generated-status reconciliations verified.
 - [x] Full production, complete served parity and publisher restoration verified.
-- [ ] Publish closing records to main and verify remote reachability.
+- [x] Closing records published to main; remote reachability verified in the closeout ledger.
 
 Current acceptance: `docs/CLOSEOUT_S406_2026-10-29.json`. No new product work or score increase. The duplicated completed header is preserved byte-for-byte in [VaultSparkStudios.github.io-TASK_BOARD.2026-10-29T18-53-46-816Z.full.md](archive/task-board/2026-10-29-S406-explicit-closeout-budget/VaultSparkStudios.github.io-TASK_BOARD.2026-10-29T18-53-46-816Z.full.md).
 

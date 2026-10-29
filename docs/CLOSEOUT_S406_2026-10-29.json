@@ -4,7 +4,7 @@
   "requestedAt": "2026-10-29T18:26:07.857Z",
   "initialHead": "bc670dc2dbda915e74865168ee81b1f852367922",
   "priorArcComplete": true,
-  "state": "production-verified-main-publication-pending",
+  "state": "complete",
   "shippedOutcomes": 6,
   "newProductChanges": 0,
   "score": 939,
@@ -69,7 +69,7 @@
     },
     {
       "task": "Publish main, fully deploy and verify served artifact",
-      "state": "production-verified-main-publication-pending"
+      "state": "complete"
     }
   ],
   "contextBudgetRepair": {
@@ -225,13 +225,74 @@
     "sourceReceiptUnmodified": true,
     "executionSourceFingerprint": "130c1ee187b6c143a15cf2ed",
     "closingFingerprint": "16ebbbdbc7c71425615ea855",
-    "scope": "Task-board completion and appended decision records are explicit verification inputs. Their closing writes follow the pinned accepted candidate; the source execution proof is not rebound or claimed as a full suite over later Git-only closing records."
+    "scope": "Task-board completion and appended decision records are explicit verification inputs. Their closing writes follow the pinned accepted candidate; the source execution proof is not rebound or claimed as a full suite over later Git-only closing records.",
+    "finalRecordFingerprint": "fa7d286e8a059e01537053ff",
+    "finalRecordScope": "Source execution receipt remains original; final task/decision completion records change explicit verification inputs without claiming a new full-source execution."
   },
   "closingMetadata": {
     "receipt": "docs/S406_explicit-closeout-metadata-overlay.json",
-    "state": "staged-production-pending",
+    "state": "verified",
     "metadataHead": "994191d026ea28f11dc75f7a24fd29b63277d20e",
+    "workflowRun": 40959087788,
     "paths": 16,
-    "scope": "Separate inert status metadata overlay on the accepted full application. Complete final composite parity remains pending."
+    "exactReads": 42,
+    "applicationBaseline": "0242fc75dd0034f1922c35a37ad18c1f5a24e74a",
+    "scope": "Accepted full application baseline plus explicitly enumerated staged closing metadata. Every overlay and five unchanged portal assets were read exactly at both public origins. Composite commit is a local verification object, never a production commit claim. Complete served parity against that explicit tree remains separate."
+  },
+  "completedAt": "2026-10-29T21:43:20.799Z",
+  "finalServedParity": {
+    "receipt": "docs/S406_explicit-closeout-final-served-parity.json",
+    "checked": 3669,
+    "identical": 3659,
+    "redirected": 10,
+    "differ": 0,
+    "unread": 0,
+    "coverageComplete": true,
+    "comparison": "Local verification-only full baseline plus exact16 metadata paths; not a production commit claim."
+  },
+  "mainPublication": {
+    "publishedCommit": "7532eba412722d672ab37743883873eda1347a59",
+    "remoteObservedHead": "7532eba412722d672ab37743883873eda1347a59",
+    "observedAt": "2026-10-29T21:43:20.799Z",
+    "state": "verified",
+    "scope": "The accepted application, metadata and closeout records reached main. Final acceptance records close this publication transaction; later observer commits do not imply whole-main production equality."
+  },
+  "metadataPublisherRestoration": {
+    "receipt": "docs/S406_explicit-closeout-metadata-window.json",
+    "restored": true,
+    "count": 5
+  },
+  "metadataVerificationAttempts": [
+    {
+      "log": ".cache/logs/S406-explicit-final-metadata-verification.log",
+      "state": "failed",
+      "reason": "Connection timeout during readback; no acceptance claimed."
+    },
+    {
+      "log": ".cache/logs/S406-explicit-final-metadata-verification-retry1.log",
+      "state": "passed",
+      "scope": "Fresh actual provider/stamp/readback and complete inventory. Inherited console literal said60 reads; authoritative reads array and dynamic assertion prove42. Console helper corrected."
+    }
+  ],
+  "arkImpact": {
+    "state": "shipped",
+    "log": ".cache/private-S406/explicit-ark-impact.log",
+    "scope": "Internal session-impact-summary delivery only; recipient adoption is not claimed.",
+    "id": "01K64PTVFIC45A65E481B77742"
+  },
+  "ownerBaton": {
+    "id": "01K64N40EC7C0791708B01567E",
+    "owner": "studio-ops",
+    "state": "queued",
+    "scope": "Recipient selection review for the existing delegated IGNIS scorer; workaround verified locally, no release-blocking dependency or recipient implementation claim."
+  },
+  "sessionHygiene": {
+    "observedAt": "2026-10-29T21:46:14.273Z",
+    "scope": "Tracked work jobs at the pre-publication hygiene gate; final publication command is checked again before the board.",
+    "backgroundStarted": 34,
+    "backgroundClosed": 34,
+    "backgroundRunning": 0,
+    "agentsRunning": 0,
+    "ownedReleaseHelpersRunning": 0
   }
 }

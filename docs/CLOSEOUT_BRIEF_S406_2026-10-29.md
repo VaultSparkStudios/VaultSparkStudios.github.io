@@ -55,7 +55,8 @@
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Measure membership, readership and field performance before claiming growth; future SIL items remain unselected.
+    • Optional E2E diagnostics:34 failures and60 skips retained; reproduce causes before changing code, baselines or policy.
+    • Measure membership, readership and field performance before claiming growth; future SIL work remains unselected.
 
   BLOCKERS
     (none)

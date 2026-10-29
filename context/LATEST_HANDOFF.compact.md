@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/compact-handoff.mjs deterministic-v1 -->
-<!-- source-hash: 4e8d5c9395412d08b115000c76a479abac35dc812f19e2a3f54f5deac5a0d250 -->
+<!-- source-hash: ab4e4967a6ef4ad173ffaf3be5e9a0583d68047148c21f2e6638a9984e5268ee -->
 
 # LATEST_HANDOFF (source extract)
 
@@ -8,14 +8,17 @@
 
 Session Intent: Explicit closeout, all context/memory/CDR/task-board updates, normal main push and full deployment.
 - Shipped: six prior outcomes; zero new product changes in this closeout.
-- Tests: fresh complete548/548; exact hosted3/3; source times/fingerprint retained in docs/S406_explicit-closeout-source.json. Failed attempts2/3 and rejected tag publication remain recorded.
-- Deploy: full production0242fc75dd0034f1922c35a37ad18c1f5a24e74a, run40957103998; complete served parity3669/3669; five publishers restored. Final main publication follows in the same closing transaction.
+- Tests: source548/548, mobile215/215 and required hosted workflows3/3 passed; optional E2E622 passed,34 failed,60 skipped (same34 failure names as prior accepted release). Evidence: docs/CLOSEOUT_S406_2026-10-29.json.
+- Deploy: full production0242fc75dd0034f1922c35a37ad18c1f5a24e74a, run40957103998; complete served parity3669/3669. Closing status metadata and main publication have separate evidence in docs/CLOSEOUT_S406_2026-10-29.json.
 
 The six selected S406 improvements are released: diagnostic help safety, canonical share-card coverage refresh, current member return information, a decision-ready investor workspace, purpose-led developer resources and factual studio updates. The prior arc is complete. The founder now explicitly requests a fresh closeout, all context/memory/CDR/task-board updates, normal main commit/push and a full deployment of the resulting candidate.
 
 Prior accepted application baseline: 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74; verified 25-file metadata overlay: b0e4d7f2082461a82a1d8638b455690e85f9c83b. Final prior publication: bc670dc2dbda915e74865168ee81b1f852367922. Prior complete served verification: 3,668 resources, zero differences or unread files. This invocation records new acceptance separately in `docs/CLOSEOUT_S406_2026-10-29.json`; earlier source and deployment proofs are historical evidence, never re-dated.
 
 Explicit S406 closeout: fresh native source548/548, full staging plus exact generated-status reconciliations, canonical ceremony11/11 and exact required hosted workflows3/3 passed. The optional E2E diagnostic lane retains34 failures and60 skips (622 passed); identical failure names also occur on the prior accepted release, with causes not independently re-diagnosed. No all-E2E-success or positive authenticated acceptance is claimed. Normal full production candidate 0242fc75dd0034f1922c35a37ad18c1f5a24e74a, workflow40957103998, provider and three build stamps verified. Complete all-served readback3669/3669: 3659 byte-identical, 10 configured redirects, zero differences/unread. All five held publishers restored. Six prior improvements and SIL939/1000 retained; zero new product changes. Closing Git records are published separately from the pinned production candidate. Existing identity/provider and field-vitals limitations remain separate. Anonymous auth-wall checks do not prove positive private-data access.
+
+
+Final publication: Full application 0242fc75dd0034f1922c35a37ad18c1f5a24e74a plus16 staged closing metadata paths at 994191d026ea28f11dc75f7a24fd29b63277d20e is verified across all3669 served resources, with zero differences/unread. Main publication 7532eba412722d672ab37743883873eda1347a59 was independently observed remotely at 2026-10-29T21:43:20.799Z. Both publisher windows are restored. Optional E2E34 failures/60 skips remain explicit; no all-E2E-green or positive authenticated acceptance claim. Final acceptance records close this publication transaction; moving observer commits are separate.
 
 ---
 
@@ -26,15 +29,9 @@ Prior release observations below retain their recorded scope.
 
 S406 released six selected outcomes at 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74: diagnostic-help safety, canonical Open Graph inventory freshness, current member return/release information, decision-ready investor workspace, purpose-led developer feeds/contracts, and factual reader updates. Returning-browser cache delivery is covered by five content-addressed portal assets and the real persistent-browser proof. Current behavior20/20 plus message46/46, mobile215/215 and392 reviewed desktop/mobile captures across seven themes passed. Two complete548-command native passes are preserved at source execution HEAD 542905dfea3ac7ce7a644429c161beabd0e18092, fingerprint 390c624684008bd329af693a; those historical source measurements are never rebound to closing metadata. Staging11/11, exact hosted3/3, normal full production run40840096846, provider/three stamps,64 exact asset reads, 16 served HTML checks with 26 portal references, six existing apex access guards, and two configured journal redirects passed. These anonymous checks do not prove positive private-data access. Complete all-served readback3668/3668: 3658 byte-identical and10 verified redirects,0 differences/0 unread. Both passive factual briefing rows were published and all5 held GitHub publishers restored to their original states. No email, notification, financial forecast, price, entitlement or authentication change is claimed. No measured growth, conversion, field-performance or token-cost uplift is claimed. Existing identity/provider and field-vitals limits remain separate.
 
-Closing records were published at b0e4d7f2082461a82a1d8638b455690e85f9c83b. The final deployed artifact is the accepted full application baseline plus the explicit 25-file staged metadata overlay. Complete final served comparison passed 3,668 resources with zero differences or unread files; docs/S406_metadata-overlay.json and docs/S406_final-served-parity.json preserve its exact scope. The native arc goal was completed after the final remote publication check.
 
-Evidence: docs/RELEASE_S406.json; docs/S406_full-source-acceptance.json; docs/S406_hosted-candidate.json; docs/S406_production-identity.json; docs/S406_served-parity.json; docs/S406_publisher-window.json. Private database row identifiers/readback stay in ignored storage.
+## Source lookup
 
-Same goal 01a18350-c2d7-7c32-a786-c2bd05199c33, createdAt1793204515; all selected outcomes are complete; verify final publication only if this turn was interrupted. A continuation does not start another arc.
-
----
-
-Earlier S406 checkpoints below are historical observations; the final acceptance above owns current release truth.
-
-
-<!-- S406-closeout-writeback -->
+Extract is incomplete. Read context/LATEST_HANDOFF.md at the indicated lines before acting on omitted work or approvals. Full file: 39 lines; 0 typed handoff blocks.
+- L2: Where We Left Off (Session 406) — explicit closeout 2026-10-29
+- L23: Where We Left Off (Session 406) — final release acceptance — 2026-10-29

@@ -13,7 +13,7 @@
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
   "currentFocus": "Current investor and member workspaces, useful public feeds, and dated studio updates.",
-  "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
+  "publicNote": "See the membership page for current plans, benefits and account-access availability.",
   "nextMilestone": "Maintain current portal briefings and public resources; measure readership and membership outcomes before further changes.",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
@@ -300,23 +300,30 @@
     "candidate": "0242fc75dd0034f1922c35a37ad18c1f5a24e74a",
     "receipt": "docs/CLOSEOUT_S406_2026-10-29.json",
     "workflowRun": 40957103998,
-    "verifiedAt": "2026-10-29T21:29:46.393Z"
+    "verifiedAt": "2026-10-29T21:43:20.799Z",
+    "metadataHead": "994191d026ea28f11dc75f7a24fd29b63277d20e",
+    "metadataWorkflowRun": 40959087788
   },
-  "truthAuditSummary": "Explicit S406 closeout: fresh native source548/548, full staging plus exact generated-status reconciliations, canonical ceremony11/11 and exact required hosted workflows3/3 passed. The optional E2E diagnostic lane retains34 failures and60 skips (622 passed); identical failure names also occur on the prior accepted release, with causes not independently re-diagnosed. No all-E2E-success or positive authenticated acceptance is claimed. Normal full production candidate 0242fc75dd0034f1922c35a37ad18c1f5a24e74a, workflow40957103998, provider and three build stamps verified. Complete all-served readback3669/3669: 3659 byte-identical, 10 configured redirects, zero differences/unread. All five held publishers restored. Six prior improvements and SIL939/1000 retained; zero new product changes. Closing Git records are published separately from the pinned production candidate.",
+  "truthAuditSummary": "Full application 0242fc75dd0034f1922c35a37ad18c1f5a24e74a plus16 staged closing metadata paths at 994191d026ea28f11dc75f7a24fd29b63277d20e is verified across all3669 served resources, with zero differences/unread. Main publication 7532eba412722d672ab37743883873eda1347a59 was independently observed remotely at 2026-10-29T21:43:20.799Z. Both publisher windows are restored. Optional E2E34 failures/60 skips remain explicit; no all-E2E-green or positive authenticated acceptance claim. Final acceptance records close this publication transaction; moving observer commits are separate.",
   "currentVerification": {
     "session": 406,
-    "state": "accepted-full-production",
+    "state": "accepted-full-production-plus-closing-metadata",
     "source": "docs/CLOSEOUT_S406_2026-10-29.json",
     "lastCompleteTestsSession": 406,
     "sourceEvidence": "docs/S406_explicit-closeout-source.json",
     "sourceFingerprint": "130c1ee187b6c143a15cf2ed",
     "applicationBaseline": "0242fc75dd0034f1922c35a37ad18c1f5a24e74a",
-    "finalParity": "docs/S406_explicit-closeout-served-parity.json"
+    "finalParity": "docs/S406_explicit-closeout-final-served-parity.json",
+    "metadataHead": "994191d026ea28f11dc75f7a24fd29b63277d20e",
+    "scope": "Pinned application and metadata acceptance; execution proof is not rebound to later closing records."
   },
   "metadataPublication": {
     "session": 406,
-    "state": "closing-main-publication-pending",
-    "scope": "Git closing records follow the exact accepted full production candidate; no whole-main production byte-equality claim."
+    "state": "verified",
+    "publishedCommit": "7532eba412722d672ab37743883873eda1347a59",
+    "remoteObservedHead": "7532eba412722d672ab37743883873eda1347a59",
+    "observedAt": "2026-10-29T21:43:20.799Z",
+    "scope": "The accepted application, metadata and closeout records reached main. Final acceptance records close this publication transaction; later observer commits do not imply whole-main production equality."
   },
   "lastCompletedArc": {
     "session": 406,
@@ -377,9 +384,11 @@
     "session": 406,
     "requestedAt": "2026-10-29T18:26:07.857Z",
     "ledger": "docs/CLOSEOUT_S406_2026-10-29.json",
-    "state": "production-verified-main-publication-pending",
+    "state": "complete",
     "priorArcComplete": true,
     "candidate": "0242fc75dd0034f1922c35a37ad18c1f5a24e74a",
-    "workflowRun": 40957103998
+    "workflowRun": 40957103998,
+    "completedAt": "2026-10-29T21:43:20.799Z",
+    "metadataHead": "994191d026ea28f11dc75f7a24fd29b63277d20e"
   }
 }
