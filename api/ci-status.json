@@ -1,38 +1,38 @@
 {
-  "generatedAt": "2026-10-27T07:03:20.257Z",
+  "generatedAt": "2026-10-29T08:10:32.839Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": true,
-  "verifiedBrowserHeadSha": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+  "verifiedBrowserHeadSha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 16,
-    "observed": 3,
-    "healthy": 3,
-    "unknown": 13,
+    "observed": 5,
+    "healthy": 5,
+    "unknown": 11,
     "stale": 0,
     "dead": 0
   },
   "terminalState": "unknown",
   "knownTerminalBlockers": [],
-  "summary": "CI gate status is unknown.",
+  "summary": "Production deployment is stranded for 4 consecutive receipts. CI gate status is unknown.",
   "deploymentReconciliation": {
-    "state": "clear",
+    "state": "stranded",
     "threshold": 2,
-    "alert": false,
+    "alert": true,
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-10-25T23:13:02.653Z",
-    "currentBehindStreak": 0,
-    "newestGradableAt": "2026-10-27T05:37:36.617Z",
-    "newestAgeHours": 1.4,
+    "lastStrandedAt": "2026-10-29T06:06:31.565Z",
+    "currentBehindStreak": 4,
+    "newestGradableAt": "2026-10-29T06:06:31.565Z",
+    "newestAgeHours": 2.1,
     "maxAgeHours": 48,
     "stale": false,
-    "strandedAlert": false
+    "strandedAlert": true
   },
   "workflows": [
     {
@@ -40,9 +40,9 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-10-27T06:56:08Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/40462700145",
-      "headSha": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+      "updatedAt": "2026-10-29T08:04:49Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/40838158030",
+      "headSha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
       "event": "push"
     },
     {
@@ -50,9 +50,9 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-10-27T06:45:34Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/40462700154",
-      "headSha": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+      "updatedAt": "2026-10-29T07:54:02Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/40838158048",
+      "headSha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
       "event": "push"
     },
     {
@@ -60,9 +60,9 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-10-27T07:01:19Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/40462700343",
-      "headSha": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
+      "updatedAt": "2026-10-29T08:08:46Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/40838158076",
+      "headSha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
       "event": "push"
     },
     {
@@ -101,13 +101,15 @@
     },
     {
       "name": "The Desk Dispatch — Daily Digest",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-10-28T23:35:31Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 8.58,
       "staleAfterHours": 48
     },
     {
@@ -123,13 +125,15 @@
     },
     {
       "name": "Investor KPI Snapshot (daily)",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-10-29T07:15:59Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 0.91,
       "staleAfterHours": 48
     },
     {
@@ -145,15 +149,15 @@
     },
     {
       "name": "Generate Leaderboard API",
-      "lastConclusion": "failure",
-      "lastUpdatedAt": "2026-10-27T06:46:16Z",
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-10-29T06:31:23Z",
       "recentConclusions": [
-        "failure"
+        "success"
       ],
       "dead": false,
-      "streak": 1,
+      "streak": 0,
       "state": "healthy",
-      "ageHours": 0.28,
+      "ageHours": 1.65,
       "staleAfterHours": 48
     },
     {
@@ -181,14 +185,16 @@
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-27T07:02:24Z",
+      "lastUpdatedAt": "2026-10-29T06:49:55Z",
       "recentConclusions": [
+        "success",
+        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.02,
+      "ageHours": 1.34,
       "staleAfterHours": 48
     },
     {
@@ -227,7 +233,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-27T06:57:43Z",
+      "lastUpdatedAt": "2026-10-29T07:37:12Z",
       "recentConclusions": [
         "success",
         "success",
@@ -236,7 +242,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.09,
+      "ageHours": 0.56,
       "staleAfterHours": 48
     },
     {
