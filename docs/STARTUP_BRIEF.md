@@ -126,14 +126,14 @@
 ║   96  [PRODUCT]      Consider extending help-only process fixtu  ║
 ║        Consider extending help-only process fixtures to another  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   90  [PRODUCT]      Consider migration of scheduled text probe  ║
 ║        Consider migration of scheduled text probes only after m  ║
 ║                                                                  ║
 ║   87  [PRODUCT]      Consider redirect-target body verification  ║
 ║        Consider redirect-target body verification only if a rea  ║
+║                                                                  ║
+║   84  [PRODUCT]      Consider response-body streaming only if m  ║
+║        Consider response-body streaming only if measured remote  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
