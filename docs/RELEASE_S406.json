@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 406,
-  "state": "final-cache-source-verification-running",
+  "state": "local-source-accepted-staging-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
@@ -150,14 +150,14 @@
     "passed": 548,
     "total": 548,
     "coverageComplete": true,
-    "sourceFingerprint": "59cb21fecdc41b6251f85988",
-    "receiptId": "5cff67eb2fe8982e1a930685"
+    "sourceFingerprint": "390c624684008bd329af693a",
+    "receiptId": "fb47b92f2d6e9330600a26d2"
   },
   "localAutopilot": {
     "command": "node scripts/closeout-autopilot.mjs --yes --skip-push",
     "exit": 0,
-    "head": "d161f7fe1ae082516d0f4a26cf813df44d022250",
-    "log": ".cache/logs/S406-website-autopilot-4.log",
+    "head": "542905dfea3ac7ce7a644429c161beabd0e18092",
+    "log": ".cache/logs/S406-cache-autopilot.log",
     "scope": "Canonical local closeout checks and commits; staging/push/full production still required."
   },
   "premerge": {
@@ -226,7 +226,7 @@
     "originalOutcomes": 2,
     "addedImplemented": 4,
     "addedVerified": 4,
-    "sourceAcceptanceCurrent": false,
+    "sourceAcceptanceCurrent": true,
     "visualAcceptanceCurrent": true,
     "mobileAcceptanceCurrent": true,
     "privateContent": "Honest empty/unavailable states; a passive factual investor studio briefing is planned only after this candidate is actually deployed and verified. No private financial documents are fabricated.",
@@ -234,7 +234,7 @@
     "locallyVerified": 4,
     "visualCurrent": true,
     "mobileCurrent": true,
-    "fullSourceCurrent": false,
+    "fullSourceCurrent": true,
     "productionCurrent": false
   },
   "expandedOutcomes": {
@@ -309,7 +309,7 @@
       "failed": 0
     },
     "warmBrowser": "docs/S406_portal-warm-cache.json",
-    "currentSource": "pending",
+    "currentSource": "docs/S406_full-source-acceptance.json",
     "production": "pending",
     "visual": "docs/S406_visual-acceptance.json",
     "mobile": "docs/S406_mobile-acceptance.json",
@@ -331,7 +331,8 @@
     "attentionContract": {
       "passed": 15,
       "total": 15
-    }
+    },
+    "canonicalAutopilotExit": 0
   },
   "latestUptimeMerge": "docs/S406_website-uptime-merge.json"
 }
