@@ -1,20 +1,40 @@
 <!-- generated-by: scripts/compact-handoff.mjs deterministic-v1 -->
-<!-- source-hash: b4ea78798406ec817295c387a4dafe0ef5607ab0c71804c515ed9f5235f9891c -->
+<!-- source-hash: 4e8d5c9395412d08b115000c76a479abac35dc812f19e2a3f54f5deac5a0d250 -->
 
 # LATEST_HANDOFF (source extract)
 
-## Where We Left Off — S400 complete in closing publication transaction
+<!-- S406-explicit-closeout-2026-10-29 -->
+## Where We Left Off (Session 406) — explicit closeout 2026-10-29
 
-Native goal01a168e8-03b3-79c1-a35e-55b14a694961,createdAt1792761435,is bound to S400,startHead1a96e6203bdd1e368d310daf50a88f1ca659a7eb. This invocation performed fresh startup,audits,implementation andrelease. Do not start another arc during continuation.
+Session Intent: Explicit closeout, all context/memory/CDR/task-board updates, normal main push and full deployment.
+- Shipped: six prior outcomes; zero new product changes in this closeout.
+- Tests: fresh complete548/548; exact hosted3/3; source times/fingerprint retained in docs/S406_explicit-closeout-source.json. Failed attempts2/3 and rejected tag publication remain recorded.
+- Deploy: full production0242fc75dd0034f1922c35a37ad18c1f5a24e74a, run40957103998; complete served parity3669/3669; five publishers restored. Final main publication follows in the same closing transaction.
 
-Both selected outcomes are fully deployed at 06d632056f (tag release-s400-06d632056f), normal Pages run40043209707, production deployment9226ae4d-c13a-467e-85f1-02924336f352. Exact hosted3/3 passed; Lighthouse neededone unchanged-candidate retry,retaining the first failure. Staging13911files and11/11ceremony passed. Current complete source547/547,receipt23971be3a92d66332bea44e6,fingerprintd559e6eea96360ef32fe1aa0 is accepted. Canonical producer readback covers1143files:1133byte-identical and10verified redirects,zero differences/unread. Both public build stamps match. Live production23/23browser checks andfourviewed light/dark desktop/mobile captures pass.
+The six selected S406 improvements are released: diagnostic help safety, canonical share-card coverage refresh, current member return information, a decision-ready investor workspace, purpose-led developer resources and factual studio updates. The prior arc is complete. The founder now explicitly requests a fresh closeout, all context/memory/CDR/task-board updates, normal main commit/push and a full deployment of the resulting candidate.
 
-Reference49self-tests and16actual Chromium differential cases pass; current340pages/31806references resolve. Original238public browser checks,112persona and28disclosure manual images remain separately scoped. Current16contrast cases meetAA; original6.04:1minimum sample is historical. Linux archivalfixtures12/12zero skips andbothdeploy self-tests18/18,27/27 pass.
+Prior accepted application baseline: 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74; verified 25-file metadata overlay: b0e4d7f2082461a82a1d8638b455690e85f9c83b. Final prior publication: bc670dc2dbda915e74865168ee81b1f852367922. Prior complete served verification: 3,668 resources, zero differences or unread files. This invocation records new acceptance separately in `docs/CLOSEOUT_S406_2026-10-29.json`; earlier source and deployment proofs are historical evidence, never re-dated.
 
-Raw apex byte audit remains explicitly unverified becauseedge-transformed HTML andruntime redirects exceed the static artifact model; no raw apex parity claim is made. The producer-origin comparison andlive apex behavior are independently passing. Premise timing classifier remains nonpassing; strict premise checks passed before behavior edits. Existing identity,field-vitals andcapacity holds remain separate. No measured conversion,field-performance oravailability gain is claimed. Evidence:docs/RELEASE_S400.json.
+Explicit S406 closeout: fresh native source548/548, full staging plus exact generated-status reconciliations, canonical ceremony11/11 and exact required hosted workflows3/3 passed. The optional E2E diagnostic lane retains34 failures and60 skips (622 passed); identical failure names also occur on the prior accepted release, with causes not independently re-diagnosed. No all-E2E-success or positive authenticated acceptance is claimed. Normal full production candidate 0242fc75dd0034f1922c35a37ad18c1f5a24e74a, workflow40957103998, provider and three build stamps verified. Complete all-served readback3669/3669: 3659 byte-identical, 10 configured redirects, zero differences/unread. All five held publishers restored. Six prior improvements and SIL939/1000 retained; zero new product changes. Closing Git records are published separately from the pinned production candidate. Existing identity/provider and field-vitals limitations remain separate. Anonymous auth-wall checks do not prove positive private-data access.
 
-Normal main publication357531b751 preserves allincoming history andthe release candidate06d632 is reachable frommain. No force push. Candidate is immutable; later observation-only main commits do not replace its acceptance evidence. Current verified shell snapshot:.cache/S400-archive-shell-manifest.json. Source fingerprints andoriginal capture times are never silently rebound after source changes.
+---
 
-SIL939/1000,velocity2. Canonical writeback,memory,independent review corrections,Ark transport andowned-process cleanup are complete. The closing transaction publishes thisreceipt normally. Mark the native goal complete after actual push andremote reachability verification; if interrupted beforethat,finish publication without restarting anarc. Do not rerun fullsource orstaging without new source/failure evidence. Onlytwo future SIL rows remain unselected. CDR reviewed:no new creative direction. Prior failed build,staging,concentration,push andhosted attempts remain retained. Ownedpreview32472/4198 was closed after live verification.
+Prior release observations below retain their recorded scope.
 
-Closing publication boundary: incoming automated homepage cadence text advances from today to yesterday at the generator UTC boundary. Production remains immutable 06d632056f. The completed 547-check and mobile receipts prove that released candidate; they are historical for the later main observation snapshot. Do not rebind them across the label change or claim the closing main snapshot was redeployed.
+<!-- S406-final-release-acceptance -->
+## Where We Left Off (Session 406) — final release acceptance — 2026-10-29
+
+S406 released six selected outcomes at 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74: diagnostic-help safety, canonical Open Graph inventory freshness, current member return/release information, decision-ready investor workspace, purpose-led developer feeds/contracts, and factual reader updates. Returning-browser cache delivery is covered by five content-addressed portal assets and the real persistent-browser proof. Current behavior20/20 plus message46/46, mobile215/215 and392 reviewed desktop/mobile captures across seven themes passed. Two complete548-command native passes are preserved at source execution HEAD 542905dfea3ac7ce7a644429c161beabd0e18092, fingerprint 390c624684008bd329af693a; those historical source measurements are never rebound to closing metadata. Staging11/11, exact hosted3/3, normal full production run40840096846, provider/three stamps,64 exact asset reads, 16 served HTML checks with 26 portal references, six existing apex access guards, and two configured journal redirects passed. These anonymous checks do not prove positive private-data access. Complete all-served readback3668/3668: 3658 byte-identical and10 verified redirects,0 differences/0 unread. Both passive factual briefing rows were published and all5 held GitHub publishers restored to their original states. No email, notification, financial forecast, price, entitlement or authentication change is claimed. No measured growth, conversion, field-performance or token-cost uplift is claimed. Existing identity/provider and field-vitals limits remain separate.
+
+Closing records were published at b0e4d7f2082461a82a1d8638b455690e85f9c83b. The final deployed artifact is the accepted full application baseline plus the explicit 25-file staged metadata overlay. Complete final served comparison passed 3,668 resources with zero differences or unread files; docs/S406_metadata-overlay.json and docs/S406_final-served-parity.json preserve its exact scope. The native arc goal was completed after the final remote publication check.
+
+Evidence: docs/RELEASE_S406.json; docs/S406_full-source-acceptance.json; docs/S406_hosted-candidate.json; docs/S406_production-identity.json; docs/S406_served-parity.json; docs/S406_publisher-window.json. Private database row identifiers/readback stay in ignored storage.
+
+Same goal 01a18350-c2d7-7c32-a786-c2bd05199c33, createdAt1793204515; all selected outcomes are complete; verify final publication only if this turn was interrupted. A continuation does not start another arc.
+
+---
+
+Earlier S406 checkpoints below are historical observations; the final acceptance above owns current release truth.
+
+
+<!-- S406-closeout-writeback -->

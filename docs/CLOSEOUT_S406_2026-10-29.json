@@ -4,7 +4,7 @@
   "requestedAt": "2026-10-29T18:26:07.857Z",
   "initialHead": "bc670dc2dbda915e74865168ee81b1f852367922",
   "priorArcComplete": true,
-  "state": "full-staging-verified-hosted-checks-pending",
+  "state": "production-verified-main-publication-pending",
   "shippedOutcomes": 6,
   "newProductChanges": 0,
   "score": 939,
@@ -65,11 +65,11 @@
     },
     {
       "task": "Verify combined source and full staging",
-      "state": "in-progress"
+      "state": "complete"
     },
     {
       "task": "Publish main, fully deploy and verify served artifact",
-      "state": "pending"
+      "state": "production-verified-main-publication-pending"
     }
   ],
   "contextBudgetRepair": {
@@ -119,7 +119,8 @@
     "sourceFingerprint": "130c1ee187b6c143a15cf2ed",
     "planFingerprint": "3cd18438e9dd1c3a99843d24",
     "acceptedHeadAfterAutopilot": "0c83024087ca665f7e771a3bca32659dc7cbe186",
-    "scope": "Actual fresh native source execution in this explicit closeout. Prior arc source proofs remain historical; accepted head is recorded after native closeout metadata commits."
+    "scope": "Actual fresh native source execution in this explicit closeout. Prior arc source proofs remain historical; accepted head is recorded after native closeout metadata commits.",
+    "acceptedProductionCandidate": "0242fc75dd0034f1922c35a37ad18c1f5a24e74a"
   },
   "staging": {
     "receipt": "docs/S406_explicit-closeout-staging.json",
@@ -169,5 +170,61 @@
     "blockingTotal": 92,
     "advisories": 1,
     "applicationCodeChanged": false
+  },
+  "releaseAccepted": true,
+  "verifiedAt": "2026-10-29T21:29:46.393Z",
+  "candidate": "0242fc75dd0034f1922c35a37ad18c1f5a24e74a",
+  "hosted": {
+    "receipt": "docs/S406_explicit-closeout-hosted.json",
+    "scope": "All three declared exact-candidate hosted workflows observed passing",
+    "sourceCommit": "0242fc75dd0034f1922c35a37ad18c1f5a24e74a"
+  },
+  "optionalDiagnostics": {
+    "receipt": "docs/S406_explicit-closeout-optional-e2e.json",
+    "passed": 622,
+    "failed": 34,
+    "skipped": 60,
+    "priorFailureNamesIdentical": true,
+    "causesIndependentlyRediagnosed": false,
+    "policyChanged": false,
+    "independentReview": "Same failure names on the accepted baseline establish no new blocking regression for this routine metadata redeployment. Retain actual results; no all-E2E-success or positive authenticated acceptance claim."
+  },
+  "production": {
+    "receipt": "docs/S406_explicit-closeout-production.json",
+    "candidate": "0242fc75dd0034f1922c35a37ad18c1f5a24e74a",
+    "workflowRun": 40957103998,
+    "providerId": "eca09ec3-7f42-4ad4-ba0d-c7ec09da5963",
+    "fullDeployment": true
+  },
+  "servedParity": {
+    "receipt": "docs/S406_explicit-closeout-served-parity.json",
+    "checked": 3669,
+    "identical": 3659,
+    "redirected": 10,
+    "differ": 0,
+    "unread": 0,
+    "coverageComplete": true
+  },
+  "publisherRestoration": {
+    "receipt": "docs/S406_explicit-closeout-publisher-window-2026-10-29.json",
+    "restored": true,
+    "count": 5
+  },
+  "rejectedCandidate": {
+    "candidate": "4533d1a86a66272196719554c9be42684230beca",
+    "reason": "Normal pre-push statistics coherence check rejected before tag publication; canonical outputs reconciled and exact staging bytes verified before publishing a new candidate.",
+    "log": ".cache/logs/S406-explicit-candidate-publication.log"
+  },
+  "websiteAssessment": {
+    "contentFreshness": "Fresh full production and complete served parity verified at the exact candidate.",
+    "polish": "Unchanged application sources; current fourteen manual pixel captures retain their actual capture/review times. Prior 392 captures remain historical.",
+    "conversion": "No measured traffic, membership, conversion or readership uplift claimed.",
+    "coreWebVitals": "Exact-candidate hosted Lighthouse assertions passed across nine URLs and27 runs. This lab evidence is separate from real-user evidence; the existing field-vitals cohort/freshness limitation remains."
+  },
+  "closingRecords": {
+    "sourceReceiptUnmodified": true,
+    "executionSourceFingerprint": "130c1ee187b6c143a15cf2ed",
+    "closingFingerprint": "16ebbbdbc7c71425615ea855",
+    "scope": "Task-board completion and appended decision records are explicit verification inputs. Their closing writes follow the pinned accepted candidate; the source execution proof is not rebound or claimed as a full suite over later Git-only closing records."
   }
 }

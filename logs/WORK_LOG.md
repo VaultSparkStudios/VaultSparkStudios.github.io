@@ -492,3 +492,11 @@ Prior accepted application baseline: 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74; v
 
 Status: records reconciled; fresh native closeout verification, current staging, exact required checks, full production and readback remain pending for this explicit request. Existing identity/provider and field-vitals limitations remain separate. No new product features, prices, entitlements, creative direction, financial figures or growth claims are introduced.
 
+
+
+<!-- S406-explicit-closeout-production-2026-10-29 -->
+## S406 explicit closeout — verified full deployment
+
+Explicit S406 closeout: fresh native source548/548, full staging plus exact generated-status reconciliations, canonical ceremony11/11 and exact required hosted workflows3/3 passed. The optional E2E diagnostic lane retains34 failures and60 skips (622 passed); identical failure names also occur on the prior accepted release, with causes not independently re-diagnosed. No all-E2E-success or positive authenticated acceptance is claimed. Normal full production candidate 0242fc75dd0034f1922c35a37ad18c1f5a24e74a, workflow40957103998, provider and three build stamps verified. Complete all-served readback3669/3669: 3659 byte-identical, 10 configured redirects, zero differences/unread. All five held publishers restored. Six prior improvements and SIL939/1000 retained; zero new product changes. Closing Git records are published separately from the pinned production candidate.
+
+No new creative direction, pricing, entitlement, authentication, lifecycle or launch promise. Prior observations retain their timestamps and scope. Dated audit is the closeout checkpoint; the new ledger owns final release acceptance. Future SIL tasks remain unselected.

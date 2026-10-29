@@ -22,10 +22,12 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Finish fresh native verification and full staging of the current comb…
-Final score: **96**
-Finish fresh native verification and full staging of the current combined tree.
-Why it matters: Finish fresh native verification and full staging of the current combi is open, local, and unblocked — can ship this session.
+#### 1. [VERIFY] Reproduce the34 optional E2E failures before changing implementation,…
+Final score: **97**
+[S406][FOLLOW-UP] Reproduce the34 optional E2E failures before changing implementation, baselines or CI policy; same failure names exist on the accepted baseline. Unselected; docs/S406_explicit-closeout-optional-e2e.json.
+Why it matters: Reproduce the34 optional E2E failures before changing implementation,  shipped last session — confirm it works in production before piling new work on top.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 #### 2. [SECURITY] Measure help startup separately from probe execution before attemptin…
 Final score: **93**
@@ -39,19 +41,19 @@ Final score: **90**
 [S406][SIL] Consider extending help-only process fixtures to another operator CLI only after reproducing its side effects.
 Why it matters: Consider extending help-only process fixtures to another operator CLI  is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Consider migration of scheduled text probes only after measuring cove…
-Final score: **84**
-[SIL][S405] Consider migration of scheduled text probes only after measuring coverage and compatibility for each caller; future, unselected.
-Why it matters: Consider migration of scheduled text probes only after measuring cover is open, local, and unblocked — can ship this session.
+#### 4. [VERIFY] Publish closing records to main and verify remote reachability.
+Final score: **86**
+Publish closing records to main and verify remote reachability.
+Why it matters: Publish closing records to main and verify remote reachability. is a 406-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check`
 
 ### NEXT
 
-#### 1. [VERIFY] Commit/push main, fully deploy, verify complete served parity and res…
-Final score: **83**
-Commit/push main, fully deploy, verify complete served parity and restore publishers.
-Why it matters: Commit/push main, fully deploy, verify complete served parity and rest is a 406-session-old carry-forward; verify or close it so it stops polluting the hit list.
-
-First command: `npm run build:check`
+#### 1. [PRODUCT] Consider migration of scheduled text probes only after measuring cove…
+Final score: **84**
+[SIL][S405] Consider migration of scheduled text probes only after measuring coverage and compatibility for each caller; future, unselected.
+Why it matters: Consider migration of scheduled text probes only after measuring cover is open, local, and unblocked — can ship this session.
 
 #### 2. [PRODUCT] Consider redirect-target body verification only if a real redirected …
 Final score: **81**
@@ -134,11 +136,11 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Finish fresh native verification and full staging of the current comb…
+1. Reproduce the34 optional E2E failures before changing implementation,…
 2. Measure help startup separately from probe execution before attemptin…
 3. Consider extending help-only process fixtures to another operator CLI…
-4. Consider migration of scheduled text probes only after measuring cove…
-5. Commit/push main, fully deploy, verify complete served parity and res…
+4. Publish closing records to main and verify remote reachability.
+5. Consider migration of scheduled text probes only after measuring cove…
 6. Consider redirect-target body verification only if a real redirected …
 7. Consider response-body streaming only if measured remote readback mem…
 8. Consider native positive-manifest text parity as a separately reviewe…

@@ -3,12 +3,14 @@
 
 - [x] Context, CDR, memory, dated audit and six-outcome brief reconciled; independent review passed.
 - [x] Prior six product outcomes released; historical acceptance: `docs/RELEASE_S406.json`.
-- [ ] Finish fresh native verification and full staging of the current combined tree.
-- [ ] Commit/push main, fully deploy, verify complete served parity and restore publishers.
+- [x] Fresh native548/548 and full staging plus exact generated-status reconciliations verified.
+- [x] Full production, complete served parity and publisher restoration verified.
+- [ ] Publish closing records to main and verify remote reachability.
 
 Current acceptance: `docs/CLOSEOUT_S406_2026-10-29.json`. No new product work or score increase. The duplicated completed header is preserved byte-for-byte in [VaultSparkStudios.github.io-TASK_BOARD.2026-10-29T18-53-46-816Z.full.md](archive/task-board/2026-10-29-S406-explicit-closeout-budget/VaultSparkStudios.github.io-TASK_BOARD.2026-10-29T18-53-46-816Z.full.md).
 
 Future unselected SIL commitments:
+- [ ] [S406][FOLLOW-UP] Reproduce the34 optional E2E failures before changing implementation, baselines or CI policy; same failure names exist on the accepted baseline. Unselected; docs/S406_explicit-closeout-optional-e2e.json.
 - [ ] [S406][SIL] Consider extending help-only process fixtures to another operator CLI only after reproducing its side effects.
 - [ ] [S406][SIL] Measure help startup separately from probe execution before attempting runtime optimization. No performance or token saving is currently claimed.
 

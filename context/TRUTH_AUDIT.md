@@ -2,7 +2,7 @@
 # Current truth posture
 
 Last reviewed: 2026-10-29 (S406 explicit closeout)
-Overall status: yellow — prior S406 application and metadata release verified; the newly requested explicit closeout and full redeployment remain pending in docs/CLOSEOUT_S406_2026-10-29.json. Existing identity/provider and field-vitals limitations remain separate.
+Overall status: yellow — explicit S406 closeout full production and complete served verification accepted at 0242fc75dd0034f1922c35a37ad18c1f5a24e74a; closing main publication follows in docs/CLOSEOUT_S406_2026-10-29.json. Existing identity/provider and field-vitals limitations remain separate.
 
 Earlier observations below retain their original dates and scope.
 

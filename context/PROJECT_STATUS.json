@@ -42,13 +42,13 @@
       "url": "https://vaultsparkstudios.com/",
       "type": "production",
       "status": "green",
-      "note": "S406 exact-candidate accepted release 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74; docs/RELEASE_S406.json. Existing identity/provider and field-vitals limits stay separate."
+      "note": "Explicit S406 full production 0242fc75dd0034f1922c35a37ad18c1f5a24e74a; docs/CLOSEOUT_S406_2026-10-29.json. Existing identity/provider and field-vitals limitations remain separate."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
       "type": "staging",
       "status": "green",
-      "note": "S406 exact-candidate accepted release 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74; docs/RELEASE_S406.json. Existing identity/provider and field-vitals limits stay separate."
+      "note": "Verified full staging baseline plus exact generated-status reconciliations; docs/S406_explicit-closeout-staging.json and docs/S406_explicit-closeout-status-reconciliation.json. Production candidate identity is recorded separately."
     },
     {
       "url": "https://vaultsparkstudios.com/?nav=sheet",
@@ -70,13 +70,13 @@
       "url": "https://website.staging.vaultsparkstudios.com/status/",
       "type": "staging",
       "status": "green",
-      "note": "S406 exact-candidate accepted release 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74; docs/RELEASE_S406.json. Existing identity/provider and field-vitals limits stay separate."
+      "note": "Verified full staging baseline plus exact generated-status reconciliations; docs/S406_explicit-closeout-staging.json and docs/S406_explicit-closeout-status-reconciliation.json. Production candidate identity is recorded separately."
     },
     {
       "command": "npm run build:check",
       "type": "tests",
       "status": "green",
-      "note": "Two actual native548/548 implementation-source passes; execution 542905dfea3ac7ce7a644429c161beabd0e18092, fingerprint 390c624684008bd329af693a. Closing metadata is a later scope, not a rebind."
+      "note": "Fresh explicit closeout source548/548; fingerprint 130c1ee187b6c143a15cf2ed; actual execution timestamps retained in docs/S406_explicit-closeout-source.json."
     }
   ],
   "vaultStatus": "SPARKED",
@@ -84,8 +84,8 @@
   "ignisScoreDelta": -192,
   "ignisGrade": "FORGE",
   "ignisLastComputed": "2026-10-29T18:27:53.835Z",
-  "entropyScore": 0.173,
-  "entropyLastComputed": "2026-10-28",
+  "entropyScore": 0.174,
+  "entropyLastComputed": "2026-10-29",
   "sessionMode": "founder",
   "sessionModeAutoShiftedAt": "2026-10-21T22:44:27.311Z",
   "silRubricVersion": "3.0",
@@ -291,36 +291,32 @@
     "behaviorChanged": false
   },
   "currentBuildState": "passed",
-  "currentBuildNote": "Source547/547 receipt23971be3a92d66332bea44e6; production06d632056f accepted withhosted3/3,staging11/11,canonical1143file readback andlive23/23browser checks.",
+  "currentBuildNote": "Fresh explicit closeout source548/548; fingerprint 130c1ee187b6c143a15cf2ed; actual execution timestamps retained in docs/S406_explicit-closeout-source.json.",
   "lastDeploySession": 406,
   "lastDeployStatus": "verified",
   "silAvg5": 938.2,
   "lastReleaseAcceptance": {
     "session": 406,
-    "candidate": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
-    "receipt": "docs/RELEASE_S406.json",
-    "workflowRun": 40840096846,
-    "verifiedAt": "2026-10-29T08:34:27.093Z"
+    "candidate": "0242fc75dd0034f1922c35a37ad18c1f5a24e74a",
+    "receipt": "docs/CLOSEOUT_S406_2026-10-29.json",
+    "workflowRun": 40957103998,
+    "verifiedAt": "2026-10-29T21:29:46.393Z"
   },
-  "truthAuditSummary": "S406 full production, final baseline-plus-metadata-overlay parity, passive factual briefings, publisher restoration and closing publication verified. Source execution remains separately pinned; identity/provider and field-vitals limits retained.",
+  "truthAuditSummary": "Explicit S406 closeout: fresh native source548/548, full staging plus exact generated-status reconciliations, canonical ceremony11/11 and exact required hosted workflows3/3 passed. The optional E2E diagnostic lane retains34 failures and60 skips (622 passed); identical failure names also occur on the prior accepted release, with causes not independently re-diagnosed. No all-E2E-success or positive authenticated acceptance is claimed. Normal full production candidate 0242fc75dd0034f1922c35a37ad18c1f5a24e74a, workflow40957103998, provider and three build stamps verified. Complete all-served readback3669/3669: 3659 byte-identical, 10 configured redirects, zero differences/unread. All five held publishers restored. Six prior improvements and SIL939/1000 retained; zero new product changes. Closing Git records are published separately from the pinned production candidate.",
   "currentVerification": {
     "session": 406,
-    "state": "accepted-application-and-metadata-overlay",
-    "source": "docs/RELEASE_S406.json",
+    "state": "accepted-full-production",
+    "source": "docs/CLOSEOUT_S406_2026-10-29.json",
     "lastCompleteTestsSession": 406,
-    "sourceExecutionHead": "542905dfea3ac7ce7a644429c161beabd0e18092",
-    "sourceFingerprint": "390c624684008bd329af693a",
-    "applicationBaseline": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
-    "metadataHead": "b0e4d7f2082461a82a1d8638b455690e85f9c83b",
-    "finalParity": "docs/S406_final-served-parity.json"
+    "sourceEvidence": "docs/S406_explicit-closeout-source.json",
+    "sourceFingerprint": "130c1ee187b6c143a15cf2ed",
+    "applicationBaseline": "0242fc75dd0034f1922c35a37ad18c1f5a24e74a",
+    "finalParity": "docs/S406_explicit-closeout-served-parity.json"
   },
   "metadataPublication": {
     "session": 406,
-    "state": "verified",
-    "publishedCommit": "b0e4d7f2082461a82a1d8638b455690e85f9c83b",
-    "remoteObservedHead": "bba034b129e83a765321b9bce8fbb4027886f41e",
-    "observedAt": "2026-10-29T08:59:22.395Z",
-    "scope": "Accepted full application baseline plus explicit verified closing metadata overlay; no whole-main production identity claim."
+    "state": "closing-main-publication-pending",
+    "scope": "Git closing records follow the exact accepted full production candidate; no whole-main production byte-equality claim."
   },
   "lastCompletedArc": {
     "session": 406,
@@ -345,7 +341,7 @@
     "releaseEvidence": "docs/RELEASE_S406.json",
     "candidate": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74"
   },
-  "ignisLastScored": "2026-10-26",
+  "ignisLastScored": "2026-10-29",
   "historicalTests": {
     "session": 403,
     "scope": "Initial implementation acceptance; canonical closing measurement is recorded separately",
@@ -360,7 +356,7 @@
   "testsFailed": 0,
   "testsLastRun": "2026-10-29",
   "testsLabel": "measured build:check steps",
-  "testsEvidence": "api/build-check-diagnostics.json",
+  "testsEvidence": "docs/S406_explicit-closeout-source.json",
   "testsPlanFingerprint": "3cd18438e9dd1c3a99843d24",
   "testsSourceFingerprint": "130c1ee187b6c143a15cf2ed",
   "closeoutObservationAddendum": {
@@ -370,18 +366,20 @@
     "note": "Closing observations recorded; acceptance scope unchanged"
   },
   "nextMilestoneTracking": {
-    "source": "docs/RELEASE_S405.json",
+    "source": "docs/CLOSEOUT_S406_2026-10-29.json",
     "stateField": "state",
     "acceptanceField": "releaseAccepted",
     "kind": "evidence-reference",
     "automaticLookupImplemented": false,
-    "note": "The existing milestone names this session objective. Read the referenced release ledger for completion; this field does not implement a runtime lookup or select a new task."
+    "note": "Current explicit closeout acceptance lives in this ledger; future improvement ideas remain unselected."
   },
   "explicitCloseout": {
     "session": 406,
     "requestedAt": "2026-10-29T18:26:07.857Z",
     "ledger": "docs/CLOSEOUT_S406_2026-10-29.json",
-    "state": "verification-and-full-redeployment-pending",
-    "priorArcComplete": true
+    "state": "production-verified-main-publication-pending",
+    "priorArcComplete": true,
+    "candidate": "0242fc75dd0034f1922c35a37ad18c1f5a24e74a",
+    "workflowRun": 40957103998
   }
 }

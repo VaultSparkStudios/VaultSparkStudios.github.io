@@ -5,7 +5,8 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Six website improvements released; explicit closeout and full redeployment in progress.    ║
+║    Six website improvements retained; explicit closeout and fresh full deployment             ║
+║    verified.                                                                                  ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     ████░░░░░░   40/100                                                       ║
 ║  ECOSYSTEM IMPACT   █░░░░░░░░░   10/100                                                       ║
@@ -18,8 +19,8 @@
 
   [#1]  diagnostic-help-safety                                    PROJ 4  ·  ECOS 1
          ── speed-organization-efficiency ───────────────────────────────────────────────────
-         Diagnostic help safety passed process fixtures and was released; current full
-         redeployment remains separately tracked.
+         Diagnostic help safety remains released; fresh source, full production and complete
+         served parity passed.
          → docs/RELEASE_S406.json
 
   [#2]  og-coverage-closeout-freshness                            PROJ 4  ·  ECOS 1
@@ -54,7 +55,7 @@
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Finish this explicitly requested closeout and full redeployment; no new product scope.
+    • Measure membership, readership and field performance before claiming growth; future SIL items remain unselected.
 
   BLOCKERS
     (none)
