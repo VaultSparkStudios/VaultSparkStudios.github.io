@@ -39,3 +39,7 @@ Both premerge full547-command runs and the eleven-step staging ceremony passed; 
 
 S406 verification continuation: the second combined547-command run passed every command but failed the unchanged30% concentration ratchet at32.0% for its first16-file batch. The native plan now has548commands after a coverage-preserving8+8 split; unit parity and runner self-tests pass, independent review PASS0. Current70visual and215mobile bindings remain valid because no browser source changed. Complete548source/autopilot, current staging, exact hosted checks, full production/readback and publisher restoration remain pending in docs/RELEASE_S406.json.
 
+
+
+<!-- S406-cache-follow-through -->
+The final delivery check found week-long caching on mutable portal assets. The existing shell builder now fingerprints five member/investor resources, resolves registered member assets relative to each page, preserves defer order and leaves unrelated/external URLs intact. Focused shell tests15/15, real persistent-browser warm-cache proof, current portal20/message46 interactions, native mobile215/215, and392 freshly captured/reviewed all-theme desktop/mobile views passed. Earlier full548 source acceptance at d161f7 is preserved as pre-cache-fix evidence; this source still requires fresh complete verification, staging, hosted checks and production/readback. No authentication, membership, pricing, financial document or outbound-message change was made. Release state remains docs/RELEASE_S406.json.

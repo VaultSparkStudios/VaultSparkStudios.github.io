@@ -23,6 +23,13 @@ const SHELL_ASSETS = [
   // week-old portal bridge from surviving an identity-plane deployment in a
   // browser or Worker asset cache.
   { key: 'supabaseClient', source: 'assets/supabase-client.js', stem: 'supabase-client.shell', attribute: 'src' },
+  // Portal releases must reach browsers that still cache the mutable source
+  // URLs for a week. Keep their existing execution order and publish new keys.
+  { key: 'memberPortalLogic', source: 'vault-member/portal-logic.js', stem: 'portal-logic.shell', attribute: 'src' },
+  { key: 'memberPortalDashboard', source: 'vault-member/portal-dashboard.js', stem: 'portal-dashboard.shell', attribute: 'src' },
+  { key: 'memberPortalStyle', source: 'vault-member/portal.css', stem: 'portal.shell', attribute: 'href' },
+  { key: 'investorTheme', source: 'assets/investor-theme.css', stem: 'investor-theme.shell', attribute: 'href' },
+  { key: 'investorExperience', source: 'assets/investor-experience.js', stem: 'investor-experience.shell', attribute: 'src' },
   { key: 'sentryInit', source: 'assets/sentry-init.js', stem: 'sentry-init.shell', attribute: 'src' },
   // The homepage idle loader imports this module dynamically. A query-string
   // revision still shares a mutable cache key at some edge layers and the
@@ -345,6 +352,21 @@ export function updateHtmlReferences(html, manifest, relPath) {
     const basename = path.basename(source, ext).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const stemBasename = path.basename(asset.stem).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const assetNamePattern = `(?:${basename}(?:\\.shell-[a-f0-9]{10})?|${stemBasename}(?:-[a-f0-9]{10})?)`;
+    if (!source.startsWith('assets/')) {
+      const directory = path.posix.dirname(source).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const registeredPath = new RegExp(`^/${directory}/${assetNamePattern}\\${ext}$`);
+      const pageUrl = new URL(String(relPath || 'index.html').replace(/\\/g, '/'), 'https://shell.invalid/');
+      const reference = new RegExp(`(${asset.attribute}=["'])([^"']+)(["'])`, 'g');
+      next = next.replace(reference, (match, prefix, value, suffix) => {
+        // Only local references to this registered resource belong to us.
+        if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(value)) return match;
+        let resolved;
+        try { resolved = new URL(value, pageUrl); } catch { return match; }
+        if (resolved.origin !== pageUrl.origin || !registeredPath.test(resolved.pathname)) return match;
+        return `${prefix}/${manifest.assets[asset.key].path}${suffix}`;
+      });
+      continue;
+    }
     const pattern = new RegExp(
       `(${asset.attribute}=["'])([^"']*?)assets\\/${assetNamePattern}\\${ext}(?:\\?[^"']*)?(["'])`,
       'g'

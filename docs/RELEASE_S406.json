@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 406,
-  "state": "website-locally-verified-full-source-pending",
+  "state": "cache-follow-through-locally-verified-full-source-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
@@ -39,31 +39,29 @@
   ],
   "browser": {
     "visual": "docs/S406_visual-acceptance.json",
-    "nativeVisual": "docs/visual-qa/S406-combined-news-tall.json",
+    "nativeVisual": "docs/visual-qa/S406-cache-changelog-entry.json",
     "manuallyReviewed": 392,
     "mobile": "215/215 passed; docs/S406_mobile-acceptance.json",
     "mobileCasesPassed": 215,
     "mobileProbesExpected": 215,
     "currentReceipts": [
-      "docs/visual-qa/S406-combined-home.json",
-      "docs/visual-qa/S406-combined-news-tall.json",
-      "docs/visual-qa/S406-combined-satire-tall.json",
-      "docs/visual-qa/S406-investor-after-stable.json",
-      "docs/visual-qa/S406-investor-profile-after.json",
-      "docs/visual-qa/S406-investor-populated.json",
-      "docs/visual-qa/S406-investor-evidence.json",
-      "docs/visual-qa/S406-investor-error.json",
-      "docs/visual-qa/S406-investor-message-empty.json",
-      "docs/visual-qa/S406-investor-message-populated.json",
-      "docs/visual-qa/S406-investor-message-error.json",
-      "docs/visual-qa/S406-member-return-after.json",
-      "docs/visual-qa/S406-member-after-modal.json",
-      "docs/visual-qa/S406-public-after.json",
-      "docs/visual-qa/S406-api-feeds.json",
-      "docs/visual-qa/S406-api-examples.json",
-      "docs/visual-qa/S406-api-actions.json",
-      "docs/visual-qa/S406-api-catalog.json",
-      "docs/visual-qa/S406-changelog-entry.json"
+      "docs/visual-qa/S406-cache-home.json",
+      "docs/visual-qa/S406-cache-news.json",
+      "docs/visual-qa/S406-cache-satire.json",
+      "docs/visual-qa/S406-investor-cache-after.json",
+      "docs/visual-qa/S406-investor-cache-populated.json",
+      "docs/visual-qa/S406-investor-cache-evidence.json",
+      "docs/visual-qa/S406-investor-cache-error.json",
+      "docs/visual-qa/S406-investor-cache-message-populated.json",
+      "docs/visual-qa/S406-investor-cache-message-error.json",
+      "docs/visual-qa/S406-cache-member-return.json",
+      "docs/visual-qa/S406-cache-member-modal.json",
+      "docs/visual-qa/S406-cache-public-after.json",
+      "docs/visual-qa/S406-cache-api-feeds.json",
+      "docs/visual-qa/S406-cache-api-examples.json",
+      "docs/visual-qa/S406-cache-api-actions.json",
+      "docs/visual-qa/S406-cache-api-catalog.json",
+      "docs/visual-qa/S406-cache-changelog-entry.json"
     ],
     "before": "docs/visual-qa/S406-combined-before-news.json"
   },
@@ -152,14 +150,14 @@
     "passed": 548,
     "total": 548,
     "coverageComplete": true,
-    "sourceFingerprint": "1fc2aba6e8db81a6123bb43b",
-    "receiptId": "bf996b38ed193d32e997088a"
+    "sourceFingerprint": "59cb21fecdc41b6251f85988",
+    "receiptId": "5cff67eb2fe8982e1a930685"
   },
   "localAutopilot": {
     "command": "node scripts/closeout-autopilot.mjs --yes --skip-push",
     "exit": 0,
-    "head": "86828849f428ae4c9d479d4a994e6a6922b6bfe2",
-    "log": ".cache/logs/S406-closeout-autopilot-attempt7.log",
+    "head": "d161f7fe1ae082516d0f4a26cf813df44d022250",
+    "log": ".cache/logs/S406-website-autopilot-4.log",
     "scope": "Canonical local closeout checks and commits; staging/push/full production still required."
   },
   "premerge": {
@@ -292,5 +290,38 @@
     "advisoryFindings": 0,
     "visualSourcePixelsUnchanged": 392,
     "fullSourceAccepted": false
+  },
+  "preCacheSource": {
+    "evidence": "docs/S406_pre-cache-fix-source.json",
+    "passed": 548,
+    "failed": 0,
+    "head": "d161f7fe1ae082516d0f4a26cf813df44d022250",
+    "sourceFingerprint": "59cb21fecdc41b6251f85988",
+    "historicalAfterCacheFix": true
+  },
+  "cacheFollowThrough": {
+    "observed": "Actual live portal-dashboard.js and investor-theme.css returned Cache-Control max-age604800; existing member HTML referenced unversioned JS. Returning browser caches could retain old portal code for a week.",
+    "implementation": "Reuse canonical shell builder for five portal resources and page-relative registered resource resolution; preserve auth and execution order.",
+    "focusedShellTests": {
+      "passed": 15,
+      "total": 15,
+      "failed": 0
+    },
+    "warmBrowser": "docs/S406_portal-warm-cache.json",
+    "currentSource": "pending",
+    "production": "pending",
+    "visual": "docs/S406_visual-acceptance.json",
+    "mobile": "docs/S406_mobile-acceptance.json",
+    "portalBehavior20": true,
+    "messageBehavior46": true,
+    "nativeBuild": {
+      "exit": 0,
+      "phases": [
+        "prebuild",
+        "build",
+        "postbuild"
+      ],
+      "log": ".cache/logs/S406-cache-build.log"
+    }
   }
 }

@@ -27,6 +27,32 @@ test('Desk stylesheet updates reach a new cache key in page and service-worker r
   assert.ok(swBefore.includes("'/assets/news-desk.css'"), 'mutable source remains explicitly non-cacheable');
 });
 
+test('portal fingerprint references resolve from page paths without changing other URLs or script order', () => {
+  const manifest = JSON.parse(before);
+  manifest.generatedFiles = [{ outputRelPath: manifest.assets.ambientCore.path, content: fs.readFileSync(path.join(ROOT, manifest.assets.ambientCore.path)) }];
+  for (const key of ['memberPortalLogic', 'memberPortalDashboard', 'memberPortalStyle', 'investorTheme', 'investorExperience']) {
+    assert.ok(manifest.assets[key], key + ' is registered');
+    assert.ok(swBefore.includes("'/" + manifest.assets[key].path + "'"), key + ' has a fingerprinted shell entry');
+    assert.ok(swBefore.includes("'/" + manifest.assets[key].source + "'"), key + ' mutable source is excluded from runtime caching');
+  }
+  const fixture = '<link href="portal.css?v=old" rel="stylesheet"><script src="./portal-logic.js" defer></script><script src="/vault-member/portal-dashboard.shell-0000000000.js?old=1" defer></script><script src="https://example.com/vault-member/portal-logic.js" defer></script><script src="/another/portal-dashboard.js" defer></script>';
+  const out = updateHtmlReferences(fixture, manifest, 'vault-member/index.html');
+  assert.ok(out.includes('href="/' + manifest.assets.memberPortalStyle.path + '"'));
+  const logic = 'src="/' + manifest.assets.memberPortalLogic.path + '" defer';
+  const dashboard = 'src="/' + manifest.assets.memberPortalDashboard.path + '" defer';
+  assert.ok(out.includes(logic) && out.includes(dashboard));
+  assert.ok(out.indexOf(logic) < out.indexOf(dashboard), 'defer execution order is preserved');
+  assert.ok(out.includes('src="https://example.com/vault-member/portal-logic.js"'));
+  assert.ok(out.includes('src="/another/portal-dashboard.js"'));
+  assert.equal(updateHtmlReferences(out, manifest, 'vault-member/index.html'), out, 'repeated builds preserve current references');
+  const nested = updateHtmlReferences('<script src="../../vault-member/portal-logic.js"></script>', manifest, 'investor-portal/profile/index.html');
+  assert.ok(nested.includes('src="/' + manifest.assets.memberPortalLogic.path + '"'));
+  const rootReference = updateHtmlReferences('<script src="/vault-member/portal-logic.js"></script>', manifest, 'index.html');
+  assert.ok(rootReference.includes('src="/' + manifest.assets.memberPortalLogic.path + '"'));
+  const unrelated = updateHtmlReferences('<script src="portal-logic.js"></script>', manifest, 'another/index.html');
+  assert.ok(unrelated.includes('src="portal-logic.js"'));
+});
+
 test('proof screenshots and raw art never enter the client placeholder map', async () => {
   const mapPath = path.join(ROOT, 'data/lqip-map.json');
   const priorMap = fs.readFileSync(mapPath, 'utf8');

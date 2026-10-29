@@ -1,0 +1,1900 @@
+    // Reader-visible releases come from the published changelog, not the
+    // deployment date. Fetch on return so an acknowledged release cannot hide
+    // a later one indefinitely.
+    let _portalRelease = null;
+
+    // ── Phase 2: XP chip notification ────────────────────────────
+    function showXpChip(pts, label) {
+      const existing = document.querySelector('.xp-chip');
+      if (existing) existing.remove();
+      const chip = document.createElement('div');
+      chip.className = 'xp-chip';
+      chip.setAttribute('role', 'status');
+      chip.setAttribute('aria-live', 'assertive');
+      chip.textContent = '+' + pts + ' pts — ' + (label || 'Vault Points');
+      document.body.appendChild(chip);
+      chip.addEventListener('animationend', () => chip.remove());
+    }
+
+    // ── Feature 3: In-portal notification center ─────────────────
+    let _notifPanelOpen   = false;
+    let _notifRealtimeCh  = null;
+    let _notifItems       = [];   // cache for badge counting
+
+    const NOTIF_TYPE_ICONS = { update: '🚀', alert: '⚠️', drop: '💎', rank_up: '⭐', default: '📢' };
+
+    function toggleNotifPanel() {
+      _notifPanelOpen = !_notifPanelOpen;
+      const panel = document.getElementById('notif-panel');
+      if (!panel) return;
+      panel.style.display = _notifPanelOpen ? 'block' : 'none';
+      if (_notifPanelOpen) {
+        loadNotifications();
+        markNotifsRead();
+      }
+    }
+
+    function closeNotifPanel() {
+      _notifPanelOpen = false;
+      const panel = document.getElementById('notif-panel');
+      if (panel) panel.style.display = 'none';
+    }
+
+    function markNotifsRead() {
+      localStorage.setItem('notifications_last_read', new Date().toISOString());
+      updateNotifBadge(0);
+    }
+
+    function updateNotifBadge(count) {
+      const badge = document.getElementById('notif-badge');
+      if (!badge) return;
+      if (count > 0) {
+        badge.textContent   = count > 9 ? '9+' : count;
+        badge.style.display = 'flex';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+
+    function countUnread(items) {
+      const lastRead = localStorage.getItem('notifications_last_read');
+      if (!lastRead) return items.length;
+      return items.filter(n => new Date(n.created_at) > new Date(lastRead)).length;
+    }
+
+    async function loadNotifications() {
+      const list = document.getElementById('notif-list');
+      if (!list) return;
+      list.innerHTML = '<div class="notif-loading">Loading…</div>';
+
+      try {
+        // Fetch Studio Pulse (last 10)
+        const [{ data: pulseItems }, { data: rankUps }] = await Promise.all([
+          VSSupabase.from('studio_pulse').select('id,type,message,created_at').order('created_at', { ascending: false }).limit(10),
+          VSSupabase.from('point_events').select('id,label,created_at').or('label.ilike.%rank up%,reason.ilike.%rank_up%').order('created_at', { ascending: false }).limit(5),
+        ]);
+
+        const combined = [
+          ...(pulseItems || []).map(p => ({ ...p, _kind: 'pulse'   })),
+          ...(rankUps   || []).map(r => ({ ...r, type: 'rank_up', message: r.label || 'Rank Up!', _kind: 'rankup' })),
+        ].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 12);
+
+        _notifItems = combined;
+        updateNotifBadge(countUnread(combined));
+
+        if (combined.length === 0) {
+          list.innerHTML = '<div class="notif-empty">No notifications yet. Studio Pulse broadcasts will appear here.</div>';
+          return;
+        }
+
+        const lastRead = localStorage.getItem('notifications_last_read');
+        list.innerHTML = combined.map(n => {
+          const isUnread = lastRead ? new Date(n.created_at) > new Date(lastRead) : true;
+          const icon     = NOTIF_TYPE_ICONS[n.type] || NOTIF_TYPE_ICONS.default;
+          const time     = formatTimeAgo(new Date(n.created_at));
+          const click    = n._kind === 'rankup' ? 'data-member-action="open-rankup"' : '';
+          const cursor   = n._kind === 'rankup' ? 'cursor:pointer;' : '';
+          return `<div ${click} class="notif-item${n._kind === 'rankup' ? ' notif-item-clickable' : ''}${isUnread ? ' notif-unread' : ''}">
+            <span class="notif-icon">${icon}</span>
+            <div class="notif-body">
+              <div class="notif-msg">${escHtml(n.message)}</div>
+              <div class="notif-time">${time}</div>
+            </div>
+            ${isUnread ? '<span class="notif-unread-dot"></span>' : ''}
+          </div>`;
+        }).join('');
+
+      } catch (_) {
+        list.innerHTML = '<div class="notif-loading">Could not load notifications.</div>';
+      }
+    }
+
+    function initNotifCenter() {
+      const wrap = document.getElementById('notif-bell-wrap');
+      if (wrap) wrap.style.display = '';
+
+      // Realtime: watch studio_pulse for new inserts
+      if (_notifRealtimeCh) { VSSupabase.removeChannel(_notifRealtimeCh); _notifRealtimeCh = null; }
+      _notifRealtimeCh = VSSupabase.channel('notif-pulse-ch')
+        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'studio_pulse' }, (payload) => {
+          _notifItems.unshift({ ...payload.new, _kind: 'pulse' });
+          updateNotifBadge(countUnread(_notifItems));
+          if (_notifPanelOpen) loadNotifications();
+        })
+        .subscribe();
+
+      // Set initial unread count from cached data (runs after loadNotifications is called elsewhere)
+      // We set it on open; show 0 initially then a quick fetch
+      setTimeout(async () => {
+        try {
+          const { data: pulse } = await VSSupabase.from('studio_pulse').select('id,created_at').order('created_at', { ascending: false }).limit(10);
+          _notifItems = (pulse || []).map(p => ({ ...p, _kind: 'pulse' }));
+          updateNotifBadge(countUnread(_notifItems));
+        } catch (_) {}
+      }, 500);
+    }
+
+    // Close notif panel on outside click
+    document.addEventListener('click', function(e) {
+      if (_notifPanelOpen) {
+        const wrap = document.getElementById('notif-bell-wrap');
+        if (wrap && !wrap.contains(e.target)) closeNotifPanel();
+      }
+    });
+
+    // ── Generic toast notification ────────────────────────────────
+    function showToast(message, opts) {
+      // opts: { emoji, color, duration }
+      opts = opts || {};
+      const bg    = opts.color || 'rgba(255,196,0,0.15)';
+      const bd    = opts.color ? opts.color.replace('0.15', '0.4') : 'rgba(255,196,0,0.4)';
+      const dur   = opts.duration || 3200;
+      const toast = document.createElement('div');
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
+      toast.style.cssText = [
+        'position:fixed',
+        'left:50%',
+        'transform:translateX(-50%)',
+        'bottom:130px',
+        'background:' + bg,
+        'border:1px solid ' + bd,
+        'border-radius:999px',
+        'padding:0.6rem 1.5rem',
+        'font-size:0.98rem',
+        'font-weight:700',
+        'color:#fff',
+        'pointer-events:none',
+        'z-index:510',
+        'white-space:nowrap',
+        'box-shadow:0 4px 24px rgba(0,0,0,0.3)',
+        'animation:xp-fly ' + (dur / 1000) + 's ease-out forwards',
+      ].join(';');
+      toast.textContent = (opts.emoji ? opts.emoji + ' ' : '') + message;
+      document.body.appendChild(toast);
+      toast.addEventListener('animationend', () => toast.remove());
+    }
+
+    // ── Feature 1: Daily login bonus + streak system ──────────────
+    // PostgREST builders are thenables without .catch; wrap before chaining.
+    function settle(builder) {
+      try {
+        return Promise.resolve(builder).then(function (r) { return r || {}; }, function (e) { return { error: e || {} }; });
+      } catch (e) { return Promise.resolve({ error: e }); }
+    }
+    function rpcMissing(error) {
+      return window.VSPortalLogic ? VSPortalLogic.isMissingRpc(error)
+        : !!(error && (error.code === 'PGRST202' || Number(error.status) === 404));
+    }
+
+    async function checkDailyLogin(member) {
+      try {
+        const todayUTC = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+        if (member.last_login_date === todayUTC) {
+          updateStreakBadge(member.streak_count);
+          return;
+        }
+
+        // S368: the streak is computed server-side by record_login_streak()
+        // (supabase-s368-caller-trust.sql). Until that RPC is deployed, the
+        // previous client-computed write runs as the fallback.
+        let newStreak;
+        const res = await settle(VSSupabase.rpc('record_login_streak'));
+        if (!res.error && res.data && typeof res.data === 'object') {
+          if (!res.data.ok) return;
+          newStreak = Number(res.data.streak) || 1;
+          if (res.data.already_today) {
+            member.streak_count = newStreak;
+            member.last_login_date = todayUTC;
+            updateStreakBadge(newStreak);
+            return;
+          }
+        } else if (rpcMissing(res.error)) {
+          const yesterday = new Date();
+          yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+          const wasConsecutive = member.last_login_date === yesterday.toISOString().slice(0, 10);
+          newStreak = wasConsecutive ? (member.streak_count || 0) + 1 : 1;
+          const write = await settle(VSSupabase.from('vault_members')
+            .update({ last_login_date: todayUTC, streak_count: newStreak })
+            .eq('id', member._id));
+          if (write.error) return;
+        } else {
+          return; // transient failure: try again next visit, award nothing
+        }
+
+        member.streak_count    = newStreak;
+        member.last_login_date = todayUTC;
+
+        // Daily login XP: once per calendar day (p_once_per 'day'). A null
+        // window deduplicated forever, so the bonus only ever paid once.
+        const award = await settle(VSSupabase.rpc('award_points', {
+          p_reason:   'daily_login',
+          p_points:   10,
+          p_label:    'Daily Login',
+          p_once_per: 'day',
+        }));
+
+        // Keep the award, but stay quiet when onboarding or a higher-value
+        // portal surface already owns this session's attention.
+        const attentionBusy = window.VSPortalAttention && window.VSPortalAttention.current();
+        if (!attentionBusy && award.data && award.data.ok) {
+          showToast('Day ' + newStreak + ' streak! +10 XP', {
+            emoji: '🔥', color: 'rgba(251,146,60,0.18)', duration: 3200
+          });
+        }
+
+        // Streak milestone bonuses (each milestone once per account).
+        const MILESTONES = { 7: 50, 14: 100, 30: 200, 60: 500, 100: 1000 };
+        if (MILESTONES[newStreak]) {
+          const bonus = MILESTONES[newStreak];
+          const milestone = await settle(VSSupabase.rpc('award_points', {
+            p_reason:   'streak_milestone_' + newStreak,
+            p_points:   bonus,
+            p_label:    newStreak + '-Day Streak Bonus',
+            p_once_per: 'ever',
+          }));
+          if (milestone.data && milestone.data.ok) {
+            setTimeout(() => {
+              if (window.VSPortalAttention && window.VSPortalAttention.current()) return;
+              showToast(newStreak + '-Day Streak! +' + bonus + ' bonus XP', {
+                emoji: '🏆', color: 'rgba(255,196,0,0.18)', duration: 4000
+              });
+            }, 1600);
+          }
+        }
+
+        updateStreakBadge(newStreak);
+        setTimeout(() => refreshPointsDisplay(), 1800);
+
+      } catch (_) { /* non-fatal */ }
+    }
+
+    function updateStreakBadge(streak) {
+      const badge = document.getElementById('streak-badge');
+      const cnt   = document.getElementById('streak-count-display');
+      if (!badge || !cnt) return;
+      if (streak && streak > 0) {
+        cnt.textContent  = streak;
+        badge.style.display = '';
+      } else {
+        badge.style.display = 'none';
+      }
+      // Also update daily loop widget
+      const dlwStreak = document.getElementById('dlw-streak');
+      if (dlwStreak) dlwStreak.textContent = streak || 0;
+    }
+
+    // ── Daily Loop Widget ─────────────────────────────────────────────
+    async function initDailyLoopWidget(member) {
+      const widget = document.getElementById('daily-loop-widget');
+      if (!widget) return;
+
+      // Show widget
+      widget.style.display = '';
+
+      // Populate streak
+      const dlwStreak = document.getElementById('dlw-streak');
+      if (dlwStreak) dlwStreak.textContent = member.streak_count || 0;
+
+      // Show login bonus chip if claimed today
+      const todayUTC = new Date().toISOString().slice(0, 10);
+      if (member.last_login_date === todayUTC) {
+        const chip = document.getElementById('dlw-bonus-chip');
+        if (chip) chip.style.display = '';
+      }
+
+      // Load an active challenge title
+      try {
+        const VSPublic = window.VSPublic;
+        if (VSPublic) {
+          const result = await VSPublic
+            .from('challenges')
+            .select('title,points')
+            .eq('active', true)
+            .order('created_at', false)
+            .limit(1)
+            .get();
+          const challenges = (result && result.data) || [];
+          const titleEl = document.getElementById('dlw-challenge-title');
+          if (titleEl) {
+            if (challenges.length > 0) {
+              const c = challenges[0];
+              titleEl.textContent = c.title + (c.points ? ' (+' + c.points + ' pts)' : '');
+            } else {
+              titleEl.textContent = 'No active challenges right now — check back soon.';
+              const btn = document.getElementById('dlw-challenge-btn');
+              if (btn) btn.style.display = 'none';
+            }
+          }
+        }
+      } catch(_) {
+        const titleEl = document.getElementById('dlw-challenge-title');
+        if (titleEl) titleEl.textContent = 'Open challenges to see what\'s active today.';
+      }
+    }
+
+    // ── Phase 2: Award points for this session's eligible actions ─
+    async function initPointsEconomy(member) {
+      const uid = member._id;
+      // localStorage flag prefix: vs_pts_{uid}_{reason}
+      const flag = (reason) => 'vs_pts_' + uid + '_' + reason;
+      const hasFlag = (reason) => !!localStorage.getItem(flag(reason));
+      const setFlag = (reason) => localStorage.setItem(flag(reason), '1');
+
+      const toAward = [];
+
+      // Subscribe to Vault Dispatch (25 pts, once ever)
+      if (member.subscribed && !hasFlag('subscribed')) {
+        toAward.push({ reason: 'subscribed', pts: 25, label: 'Subscribed to Vault Dispatch' });
+      }
+
+      // Bio set (15 pts, once ever)
+      if (member.bio && member.bio.trim().length > 0 && !hasFlag('bio_set')) {
+        toAward.push({ reason: 'bio_set', pts: 15, label: 'Completed your profile bio' });
+      }
+
+      // Avatar customized (10 pts, once ever)
+      if (member.avatar_id && member.avatar_id !== 'spark' && !hasFlag('avatar_customized')) {
+        toAward.push({ reason: 'avatar_customized', pts: 10, label: 'Customized your avatar' });
+      }
+
+      // Game visits (set by localStorage on game pages, award once per game)
+      const gameVisits = [
+        { key: 'vs_visited_cod',   reason: 'game_visit_cod',    pts: 10, label: 'Visited Call of Doodie' },
+        { key: 'vs_visited_gm',    reason: 'game_visit_gridiron', pts: 10, label: 'Visited Gridiron GM' },
+        { key: 'vs_visited_vsfgm', reason: 'game_visit_vsfgm',  pts: 10, label: 'Visited Franchise Architect' },
+      ];
+      for (const v of gameVisits) {
+        if (localStorage.getItem(v.key) && !hasFlag(v.reason)) {
+          toAward.push({ reason: v.reason, pts: v.pts, label: v.label });
+        }
+      }
+
+      // Lore read (set by localStorage on lore page)
+      if (localStorage.getItem('vs_visited_dreadspike') && !hasFlag('lore_read_dreadspike')) {
+        toAward.push({ reason: 'lore_read_dreadspike', pts: 15, label: 'Read DreadSpike classified file' });
+      }
+
+      if (toAward.length === 0) return;
+
+      let totalAwarded = 0;
+      let lastLabel = '';
+      for (const item of toAward) {
+        try {
+          const { data } = await VSSupabase.rpc('award_points', {
+            p_reason:   item.reason,
+            p_points:   item.pts,
+            p_label:    item.label,
+            p_once_per: 'ever',
+          });
+          if (data?.ok) {
+            setFlag(item.reason);
+            totalAwarded += item.pts;
+            lastLabel = item.label;
+          } else if (data?.skipped) {
+            setFlag(item.reason); // already in DB, don't retry
+          }
+        } catch (_) { /* non-fatal */ }
+      }
+
+      if (totalAwarded > 0) {
+        showXpChip(totalAwarded, toAward.length === 1 ? lastLabel : 'Multiple actions');
+        // Refresh points display from DB
+        const { data: row } = await VSSupabase.from('vault_members').select('points').eq('id', uid).single();
+        if (row) {
+          const newPts = row.points;
+          document.getElementById('profile-pts').textContent = newPts + ' pts';
+          document.getElementById('stat-pts').textContent    = newPts;
+          document.getElementById('info-pts').textContent    = newPts + ' pts';
+          const rank = VS.getRank(newPts);
+          const progress = VS.getRankProgress(newPts);
+          document.getElementById('progress-fill').style.width = progress + '%';
+          document.getElementById('stat-rank').textContent  = rank.name;
+          document.getElementById('info-rank').textContent  = rank.name;
+          updateRankProgress(newPts);
+          // Reload activity
+          loadPointEvents();
+        }
+      }
+    }
+
+    // ── Phase 36: Game session milestone awards ───────────────────
+    async function initGameSessionMilestones(member) {
+      const uid = member._id;
+      const flag    = (r) => 'vs_pts_' + uid + '_' + r;
+      const hasFlag = (r) => !!localStorage.getItem(flag(r));
+      const setFlag = (r) => localStorage.setItem(flag(r), '1');
+
+      const MILESTONES = [
+        { game: 'call-of-doodie',         steps: [
+          { n: 5,  reason: 'gs_cod_5',   pts: 25,  label: '5 Call of Doodie sessions' },
+          { n: 10, reason: 'gs_cod_10',  pts: 50,  label: '10 Call of Doodie sessions' },
+          { n: 25, reason: 'gs_cod_25',  pts: 100, label: '25 Call of Doodie sessions' },
+        ]},
+        { game: 'gridiron-gm',            steps: [
+          { n: 5,  reason: 'gs_ggm_5',   pts: 25,  label: '5 Gridiron GM sessions' },
+          { n: 10, reason: 'gs_ggm_10',  pts: 50,  label: '10 Gridiron GM sessions' },
+          { n: 25, reason: 'gs_ggm_25',  pts: 100, label: '25 Gridiron GM sessions' },
+        ]},
+        { game: 'franchise-architect', steps: [
+          { n: 5,  reason: 'gs_vsfgm_5',   pts: 25,  label: '5 Franchise Architect sessions' },
+          { n: 10, reason: 'gs_vsfgm_10',  pts: 50,  label: '10 Franchise Architect sessions' },
+          { n: 25, reason: 'gs_vsfgm_25',  pts: 100, label: '25 Franchise Architect sessions' },
+        ]},
+      ];
+
+      // Only proceed if any milestone is not yet locally flagged
+      const needsCheck = MILESTONES.some(g => g.steps.some(s => !hasFlag(s.reason)));
+      if (!needsCheck) return;
+
+      try {
+        // Single query: count sessions grouped by game_slug for this user
+        const { data: rows } = await VSSupabase
+          .from('game_sessions')
+          .select('game_slug')
+          .eq('user_id', uid);
+        if (!Array.isArray(rows)) return;
+
+        const counts = {};
+        rows.forEach(r => { counts[r.game_slug] = (counts[r.game_slug] || 0) + 1; });
+
+        const toAward = [];
+        for (const g of MILESTONES) {
+          const count = counts[g.game] || 0;
+          for (const step of g.steps) {
+            if (count >= step.n && !hasFlag(step.reason)) {
+              toAward.push(step);
+            }
+          }
+        }
+
+        let totalAwarded = 0;
+        for (const item of toAward) {
+          try {
+            const { data } = await VSSupabase.rpc('award_points', {
+              p_reason:   item.reason,
+              p_points:   item.pts,
+              p_label:    item.label,
+              p_once_per: 'ever',
+            });
+            if (data?.ok || data?.skipped) setFlag(item.reason);
+            if (data?.ok) totalAwarded += item.pts;
+          } catch (_) {}
+        }
+
+        if (totalAwarded > 0) {
+          showXpChip(totalAwarded, toAward.length === 1 ? toAward[0].label : 'Game milestones reached');
+          setTimeout(() => refreshPointsDisplay(), 1800);
+        }
+      } catch (_) {}
+    }
+
+    // ── Phase 42: Currently playing badge ────────────────────────
+    async function loadCurrentlyPlaying(member) {
+      const GAME_NAMES = {
+        'call-of-doodie':         'Call of Doodie',
+        'gridiron-gm':            'Gridiron GM',
+        'franchise-architect': 'Franchise Architect',
+      };
+      try {
+        const { data } = await VSSupabase
+          .from('game_sessions')
+          .select('game_slug,played_at')
+          .eq('user_id', member._id)
+          .order('played_at', { ascending: false })
+          .limit(1)
+          .single();
+        if (!data) return;
+        const badge = document.getElementById('currently-playing-badge');
+        if (!badge) return;
+        const name     = GAME_NAMES[data.game_slug] || data.game_slug;
+        const today    = new Date().toISOString().slice(0, 10);
+        const isToday  = data.played_at.slice(0, 10) === today;
+        const label    = isToday ? 'Playing' : 'Last played';
+        const color    = isToday ? '#10B981' : '#94a3b8';
+        const bg       = isToday ? 'rgba(16,185,129,0.1)' : 'rgba(148,163,184,0.08)';
+        const border   = isToday ? 'rgba(16,185,129,0.25)' : 'rgba(148,163,184,0.18)';
+        badge.style.display = '';
+        badge.innerHTML = `<span style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.78rem;font-weight:700;color:${color};background:${bg};border:1px solid ${border};border-radius:999px;padding:0.22rem 0.65rem;">🎮 ${label}: ${name}</span>`;
+      } catch (_) {}
+    }
+
+    // ── Phase 43: Teams ──────────────────────────────────────────
+    const TEAM_SB  = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+    const TEAM_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
+
+    function teamAuthH(tok) {
+      return { apikey: TEAM_KEY, Authorization: 'Bearer ' + tok, 'Content-Type': 'application/json' };
+    }
+
+    async function loadTeamPanel(member) {
+      const el = document.getElementById('team-content');
+      if (!el || !member) return;
+      try {
+        const { data } = await VSSupabase.rpc('get_my_team');
+        if (!data) {
+          renderNoTeam(el, member);
+        } else {
+          renderTeam(el, data, member);
+        }
+      } catch (_) { el.innerHTML = '<span class="team-error">Unable to load team.</span>'; }
+    }
+
+    function renderNoTeam(el, member) {
+      el.innerHTML = `
+        <div class="team-no-team">
+          You're not on a team yet. Create one or join with an invite code.
+        </div>
+        <div class="team-form-wrap">
+          <div>
+            <div class="team-label">Create a Team</div>
+            <div class="team-input-row">
+              <input id="team-create-name" type="text" maxlength="30" placeholder="Team name" autocomplete="off"
+                class="team-input" />
+              <button data-member-action="create-team" data-member-id="${member._id}" class="team-btn-create">
+                Create
+              </button>
+            </div>
+          </div>
+          <div>
+            <div class="team-label">Join a Team</div>
+            <div class="team-input-row">
+              <input id="team-join-code" type="text" maxlength="6" placeholder="6-char invite code" autocomplete="off"
+                class="team-input-code" />
+              <button data-member-action="join-team" data-member-id="${member._id}" class="team-btn-join">
+                Join
+              </button>
+            </div>
+          </div>
+          <div id="team-feedback" class="team-feedback"></div>
+        </div>`;
+    }
+
+    function renderTeam(el, data, member) {
+      const t = data.team;
+      const roster = Array.isArray(data.roster) ? data.roster : [];
+      const isLeader = roster.some(r => r.user_id === member._id && r.role === 'leader');
+      const rosterHtml = roster.map(r =>
+        `<div class="team-roster-item">
+          <span class="team-roster-icon">${r.role === 'leader' ? '👑' : '🏃'}</span>
+          <span class="team-roster-name" style="font-weight:${r.user_id === member._id ? '700' : '400'};">${escHtml(r.username)}${r.user_id === member._id ? ' <span class="team-roster-you">(you)</span>' : ''}</span>
+          <span class="team-roster-role">${r.role}</span>
+        </div>`
+      ).join('');
+      el.innerHTML = `
+        <div class="team-card">
+          <div class="team-card-header">
+            <div>
+              <div class="team-name">${escHtml(t.name)}</div>
+              <div class="team-invite-code">
+                Invite code: <code>${t.invite_code}</code>
+                <button data-member-action="copy-invite" data-invite-code="${t.invite_code}"
+                  class="team-copy-btn">Copy</button>
+              </div>
+            </div>
+            <div class="team-pts-wrap">
+              <div class="team-pts-value">${(t.total_points||0).toLocaleString()}</div>
+              <div class="team-pts-label">team pts</div>
+            </div>
+          </div>
+          <div class="team-member-count">${roster.length} member${roster.length!==1?'s':''}</div>
+          ${rosterHtml}
+        </div>
+        <div class="team-actions">
+          ${isLeader ? `<button data-member-action="disband-team" data-team-id="${t.id}" data-member-id="${member._id}" class="team-btn-disband">Disband Team</button>` : ''}
+          <button data-member-action="leave-team" data-member-id="${member._id}" class="team-btn-leave">Leave Team</button>
+          <a href="/leaderboards/" class="team-btn-rankings">Team Rankings →</a>
+        </div>
+        <div id="team-feedback" class="team-feedback-bottom"></div>`;
+    }
+
+    function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+    async function createTeam(memberId) {
+      const nameEl = document.getElementById('team-create-name');
+      const fb     = document.getElementById('team-feedback');
+      const name   = (nameEl?.value || '').trim();
+      if (!name) { if(fb) fb.textContent = 'Enter a team name.'; return; }
+      if (name.length < 2) { if(fb) fb.textContent = 'Name must be at least 2 characters.'; return; }
+      const s = await VSSupabase.auth.getSession();
+      const tok = s?.data?.session?.access_token;
+      if (!tok) return;
+      try {
+        const res = await fetch(TEAM_SB + '/rest/v1/teams', {
+          method: 'POST',
+          headers: Object.assign({}, teamAuthH(tok), { Prefer: 'return=representation' }),
+          body: JSON.stringify({ name, created_by: memberId })
+        });
+        if (!res.ok) throw new Error((await res.json())?.message || 'Create failed');
+        const [team] = await res.json();
+        // join as leader
+        await fetch(TEAM_SB + '/rest/v1/team_members', {
+          method: 'POST',
+          headers: Object.assign({}, teamAuthH(tok), { Prefer: 'return=minimal' }),
+          body: JSON.stringify({ team_id: team.id, user_id: memberId, role: 'leader' })
+        });
+        if(nameEl) nameEl.value = '';
+        loadTeamPanel(_currentMember);
+      } catch(e) { if(fb) fb.textContent = e.message || 'Failed to create team.'; }
+    }
+
+    async function joinTeam(memberId) {
+      const codeEl = document.getElementById('team-join-code');
+      const fb     = document.getElementById('team-feedback');
+      const code   = (codeEl?.value || '').trim().toUpperCase();
+      if (code.length !== 6) { if(fb) fb.textContent = 'Invite codes are 6 characters.'; return; }
+      const s = await VSSupabase.auth.getSession();
+      const tok = s?.data?.session?.access_token;
+      if (!tok) return;
+      try {
+        // find team by invite code
+        const res = await fetch(TEAM_SB + '/rest/v1/teams?invite_code=eq.' + encodeURIComponent(code) + '&select=id', {
+          headers: { apikey: TEAM_KEY, Authorization: 'Bearer ' + tok }
+        });
+        const teams = res.ok ? await res.json() : [];
+        if (!teams.length) { if(fb) fb.textContent = 'Team not found. Check the code.'; return; }
+        const teamId = teams[0].id;
+        const joinRes = await fetch(TEAM_SB + '/rest/v1/team_members', {
+          method: 'POST',
+          headers: Object.assign({}, teamAuthH(tok), { Prefer: 'return=minimal' }),
+          body: JSON.stringify({ team_id: teamId, user_id: memberId, role: 'member' })
+        });
+        if (!joinRes.ok) {
+          const err = await joinRes.json();
+          throw new Error(err?.message?.includes('unique') ? 'You are already on a team.' : 'Join failed.');
+        }
+        if(codeEl) codeEl.value = '';
+        loadTeamPanel(_currentMember);
+      } catch(e) { if(fb) fb.textContent = e.message || 'Failed to join team.'; }
+    }
+
+    async function leaveTeam(memberId) {
+      if (!confirm('Leave your team?')) return;
+      const s = await VSSupabase.auth.getSession();
+      const tok = s?.data?.session?.access_token;
+      if (!tok) return;
+      await fetch(TEAM_SB + '/rest/v1/team_members?user_id=eq.' + memberId, {
+        method: 'DELETE',
+        headers: { apikey: TEAM_KEY, Authorization: 'Bearer ' + tok }
+      });
+      loadTeamPanel(_currentMember);
+    }
+
+    async function disbandTeam(teamId, memberId) {
+      if (!confirm('Disband the team? This cannot be undone.')) return;
+      const s = await VSSupabase.auth.getSession();
+      const tok = s?.data?.session?.access_token;
+      if (!tok) return;
+      await fetch(TEAM_SB + '/rest/v1/teams?id=eq.' + teamId, {
+        method: 'DELETE',
+        headers: { apikey: TEAM_KEY, Authorization: 'Bearer ' + tok }
+      });
+      loadTeamPanel(_currentMember);
+    }
+
+    // ── Phase 2: Load point events feed ──────────────────────────
+    async function loadPointEvents() {
+      const feed = document.getElementById('activity-feed');
+      if (!feed) return;
+      try {
+        // Phase 38: use prefetched events from bootstrap RPC on first load
+        let events;
+        if (window._prefetchedEvents && window._prefetchedEvents.length > 0) {
+          events = window._prefetchedEvents;
+          window._prefetchedEvents = null; // consume once
+        } else {
+          const res = await VSSupabase
+            .from('point_events')
+            .select('label, points, created_at')
+            .order('created_at', { ascending: false })
+            .limit(8);
+          events = res.data;
+        }
+
+        if (!events || events.length === 0) {
+          feed.innerHTML = '<span class="activity-empty">No activity yet — explore the vault to earn points.</span>';
+          return;
+        }
+
+        const icons = { subscribed: '📡', bio_set: '✍️', avatar_customized: '🎨', referral: '🤝',
+                        game_visit: '🎮', lore_read: '📖', default: '⚡' };
+
+        feed.innerHTML = events.map(ev => {
+          const icon = Object.keys(icons).find(k => ev.label?.toLowerCase().includes(k.split('_')[0])) || 'default';
+          const timeAgo = formatTimeAgo(new Date(ev.created_at));
+          return `<div class="activity-item">
+            <span class="activity-icon">${icons[icon] || icons.default}</span>
+            <span class="activity-label">${escHtml(ev.label || 'Vault Points')}</span>
+            <span class="activity-pts">+${ev.points}</span>
+            <span class="activity-time">${timeAgo}</span>
+          </div>`;
+        }).join('');
+      } catch (_) {
+        feed.innerHTML = '<span class="activity-empty">Could not load activity.</span>';
+      }
+    }
+
+    function formatTimeAgo(date) {
+      const s = Math.floor((Date.now() - date) / 1000);
+      if (s < 60) return 'just now';
+      const m = Math.floor(s / 60);
+      if (m < 60) return m + 'm ago';
+      const h = Math.floor(m / 60);
+      if (h < 24) return h + 'h ago';
+      const d = Math.floor(h / 24);
+      if (d < 30) return d + 'd ago';
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    // ── Phase 3: Load / display personal invite code ─────────────
+    async function loadInviteCode() {
+      const valEl  = document.getElementById('invite-code-value');
+      const copyEl = document.getElementById('invite-copy-btn');
+      if (!valEl) return;
+      try {
+        const { data: code } = await VSSupabase.rpc('get_or_create_my_invite_code');
+        if (code) {
+          valEl.textContent = code;
+          if (copyEl) copyEl.disabled = false;
+        } else {
+          valEl.textContent = 'Unavailable';
+        }
+      } catch (_) {
+        if (valEl) valEl.textContent = 'Unavailable';
+      }
+    }
+
+    async function copyInviteCode() {
+      const code = document.getElementById('invite-code-value')?.textContent;
+      const btn  = document.getElementById('invite-copy-btn');
+      if (!code || code === 'Generating…' || code === 'Unavailable') return;
+      try {
+        await navigator.clipboard.writeText(code);
+        if (btn) { btn.textContent = 'Copied ✓'; setTimeout(() => { btn.textContent = 'Copy'; }, 2000); }
+      } catch (_) {
+        // Fallback for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = code; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        if (btn) { btn.textContent = 'Copied ✓'; setTimeout(() => { btn.textContent = 'Copy'; }, 2000); }
+      }
+    }
+
+    // ── Phase 50: Referral Milestones ─────────────────────────────
+    let _milestonesLoaded = false;
+
+    async function loadReferralMilestones() {
+      if (_milestonesLoaded) return;
+      _milestonesLoaded = true;
+
+      const panel = document.getElementById('referral-milestones-panel');
+      if (!panel) return;
+
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+
+        const { data, error } = await VSSupabase.rpc('get_referral_milestones', { p_user_id: session.user.id });
+        if (error || !data) return;
+
+        const count = data.referral_count || 0;
+        const milestones = data.milestones || [];
+        if (!milestones.length) return;
+
+        const nextLocked = milestones.find(function(m) { return count < m.threshold; });
+        _claimCenterState.referralCount = count;
+        _claimCenterState.referralClaimable = milestones.some(function(m) { return count >= m.threshold && !m.claimed; });
+        _claimCenterState.nextReferralText = _claimCenterState.referralClaimable
+          ? count + ' referrals · reward ready to claim'
+          : nextLocked
+            ? count + ' referrals · next reward at ' + nextLocked.threshold
+            : count + ' referrals · all milestones reached';
+        if (_currentMember) updateClaimCenter(_currentMember, { isSparked: !!_currentMember.is_sparked });
+
+        panel.style.display = '';
+
+        // Count badge
+        const badge = document.getElementById('referral-count-badge');
+        if (badge) badge.textContent = count + ' referral' + (count !== 1 ? 's' : '');
+
+        // Progress bar
+        const maxThreshold = milestones[milestones.length - 1].threshold;
+        const pct = Math.min(100, (count / maxThreshold) * 100);
+        const fill = document.getElementById('referral-progress-fill');
+        if (fill) fill.style.width = pct + '%';
+
+        // Milestone cards
+        const list = document.getElementById('referral-milestones-list');
+        if (!list) return;
+
+        list.innerHTML = milestones.map(function(m) {
+          const reached = count >= m.threshold;
+          const claimed = m.claimed;
+          const opacity = reached ? '1' : '0.45';
+          const border = reached && !claimed ? 'rgba(255,196,0,0.3)' : 'rgba(255,255,255,0.08)';
+          const bg = reached && !claimed ? 'rgba(255,196,0,0.04)' : 'rgba(255,255,255,0.02)';
+
+          let actionHtml = '';
+          if (claimed) {
+            actionHtml = '<span class="milestone-claimed">&#10003; Claimed</span>';
+          } else if (reached) {
+            actionHtml = '<button type="button" data-member-action="claim-milestone" data-milestone-id="' + m.id + '" class="button button-sm" style="font-size:0.78rem;padding:0.3rem 0.85rem;">Claim Reward</button>';
+          } else {
+            actionHtml = '<span class="milestone-needed">' + m.threshold + ' referrals needed</span>';
+          }
+
+          return '<div class="milestone-card" style="border:1px solid ' + border + ';background:' + bg + ';opacity:' + opacity + ';">' +
+            '<div class="milestone-icon">' + (m.icon || '🏆') + '</div>' +
+            '<div class="milestone-info">' +
+              '<div class="milestone-label">' + m.label + '</div>' +
+              '<div class="milestone-desc">' + m.description + '</div>' +
+            '</div>' +
+            '<div class="milestone-action">' + actionHtml + '</div>' +
+          '</div>';
+        }).join('');
+
+      } catch (err) {
+        console.warn('[milestones]', err);
+      }
+    }
+
+    async function claimMilestone(milestoneId, btn) {
+      if (btn) { btn.disabled = true; btn.textContent = 'Claiming…'; }
+      try {
+        const { data, error } = await VSSupabase.rpc('claim_referral_milestone', { p_milestone_id: milestoneId });
+        if (error) throw error;
+        if (data && data.ok) {
+          if (btn) {
+            btn.outerHTML = '<span class="milestone-claimed">&#10003; Claimed!</span>';
+          }
+          if (typeof showToast === 'function') showToast('Milestone reward claimed!', { icon: '🏆' });
+        } else {
+          if (btn) { btn.disabled = false; btn.textContent = 'Claim Reward'; }
+          if (typeof showToast === 'function') showToast(data?.error || 'Could not claim', { icon: '⚠️' });
+        }
+      } catch (err) {
+        if (btn) { btn.disabled = false; btn.textContent = 'Claim Reward'; }
+        console.warn('[milestone-claim]', err);
+      }
+    }
+
+    // ── Phase 6: Activity Chronicle ──────────────────────────────
+    let _chronicleLoaded = false;
+
+    const CHRONICLE_ICONS = {
+      challenge:  { icon: '⚡', bg: 'rgba(255,196,0,0.12)',   color: '#fbbf24' },
+      file:       { icon: '📄', bg: 'rgba(31,162,255,0.1)',   color: '#7dd3fc' },
+      game:       { icon: '🎮', bg: 'rgba(52,211,153,0.1)',   color: '#34d399' },
+      subscribed: { icon: '📡', bg: 'rgba(167,139,250,0.1)',  color: '#a78bfa' },
+      profile:    { icon: '🔧', bg: 'rgba(255,255,255,0.06)', color: 'var(--muted)' },
+      referral:   { icon: '🤝', bg: 'rgba(255,196,0,0.1)',    color: '#fbbf24' },
+      joined:     { icon: '🔑', bg: 'rgba(255,196,0,0.14)',   color: 'var(--gold)' },
+      points:     { icon: '✦',  bg: 'rgba(255,255,255,0.05)', color: 'var(--dim)' },
+    };
+
+    async function loadChronicle() {
+      const el = document.getElementById('chronicle-timeline');
+      if (!el) return;
+      el.innerHTML = '<div class="pulse-empty">Loading…</div>';
+      loadLoginHeatmap(); // non-blocking
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+
+        const [{ data: events, error }, { data: row }] = await Promise.all([
+          VSSupabase.rpc('get_activity_timeline', { p_limit: 50 }),
+          VSSupabase.from('vault_members').select('created_at').eq('id', session.user.id).single(),
+        ]);
+
+        if (error) throw error;
+
+        const items = [...(events || [])];
+        if (row?.created_at) {
+          items.push({ type: 'joined', label: 'Joined the Vault', points: 0, occurred_at: row.created_at });
+        }
+
+        if (items.length === 0) {
+          el.innerHTML = '<div class="pulse-empty">No activity yet — start earning points to build your Chronicle.</div>';
+          loadFeedbackShippedStrip(el);
+          return;
+        }
+
+        const today     = new Date();
+        const yesterday = new Date(today); yesterday.setDate(today.getDate() - 1);
+
+        let html = '<div class="chronicle-timeline">';
+        let lastDay = null;
+
+        for (const ev of items) {
+          const d      = new Date(ev.occurred_at);
+          const dayKey = d.toDateString();
+
+          if (dayKey !== lastDay) {
+            let dayLabel;
+            if (dayKey === today.toDateString())     dayLabel = 'Today';
+            else if (dayKey === yesterday.toDateString()) dayLabel = 'Yesterday';
+            else dayLabel = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            html += `<div class="chronicle-day-header">${dayLabel}</div>`;
+            lastDay = dayKey;
+          }
+
+          const style   = CHRONICLE_ICONS[ev.type] || CHRONICLE_ICONS.points;
+          const timeStr = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+          const ptsHtml = ev.points > 0 ? `<div class="chronicle-pts">+${ev.points} pts</div>` : '';
+
+          html += `<div class="chronicle-item">
+            <div class="chronicle-icon" style="background:${style.bg};color:${style.color};">${style.icon}</div>
+            <div class="chronicle-body">
+              <div class="chronicle-label">${ev.label || ev.type}</div>
+              <div class="chronicle-time">${timeStr}</div>
+            </div>
+            ${ptsHtml}
+          </div>`;
+        }
+
+        html += '</div>';
+        el.innerHTML = html;
+        loadFeedbackShippedStrip(el);
+      } catch (_) {
+        if (el) el.innerHTML = '<div class="pulse-empty">Could not load activity chronicle.</div>';
+      }
+    }
+
+    // ── S335: "Your feedback that shipped" — closes the loop inside the Chronicle ──
+    // page_feedback rows carry no user id and are SELECT-able by service_role only
+    // (supabase/migrations/supabase-page-feedback.sql), so a member cannot query
+    // "their" rows. The rate-this-page widget keeps the visitor's own reactions on
+    // this device (localStorage vs_rate_page_v1 → { [path]: { at, reaction } }); that
+    // is the only honest per-member record. Join key = theme, exactly as
+    // assets/feedback-insights.js buckets paths and api/ship-receipts.json keys
+    // receipts. Conservative: a receipt counts only when it carries a shipped commit
+    // dated AFTER the member's reaction on a page inside that theme.
+    const FEEDBACK_THEMES = [
+      { key: 'conversion',   test: (p) => /^\/(membership|join|invite|vaultsparked|pricing)/.test(p) },
+      { key: 'worlds',       test: (p) => /^\/(games|universe)/.test(p) },
+      { key: 'transparency', test: (p) => /^\/(studio-pulse|oracle|ignis|studio|roadmap|changelog|journal|press)/.test(p) },
+      { key: 'trust',        test: (p) => /^\/(privacy|terms|cookies|accessibility|data-deletion|security)/.test(p) },
+      { key: 'frontdoor',    test: (p) => p === '/' || p === '' },
+    ];
+    function feedbackThemeFor(path) {
+      const p = String(path || '/');
+      for (const t of FEEDBACK_THEMES) if (t.test(p)) return t.key;
+      return null;
+    }
+    function readOwnPageFeedback() {
+      try {
+        const raw = window.localStorage.getItem('vs_rate_page_v1');
+        const store = raw ? JSON.parse(raw) : {};
+        if (!store || typeof store !== 'object') return [];
+        return Object.entries(store)
+          .filter(([, e]) => e && Number.isFinite(Number(e.at)) && !e.pendingPayload) // delivered only
+          .map(([path, e]) => ({ path: path, at: Number(e.at), reaction: String(e.reaction || '') }))
+          .sort((a, b) => b.at - a.at);
+      } catch (_) { return []; }
+    }
+    async function loadFeedbackShippedStrip(container) {
+      if (!container) return;
+      let strip = document.getElementById('chronicle-feedback-shipped');
+      if (!strip) {
+        strip = document.createElement('div');
+        strip.id = 'chronicle-feedback-shipped';
+        strip.style.marginTop = '1.25rem';
+        container.appendChild(strip);
+      }
+      const header = '<div class="chronicle-day-header">Your feedback that shipped</div>';
+      const quiet = header + '<div class="pulse-empty">No shipped changes tied to your feedback yet — keep the signals coming.</div>';
+
+      const own = readOwnPageFeedback();
+      let receipts = [];
+      try {
+        const res = await fetch('/api/ship-receipts.json', { credentials: 'omit' });
+        if (res.ok) {
+          const data = await res.json();
+          receipts = (Array.isArray(data?.receipts) ? data.receipts : [])
+            .filter((r) => (r.feedbackSignals || 0) > 0 && Array.isArray(r.shippedCommits) && r.shippedCommits.length > 0);
+        }
+      } catch (_) { /* honest-dark below */ }
+
+      const matches = [];
+      for (const fb of own) {
+        const theme = feedbackThemeFor(fb.path);
+        if (!theme) continue;
+        const rec = receipts.find((r) => r.theme === theme);
+        if (!rec) continue;
+        const ships = rec.shippedCommits
+          .filter((c) => c && c.summary && (Date.parse(c.ts) || 0) >= fb.at)
+          .sort((a, b) => (Date.parse(b.ts) || 0) - (Date.parse(a.ts) || 0));
+        if (!ships.length) continue;
+        matches.push({ fb: fb, rec: rec, ship: ships[0] });
+      }
+
+      if (!matches.length) { strip.innerHTML = quiet; return; }
+
+      const pageName = (p) => (!p || p === '/') ? 'Home' : p.replace(/^\/|\/$/g, '').replace(/\//g, ' › ');
+      strip.innerHTML = header + '<div class="chronicle-timeline">' + matches.slice(0, 5).map((m) => {
+        const flagged = new Date(m.fb.at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const shipped = Date.parse(m.ship.ts) ? new Date(Date.parse(m.ship.ts)).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+        return '<div class="chronicle-item">'
+          + '<div class="chronicle-icon" style="background:rgba(255,196,0,0.12);color:#fbbf24;">📣</div>'
+          + '<div class="chronicle-body">'
+          + '<div class="chronicle-label">You flagged <strong>' + escHtml(pageName(m.fb.path)) + '</strong> · ' + escHtml(flagged)
+          + ' → shipped: <a href="/changelog/#requests" style="color:var(--gold);font-weight:700;">' + escHtml(m.rec.label || m.rec.theme) + ' — ' + escHtml(m.ship.summary) + '</a></div>'
+          + '<div class="chronicle-time">' + escHtml(shipped ? 'Shipped ' + shipped : 'Shipped') + '</div>'
+          + '</div>'
+          + '</div>';
+      }).join('') + '</div>';
+    }
+
+    // ── Phase 24: QR Code for referral link ──────────────────────
+    function showReferralQR() {
+      const link = document.getElementById('referralLink')?.textContent?.trim();
+      if (!link) return;
+      const overlay = document.getElementById('qr-modal-overlay');
+      const wrap    = document.getElementById('qr-canvas-wrap');
+      if (!overlay || !wrap) return;
+      wrap.innerHTML = '';
+      _lastFocus = document.activeElement;
+      overlay.classList.add('show');
+      setTimeout(() => _trapFocus(document.querySelector('.qr-modal')), 50);
+      // Use QRCode library (loaded via CDN with defer)
+      if (typeof QRCode !== 'undefined') {
+        const canvas = document.createElement('canvas');
+        wrap.appendChild(canvas);
+        QRCode.toCanvas(canvas, link, {
+          width: 200, margin: 1,
+          color: { dark: '#000000', light: '#ffffff' }
+        }, () => {});
+      } else {
+        // Fallback: show link in text if library not loaded
+        wrap.innerHTML = '<p class="qr-fallback">' + link + '</p>';
+      }
+    }
+
+    function dismissQRModal() {
+      document.getElementById('qr-modal-overlay')?.classList.remove('show');
+      _releaseFocus(document.querySelector('.qr-modal'));
+    }
+
+    // ── Phase 24: Login heatmap (12-week activity calendar) ───────
+    async function loadLoginHeatmap() {
+      const el = document.getElementById('login-heatmap');
+      if (!el) return;
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+
+        // Fetch point_events (login + other activity) for last 84 days
+        const since = new Date(Date.now() - 84 * 86400000).toISOString();
+        const { data: events } = await VSSupabase
+          .from('point_events')
+          .select('created_at')
+          .eq('user_id', session.user.id)
+          .gte('created_at', since)
+          .order('created_at', { ascending: true });
+
+        // Build day bucket map: 'YYYY-MM-DD' → count
+        const dayMap = {};
+        (events || []).forEach(ev => {
+          const key = ev.created_at.slice(0, 10);
+          dayMap[key] = (dayMap[key] || 0) + 1;
+        });
+
+        // Build 12 weeks (84 days) grid, 7 rows × 12 cols
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const cells = []; // array of 84 day objects from oldest to newest
+        for (let i = 83; i >= 0; i--) {
+          const d = new Date(today - i * 86400000);
+          const key = d.toISOString().slice(0, 10);
+          const count = dayMap[key] || 0;
+          let heat = 0;
+          if (count >= 1) heat = 1;
+          if (count >= 3) heat = 2;
+          if (count >= 6) heat = 3;
+          if (count >= 10) heat = 4;
+          cells.push({ key, heat, count, label: d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) });
+        }
+
+        // Render: 12 columns of 7 cells each
+        let html = '';
+        for (let col = 0; col < 12; col++) {
+          html += '<div class="heatmap-col">';
+          for (let row = 0; row < 7; row++) {
+            const idx = col * 7 + row;
+            const c = cells[idx];
+            const cls = c.heat > 0 ? ` heat-${c.heat}` : '';
+            const label = c.count > 0 ? `${c.label}: ${c.count} event${c.count === 1 ? '' : 's'}` : c.label;
+            html += `<div class="heatmap-cell${cls}" title="${label}"></div>`;
+          }
+          html += '</div>';
+        }
+        el.innerHTML = html;
+      } catch (_) {
+        if (el) el.innerHTML = '<span class="heatmap-fallback">Heatmap unavailable.</span>';
+      }
+    }
+
+    // ── Phase 24: Annual vault anniversary check ──────────────────
+    async function checkVaultAnniversary(member) {
+      try {
+        if (!member?.createdAt) return;
+        const joined = new Date(member.createdAt);
+        const now    = new Date();
+        const years  = now.getFullYear() - joined.getFullYear();
+        if (years <= 0) return; // not a year yet
+        const anniv = new Date(joined);
+        anniv.setFullYear(now.getFullYear());
+        const daysDiff = Math.abs(now - anniv) / 86400000;
+        if (daysDiff > 1) return; // not within 1 day of anniversary
+
+        // Check we haven't already awarded this year
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+        const yearKey = now.getFullYear();
+        const alreadyKey = `vs_anniversary_awarded_${yearKey}`;
+        if (localStorage.getItem(alreadyKey)) return;
+
+        // Check point_events for this year's anniversary
+        const startOfYear = `${yearKey}-01-01T00:00:00Z`;
+        const { data: existing } = await VSSupabase
+          .from('point_events')
+          .select('id')
+          .eq('user_id', session.user.id)
+          .eq('reason', 'anniversary')
+          .gte('created_at', startOfYear)
+          .limit(1);
+
+        if (existing && existing.length > 0) {
+          localStorage.setItem(alreadyKey, '1');
+          return;
+        }
+
+        // Award anniversary bonus
+        const bonus = years * 50; // 50 pts per year
+        await VSSupabase.rpc('award_points', {
+          p_user_id: session.user.id,
+          p_amount: bonus,
+          p_reason: 'anniversary',
+          p_source: 'vault_member',
+        });
+        localStorage.setItem(alreadyKey, '1');
+
+        // Show celebration only when this is the one automatic attention
+        // surface for the session; the point award remains independent.
+        if (window.VSPortalAttention && !window.VSPortalAttention.claim('anniversary')) return;
+        showXPChip(`🎂 Vault Anniversary! Year ${years} — +${bonus} pts`);
+        setTimeout(() => {
+          if (typeof showToast === 'function') {
+            showToast(`Happy ${years}-year Vault anniversary! You've earned ${bonus} bonus points.`, 'success', 5000);
+          }
+        }, 800);
+      } catch (_) {}
+    }
+
+    // ── Phase 24: Weekly XP recap (shown Mondays) ─────────────────
+    async function checkWeeklyRecap(member) {
+      try {
+        const today = new Date();
+        if (today.getDay() !== 1) return; // Monday only
+
+        // ISO week key: YYYY-WW
+        const startOfYear = new Date(today.getFullYear(), 0, 1);
+        const weekNum = Math.ceil(((today - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
+        const weekKey = `vs_weekly_recap_${today.getFullYear()}_${weekNum}`;
+        if (localStorage.getItem(weekKey)) return;
+
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+
+        // Fetch last week's points
+        const lastMonday = new Date(today - 7 * 86400000);
+        lastMonday.setHours(0, 0, 0, 0);
+        const lastSunday = new Date(today);
+        lastSunday.setHours(0, 0, 0, 0);
+
+        const { data: events } = await VSSupabase
+          .from('point_events')
+          .select('points')
+          .eq('user_id', session.user.id)
+          .gte('created_at', lastMonday.toISOString())
+          .lt('created_at', lastSunday.toISOString());
+
+        const weekPts = (events || []).reduce((s, e) => s + (e.points || 0), 0);
+        if (weekPts === 0) return;
+
+        const rank = VS.getRank(member.points);
+        const nextRank = VS.getNextRank(member.points);
+        const ptsToNext = nextRank ? (nextRank.min - member.points) : 0;
+
+        const banner  = document.getElementById('weekly-recap-banner');
+        const textEl  = document.getElementById('weekly-recap-text');
+        if (!banner || !textEl) return;
+        if (window.VSPortalAttention && !window.VSPortalAttention.claim('weekly-recap')) return;
+        localStorage.setItem(weekKey, '1');
+
+        const ptsLine = ptsToNext > 0
+          ? ` You're <strong>${ptsToNext} pts</strong> away from <strong>${nextRank.name}</strong>.`
+          : ' You\'ve reached maximum rank!';
+
+        textEl.innerHTML =
+          `📊 <strong>Last week you earned ${weekPts.toLocaleString()} Vault Points.</strong>${ptsLine} Keep the streak going this week.`;
+        banner.classList.add('show');
+      } catch (_) {}
+    }
+
+    function dismissWeeklyRecap() {
+      document.getElementById('weekly-recap-banner')?.classList.remove('show');
+    }
+
+    // ── Point gifting ─────────────────────────────────────────────
+    async function giftPoints() {
+      if (!_currentMember) return;
+      const recipient = (document.getElementById('gift-username')?.value || '').trim().toLowerCase();
+      const amount    = parseInt(document.getElementById('gift-amount')?.value || '0', 10);
+      const fb        = document.getElementById('gift-feedback');
+      if (!fb) return;
+
+      if (!recipient) { fb.style.color = '#f87171'; fb.textContent = 'Enter a recipient username.'; return; }
+      if (isNaN(amount) || amount < 10 || amount > 500) { fb.style.color = '#f87171'; fb.textContent = 'Amount must be 10–500 pts.'; return; }
+      if (_currentMember.points < amount) { fb.style.color = '#f87171'; fb.textContent = 'Not enough Vault Points.'; return; }
+      if (recipient === (_currentMember.username || '').toLowerCase()) { fb.style.color = '#f87171'; fb.textContent = 'You cannot gift to yourself.'; return; }
+
+      fb.style.color = 'var(--dim)'; fb.textContent = 'Sending…';
+
+      try {
+        // S335 (phase61): the transfer is one atomic security-definer RPC.
+        // Points are no longer client-writable — the server resolves the
+        // sender from auth.uid(), locks the row, bounds-checks, rejects
+        // self-gifts, and writes both ledger rows in the same transaction.
+        const GIFT_ERRORS = {
+          recipient_not_found: 'Member not found.',
+          self_gift: 'You cannot gift to yourself.',
+          amount_out_of_range: 'Amount must be 10–500 pts.',
+          insufficient_points: 'Not enough Vault Points.',
+          not_authenticated: 'Please sign in again.',
+        };
+        const { data: result, error: rpcErr } = await VSSupabase
+          .rpc('gift_points', { p_recipient_username: recipient, p_amount: amount });
+        if (rpcErr) throw rpcErr;
+        if (!result || !result.ok) {
+          fb.style.color = '#f87171';
+          fb.textContent = GIFT_ERRORS[result && result.error] || 'Could not send gift.';
+          return;
+        }
+
+        _currentMember.points = typeof result.balance === 'number' ? result.balance : _currentMember.points - amount;
+        document.getElementById('stat-points').textContent = _currentMember.points.toLocaleString();
+        document.getElementById('gift-username').value = '';
+        document.getElementById('gift-amount').value   = '';
+        fb.style.color = '#10B981'; fb.textContent = '⚡ Gift sent to ' + escHtml(result.recipient) + '!';
+        setTimeout(function(){ if(fb) fb.textContent = ''; }, 3000);
+      } catch(err) {
+        fb.style.color = '#f87171'; fb.textContent = 'Error: ' + (err.message || 'Could not send gift.');
+      }
+    }
+
+    // Gift VaultSparked checkout was removed from the portal (D-S368.1): it is
+    // hidden until rebuilt with a real 30-day expiry and a founder-set price.
+    // The create-gift-checkout edge function is left untouched.
+    window.claimMilestone = claimMilestone;
+
+    // ── Phase 25: Member Spotlight ────────────────────────────────
+    async function loadMemberSpotlight() {
+      const el = document.getElementById('spotlight-content');
+      if (!el) return;
+      try {
+        // Pick a random top-50 member that isn't the current user
+        // public_leaderboard only lists members who chose to be public.
+        const { data: members } = await VSSupabase
+          .from('public_leaderboard')
+          .select('username, points, member_number')
+          .order('points', { ascending: false })
+          .limit(50);
+
+        if (!members || members.length === 0) { el.textContent = 'No members yet.'; return; }
+
+        // Pick random, exclude current member
+        const pool = members.filter(m => m.username !== (_currentMember?.username || ''));
+        if (pool.length === 0) { el.textContent = 'You\'re the top member!'; return; }
+        const featured = pool[Math.floor(Math.random() * Math.min(pool.length, 20))];
+
+        const rank = VS.getRank(featured.points);
+        const av   = VS.getAvatar(featured.avatar_id || 'spark');
+        const accent = featured.accent || '#FFC400';
+
+        el.innerHTML = `
+          <a href="/member/?u=${encodeURIComponent(featured.username)}" class="spotlight-link">
+            <div class="spotlight-avatar" style="background:${av.bg};border:2px solid ${accent}44;">${av.emoji}</div>
+            <div>
+              <div class="spotlight-name">${escHtml(featured.username)}</div>
+              <div class="spotlight-meta">${rank.name} &nbsp;·&nbsp; ${featured.points.toLocaleString()} pts</div>
+            </div>
+            <div class="spotlight-arrow">View →</div>
+          </a>`;
+      } catch (_) {
+        if (el) el.textContent = 'Spotlight unavailable.';
+      }
+    }
+
+    // Rank comparison moved beside the rank bar as the nearest-rival callout
+    // (portal-loop.js renderRival, public profiles only).
+
+    // ── Phase 14: What's New modal — S66 enhanced ────────────────
+    async function loadPublishedPortalRelease() {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 5000);
+      try {
+        const response = await fetch('/api/changelog-narrative.json', { cache: 'no-store', signal: controller.signal });
+        if (!response.ok) throw new Error('Published updates unavailable');
+        _portalRelease = VSPortalLogic.publishedRelease(await response.json());
+        const title = document.getElementById('member-release-title');
+        const date = document.getElementById('member-release-date');
+        if (title) title.textContent = _portalRelease ? _portalRelease.title : 'No published update is available yet.';
+        if (date) date.textContent = _portalRelease ? 'Published ' + _portalRelease.date : 'The changelog keeps the complete public record.';
+        return _portalRelease;
+      } catch (_) {
+        const title = document.getElementById('member-release-title');
+        if (title) title.textContent = 'Updates could not be loaded. Open the changelog to check the record.';
+        return null;
+      } finally { clearTimeout(timer); }
+    }
+
+    async function checkWhatsNew() {
+      const release = await loadPublishedPortalRelease();
+      if (!release) return;
+      let seen = null;
+      try { seen = localStorage.getItem('vs_portal_release_seen'); } catch (_) {}
+      if (seen === release.key) return;
+      _showWhatsNewBellBadge();
+      if (!window.VSPortalAttention || window.VSPortalAttention.claim('whats-new')) {
+        showWhatsNewModal(release.items, release.date);
+      }
+    }
+
+    async function initMemberReturnBriefing() {
+      const open = document.getElementById('member-updates-open');
+      if (open) open.addEventListener('click', async () => {
+        const release = await loadPublishedPortalRelease();
+        if (release) showWhatsNewModal(release.items, release.date);
+      });
+      // This is public reading, independent of membership level and points.
+      try {
+        const response = await fetch('/api/news-desk-feed.json');
+        if (!response.ok) return;
+        const feed = await response.json();
+        const item = Array.isArray(feed.items) ? feed.items[0] : null;
+        if (!item || !item.title) return;
+        const url = new URL(item.url, location.origin);
+        if ((url.origin !== location.origin && url.origin !== 'https://vaultsparkstudios.com') || !url.pathname.startsWith('/news/')) return;
+        const title = document.getElementById('member-desk-title');
+        const date = document.getElementById('member-desk-date');
+        if (title) { title.textContent = item.title; title.href = url.pathname + url.search + url.hash; }
+        if (date && Number.isFinite(Date.parse(item.date_published))) date.textContent = 'Published ' + item.date_published.slice(0,10);
+      } catch (_) { /* The direct Desk link remains useful when the feed is offline. */ }
+    }
+    initMemberReturnBriefing();
+
+    function _showWhatsNewBellBadge() {
+      const badge = document.getElementById('whats-new-bell-badge');
+      if (badge) badge.classList.add('visible');
+    }
+
+    function _hideWhatsNewBellBadge() {
+      const badge = document.getElementById('whats-new-bell-badge');
+      if (badge) badge.classList.remove('visible');
+    }
+
+    function showWhatsNewModal(items, latestTs) {
+      if (document.getElementById('whats-new-modal')) return;
+      const releaseKey = _portalRelease ? _portalRelease.key : null;
+      const modal = document.createElement('div');
+      modal.id = 'whats-new-modal';
+      modal.className = 'whats-new-overlay';
+      const typeEmoji = { info:'ℹ️', update:'🔔', lore:'📁', alert:'⚡', milestone:'🏆' };
+      const safeTs = /^\d{4}-\d{2}-\d{2}$/.test(latestTs || '') ? latestTs : null;
+      const displayItems = items.slice(0, 5);
+      const itemsHtml = displayItems.map(p =>
+        '<div class="whats-new-item">'
+        + '<span class="whats-new-item-icon">' + (typeEmoji[p.type] || '⚡') + '</span>'
+        + '<div class="whats-new-item-text">' + escHtml(p.message) + '</div>'
+        + '</div>'
+      ).join('');
+
+      modal.innerHTML = '<div role="dialog" aria-modal="true" aria-labelledby="whats-new-title" class="whats-new-dialog">'
+        + '<div class="whats-new-header">'
+        + '<h3 id="whats-new-title" class="whats-new-title">What\'s New in the Vault</h3>'
+        + '<span class="whats-new-badge">'
+        + displayItems.length + ' update' + (displayItems.length > 1 ? 's' : '') + '</span>'
+        + '</div>'
+        + '<div class="whats-new-body">' + itemsHtml + '</div>'
+        + '<button id="whats-new-close-btn" class="whats-new-close-btn">Got it — I\'m up to speed</button>'
+        + '<div class="whats-new-version">' + (safeTs ? 'Published ' + safeTs : 'Published reader updates') + ' · <a href="/changelog/">Full changelog</a></div>'
+        + '</div>';
+
+      const _wnPrev = document.activeElement;
+      document.body.appendChild(modal);
+      _trapFocus(modal);
+      const closeBtn = document.getElementById('whats-new-close-btn');
+      if (closeBtn) closeBtn.focus();
+
+      const closeModal = () => {
+        modal.remove();
+        _hideWhatsNewBellBadge();
+        try { _wnPrev?.focus(); } catch(_) {}
+        // Persist: mark version seen and record the latest pulse timestamp
+        try {
+          if (releaseKey) localStorage.setItem('vs_portal_release_seen', releaseKey);
+          if (safeTs) localStorage.setItem('vs_portal_last_seen_date', safeTs);
+          if (safeTs) localStorage.setItem('vs_last_pulse_seen_ts', safeTs);
+        } catch (_) {}
+      };
+
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+      modal.addEventListener('keydown', e => { if (e.key === 'Escape') { e.preventDefault(); closeModal(); } });
+    }
+
+    // ── Phase 14: Points breakdown modal ─────────────────────────
+    async function showPtsBreakdown() {
+      if (document.getElementById('pts-breakdown-modal')) return;
+      try {
+        const { data: events } = await VSSupabase
+          .from('point_events')
+          .select('reason,points')
+          .order('created_at', { ascending: false })
+          .limit(300);
+        if (!events || events.length === 0) return;
+        const cats = {};
+        events.forEach(e => {
+          const cat = (e.reason || 'other').replace(/_\d+$/, '').replace(/_/g, ' ');
+          cats[cat] = (cats[cat] || 0) + (e.points || 0);
+        });
+        const sorted = Object.entries(cats).sort((a, b) => b[1] - a[1]).slice(0, 7);
+        const total = sorted.reduce((s, c) => s + c[1], 0);
+        const rows = sorted.map(([cat, pts]) => {
+          const pct = total > 0 ? Math.round(pts / total * 100) : 0;
+          return '<div class="pts-breakdown-row">'
+            + '<div class="pts-breakdown-labels">'
+            + '<span class="pts-breakdown-cat">' + cat + '</span>'
+            + '<span class="pts-breakdown-val">' + pts + ' pts</span>'
+            + '</div>'
+            + '<div class="pts-bar-track">'
+            + '<div class="pts-bar-fill" style="width:' + pct + '%;"></div>'
+            + '</div></div>';
+        }).join('');
+        const modal = document.createElement('div');
+        modal.id = 'pts-breakdown-modal';
+        modal.className = 'pts-breakdown-overlay';
+        modal.innerHTML = '<div role="dialog" aria-modal="true" aria-labelledby="pts-breakdown-title" class="pts-breakdown-dialog">'
+          + '<div class="pts-breakdown-header">'
+          + '<h3 id="pts-breakdown-title" class="pts-breakdown-title">Points Breakdown</h3>'
+          + '<button id="pts-breakdown-close" class="pts-breakdown-close" aria-label="Close">&times;</button>'
+          + '</div>'
+          + '<div class="pts-breakdown-total">Total earned: ' + total + ' pts</div>'
+          + rows + '</div>';
+        document.body.appendChild(modal);
+        const _pbPrev = document.activeElement;
+        document.getElementById('pts-breakdown-close')?.focus();
+        const closeBreakdown = () => { modal.remove(); try { _pbPrev?.focus(); } catch(_) {} };
+        document.getElementById('pts-breakdown-close').addEventListener('click', closeBreakdown);
+        modal.addEventListener('click', e => { if (e.target === modal) closeBreakdown(); });
+        modal.addEventListener('keydown', e => { if (e.key === 'Escape') closeBreakdown(); });
+      } catch (_) {}
+    }
+
+    // ── Phase 14: Challenge complete modal ───────────────────────
+    function showChallengeCompleteModal(pts, title) {
+      const existing = document.getElementById('challenge-complete-modal');
+      if (existing) existing.remove();
+      const currentPts = parseInt(document.getElementById('stat-pts').textContent, 10) || 0;
+      const newPts = currentPts + pts;
+      const rank = VS.getRank(newPts);
+      const nextRank = VS.getNextRank(newPts);
+      const prog = VS.getRankProgress(newPts);
+      const progressHtml = nextRank
+        ? '<div class="challenge-modal-prog">'
+          + '<div class="challenge-modal-prog-labels">'
+          + '<span>' + rank.name + '</span><span>' + (nextRank.min - newPts) + ' pts to ' + nextRank.name + '</span>'
+          + '</div>'
+          + '<div class="pts-bar-track">'
+          + '<div class="pts-bar-fill" style="width:' + prog + '%;transition:width 0.6s ease;"></div>'
+          + '</div></div>'
+        : '';
+      const modal = document.createElement('div');
+      modal.id = 'challenge-complete-modal';
+      modal.className = 'challenge-modal';
+      modal.innerHTML = '<div class="challenge-modal-top">'
+        + '<div>'
+        + '<div class="challenge-modal-label">Challenge Complete ⚡</div>'
+        + '<div class="challenge-modal-name">' + title + '</div>'
+        + '</div>'
+        + '<button data-member-action="close-challenge-modal" class="challenge-modal-close" aria-label="Close">&times;</button>'
+        + '</div>'
+        + '<div class="challenge-modal-pts">+' + pts + ' pts</div>'
+        + '<div class="challenge-modal-total">Total: ' + newPts + ' pts · ' + rank.name + '</div>'
+        + progressHtml;
+      document.body.appendChild(modal);
+      setTimeout(() => { const m = document.getElementById('challenge-complete-modal'); if (m) m.remove(); }, 6000);
+    }
+
+    // ── Points summary: totals + top sources ─────────────────────
+    let _pointsSummaryLoaded = false;
+    async function renderPointsSummary() {
+      if (_pointsSummaryLoaded) return;
+      _pointsSummaryLoaded = true;
+
+      // All-time total
+      const { data: allRows } = await VSSupabase
+        .from('point_events')
+        .select('points,created_at,label,reason')
+        .order('created_at', { ascending: false })
+        .limit(1000);
+
+      if (!allRows || allRows.length === 0) return;
+
+      const alltime = allRows.reduce((s, r) => s + (r.points || 0), 0);
+
+      const cutoff = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+      const recent = allRows.filter(r => new Date(r.created_at) >= cutoff);
+      const total30 = recent.reduce((s, r) => s + (r.points || 0), 0);
+
+      // Active days (days with at least one event) in last 30
+      const activeDays = new Set(recent.map(r => new Date(r.created_at).toDateString())).size;
+
+      const atEl = document.getElementById('pts-total-alltime');
+      const t30El = document.getElementById('pts-total-30d');
+      const adEl = document.getElementById('pts-active-days');
+      if (atEl) atEl.textContent = alltime.toLocaleString();
+      if (t30El) t30El.textContent = (total30 > 0 ? '+' : '') + total30.toLocaleString();
+      if (adEl) adEl.textContent = activeDays;
+
+      // Top sources: group by label, sum points, top 5
+      const sourceMap = {};
+      allRows.forEach(r => {
+        const key = r.label || r.reason || 'Other';
+        sourceMap[key] = (sourceMap[key] || 0) + (r.points || 0);
+      });
+      const top = Object.entries(sourceMap)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5);
+
+      if (top.length === 0) return;
+      const maxPts = top[0][1];
+      const listEl = document.getElementById('points-sources-list');
+      const wrap = document.getElementById('points-top-sources');
+      if (!listEl || !wrap) return;
+
+      listEl.innerHTML = top.map(([label, pts]) => {
+        const pct = Math.max(4, Math.round(pts / maxPts * 100));
+        return `<div class="pts-source-row">
+          <div class="pts-source-labels">
+            <span class="pts-source-name">${escHtml(label)}</span>
+            <span class="pts-source-val">${pts.toLocaleString()} pts</span>
+          </div>
+          <div class="pts-source-track">
+            <div class="pts-source-fill" style="width:${pct}%;"></div>
+          </div>
+        </div>`;
+      }).join('');
+      wrap.style.display = '';
+    }
+
+    // ── Phase 14: Points history SVG chart ───────────────────────
+    async function renderPointsHistoryChart() {
+      const el = document.getElementById('points-chart-svg');
+      if (!el) return;
+      try {
+        const { data: events } = await VSSupabase
+          .from('point_events')
+          .select('points,created_at')
+          .gte('created_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString())
+          .order('created_at', { ascending: true });
+
+        if (!events || events.length === 0) {
+          el.textContent = 'No activity in the last 30 days.';
+          return;
+        }
+
+        // Build a map of day → total points
+        const dayMap = {};
+        for (let i = 29; i >= 0; i--) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          dayMap[d.toDateString()] = 0;
+        }
+        events.forEach(e => {
+          const key = new Date(e.created_at).toDateString();
+          if (key in dayMap) dayMap[key] += (e.points || 0);
+        });
+
+        const days = Object.entries(dayMap);
+        const maxPts = Math.max(...days.map(d => d[1]), 1);
+        const W = 600, H = 80, barGap = 2;
+        const barW = Math.floor((W - barGap * (days.length - 1)) / days.length);
+        const bars = days.map(([day, pts], i) => {
+          const barH = pts > 0 ? Math.max(3, Math.round(pts / maxPts * H)) : 2;
+          const x = i * (barW + barGap);
+          const y = H - barH;
+          const opacity = pts > 0 ? '1' : '0.25';
+          return `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" rx="2" fill="var(--gold)" opacity="${opacity}"><title>${new Date(day).toLocaleDateString('en-US',{month:'short',day:'numeric'})}: ${pts} pts</title></rect>`;
+        }).join('');
+
+        el.innerHTML = `<svg viewBox="0 0 ${W} ${H + 20}" style="width:100%;height:auto;display:block;" role="img" aria-label="Points earned over last 30 days">${bars}<text x="0" y="${H + 16}" font-size="10" fill="var(--dim)">${new Date(days[0][0]).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</text><text x="${W}" y="${H + 16}" text-anchor="end" font-size="10" fill="var(--dim)">Today</text></svg>`;
+      } catch (_) {
+        el.textContent = 'Could not load chart.';
+      }
+    }
+
+    // ── S335: Sparked digest — three newest Desk headlines from the public feed ──
+    async function loadSparkedDigest() {
+      const list = document.getElementById('sparked-digest-list');
+      if (!list) return;
+      const fallback = 'The Desk feed is unavailable right now — <a href="/news/" style="color:var(--text);font-weight:700;">open The Desk</a>.';
+      try {
+        const res = await fetch('/api/news-desk-feed.json', { credentials: 'omit' });
+        if (!res.ok) throw new Error('feed ' + res.status);
+        const feed = await res.json();
+        const items = (Array.isArray(feed?.items) ? feed.items : [])
+          .filter((it) => it && it.title && typeof it.url === 'string' && /^(\/|https:\/\/vaultsparkstudios\.com\/)/.test(it.url))
+          .sort((a, b) => (Date.parse(b.date_published) || 0) - (Date.parse(a.date_published) || 0))
+          .slice(0, 3);
+        if (!items.length) { list.innerHTML = fallback; return; }
+        list.innerHTML = items.map((it) => {
+          const t = Date.parse(it.date_published);
+          const when = t ? new Date(t).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+          return '<a href="' + escHtml(it.url) + '" style="color:var(--text);text-decoration:none;line-height:1.4;">'
+            + '<span style="color:#c084fc;margin-right:0.35rem;" aria-hidden="true">✦</span>' + escHtml(it.title)
+            + (when ? ' <span style="font-size:0.74rem;color:var(--dim);white-space:nowrap;">· ' + escHtml(when) + '</span>' : '')
+            + '</a>';
+        }).join('');
+      } catch (_) {
+        list.innerHTML = fallback;
+      }
+    }
+
+    // ── S335: Ask-IGNIS monthly quota meter ──────────────────────
+    // Limits mirror supabase/functions/ask-ignis/index.ts: DEFAULT_SPARKED_QUOTA = 40
+    // (Sparked), null = unlimited (Eternal), 0 (free). The server may override the
+    // Sparked cap via ASK_IGNIS_SPARKED_MONTHLY_QUOTA, which the browser cannot read,
+    // so the Sparked branch also asks the function's { probe: true } endpoint (no
+    // Claude turn, no quota spend) and prefers its live monthlyLimit when it answers.
+    // Usage comes from the member's own ignis_usage_monthly row (RLS: read-own).
+    const IGNIS_MONTHLY_LIMITS = { free: 0, vault_sparked: 40, vault_sparked_pro: null };
+    const ASK_IGNIS_ENDPOINT = 'https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/ask-ignis';
+
+    async function probeIgnisAccess(session) {
+      try {
+        const res = await fetch(ASK_IGNIS_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            apikey: 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij',
+            Authorization: 'Bearer ' + session.access_token,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ probe: true }),
+        });
+        if (!res.ok) return null;
+        const json = await res.json();
+        return json && json.access ? json.access : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    async function loadIgnisQuotaMeter(planKey) {
+      const wrap  = document.getElementById('ignis-quota-meter');
+      const value = document.getElementById('ignisQuotaValue');
+      const bar   = document.getElementById('ignisQuotaBar');
+      const hint  = document.getElementById('ignisQuotaHint');
+      if (!wrap || !value || !bar || !hint) return;
+
+      const tier = planKey === 'vault_sparked_pro' ? 'vault_sparked_pro'
+        : planKey === 'vault_sparked' ? 'vault_sparked' : 'free';
+      const setBar = (pct) => {
+        const p = Math.max(0, Math.min(100, Number(pct) || 0));
+        bar.style.width = p + '%';
+        bar.setAttribute('aria-valuenow', String(Math.round(p)));
+      };
+      const dark = (msg) => { value.textContent = '—'; setBar(0); hint.textContent = msg; };
+
+      if (tier === 'free') {
+        value.textContent = '—';
+        setBar(0);
+        hint.innerHTML = 'Ask IGNIS opens with VaultSparked. <a href="/vault-member/#upgrade" style="color:var(--gold);font-weight:700;">Upgrade to ask IGNIS →</a>';
+        return;
+      }
+
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) { dark('Sign in again to see your IGNIS usage.'); return; }
+
+        const now = new Date();
+        const bucket = now.getUTCFullYear() + '-' + String(now.getUTCMonth() + 1).padStart(2, '0');
+        const [usage, access] = await Promise.all([
+          VSSupabase.from('ignis_usage_monthly')
+            .select('request_count, last_request_at')
+            .eq('user_id', session.user.id)
+            .eq('month_bucket', bucket)
+            .maybeSingle(),
+          tier === 'vault_sparked' ? probeIgnisAccess(session) : Promise.resolve(null),
+        ]);
+        if (usage.error) throw usage.error;
+
+        // No row yet means the function has never upserted for this month: 0 used is the truth.
+        const used = Number(usage.data?.request_count ?? 0);
+        let limit = IGNIS_MONTHLY_LIMITS[tier];
+        if (access && (access.unlimited === true || access.monthlyLimit === null)) limit = null;
+        else if (access && Number.isFinite(Number(access.monthlyLimit)) && Number(access.monthlyLimit) > 0) limit = Number(access.monthlyLimit);
+
+        if (limit === null) {
+          value.textContent = used + ' · Unlimited';
+          setBar(0);
+          bar.setAttribute('aria-valuetext', used + ' questions asked, no monthly cap');
+          hint.textContent = 'Eternal has no monthly cap on Ask IGNIS.';
+          return;
+        }
+
+        const remaining = Math.max(limit - used, 0);
+        const pct = limit > 0 ? (used / limit) * 100 : 0;
+        value.textContent = used + ' / ' + limit;
+        setBar(pct);
+        bar.setAttribute('aria-valuetext', used + ' of ' + limit + ' questions used');
+        if (remaining === 0) {
+          hint.innerHTML = 'Quota spent — resets on the 1st (UTC). <a href="/vault-member/#upgrade" style="color:#c084fc;font-weight:700;">VaultSparked Eternal removes the cap →</a>';
+        } else {
+          hint.textContent = remaining + ' left this month · resets on the 1st (UTC).';
+        }
+      } catch (err) {
+        console.warn('[ignis-quota]', err);
+        dark('Usage unavailable right now.');
+      }
+    }
+
+    async function loadEternalIntelligencePanel(planKey) {
+      const el = document.getElementById('eternal-intelligence-content');
+      if (!el) return;
+
+      const isSparked = planKey === 'vault_sparked' || planKey === 'vault_sparked_pro';
+      const isPro = planKey === 'vault_sparked_pro';
+
+      if (!isSparked) {
+        // Free tier: ONE locked card, one link (S335 — no stacked paywalls).
+        el.innerHTML = '<div style="padding:1rem 1.1rem;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);">'
+          + '<div style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;">Locked Surface</div>'
+          + '<div style="font-size:0.92rem;color:var(--text);margin-bottom:0.45rem;">Ask IGNIS, the Sparked archive and beta keys, and the Eternal Dispatch briefing unlock with VaultSparked and VaultSparked Eternal.</div>'
+          + '<a href="/vault-member/#upgrade" style="display:inline-flex;align-items:center;gap:0.35rem;color:var(--gold);font-weight:700;text-decoration:none;">See upgrade options →</a>'
+          + '</div>';
+        return;
+      }
+
+      if (!isPro) {
+        // Sparked (not Eternal): a digest the member can actually use — the three
+        // newest Desk headlines — plus ONE upsell line. Replaces the second locked card.
+        el.innerHTML = '<div style="padding:1rem 1.1rem;border-radius:14px;background:rgba(192,132,252,0.06);border:1px solid rgba(192,132,252,0.18);">'
+          + '<div style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#c084fc;margin-bottom:0.5rem;">Your Sparked digest</div>'
+          + '<div id="sparked-digest-list" style="display:flex;flex-direction:column;gap:0.45rem;font-size:0.88rem;color:var(--dim);">Loading the Desk…</div>'
+          + '<div style="font-size:0.8rem;color:var(--muted);margin-top:0.7rem;">VaultSparked Eternal adds unlimited IGNIS and the Eternal Dispatch briefing → <a href="/vault-member/#upgrade" style="color:#c084fc;font-weight:700;">Go Eternal</a></div>'
+          + '</div>';
+        loadSparkedDigest();
+        return;
+      }
+
+      el.innerHTML = '<div style="color:var(--dim);font-size:0.85rem;">Checking Eternal access…</div>';
+
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) {
+          el.innerHTML = '<div style="color:var(--dim);font-size:0.85rem;">Session expired. Sign in again to read Eternal Dispatch.</div>';
+          return;
+        }
+
+        const endpoint = 'https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/eternal-intelligence';
+        const headers = {
+          apikey: 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij',
+          Authorization: 'Bearer ' + session.access_token,
+          'Content-Type': 'application/json',
+        };
+        const probeRes = await fetch(endpoint, {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({ probe: true }),
+        });
+        const probeBody = await probeRes.json().catch(function () { return null; });
+        if (!probeRes.ok || !probeBody) {
+          throw new Error((probeBody && probeBody.error) || 'Eternal Dispatch is unavailable right now.');
+        }
+
+        var preview = probeBody.preview || {};
+        el.innerHTML = '<div style="display:grid;gap:0.55rem;">'
+          + '<div style="font-size:0.82rem;color:var(--muted);">Eternal access confirmed. Queue status: '
+          + (preview.revealCount || 0) + ' reveal window' + ((preview.revealCount || 0) === 1 ? '' : 's')
+          + ' · ' + (preview.creditCount || 0) + ' credit' + ((preview.creditCount || 0) === 1 ? '' : 's') + '.</div>'
+          + '<div style="color:var(--dim);font-size:0.85rem;">Loading Eternal Dispatch…</div>'
+          + '</div>';
+
+        const res = await fetch(endpoint, {
+          headers: {
+            apikey: headers.apikey,
+            Authorization: headers.Authorization,
+          },
+        });
+        const body = await res.json().catch(function () { return null; });
+        if (!res.ok || !body) {
+          throw new Error((body && body.error) || 'Eternal Dispatch is unavailable right now.');
+        }
+
+        const dispatch = body.dispatch || {};
+        const sections = Array.isArray(dispatch.sections) ? dispatch.sections : [];
+        const reveals = Array.isArray(body.reveals) ? body.reveals : [];
+
+        const sectionHtml = sections.map(function (section) {
+          return '<div style="padding:0.85rem 0.95rem;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);">'
+            + '<div style="font-size:0.72rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#c084fc;margin-bottom:0.38rem;">' + escHtml(section.heading || 'Dispatch') + '</div>'
+            + '<div style="font-size:0.86rem;line-height:1.65;color:var(--muted);">' + escHtml(section.body || 'No signal yet.') + '</div>'
+            + '</div>';
+        }).join('');
+
+        const revealHtml = reveals.length
+          ? reveals.map(function (reveal) {
+              var revealDate = reveal.revealAt ? new Date(reveal.revealAt).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Soon';
+              return '<a href="' + escHtml(reveal.href || '/studio-pulse/') + '" style="display:block;padding:0.85rem 0.95rem;border-radius:14px;background:rgba(31,162,255,0.06);border:1px solid rgba(31,162,255,0.18);text-decoration:none;">'
+                + '<div style="display:flex;justify-content:space-between;gap:0.75rem;align-items:flex-start;">'
+                + '<div>'
+                + '<div style="font-size:0.86rem;font-weight:700;color:var(--text);">' + escHtml(reveal.title || 'Sealed Signal') + '</div>'
+                + '<div style="font-size:0.79rem;line-height:1.6;color:var(--muted);margin-top:0.2rem;">' + escHtml(reveal.description || 'No signal on that reveal yet.') + '</div>'
+                + '</div>'
+                + '<div style="font-size:0.68rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#7EC9FF;white-space:nowrap;">Reveals ' + escHtml(revealDate) + '</div>'
+                + '</div>'
+                + '</a>';
+            }).join('')
+          : '<div style="padding:0.85rem 0.95rem;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);font-size:0.82rem;color:var(--muted);">No sealed projects are inside the 48-hour reveal window yet.</div>';
+
+        el.innerHTML = '<div style="display:grid;gap:0.95rem;">'
+          + '<div style="padding:1rem 1.05rem;border-radius:16px;background:linear-gradient(145deg,rgba(55,24,89,0.35),rgba(14,18,32,0.92));border:1px solid rgba(192,132,252,0.18);">'
+          + '<div style="font-size:0.7rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#c084fc;margin-bottom:0.38rem;">' + escHtml(dispatch.title || 'Eternal Dispatch') + '</div>'
+          + '<div style="font-size:0.92rem;color:var(--text);line-height:1.65;">' + escHtml(dispatch.dek || 'Private studio briefing.') + '</div>'
+          + '</div>'
+          + '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem;">' + sectionHtml + '</div>'
+          + '<div>'
+          + '<div style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#7EC9FF;margin-bottom:0.45rem;">48-Hour Reveal Window</div>'
+          + '<div style="display:grid;gap:0.65rem;">' + revealHtml + '</div>'
+          + '</div>'
+          // S368: no "Eternal Credits Queue" — game/studio credits are listed under
+          // notOffered in api/membership-tiers.json (D-S368.1), so the panel must not
+          // present a queue for a perk the membership page says is not offered.
+          + '</div>';
+      } catch (err) {
+        el.innerHTML = '<div style="padding:0.9rem 1rem;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);font-size:0.82rem;color:var(--muted);">'
+          + escHtml((err && err.message) || 'Eternal Dispatch is unavailable right now.')
+          + '</div>';
+      }
+    }
+
+    // ── Your Games (replaces Connected Games / Studio Access / Studio Pipeline)
+    // One list, rendered from data/game-registry.json by portal-loop.js so the
+    // statuses always match the registry. Name kept for existing callers.
+    function loadStudioAccessPanel(planKey, rankName) {
+      if (window.VSPortalLoop) VSPortalLoop.renderYourGames(planKey);
+      loadEternalIntelligencePanel(planKey);
+      loadIgnisQuotaMeter(planKey);
+    }
