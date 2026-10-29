@@ -3,7 +3,7 @@
 ║  ✓  Velocity      6 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   4d                                             ║
-║  ✓  IGNIS         44828 FORGE  ·  1d old                         ║
+║  ✓  IGNIS         45136 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — prior S406 application and…           ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║

@@ -77,7 +77,7 @@
 ║  ✓  Velocity      6 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   4d                                             ║
-║  ✓  IGNIS         44828 FORGE  ·  1d old                         ║
+║  ✓  IGNIS         45136 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — prior S406 application and…           ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   99  [SECURITY]     Measure help startup separately from probe  ║
+║   96  [PRODUCT]      Finish fresh native verification and full   ║
+║        Finish fresh native verification and full staging of the  ║
+║                                                                  ║
+║   93  [SECURITY]     Measure help startup separately from probe  ║
 ║        Measure help startup separately from probe execution bef  ║
 ║                                                                  ║
-║   96  [PRODUCT]      Consider extending help-only process fixtu  ║
+║   90  [PRODUCT]      Consider extending help-only process fixtu  ║
 ║        Consider extending help-only process fixtures to another  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
-║   90  [PRODUCT]      Consider migration of scheduled text probe  ║
+║   84  [PRODUCT]      Consider migration of scheduled text probe  ║
 ║        Consider migration of scheduled text probes only after m  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Consider redirect-target body verification  ║
-║        Consider redirect-target body verification only if a rea  ║
+║   83  [VERIFY]       Commit/push main, fully deploy, verify com  ║
+║        Commit/push main, fully deploy, verify complete served p  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

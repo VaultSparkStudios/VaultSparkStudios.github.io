@@ -1,0 +1,808 @@
+<!-- S406-explicit-closeout-2026-10-29 -->
+## S406 explicit closeout — 2026-10-29
+
+The six selected S406 improvements are released: diagnostic help safety, canonical share-card coverage refresh, current member return information, a decision-ready investor workspace, purpose-led developer resources and factual studio updates. The prior arc is complete. The founder now explicitly requests a fresh closeout, all context/memory/CDR/task-board updates, normal main commit/push and a full deployment of the resulting candidate.
+
+Prior accepted application baseline: 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74; verified 25-file metadata overlay: b0e4d7f2082461a82a1d8638b455690e85f9c83b. Final prior publication: bc670dc2dbda915e74865168ee81b1f852367922. Prior complete served verification: 3,668 resources, zero differences or unread files. This invocation records new acceptance separately in `docs/CLOSEOUT_S406_2026-10-29.json`; earlier source and deployment proofs are historical evidence, never re-dated.
+
+Status: records reconciled; fresh native closeout verification, current staging, exact required checks, full production and readback remain pending for this explicit request. Existing identity/provider and field-vitals limitations remain separate. No new product features, prices, entitlements, creative direction, financial figures or growth claims are introduced.
+
+---
+
+Prior release observations below retain their recorded scope.
+
+<!-- S406-final-release-acceptance -->
+## S406 selected arc outcomes — release verified
+
+- [x] Fresh startup/audits and admitted founder-expanded scope in the same bound goal.
+- [x] All six selected L2 outcomes implemented, independently reviewed and locally verified.
+- [x] Returning-browser delivery, current392 visual captures and215 mobile checks accepted.
+- [x] Two native548-command source passes, current staging11/11 and exact hosted3/3 accepted.
+- [x] Normal full production 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74, complete all-served readback, two passive factual briefing rows and all5 publisher restorations verified.
+- [x] Closing metadata published, explicit metadata overlay staged/deployed and complete final served parity verified. Final push reachability is checked before the native goal status is completed.
+
+Evidence: docs/RELEASE_S406.json; docs/S406_full-source-acceptance.json; docs/S406_hosted-candidate.json; docs/S406_production-identity.json; docs/S406_served-parity.json; docs/S406_publisher-window.json. Private database row identifiers/readback stay in ignored storage.
+
+Future unselected SIL commitments:
+- [ ] [S406][SIL] Consider extending help-only process fixtures to another operator CLI only after reproducing its side effects.
+- [ ] [S406][SIL] Measure help startup separately from probe execution before attempting runtime optimization. No performance or token saving is currently claimed.
+
+---
+
+<!-- S405-closeout-writeback -->
+## S405 selected outcome
+
+- [x] [S405] manifest-text-parity L2 implemented and independently reviewed. Deployment acceptance is separate in docs/RELEASE_S405.json.
+- [ ] [SIL][S405] Consider migration of scheduled text probes only after measuring coverage and compatibility for each caller; future, unselected.
+- [ ] [SIL][S405] Consider redirect-target body verification only if a real redirected destination failure is reproduced; future, unselected.
+
+Wave 1 complete: fresh startup, nine-axis audit, strict premise2/2 and pending admission.
+Wave 2 complete: selected L2 implementation, real HTTP regressions4/4, independent approval.
+Wave 3 release verification and Wave 4 final publication are tracked in docs/RELEASE_S405.json; that ledger owns their current state and final reconciliation. This section records implementation acceptance, not a production-completion claim.
+
+<!-- S404-closeout-writeback -->
+## S404 selected outcomes
+
+- [x] [S404] Mobile News kicker/status-ring clearance repaired with56actual geometry cells; current source-bound after pixels and full release tracked in docs/RELEASE_S404.json.
+- [x] [S404] Complete manifest-based native asset comparison implemented and independently reviewed. Full release acceptance: docs/RELEASE_S404.json.
+- [ ] [SIL][S404] Consider response-body streaming only if measured remote readback memory pressure justifies it; future, unselected.
+- [ ] [SIL][S404] Consider native positive-manifest text parity as a separately reviewed default migration; preserve legacy default in this session. Future, unselected.
+
+Wave 1 complete: new invocation startup, fresh nine-axis audit, strict typed premises and candidate admission.
+Wave 2 complete locally: complete inventory, efficient binary hashing, real HTTP/CLI fixtures and corrected independent review.
+Wave 3 release and Wave 4 closeout/publication acceptance have their authoritative state in docs/RELEASE_S404.json. Local verification alone proves neither.
+## Session 402 selected outcome
+
+- [x] [S402] Recovered-route duration and method-scoped corroboration fully accepted; docs/RELEASE_S402.json.
+- [x] [SIL][S402] Add session-heading support to the existing ledger rotator; completed by S403 accepted outcome, docs/RELEASE_S403.json.
+- [ ] [SIL][S402] Extend method-specific corroboration coverage if additional signals are introduced; future, unselected.
+
+Waves1–3 complete. Wave4 canonical closeout and publication have their authoritative state in docs/RELEASE_S402.json, waves[3]. S403 follow-up: session-heading support completed; additional method-specific corroboration remains future/unselected.
+## Session 401 selected outcome
+
+- [x] [S401] Archive membership and gzip integrity fully accepted: 10/10 fixtures, independent CRC correction,13934-file staging,547/547 source checks, hosted3/3 and normal full production. docs/RELEASE_S401.json.
+- [ ] [SIL][S401] Consider per-member byte verification only if source mutation during packaging is observed; not selected in this arc.
+## S400 — reference integrity and persona readability
+
+Wave 1 · Startup and fresh audits — complete.
+Wave 2 · Both selected L2 outcomes — locally verified; Reference49/49, Chromium differential16/16; readability23/23 including16 rendered-background contrast cases (minimum6.04:1), shell14/14 and SW100/100. Final112 persona captures and separate28 disclosure states were actually inspected; CANON-053 passes.
+Wave 3 · Staging, full suite, push and production readback — authoritative state: docs/RELEASE_S400.json, waves[2].
+Wave 4 · Canonical closeout and final native audit — authoritative state: docs/RELEASE_S400.json, waves[3].
+
+- [x] [S400] Browser-faithful references: docs/AUDIT_2026-10-23-S400.json.
+- [x] [S400] Persona readability: docs/AUDIT_2026-10-23-S400-readability.json.
+
+Release and closeout are complete only when the corresponding ledger waves are complete and releaseAccepted is true; local verification alone does not establish deployment.
+
+- [x] [SIL][S400][S401] Pre-upload archive membership verification implemented in both staging publishers, with streaming gzip integrity and 10 actual-tar regressions. Original S400 omission retained; real deployment acceptance tracked in docs/RELEASE_S401.json.
+- [ ] [SIL][S400] Coordinate an evidence-backed distinction between formatting-only source writes and actual pixel changes in visual freshness; existing mandatory gate remains enforced. Future selection only.
+## S399
+
+Wave 1 · Spark reading clearance — done.
+Wave 2 · Responsive image reference gate — done.
+Wave 3 · Full S399 Pages promotion and 1,137-file readback — done.
+Wave 4 · S399 closeout records, checks, publication and cleanup — done. Release, readback, writebacks, intelligence, independent review, two complete547 suites, Ark and owned-process cleanup verified.
+
+- [ ] [SIL][S399] Verify Studio Ops acceptance of the planning-artifact timing classification reproduction; delivered cargo does not prove an applied fix. Future only.
+
+- [x] Both fixes: docs/AUDIT_2026-10-23-S399.md.
+- [x] Full deployment and canonical closeout verified: docs/RELEASE_S399.json.
+## S398 — SI, offline gate
+
+- [x] [S398] SI, bare-si gate, offline test; docs/RELEASE_S398.json.
+- [x] [SIL][S398] Spark buddy overlap repaired and browser-gated in S399.
+- [ ] [SIL][S398] Staging lineage tolerant of publisher data drift.
+## S397 — offline reliability
+
+- [x] [S397 #1-2] Origin-confirmed recovery and public precache navigation; docs/AUDIT_2026-10-22-S397.md.
+- [x] [S397 RELEASE] Normal full production63641742e5, exact hosted3/3, staging11/11, whole served tree verified; docs/RELEASE_S397.json.
+- [x] [SIL][S397] Origin-down test, S398.
+
+- [ ] [SIL][S397] Reuse the canonical Pages broker in deploy-currency provider observations; the current Worker-token Pages probe returns403. Future selection only.
+## S396 — dead internal references fixed and gated
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- [ ] [SIL][S396] Gate srcset, CSS url(), redirect targets. Future only.
+## S395 — complete served coverage and full deployment
+
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
+
+- [ ] [SIL][S395][PROTOCOL/P2] Investigate timing classification of incoming pre-session same-identity automation after a pre-sync lock; preserve original failure. Future selection only.
+- [ ] [SIL][S395][VERIFY/P2] Separately assess served binary coverage against real release risk; current verifier explicitly measures tracked served text. Future selection only.
+
+Waves1–3 product outcomes verified. Closing acceptance is recorded in docs/RELEASE_S395.json. Existing future SIL rows remain unselected.
+
+The closing release also carries the article stylesheet correction. Its acceptance and retained prior hosted failures are recorded in docs/RELEASE_S395.json.
+## S394 — truthful shell parity and full release
+
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
+
+- [ ] [SIL][S394][PROTOCOL/P2] Keep startup-generated genius-list drift distinguishable from selected implementation in premise timing; preserve the original nonpassing receipt. Future selection only.
+- [ ] [SIL][S394][RELIABILITY/P2] Assess cross-origin redirect handling in diagnostic HTTP commands with measured caller compatibility. Future selection only.
+
+Waves 1–4 product outcomes verified. Closing status publication is recorded in docs/RELEASE_S394.json. Future SIL items are unselected.
+## S393 — rank-report integrity and authorized full release
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
+
+- [ ] [SIL][S393][PROTOCOL/P2] Record strict premise acceptance before creating any plan artifact in the next selected audit.
+- [ ] [SIL][S393][BUILD/P2] Measure and remove generated leaderboard metadata/whitespace churn at its existing builder boundaries; preserve canonical social previews and rendered evidence. Future selection only.
+
+Waves1–3 implemented and verified for the full product release. Closing status/publication receipts are maintained in docs/RELEASE_S393.json; the two future SIL rows remain unselected.
+## S391 — operational reliability
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- [ ] [SIL][S391] Require the strict premise checkpoint before delegated edits.
+- [ ] [UI follow-up][S391] Assess the existing mobile Spark overlap with article prose in a future UI audit.
+
+Waves1–2 implemented; Wave3 release pending. Goal association: LATEST_HANDOFF.md.
+## S390 — public data contracts
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- [ ] [S390][FOUNDER REVIEW] vault-sdk member fetch fails on vault_rank; fixing changes consumer gating.
+- [ ] [S390][UX/P2] Rank orb never renders for members.
+- [ ] [S390][DATA/P2] Member achievements schema/display.
+- [ ] [S390][SEC/P2] event_rsvps exposes user_id to anon.
+## S388 — release follow-through
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- [ ] [SIL][S388][OBS/P2] Observe real post-release CSP collection and shared KV usage before claiming account-wide quota isolation.
+
+Waves1–3 verified; release evidence: docs/RELEASE_S388.json.
+## S387 — reliability follow-through
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- [ ] [SIL][S387][RELIABILITY/P1] Attribute remaining shared KV writers (CSP reports, rate counters and other account namespaces); verify real daily usage before claiming the account-wide outage risk eliminated.
+- [ ] [SIL][S387][OBS/P2] Re-read the current 30-day TT cohort after production promotion; no-data or incomplete evidence never authorizes enforcement.
+
+Wave 1 · trace diagnostic quota coupling and audit: complete. Wave 2 · isolate intake and preserve evidence: implementation/staging verified. Wave 3 · exact-candidate release and closeout: acceptance source docs/RELEASE_S387.json.
+## S386 — Desk art review contract
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- [ ] [P0][S386] KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telemetry writes.
+- [ ] [S386] Persona page/N 404s: lane allowlist + Hetzner rules together.
+- [ ] [SIL][S386] Disabled-workflow 422 = deferred; idle 30-min ingest scan.
+## S385 — public data contracts
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+S385 release acceptance: docs/RELEASE_S385.json (verified).
+- [ ] [SIL][S385] Investigate remaining Oracle canonical-route and feed assertions against actual source; preserve privacy and current navigation.
+- [ ] [SIL][S385] Inspect retained pixel diagnostic failures against original route/theme/viewport before proposing baseline changes.
+## S384 — returning-visitor reliability
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- S384 release acceptance is tracked in docs/RELEASE_S384.json and the Wave3 implementation plan.
+- [ ] [SIL][S384] Reproduce remaining stats/Oracle/community contract failures against controlled current fixtures; preserve actual rank/privacy semantics.
+- [ ] [SIL][S384] Inspect original pixel differences by route/theme/viewport before proposing baselines.
+## S383 — homepage engagement acceptance
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- S383 release acceptance and remaining gates: docs/RELEASE_S383.json is authoritative; completion requires accepted:true and no remaining gates.
+- [ ] [SIL][S383] Reproduce remaining optional behavioral diagnostics against the current candidate before changes.
+- [ ] [SIL][S383] Inspect original pixel differences by route/theme/viewport before proposing baselines.
+## S382 — Spark browser acceptance
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+S382 release acceptance and remaining phases: `docs/RELEASE_S382.json`. Implementation complete; full release unproven until that receipt passes.
+- [ ] [SIL][S382] Investigate the eight unresolved behavior assertions from E2E_DIAGNOSTICS_S382.json; reproduce runtime before changing tests.
+- [ ] [SIL][S382] Inspect24 pixel differences against exact route/theme/viewport before any baseline proposal.
+## S381 — selected candidate verification
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+Release acceptance and remaining gates: `docs/RELEASE_S381.json`. This ledger remains nonpassing until hosted checks and production readback are verified.
+- [ ] [SIL][S381] Classify the remaining broad E2E failures against the candidate now that target association is corrected; do not refresh visual baselines to conceal differences.
+- [ ] [SIL][S381] Assess candidate-origin contracts for other browser API probes in a future bounded audit; keep explicit external integration checks distinct.
+## S380 — browser discovery release
+
+Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S384 lossless excerpt).
+- [ ] [SIL][S380] Evaluate the existing Node schema-lite TODO with focused schema fixtures in a future authorized scope.
+- [ ] [SIL][S380] Separate optional authenticated runtime coverage from public browser failures using measured current results; discovery is now mandatory.
+## S379 — accepted implementation and release
+
+Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S384 lossless excerpt).
+- [ ] [SIL][S379][OPS/P2] Reduce staging archive overhead through the existing production public-surface policy; prove advertised routes and rollback before changing the manifest.
+- [ ] [SIL][S379][QA/P2] Give staging theme captures a session-specific output directory so runtime gates preserve pre-existing operator screenshots.
+## S378 arc — Spark clears reader controls
+
+Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S385 lossless excerpt).
+- [ ] [SIL/P3 · S378] Keep attribute-only interaction regressions synchronized with selector membership when companion controls evolve.
+- [ ] [SIL/P3 · S378] Inspect hidden-opener focus return after future placement changes; preserve header fallback.
+## S377 arc — homepage Recent Ships
+
+Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S385 lossless excerpt).
+- [ ] [SIL/P3 · S377] Census deferred homepage modules before enabling home-intelligence; preserve dormant member-query scope until its own review.
+- [ ] [SIL/P3 · S377] Keep generated receipt repairs in dependency order: status-proof before stats-surface; verify current candidate after rebases.
+## S376 arc — reader feedback on Desk articles
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- [ ] **[SIL/P2 · S376]** Firefox loses a reaction tap issued straight after a jump about 2 in 14 (late sections resize while anchoring settles; passes on retry). Decide between exact section size hints and no deferral, with Lighthouse evidence.
+- [ ] **[OPS/P3 · S376]** Start maintenance lane has no local copy here; task-slice and check-audit-premises shipped S377.
+## S374 arc — scripts after first paint, SI first use
+
+Completed waves: [verbatim archive](archive/TASK_BOARD_ARCHIVE.md).
+
+- [ ] **[SIL/P2 · S374]** Four browser specs fail on this machine against both production and the local build, before and after this session's change: `ambient-engagement` (milestones, first-scroll order, IGNIS tier) and `stats-theme-accessibility` (expects 19 projects, feed has 22). The CI `e2e` job reported success at 4e2f42773 but its log shows no Playwright totals. Establish whether CI runs them, then fix or retire each.
+- [ ] **[HOME/P2 · S374]** `home-intelligence.js` remains dormant after deferred injection; review its member-data and layout scope before enabling. `recent-ships.js` shipped with early/late initialization and hashed delivery in S377.
+## S372 arc — assurance and redirect repair
+
+- [ ] **[PERF/P2 · S372]** Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and `/news/2026-08-11/cloudflare-gave…/` bimodal 0.88 or 0.92 vs 0.90 (text LCP, render delay 2.2s vs 3.4s, TBT 0). Three of the last five runs needed a re-run. Find the render-delay cause or mark the tier lab-volatile with corroboration; do not lower floors. **S373 evidence:** observed FCP equals observed LCP (160–230ms) and ten scripts finish before it in every run; simulated FCP is steady at 1.3s while simulated LCP swings 2.3–3.9s. The gap is the script graph. Next: load below-the-fold Desk scripts after paint (CSP-safe) and compare in CI. The homepage tier now reads recurring sub-floor. — **S374:** script loading changed on both page types (D-S374.1); **S374: improved, not stable.** be218812c8 passed first time (article 0.98/0.99/0.99); 1f29cc7bf9 failed once on the article (0.88/0.88/0.96) and passed on re-run. Failing runs had the load event before first paint with 24 to 25 requests done, including fetches from eager `desk-presence` and ambient scripts. Next: delay those first fetches until after paint.
+## S371 release maintenance
+
+- [ ] [SIL/P2 · next scope] Exercise the art receipt path on the next real scheduled publish; confirm consumer accepts the exact SHA/path ledger.
+- [ ] [SIL/P2 · next scope] Keep shell regeneration and SRI stamping in a single documented sequence when running partial generators.
+
+# Task Board — VaultSparkStudios.github.io
+## S370 arc
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- [ ] **[SIL/P2 · next scope]** Preserve project-local capability contracts during incoming propagation; source copies that remove known exports must fail before being applied.
+
+Last updated: 2026-10-08 UTC (S370 requested closeout)
+## S368 final — open follow-ups (2026-10-05)
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- [ ] **[SIL/P2]** Push helper as a repo script (`scripts/push-main.mjs`): autostash merge, regenerate conflicted generated outputs, `repair-evidence-graph`, push — replacing the session-local PowerShell helper that four separate failure modes tripped this session.
+## S368 — Audit 2026-10-02
+
+- [ ] **[AUTH/P0]** Obelisk Ark `01K3SH847CF5020D9D7209EB07`: reopen signup + test identity → login E2E; Sparked-as-free.
+- [ ] **[P1]** Approve Desk digest test → `autoSend`; apply caller-trust-column-revokes; Ark `01K3SJ87…` reply.
+## Desk archive follow-up — 2026-10-01
+
+- [x] Archive 90 stories by month; seven recent editions keep the hub below 200 KiB.
+- [x] PR #134 and Pages run `36813693699`: 153-path staging/production parity preserves all 147 prior Desk paths; hosted and browser checks pass.
+- [x] Repair the daily Desk lane's staging ancestry, 24 withheld persona/archive paths and restricted receiver rules; recovery `36835514861` and Pages `36835622726` passed with 159/159 production bytes.
+- [x] **[DESK/RELEASE/P2 · S370 verified run 37622619279]** Observe the next scheduled publisher-to-release trigger after the October 1 repair; the manual recovery path is proven.
+- [ ] **[DESK/QA/P2]** Add a generated-fixture check for month rollover so a future edition automatically creates its month archive and retains all older story links.
+## Desk persona follow-up — 2026-09-30
+
+- [x] Release eight fictional correspondents with portraits, marks, voices, sourced feeds and prediction records; add creative-tools MICA with an honestly empty feed.
+- [x] Label panel turns accurately; keep historical articles and the Directors report unchanged.
+- [x] PR #132 and Pages run `36791903046`: 506 build checks, 215 mobile cases, 70 reviewed captures, hosted gates and 147-path parity passed. Full-site identity remains held.
+- [ ] **[DESK/RELEASE/P2]** Verify prior-overlay path preservation automatically before scoped Pages deploys.
+- [ ] **[QA/P2]** Review measured Linux screenshots before refreshing visual-regression references.
+## S366 — Robinhood Summit and daily homepage publication
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- [ ] **[S366][RELEASE/P2]** Track growth of the Desk overlay from the production baseline; arrange a reviewed baseline reset before accumulated story paths or artwork hit the staging archive or Pages limits.
+## S365 — completed arc and follow-up
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- [ ] **[S365][CI/P2]** Make staging deployment regenerate its continuity summary before a release ceremony can read it. The first S365 ceremony ran before that summary and rejected only lineage; the settled rerun passed 11/11.
+- [ ] **[S365][PERF/P3]** Watch the next three article Lighthouse runs for stability at the unchanged 0.90 floor. Investigate if the median falls below the threshold again; preserve the reader-first order and theme evidence.
+- [ ] **[S365][OPS/P2]** Teach the closeout wipe guard to recognize a byte-preserving work-log archive move, so routine cap rotation no longer needs `--allow-wipe`; keep unarchived deletion blocking.
+- [ ] **[S365][DESK/P3]** Decode literal HTML entities in a few older Desk source-receipt excerpts (`&#x27;`, `&#8217;`), then regenerate and visually verify those pages. The S365 post-edition visual matrix exposed the artifacts in mobile source cards.
+## S364 — requested signup repair
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- [ ] Verify one real confirmation only after explicit email-send authorization; no email sent yet.
+## Open — S362
+
+- [ ] **[SIL][S360][OBS/P2]** Surface the Supabase health API per-service verdict (db/rest/auth) on /status/ through a scheduled, credential-side probe that writes a public JSON. The browser probes can say "not responding" but not "the database is up and the gateway is not".
+- [ ] **[SIL][S362][OBS/P3]** The doctor names `rescore-ignis --stale` as the IGNIS remedy, but the propagated copy reads `portfolio/PROJECT_REGISTRY.json` from this repo root and finds nothing, so the remedy is a structural no-op here (D-S362.6). Awaiting the studio-ops answer to Ark repo-question `01K2TR2MCB649E1AD036E22BAD`; until then the stale score stands honestly reported.
+- [x] **[SIL][S362][OBS/P3]** The staleness probe checked count flickered — **DONE S363** (D-S363.9). Root cause found: the budget was a flat 24 s for the whole sweep, one sequential `gh` call per cron, so the count tracked API latency rather than the repo — measured live at **4/14 reached, deadline exhausted**, minutes after the same probe reported a clean `checked: 14`. Budget now scales per discovered workflow (8 s each, 24 s floor, 150 s ceiling) and the verdict is bound to coverage: a clean reading over an incomplete scan reports `⚠ PARTIAL` and exits non-zero, naming every cron it never reached. The pass line states its denominator (`14/14 scheduled workflows reached`). Four self-test cases pin the seam, including the S362 shape itself — a reachable subset that reads perfectly clean. **Reopened once during S363:** an earlier attempt closed this on a single stable `checked: 14`, which was one reading under a healthy budget, not a bound denominator.
+
+- [ ] **[S362][OBS/P3]** `desk-model-servability` dropped to 1/2 during this session: `Qwen3.8-27B` is unmeasured at the provider. Advisory and external; re-probe next session before treating it as a defect.
+- [ ] **[S362][OBS/P3]** The newsletter cron still shows 6 consecutive failures until the first held run on 2026-10-02 (D-S362.8). Expected, not a regression — confirm the run concludes success with a `held` annotation.
+## Now (next session ready)
+
+- [x] **[SIL][S363][GATES/P2]** Make `build:check` idempotent over `ignis/output/ecosystem-state.json` — **DONE S365.** The standalone runner now sanitizes the gitignored Oracle export before freezing and fingerprinting the tree, so a prior generator cannot strand step 81 on a rerun. This repaired a real closeout gate failure.
+- [ ] **[SIL][S363][PROTOCOL/P1]** Refuse an inbound propagation that removes an exported symbol this repo's own code imports. S363 merged back eight such symbols (D-S363.4), and S316 had already restored one of them and shipped cargo upstream so the next drain would carry it — it did not. Upstream cargo alone does not hold, so the recipient needs its own check: diff exported symbols pre/post drain and fail the drain, not the next build. Seven of the eight failed loudly as named imports; the eighth degraded silently and was caught only by a contract test, so detection is currently partly luck.
+- [ ] **[SIL][S363][PROTOCOL/P2]** Reconcile the four propagated checkers that encode studio-ops' own layout (D-S363.5, D-S363.7, D-S363.8, D-S363.9): `check-windows-hide` scan roots, the wipe guard's status-row format and archive naming, and `arc-profile.mjs` resolving `PROJECT_REGISTRY` to a path that exists only inside studio-ops. Each produced a false failure or a false inference that no local change could fix. Ark cargo `01K30UDB1264A040FE519B8D8B` carries the upstream ask; this item tracks whether the next drain actually lands it.
+
+- [x] **[S363][SIL/P3] Compact the agent memory index by hand (21.3KB, target <17.1KB).** — **DONE S372:** 23.3KB → 12.1KB by moving the Gates/CI section verbatim into a topic sub-index (no labels shortened, zero links lost). An automated label-truncation pass was tried and reverted: shortening to a character budget inverted meanings ("Green run can deploy nothing" → "Green run can deploy"). Needs a deliberate pass that merges genuine near-duplicates (the two "receipts after final …" entries, the two skip-ci entries) and writes shorter labels that still carry the claim. A wrong recall hook is worse than a large index.
+- [x] **[S363][SAFETY/P0] The newsletter send gate keys on the mode, not the event — SHIPPED.** A manual `workflow_dispatch` with `mode=send` skipped the hold entirely and would have mailed every opted-in member with `NEWSLETTER_ARMED` unset; the hold branch was also unreachable by any manual run. Now held whenever the effective mode is `send` and the variable is not `true` (D-S363.1). Nothing armed, nothing sent.
+- [x] **[S363][OBS/P1] The staleness probe can say "repaired, awaiting its next run" — SHIPPED.** Reads the workflow source's commit time, so a streak whose every run predates the fix is `repaired-untested` with streak, commit and expiry named. Self-expires after one cadence; untouched workflows stay broken; a post-fix failure makes the streak real again; silence still reported. 9 self-test guards (D-S363.2).
+- [x] **[S363][TRUTH/P1] Supabase control-plane `overall` aggregates all four planes — SHIPPED.** The public receipt read `blocked` while carrying three `ready` authorities and `readyPlanes: 3/4` beside it. Now `ready`/`partial`/`blocked` over all four, with live authorities named on the CLI. Promotion gate keys on `ready`, so nothing loosened (D-S363.3).
+- [x] **[S363][TRUTH/P1] The startup brief resolves revenue freshness through the shared resolver — SHIPPED.** It parsed a studio-ops-only path, so it always printed `not found` while the doctor read it fine. `smoke-startup-scripts` 60/60 (D-S363.6).
+- [x] **[S363][PROTOCOL/P0] Eight local-ahead guards restored after the `/start` propagation drain — SHIPPED.** `lib/secrets.mjs` (suggestCapabilities + known/suggestions/probe-health fields), `check-secrets.mjs` (caller-error render, exit 3), `lib/sil-categories.mjs` (pure 23-line deletion of the SIL invariant helpers), `lib/task-board.mjs` + the brief's inventory row, `lib/project-status-contract.mjs` (deprecated-alias guard), `probe-capability.mjs` (entire self-test). Merged beside the propagated improvements, never reverted; lane fix shipped upstream as Ark `pattern-share` `01K3052GLJ1D81D97FA5043903` (D-S363.4).
+- [x] **[S363][OBS/P1] A `git pull` could make the write-back probe cry wolf — SHIPPED.** 57 commits authored by `github-actions[bot]` counted as session debt and the lock written afterwards tripped the cut-off heuristic. Authorship is now the filter, and the file gained a real `--self-test` (8/8) — it had none, so `build:check` was running the live git probe while reporting itself as a logic test.
+- [x] **[S363][GATES/P2] Six gates no runner invoked, and two rotted allowlists — SHIPPED.** `check-protocol-skill-parity` and `check-scheduled-write-admission` wired into `build:check`; four lifecycle-owned gates declared their real lane with `@verification-scope`. Redundant allowlist entries removed from `check-orphan-libs` and `check-orphan-scripts` (D-S363.5).
+- [x] **[S363][GATES/P2] Seven superseded orphan libs removed — SHIPPED.** Six byte-identical to their studio-ops canonical copies (S220 precedent), plus `startup-evidence.mjs` whose property the propagated renderer now carries more strongly; its vacuous `--self-test` step removed from the manifest in the same edit.
+- [x] **[S363][WINDOWS/P1] Five spawn sites brought back under the window-storm guard — SHIPPED.** Four dynamic `node:child_process` imports routed through `lib/safe-spawn.mjs`, and the `cmd.exe` spawn in `run-local-browser-verify` states `windowsHide: true` at the call site. The propagated gate's scan roots are now repo-aware: owned roots still hard-fail if they vanish, portable ones are reported by name when a project does not carry them.
+- [x] **[S363][CONTENT/P2] The copy gate stopped reporting correct English as a defect — SHIPPED.** It split the sentence at the period inside `(R-Mo.)` and flagged the continuation as a lowercase start. Fixed structurally — a sentence does not end inside a parenthesis and resume lowercase — with the accepted blind spot stated in the tests rather than hidden. 45/45.
+- [x] **[S363][OBS/P2] The closeout board's git window gained a sentinel — SHIPPED.** A fixed `git log -n 30` would report "nothing shipped" for a session buried under beacon churn. Now scans `max + 1` and states `complete` / `scan-ceiling-reached` / `history-exhausted`.
+
+- [x] **[S356][DESK/P1] The Desk publishes real illustrations again — SHIPPED.** The publisher never had an image model — art 08-07..08-23 was hand-made, so 25 stories shipped the procedural card. A local Codex worker (ChatGPT plan, no API key) generates it; ingest takes only reviewed images; 25 backfilled (D-S356.1).
+- [x] **[S356][DESK/P1] Article + index redesigned for readers — SHIPPED.** Headline/byline/illustration/short-version first, readable persona blocks, receipts folded per fact, image-led index, "Illustration pending" when art is a placeholder.
+- [x] **[S356][DESK/P1] Reactions toggle and diversify — SHIPPED.** One pick per bar, tap again to remove, 8 panel emoji, and the floating widget no longer covers the bars.
+- [x] **[S356][DESK/P1] Community comments on every article — BUILT (deploy pending).** Anyone may post, automatic filter, members badged and featured; report + auto-hold; moderation CLI; migration + probe ready (D-S356.2).
+- [x] **[S356][DESK/P1] Desk reaches readers everywhere — SHIPPED.** Flagship homepage module above the fold and a site-wide header strip that only claims "Live" when the measured cadence is daily.
+- [x] **[S356][DESK/P1] Daily publishing defects fixed — SHIPPED.** Authoring runs the checks promote runs, anchors repaired verbatim (with an overlap rule), a missed day fails the late-night run, 7-day novelty, feed-summary facts, 20 verified new sources, same-day follow-up overwrite refused (D-S356.3).
+- [x] **[S356][TRUTH/P1] Studio Pulse tells the truth — SHIPPED.** Dormant projects derived from real activity (Solara is no longer "right now in the forge"), studio-wide 7-day timeline with honest partial states, false "stranded deploy" alarm closed.
+- [x] **[S356][SITE/P0] Site-wide crawl: 5 P0 + 13 P1 defects fixed.** Sigil covering the mobile menu button on 134 pages, floating widgets covering content on 104+ loads, two production 404s, an unhandled error on /invite/, light-theme contrast, 181 undersized tap targets, /faq/ CLS 0.419→0.003.
+- [x] **[S356][EMAIL/P1] Member newsletter fixed and armed — BUILT (deploy pending).** Brevo sender, working unsubscribe (one-click + confirmation page), postal address, claim-before-send hardened against double sends, rate-limit abort, timeouts (D-S356.4).
+- [x] **[S356][QA/P2] Test coverage + copy gate — SHIPPED.** 9 new unit specs over consent/analytics, theme, nav, CSRF, Turnstile, feedback payloads, presence and pure libs; new Desk copy-quality gate (a typo reached the homepage and two feeds with no spellcheck anywhere).
+- [x] **[S356][PRIVACY/P0] Founder presence removed from the website — SHIPPED.** Feed, generator, badge, wordmark handle, favicon pulse, hero/Pulse tiles, Atlas dot, edge allowlist, graph node and all regeneration vectors deleted; session-timing and work-recency removed from public-intelligence, the timeline, Pulse and /oracle/; guard test blocks any return. Agent-invented S98, never requested; ~41h live across 73 days (D-S356.6).
+- [ ] **[S356][PRIVACY/P0] Purge api/founder-presence.json from public git history.** 30 revisions carry live:true with project names and exact start timestamps; founder authorised the purge. Requires crons disabled, filter-repo rewrite, force-push, then regenerating SHA-pinned proof artifacts.
+- [x] **[S356][SITE/P1] Oracle/IGNIS prompt chips fail contrast in light theme.** — **closed S360, see Closed — S359 items.** `.ignis-chip` (from `assets/ignis-answer-engine.js`, styled at `oracle/index.html:35` / `ignis/index.html:34`) is solid orange with near-black text in light theme on `/oracle/` and `/ignis/` — seen in the S356 matrix, pre-existing. Fix with theme tokens.
+- [x] **[S356][GATES/P2] Drift preflight scope is narrower than the gate set.** — **closed S360, see Closed — S359 items.** `check-generated-drift-preflight` declares ~7 nodes and reported "current" while `build-news-desk` and `generate-pathways` were stale (both out of scope). Widen it toward the 92-subject sweep, or rename it so green cannot read as whole-tree freshness.
+- [ ] **[S356][PRODUCT/P2] "Coming soon" / "TBD" copy on six live game pages.** Founder copy decision: call-of-doodie, franchise-architect, gridiron-gm (trailer + screenshots), vaultfront (backend), mindframe, project-unknown (platform, title).
+- [x] **[S356][SITE/P2] Leaderboard embed hard-codes low-contrast greys.** — **closed S360, see Closed — S359 items.** api/leaderboard/v1/widget.js:22,33 (#555/#666 on #0a0a0a) fails AA in both themes; owned by the embed, not the stylesheet.
+- [ ] **[S356][OBS/P3] Staging Worker observability.** Still the only way to source the S354/S355 staging 503s; needs a Worker deploy and a free-tier cost check.
+
+- [x] **[S355][CI/P1] Held Pages runs no longer cancel confirmed promotions — SHIPPED.** `cancel-in-progress` is true only for a dispatch confirming production or content; refresh-live-data's input-less dispatch cancelled promotion `34824034218` in S354.
+- [x] **[S355][CI/P1] Publishers staging graph sources push with --resync — SHIPPED.** refresh-live-data, leaderboard-api, weekly-maintenance fixed; `check-publisher-resync` (11/11) gates the class.
+- [x] **[S355][OBS/P1] Founder presence no longer fails gates on other repos' sessions — SHIPPED.** `--check` validates shape, invariants and a sourceDigest over generator, slug lib and registry; `--check-live` keeps the strict comparison.
+- [x] **[S355][DESK/P1] Claim-parity gate escaped differently from the renderer — SHIPPED.** A fact containing `"` rendered fine and read as absent, blocking the 2026-09-13 latenight edition; both now use `scripts/lib/news-html.mjs`.
+- [x] **[S355][OBS/P2] Held runs, Desk model servability, mobile audit production guard — SHIPPED.** Advisory held field in sched-staleness; `check-desk-model-servability` in doctor; mobile audit refuses the production host unless `MOBILE_AUDIT_ALLOW_PRODUCTION=1`.
+- [ ] **[S355][UX/P3] Mount the narrative on /journal/.** Deferred: a UI change needs its own theme-matrix receipt cycle; declare the script in page-script scope.
+- [ ] **[S355][OBS/P3] Enable Worker observability for staging.** Deferred: needs a Worker deploy and a Workers Logs free-tier cost check (CANON-029); without it the S354 staging 503s cannot be sourced.
+
+- [ ] **[S354][FOUNDER DIRECTIVE] Founder-owned items deferred.** Passkey sign-in, signup walkthrough, public member data, newsletter arming, Desk cadence, warm-origin, Workers Paid and the small confirmations wait until the founder picks them up; agent-owned items continue.
+
+- [x] **[S352][SIL][CI/P2] Gate staged-but-unmodeled outputs — SHIPPED S353.** The "67/67 modeled" ratchet only read `build:check:steps`; 20 generators checked inside `check-proof-surface` were invisible. Coverage now parses that list too: 72/92 modeled, baseline 20, may only fall.
+- [ ] **[S353][SIL:1][CI/P2] Model the proof-surface generators, highest-risk first — 19 left.** S354 modeled `build-release-dependencies` (and its missing `release-proof` edge, which exposed a real weekly-maintenance strand, now closed). Start with `build-release-dependencies` (weekly-maintenance stages its output). Read each generator for REAL sources, add the node, `--update` to lower the baseline.
+- [ ] **[S353][SIL][OBS/P2] Verify the first Vault Narrative run after the S353 fix publishes a dispatch.** Expect `[vault-narrative] wrote … (anchor:…)` and `--check-fresh` green; if it rejects, the log now prints the rejected text.
+- [ ] **[S352][SIL][OBS/P1] Ship the sampler RPC entrypoint on Ark acceptance.** Ark `01K2EQ77M9F29A0EC9619EA4BC` asks studio-ops to reuse `studio-ops-cron` */30 via a service binding. The website half needs a node-side `cloudflare:workers` shim for the unit tests.
+
+- [ ] **[S351][OBS/P0 · FOUNDER DECISION] Free a cron slot, or move the account to Workers Paid.** S352: an agent-side third option went to studio-ops via Ark (row above); this row closes if studio-ops accepts. This is the single thing standing between the studio and ever observing its own edge, and it is now a one-sentence decision rather than an investigation. Five of five free-plan cron triggers are in use by other projects. Retiring one is a live change to that project (founder call); Workers Paid raises the cap to 1,000 and is a billing action reserved to a human under CANON-019. Everything downstream is already built, deployed and verified — namespace, binding, handler, drain, 12/12 drain self-tests.
+
+- [ ] **[S351][CI/P1] The `[skip ci]` publishers still do not cascade their derived artifacts.** `b67c283d1 feat(desk): publish the latenight edition [skip ci]` added news pages plus art and changed `index.html` at 22:20Z, then skipped CI — leaving the sitemap stale, five images missing from `data/lqip-map.json`, the mobile receipt bound to a superseded `index.html`, and the startup brief disagreeing with the shared revenue resolver. S351 ran that cascade BY HAND (lqip-map, sitemap, news-freshness, home-desk-module, oracle feed sanitizer, oracle answers, candidate manifest, plus a 215-cell mobile re-capture) and the repo was green afterwards. The debt is structural, not one bad commit: any publisher that takes `[skip ci]` must either run its own cascade or hand the work to a follow-up workflow. Until it does, every session that follows a publisher pays this tax. **S352:** the sitemap strand is closed structurally (graph node `sitemap <- news/`, 4 publishers fixed); the general class stays open, see the [SIL] row.
+
+- [x] **[S351][QA/P2] Unit-suite divergence gate — SHIPPED S352.** `check-unit-suite-parity.mjs` requires declared = executed = tracked and runs in build:check before `node --test`; 9/9 self-test, and a live mutation fails by name.
+
+- [ ] **[S349→S351][OBS/P1] Enable the edge uptime sampler — BLOCKED ON A CRON SLOT, and now precisely.** S351 cleared the S350 hold (the KV namespace created on the first attempt: `production-UPTIME_SAMPLES` = `adfe5ed60c90426ea1286321360138e3`) and deployed the Worker with the binding LIVE in production. The cron was then REFUSED: Cloudflare error 10072 — Workers Free caps the account at 5 cron triggers and all five belong to other projects (seamline `*/5`, studio-ops-cron `*/30`, veilos hourly, velaxis-proxy ×2). No cron = no invoker = `scheduled()` never runs, so the flag is back to `"0"` and the cron is commented out; left declared it fails EVERY future Worker deploy at the trigger step, because wrangler does not roll back the successful part. **Remaining work is two lines** once a founder picks (a) free a slot by retiring one of the five — a live change to a different project, not this repo's call — or (b) Workers Paid, which is billing and founder-reserved under CANON-019.
+- [ ] **[S349][OBS/P2] Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewriting them.** They are published as `unresolvedLegacyChecks` because a challenge and a real edge outage leave an identical footprint once the shape is gone, so they cannot now be told apart. Once the edge sampler has produced a full 31-day window, the retained history ages them out naturally and the public number becomes fully classifier-current. Do NOT re-score them to improve the figure.
+- [x] **[S349][PERF/P2] Hidden-tab polling.** SHIPPED S350: favicon-pulse and vault-pulse skip poll/rotation while `document.hidden`; all three refresh on return. desk-presence already skipped its network call (premise half-false).
+- [x] **[S349][PERF/P3] Superseded hashed shells.** SHIPPED S350: the existing `cleanupOldFingerprintedFiles` regex never matched (escaped `$`); root-fixed, 8 stale shells pruned.
+- [x] **[S350][SIL][OPS/P3] Self-test the shell cleanup pattern — SHIPPED S351.** `extractShellHashes()` and `isStaleShellName()` are now exported pure functions, the live `--apply`/`--check` path routes through the same predicate (one source of truth), and `--self-test` asserts 8 cases against synthetic names including the one that matters: a known-stale fixture MUST classify as stale. Wired into `build:check:steps` so it actually runs — a cleaner that matches nothing and a repo with nothing to clean print an identical line.
+- [x] **[S349][UX/P3] h1→h3 skips.** SHIPPED S350: Community, Journal, Contact demoted to h2, look preserved with `font-family: inherit`.
+
+- [x] **[S349][COST/P1] Uptime sampler enabling release — DONE S351.** Superseded by the OBS/P1 row above. The namespace exists, the binding and cron are declared, the flag is `"1"`, and `drain-uptime-kv.mjs` now resolves the namespace id from `cloudflare/wrangler.toml` instead of an env var nothing set — without that it would have printed "the sampler has not been enabled yet" and exited 0 while draining nothing, reporting success for the very step meant to verify the release. **Still not claimed:** no sample has been read back yet; the first `scheduled()` invocation has to run before anything has observed our edge.
+- [ ] **[NEXT][SIL][OBS/P1] Close field-vitals freshness only with real evidence.** Surface observed-through/stale-days, obtain a genuinely fresh post-S262 RUM cohort, and bind cohort verdicts to a release SHA so a fresh generated clock can never imply fresh field evidence.
+
+- [x] **[S348][PERF/P1] Defer Changelog reaction hydration below the fold.** **DONE S348.** Near-viewport observation, bounded four-island idle fallback, layout containment and unavailable-count semantics shipped; focused mutation coverage plus 14/14 inspected theme/device captures bind the deep-scroll reaction state.
+
+- [x] **[S348][PERF/P2] Make local performance sampling repeatable.** **DONE S348.** The harness warms once, defaults to three measured samples, preserves raw runs, reports full distributions and binds host-noise evidence. The measured Changelog run abstained as volatile (LCP p75 1.636s; CLS median 0.0021); it explicitly makes no field Core Web Vitals claim.
+
+- [x] **[S348][VERIFY/P1] Make mobile evidence atomic across flaky routes.** **DONE S348.** Process-level retries can no longer restart the single-writer ledger; bounded navigation recovery remains. Clean proof: 215/215 findings, zero failed captures, current candidate/source-bound receipt.
+
+- [x] **[S348][BUILD/P1] Make generated provenance byte-deterministic.** **DONE S348.** Forge RSS dates now derive from the newest source commit, feedback provenance inherits its source receipt clock, and both builders' `--check` modes compare exact output bytes. Two consecutive rebuilds produced identical hashes; Forge focused coverage is 9/9.
+
+- [x] **[S348][BUILD/P1] Close evidence-graph coverage instead of carrying a permanent blind spot.** **DONE S348.** Every one of 67 `--check`-gated generators is now source-reviewed and modeled (80 graph nodes total after the critique-packet innovation; unmodeled 33 -> 0). The projection, acyclicity/build-order gate, coverage self-test 12/12, reachability self-test 15/15, and all 80 live check/output contracts pass.
+
+- [x] **[S348][CI/P1] Close scheduled-publisher cascades exposed by the complete graph.** **DONE S348.** The centralized refresh order now rebuilds all newly visible dependents; both live-data publishers stage every fan-out, including agent discovery, project shards, catalog pages and ledgers. All 29 workflows pass the cascade gate and its widened mutation suite is 21/21.
+
+- [x] **[S345][DEPLOY/P0] Full production deploy, both lanes, founder-authorised.** **DONE S345.** Staging refreshed first per CANON-007 by the operator overlay (403 overlays, 26 safe removals, identity untouched, exact-byte verified), then promoted through the SCOPED path -- `check-promotion-scope` reported `promotable=true - scoped-disjoint` against BOTH active hold reasons (`real-provider-e2e-pending`, `supabase-control-plane-partial`), and the identity hold was never cleared. Content lane: `pages-deploy` run `34153075898` green; **production serves HEAD `998243a3f76643c70ece998f7f75c748aa0d1bf2` exactly**, not a baseline stamp. Worker lane second (it deadlocks on `deploy-currency-live` otherwise): run `34153477094` passed the canonical release ceremony, deployed, and cleared the post-deploy liveness gate with no rollback. Verified live: strict CSP with the sha allowlist, HSTS preload, TT report-only, and `/ /news/ /status/ /membership/ /evidence/` all 200. `deploy-currency` now reads `production current - 0 commit(s) behind`. Precondition the content lane needs and CI cannot produce: `build-worker-route-provenance --probe` from a residential vantage, matched 7/7.
+
+- [x] **[S345][BUILD/P1] `check-evidence-graph-coverage.mjs` executed its own ratchet when imported.** **DONE S345.** `else run()` at module scope meant any consumer that imported `checkedGenerators`/`coverage` would run the gate and hit its `process.exit`. Found by needing the import for the sweep above, not by a gate -- nothing imported it before. Fixed with the repo's established `isDirect` guard; both direct invocation and `--self-test` (7/7) unchanged, and the import is now silent.
+
+- [x] **[S345→S348][BUILD/P3] Evidence-graph coverage debt is closed.** **DONE S348.** Source inspection expanded the graph to all 67 `--check`-gated generators (79 nodes including fan-out writers), lowered the ratchet from 33 to 0, and taught reachability to prove wildcard outputs against tracked files rather than treating globs as literal paths.
+
+- [x] **[S344][UX/P0] The homepage returning-visitor strip had never rendered, and two theme defects were hiding behind that.** **DONE S344.** Found by doing the CANON-053 pixel check on the surface fixed above — it would not render. `returning-visitor-digest.js` loads first (`ambient-loader.js`, both `idle`) and stamps `vs_last_visit_ts` to `now` before `returning-signal-strip.js` reads the same key, so no entry was ever newer than "last visit". Proved with a control blocking only the digest: strip renders, baseline preserved. Same class as the S343 `vs_visit_count` fix, same two files, neighbouring key. Fixed with a one-writer handoff key `vs_prev_visit_ts` (absent = bail, self-heals next visit). Underneath it: `--vs-text` is defined nowhere so every theme used a near-white fallback (invisible on light), and brand gold measured 1.31:1 on cream. Now `--text` plus a light-only `#8a6a00` (4.72:1). **7/7 themes clear WCAG AA on all four elements, measured from painted pixels** after two computed-style readings were wrong. See D-S344.6.
+
+- [x] **[S344][CI/P0] A skipped step read as a successful step, four guards deep.** **DONE S344.** `news-publish.yml` chained on `if: steps.<X>.outputs.status == '0'`; a SKIPPED step writes no output and GitHub coerces `''` and `'0'` to the same number, so the guard passed for a step that never ran. In run `34063581495` the art renderer, Desk rebuild, editorial gates and public-feed cascade all executed on a slot that drafted nothing. Fixed with a non-numeric `ok=yes/no` sentinel across all 7 guards, plus `check-workflow-step-guards.mjs` (10/10 self-test, in `build:check`, 29 workflows clean) run against the pre-fix file as a negative control -- it caught all 7. See D-S344.3.
+
+- [x] **[S344][CI/P0] `generate-news-art.mjs` crashed with a raw ENOENT stack on the normal dropped slot.** **DONE S344.** Unguarded `readdirSync('.cache/news-drafts')`. Shipped in the SAME change as the guard fix and never alone: this crash was one of only two things preventing an unattended commit of a non-edition. Exit code deliberately unchanged (still non-zero) so promotion stays gated.
+
+- [x] **[S344][UX/P0] The homepage published CI jargon to returning visitors, and the filter meant to stop it was dead code.** **DONE S344.** `MOVE_VERB[commit.move] || MOVE_VERB[commit.type]` meant `chore: null` was never reached, because chore maps to move `Tended` -> truthy `Refined`. 13 of 24 live sentences were chore commits. Fixed the precedence, added structural `visitorFacing` classification (producer + reader shipped together; absent field = not publishable), stripped `(attempt N)`, and pinned the exact leaked sentence. Feed 24 -> 8, every survivor visitor-visible. Closes [VOICE/P1] from S343. See D-S344.4.
+
+- [ ] **[S345→S347][ENG/P0] Member-newsletter deployment and explicit arming decision remain separate.** S347 hardened the existing operator (8/8 focused tests); no deploy, secret update or send occurred. Management/function inspection is agent-capable; prior-session sandbox refusals are historical, not fresh human-only proof. Preserve D-S341.4 and the separate arming/first-send decision; verify the exact unauthenticated 401 guard before any approved send.
+
+- [ ] **[S344][DESK/P1] ESCALATION: The Desk's cadence lever is still the founder's pick -- but the S344 symptom sentence has EXPIRED.** **Re-probed S345:** `build-news-freshness --check --require-daily` now reports `daily - latest 2026-09-07 - age 0d`, and 2 editions published on 2026-09-07. The S344 text ('nothing has published since 2026-09-04', 'degraded to `periodic`') was true when written and is false now; it is corrected here rather than carried, because a blocker sentence is a claim with an expiry. **What is NOT resolved, and is not claimed to be:** the queue-width constraint that caused the 3-day gap is UNMEASURED locally -- the radar cache is CI-only and absent from a local tree, so this session could not confirm whether the queue widened or the day was simply lucky. 2 editions against a 4-slot/day promise is a partial recovery, not a met promise. The founder's pick (widen radar yield, shorten novelty, or reduce slots) stands, and the cadence gate's reds remain HONEST (D-S344.5).
+
+- [x] **[S344][SEC/P0] The Supabase credential mismatch is named at the probe, and the gateway fix is shipped.** **DONE S344.** Root cause is structural, not a bad intake: `loadEnv()` merges every `secrets/*.env` into ONE flat namespace, the studio runs TWO shared Supabase projects, and both want `SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY` — so whichever intakes last silently takes the slot. It flipped on 2026-08-17. Fixed here: `probe-supabase-control-plane.mjs` was *diagnosing* `credential-project-mismatch` and then reporting the generic `supabase-rest-probe-failed`, which sends the reader to the provider when the fix is one line in the gateway; the blocker is now named, and the probe also decodes the service-role JWT's own `ref` so a right-URL/wrong-key slot is caught. 16/16 with the historical bug pinned. Gateway half shipped to studio-ops as Ark `01K1S867GM47A2B15C3C840B38` (project-scoped names + surface `lastProbeStatus`). See D-S344.1.
+
+- [ ] **[S344→S347][SEC/P0] Scoped website credential owner reconciliation.** Fresh S347 preflight still reports credential-project mismatch while management/SQL/function inspection is available. Ark 01K22H17HM5F6D2952E9B84165 requests the studio-ops owner fix without exposing credentials. Owner-pending, not a claim that credentials are absent or that only the founder can act; provider truth reads remain unproven.
+
+- [x] **[S344->S349][OBS/P1] `check-secrets` reports READY for a credential it knows is failing.** **FIXED S349.** `resolveCapability` held `lastProbeStatus` and never read it. It now returns `lastProbeStatus`/`lastProbeAt`/`probeFailing` alongside presence, and the CLI renders a distinct `⚠ FAILING` row ("present but last probe: auth-error (2026-08-13)") instead of collapsing it into READY. `ok` deliberately keeps meaning presence, so no existing caller changes behaviour. Exit codes are unchanged on purpose: a failing probe is NOT "credential absent", and returning 1 would have relabelled it as the founder blocker CANON-019 forbids. Surfaced a second unknown failure in the process -- `openai.api` -> `unreachable` -- so the honest ready count is 44/72, not 46/72.
+
+- [ ] **[S344][INFRA/P1] Re-evaluate the data plane for the shared box once `STUDIO_PG_ADMIN_URL` is vaulted.** CANON-038 makes self-hosted Postgres first choice and cloud-managed the justified exception; D-S344.2 records the justification. The shared cluster's admin DSN is **ABSENT**, which CANON-038 itself names as its remaining founder-aware step, so there is currently nothing to migrate to. When it exists: this is an **escalation, not a task** — it moves live member accounts and the sign-in path onto a single box, `AGENTS.md` requires escalation before changing auth flows, and the cost saving is ~zero because the Supabase free tier is already cost-neutral (CANON-029). The static site is deliberately excluded: a free global CDN is not beaten by one box.
+
+- [x] **[S343][AUTH/P0] Nobody could join this website — one undefined function was failing every registration.** **DONE S343, live in production.** `vault-member/portal-auth.js` called `VS.kitSubscribe(...)`, defined nowhere in the codebase, inside the registration try-block and BEFORE `showDashboard()`. The subscribe checkbox ships `checked`, so every new member on the default path hit a TypeError, was told *"Could not complete registration. Please try again."* — and was stranded while their account had in fact been created; the retry then collided with `register_open`'s username-uniqueness guard. This is the explanation for zero users. Opt-in now fires AFTER `showDashboard()`, guarded on `window.VaultKit`, un-awaited, rejection swallowed. Verified in the SERVED bundle at `57e69bfcd`: the only surviving `kitSubscribe` is the comment explaining its removal.
+
+- [x] **[S343][AUTH/P0] A taken Vault Handle was reading as a successful registration.** **DONE S343.** `register_open` reports a rejection as DATA, not as `rpcErr`; the client checked only `rpcErr`, so a taken handle dropped the member into a dashboard their handle was never bound to. Now inspects `rpcData` on both the array and object shapes.
+
+- [x] **[S343][UX/P1] `/login` served browsers a raw JSON blob when the IdP was down.** **DONE S343.** `cloudflare/obelisk-auth.js` content-negotiates: browsers get a branded retry page, machines keep the `identity_provider_unavailable` JSON contract byte-for-byte. 57/57 worker tests.
+
+- [x] **[S343][OBS/P1] The funnel had no bot separation, while the site advertised that it did.** **DONE S343.** `/stats/ecosystem/` has claimed "bots separated from people" for months; the funnel beacon applied no such filter, leaving all 371 hero impressions of unknown provenance. `looksLikeBot()` returns a BOOLEAN — the UA is read and discarded, never stored, because a retained UA is a fingerprint.
+
+- [x] **[S343][LEGAL/P1] Subscriptions were sellable with no cancel path.** **DONE S343.** `supabase/functions/customer-portal-session` had ZERO callers and the Settings button was guarded by `typeof`, so it failed SILENTLY while the copy promises "Cancel anytime" — a consumer-law exposure, not just a bug. `VS.openCustomerPortal()` defined in `portal-core.js`, handling the `No subscription found` 404. Also: `?checkout=success` is now read (mirroring the working `?gift=success` path); `create-checkout` had been redirecting with it to nothing.
+
+- [x] **[S343][PERF/P2] The homepage shipped ~6 KB per visit to run two guaranteed no-ops.** **DONE S343.** `home-personalized.js` and `pathways-router.js` were loaded on `/` by the idle loader; both early-return on `/`, and `#home-personalized-welcome` exists in zero HTML files. Also fixed `vs_visit_count`, which had two writers with incompatible meanings (per-path here, per-session in `returning-visitor-digest.js`) while every trust/cadence threshold on the site reads it — the session-scoped writer now owns it outright.
+
+- [x] **[S343][SEC/P0] The gateway's Supabase service-role key is scoped to a DIFFERENT project.** Duplicate consolidated into the S344 scoped-credential owner task. S347 fresh preflight still observes credential-project mismatch; Ark 01K22H17HM5F6D2952E9B84165 requests the owner fix. This is owner-pending, not missing-credential or human-only evidence.
+
+- [x] **[S343][VOICE/P1] The homepage hero is publishing CI jargon to strangers.** S347: Conduit public eligibility, operational-copy rejection and grammatical public action sentences implemented; 19/19 focused tests. Generated/served after-state verification pending.
+
+- [ ] **[S343][QA/P0] The Phase 0 gate is a HUMAN walkthrough and has not been run.** The plan's own gate is a real signup in a clean browser profile with the subscribe box left checked, landing on the dashboard. The fix is verified by build:check 388/388, mobile 215/215, worker 57/57, and by reading the SERVED bundle — but not by a person actually creating an account. ~3 minutes; do it before any onboarding push.
+
+- [ ] **[S342][AUTH/P0] Complete the Obelisk provider journey — it is the LAST step, and the command is `--watch`.** `node scripts/verify-provider-journey.mjs --watch`, then in YOUR OWN browser (native Windows Hello works): sign in at `/login` → land on `/vault-member/` → **SIGN OUT there** (the logout leg is the revocation evidence). 12-hour window, live `callback:✓ compat:✓ logout:✓`. Self-check: `/api/auth/me` returning `identity: {...}` means the callback landed. Do NOT use `--live` unless the passkey is in Windows Hello — it opens a fresh automated profile that cannot reach a Chrome-held credential (two 10-min runs expired writing nothing). Everything upstream is verified live: registration `active` with both callbacks, authorize with correct PKCE, revocation endpoint live, `recordJourney` wired at all three Worker legs. Clears `real-provider-e2e-pending` and unholds `auth/**`, `surface:identity`, `worker:identity`. **Re-probed S372 (2026-10-10):** `--watch --since=168` observed no callback, compat or logout leg in the last 7 days, so the hold condition is still unmet. The upstream dependency `obelisk-staging-registration` now reads `completed` and live-verified (4/4 checks, probed 2026-10-05), so the founder passkey sign-in and sign-out is the only remaining step. The S372 full promotion (run 38017202206) shipped under the SCOPED path with this hold in place; byte parity showed every `auth/**` page already identical to main.
+
+- [x] **[S342][BUILD/P1] `check-publish-cascade-coverage` did not know that news art feeds the LQIP map.** **DONE S342.** Added an `lqip-map` node to `config/evidence-graph.json` with the publisher-committed image roots as sources (`assets/og/news/`, `data/news-desk/art/`, `assets/og/`, `assets/covers/`). **The first attempt was decorative** — the gate filters `node.publishCascade === true` and the node lacked the flag, so the negative control stayed green and would have shipped a fix that fixed nothing. With the flag set, reverting the news-publish repair makes the gate name the violation and exit 1; restoring it clears. Proven both directions. The new edge immediately found a SECOND publisher with the same gap — `refresh-live-data.yml` does a bare `git add data/`, sweeping in `data/news-desk/art/` without re-deriving the map — now fixed too. 21/21 self-test.
+
+- [x] **[S342][OBS/P2] The registration probe's 14-day clock had no re-probe cadence.** **DONE S342.** `weekly-maintenance.yml` now runs `build-release-dependencies --probe`, re-derives `api/release-dependencies.json` from the observation, `--check`s it and stages both — weekly is well inside the 14 days. `continue-on-error: true`: an unreachable provider leaves the probe `unreachable`, which settles nothing, which is the honest outcome. The clock was deliberately NOT widened.
+
+- [x] **[S342][BUILD/P3] The live probe settled the dependency only on the no-cargo path.** **DONE S342.** `liveSettles` now applies after the cargo-path status, so a live-verified dependency stays `completed` whether its cargo is in flight, acknowledged, expired or gone — re-opening the Ark conversation can no longer demote it and re-raise `releaseDependenciesSatisfied`. Four regression tests pin it, including the exact shape that was broken. Writing them surfaced a second latent bug: a **future-dated** probe produced a negative age that sailed past the `> 14 days` upper bound and settled the contract; `liveSettles` now rejects both ends of the clock. 32/32.
+
+- [ ] **[S341][OPS/P1] Decide whether to arm the Monthly Member Newsletter — it has never once sent.** Every scheduled run since 2026-04-02 has failed; zero successes on record. Two confirmed causes: `NEWSLETTER_SECRET` does not exist as a repository secret, so the workflow sends `Authorization: Bearer ` with an empty token; and `POST {SUPABASE_FUNCTION_BASE_URL}/send-member-newsletter` returns `404 NOT_FOUND` because `supabase/functions/send-member-newsletter/` exists here but was never deployed. **Not** founder-blocked: `supabase.management` is READY, so both the deploy and the secret are agent paths (CANON-019, phantom-blocker test satisfied). Deliberately not armed because doing so emails every member on the 2nd of next month, which is not a side effect of a website deploy session (D-S341.4). If armed: deploy the function, mint the secret, dispatch ONE manual run before the cron fires.
+
+- [x] **[S341][OPS/P2] Ship Ark cargo to studio-ops requesting propagation of the 12 protocol scripts.** **DONE S341** — `repo-question` shipped to studio-ops (id `01K1IPF5HI8DECBF21D3725972`), plus a `pattern-share` to `*` on the publisher-landing class (id `01K1IPEHNUF7C2B696EB872089`). Sibling tree untouched (CANON-018). Reopen only if the propagation does not arrive. All twelve exist canonically in `vaultspark-studio-ops`; five are `SESSION_PROTOCOL` §1 GATES (`start-sync` 0.8, `start-canon-sync` 2.3, `frontier-capability-radar` 2.6, `run-maintenance` 2.7, `check-maintenance-lane-ran` 2.8) and were unrunnable during this session's own `/start` — a protocol step whose script is absent from the repo that runs it has never run here. Do NOT re-implement locally; do NOT `--heal` (a shim resolves its root from `import.meta.dirname` and would measure studio-ops while appearing to measure this repo, the S66 substitution). Named in a `propagationGap` bucket with its owner (D-S341.5).
+
+- [x] **[S341][OBS/P3] The `silent` cron verdict is fixture-proven only -- and now says so itself.** **DONE S345.** Re-probed live: `broken: 1` (the newsletter), `silent: 0`, `unmeasured: 0`. There is no real silent cron to pin against, and disabling a live workflow to manufacture one would be fabricating evidence to pass a test. Took the item's second branch, but made it self-declaring rather than a note in a doc that rots: the run now computes `liveCorroboration` per verdict class and reports `fixtureOnlyVerdicts` on BOTH the pass and fail paths, plus in `--json`. The point is that `silent: 0` read identically whether the detector worked or was quietly broken; it now distinguishes 'no instance' from 'verified all-clear'. Self-test 18/18 with the silent fixture pinned as the only proof it has. CANON-031.
+
+- [x] **[S340→S345][BUILD/P2] Derived-generator coverage repair completed.** Full original evidence: context/archive/TASK_BOARD_ARCHIVE.md (S387 rotation).
+
+- [x] **[S340][BUILD/P1] Register `/evidence/` in `config/intelligence-suite.json` and end the nav tug-of-war.** S347: canonical Evidence route and shared-suite ownership implemented and focused-tested. Final generated matrix and release verification pending.
+
+- [x] **[S340][UX/P2] Make the game covers art-only; the tile owns all text.** S347: D-S340.7 implemented in the cover producer; live tiles retain labels. Final asset/pixel evidence and release pending.
+
+- [x] **[S340][VERIFY/P1] Confirm the E2E Test Suite is green on a real scheduled/push run, not only locally.**
+  **DONE S340 — verified in CI.** Run `33705213412` on `b5420deb3` completed **success** with BOTH jobs green (`e2e: success`, `compliance: success`). The eight runs before the fix died at ~1m30s in the smoke pre-gate without ever reaching the suite; the two runs after the pre-gate fix reached it and reported `e2e: success` at ~10.5 minutes while `compliance` still failed on `build-intelligence-budget` drift — the second wave the pre-gate had been masking — and this run is the first with both green. Original text follows. S340 fixed it at the root and proved it locally: the smoke went 12 checks to 26 with 0 failures, and all eight previously-stranded specs pass (26 passed / 0 failed against the preview). But the workflow itself had been red on eight consecutive pushes, and the proof that it is fixed is a green run on GitHub -- which had not happened at closeout. Check `gh run list --workflow="E2E Test Suite"`. If it is still red, read the failing step before touching anything: the pre-gate is no longer the failure point, so anything red now is a consumer that was masked for 17 hours and has not yet been seen.
+
+- [x] **[S340][OBS/P3] `check-postbuild-ordering --check` reports `unmeasured` in CI and always will.** S347: actual postbuild lifecycle now produces a schema-bound trace. Exact complete-HTML hash observations gate later writes; ordinary/no-op reads are retained without invented dataflow. 38/38 focused tests; final build pending.
+
+- [x] **[S339][UX/P3] The cover artwork still duplicates the tile's KICKER and TITLE, the same way it used to duplicate the status.** Superseded by the decided S340 art-only direction and its S347 implementation; no separate design decision remains. Final pixel/release evidence is tracked on the S347 item.
+
+- [ ] **[S337][SEC/P1] The Trusted Types enforce blocker is LOAD ORDER, and it is measured.** `ambient-core.bundle.js` installs the TT `default` policy that the site's ~167 legacy `innerHTML` sinks depend on, and its own comment says it "MUST load before any sink usage" — but ambient-core is not the first script on the page. Measured across 137 built pages in S337: **31 sink-bearing client assets load before it**, led by `pwa-nav.js` (81 pages) and `pwa-install.js` (72). Report-Only hides this; enforcement throws. This is the concrete blocker the board has been recording as "stale soak evidence" — both are true, only this one names a defect. The repair hoists the policy installer ahead of every sink-bearing asset, which rewrites the head of every page and invalidates every hash-bound receipt at once, so it needs its own session and its own reseal budget, not a rider on a deploy. Re-measure with the scan in D-S337.3 before and after. (D-S337.3)
+
+- [x] **[S337][OBS/P2] The release-ceremony receipt truncates a failure message at 500 characters, so a multi-violation failure names only its first file.** S347: both release producers extract bounded distinct repair references before prose truncation; full six-failure classifier fixtures pass. Actual release receipts pending.
+
+- [x] **[S337][DEPLOY/P2] Staging is behind production — now MEASURED, not yet refreshed.** **S338: the probe exists and the number is real.** `check-staging-parity.mjs` compared a hand-maintained sample of three routes and could never see an absent one; it now compares the surface each origin advertises (two sitemap GETs, full coverage). Live: production advertises 134 routes, staging 115, **23 missing on staging** — `/evidence/`, `/how-we-build/`, three news editions and the entire `.ai/` fact-sheet layer — and staging's `build-sha.json` reports `94e78e93` built **2026-08-28**, five days behind production. Published as `surfaceParity` with `gating:false` and a stated reason (D-S338.3). REMAINING: establish what refreshes staging (it is evidently not on the content lane), refresh it, then flip `surfaceParity.gating` to true so the CANON-007 gate stops being inverted. Original text: Probed in S337: `https://website.staging.vaultsparkstudios.com/how-we-build/` returns **404** while the apex returns 200. CANON-007 makes staging the thing production is verified against, so a staging origin quietly older than production inverts the gate — the release ceremony's browser matrix is measuring a tree that no longer matches what is being promoted. Establish what refreshes staging, whether it is on the content lane at all, and add a parity probe that fails when a route serving in production is absent from staging.
+
+- [ ] **[S336][VERIFY/P2] Manual CANON-053 rendered-pixel review of the surfaces that only NOW actually serve.** S335 captured automated receipts for `/community/#wall`, `/changelog/#requests`, `/evidence/#verify`, `/how-we-build/` and the member dashboard meter — but production was serving the pre-S335 build at the time, so those captures could not have been of the live pages. They serve as of S336. Capture across all seven themes at 1366px desktop and 390px mobile, inspect the images, and leave a hash-bound `docs/visual-qa/LATEST.json`. Verify with `check-visual-qa.mjs --project . --changed`.
+
+- [x] **[S336][DEPLOY/P2] Confirm the promotion stuck, and that the new content clock reads true.** **S337: confirmed.** Probed the apex live — `/`, `/how-we-build/`, `/evidence/`, `/community/` and `/news/` all return 200, so the S336 promotion held. `prune-served-surface --check` stays green in `build:check`. Original text: `deploy-currency` should keep reporting `content-current` with `undeployedContentCommits: 0`. If it drifts back to `behind` with a rising `contentLagHours`, the content lane needs another dispatch — that is now the intended signal rather than a silent gap. Also confirm `prune-served-surface --check` stays green in CI, since it is newly wired into `build:check`.
+
+- [x] **[S336][DEPLOY/P3] Retire `vault-wall/` from `config/served-surface.json` once a FULL production deploy has actually removed the page.** **S337: DONE, and by evidence.** The S337 full `confirm_production` deploy (run `33598223667`) completed the release ceremony and promoted a clean dist: production now serves commit `fe82e5116`, `/vault-wall/` returns **301** (was 200), and the deployed `sitemap.xml` no longer lists it. The prefix is removed and `prune-served-surface --check` stays green — 1388 tracked deployable files, 1168 positively classified, 193 advertised routes, every advertised route surviving its own prune. Original text: The prefix was restored in S336 (D-S336.2) because the content lane cannot delete files or promote `_redirects`, so production still serves `/vault-wall/` (probed 200) and the deployed sitemap still advertises it. At HEAD the prefix matches nothing and is inert. Remove it only after a `confirm_production` deploy retires the page and regenerates the sitemap — which S337 proved is NOT gated on the Obelisk identity hold — the S319 scoped path returns `allowed=true; mode=scoped` today (D-S337.1). The remaining dependency is simply a `confirm_production` run that completes the release ceremony.
+
+- [x] **[S335→S348][BUILD/P2] Identical-build provenance churn is closed.** **DONE S348.** The residual churn was genuinely timestamp-derived: Forge RSS emitted wall time and feedback provenance emitted its own clock instead of inheriting the source receipt. Both now use source-derived clocks, both `--check` paths compare exact bytes, and two consecutive writer runs over unchanged sources produced identical hashes. The earlier `_headers` ordering repair remains intact.
+- [x] **[S335→S347][DATA/P2] Align member feedback with its verified schema.** Read-only live catalog evidence corroborates path/reaction; the client now sends only those columns and maps mixed to ok. Installed-Chromium schema-stub tests pass 6/6 with all network aborted. No real insert, schema/RLS/auth change or deployment occurred; final candidate verification/release pending.
+
+- [ ] **[S336][SEC/P1] Re-run the Trusted Types KV soak, then decide the enforce flip on current evidence.** **S336 fixed the receipt, not the blocker.** `build-tt-readiness.mjs` computed no age at all — `amber-soak` held whenever a warm row existed, forever, while `nextAction` told the reader to wait for rows to age out that nothing aged — and it re-stamped `generatedAt` every build over a manifest generated 2026-07-07 against a declared 30-day window. It now ages rows for real, publishes `manifestAgeDays`/`soakWindowDays`/`evidenceStale`, and reports the new `stale-evidence` status, which keeps `enforceEligible:false`. That refusal is deliberate: all 17 warm rows would age out, so ageing alone would have manufactured `enforce-candidate` from a fossil. The remaining work is INPUT, not code — run `scripts/analyze-tt-violations.mjs` against live Workers KV to regenerate `.cache/tt-active-local-sinks.json`, then re-read the receipt. Only if it reaches `enforce-candidate` do you set `TT_ENFORCE_ENABLED="1"` in `cloudflare/wrangler.toml`, deploy, verify live headers on the apex (not pages.dev), and regenerate `api/security-posture.json` so "active" means enforced. Founder approval for the flip was given in S335 and still stands. (D-S336.4)
+
+- [x] ~~**[S335][SEC/P1] Flip Trusted Types to enforce once the readiness receipt is honest.**~~ Receipt made honest in S336; superseded by the item above. The Worker now honours `TT_ENFORCE_ENABLED` (default "0", one-variable rollback); founder approved the flip in S335. Held because `api/tt-readiness.json` reports `enforceEligible:false` on 17 "warm" rows whose newest report is 2026-07-03 — two-month-old rows should have aged to stale, so `build-tt-readiness.mjs`'s warm/stale window is the first suspect. Fix the ageing, regenerate, then set the var to "1" in `cloudflare/wrangler.toml`, deploy, verify live headers on the apex (not pages.dev), and regenerate `api/security-posture.json` so "active" means enforced.
+- [ ] **[S336][SEC/P1 · FOUNDER DECISION] Four public tables still render a silent zero — decide which member activity becomes publicly readable, then ship one migration.** **S336 completed the audit; the remaining step is a decision, not investigation.** Verified against the migrations and probed live: `challenge_submissions` (no anon SELECT policy — only `read_own` + admin; read anonymously by `/community/` and all seven `/leaderboards/*`; probe returns HTTP 200 count 0), `game_sessions` (no anon SELECT at all; `/community/` and `/`), `point_events` (`auth.uid() = user_id` only — powers the referral leaderboard and the public profile's "Recent activity", which renders its empty state forever), `member_achievements` (`auth.uid() = member_id` only — public profile shows "No achievements unlocked yet." permanently; its policy also keys `member_id` while the client filters `user_id`). The `vault_members(username,…)` PostgREST embeds at `leaderboards/index.html:822,868` resolve to null for anon, so fixing the four alone would render raw UUIDs. Proposed shape, generalizing S335's `public_leaderboard`: definer projection views (`public_challenge_feed`, `public_game_activity`, `public_point_events`, `public_member_achievements`), each honouring `vault_members.public_profile`, each with an explicit `grant select … to anon, authenticated`, then repoint the ~20 call sites. **NOT applied in S336 because it decides what member activity is publicly visible — a privacy/product call reserved for the founder.** Apply with `scripts/apply-supabase-migration.mjs` (pre-image + probe) once the columns are chosen. (D-S336.5)
+
+- [x] ~~**[S335][SEC/P2] Audit the other public tables for the same silent-zero.**~~ Done in S336 — see the escalation above. The live table had no anon SELECT policy; `public_leaderboard` (definer view, opt-out enforced) now feeds every public surface. Run the same probe (`apply-supabase-migration.mjs --probe`) shape against `challenge_submissions`, `game_sessions`, `polls`, `studio_pulse`, `treasury_items`: for each, compare `set local role anon` count against the base count and list which public surfaces read it. A public surface that renders "—" forever is indistinguishable from an honest empty state, which is exactly why this hid for months.
+- [x] **[S335→S348][TOKEN/P2] Shard `context/CURRENT_STATE.md` without deleting its history.** **DONE S348.** `rotate-ledger.mjs` now treats current state as a first-class 120 KB hot ledger, archives the exact preimage, and retains every block from the newest session. The live file fell from 563,454 bytes to 2,582 bytes; `context/archive/CURRENT_STATE_through_S347.md` preserves all prior bytes. Rotation is idempotent/fail-closed against an archive-name collision and passes 19/19 focused tests plus the live size gate.
+- [ ] <!-- evidence-open: the config files named are the ones to EDIT; the deliverable is the deleted page + 301, not their existence --> **[S335][IA/P3] Retire `/atlas/` into `/oracle/` + `/sitemap-page/`.** Third rendering of the project inventory (Pulse and Oracle carry the other two). It is generated by `build-atlas.mjs` (build step) and listed in `config/intelligence-suite.json` + `config/resource-links.json`; retiring means removing the build step, deleting the page, an edge 301, and the propagate-nav context rule for `vault-atlas.js`. Confirm nothing consumes an atlas JSON feed first. Deferred from S335 as lowest-value of the IA set.
+- [ ] **[S335][ENGAGE/P2] Confirm the founder-approved Season 1 defaults, then watch the first week.** `data/seasons.json` declares "Season 1 — Ignition" (2026-09-02 → 2026-10-14, rewards in Vault Points only). Founder may veto name/dates/rewards at review. After a week: does `season_xp` move, does the weekly board fill, does the community `#wall` countdown render on mobile across all themes (CANON-053 receipt).
+- [x] **[S335][UX/P3] Confirm the four merged routes 301 at the apex from a real browser.** **S336: DONE, verified live.** Probed the apex with a browser UA — `/nervous-system` → 301 `/studio-pulse/#signal-digest`, `/membership-value` → 301 `/membership/#benefits`, `/vaultsparked` → 301 `/membership/#tiers`, `/ip` → 301 `/rights/`. All four correct; no 429 encountered with a real UA. Closed by evidence rather than re-done. `/proof/`, `/feedback/`, `/feedback/insights/`, `/vault-wall/` now live in `_redirects` only. Scripted probes of the apex return 429 from the Worker's scanner block, so the S335 verification was against the tree (route court) and the Pages origin rules, not a live apex fetch. `verify-provider-journey`-style headed Playwright or the existing `smoke-http.mjs` with a real browser UA is the receipt.
+
+- [x] **[S334][CI/P1] Two CI workflows are red, neither newly broken by S334 — confirm before touching either.** `E2E Test Suite / compliance` fails on `sibling-readme-missing` for Call-Of-Doodie, Gridiron-GM, mindframe and Solara: those sibling repos are not checked out on the runner, and the job was already failing this way at `8a44a027` (00:32 on 2026-09-01, before any S334 commit). The `e2e` job itself passes, including the Mobile rendered-runtime release contract. `Lighthouse CI` fails on one route at a time with a different route each run — `/community/` at −0.11 on `3881729`, then a news article at 0.88 vs 0.90 on `ae8a11f` — which is lab volatility on that runner, not a regression. Do NOT lower either threshold; corroborate across runs first. **S335: confirmed, not touched; the sibling-readme failure is runner-environmental and Lighthouse volatility policy is shared — left as-is per triage note.**
+
+- [ ] **[S334][MOBILE/P2] The mobile audit measures PRODUCTION by default, so it cannot see an undeployed change.** playwright's baseURL defaults to `https://vaultsparkstudios.com`, and a local pass on a not-yet-deployed page is measuring the OLD live page. That is exactly how a P1 tap-target on the new pathway route reached CI: six local runs passed because they were probing the previous version. Set `BASE_URL` to a local preview when verifying an unshipped change, and add a route to the audit list only AFTER the deploy that ships it. Also run it at default concurrency — a `--workers=4` pass raced on findings.jsonl and persisted 139 of 215 cells, which reads as missing matrix cells rather than lost writes.
+
+- [x] **[S334][BUILD/P2] One generator is non-idempotent and it makes the receipt cascade unwinnable.** Every `npm run build` rewrites a single `<style id="vs-yas-style">` line on `changelog/index.html`, which changes the candidate manifest, which invalidates the hash-bound mobile and visual receipts, which costs a ~26-minute re-probe. Find the writer (no script in `scripts/` greps for `vs-yas`) and make its output deterministic. Until then, the working order is: build once, settle, capture receipts, push — and never run a build between capture and push. **S335: root cause was a cascade gap, not non-determinism (D-S335.8); route-consolidation writer removed, 16 duplicate build invocations dropped, idempotence proven by a second build with an empty git status.**
+
+- [ ] **[S334][OBS/P1] `startup-revenue-agreement` is red and the cause is upstream, not here.** The promoted v5 startup brief renders `Revenue sig. 1d old (2026-08-30)` while the shared resolver — the same one doctor uses — computes 2 days. Both clock paths inside `revenue-freshness.mjs` agree on 2 (`studioCalendarDate()` and the UTC default both return 2026-09-01), so the disagreement is in the v5 renderer's SIGNALS composition, which promotes over the v3 block that computed correctly. `context/SIGNALS.md`, the documented fallback, is 18 days stale and says `not found`, so a reader is keyed on an artifact its producer stopped writing. This is a studio-ops brief-renderer concern — ship `repo-question` or `pattern-share` cargo rather than editing the sibling repo. It surfaced only because the date rolled over mid-session; it will recur every session boundary until fixed.
+
+- [x] **[S334→S348][NEWS/P2] Off-topic advertising copy cannot rank as a sourced fact.** **VERIFIED S348.** The implemented relevance term compares each candidate with significant story-title tokens, sinking the exact Shark promo regression while preserving on-topic quantified claims and backward-compatible no-topic callers. The live focused suite passes 69/69; this stale open row was the defect, not missing code.
+
+- [x] **[S334][UX/P2] The footer still names two retired routes.** `Vault Portal` (`/vault-portal/`) and `Value Breakdown` (`/membership-value/`) remain in the sitewide footer. Both now resolve via edge 301s rather than 404s, so nothing is broken — but the footer advertises routes that no longer exist as destinations. The footer is written by `propagate-nav.mjs`, which is the documented S329 landmine (its hand-maintained arrays are stale against the registry-driven pages), so this needs the arrays reconciled first, not a direct edit. **S335: propagate-nav footer reconciled (4 retired links → live anchors), 13 stubs deleted for good — the generator that re-rendered them is now a court.**
+
+- [ ] **[S334][PERF/P3] Two audit items were disproved, not deferred — do not re-raise them without new measurement.** The homepage's inline CSS is page-unique (7% overlap with the shared sheet) and its measured mobile LCP is ~900ms; the member dashboard measures FCP 860ms at 1,414 DOM nodes. A controlled A/B also confirmed S275's blocking-stylesheet decision (724ms vs 752ms median FCP), and the alarming 4,724ms `/games/` reading was a cold-start artifact of the first page load in a fresh browser process. Any future perf work here starts from a warmed-browser measurement, not from document size.
+
+- [ ] **[S333][NEWS/P1] Readable-source breadth is the last untouched lever, and it is now isolated.** ~70 topics are blocked by nothing except having no readable body: they are corroborated, castable, fresh, and unusable because every source is a Google News redirect. Corroboration cannot help them and clustering cannot either. The only remaining approaches are more publisher-direct feeds (probe reachability and 72h freshness first, as S333 did — four were added this way) or resolving aggregator items to publisher URLs by matching on entities rather than the current same-outlet headline rule. Measure with `--scan`, whose single-blocker headroom tally now reports this number directly.
+
+- [x] **[S333][NEWS/P2] Corroboration recall fixed; readable-source ceiling remains.** ✅ Partially closed (D-S333.20): the corroboration matcher now compares every headline a cluster carries rather than only its lead, taking readable-and-corroborated topics from 2 to 5, with borrowing capped at 8 outlets. Headroom was measured before building: 70 topics lack only a readable source, 55 lack only corroboration, and ZERO lack only a persona beat — so the beat-map widening proposed below was disproven and NOT built. The readable-source half is unchanged and carries forward as the next item. Original text: After both S333 decisions the supply shape is 4 readable+corroborated against 119 corroborated-but-unreadable and ~89 readable-but-single. Corroboration cannot help the 119 — they have no readable body at all — so the remaining lever is readable breadth. Options in order of expected value: resolve more aggregator items to publisher URLs by matching on entities rather than same-outlet headlines; add further AI-scoped publisher feeds (probe reachability and 72h freshness first, as S333 did); or widen the persona beat map, which blocked 80 topics as uncastable.
+
+- [x] **[S333][NEWS/P1] Decide whether to loosen topic clustering so corroboration and readability can meet.** ✅ Decided (D-S333.19): loosening was REJECTED as a truth risk; cross-outlet corroboration added instead at a stricter-than-merge bar. Tuned on live data — 0.55 changed nothing, 0.45 doubled readable+corroborated from 2 to 4. Original text: Measured: 215 topics yielded 2 readable-and-corroborated, 119 corroborated-but-unreadable, 87 readable-but-single-outlet. Those last two populations largely cover the same stories; they do not merge because `clusterItems` compares headlines at a 0.34 similarity threshold and outlets word the same story differently. Merging them converts unusable breadth into publishable topics **without relaxing any editorial standard** — but a looser threshold risks merging distinct stories, which is what S329 tightened dedupe to prevent. Evaluate with the new `--scan` supply-shape cross-tab as the before/after measure, and consider matching on entities/URLs rather than headline words.
+- [x] **[S333→S348][NEWS/P2] Readable-feed probation completed with a measured keep/drop decision.** **DONE S348.** Across eight days of committed editions, The Decoder and MarkTechPost each supplied a published story and remain. ZDNet supplied none and was unreachable in the latest unattended scan; The Register supplied none. Both non-performers were removed rather than retained as item-count inflation. Radar self-test remains 71/71.
+
+- [x] **[S333→S348][NEWS/P0] Topic acceptance is no longer the Desk's binding constraint.** **VERIFIED S348.** The latest unattended radar processed 2,999 items into 232 topics and queued 17; 33 were both readable and corroborated. Three editions landed automatically on 2026-09-09. The latenight drop was downstream source-body accessibility after four attempts, not an empty queue. The separate four-slot cadence choice remains founder-owned and is not weakened here.
+- [x] **[S333][OBS/P2] `news-trend-radar --scan` failure is swallowed by `|| echo` in the publish workflow.** Historical defect resolved in news-publish.yml: scanner exit status is written to GITHUB_OUTPUT and a named failure warning is emitted. This does not prove the current queue or remote cadence is healthy.
+- [x] **[S333][GATE/P1] Receipts bound a churning anchor.** ✅ Decided and shipped (D-S333.18): receipts now bind `candidateSha` and the manifest path; `root`/`manifestSha256` are informational. False invalidation is gone and tamper detection is proven intact. The pre-push-coverage half of this item is superseded — with the churn removed, the state that used to be pushed inconsistently can no longer occur from regeneration alone. Original text: Observed live in S333: the push-retry loop regenerated the derived graph on each attempt without regenerating the proof receipts, and the push succeeded because the evidence-graph-derived coherence checks do not include receipt ordering. `main` briefly carried receipts whose `candidate.root` did not match its own manifest, so `build:check` would fail at step 140 on a clean checkout. The receipts' `candidateSha` matched exactly throughout — the attestation was never wrong, only its churn-anchor. Add receipt ordering to the pre-push set, or make the receipts bind `candidateSha` (see D-S333.12/13). Note the corrected history: all 14 prior receipt-writing commits ARE coherent, so the repo's existing practice — re-bind receipts in the same change that regenerates the manifest — works; S333 simply broke it by regenerating the derived graph as the last act of its push loop. The cheapest durable fix is the pre-push check, which would have caught it mechanically.
+
+- [x] **[S333→S348][NEWS/P1] Unattended scheduled Desk publication is proven.** **VERIFIED S348.** Twelve consecutive scheduled runs from 2026-09-07 06:45Z through 2026-09-09 22:17Z completed successfully, and the 2026-09-09 wire, midday and close slots committed editions (`9d22a9f87`, `bb4fe41a7`, `71c0a8c46`) without intervention.
+- [x] **[S333][NEWS/P2] Thread `fellBackFrom` into published story provenance.** Historical implementation verified from source in S347: author-news-edition.mjs writes candidate.story.authoredBy with actual model, requested model, fallback flag and attempt; focused fixtures cover preferred, standby and unknown model states. No new inference run or current provider-health claim is implied.
+
+- [x] **[S333][NEWS/P1] Confirm the Desk publishes a real edition end to end on the standby model.** ✅ Edition `2026-08-31` ("Meta's Data Center Robots: Tugger Carts and Laundry Folds") authored on attempt 1, promoted, deployed via content lane run `33356296320`, and verified serving HTTP 200; public freshness moved `periodic · age 6d` → `daily · age 0d`. Still open as a watch item below: this was a DISPATCHED run, not an unattended scheduled one. Original text: The selection fix is proven in production CI (`prepare: 0`, 2/2 sources, 6 sourced facts) and the model failover is proven live (`fellBackFrom` recorded, standby returns 200), but no edition has actually reached `/news/` yet. The proof is a scheduled run that goes green unattended and publishes a post-2026-08-30 edition. Until that happens the honest public state is still "periodic, latest 2026-08-25".
+- [ ] **[S333][NEWS/P2] Watch whether Hetzner repools `Qwen/Qwen3.6-35B-A3B-FP8`, and review standby-authored editions for voice drift.** The Desk prompts were tuned for Qwen3.6. Every standby-authored edition costs one wasted 503 round-trip (~500ms) and may read differently; if the retirement proves permanent, promote `Qwen3.8-27B` to primary and retune, rather than leaving a dead model as the declared preference.
+- [ ] **[S333][OBS/P2] Alert when a provider advertises a model it cannot serve.** `GET /models` listed the retired model as available, so no health check could distinguish "model exists" from "model is servable". A cheap periodic completion against each declared authoring model would have caught this before it stopped the newsroom.
+
+- [x] **[S333][INFRA/P2] The `full` derived-build profile is not full: it omits `build-public-status.mjs`, so a closeout cascade leaves the public status surface stale.** `DERIVED_BUILD_PROFILES.full` is the profile `closeout-autopilot` runs after context write-back, but `build-public-status.mjs` appears only in `refresh-live-data`. Observed live in S333: after regenerating `public-intelligence` and running the `full` profile to green preflight, `build-public-status --check` still failed at build:check step 140 because nothing in `full` re-derived it. A profile named `full` that is a strict subset of another profile is a naming trap, and the cascade is only ever as wide as its declared graph. Either make `full` a genuine superset, or derive both profiles from one dependency graph so a consumer cannot be reachable in one profile and orphaned in the other. Pairs with the S333 invocation-mode work: same file, same class of gap. **S335: `full` now includes build-public-status.mjs in topological position with two new self-test assertions (29/29); build-oracle-answers stays out by design (reads the last seal step).**
+
+- [x] **[S333][OBS/P3] The Desk freshness banner disagrees with its own API by one day, and its `--check` gate goes stale daily by design.** S347: static absolute publication evidence replaces baked current-age/cadence claims; 13/13 focused tests. Generated/served verification pending.
+
+- [x] **[S333→S348][SIL][OBS/P2] Fixed-size Git-history windows cannot silently bury meaningful work.** **DONE S348.** The repository sweep found one remaining pre-filter raw window: the closeout board read 30 subjects before removing publisher noise. It now scans available history and stops at a five-item semantic quota. `check-history-window-safety.mjs` rejects raw `-n` / numeric `--max-count` readers unless they carry a +1 sentinel and explicit truncation verdict; 5/5 mutation cases pass, and the live scan is integrated into the existing workflow-history gate. Time/anchor windows and post-filter display caps remain intentionally valid.
+
+- [x] **[S333→S348][SIL][NEWS/P1] The Desk resumed on its own schedule.** **VERIFIED S348.** GitHub run `34411484451` is the twelfth consecutive scheduled success; committed editions after the original recovery include three dated 2026-09-09. Dropped slots remain honest no-ops rather than incidents or fabricated editions.
+- [x] **[S333→S347][SIL][GATE/P1] Sweep for orphaned self-test modes.** S347 mode-aware path/mode census and runner wiring implemented; 83/83 added fixture modes pass, focused reachability 26/26, and cache assertion negative control fails as required. Exact check modes and lifecycle scopes are explicitly classified. This is focused implementation evidence; final complete synchronized-candidate suite and release remain pending.
+
+- [x] **[S330][UX/P0] Coordinate every automatic notification through one visitor-attention budget.** ✅ Shared `VSAttention` claim covers consent, PWA install, exit intent, visit depth, returning digest, journey tour/feedback, and portal notices. Consent/onboarding reserve functional priority; returning visitors receive at most one automatic surface per tab; 30-day cooldowns prevent repeat nags. Contract 15/15; exact staging behavior 15/15 across Chromium, Firefox, and WebKit.
+- [x] **[S330][MOBILE/P1] Repair narrow-screen footer dispatch containment and the membership interview skip target.** ✅ Footer collapses safely at ≤430px; the interview skip affordance is an inline-flex 44px target and its dynamic source is bound into the 235-cell mobile receipt. Zero P0/P1 across 235/235 cells.
+- [x] **[S330][GATE/P1] Make final-tree receipt ordering structural.** ✅ `check-receipt-ordering.mjs` rejects visual/mobile evidence captured before the final candidate tree and is reachable from the 370-step build gate.
+- [x] **[S330→S331][SIL][RELEASE/P1] Add the attention behavior suite to the canonical release ceremony.** ✅ `run-attention-release-gate.mjs` requires all 15 cases across Chromium/Firefox/WebKit on canonical staging, rejects skips/flakes/origin/count drift, writes an aggregate public-safe receipt, and is mandatory in the 10-step ceremony. Exact staging 15/15; ceremony 10/10.
+- [x] **[S330→S332][SIL][OBS/P2] Publish an honest attention-pressure metric without identifiers.** ✅ Fixed-vocabulary `attention:claimed` telemetry is accepted only after consent, aggregated by automatic surface + coarse visit depth, suppressed below 20 claims, and projected through a public-safe receipt/status tile. Cookie consent is explicitly excluded. Worker unit 53/53; attention contract 15/15; rollup 36 assertions.
+- [x] **[S331→S332][SIL][GATE/P2] Add sampled canonical-destination reachability to the link court.** ✅ A deterministic 12-target sample comes only from the sanitized public registry projection; two 404/410 responses are required for a failed verdict, while timeouts/access blocks/5xx remain unknown. First live receipt: 10 passed, 0 failed, 2 unknown; refresh workflow and evidence cascade are wired.
+- [x] **[S332→S333][SIL][GATE/P2] Generalize invocation-mode validation across derived-build profiles.** ✅ `scripts/lib/invocation-modes.mjs` derives mode-requirement structurally from each producer's dispatch source (a mode chain with no default action whose terminal `else` prints usage and exits nonzero) and requires every profile step running such a script to declare a mode the script actually recognises; a typo'd flag is a violation too. Proven to fire on a reintroduced S332 regression AND on `--rebuidl`, and proven silent on the correct declaration. Detector 10/10; build-order 27/27. Original text: Detect mode-required producer CLIs and require every profile step to declare a supported mode, so the News Desk bare-call regression class cannot recur in another producer.
+- [x] **[S332→S333][SIL][OBS/P2] Publish destination unknown streak and last-known-good age.** ✅ Each destination now carries `unknownStreak` and `lastKnownGoodAt`/`lastKnownGoodAgeHours`, carried forward from the committed receipt. The validator forbids a streak on a decided verdict, forbids an unknown without a streak, and forbids an age without an anchor — so retained evidence can never become a verdict. Never-confirmed destinations report `null`, not a fabricated past; the `/status/` tile publishes the streak, the oldest last-known-good age, and the never-confirmed count. Probe 23/23. Original text: Preserve unknown as unknown while exposing how long a canonical destination has remained unobservable; never upgrade retained evidence into a current pass.
+- [x] **[S329][IA/P1] Phase 4a — uncontroversial IA consolidation.** Historical implementation reconciled S347: route config redirects Nervous System, Stats pages have the real shell, build-stats-surface imports ecosystem stats, sitemap handles structural noindex, and canonical intelligence suite owns active routes. Evidence suite integration is included in S347; final generated checks pending.
+- [x] **[S329][IA/P1] Phase 4b — analysis-gated merges.** Historical implementation reconciled S347: docs/ROUTE_CONSOLIDATION_ANALYSIS_2026-08-25.md, config/route-consolidation.json and D-S335.3 cover membership, orphans and Vault Wall; Projects is registry-derived. /share/ is intentionally preserved as the installed-app share target. No new merger or founder decision is implied.
+- [x] **[S329→S348][SEC/P1] Phase 5 — security is complete.** **VERIFIED S348.** Public security posture is active with 8/8 controls verified; contact and Ask Founders both obtain Turnstile plus CSRF tokens, and the Worker performs edge `siteverify` before either submission path. The tokenless mutation rejects with `turnstile_token_missing`; `/ask-founders/` exists. Worker focused coverage passes all 56 subtests, including the agent-action and Turnstile contracts.
+- [x] **[S329][COST/P1] Phase 6 — token/compute.** vault-narrative → free Hetzner `desk-inference.chat()` (Anthropic shape isolated at 3 points; raise maxTokens 220→≥512, thinking:false; workflow secret swap; grounding post-check) — kills all scheduled paid LLM spend; `refresh-live-data.yml` → `runDerivedBuilds()` slim profile + coverage assertion; monthly journal-revival lane on Hetzner inference (founder-approved, draft-for-review, never auto-publish) + wire `update-journal-dates.mjs` into build. **S335: vault-narrative, journal-revival and the Desk all already run on free Hetzner inference; update-journal-dates is in prebuild. Scheduled paid LLM spend is $0. Remaining half (refresh-live-data slim profile) carried below.**
+- [x] **[S329][INFRA/P1] Reconcile `propagate-nav.mjs` before any future run.** Its hand-maintained NAV_GAMES/NAV_PROJECTS arrays and ambient-script refs are stale vs live pages — a bare run clobbered 126 pages (games dropdown regressed, footer `/stats/` link dropped, hashed ambient shells replaced with `.bundle.js`; reverted in S329). Derive the arrays from game-registry/catalog or assert parity with `derive-game-nav` before it may write again. **S335: NAV_GAMES/NAV_PROJECTS already derive from the registry (deriveGameNav/deriveProjectNav); the remaining hand-written footer arrays were reconciled this session.**
+- [x] **[S329→S330][SIL][GATE/P2] Build `check-receipt-ordering` — turn the receipt-after-final-build rule into a gate.** ✅ The mobile-runtime and visual receipts bind the current candidate fingerprint; mutation coverage proves a later build invalidates them. Final S331 receipts match candidate `7511859050af`.
+- [x] **[S329→S348][PERF/P2] Phase 7 — performance is complete.** **VERIFIED S348.** The final unreferenced fingerprinted stylesheet was confirmed by a zero-reference search and removed (recoverable from Git); the 193,229-byte stylesheet has a conservative 1,905-selector inventory with 65 review-only candidates rather than unsafe auto-deletion; measured route tiers enforce 0.80–0.90 performance floors above the 0.76 volatile fallback; visual-QA retention protects the 14 bound captures and classifies 942 archival candidates without deleting evidence; and the Franchise Architect interaction gate confirms no hover work plus the Event Timing interaction-ID guard.
+- [x] **[S329→S348][ELITE/P2] Phase 8 — elite features are present and verified.** **VERIFIED S348.** Eternal Intelligence calls the metered/cached Ask IGNIS function; the portal feedback panel writes the supported anonymous `page_feedback` schema (18/18 browser cases across Chromium, Firefox and WebKit); the Worker exposes scope-bound `/api/agent-actions/v1` through agent discovery; evidence coverage is 0/67 unmodeled; and every new Desk story is bound to deterministic visual/diversity receipts. This stale umbrella row no longer represents missing implementation.
+- [ ] **[S325][SIL:2⛔][NEWS/P1] Prove the first privacy-thresholded article measurements from the repaired publisher.** Wait for at least five real browser pageloads on a Desk article, then verify Reader views and measured engaged time replace the honest “Collecting” state without changing the privacy floor or counting UX events as views. The new qualification summary must identify the first qualifying receipt; it currently abstains honestly at zero qualified stories. (Blocked on real traffic + the CF Web Analytics founder unlock — exempt from forced escalation while externally starved.)
+
+- [x] **[S327][NEWS/P0] Make AI-generated Desk memes/satire clear, compelling, and collision-free.** ✅ Text-free source art now receives one controlled masthead/caption layer with opaque safe zones; duplicate visible punchlines and meta-composition prose are removed; visual parity fails closed; reviewed artwork is immutable during ordinary scheduled rebuilds; 28/28 seven-theme desktop/mobile captures and final production desktop/mobile captures show zero overlap or conflicting text. Production run 32662840244 verified 12 pages, 36 exact assets, the August 23 edition, and five claims.
+- [x] **[S327][OPS/P1] Close the analytics-to-stats closeout dependency.** ✅ The canonical derived-build order now regenerates the public Stats surface after analytics and status proof, preventing closeout from creating its own deterministic check-364 drift. Ordering self-test: 15/15.
+- [x] **[S326][NEWS/P0] Complete the Desk recovery deployment and close the claim-ledger release gap.** ✅ Production now serves the August 21 and August 22 editions, visible `~1 min` / `Reader views` / `Collecting` labels, daily freshness through August 22, and five August 22 rows from `api/news-desk-claims.ndjson`. The content gate permits only that canonical NDJSON path; arbitrary `api/*.ndjson` and `data/*.ndjson` remain blocked. Verification: hotfix gate 43/43, content lane 63/63, build/check 368/368, staging proof at head `0b5e2bd88`, exact CI green, production run 32605433768.
+- [x] **[S326][SIL][NEWS/P1] Add the canonical claim ledger to the deployment workflow's exact live News verifier.** ✅ The shared release contract derives the newest feed item, requires matching fact and stance rows, compares exact candidate/live bytes, and emits ledger counts/hashes. Self-test 7/7; staging and production both verify five August 23 claim rows.
+- [x] **[S326][SIL][NEWS/P2] Extend staging content verification to the newest edition and claims row.** ✅ Staging now derives the newest route from the feed and verifies the matching claims date rather than relying on August 7 fixtures. Self-test 15/15; the S327 staging receipt verifies 12 pages, 36 assets, and newest date 2026-08-23.
+- [x] **[S325][SIL][NEWS/P2] Publish a bounded newsroom-run receipt on `/status/`.** ✅ `api/newsroom-run.json` reports observed/abstained state, last run/stage, latest edition, next UTC slot, and public-safe privacy bounds. The live status tile reports `Run observed · latest edition 2026-08-23`.
+- [x] **[S327→S348][SIL:1][NEWS/P1] Every newly published story carries a deterministic visual receipt.** **VERIFIED S348.** `api/news-visual-receipts.json` binds source-day, rendered-page and art hashes, safe-zone geometry, pixel/semantic review, scene fingerprint and declared-diversity memory for 30 stories. Promotion rejects missing semantic review or repeated visual shorthand; current check is green with zero recent exact-scene warnings and the mutation suite passes 10/10. Historical pre-contract stories remain honestly ineligible rather than backfilled with invented review.
+- [x] **[S327][SIL:1][NEWS/P2] Add a Desk visual-diversity memory.** S347: declared archetype/composition metadata comparisons, exact-scene checks and honest abstentions implemented; 10/10 focused tests. Metadata comparisons do not claim pixel similarity; final publication evidence pending.
+- [x] **[S328][INFRA/P0] Stop `refresh-live-data` stranding the byte-checked artifact derived from the feed it commits.** ✅ The cron ran `npm run build` (regenerating both `api/funnel-summary.json` and `.cache/cta-readiness.json`) but staged only `api/`, committing the producer and abandoning the consumer every cycle; `[skip ci]` meant no CI run ever saw it, and `build:check` step 57/368 went red on the next clean tree. The workflow now stages `.cache/cta-readiness.json` with the feed.
+- [x] **[S328][INFRA/P0] Close the cascade gate's `.cache/` blind spot.** ✅ `check-publish-cascade-coverage` passed on the very strand it exists to catch: it builds its universe from `config/evidence-graph.json`, which held 33 nodes and zero under `.cache/`. Declared `.cache/cta-readiness.json` as the graph's first `.cache/` node. Proven both directions in one process — with the staging fix exit 0, without it exit 1 naming `refresh-live-data.yml` and the artifact. Self-test 20/20 including the new strand regression.
+- [x] **[S328][OBS/P1] Make the CTA readiness surface state its real denominator.** ✅ `counts.shown` is a rolling 30-day count, but the message promised a cumulative post-epoch total. The row now carries `basis`, `windowDays`, and `observedThrough`, phrases the bar as *within a single 30-day window*, and reports a distinct no-post-epoch-span verdict instead of a countdown over frozen evidence. `--check` compares the new source-derived fields. No floor lowered. Self-test 11/11.
+- [x] **[S328][INFRA/P2] Fix the play-next suppressor that could never fire.** ✅ It was pinned to `'2026-06-18'` while the live epoch is `'2026-07-02'` — the exact value `check-play-next-impression-contract`'s self-test uses as its wrong-epoch negative control. Both now read `scripts/lib/cta-contract-registry.mjs`. Latent, not user-visible.
+- [x] **[S328→S348][SIL:1][INFRA/P1] All byte-checked generators are represented in the evidence graph.** **DONE S348.** The source-reviewed expansion covers all 67 checked generators, including cache-fed outputs and explicit external/conditional sources, across 80 validated nodes. The coverage ratchet is 0 unmodeled; reachability proves every declared check/output/fan-out and publisher cascade closure covers all 29 workflows.
+- [x] **[S328→S332][SIL:1][OBS/P2] Surface evidence age on the CTA readiness row.** ✅ Readiness now distinguishes current/aging/stale/absent evidence and gives stale evidence its own explanation; `/status/` derives the public age tile from committed `asOf`. Wall-clock fields remain excluded from byte comparison while `observedThrough` stays covered. Self-test 15 checks; deterministic check current.
+## Human Action Required
+
+- [x] **[S330][AUTH/P0] Complete Obelisk relying-party setup and the real-provider passkey ceremony.** Duplicate consolidated into the S342 provider journey task. S347 registration checks now pass; a real provider/hardware-backed acceptance journey remains separately unobserved. Do not repeat obsolete missing-registration claims.
+- [x] **Complete the real-provider passkey ceremony.** Duplicate consolidated into the S342 provider journey task; no ceremony is claimed complete.
+- [ ] **Authorize or decline immutable warm-origin migration.** D-S303 reserves the GitHub Pages rollback-origin architecture decision for the founder; the current warm origin still follows mutable `main`.
+- [x] **Confirm The Dispatch double opt-in.** Founder reports the regular public signup worked correctly on2026-10-06; subscriber count still comes from provider-backed metrics rather than assumptions.
+- [x] **[S329→S354] Cloudflare Web Analytics — WORKING, verified end to end S354.** Enabled with auto-install since 2026-03-04. Real Chromium: one nonce-bound beacon, no CSP violations, report POST to same-origin `/cdn-cgi/rum` 204, and four headless test visits appeared in GraphQL within minutes (bot=1). The seven-day zero before them was real: no browser page loads were reported. Not a CSP or injection problem; both were tested and ruled out.
+
+- [x] **[S321][FOUNDER/P0] Run the real-provider sign-in ceremony — it is now the ONLY thing holding production promotion.** Duplicate consolidated into the S342 provider journey task. Scoped content promotion and identity approval remain distinct.
+- [x] **[S321→S322][SIL][RELEASE/P1] Wire the staging `workers_dev` binding as the route-provenance corroborating vantage.** ✅ (S322) `build-worker-route-provenance.mjs --probe` now also probes `https://vaultspark-security-headers-staging.founder-d73.workers.dev` and writes a `buildVantage` field (`attests: "build"`, own state/summary/sourceSha256) alongside the primary receipt. CI's existing `--probe` step in `uptime-probe.yml` picks it up with no workflow change. Deliberately additive: `observedOrigin`, `routes[]`, and `state` on the primary receipt are untouched, so `check-content-capability-slice.mjs`'s `observedOrigin === production` gate still requires the real thing — a build attestation can never stand in for production route provenance. self-test 19/19 (6 new cases) · build:check 319/319.
+- [x] **[S321→S323][SIL][GATE/P1] Audit the remaining gate names against what they actually assert.** ✅ (S323) Swept all 173 `check-*.mjs` gates (five in-process reader agents), verified each candidate against live code, and fixed ten offenders — most severe: `check-worker-rewriter-safety` ran 2 of the 4 unsafe-op scanners it defines (nonce-`Content-Type`-drop + HEAD-cache-poison dead in production, green in self-test); `check-canon-compliance` CANON-008 passed on a canon-id substring the propagated index always carries; `check-launch-ready` compared case-sensitive `'SPARKED'` vs the registry's lowercase `'sparked'`, silently disabling all SPARKED enforcement, and read `liveUrl` where the field is `runtimeUrl`. Also fixed: news-engagement engaged-time drift, build-step unguarded-read blindness, game-playability sourceRepo-in-loop, registry-freshness dead urlDrift bucket, hero-jsonld empty-array truthiness, journal-dates comma≠day, portfolio-coherence phantom sitemap leg. Each fix locked by a both-directions self-test. build:check 319/319 (real captured exit — the wrapper's "exit 0" masked a real exit 1 first run).
+
+- [x] **[S323→S324][SIL][GATE/P2] Swept the `build-*.mjs --check` gates as a class — the defect was worse than predicted.** ✅ (S324) The predicted shapes (volatile-input drift, absent-input-defaults-green) were rare. The real class defect was **gates nothing ever invokes**: of 82 `build-*.mjs --check` implementations, 54 were wired into `build:check:steps`, 16 reached one hop in through `check-proof-surface` / `check-generated-drift-preflight`, and **12 were reachable by no runner at all**. Run individually, three were RED — `api/changelog-narrative.json`, `api/intent-map.json`, and `data/stats-surface.json`+`stats.json` were all stale on the live site while `build:check` read 319/319 green. Two more gates were name-vs-body: `build-release-dependencies --check` printed `state: rejected` and exited 0, and `build-tt-summary --check` derived the fresh payload then never compared it. All fixed, all locked with both-directions self-tests, and replaced by a structural gate (`check-build-gate-reachability.mjs`) so the next unreachable `--check` cannot be born silently. build:check 327/327 (real captured exit 0).
+- [x] **[S324→S325][SIL][OBS/P2] Give `api/ecosystem-velocity.json` a real closed-day drift gate.** ✅ The feed now hashes completed UTC date/count pairs, verifies overlapping closed days, tolerates only the open edge, normalizes committer timestamps to UTC, and is modeled as a Git-metadata-sourced evidence node. 14/14 self-tests; 59 closed days stable.
+- [x] **[S324→S325][SIL][RELEASE/P2] Make the four-hour publisher-promotion cadence explicit.** ✅ `api/deploy-currency.json` publishes the cost-neutral coalesced strategy, maximum four-hour lag, and promoter workflow; `/status/` renders it, the exact fields are contract-checked, and all seven themes passed desktop/mobile review.
+- [x] **[S324→S325][SIL][GATE/P2] Extend verification reachability beyond `build-*.mjs`.** ✅ The structural gate now covers source-declared build/check/generate/derive/enrich scopes and proves 233/233 build-scope gates reachable, with lifecycle tools explicitly classified. All 33 raw child-process imports were routed through the Windows-safe spawn boundary; 11/11 mutation cases pass.
+- [ ] **[S323][ARK] Ship a `pattern-share` to studio-ops on two launch-ready latent bugs.** The registry's canonical live-URL field is `runtimeUrl`, not `liveUrl`; and case-sensitive `vaultStatus === 'SPARKED'` comparisons silently disable SPARKED enforcement portfolio-wide. Both are latent in any sibling that copied the launch-ready / compliance pattern.
+- [ ] **[S323][ADVISORY] Surfaced, studio-ops-owned (CANON-018):** `mindframe` registry `deployedUrl` drift (local `steadfast-determination-production.up.railway.app` ≠ canonical `usemindframe.com`) and `franchise-architect` portfolio-coherence drift. Resolve upstream, not from here.
+
+- [x] **[S319][RELEASE/P0] Scoped the release ceremony's browser evidence to the promotion blast radius.** `held` is a first-class receipt state, permitted only when the promotion resolves as `scoped` and the contract's surface is inside an active radius. Coverage stays total (executed + held = expected); skips still reject; a failure on a promoted surface still rejects. 15 self-test cases, fail-closed in five directions, contract map pinned against the real spec.
+- [x] **[S319][AUTH/P0] Landed the /login guard and repaired the live outage.** Root cause was a Cloudflare KV write-quota exhaustion (`10048`), not the discovery document: `/v/rum` wrote a rate-limit counter on every request and burned the ~1,000/day budget, after which every KV-writing route threw. Worker deployed and verified live: `/v/rum` 500→202, `/login` 500→503 `auth_store_unavailable`. Counter is now sampled so it cannot recur.
+- [x] **[S319][OBS/P0] Add live `/login` AND `/v/rum` synthetic probes to the uptime cron.** SHIPPED S320 — Both returned HTTP 500 in production and every trust surface still read healthy, because the probe exercises neither the auth entry point nor the telemetry beacon. `/v/rum` had been down long enough that `data/news-desk-engagement-history.ndjson` never existed at all. Assert expected STATUS, not merely reachability. (Original item text: add a live `/login` synthetic probe to the uptime cron.** Production sign-in returned HTTP 500 long enough that it was found incidentally while deploying. The uptime probe watches liveness and route provenance but never exercised the auth entry point, so a dead conversion path was invisible to every trust surface.
+- [x] **[S319][OBS/P1] Publish a real deploy-currency observation on a schedule.** SHIPPED S320 — The probe only forms quorum when the Cloudflare Pages vantage has credentials; that env wiring is now in place, but the `Publish uptime status` step short-circuits on "no commit-worthy change", so a healthy hour skips the probe entirely and the committed reading can age silently.
+- [x] **[S318][ROLLBACK/P0] Founder decision: authorize or decline migration of the GitHub Pages warm rollback origin away from mutable `main`.** Duplicate consolidated into the canonical immutable warm-origin decision row; D-S303 remains reserved.
+- [x] **[SIL][NEWS/P1] Complete Reader-signal → Director's Report closure.** S347: optional declared response actions bind verified observation content, sufficient signals and safe local candidate routes; Reader 29/29 and reactions 12/12 focused tests. Current real report has no qualifying declared actions; no response or causal relationship is fabricated.
+- [ ] **[SIL][OBS/P1] Confirm the Desk surfaces cross their floors on real traffic.** S319 observed that `data/news-desk-engagement-history.ndjson` **has never existed**, so the engagement path has never produced data end to end and every row correctly reads `unavailable`. Verify the first scheduled `rum-pull` run that writes a history row. **Do not lower a floor to make the page look alive.**
+- [ ] **[S319][ECOSYSTEM/P2] IGNIS freshness is portfolio-owned.** Reads 15 days stale while `ops.mjs rescore` reports every project fresh, so the stale artifact lives in studio-ops and cannot be written from here (CANON-018). Resolve upstream rather than backdating a timestamp.
+- [ ] **[NEXT][SIL][ANALYTICA/P1] Main-domain Cloudflare Web Analytics activation receipt.** Unchanged from S318.
+- [x] **[S319][RELEASE/P1] Promote the static content lane.** SHIPPED S320 — The Worker lane carried the outage fix, but production markup still serves baseline `9527f227` — so the homepage Desk module and 700+ commits of content are not yet live. The ceremony now reaches 8/8 with scoped evidence, so this is unblocked.
+- [x] **[S319][OBS/P1] Confirm RUM history begins accruing.** Duplicate observation obligation consolidated into the current Desk traffic-floor row. No traffic floor, first sample or healthy window is claimed here.
+
+- [x] **[S320][RELEASE/P0] Give route-provenance a vantage CI can actually use — PREMISE DISPROVEN S321, re-scoped above (D-S321.5).** The committed approach was to probe the `pages.dev` origin as a corroborating second vantage. Measured directly in S321, `pages.dev` returns 404 for `/_health` and `/api/auth/me` and 405 for `OPTIONS /v/rum`: it is the Pages origin *behind* the Worker, and the Worker owns the `vaultsparkstudios.com/*` route, so it can never observe Worker route provenance. Implementing it as written would have been worse than leaving the gap open — `isMissingRoute` treats a 404 beside a clear control as a fact about the deployment, so this vantage could have produced a false `routes-absent-from-deployed-worker` verdict. Re-scoped to the staging `workers_dev` binding (see the S321 item above). The underlying gap remains open; only this approach is closed.
+- [x] **[S320][SIL][OBS/P1] Promote `contractLive` to a hard assertion in the `/v/rum` ingest probe.** SHIPPED S321 — the tolerance existed only for the Worker rollout window (D-S320.4) and the code said so ("Tighten once contractLive holds"). Verified live `202 {"ok":true,"synthetic":true}`, so `summarize()` now treats `contractLive === false` as `edge-degraded`. Both directions self-tested (a healthy contract must not page, or the assertion gets muted). probe-uptime 40/40.
+- [x] **[S320][VERIFY/P1] Confirm sign-in recovers at the 00:00 UTC KV reset.** VERIFIED S321 — `GET /login` returns **302** to `obeliskgate.com/auth/authorize` carrying a complete S256 PKCE challenge. The 503 cleared. Verifying it also surfaced that the recovery was never retracted from the public status surface, and that the S319 crash fix covered only the start leg; both fixed this session.
+## Next (future runway)
+
+- [x] **[S348][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet — DONE.** Every Desk story now links to a deterministic `critique.json` argument map joining stable fact receipts, stances, predictions, and hash-bound visual evidence. Unsupported claims stay explicitly `unlinked`; orphan cross-references fail closed; no runtime model call is made.
+## Next (historical)
+
+- [x] **[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261.** Analyzer emits `.cache/tt-active-local-sinks.json`; guard consumes it and proves active-local unresolved rows are 0.
+## Historical Runway (Session 249)
+
+- [~] **[SIL:2⛔][PERF/P1] INP root-fix when CLEAN field data lands** — PARTIAL S262: clean R2 pull named `/games/vaultspark-football-gm/` as the dominant route (91 phase samples, presentation-heavy pointer hover); shipped page-level paint/compositing mitigation. Needs post-deploy field soak before closing.
+- [ ] **[EXTERNAL][ENGAGE/P1] play-next conversion redesign — once the honest window has data** — S249 fixed the impression metric (IntersectionObserver true-viewport `play-next:shown`; epoch bumped 2026-07-02). Let ~1 week of honest viewport-view vs click data accrue, THEN decide placement vs copy vs retire from a trustworthy denominator (the 37/0 was a dishonest trigger-fire count).
+- [~] **[OPS/P2] Atlas registry freshness reconciliation** — Ark cargo `01JSSHJD94DA233EFA5EC7E9FA` shipped to `studio-ops` in S262; no sibling tree edits. Await owner reply/cargo before local close.
+## Premium-site roadmap — S208 outcome
+
+Top themes identified S207, run via S208 `/audit`→`/implement`:
+- [x] **[PERF/P1] Core Web Vitals — DONE (S208).** The lingering `/ desktop LCP 13060ms` was a PHANTOM: a rolling-3 median dragged by two 26-day-old, already-fixed S161 incident traces (real RUM p75 = 976ms). Root fix = a recency staleness horizon in `check-perf-budget` so resolved incidents expire (not a data edit — a control self-test proves it). Plus AVIF+WebP covers (~93% smaller) via `image-set()`+`@supports`.
+- [x] **[POLISH/P2] Bespoke OG cards — DONE (S208).** Atlas repointed from generic `og-home.png` to its bespoke `og-atlas.png` (the generator made the card; the meta hand-referenced the homepage's). Homepage correctly keeps `og-home.png`; no other page misused it.
+- [~] **[COHESION/P2] Graduate the elite hero treatment — PARTIAL (S208).** The **Atlas rows** slice is done (cover thumbnails). The per-page hero-glow graduation to /games//membership//studio/ is **deferred** — mature-surface visual change wanting real-device verification; tracked in S208-committed above.
+- [x] **[DEPTH/P3] Atlas v2 — DONE (S208).** Per-project cover thumbnails on every row (6 bespoke covers via image-set + 5 accent-initial fallbacks). The "moving this week" live strip is **honestly deferred** — no per-project activity data source exists; building it would be a lying surface (CANON-031).
+- [ ] **[HUMAN][CONTENT/P1·FOUNDER] Publish the forge devlog** (`journal/_drafts/forge-week-2026-06-18.md`) — clears the changelog stale warn. Founder-voice essay; never auto-published.
+## Resolved this session (carries from S188 Now)
+## Historical Runway (Session 189 — carries folded into S190 Now)
+
+- [ ] **[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft.** `journal/_drafts/forge-week-2026-06-11.md` is generated; founder reviews SOUL voice, then publish to `journal/` to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).
+
+<!--
+Verification, S281 (do not re-derive):
+  $ node scripts/check-secrets.mjs --for supabase.admin
+    supabase.admin   ✓ READY   2/2 all present
+-->
+
+- [~] **[S187][UX/P2] FLAGSHIP-PRODUCT-STORYTELLING — 3/4 sub-items already DONE, "screenshot" honestly re-scoped S251.** Verified against the two true SPARKED flagships (`games/call-of-doodie/`, `games/vaultspark-football-gm/`): narrative hero ✓ (`.hero-art` promise copy), single CTA ✓ (primary "Play Now — Free" + secondary), voice copy ✓ (comedy-voiced tagline, distinct per game). Attempted adding each game's bespoke cover art (`assets/covers/{doodie,footballgm}.{avif,webp,png}`) as a blurred hero backdrop via `image-set()` — reverted after inspection: those covers are abstract branded title-cards with baked-in text ("Call of Doodie", "SPARKED", genre label), not gameplay art, so blurring one behind the hero just duplicated the page's own heading as illegible mush and added no real information. A genuine screenshot needs either founder-provided gameplay captures or a real image-generation pipeline for game art — neither exists yet. Honest deferral, not a skip.
+- [ ] **[S186→S281][SECURITY/P1] TT-ENFORCE-REPROBE — CANONICAL ENTRY (S177/S180/S184/S185 records consolidated here S281, D-S281.4).** One job, previously logged as five open entries; all evidence preserved below.
+  - **Verdict: AMBER** (S257 reprobe, newest evidence): 401 `tt:*` keys across 26 counter days/30d — not the clean GREEN a flip needs.
+  - **Prior datapoint** (S184, 2026-06-10): 148 violations/30d. Top sinks: `journal/dispatches:364` (×30, recurring), `home-idle-loader.js:16`, football-gm `appCore.js` (cross-repo), `schema-injector.js:23`, `ambient.shell`.
+  - **Progress:** the July 3 `/leaderboards/` fallback/skeleton sink was root-fixed with DOM row helpers and propagated. Soak clock restarted 2026-06-05 (env-fix); S176's default-policy bridge burned down the founder-named sinks.
+  - **Reprobe:** `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`
+  - **Burn-down plan + flip command:** `docs/TT_ENFORCE_READINESS_2026-06-10.md`
+  - **Next steps:** named-policy migration of the 4 first-party sinks · Ark cargo to football-gm for the cross-repo sink (CANON-018 — never edit the sibling tree directly) · post-deploy soak verification + stale-cluster aging.
+  - **Gate:** enforce flip stays founder-device verified (SOUL #3). Not agent-flippable.
+- [ ] **[S180][FOUNDER] nav-sheet device verify** (mobile bottom-sheet default-swap — real-device confirmation).
+## Historical Runway (Session 183 — superseded by S186 Now)
+
+- [ ] **[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION.** Oracle's core feed is fixed via `/api/public-intelligence.json`, but the richer layer (per-project IGNIS voices, ecosystem-velocity chart, cognition aggregate score) still sources from the gitignored local-only `/ignis/output/*`. Deploying it needs a public-safe decision (what cross-project/sealed intelligence is exposable) + a sanitized deploy path + a refresh mechanism (generation is local-only — reads all sibling repos). Founder call.
+- [ ] **[S180][FOUNDER/DEVICE] NAV-SHEET DEVICE VERIFY.** `assets/vaultsparked-proof.js` was already deleted and verified in S186; the only remaining action is the real founder-device nav-sheet behavior check required by SOUL #3. No deletion work remains.
+- [x] **[SIL] IGNIS-HINT-CONVERSION-TRACKING — DONE, phantom carry closed S251.** `assets/ignis-answer-engine.js` `showHint()` fires `emitUx('ignis-hint:shown'/'click'/'dismissed')` through the existing RUM pipeline (functionally equivalent to the proposed `vs:ux` CustomEvent); all three allowlisted in `cloudflare/security-headers-worker.js` `RUM_UX_EVENTS`.
+- [x] **[SIL] CLOSEOUT-BUILD-ORDER-MODULE — DONE, phantom carry closed S251.** `scripts/lib/build-order.mjs` exists (`DERIVED_BUILD_ORDER` + `runDerivedBuilds()`), imported directly by `scripts/closeout-autopilot.mjs`.
+## Historical Runway (Session 182)
+## Historical Runway (Session 177)
+## Historical Runway (Session 176 additions)
+## Previous (historical)
+
+- [ ] **[S97→S98][FOLLOWUP carry]** IGNIS + model fallback, exit-intent timing, Studio Milestones render, changelog live-feed, rank strip highlight.
+## Previous (historical)
+## Previous (historical)
+
+- [x] **[SIL] Membership rank strip — logged-in tier highlight** — DONE S94: `membership-live-tier.js` queries Supabase session, gets vault_points + plan, highlights active tier in strip with gold glow + scroll-into-view + haptic event.
+- [x] **[SIL] World Vault Teaser — live unlock gates** — DONE S94: `membership-live-tier.js` adds live "✓ You have access" / "→ Upgrade to unlock" badges to all world card unlock rows based on member's actual plan tier.
+- [ ] **[S94][FOLLOWUP] Verify membership-live-tier.js in browser** — sign in as a member and confirm rank strip highlights active tier (gold glow + scroll-into-view), world vault shows "✓ You have access" badges for tier unlocks. Check mobile layout.
+- [ ] **[S93][FOLLOWUP] Verify real web push receipt in browser** — contract guard passes; need real browser/device subscription + classified-file or category notification confirmed received.
+- [x] **[FOLLOWUP] Forge Window nav rename** — shipped S106: nav/footer/guidance labels now use "Forge Window" sitewide via `scripts/propagate-nav.mjs` and shared runtime copy updates while preserving `/studio-pulse/` as the canonical route for SEO/backlinks. **DONE S106**
+- [ ] **[FOLLOWUP] Verify annual checkout end-to-end** — test the annual billing toggle → checkout → Stripe → portal flow against staging. Annual prices are live but the path hasn't been browser-tested yet. **S92 local guard:** `npm run verify:annual-checkout` now verifies annual UI plan keys, edge price IDs, success URLs, and public copy; browser Stripe redirect remains open.
+## Historical Runway (Session 77)
+
+- [x] **[SIL:2⛔] Genius Hit List as scheduled audit** — **DONE S88**: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.
+- [ ] **[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages** — carry the stronger trust language into join/invite or other high-intent public entry routes if the next session stays conversion-focused.
+- [x] **[GENIUS][COHESION] Extend gravity onto the `/games/` and `/universe/` hubs** — **DONE S92**: `/games/` and `/universe/` now mount `pathways-router.js` with context-specific four-card intent routing before their existing related rails; `pathways-router.js` understands `games` and `universe` contexts. Verification: `npm run build:check`, `npm run smoke:http`, `node scripts/csp-audit.mjs`, and `node --check assets/pathways-router.js`.
+- [ ] **[OPS] Annual Stripe activation once keys exist** — replace the annual placeholder path only after the real Stripe annual plan keys are created.
+- [ ] **[OPS] CF Worker automation unblock** — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth.
+## Previous (historical)
+
+- [x] **[SIL] robots.txt Cloudflare note** — added comment explaining Cloudflare AI Labyrinth injects directives at CDN edge (S46)
+- [x] **[SIL] prefers-reduced-motion guard** — global `@media (prefers-reduced-motion: reduce)` rule already present in style.css (line ~1464); disables all animations including nav-enter. Done.
+- [x] **[SIL] closeout.md sync** — updated `prompts/closeout.md` to studio-ops v2.4: removed Step 7.5, added Step 8.5 (S46)
+- [x] **[SIL] Theme persistence test contract** — replaced `#theme-select` assertions with `#theme-picker-btn` + `.theme-option[data-theme=x].active`; `body[data-theme]` assertions preserved (S46)
+- [x] **[SIL] Nav backdrop opacity by theme** — added `--nav-backdrop-overlay` var to `:root` (dark) and `body.light-mode` (45% dark-navy); `#nav-backdrop` now uses var (S46)
+- [x] **[SIL] Theme picker swatch pulse** — `@keyframes swatch-pulse` added; `.swatch-pulse` class toggled in click handler + cleaned up on label reset (S46)
+- [x] **[SIL] Portal nav admin link** — added `id="nav-admin-link"` to nav-account-menu in `vault-member/index.html`; `display:none` by default; JS shows it for admin users (S47)
+- [x] **[SIL] Referral attribution wire** — `p_ref_by: sessionStorage.getItem('vs_ref')` wired into all 3 `register_open` RPC calls in `portal-auth.js` + `portal.js` (S47); **requires DB migration**: add `p_ref_by` param to `register_open` Supabase function (human action — see below)
+
+---
+## Previous (historical)
+
+- [x] **[SIL:2⛔] Theme picker compact mode at 641–980px** — added `.theme-picker-label { display:none }` + `.theme-picker-arrow { display:none }` to `@media (max-width:980px)` block in `assets/style.css` (S57)
+- [x] **[SIL:2⛔] CF Worker auto-redeploy via GitHub Actions** — created `.github/workflows/cloudflare-worker-deploy.yml`; triggers on `cloudflare/**` changes on main push; uses `npx wrangler@3 deploy --env production` with `CF_WORKER_API_TOKEN` secret (S57)
+- [x] **[SIL] Genesis badge slots-remaining counter** — added `<span id="genesis-slots-left">` to `/vaultsparked/` FAQ answer; created `/vaultsparked/vaultsparked.js` with live counter logic (3-tier colour: gold/orange/crimson); 2-step PostgREST query excludes 4 studio UUIDs from count; script loads as `defer` (S57)
+- [x] **[SIL] Vault Wall opt-in toggle (Phase 1)** — created `supabase/migrations/supabase-phase59-public-profile.sql` (adds `public_profile boolean DEFAULT true`); updated vault-wall queries to filter `.eq('public_profile',true)`; fixed broken `.count().head()` → `.count().get()` bug (S57); **[HAR] run db-migrate workflow to apply migration**
+- [x] **[SIL] Achievement SVG icons — VaultSparked + Forge Master** — created `assets/images/badges/vaultsparked.svg` (purple crystal gem, violet gradient, gold crown spark) and `assets/images/badges/forge-master.svg` (anvil + spark burst, crimson ring, ember particles) (S57)
+
+- [x] **[SIL] Portal settings: public_profile toggle** — "Show my profile on the Vault Wall" toggle added to portal settings privacy section; `savePublicProfileToggle()` PATCHes `public_profile` via Supabase SDK; wired via addEventListener in IIFE (CSP-safe); phase59 migration applied live S61 (S61)
+- [x] **[SIL] Vault Wall: verify post-migration** — phase59 migration applied live S61 (`public_profile boolean NOT NULL DEFAULT true` + partial index confirmed); `tests/vault-wall.spec.js` smoke spec created and wired into CI (continue-on-error); live filter `.eq('public_profile',true)` active (S61)
+- [x] **[SIL] VaultSparked CSP smoke test** — `tests/vaultsparked-csp.spec.js` created; Chromium-only; `page.on('console')` collects CSP errors; asserts zero violations on /vaultsparked/ + homepage; wired into e2e.yml compliance job as non-optional step (S61)
+- [x] **[SIL] Homepage hero structural redesign** — replaced 2-column grid (text left / logo card right) with full-width centered cinematic stack: eyebrow → logo banner (`.hero-logo`, 620px max, blur glows) → h1 inline → `.hero-sub` centered → CTAs centered → `.hero-meta-row` (chips + stats) → hero-story. Removed `.hero-card`/`.hero-visual`/`.logo-wrap` CSS. CDR direction satisfied (S61)
+- [x] **[SIL] propagate-csp SKIP_DIRS: add vaultsparked** — `'vaultsparked'` added to SKIP_DIRS in `scripts/propagate-csp.mjs`; future global CSP propagation runs will skip the directory entirely (S61)
+- [x] **[SIL] Voidfall Fragment 005** — 5th Transmission Archive card added to `/universe/voidfall/`; coordinates confirmed correct, nothing there, "keeps ████████"; continues intercept log pattern with new redaction teaser (S61)
+- [x] **[SIL] Portal: rank loyalty discount display** — Forge Master (25%, crimson chip) and The Sparked (50%, gold chip) rank loyalty discounts shown in Studio Access panel; `RANK_DISCOUNT` map in `loadStudioAccessPanel()`; non-discount members see upgrade CTA instead (S61)
+## Next (historical)
+
+- [x] **[SIL] CSP propagation script** — `scripts/propagate-csp.mjs` created; single CSP_VALUE constant at top propagates to all HTML files via `node scripts/propagate-csp.mjs` (S47)
+- [x] **[SIL] Staging smoke test script** — `scripts/smoke-test.sh` created; 12 key URLs, exits non-zero on failure; enforces CANON-007 (S47)
+- [x] **[SIL] Light-mode screenshot smoke** — `tests/light-mode-screenshots.spec.js` created; Chromium-only, 3 pages, forced light-mode via localStorage (S47)
+- [x] **[SIL] IGNIS delta field** — `ignisScoreDelta` added to `PROJECT_STATUS.json`; closeout Step 8 updated to compute and write it (S47)
+- [x] **[SIL] Join form GA4 form_error** — `form_error` gtag event added to vault access request catch handler in `join/index.html` (S50)
+- [x] **[SIL] Voidfall chapter I excerpt** — "First Pages" section added to `/universe/voidfall/` with opening Chapter I prose + locked volume badge (S50)
+- [x] **[SIL] Light-mode screenshot CI** — `tests/light-mode-screenshots.spec.js` wired into compliance job; screenshots uploaded as 14-day artifact (S50)
+
+- [x] **[SIL] Voidfall subscription GA4** — `form_submit` gtag event added to Kit subscribe success handler in `universe/voidfall/index.html` (S51)
+- [x] **[SIL] Voidfall Fragment 004** — 4th Transmission Archive card added; named thing, the answer, fully redacted (S51)
+- [x] **[SIL] DreadSpike signal log entry** — intercept-transmission card added to DreadSpike universe page (S53)
+- [x] **[SIL] Voidfall entity 4 hint** — atmospheric one-liner below The Crossed row hinting at unclassified 4th entity (S53)
+- [x] **[SIL] Remove inline onclick handlers from vault-member/index.html** — all onclick/onchange/onmouseenter removed; portal-init.js extracted; portal-core.js event wiring complete; CSP updated to SHA-256 hashes; 85 pages propagated (S53)
+- [x] **[SIL] Cloudflare cache purge on deploy** — `.github/workflows/cloudflare-cache-purge.yml` created; triggers on push to main; uses CF_API_TOKEN + CF_ZONE_ID secrets (S53)
+## Next (prior)
+
+- [ ] **Per-form Web3Forms keys** — create 3 separate keys in Web3Forms dashboard (join/, contact/, data-deletion/) for per-form lead tracking; update access_key values in each HTML [low priority]
+- [ ] **Cloudflare WAF rule (CN/RU/HK)** — JS Challenge firewall rule; requires API token with Zone / Firewall Services / Edit + Zone / Zone / Read; or Studio Owner can create in dashboard [human action / provide token]
+- [ ] **Web3Forms browser test** — manually submit /join/ and /contact/ to confirm email delivery to inbox [human action]
+- [ ] **[SIL] Add `beacon.env`** — once Studio Owner runs `node scripts/configure-beacon.mjs` in studio-ops, copy resulting `.claude/beacon.env` to this repo (gitignored); enables active session indicator in Studio Hub
+
+---
+## Deferred to Project Agents
+
+- cross-repo item owned by another repo agent:
+## Blocked
+
+*(none)*
+
+---
+## Later
+
+- [x] **Voidfall teaser → full page** — expanded with Transmission Archive (3 fragments), The Signal world-building, Known Entities (3 entities), Saga meta grid; CSS added (S47)
+- [x] **Sentry release tagging** — `.github/workflows/sentry-release.yml` created; tags each main push as a Sentry release; requires SENTRY_AUTH_TOKEN, SENTRY_ORG, SENTRY_PROJECT repo secrets/vars (human action to configure, S47)
+- [ ] **`/vaultsparked/` Phase 2** — open Phase 2 when Phase 1 fills (subscriber_cap)
+- [ ] **Web push test** — subscribe in portal, upload classified file, verify notification received. **S92 local guard:** `npm run verify:push-contract` now verifies portal opt-in, service worker receipt, `send-push` edge route, stale subscription cleanup, and public prompt wiring; real browser notification receipt remains open.
+
+---
+## Historical Human Action Required
+
+- [x] **[DB] `register_open` migration** — phase56 applied live (S48): `referred_by` column, `p_ref_by` param, milestones updated ✅
+- [x] **[Sentry] Configure release workflow** — `SENTRY_AUTH_TOKEN` secret set; org/project hardcoded in workflow; CI passing (S48) ✅
+- [x] **[STRIPE-ANNUAL]** Create the annual Stripe yearly price IDs so the honest annual pricing preview can be activated into a real checkout route. ✅ (S99: prices `price_1TNJPfGMN60PfJYsHKVkjL12` + `price_1TNJPtGMN60PfJYsAXZYQNVj` active in Stripe, hardcoded in edge fn, wired in billing-toggle.js — phantom blocker)
+- [x] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` to GitHub Actions secrets so Worker deploys stop depending on local Wrangler auth. ✅ (S99: secret confirmed set 2026-04-17 — phantom blocker)
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com (server-side test blocked by Web3Forms free tier). Verify with `node -e "fetch('https://vaultsparkstudios.com/contact/').then(r=>r.text()).then(t=>console.log('form-access_key:', /access_key/.test(t) ? 'wired' : 'MISSING'))"` (expect `form-access_key: wired`); after submitting from browser, confirm receipt at founder@vaultsparkstudios.com inbox.
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard — CF API token lacks Zone:Security Read scope; needs token with that permission or dashboard check. Verify (post-token-scope-fix) with `node -e "fetch('https://api.cloudflare.com/client/v4/zones/'+process.env.CLOUDFLARE_ZONE_ID+'/firewall/rules',{headers:{Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN}}).then(r=>r.json()).then(j=>console.log('rules:', (j.result||[]).filter(r=>/CN|RU|HK/.test(JSON.stringify(r.filter||r))).length))"` (expect ≥1).
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here — no beacon Gist found in GitHub gists; Gist must be created first (Hub Settings → Active Session Beacon). Verify with `node -e "console.log(require('fs').existsSync('.claude/beacon.env') ? 'beacon-env: present' : 'beacon-env: MISSING')"` (expect `present`).
+- [ ] **[WEB3FORMS-KEYS]** Create 3 separate keys in Web3Forms dashboard (join/, contact/, data-deletion/) for per-form lead tracking [low priority]. Verify with `node -e "Promise.all(['/contact/','/join/','/data-deletion/'].map(p=>fetch('https://vaultsparkstudios.com'+p).then(r=>r.text()).then(t=>(t.match(/access_key[\"']\\s*value=[\"']([\\w-]+)/)||[])[1]||null))).then(keys=>{const u=new Set(keys.filter(Boolean)); console.log('unique-access-keys:', u.size, '/', keys.filter(Boolean).length)})"` (expect `3 / 3`).
+- [ ] **[CF-EMAIL-ROUTING-SCOPE]** Expand `CLOUDFLARE_API_TOKEN` scope to include `Zone › Email Routing Addresses › Edit` and `Zone › Email Routing Rules › Edit` (currently neither `CLOUDFLARE_API_TOKEN` nor `CLOUDFLARE_DNS_TOKEN` carries either scope — verified S114 via 403 probe against `/zones/<id>/email/routing/rules`). Steps: (1) CF dashboard → My Profile → API Tokens → edit existing or create new; (2) add the two scopes against the vaultsparkstudios.com zone; (3) update `secrets/cloudflare.env` in studio-ops; (4) verify with `node -e "fetch('https://api.cloudflare.com/client/v4/zones/'+process.env.CLOUDFLARE_ZONE_ID+'/email/routing/rules',{headers:{Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN}}).then(r=>console.log('HTTP',r.status))"` (expect HTTP 200). [low priority — only needed if we automate adding new CF-hosted domains to email routing]
+- [x] **[DB] Founding Vault Badge** — migration applied 2026-04-12 via Supabase CLI; 4 founding members badged: DreadSpike, OneKingdom, VaultSpark, Voidfall ✅
+- [x] **[CF-SECRETS]** Add `CF_API_TOKEN` (Zone/Cache Purge) and `CF_ZONE_ID` secrets to GitHub repo → Settings → Secrets; enables auto cache purge workflow added S53 ✅ (S54)
+- [x] **[CSP-VERIFY]** After S53 deploy: open vault-member/index.html in DevTools console (incognito); confirm zero `Content-Security-Policy` errors ✅ (S54 — verified; remaining Cloudflare edge-injected inline scripts are platform-generated, unfixable with static hashes, accepted as limitation)
+- [x] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. ✅ (S100: duplicate phantom — secret confirmed set 2026-04-17 per S99 audit; GitHub API confirmed CF_WORKER_API_TOKEN present)
+- [x] **[DB] Phase59 public_profile migration** — applied S61 via `supabase db query --linked`; `public_profile boolean NOT NULL DEFAULT true` column confirmed; partial index `idx_vault_members_public_profile` confirmed. Portal toggle + vault-wall filter now live. ✅
+
+---
+## Completed historical work
+
+Completed S30–S69 entries are preserved in [TASK_BOARD_ARCHIVE.md](archive/TASK_BOARD_ARCHIVE.md).
+## S364 follow-up
+
+- [ ] **[SIL][S364][OBS/P2]** Add a scheduled no-send public-form configuration probe that distinguishes missing challenge configuration from ordinary invalid input. No scheduled email sends.
+## S369 focused follow-ups
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- [ ] **[SIL][S369][P2]** Re-probe Scriptorium (HTTP 401) and VaultFront (HTTP 503); treat these as authentication/availability observations, not proven abandoned URLs.
+- [ ] **[SIL][S369][P2]** Review Spark aggregate usage only after a fresh consented cohort exists; no conversion improvement is claimed from lab tests.
+
+### S369 — Expanded Desk delivery
+
+### S369 closeout record reconciliation
+
+### S369 requested newsletter experience
+
+- [ ] [SIL] Check upgraded invite/unsubscribe in a real mailbox during the next authorized signup; new-template delivery remains unverified.
+- [ ] [SIL] Evaluate explicit confirmation POST to avoid mail-scanner opt-in while preserving a simple agent workflow; existing confirmation GET retained in this release.
+
+Eight older completed technical tasks are preserved in context/archive/TASK_BOARD_ARCHIVE.md.
+
+### 2026-10-07 requested follow-through
+
+### S370 explicit final closeout
+
+- [ ] **[SIL/P2 · future maintenance]** Make candidate-manifest changes select the existing receipt-ordering check before push, including metadata-only rebuilds; retain source/image guards and original review dates.
+
+- [ ] **[UX/P2 · separate scope]** Stabilize initial browser Find positioning during article expansion. S371 production diagnostics reproduced the offscreen selected title with both current CSS and the appended optimization removed; script blocking preserved visibility. Evidence: `docs/S371_PRODUCTION_ACCEPTANCE.json`.
+
+### S378 record recovery — 2026-10-14
+
+Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+## S392 checkpoint + remaining release
+
+Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
+
+- [ ] [S392] Finish full validation, staging, push and production readback. Supabase unhealthy; one restart approval pending. Evidence: docs/RELEASE_S392.json.
+- [ ] [SIL][S392] Run tracked-test parity and generated-data preflight before the full suite.
+- [ ] [SIL][S392] Keep active handoff headings distinct from completed-session evidence.
+
+Wave 1 ✔ fresh audit. Wave 2 ✔ two input-boundary fixes. Wave 3 ◻ release gates and deployment carried forward. Phase tally:3 phases,2 done,1 open.
+
+### S393 release-dependent theme outcome
+
+Both selected local outcomes are accepted. Whole-project and release checks remain pending; no prior-session acceptance is borrowed.
+
+- [ ] [S401 FOLLOW-UP] Diagnose live-browser simulated origin-outage ERR_FAILED and Sparked QA entitlement mismatch; both reproduce on prior immutable release with unchanged code. Retained in docs/RELEASE_S401.json; not selected for this archive-integrity arc.
+
+- [ ] [SIL][S403] Assess the separate shard-ledger byte-offset path before generalizing dated-ledger UTF-8 planning; future, unselected.
+- [ ] [SIL][S403] Verify Studio Ops adoption of the rotated-ledger pattern after Ark delivery; transport alone does not prove adoption. Future, unselected.
+
+- [x] [S405] receipt-only-browser-isolation L2: deterministic CLI negative tests2/2 and normal28-frame capture independently reviewed. Complete release acceptance remains in docs/RELEASE_S405.json.
+
+
+<!-- S406-og-freshness -->
+### S406 coverage freshness release prerequisite
+
+S406 observed release prerequisite: both canonical full and refresh-live-data profiles now run the existing Open Graph (OG) inventory producer before public status and candidate sealing. Actual inventory337/337eligible public pages carded,18dark,0untriaged; age0.0days and unchanged2day limit. Existing build-order43/43, invocation-mode10/10 and generator6/6 checks passed; independent review PASS0. Complete source/staging/hosted/production acceptance remains pending in docs/RELEASE_S406.json.
+
+Source attempt2 remains failed evidence:167passing of168executed/547planned. No timestamp-only repair, gate relaxation or skipped acceptance. Native OG recomputation and both profile entries fix the omitted producer. No UI, identity, pricing, lifecycle, trust-policy or dependency change. Rollback: bounded revert of the two profile entries. Local implementation velocity2; SIL939/1000unchanged, no product/conversion/field-performance or token-cost gain claimed.
+
+
+<!-- S406-cache-follow-through -->
+The final delivery check found week-long caching on mutable portal assets. The existing shell builder now fingerprints five member/investor resources, resolves registered member assets relative to each page, preserves defer order and leaves unrelated/external URLs intact. Focused shell tests15/15, real persistent-browser warm-cache proof, current portal20/message46 interactions, native mobile215/215, and392 freshly captured/reviewed all-theme desktop/mobile views passed. Earlier full548 source acceptance at d161f7 is preserved as pre-cache-fix evidence; this source still requires fresh complete verification, staging, hosted checks and production/readback. No authentication, membership, pricing, financial document or outbound-message change was made. Release state remains docs/RELEASE_S406.json.

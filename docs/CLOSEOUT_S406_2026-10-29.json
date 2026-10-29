@@ -4,7 +4,7 @@
   "requestedAt": "2026-10-29T18:26:07.857Z",
   "initialHead": "bc670dc2dbda915e74865168ee81b1f852367922",
   "priorArcComplete": true,
-  "state": "reconciling-current-generated-data",
+  "state": "focused-repairs-passed-fresh-complete-native-run-pending",
   "shippedOutcomes": 6,
   "newProductChanges": 0,
   "score": 939,
@@ -31,6 +31,76 @@
       "state": "intentionally-interrupted",
       "sourceAcceptance": false,
       "reason": "Scheduled upstream feed updates since the prior release were discovered before the full source gate; synchronize before measuring the combined candidate."
+    },
+    {
+      "state": "failed",
+      "log": ".cache/logs/S406-explicit-closeout-autopilot-attempt2.log",
+      "receipt": "docs/S406_explicit-closeout-source-attempt2.json",
+      "passed": 22,
+      "failed": 1,
+      "planned": 548,
+      "reason": "Startup board plus brief estimated42068 tokens exceeded unchanged42000 limit; no full source acceptance claimed."
+    },
+    {
+      "state": "failed",
+      "log": ".cache/logs/S406-explicit-closeout-autopilot-attempt3.log",
+      "receipt": "docs/S406_explicit-closeout-source-attempt3.json",
+      "passed": 143,
+      "failed": 1,
+      "planned": 548,
+      "reason": "Handoff archive405KB exceeded unchanged400KBcap atstep144; no complete source acceptance."
     }
-  ]
+  ],
+  "independentReview": {
+    "rounds": 2,
+    "firstFindings": 1,
+    "fixed": 1,
+    "remaining": 0,
+    "reviewer": "closeout_reviewer"
+  },
+  "scaffold": [
+    {
+      "task": "Reconcile context, CDR, memory and task board",
+      "state": "complete"
+    },
+    {
+      "task": "Verify combined source and full staging",
+      "state": "in-progress"
+    },
+    {
+      "task": "Publish main, fully deploy and verify served artifact",
+      "state": "pending"
+    }
+  ],
+  "contextBudgetRepair": {
+    "archive": "context/archive/task-board/2026-10-29-S406-explicit-closeout-budget/VaultSparkStudios.github.io-TASK_BOARD.2026-10-29T18-53-46-816Z.full.md",
+    "sha256": "f39aa7d5714fd823b469e912defe597f175b947ba6a7da8b983d2d134827d993",
+    "preservedFutureSILTasks": true,
+    "preservedAllPriorSessionSections": true,
+    "thresholdChanged": false
+  },
+  "retentionRepair": {
+    "command": "node scripts/rotate-ledger.mjs --apply",
+    "scope": "Native approximate168KB console report; history moved verbatim into shard3, not deleted",
+    "sizeGatePassed": true,
+    "capChanged": false,
+    "nativeReportedMovedKB": 168,
+    "nativeSizeRounded": true
+  },
+  "proofPreflight": {
+    "log": ".cache/logs/S406-explicit-proof-preflight.log",
+    "blockingPassed": 92,
+    "blockingTotal": 92,
+    "advisories": 1,
+    "sourceAcceptance": false
+  },
+  "remainingDiagnostic": {
+    "receipt": "docs/S406_explicit-closeout-remaining-diagnostic.json",
+    "passed": 404,
+    "failed": 0,
+    "firstStep": 145,
+    "planned": 548,
+    "coverageComplete": false,
+    "sourceAcceptance": false
+  }
 }

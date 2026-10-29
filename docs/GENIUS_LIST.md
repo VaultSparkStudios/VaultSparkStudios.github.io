@@ -6,7 +6,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **82/100**
+- Overall opportunity pressure: **79/100**
 - Health: **yellow**
 - Current SIL: **939/1000**
 - CI health: **check gh run list**
@@ -22,73 +22,73 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [SECURITY] Measure help startup separately from probe execution before attemptin…
-Final score: **99**
+#### 1. [PRODUCT] Finish fresh native verification and full staging of the current comb…
+Final score: **96**
+Finish fresh native verification and full staging of the current combined tree.
+Why it matters: Finish fresh native verification and full staging of the current combi is open, local, and unblocked — can ship this session.
+
+#### 2. [SECURITY] Measure help startup separately from probe execution before attemptin…
+Final score: **93**
 [S406][SIL] Measure help startup separately from probe execution before attempting runtime optimization. No performance or token saving is currently claimed.
 Why it matters: Measure help startup separately from probe execution before attempting lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
 
-#### 2. [PRODUCT] Consider extending help-only process fixtures to another operator CLI…
-Final score: **96**
+#### 3. [PRODUCT] Consider extending help-only process fixtures to another operator CLI…
+Final score: **90**
 [S406][SIL] Consider extending help-only process fixtures to another operator CLI only after reproducing its side effects.
 Why it matters: Consider extending help-only process fixtures to another operator CLI  is open, local, and unblocked — can ship this session.
 
-#### 3. [VERIFY] Post-push CI confirmation
-Final score: **96**
-Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
-Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
-
-First command: `gh run list --limit 10`
-
 #### 4. [PRODUCT] Consider migration of scheduled text probes only after measuring cove…
-Final score: **90**
+Final score: **84**
 [SIL][S405] Consider migration of scheduled text probes only after measuring coverage and compatibility for each caller; future, unselected.
 Why it matters: Consider migration of scheduled text probes only after measuring cover is open, local, and unblocked — can ship this session.
 
 ### NEXT
 
-#### 1. [PRODUCT] Consider redirect-target body verification only if a real redirected …
-Final score: **87**
+#### 1. [VERIFY] Commit/push main, fully deploy, verify complete served parity and res…
+Final score: **83**
+Commit/push main, fully deploy, verify complete served parity and restore publishers.
+Why it matters: Commit/push main, fully deploy, verify complete served parity and rest is a 406-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check`
+
+#### 2. [PRODUCT] Consider redirect-target body verification only if a real redirected …
+Final score: **81**
 [SIL][S405] Consider redirect-target body verification only if a real redirected destination failure is reproduced; future, unselected.
 Why it matters: Consider redirect-target body verification only if a real redirected d is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Consider response-body streaming only if measured remote readback mem…
-Final score: **84**
+#### 3. [PRODUCT] Consider response-body streaming only if measured remote readback mem…
+Final score: **78**
 [SIL][S404] Consider response-body streaming only if measured remote readback memory pressure justifies it; future, unselected.
 Why it matters: Consider response-body streaming only if measured remote readback memo is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Consider native positive-manifest text parity as a separately reviewe…
-Final score: **81**
+#### 4. [PRODUCT] Consider native positive-manifest text parity as a separately reviewe…
+Final score: **75**
 [SIL][S404] Consider native positive-manifest text parity as a separately reviewed default migration; preserve legacy default in this session. Future, unselected.
 Why it matters: Consider native positive-manifest text parity as a separately reviewed is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Extend method-specific corroboration coverage if additional signals a…
-Final score: **78**
+#### 5. [PRODUCT] Extend method-specific corroboration coverage if additional signals a…
+Final score: **72**
 [SIL][S402] Extend method-specific corroboration coverage if additional signals are introduced; future, unselected.
 Why it matters: Extend method-specific corroboration coverage if additional signals ar is open, local, and unblocked — can ship this session.
 
-#### 5. [PRODUCT] Consider per-member byte verification only if source mutation during …
-Final score: **75**
+### LATER
+
+#### 1. [PRODUCT] Consider per-member byte verification only if source mutation during …
+Final score: **69**
 [SIL][S401] Consider per-member byte verification only if source mutation during packaging is observed; not selected in this arc.
 Why it matters: Consider per-member byte verification only if source mutation during p is open, local, and unblocked — can ship this session.
 
-### LATER
-
-#### 1. [PRODUCT] Coordinate an evidence-backed distinction between formatting-only sou…
-Final score: **72**
+#### 2. [PRODUCT] Coordinate an evidence-backed distinction between formatting-only sou…
+Final score: **66**
 [SIL][S400] Coordinate an evidence-backed distinction between formatting-only source writes and actual pixel changes in visual freshness; existing mandatory gate remains enforced. Future selection only.
 Why it matters: Coordinate an evidence-backed distinction between formatting-only sour is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Staging lineage tolerant of publisher data drift.
-Final score: **66**
+#### 3. [PRODUCT] Staging lineage tolerant of publisher data drift.
+Final score: **60**
 [SIL][S398] Staging lineage tolerant of publisher data drift.
 Why it matters: Staging lineage tolerant of publisher data drift. is open, local, and unblocked — can ship this session.
-
-#### 3. [PRODUCT] Gate srcset, CSS url(), redirect targets. Future only.
-Final score: **63**
-[SIL][S396] Gate srcset, CSS url(), redirect targets. Future only.
-Why it matters: Gate srcset, CSS url(), redirect targets. Future only. is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -134,18 +134,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Measure help startup separately from probe execution before attemptin…
-2. Consider extending help-only process fixtures to another operator CLI…
-3. Post-push CI confirmation
+1. Finish fresh native verification and full staging of the current comb…
+2. Measure help startup separately from probe execution before attemptin…
+3. Consider extending help-only process fixtures to another operator CLI…
 4. Consider migration of scheduled text probes only after measuring cove…
-5. Consider redirect-target body verification only if a real redirected …
-6. Consider response-body streaming only if measured remote readback mem…
-7. Consider native positive-manifest text parity as a separately reviewe…
-8. Extend method-specific corroboration coverage if additional signals a…
-9. Consider per-member byte verification only if source mutation during …
-10. Coordinate an evidence-backed distinction between formatting-only sou…
-11. Staging lineage tolerant of publisher data drift.
-12. Gate srcset, CSS url(), redirect targets. Future only.
+5. Commit/push main, fully deploy, verify complete served parity and res…
+6. Consider redirect-target body verification only if a real redirected …
+7. Consider response-body streaming only if measured remote readback mem…
+8. Consider native positive-manifest text parity as a separately reviewe…
+9. Extend method-specific corroboration coverage if additional signals a…
+10. Consider per-member byte verification only if source mutation during …
+11. Coordinate an evidence-backed distinction between formatting-only sou…
+12. Staging lineage tolerant of publisher data drift.
 
 ## Best Immediate Move
 

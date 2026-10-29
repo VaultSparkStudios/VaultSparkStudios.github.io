@@ -1144,3 +1144,7 @@ Prior accepted application baseline: 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74; v
 
 Status: records reconciled; fresh native closeout verification, current staging, exact required checks, full production and readback remain pending for this explicit request. Existing identity/provider and field-vitals limitations remain separate. No new product features, prices, entitlements, creative direction, financial figures or growth claims are introduced.
 
+
+
+### S406 explicit closeout startup-context repair
+The full native run failed at the unchanged42,000-token startup budget. Archive the complete task board before compacting only duplicate completed S406 header prose. Preserve both future SIL tasks and every earlier session section. No threshold increase, task deletion or historical acceptance rewrite.

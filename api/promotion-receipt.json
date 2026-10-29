@@ -4,19 +4,19 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "d161f7fe1ae082516d0f4a26cf813df44d022250",
+    "sha": "87f147027f814be9ec78dd9960132f142945e178",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "c06161b6aa3bd398bc7ced0a42d88979eb60697f",
-    "contentLaneHead": "59abdec9314eb61be1427af655e60d8a15e5ea84",
+    "sha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+    "contentLaneHead": null,
     "reachable": true,
-    "reconciliation": "behind",
+    "reconciliation": "ahead",
     "shellParity": {
       "state": "matched",
-      "observedAt": "2026-10-29T05:36:38.227Z",
-      "ageHours": 0.5,
+      "observedAt": "2026-10-29T18:13:39.608Z",
+      "ageHours": 0.8,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -33,13 +33,14 @@
   "browser": {
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
-    "consoleErrors": 8,
+    "consoleErrors": 7,
     "workerRouteErrors": 7,
-    "signalCardinality": 7,
+    "signalCardinality": 8,
     "signalEndpoints": [
       "api/ecosystem-state.json",
       "api/ignis-conduit.json",
       "api/membership-tiers.json",
+      "api/news-desk-feed.json",
       "api/public-intelligence.json",
       "api/rank-climbers.json",
       "api/recent-ships.json",
@@ -67,16 +68,17 @@
         "captured": true,
         "consoleErrors": 1,
         "workerRouteErrors": 1,
-        "signalCardinality": 1,
+        "signalCardinality": 2,
         "signalEndpoints": [
-          "api/membership-tiers.json"
+          "api/membership-tiers.json",
+          "api/news-desk-feed.json"
         ]
       },
       {
         "route": "/games/franchise-architect/",
         "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
         "captured": true,
-        "consoleErrors": 2,
+        "consoleErrors": 1,
         "workerRouteErrors": 1,
         "signalCardinality": 2,
         "signalEndpoints": [
@@ -89,21 +91,21 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "the repo has advanced past the last promotion: production serves c06161b6, repo build-sha is d161f7fe — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
-    "8 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 1 unexplained"
+    "production serves 94fe9ea3, newer than the recorded promoted 87f14702 (benign — a later rebuild moved on)",
+    "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-10-29T06:06:31.565Z",
+  "generatedAt": "2026-10-29T19:00:44.885Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
     "lastStrandedAt": "2026-10-29T06:06:31.565Z",
-    "currentBehindStreak": 4,
-    "newestGradableAt": "2026-10-29T06:06:31.565Z",
+    "currentBehindStreak": 0,
+    "newestGradableAt": "2026-10-29T19:00:44.885Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,
-    "strandedAlert": true
+    "strandedAlert": false
   }
 }
