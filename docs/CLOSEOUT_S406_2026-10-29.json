@@ -135,5 +135,38 @@
   "visual": {
     "receipt": "docs/visual-qa/S406-explicit-closeout-current.json",
     "scope": "Unchanged source/pixel proof; original capture/review times preserved, candidate metadata rebound only."
+  },
+  "hostedAttempts": [
+    {
+      "candidate": "933be2998f8e4a19cb3926cca3bd1967c27fbd1e",
+      "workflows": [
+        {
+          "workflow": ".github/workflows/e2e.yml",
+          "runId": 40952729137
+        },
+        {
+          "workflow": ".github/workflows/lighthouse.yml",
+          "runId": 40952737765
+        },
+        {
+          "workflow": ".github/workflows/accessibility.yml",
+          "runId": 40952743932
+        }
+      ],
+      "failedJob": 123724783895,
+      "failedStep": "Public intelligence sync check",
+      "reason": "Generated public-status feed had not been reconciled after native closeout refreshed heartbeat activity.",
+      "productionDispatched": false,
+      "localReproduction": true,
+      "repair": "Canonical public-status and dependent feed producers; fresh proof-surface92/92 blocking passes.",
+      "log": ".cache/logs/S406-explicit-compliance-job.log"
+    }
+  ],
+  "postCloseoutRepair": {
+    "proofLog": ".cache/logs/S406-explicit-post-closeout-proof-repair.log",
+    "blockingPassed": 92,
+    "blockingTotal": 92,
+    "advisories": 1,
+    "applicationCodeChanged": false
   }
 }
