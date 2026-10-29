@@ -1,6 +1,6 @@
 # Genius Hit List — Session 406
 
-Generated: 2026-10-28
+Generated: 2026-10-29
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **939/1000**
 - CI health: **check gh run list**
-- Current focus: S406 diagnostic help safety and OG coverage freshness locally verified; full release acceptance in docs/RELEASE_S406.json
+- Current focus: Refining member and investor workspaces and making the studio’s public feeds easier to use.
 
 ## Strategic Read
 

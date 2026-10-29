@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-28 (Session 406 closeout) -->
+<!-- generated-at: 2026-10-29 (Session 406 closeout) -->
 <!-- semantic-freshness: hash=475f5cc8352ac49d next=407 silSession=406 silScore=939 handoff=406 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 406 closeout · 2026-10-28.
+> **Fast-boot brief** — generated at Session 406 closeout · 2026-10-29.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 407 · 2026-10-28 · FOUNDER MODE                         ║
+║  Session 407 · 2026-10-29 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S406) - WHAT SHIPPED ══════════════════════════╗
-║  S406 two bounded reliability outcomes locally verified and ind  ║
+║  S406 original reliability repairs preserved; portal and public  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -42,8 +42,8 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2→                          ║
-║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 6→                          ║
+║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
 ║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -63,7 +63,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 406 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    547/547 passing  ·  Deploy: verified                  ║
+║  Tests:    548/548 passing  ·  Deploy: verified                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -73,10 +73,10 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         547/547 passing (2026-10-28)                   ║
-║  ✓  Velocity      2 →  ·  Debt: →                                ║
+║  ✓  Tests         548/548 passing (2026-10-28)                   ║
+║  ✓  Velocity      6 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ✓  Context age   3d                                             ║
+║  ✓  Context age   4d                                             ║
 ║  ✓  IGNIS         44828 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — S406 implementation verified; full…   ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
@@ -95,8 +95,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    66d · Authorize or decline immutable warm-origin migrati      ║
-║    66d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
+║    67d · Authorize or decline immutable warm-origin migrati      ║
+║    67d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -108,14 +108,14 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▂▂▂▄  2→  (last 5 sessions)                         ║
+║  Velocity:   ▂▂▂▄  6→  (last 5 sessions)                         ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  935/1000  (↓4 vs current 939)                       ║
-║  At-risk:    Momentum Δ-3                                        ║
+║  Projected:  938/1000  (↓1 vs current 939)                       ║
+║  All categories forecast stable or rising.                       ║
 ║  Calibration: MAE 4.2 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 406 closeout · 2026-10-28*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 406 closeout · 2026-10-29*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

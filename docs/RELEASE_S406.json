@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "session": 406,
-  "state": "website-implemented-final-verification-pending",
+  "state": "website-locally-verified-full-source-pending",
   "releaseAccepted": false,
   "goal": {
     "threadId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
@@ -33,21 +33,37 @@
     "procedure": "Normal bounded revert and redeploy prior accepted production; never force-push."
   },
   "limitations": [
-    "No UI/auth/pricing/lifecycle/trust-policy changes.",
+    "UI changed within the founder-expanded scope; auth, pricing, lifecycle and trust policy were preserved.",
     "No field-performance, conversion, availability or token-cost gain claimed.",
     "Existing independent identity/provider and field-vitals limits remain separate."
   ],
   "browser": {
     "visual": "docs/S406_visual-acceptance.json",
     "nativeVisual": "docs/visual-qa/S406-combined-news-tall.json",
-    "manuallyReviewed": 70,
-    "mobile": "docs/S406_mobile-acceptance.json",
+    "manuallyReviewed": 392,
+    "mobile": "215/215 passed; docs/S406_mobile-acceptance.json",
     "mobileCasesPassed": 215,
     "mobileProbesExpected": 215,
     "currentReceipts": [
       "docs/visual-qa/S406-combined-home.json",
       "docs/visual-qa/S406-combined-news-tall.json",
-      "docs/visual-qa/S406-combined-satire-tall.json"
+      "docs/visual-qa/S406-combined-satire-tall.json",
+      "docs/visual-qa/S406-investor-after-stable.json",
+      "docs/visual-qa/S406-investor-profile-after.json",
+      "docs/visual-qa/S406-investor-populated.json",
+      "docs/visual-qa/S406-investor-evidence.json",
+      "docs/visual-qa/S406-investor-error.json",
+      "docs/visual-qa/S406-investor-message-empty.json",
+      "docs/visual-qa/S406-investor-message-populated.json",
+      "docs/visual-qa/S406-investor-message-error.json",
+      "docs/visual-qa/S406-member-return-after.json",
+      "docs/visual-qa/S406-member-after-modal.json",
+      "docs/visual-qa/S406-public-after.json",
+      "docs/visual-qa/S406-api-feeds.json",
+      "docs/visual-qa/S406-api-examples.json",
+      "docs/visual-qa/S406-api-actions.json",
+      "docs/visual-qa/S406-api-catalog.json",
+      "docs/visual-qa/S406-changelog-entry.json"
     ],
     "before": "docs/visual-qa/S406-combined-before-news.json"
   },
@@ -211,10 +227,70 @@
     "resourceAudit": "docs/S406_website-resource-audit.json",
     "originalOutcomes": 2,
     "addedImplemented": 4,
-    "addedVerified": 0,
+    "addedVerified": 4,
     "sourceAcceptanceCurrent": false,
-    "visualAcceptanceCurrent": false,
-    "mobileAcceptanceCurrent": false,
-    "privateContent": "Honest empty/unavailable states; a passive factual investor studio briefing is planned only after this candidate is actually deployed and verified. No private financial documents are fabricated."
+    "visualAcceptanceCurrent": true,
+    "mobileAcceptanceCurrent": true,
+    "privateContent": "Honest empty/unavailable states; a passive factual investor studio briefing is planned only after this candidate is actually deployed and verified. No private financial documents are fabricated.",
+    "implemented": 4,
+    "locallyVerified": 4,
+    "visualCurrent": true,
+    "mobileCurrent": true,
+    "fullSourceCurrent": false,
+    "productionCurrent": false
+  },
+  "expandedOutcomes": {
+    "original": 2,
+    "website": 4,
+    "totalLocallyVerified": 6,
+    "audit": "docs/AUDIT_2026-10-28-S406-website-refresh.json",
+    "releaseAccepted": false
+  },
+  "websiteSourceAttempt1": {
+    "evidence": "docs/S406_website-source-attempt1-failed.json",
+    "exit": 1,
+    "passed": 5,
+    "executed": 6,
+    "planned": 548,
+    "reason": "Stale removed studio_pulse query in native public REST inventory. Native read-only live refresh also verified corrected message fallback against the actual schema; final message visual review pending."
+  },
+  "messageVerification": {
+    "behavior": "docs/S406_message-behavior.json",
+    "passed": 46,
+    "total": 46,
+    "networkWrites": 0,
+    "visualStates": [
+      "empty",
+      "populated",
+      "unavailable"
+    ],
+    "captures": 42,
+    "scope": "Local Chromium query fixtures; no actual identity, private record or message delivery result claimed.",
+    "statusTruth": "Absent or unknown status is Sent; explicit in_review retains existing contract."
+  },
+  "websiteSourceAttempt2": {
+    "evidence": "docs/S406_website-source-attempt2-interrupted.json",
+    "state": "intentionally-interrupted",
+    "acceptance": false,
+    "lastStartedStep": 145,
+    "planned": 548
+  },
+  "websiteSourceAttempt3": {
+    "evidence": "docs/S406_website-source-attempt3-failed.json",
+    "exit": 1,
+    "passed": 168,
+    "executed": 169,
+    "planned": 548,
+    "reason": "Visual retention report stale after final42 message captures; native producer and whole canonical proof cascade refreshed."
+  },
+  "proofPrerequisites": {
+    "observedAt": "2026-10-29T02:08:53.886Z",
+    "log": ".cache/logs/S406-final-proof-refresh.log",
+    "exit": 0,
+    "blockingPassed": 92,
+    "blockingTotal": 92,
+    "advisoryFindings": 0,
+    "visualSourcePixelsUnchanged": 392,
+    "fullSourceAccepted": false
   }
 }

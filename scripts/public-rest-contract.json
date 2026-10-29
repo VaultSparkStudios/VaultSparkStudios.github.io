@@ -1,6 +1,6 @@
 {
   "schema": "public-rest-contract/v1",
-  "verifiedAt": "2026-10-19T22:49:49.991Z",
+  "verifiedAt": "2026-10-29T01:21:26.808Z",
   "queries": {
     "beta_keys|*": {
       "verdict": "ok",
@@ -182,11 +182,9 @@
       "verdict": "auth-only",
       "status": 401
     },
-    "investor_messages|id,subject,body,category,created_at|where:created_at": {
-      "verdict": "known-failing",
-      "status": 400,
-      "detail": "42703 column investor_messages.body does not exist",
-      "note": "S390 deferred: investor-portal message view names a body column production lacks; investor surface needs the real message schema."
+    "investor_messages|id,subject,message,priority,created_at,founder_reply,founder_replied_at|where:created_at": {
+      "verdict": "ok",
+      "status": 200
     },
     "investor_requests|why_approve,why_vaultspark,investing_history,value_beyond_capital,how_heard,created_at,full_name,entity_type,organization,investment_range|where:created_at": {
       "verdict": "ok",
@@ -375,10 +373,6 @@
       "status": 200
     },
     "studio_pulse|id,created_at|where:created_at": {
-      "verdict": "ok",
-      "status": 200
-    },
-    "studio_pulse|id,message,type,created_at|where:created_at": {
       "verdict": "ok",
       "status": 200
     },

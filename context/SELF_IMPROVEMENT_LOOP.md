@@ -11,8 +11,8 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last5 available totals):939 →939 →939 →939 →939
 Avgs (available rolling totals) —3:939.0 |5:939.0 |10:unmeasured |25:unmeasured |all:unmeasured
 Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session:2026-10-28 | Session 406 | Total:939/1000 | Velocity:2
-  └ Diagnostic help safety locally verified; release and closing state: docs/RELEASE_S406.json.
+Last session:2026-10-28 | Session 406 | Total:939/1000 | Velocity:6
+  └ Six local outcomes verified; full release and closing state: docs/RELEASE_S406.json.
 <!-- rolling-status-end -->
 
 > Older entries through S401 live verbatim in `context/archive/SIL_S1-S401.md` (exact committed pre-rotation snapshot). Recent complete entries follow.
@@ -2111,3 +2111,11 @@ Website assessment: no UI, conversion journey or performance-sensitive public as
 S406 observed release prerequisite: both canonical full and refresh-live-data profiles now run the existing Open Graph (OG) inventory producer before public status and candidate sealing. Actual inventory337/337eligible public pages carded,18dark,0untriaged; age0.0days and unchanged2day limit. Existing build-order43/43, invocation-mode10/10 and generator6/6 checks passed; independent review PASS0. Complete source/staging/hosted/production acceptance remains pending in docs/RELEASE_S406.json.
 
 Source attempt2 remains failed evidence:167passing of168executed/547planned. No timestamp-only repair, gate relaxation or skipped acceptance. Native OG recomputation and both profile entries fix the omitted producer. No UI, identity, pricing, lifecycle, trust-policy or dependency change. Rollback: bounded revert of the two profile entries. Local implementation velocity2; SIL939/1000unchanged, no product/conversion/field-performance or token-cost gain claimed.
+
+
+<!-- S406-expanded-local-acceptance -->
+### S406 founder-expanded website acceptance
+
+Six S406 L2 outcomes are locally verified: diagnostic help safety, canonical Open Graph inventory refresh, current member return/release experience, decision-ready investor workspace, purpose-led developer integrations, and factual public content freshness. Actual Chromium behavior20/20 plus message46/46, mobile215/215, and all392 current desktop/mobile captures across seven themes passed review. Full current source verification, staging, hosted checks, production/readback, passive investor briefing and publisher restoration remain pending in docs/RELEASE_S406.json. No measured growth, conversion or field-performance uplift is claimed.
+
+Local implementation velocity6; SIL939/1000 unchanged. The ten category scores above remain the last product assessment; no inferred score gain. Earlier no-UI statements describe the original reliability checkpoint only. The founder selected both premium studio experience and decision-ready information, with decision-ready information first; direction is recorded in docs/CREATIVE_DIRECTION_RECORD.md. Existing membership, identity, rights and public pricing remain unchanged. The two existing unselected follow-ups on TASK_BOARD remain sufficient; no unrelated maintenance added.

@@ -5,9 +5,9 @@ Same native goal and session; prior reliability outcomes and pre-portal source54
 
 - [x] Wave 1: Inspect actual portal, page, feed and integration sources; preserve accepted pre-portal receipts.
 - [x] Wave 2: Admit strict typed premises and pending plan before edits; capture existing UI in a real browser.
-- [ ] Wave 3: Member return/freshness and premium investor workspace; preserve auth, ranks, prices and entitlement rules.
-- [ ] Wave 4: Developer feeds/actions/integration discovery and factual public updates; sitewide page-family reconciliation.
-- [ ] Wave 5: Independent review, all-theme desktop/mobile visual evidence, complete source checks, current staging, exact hosted checks, full production and complete served readback; final closeout and publisher restoration.
+- [x] Wave 3: Member return/freshness and premium investor workspace; preserve auth, ranks, prices and entitlement rules.
+- [x] Wave 4: Developer feeds/actions/integration discovery and factual public updates; sitewide page-family reconciliation.
+Wave 5 complete local visual/interaction/mobile verification. Remaining complete source, staging, hosted checks, production/readback, closeout and publisher restoration are delegated to `docs/RELEASE_S406.json`; this plan does not claim release acceptance.
 
 Selected L2 outcomes:
 

@@ -1,6 +1,6 @@
 {
   "session": 406,
-  "observedAt": "2026-10-28T21:12:49.861Z",
+  "observedAt": "2026-10-29T00:57:36.139Z",
   "passed": 215,
   "total": 215,
   "failed": 0,
@@ -8,7 +8,7 @@
   "nativeReceipt": "docs/mobile-audit/receipt.json",
   "source": {
     "algorithm": "sha256",
-    "sha256": "5322ebff943d1476c0d5bcdf2ff79c9e26419b75ff52881d9259c5a563f0b2d6",
+    "sha256": "d53e45b53b6be1be7fcf038a915addf7d5061da64d61dab5870c989f07d8792f",
     "files": [
       "assets/membership-interview.js",
       "assets/page-sigil.js",
@@ -90,7 +90,7 @@
       },
       {
         "path": "changelog/index.html",
-        "sha256": "698b7e9c46226afcdca5e977124224abbe519f29a43b318ad32dc47907a4a57e"
+        "sha256": "d82341291d79dc736168d9695cbe9bc9cbdecb83f09f1879eaefd9b99d83c5ba"
       },
       {
         "path": "community/index.html",
@@ -150,11 +150,11 @@
       },
       {
         "path": "index.html",
-        "sha256": "159462e6b05d27ebc4c5784e1812adcccabf31376297a7da66c3decde52bf1de"
+        "sha256": "35108d90f52b52f2b6764d5eb9ca0534fb5fa5ed5b374022f2599ef3b7977a56"
       },
       {
         "path": "journal/index.html",
-        "sha256": "16b9ea79b2ee5f87e8ebc96c75cebcc1d21bcdecb5b3d8973c66192a91ba8813"
+        "sha256": "0d15895e5138b7abc6aaa4111ceff613d72be609244ffca661e72f05765600b3"
       },
       {
         "path": "journal/vault-opened/index.html",
@@ -270,22 +270,18 @@
       },
       {
         "path": "vault-member/index.html",
-        "sha256": "6db568c696290e80b762993509505c85b846b1a8c8d3da76c0230e1d7d293252"
+        "sha256": "8b697db4278e6e632a36175ce4228e2687c5e759185f0ad3a01e52627c7f2a6f"
       }
     ]
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "0c5281590dabb0ad343adc75d2f335b5cef679a834e439f01f54e499821ed164",
-    "candidateSha": "67a8cd7d98ad08fe9e7968f0607ea95eebe9f877",
-    "root": "c5249f48ad5c74e3e237b170a9212ca324dcbd953ce4bc01656bccb9fd722c85"
+    "manifestSha256": "86c35bab22b4a05d35fc7a33b83b7e1bbf2edf3dbe383a2cbeb912dae58690a9",
+    "candidateSha": "bcf232f1fc28b4306b8ccb782c103681974dc4c6",
+    "root": "85bccb1aea709c4940a2e81c4297f6d2eb4f6773156eaea8d4c3235a95112cc9"
   },
   "command": "BASE_URL=http://127.0.0.1:4196 node node_modules/@playwright/test/cli.js test tests/mobile-audit.spec.js --config=.cache/S406-playwright.config.cjs --project=chromium --workers=1 --reporter=list",
-  "scope": "Fresh complete native mobile matrix on merged local candidate. Same browser options and viewport sizes; only operator-local env loader disabled and config directories made absolute. Anonymous loopback preview; no credentials read.",
+  "scope": "Fresh complete native 215-case mobile run after the website refresh. Local anonymous preview; no production auth or growth result claimed.",
   "preview": "Owned loopback4196 preview stopped after actual215/215 process exit0.",
-  "metadataRebind": {
-    "at": "2026-10-28T22:57:53.863Z",
-    "by": "scripts/rebind-mobile-receipt.mjs",
-    "note": "candidate metadata re-stamped; records and pixel hashes unchanged"
-  }
+  "metadataRebind": null
 }

@@ -1,8 +1,8 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         547/547 passing (2026-10-28)                   ║
-║  ✓  Velocity      2 →  ·  Debt: →                                ║
+║  ✓  Tests         548/548 passing (2026-10-28)                   ║
+║  ✓  Velocity      6 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ✓  Context age   3d                                             ║
+║  ✓  Context age   4d                                             ║
 ║  ✓  IGNIS         44828 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — S406 implementation verified; full…   ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║

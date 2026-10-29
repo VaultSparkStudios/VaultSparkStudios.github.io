@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "2.0",
+  "generatedAt": "2026-10-29T01:18:54.159Z",
+  "publicSafe": true,
+  "source": "scripts/run-build-check.mjs",
+  "commandCount": 6,
+  "plannedCommandCount": 548,
+  "firstStep": 1,
+  "coverageComplete": false,
+  "planFingerprint": "3cd18438e9dd1c3a99843d24",
+  "sourceFingerprint": "4c16898c349d4643a2c7030a",
+  "passed": 5,
+  "failed": 1,
+  "totalDurationMs": 374443,
+  "startedAt": "2026-10-29T01:11:59.565Z",
+  "finishedAt": "2026-10-29T01:18:54.159Z",
+  "slowest": [
+    {
+      "step": 2,
+      "command": "node --test tests/served-binary-parity.unit.spec.mjs tests/operational-admission.unit.spec.mjs tests/moderation-admission.unit.spec.mjs tests/public-rest-canary.unit.spec.mjs tests/metadata-backfill.unit.spec.mjs tests/heartbeat-snapshot.unit.spec.mjs tests/rollback-archive.unit.spec.mjs tests/diagnostic-help.unit.spec.mjs",
+      "status": 0,
+      "durationMs": 140027,
+      "error": null
+    },
+    {
+      "step": 1,
+      "command": "node --test tests/ledger-rotation.unit.spec.mjs tests/staging-archive.unit.spec.mjs tests/offline-recovery.unit.spec.mjs tests/offline-navigation.unit.spec.mjs tests/deploy-parity.unit.spec.mjs tests/news-article-css.unit.spec.mjs tests/news-kicker-clearance.unit.spec.mjs tests/served-parity.unit.spec.mjs",
+      "status": 0,
+      "durationMs": 124542,
+      "error": null
+    },
+    {
+      "step": 3,
+      "command": "node --test tests/deployment-admission.unit.spec.mjs",
+      "status": 0,
+      "durationMs": 107511,
+      "error": null
+    },
+    {
+      "step": 6,
+      "command": "node scripts/check-public-rest-contract.mjs",
+      "status": 1,
+      "durationMs": 1162,
+      "error": null
+    },
+    {
+      "step": 4,
+      "command": "node scripts/check-csp-violations.mjs --self-test",
+      "status": 0,
+      "durationMs": 888,
+      "error": null
+    },
+    {
+      "step": 5,
+      "command": "node scripts/check-public-rest-contract.mjs --self-test",
+      "status": 0,
+      "durationMs": 313,
+      "error": null
+    }
+  ],
+  "concentration": {
+    "maxStepShare": 0.3,
+    "minActionableStepMs": 45000,
+    "dominantStep": 2,
+    "dominantCommand": "node --test tests/served-binary-parity.unit.spec.mjs tests/operational-admission.unit.spec.mjs tests/moderation-admission.unit.spec.mjs tests/public-rest-canary.unit.spec.mjs tests/metadata-backfill.unit.spec.mjs tests/heartbeat-snapshot.unit.spec.mjs tests/rollback-archive.unit.spec.mjs tests/diagnostic-help.unit.spec.mjs",
+    "dominantDurationMs": 140027,
+    "dominantShare": 0.374,
+    "breached": true
+  },
+  "failures": [
+    {
+      "step": 6,
+      "command": "node scripts/check-public-rest-contract.mjs",
+      "status": 1,
+      "durationMs": 1162,
+      "error": null
+    }
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "command": "node --test tests/ledger-rotation.unit.spec.mjs tests/staging-archive.unit.spec.mjs tests/offline-recovery.unit.spec.mjs tests/offline-navigation.unit.spec.mjs tests/deploy-parity.unit.spec.mjs tests/news-article-css.unit.spec.mjs tests/news-kicker-clearance.unit.spec.mjs tests/served-parity.unit.spec.mjs",
+      "status": 0,
+      "durationMs": 124542,
+      "error": null
+    },
+    {
+      "step": 2,
+      "command": "node --test tests/served-binary-parity.unit.spec.mjs tests/operational-admission.unit.spec.mjs tests/moderation-admission.unit.spec.mjs tests/public-rest-canary.unit.spec.mjs tests/metadata-backfill.unit.spec.mjs tests/heartbeat-snapshot.unit.spec.mjs tests/rollback-archive.unit.spec.mjs tests/diagnostic-help.unit.spec.mjs",
+      "status": 0,
+      "durationMs": 140027,
+      "error": null
+    },
+    {
+      "step": 3,
+      "command": "node --test tests/deployment-admission.unit.spec.mjs",
+      "status": 0,
+      "durationMs": 107511,
+      "error": null
+    },
+    {
+      "step": 4,
+      "command": "node scripts/check-csp-violations.mjs --self-test",
+      "status": 0,
+      "durationMs": 888,
+      "error": null
+    },
+    {
+      "step": 5,
+      "command": "node scripts/check-public-rest-contract.mjs --self-test",
+      "status": 0,
+      "durationMs": 313,
+      "error": null
+    },
+    {
+      "step": 6,
+      "command": "node scripts/check-public-rest-contract.mjs",
+      "status": 1,
+      "durationMs": 1162,
+      "error": null
+    }
+  ],
+  "note": "Public-safe build gate timing, plan identity, coverage, and direct exit-code summary. Command output is intentionally excluded.",
+  "receiptId": "1176ede529748b5182f8a389"
+}

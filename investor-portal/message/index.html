@@ -264,14 +264,24 @@
     async function loadMessageThread() {
       const list = document.getElementById('investorThreadList');
       if (!list || !sb) return;
-      // Try the view first (post-migration); fall back to raw table.
-      let { data, error } = await sb.from('investor_message_thread')
-        .select('*').order('created_at', { ascending: false }).limit(20);
-      if (error || !data) {
-        const fallback = await sb.from('investor_messages')
-          .select('id, subject, body, category, created_at')
-          .order('created_at', { ascending: false }).limit(20);
-        data = fallback.data || [];
+      // The view exposes body/category; the underlying table uses message/priority.
+      let data;
+      try {
+        let primary;
+        try { primary = await sb.from('investor_message_thread')
+          .select('*').order('created_at', { ascending: false }).limit(20); }
+        catch (_) { primary = { error: true }; }
+        if (!primary.error && Array.isArray(primary.data)) data = primary.data;
+        else {
+          const fallback = await sb.from('investor_messages')
+            .select('id, subject, message, priority, created_at, founder_reply, founder_replied_at')
+            .order('created_at', { ascending: false }).limit(20);
+          if (fallback.error || !Array.isArray(fallback.data)) throw new Error('Message history unavailable');
+          data = fallback.data.map(row => ({ ...row, body: row.message }));
+        }
+      } catch (_) {
+        list.innerHTML = '<p class="inv-empty">Message history could not be loaded. Reload the page to try again.</p>';
+        return;
       }
       if (!data.length) {
         list.innerHTML = '<p style="color:var(--muted,#94a3b8);font-style:italic;font-size:0.88rem;">No messages yet. Send your first above.</p>';
@@ -285,12 +295,12 @@
           ? new Date(row.founder_replied_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
           : null;
         const statusChip = hasReply
-          ? '<span style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#5ad28d;padding:0.2rem 0.5rem;border-radius:4px;background:rgba(90,210,141,0.1);border:1px solid rgba(90,210,141,0.3);">✓ Founder Replied</span>'
+          ? '<span style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--inv-accent);padding:0.2rem 0.5rem;border-radius:4px;background:rgba(90,210,141,0.1);border:1px solid rgba(90,210,141,0.3);">✓ Founder Replied</span>'
           : row.status === 'awaiting'
-            ? '<span style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#f5b042;padding:0.2rem 0.5rem;border-radius:4px;background:rgba(245,176,66,0.1);border:1px solid rgba(245,176,66,0.3);">Awaiting</span>'
-            : '<span style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#7EC9FF;padding:0.2rem 0.5rem;border-radius:4px;background:rgba(126,201,255,0.1);border:1px solid rgba(126,201,255,0.3);">In Review</span>';
+            ? '<span style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--inv-accent);padding:0.2rem 0.5rem;border-radius:4px;background:rgba(245,176,66,0.1);border:1px solid rgba(245,176,66,0.3);">Awaiting</span>'
+            : `<span style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--inv-accent);padding:0.2rem 0.5rem;border-radius:4px;background:rgba(126,201,255,0.1);border:1px solid rgba(126,201,255,0.3);">${row.status === 'in_review' ? 'In Review' : 'Sent'}</span>`;
         return `
-          <article style="padding:1.1rem 1.2rem;border-radius:12px;background:linear-gradient(135deg,rgba(13,17,28,0.92),rgba(20,14,8,0.93));border:1px solid rgba(255,255,255,0.08);">
+          <article style="padding:1.1rem 1.2rem;border-radius:12px;background:var(--portal-surface);border:1px solid var(--inv-line);">
             <header style="display:flex;align-items:baseline;gap:0.6rem;flex-wrap:wrap;margin-bottom:0.5rem;">
               <h3 style="font-family:Georgia,serif;font-size:1.05rem;letter-spacing:-0.01em;margin:0;flex:1;">${esc(row.subject)}</h3>
               ${statusChip}
@@ -299,7 +309,7 @@
             <p style="font-size:0.9rem;line-height:1.55;color:var(--text,#e4e7f0);margin:0 0 0.6rem;white-space:pre-wrap;">${esc(row.body)}</p>
             ${hasReply ? `
               <div style="margin-top:1rem;padding:0.9rem 1rem;border-radius:8px;background:rgba(90,210,141,0.05);border-left:3px solid #5ad28d;">
-                <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#5ad28d;margin-bottom:0.4rem;">Founder reply${repliedDate ? ' · ' + repliedDate : ''}</div>
+                <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--inv-accent);margin-bottom:0.4rem;">Founder reply${repliedDate ? ' · ' + repliedDate : ''}</div>
                 <p style="font-size:0.92rem;line-height:1.6;color:var(--text,#e4e7f0);margin:0;white-space:pre-wrap;">${esc(row.founder_reply)}</p>
               </div>
             ` : ''}
