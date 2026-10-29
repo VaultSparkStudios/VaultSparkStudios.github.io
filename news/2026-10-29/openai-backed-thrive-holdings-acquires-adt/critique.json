@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-29T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-10-29/openai-backed-thrive-holdings-acquires-adt",
+    "url": "https://vaultsparkstudios.com/news/2026-10-29/openai-backed-thrive-holdings-acquires-adt/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-10-29-openai-backed-thrive-holdings-acquires-adt-01-13b334a945bd",
+      "hash": "13b334a945bd6d99438d62259f5802b9c9125c549cd9047c69a6e7e0f37d4f83",
+      "text": "Thrive Holdings has acquired physical security company ADT for $10 per share or about $7.6 billion in equity, the companies announced on Thursday.",
+      "sourceUrl": "https://techcrunch.com/2026/10/29/openai-backed-thrive-holdings-acquires-adt/",
+      "sourceHost": "techcrunch.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-10-29/openai-backed-thrive-holdings-acquires-adt/#fact-2026-10-29-openai-backed-thrive-holdings-acquires-adt-01-13b334a945bd"
+    },
+    {
+      "id": "fact-2026-10-29-openai-backed-thrive-holdings-acquires-adt-02-0235d6af486d",
+      "hash": "0235d6af486d10196d2ea0e366cd9ad40c398d213ba9c7d14dbbc5d49dbdca4e",
+      "text": "Beyond equity, the total enterprise value of the deal is $15.3 billion, ADT said.",
+      "sourceUrl": "https://techcrunch.com/2026/10/29/openai-backed-thrive-holdings-acquires-adt/",
+      "sourceHost": "techcrunch.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-10-29/openai-backed-thrive-holdings-acquires-adt/#fact-2026-10-29-openai-backed-thrive-holdings-acquires-adt-02-0235d6af486d"
+    },
+    {
+      "id": "fact-2026-10-29-openai-backed-thrive-holdings-acquires-adt-03-b4aed65b545d",
+      "hash": "b4aed65b545d73749f53829916d323437bd3e9b2a21afcebb788f05937828cc2",
+      "text": "Currently, Thrive Holdings holds over 75 companies, it says.",
+      "sourceUrl": "https://techcrunch.com/2026/10/29/openai-backed-thrive-holdings-acquires-adt/",
+      "sourceHost": "techcrunch.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-10-29/openai-backed-thrive-holdings-acquires-adt/#fact-2026-10-29-openai-backed-thrive-holdings-acquires-adt-03-b4aed65b545d"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "dot:fair",
+      "persona": "dot",
+      "text": "$15.3B total cost against equity paid. The balance sheet bears the burden of this acquisition structure.",
+      "confidence": 0.95,
+      "verdict": "fair",
+      "direction": 0,
+      "factRefs": [
+        "fact-2026-10-29-openai-backed-thrive-holdings-acquires-adt-01-13b334a945bd",
+        "fact-2026-10-29-openai-backed-thrive-holdings-acquires-adt-02-0235d6af486d",
+        "fact-2026-10-29-openai-backed-thrive-holdings-acquires-adt-03-b4aed65b545d"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "rex:underhyped",
+      "persona": "rex",
+      "text": "ADT’s physical sensors become data sources for AI models once Thrive integrates them into its 75-company network.",
+      "confidence": 0.85,
+      "verdict": "underhyped",
+      "direction": 1,
+      "factRefs": [
+        "fact-2026-10-29-openai-backed-thrive-holdings-acquires-adt-01-13b334a945bd",
+        "fact-2026-10-29-openai-backed-thrive-holdings-acquires-adt-02-0235d6af486d",
+        "fact-2026-10-29-openai-backed-thrive-holdings-acquires-adt-03-b4aed65b545d"
+      ],
+      "evidenceStatus": "linked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-10-29--openai-backed-thrive-holdings-acquires-adt.png",
+    "artSha256": "152e0c0d485dce11ad3cfa6df79734075a56e855701de4d4cd5a3a12bf7477af",
+    "pageSha256": "07ef9f3df75a600058e66854b8f5835d5fa3b97c6d6c99cb83bab46080d990db",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": false,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)"
+    },
+    "sceneFingerprint": "c78056b4b35906d3518e91497bb09a245a4a17c0438b1eb7a80cd9b40d7b2e23",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}
