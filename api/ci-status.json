@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-10-29T09:09:27.771Z",
+  "generatedAt": "2026-10-29T09:19:54.270Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": false,
-  "verifiedBrowserHeadSha": null,
+  "browserGatesGreen": true,
+  "verifiedBrowserHeadSha": "bc670dc2dbda915e74865168ee81b1f852367922",
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 16,
-    "observed": 4,
-    "healthy": 4,
-    "unknown": 12,
+    "observed": 5,
+    "healthy": 5,
+    "unknown": 11,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "unknown",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 4 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 4 consecutive receipts. CI gate status is unknown.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-29T06:06:31.565Z",
     "currentBehindStreak": 4,
     "newestGradableAt": "2026-10-29T06:06:31.565Z",
-    "newestAgeHours": 3,
+    "newestAgeHours": 3.2,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": true
@@ -37,10 +37,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-29T09:04:19Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-10-29T09:18:29Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/40846748702",
       "headSha": "bc670dc2dbda915e74865168ee81b1f852367922",
       "event": "push"
@@ -57,10 +57,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-29T09:04:18Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-10-29T09:19:24Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/40846748793",
       "headSha": "bc670dc2dbda915e74865168ee81b1f852367922",
       "event": "push"
@@ -79,13 +79,15 @@
   "scheduledWorkflows": [
     {
       "name": "CI Health Monitor",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-10-29T09:15:45Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 0.07,
       "staleAfterHours": 48
     },
     {
@@ -131,7 +133,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.89,
+      "ageHours": 2.07,
       "staleAfterHours": 48
     },
     {
@@ -155,7 +157,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.63,
+      "ageHours": 2.81,
       "staleAfterHours": 48
     },
     {
@@ -185,13 +187,12 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-10-29T06:49:55Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.33,
+      "ageHours": 2.5,
       "staleAfterHours": 48
     },
     {
@@ -230,7 +231,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-29T08:38:44Z",
+      "lastUpdatedAt": "2026-10-29T09:12:54Z",
       "recentConclusions": [
         "success",
         "success",
@@ -239,7 +240,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.51,
+      "ageHours": 0.12,
       "staleAfterHours": 48
     },
     {
