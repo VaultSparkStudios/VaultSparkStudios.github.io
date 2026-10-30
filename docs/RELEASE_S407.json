@@ -5,7 +5,14 @@
   "implementation": "docs/S407_implementation.json",
   "authorization": "Founder explicitly authorizes normal direct main commit/push and full deployment.",
   "acceptance": {
-    "source": "pending",
+    "source": {
+      "state": "passed",
+      "receipt": "docs/S407_source-acceptance.json",
+      "passed": 548,
+      "failed": 0,
+      "coverageComplete": true,
+      "sourceFingerprint": "30d1891a84264c34802834a6"
+    },
     "staging": "pending",
     "exactRequiredHostedChecks": "pending",
     "production": "pending",
@@ -102,5 +109,10 @@
     "planned": 548,
     "coverageComplete": false,
     "sourceAcceptance": false
+  },
+  "nativeCloseout": {
+    "exit": 0,
+    "result": ".cache/S407/autopilot-attempt4.json",
+    "log": ".cache/logs/S407-closeout-autopilot-attempt4.log"
   }
 }
