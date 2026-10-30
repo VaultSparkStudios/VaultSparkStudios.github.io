@@ -1,6 +1,6 @@
 {
   "session": 407,
-  "state": "staging-verified-hosted-checks-pending",
+  "state": "application-verified-main-and-closing-publication-pending",
   "audit": "docs/AUDIT_2026-10-30.json",
   "implementation": "docs/S407_implementation.json",
   "authorization": "Founder explicitly authorizes normal direct main commit/push and full deployment.",
@@ -19,13 +19,71 @@
       "receiptId": "6326d1271a851d416956e7a4",
       "ceremony": "docs/S407_staging-ceremony.json",
       "ceremonyPassed": 11,
-      "ceremonyTotal": 11
+      "ceremonyTotal": 11,
+      "currentness": {
+        "receipt": "docs/S407_staging-currentness.json",
+        "candidate": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+        "criticalContracts": 70,
+        "rawCriticalLeafMatches": 63,
+        "transportStampSeparatelyVerified": true,
+        "metadataReceipt": "docs/S407_staging-metadata.json",
+        "exactMetadataFiles": 25
+      }
     },
-    "exactRequiredHostedChecks": "pending",
-    "production": "pending",
-    "completeServedReadback": "pending",
-    "remotePublication": "pending",
-    "publisherRestoration": "pending",
+    "exactRequiredHostedChecks": {
+      "state": "passed",
+      "receipt": "docs/S407_required-checks.json",
+      "candidate": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+      "checks": [
+        {
+          "workflow": ".github/workflows/e2e.yml",
+          "state": "passed",
+          "runId": 41136969770
+        },
+        {
+          "workflow": ".github/workflows/lighthouse.yml",
+          "state": "passed",
+          "runId": 41136980065
+        },
+        {
+          "workflow": ".github/workflows/accessibility.yml",
+          "state": "passed",
+          "runId": 41136987669
+        }
+      ]
+    },
+    "production": {
+      "state": "passed",
+      "candidate": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+      "runId": 41138429851,
+      "receipt": "docs/S407_production.json",
+      "kind": "normal-full-pages-deploy",
+      "providerVerified": true,
+      "buildStamps": 3,
+      "privatePillarRequests": 0,
+      "existingAccessWalls": 6
+    },
+    "completeServedReadback": {
+      "state": "passed",
+      "receipt": "docs/S407_served-parity.json",
+      "candidate": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+      "scope": "all-served",
+      "checked": 3714,
+      "identical": 3704,
+      "redirected": 10,
+      "differ": 0,
+      "unread": 0,
+      "coverageComplete": true
+    },
+    "remotePublication": {
+      "tagPublishedAt": "2026-10-30T22:16:06.984Z",
+      "main": "pending"
+    },
+    "publisherRestoration": {
+      "state": "pending",
+      "record": ".cache/S407-publisher-window.json",
+      "uptimeKeptActive": true
+    },
     "mobile": {
       "state": "passed",
       "receipt": "docs/S407_mobile-acceptance.json",
@@ -121,5 +179,34 @@
     "exit": 0,
     "result": ".cache/S407/autopilot-attempt4.json",
     "log": ".cache/logs/S407-closeout-autopilot-attempt4.log"
-  }
+  },
+  "candidate": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+  "tag": "S407-release-20261030-45b74582c9a1",
+  "publicationAttempts": [
+    {
+      "record": ".cache/S407/rejected-candidate-attempt1.json",
+      "state": "pre-push-rejected",
+      "remoteTagAbsent": true,
+      "reason": "Staging ceremony advanced proof inputs; native stats coherence rejected before publication."
+    },
+    {
+      "record": ".cache/S407/superseded-hosted-candidate1.json",
+      "state": "superseded",
+      "candidate": "a7298742d59843a4cccb387ebbc1dc9ed86fa7e5",
+      "reason": "Locally reproduced public-status heartbeat drift after native post-commit reconciliation; fresh exact-SHA checks required.",
+      "retirement": ".cache/S407/superseded-check-retirement.json"
+    }
+  ],
+  "postCloseoutRepair": "docs/S407_post-closeout-repair.json",
+  "localHygiene": {
+    "previewStopped": true,
+    "pid": 61820,
+    "reason": "Verified own local-preview process identity and absence after termination; no longer required after real staging acceptance."
+  },
+  "performance": "docs/S407_ignis-performance.json",
+  "remaining": [
+    "Normal main publication preserving upstream observer commits",
+    "Final canonical writeback and any resulting served metadata staging/production reconciliation",
+    "Publisher restoration, final review and receipt reachability"
+  ]
 }

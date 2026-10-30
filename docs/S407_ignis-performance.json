@@ -1,0 +1,42 @@
+{
+  "session": 407,
+  "candidate": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+  "observedAt": "2026-10-30T22:38:15.030Z",
+  "tool": "Lighthouse13.4.1, existing cached CLI; exact registry/lock integrity, maintainer continuity and lifecycle checks verified before reuse",
+  "formFactor": "mobile",
+  "reports": [
+    {
+      "target": "staging",
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "fetchTime": "2026-10-30T22:30:51.268Z",
+      "finalDisplayedUrl": "https://website.staging.vaultsparkstudios.com/ignis/?compare=vaultsparkstudios-website%2Cmindframe",
+      "performance": 82,
+      "largestContentfulPaintMs": 2827.232,
+      "cumulativeLayoutShift": 0.001068233024587283,
+      "totalBlockingTimeMs": 522,
+      "report": ".cache/S407/ignis-staging-lighthouse.json",
+      "sha256": "b61bdb30e56902a39250edfff060920847a0ad50f613adb7f04c6e6ec8bcfb41",
+      "actualExit": 0
+    },
+    {
+      "target": "production",
+      "origin": "https://vaultsparkstudios.com",
+      "fetchTime": "2026-10-30T22:36:36.265Z",
+      "finalDisplayedUrl": "https://vaultsparkstudios.com/ignis/?compare=vaultsparkstudios-website%2Cmindframe",
+      "performance": 92,
+      "largestContentfulPaintMs": 3087.0125,
+      "cumulativeLayoutShift": 0,
+      "totalBlockingTimeMs": 128,
+      "report": ".cache/S407/ignis-production-lighthouse.json",
+      "sha256": "afdbaaf0d7fb0074502d0417922f938768cd127068fa0d3b85a931ed759db332",
+      "actualExit": 0
+    }
+  ],
+  "advisoryTarget": 90,
+  "postDeployTargetPassed": true,
+  "limitations": [
+    "These are individual mobile laboratory measurements, not field Core Web Vitals or measured business outcomes.",
+    "Staging score82 is retained. The first staging launch failed before auditing due preload path quoting; the next produced88 but exited1 on temporary-profile cleanup. Neither failed process is accepted as a passing audit.",
+    "A single clean run with an explicit isolated profile completed on each origin; no application code changed between measurements."
+  ]
+}

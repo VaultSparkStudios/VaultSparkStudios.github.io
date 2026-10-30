@@ -1,0 +1,310 @@
+{
+  "session": 407,
+  "observedAt": "2026-10-30T22:36:01.741Z",
+  "candidate": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+  "run": {
+    "id": 41138429851,
+    "head_sha": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+    "event": "workflow_dispatch",
+    "status": "completed",
+    "conclusion": "success",
+    "path": ".github/workflows/pages-deploy.yml",
+    "html_url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/41138429851",
+    "created_at": "2026-10-30T22:29:12Z",
+    "updated_at": "2026-10-30T22:34:14Z",
+    "run_attempt": 1
+  },
+  "steps": [
+    {
+      "name": "Run canonical release ceremony",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-10-30T22:31:24Z",
+      "completed_at": "2026-10-30T22:32:38Z"
+    },
+    {
+      "name": "Build clean dist (git-tracked files only)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15,
+      "started_at": "2026-10-30T22:32:38Z",
+      "completed_at": "2026-10-30T22:32:56Z"
+    },
+    {
+      "name": "Stamp honest deployed SHA into build-sha.json",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 16,
+      "started_at": "2026-10-30T22:32:56Z",
+      "completed_at": "2026-10-30T22:32:56Z"
+    },
+    {
+      "name": "Deploy to Cloudflare Pages",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 19,
+      "started_at": "2026-10-30T22:32:56Z",
+      "completed_at": "2026-10-30T22:33:09Z"
+    },
+    {
+      "name": "Purge edge HTML cache",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 20,
+      "started_at": "2026-10-30T22:33:09Z",
+      "completed_at": "2026-10-30T22:33:09Z"
+    },
+    {
+      "name": "Post-purge edge liveness check",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 22,
+      "started_at": "2026-10-30T22:33:09Z",
+      "completed_at": "2026-10-30T22:33:12Z"
+    }
+  ],
+  "provider": {
+    "id": "001534e3-65dd-46b6-96e0-f79666616ebc",
+    "url": "https://001534e3.vaultsparkstudios-website.pages.dev",
+    "environment": "production",
+    "commit": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+    "branch": "main",
+    "latestStage": {
+      "name": "deploy",
+      "started_on": null,
+      "ended_on": "2026-10-30T22:33:08.459204Z",
+      "status": "success"
+    }
+  },
+  "stamps": [
+    {
+      "origin": "https://001534e3.vaultsparkstudios-website.pages.dev",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-30",
+        "sha": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+        "builtAt": "2026-10-30T22:32:56.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-30",
+        "sha": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+        "builtAt": "2026-10-30T22:32:56.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-30",
+        "sha": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+        "builtAt": "2026-10-30T22:32:56.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    }
+  ],
+  "reads": [
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "agents.json",
+      "exact": true,
+      "sha256": "9e9c551d3c49e3babf2a241fac4b5c4f614c497334cdfba15aec8342ead8f205"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "agents.json",
+      "exact": true,
+      "sha256": "9e9c551d3c49e3babf2a241fac4b5c4f614c497334cdfba15aec8342ead8f205"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/public-status.json",
+      "exact": true,
+      "sha256": "7b75c077cf994d03eccc0a32352a870573d680bc3f21a5d1876e044410dbaa24"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/public-status.json",
+      "exact": true,
+      "sha256": "7b75c077cf994d03eccc0a32352a870573d680bc3f21a5d1876e044410dbaa24"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "audits/2026-10-30.json",
+      "exact": true,
+      "sha256": "41aca94d5a907d8eebce8aba0484db34e8f15ddd1f355eab0dd72469b9428456"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "audits/2026-10-30.json",
+      "exact": true,
+      "sha256": "41aca94d5a907d8eebce8aba0484db34e8f15ddd1f355eab0dd72469b9428456"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/public-intelligence.json",
+      "exact": true,
+      "sha256": "e47c9da8c5ea59c69a8f435ea2adb239c76e95854d31db3374a9e52d8c7371c6"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/public-intelligence.json",
+      "exact": true,
+      "sha256": "e47c9da8c5ea59c69a8f435ea2adb239c76e95854d31db3374a9e52d8c7371c6"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/intent-map.json",
+      "exact": true,
+      "sha256": "2395519444d9c2998f63553e81f7392ff58db24d70b06def617a9cea292daf21"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/intent-map.json",
+      "exact": true,
+      "sha256": "2395519444d9c2998f63553e81f7392ff58db24d70b06def617a9cea292daf21"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "data/stats-surface.json",
+      "exact": true,
+      "sha256": "8e1fb85fb7eba32823695cc54243109ceec0ad1407952519eef81870710d217d"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "data/stats-surface.json",
+      "exact": true,
+      "sha256": "8e1fb85fb7eba32823695cc54243109ceec0ad1407952519eef81870710d217d"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "stats.json",
+      "exact": true,
+      "sha256": "8e1fb85fb7eba32823695cc54243109ceec0ad1407952519eef81870710d217d"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "stats.json",
+      "exact": true,
+      "sha256": "8e1fb85fb7eba32823695cc54243109ceec0ad1407952519eef81870710d217d"
+    }
+  ],
+  "htmlReads": [
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "/ignis/",
+      "status": 200,
+      "unpublishedPillars": 5,
+      "privatePillarReference": false
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "/ignis/",
+      "status": 200,
+      "unpublishedPillars": 5,
+      "privatePillarReference": false
+    }
+  ],
+  "walls": [
+    {
+      "route": "/investor-portal/",
+      "status": 302,
+      "correctReturn": true,
+      "loginStatus": 200,
+      "identityOrigin": "https://obeliskgate.com",
+      "identityPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true
+    },
+    {
+      "route": "/investor-portal/updates/",
+      "status": 302,
+      "correctReturn": true,
+      "loginStatus": 200,
+      "identityOrigin": "https://obeliskgate.com",
+      "identityPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true
+    },
+    {
+      "route": "/investor-portal/documents/",
+      "status": 302,
+      "correctReturn": true,
+      "loginStatus": 200,
+      "identityOrigin": "https://obeliskgate.com",
+      "identityPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true
+    },
+    {
+      "route": "/investor-portal/message/",
+      "status": 302,
+      "correctReturn": true,
+      "loginStatus": 200,
+      "identityOrigin": "https://obeliskgate.com",
+      "identityPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true
+    },
+    {
+      "route": "/investor-portal/profile/",
+      "status": 302,
+      "correctReturn": true,
+      "loginStatus": 200,
+      "identityOrigin": "https://obeliskgate.com",
+      "identityPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true
+    },
+    {
+      "route": "/investor-portal/admin/",
+      "status": 302,
+      "correctReturn": true,
+      "loginStatus": 200,
+      "identityOrigin": "https://obeliskgate.com",
+      "identityPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true
+    }
+  ],
+  "browserReads": [
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "/ignis/",
+      "grades": 5,
+      "unpublished": 5,
+      "scoresAreUnavailable": true,
+      "privatePillarRequests": 0
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "/ignis/",
+      "grades": 5,
+      "unpublished": 5,
+      "scoresAreUnavailable": true,
+      "privatePillarRequests": 0
+    }
+  ],
+  "scope": "Actual normal full production workflow, provider identity and three served stamps;14 exact metadata/data reads, two IGNIS HTML contracts, two real-browser pillar checks and six existing apex access walls. Complete all-served parity is separate. Anonymous guards do not prove authenticated private-data access."
+}

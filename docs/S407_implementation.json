@@ -37,8 +37,10 @@
   },
   "mediumGate": {
     "pass": true,
-    "reason": "advisory — verify Lighthouse Performance ≥90 mobile post-deploy",
-    "medium": "website"
+    "blocking": false,
+    "medium": "website",
+    "reason": "Post-deploy mobile laboratory Lighthouse Performance92 meets the advisory90 target; staging82 retained; no field-vitals claim.",
+    "receipt": "docs/S407_ignis-performance.json"
   },
   "release": "docs/RELEASE_S407.json"
 }
