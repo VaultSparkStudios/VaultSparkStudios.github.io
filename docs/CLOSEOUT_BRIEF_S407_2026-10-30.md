@@ -5,10 +5,10 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Honest IGNIS measurements and current browser coverage verified locally; release gates     ║
-║    pending.                                                                                   ║
+║    Public metrics, browser journeys and copy-checker precision verified locally; full         ║
+║    release pending.                                                                           ║
 ║                                                                                               ║
-║  PROJECT IMPACT     ██████░░░░   60/100                                                       ║
+║  PROJECT IMPACT     █████░░░░░   50/100                                                       ║
 ║  ECOSYSTEM IMPACT   █░░░░░░░░░   10/100                                                       ║
 ║  SIL DELTA          939 → 939  (+0)                                                           ║
 ║                                                                                               ║
@@ -24,6 +24,13 @@
          verification is pending.
          → docs/S407_implementation.json
 
+  [#2]  copy-quality-word-boundaries                              PROJ 4  ·  ECOS 1
+         ── observability-honesty ───────────────────────────────────────────────────────────
+         Legitimate reporting remains unchanged while real repeated words and publishing
+         stubs stay blocked.72 regression cases and independent review passed; release
+         acceptance remains pending.
+         → docs/S407_copy-quality-acceptance.json
+
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
@@ -34,7 +41,7 @@
     (none)
 
   ACTION GATE
-    1 items shipped · ready to commit & push? [y/N]
+    2 items shipped · ready to commit & push? [y/N]
 
 ```
 

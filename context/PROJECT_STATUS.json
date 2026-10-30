@@ -12,7 +12,7 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S407: honest IGNIS measurements and current browser journey coverage; release verification underway.",
+  "currentFocus": "S407: honest IGNIS measurements, current browser coverage and precise publishing checks; release verification underway.",
   "publicNote": "See the membership page for current plans, benefits and account-access availability.",
   "nextMilestone": "Verify complete source, staging and exact candidate checks; publish main and fully deploy S407.",
   "blockers": [
@@ -255,7 +255,7 @@
     "docs/visual-qa/SPARK_HELD_MEMBERSHIP.json"
   ],
   "truthGenome": "23/25",
-  "lastSessionSummary": "S407 L2 implementation verified locally: browser38 passed/7 private-fixture skips;14 reviewed theme/viewport captures. Full release acceptance remains pending.",
+  "lastSessionSummary": "S407 browser38/7private-fixture skips, mobile215/215,14 reviewed captures and copy-checker72/72/corpus passed. Both local outcomes independently reviewed; full release pending.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
     "session": 403,
@@ -277,9 +277,9 @@
   "sessionState": {
     "version": 1,
     "durableSession": 407,
-    "currentFocus": "S407: honest IGNIS measurements and current browser journey coverage; release verification underway.",
+    "currentFocus": "S407: honest IGNIS measurements, current browser coverage and precise publishing checks; release verification underway.",
     "nextMilestone": "Verify complete source, staging and exact candidate checks; publish main and fully deploy S407.",
-    "lastSessionSummary": "S407 L2 implementation verified locally: browser38 passed/7 private-fixture skips;14 reviewed theme/viewport captures. Full release acceptance remains pending."
+    "lastSessionSummary": "S407 browser38/7private-fixture skips, mobile215/215,14 reviewed captures and copy-checker72/72/corpus passed. Both local outcomes independently reviewed; full release pending."
   },
   "s378RecordRecovery": {
     "date": "2026-10-14",
@@ -361,11 +361,11 @@
   "testsTotal": 548,
   "testsPassing": 548,
   "testsFailed": 0,
-  "testsLastRun": "2026-10-29",
+  "testsLastRun": "2026-10-30",
   "testsLabel": "measured build:check steps",
-  "testsEvidence": "docs/S406_explicit-closeout-source.json",
+  "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "3cd18438e9dd1c3a99843d24",
-  "testsSourceFingerprint": "130c1ee187b6c143a15cf2ed",
+  "testsSourceFingerprint": "30d1891a84264c34802834a6",
   "closeoutObservationAddendum": {
     "session": 400,
     "through": "35e5d5f181",
@@ -399,6 +399,14 @@
       "failed": 0,
       "skipped": 7
     },
-    "visualCaptures": 14
-  }
+    "visualCaptures": 14,
+    "copyQuality": {
+      "state": "locally-verified",
+      "passed": 72,
+      "failed": 0,
+      "review": "pass",
+      "evidence": "docs/S407_copy-quality-acceptance.json"
+    }
+  },
+  "silProtocolVelocity": 1
 }

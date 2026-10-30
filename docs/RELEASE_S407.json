@@ -56,6 +56,51 @@
       "accepted": false,
       "reason": "Read-only required mobile-runtime checker proved its receipt stale for the changed IGNIS source. Stopped live source pass to rerun actual mobile matrix before full acceptance.",
       "mobileCheckerExit": 1
+    },
+    {
+      "kind": "native-closeout-source-attempt2",
+      "state": "failed",
+      "accepted": false,
+      "log": ".cache/logs/S407-closeout-autopilot-attempt2.log",
+      "actualProcessExit": 1,
+      "passed": 168,
+      "failed": 1,
+      "planned": 548,
+      "reason": "Nested proof-surface gate rejected stale visual-retention report after current screenshot receipt. Regenerated report with native tool; zero images deleted. Complete acceptance still required."
+    },
+    {
+      "kind": "native-closeout-source-attempt3",
+      "state": "failed",
+      "actualProcessExit": 1,
+      "accepted": false,
+      "passed": 361,
+      "failed": 1,
+      "planned": 548,
+      "log": ".cache/logs/S407-closeout-autopilot-attempt3.log",
+      "reason": "Actual copy-quality gate falsely rejects legitimate compound phrase, publisher house style and noun usage in upstream corpus. Required verifier repair selected in same session; original reporting preserved."
     }
-  ]
+  ],
+  "proofPreflight": {
+    "state": "passed",
+    "blockingPassed": 92,
+    "blockingTotal": 92,
+    "advisories": 1,
+    "log": ".cache/logs/S407-proof-preflight.log",
+    "sourceAcceptance": false,
+    "repair": "Native visual-retention report regenerated; zero images deleted. Stale build-stamp advisory refreshed separately."
+  },
+  "releasePrerequisite": "docs/AUDIT_2026-10-30-S407.json",
+  "implementationOutcomes": [
+    "docs/S407_implementation.json",
+    "docs/S407_copy-quality-acceptance.json"
+  ],
+  "remainingDiagnostic": {
+    "receipt": "docs/S407_remaining-source-diagnostic.json",
+    "passed": 186,
+    "failed": 0,
+    "firstStep": 363,
+    "planned": 548,
+    "coverageComplete": false,
+    "sourceAcceptance": false
+  }
 }

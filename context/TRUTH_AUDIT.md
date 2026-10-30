@@ -9,6 +9,9 @@ S407 implements browser-contract-fidelity at L2. Public IGNIS no longer requests
 
 Evidence distinction: baseline25pass/9fail/11skip; current38pass/0fail/7skip. Artwork comments passed this invocation without a code change. Eight baseline failures were stale assertions, one was an actual private-feed request. Historical S40634 failures remain historical; the24 snapshot failures have not been classified. No claim that the entire optional E2E lane is green. CDR unchanged because no new founder creative direction was given.
 
+
+S407 release prerequisite: The same S407 arc also repaired three source-gate false positives in copy-quality-word-boundaries. Complete-word tokenization preserves compounds, contractions and quoted-duplicate detection; WIRED is recognized as a publisher house style; ordinary placeholder prose is distinguished from explicit publishing stubs. Original article text is unchanged. All72 self-tests and the actual corpus pass. Independent review found one quotation-boundary regression, fixed before round2 approval. The remaining186 source steps passed diagnostically with coverageComplete:false; no complete-source acceptance is claimed.
+
 ---
 
 <!-- S406-explicit-closeout-current-truth -->

@@ -1,14 +1,16 @@
-<!-- Session 407 · source: docs/AUDIT_2026-10-30.json -->
-# S407 browser journey regression confidence
+<!-- Session 407 · source: docs/AUDIT_2026-10-30-S407.json -->
+# S407 browser confidence and release prerequisites
 
 Session Intent: /arc then authorized direct main commit/push and full deployment.
 
-Wave 1: fresh startup and nine-axis audit; source and browser evidence, typed premise and candidate admission before edits.
-Wave 2: browser-contract-fidelity at L2. Reproduce the five existing behavioral suites; align retired Oracle navigation with canonical IGNIS and current privacy-preserving panels, verify the two actual leaderboard periods, and fix deterministic artwork-comment checks only after classifying the failure. Preserve positive interaction and public-feed coverage; do not skip failing cases, loosen timing globally, restore private metrics or bulk-update visual baselines.
-Wave 3: required source checks, rendered review for changed UI, current staging, exact hosted candidate checks, canonical closeout, main publication and full production served readback.
+Original outcome: browser-contract-fidelity at L2 remains implemented under docs/AUDIT_2026-10-30.json and docs/S407_implementation.json; it is preserved, not replaced.
 
-Acceptance: All tests in desk-artwork, leaderboards, nav-dropdown-coverage, oracle-extra and s134-oracle-ignis pass against the current candidate with no new skips. Canonical navigation, compare state reload/share, committed public feeds, actual leaderboard periods and independent comment-thread behavior remain asserted. Any actual defect receives a focused regression and required visual proof.
+Wave 1 complete: fresh startup and nine-axis audit.
+Wave 2: original outcome complete; required source-gate prerequisite copy-quality-word-boundaries at L2 locally verified;72 self-tests/corpus and review passed.
+Correct doubled-word matching at complete hyphenated-word boundaries, recognize WIRED in the existing all-caps brand allowlist, and distinguish the ordinary noun placeholder from explicit publishing markers. Keep true duplicate, shouting, bracketed/uppercase/standalone stub and other placeholder detectors active. Preserve article prose and add positive/negative regression fixtures in the existing self-test.
 
-Rollback: bounded revert of S407 changes and redeploy prior accepted application0242fc75dd0034f1922c35a37ad18c1f5a24e74a with its documented metadata overlay. Preserve identity, pricing, rank economy and lifecycle; existing CANON-045 gap stays separately justified.
+Acceptance: Actual corpus passes without changing its article text. Existing54 self-tests plus explicit positive/negative boundary, brand and publishing-marker regressions pass. Genuine repeated words, unknown shouted words, and explicit placeholder stubs still fail. Independent review passes before source/full release acceptance.
 
-Reproduced defect: public IGNIS requests /ignis/output/five-pillars.json; replace with an explicit unavailable measurement state, preserve aggregate score, and inspect before/after seven-theme desktop/mobile screenshots.
+Wave 3 remains pending: complete native source verification, current staging, exact required hosted checks, authorized main publication, full production and complete served readback. All five publishing workflows must be restored.
+
+Rollback: bounded revert of S407 changes; retain previous accepted full application and metadata evidence in docs/CLOSEOUT_S406_2026-10-29.json. Preserve identity, pricing, economy and lifecycle holds.

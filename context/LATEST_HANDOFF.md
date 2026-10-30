@@ -7,6 +7,9 @@ This is a fresh native goal bound to S407 in ignored .cache/arc-goals; resume th
 
 A premature run-build-check --help invocation started the full suite unexpectedly; its verified process family was intentionally stopped before acceptance while capture/writeback was incomplete. Its stale owned lock was cleared only after owner PID53788 was confirmed absent. It contributes no source acceptance.
 
+
+S407 release prerequisite: The same S407 arc also repaired three source-gate false positives in copy-quality-word-boundaries. Complete-word tokenization preserves compounds, contractions and quoted-duplicate detection; WIRED is recognized as a publisher house style; ordinary placeholder prose is distinguished from explicit publishing stubs. Original article text is unchanged. All72 self-tests and the actual corpus pass. Independent review found one quotation-boundary regression, fixed before round2 approval. The remaining186 source steps passed diagnostically with coverageComplete:false; no complete-source acceptance is claimed.
+
 ---
 
 <!-- S406-explicit-closeout-2026-10-29 -->

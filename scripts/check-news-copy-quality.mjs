@@ -177,6 +177,7 @@ export const ACRONYMS = new Set([
   'NVIDIA', 'IBM', 'AMD', 'ARM', 'TSMC', 'HBM', 'PCIE', 'DDR', 'SRAM', 'DRAM',
   'CUDA', 'ROCM', 'MLPERF', 'NASA', 'DARPA', 'MIT', 'IEEE', 'ACM', 'UNCTAD',
   'TRELLIS', // 3D generation product name; NVIDIA's published house style.
+  'WIRED', // Publisher house style, not a shouted adjective.
 ]);
 
 /** Brands and identifiers that legitimately begin a sentence in lowercase. */
@@ -327,9 +328,17 @@ const RULES = [
     id: 'doubled-word',
     run(text) {
       const out = [];
-      const re = /\b([A-Za-z]{2,})\s+\1\b/gi;
-      let m;
-      while ((m = re.exec(String(text)))) out.push({ text: m[0], detail: `the word "${m[1]}" is repeated` });
+      // Tokenize whole compounds before comparing adjacent words. Apostrophes
+      // join a word only when letters follow, so quotation marks cannot hide
+      // duplicates while contractions remain a single word.
+      const src = String(text);
+      const words = [...src.matchAll(/[A-Za-z]+(?:[-\u2010\u2011'’][A-Za-z]+)*/g)];
+      for (let i = 1; i < words.length; i++) {
+        const previous = words[i - 1], current = words[i];
+        const gap = src.slice(previous.index + previous[0].length, current.index);
+        if (current[0].length < 2 || current[0].toLowerCase() !== previous[0].toLowerCase() || !/^\s+$/.test(gap)) continue;
+        out.push({ text: src.slice(previous.index, current.index + current[0].length), detail: `the word "${previous[0]}" is repeated` });
+      }
       return out;
     },
   },
@@ -431,9 +440,19 @@ const RULES = [
     id: 'placeholder-text',
     run(text) {
       const out = [];
-      const re = /\b(TBD|TODO|FIXME|XXX|PLACEHOLDER|LOREM IPSUM|LOREM|DUMMY TEXT|INSERT [A-Z]+ HERE)\b/gi;
-      let m;
-      while ((m = re.exec(String(text)))) out.push({ text: m[0], detail: 'placeholder text left in published copy' });
+      // "A placeholder" is also ordinary editorial language. Require an
+      // explicit publishing marker for that word: uppercase, brackets, or a
+      // standalone field/label. Other established stub markers stay unchanged.
+      const patterns = [
+        /\b(TBD|TODO|FIXME|XXX|LOREM IPSUM|LOREM|DUMMY TEXT|INSERT [A-Z]+ HERE)\b/gi,
+        /\bPLACEHOLDER\b/g,
+        /[\[<{]\s*placeholder\s*[\]}>]/gi,
+        /^\s*(?:[A-Za-z][A-Za-z ]{0,40}:\s*)?placeholder(?:\s+(?:text|copy|headline|title|description))?[.!]?\s*$/gim,
+      ];
+      for (const re of patterns) {
+        let m;
+        while ((m = re.exec(String(text)))) out.push({ text: m[0], detail: 'placeholder text left in published copy' });
+      }
       return out;
     },
   },
@@ -581,6 +600,26 @@ function selfTest() {
     ['a curated misspelling names the correction',
       () => checkText('Paramaters grew.').some((f) => /did you mean "parameters"/.test(f.detail))],
     ['a doubled word fires', () => fires('doubled-word', 'The the model shipped.')],
+    ['a compound followed by its last segment is not a doubled word',
+      () => clean('That is a non-denial denial.')],
+    ['repeating an entire compound still fires',
+      () => fires('doubled-word', 'That is a non-denial non-denial.')],
+    ['a later standalone duplicate after a compound still fires',
+      () => fires('doubled-word', 'That is a non-denial denial denial.')],
+    ['ordinary standalone duplicates remain rejected',
+      () => fires('doubled-word', 'The statement was a denial denial.')],
+    ['straight single-quoted duplicates remain rejected',
+      () => fires('doubled-word', "'the the'")],
+    ['single-quoted duplicates inside a sentence remain rejected',
+      () => fires('doubled-word', "He called it 'the the model'.")],
+    ['curly single-quoted duplicates remain rejected',
+      () => fires('doubled-word', 'It was ‘the the’.')],
+    ['repeated straight and curly contractions remain rejected',
+      () => fires('doubled-word', "It can't can't work.") && fires('doubled-word', 'It can’t can’t work.')],
+    ['typographic hyphens keep the complete compound boundary',
+      () => clean('That is a non‑denial denial.') && fires('doubled-word', 'That is a non‑denial non‑denial.')],
+    ['quoting a legitimate compound phrase does not make it a duplicate',
+      () => clean("The ‘non-denial denial’ remained evasive.")],
     ['an unbalanced bracket fires', () => fires('unbalanced-delimiter', 'The lab (formerly a startup said no.')],
     ['an odd straight quote count fires', () => fires('unbalanced-delimiter', 'He said "we will not ship it.')],
     ['an unbalanced curly quote fires', () => fires('unbalanced-delimiter', 'He said “we will not ship it.')],
@@ -612,6 +651,22 @@ function selfTest() {
     ['an elided straight-quoted claim fires', () => fires('ellipsis-truncated-quote', 'He said "we blocked it ... eventually" today.')],
     ['placeholder text fires', () => fires('placeholder-text', 'Impact: TBD before publication.')],
     ['lorem ipsum fires', () => fires('placeholder-text', 'Lorem ipsum dolor sit amet.')],
+    ['placeholder as an ordinary editorial noun passes',
+      () => clean('That is not a measurement. It is a placeholder until evidence arrives.')],
+    ['an uppercase placeholder publishing token still fires',
+      () => fires('placeholder-text', 'Summary: PLACEHOLDER before publication.')],
+    ['a bracketed placeholder stub still fires',
+      () => fires('placeholder-text', '[placeholder]')],
+    ['a standalone lowercase placeholder field still fires',
+      () => fires('placeholder-text', 'placeholder')],
+    ['a labelled lowercase placeholder field still fires',
+      () => fires('placeholder-text', 'Impact: placeholder')],
+    ['standalone placeholder copy remains a publishing stub',
+      () => fires('placeholder-text', 'Placeholder text')],
+    ['the named publisher is accepted without accepting arbitrary shouting',
+      () => clean('WIRED reported the agency response.') && fires('all-caps-run', 'The response was MISLEADING.')],
+    ['the upstream editorial wording survives without changing its meaning',
+      () => clean('The DOD spokesperson told WIRED that the department does not comment. This is standard non-denial denial. It is a placeholder until a confirmed report arrives.')],
 
     // ── Negative controls: legitimate tech vocabulary must pass ──
     ['real model and company names pass',

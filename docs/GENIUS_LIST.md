@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **939/1000**
 - CI health: **check gh run list**
-- Current focus: S407: honest IGNIS measurements and current browser journey coverage; release verification underway.
+- Current focus: S407: honest IGNIS measurements, current browser coverage and precise publishing checks; release verification underway.
 
 ## Strategic Read
 
@@ -22,10 +22,10 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Full canonical closeout, complete source checks and current staging.
+#### 1. [PRODUCT] Canonical closeout, full source and staging checks.
 Final score: **96**
-Full canonical closeout, complete source checks and current staging.
-Why it matters: Full canonical closeout, complete source checks and current staging. is open, local, and unblocked — can ship this session.
+Canonical closeout, full source and staging checks.
+Why it matters: Canonical closeout, full source and staging checks. is open, local, and unblocked — can ship this session.
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -34,22 +34,22 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Exact required candidate checks, authorized main publication, full pr…
+#### 3. [PRODUCT] Exact hosted checks, main push, full production and complete served r…
 Final score: **93**
-Exact required candidate checks, authorized main publication, full production and complete served readback.
-Why it matters: Exact required candidate checks, authorized main publication, full pro is open, local, and unblocked — can ship this session.
+Exact hosted checks, main push, full production and complete served readback.
+Why it matters: Exact hosted checks, main push, full production and complete served re is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Classify the historical visual-regression failures against canonical …
+#### 4. [PRODUCT] Classify historical visual failures before updating baselines.
 Final score: **90**
-[S407][SIL] Classify the historical visual-regression failures against canonical routes before changing snapshot baselines.
-Why it matters: Classify the historical visual-regression failures against canonical r is open, local, and unblocked — can ship this session.
+[S407][SIL] Classify historical visual failures before updating baselines.
+Why it matters: Classify historical visual failures before updating baselines. is open, local, and unblocked — can ship this session.
 
 ### NEXT
 
-#### 1. [PRODUCT] Reproduce run-build-check --help behavior in an isolated process befo…
+#### 1. [PRODUCT] Isolate run-build-check --help side effects before selecting a repair.
 Final score: **87**
-[S407][SIL] Reproduce run-build-check --help behavior in an isolated process before selecting a CLI admission repair; usage currently starts verification.
-Why it matters: Reproduce run-build-check --help behavior in an isolated process befor is open, local, and unblocked — can ship this session.
+[S407][SIL] Isolate run-build-check --help side effects before selecting a repair.
+Why it matters: Isolate run-build-check --help side effects before selecting a repair. is open, local, and unblocked — can ship this session.
 
 #### 2. [VERIFY] Reproduce the34 optional E2E failures before changing implementation,…
 Final score: **86**
@@ -136,11 +136,11 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Full canonical closeout, complete source checks and current staging.
+1. Canonical closeout, full source and staging checks.
 2. Post-push CI confirmation
-3. Exact required candidate checks, authorized main publication, full pr…
-4. Classify the historical visual-regression failures against canonical …
-5. Reproduce run-build-check --help behavior in an isolated process befo…
+3. Exact hosted checks, main push, full production and complete served r…
+4. Classify historical visual failures before updating baselines.
+5. Isolate run-build-check --help side effects before selecting a repair.
 6. Reproduce the34 optional E2E failures before changing implementation,…
 7. Measure help startup separately from probe execution before attemptin…
 8. Consider extending help-only process fixtures to another operator CLI…

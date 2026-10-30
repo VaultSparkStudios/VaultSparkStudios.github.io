@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S407) - WHAT SHIPPED ══════════════════════════╗
-║  S407 L2 implementation verified locally: browser38 passed/7 pr  ║
+║  S407 browser38/7private-fixture skips, mobile215/215,14 review  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -42,9 +42,9 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 1→                          ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 1↓                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
-║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
+║    Trend  ▂▂▂▄  ↓  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -74,7 +74,7 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         548/548 passing (2026-10-29)                   ║
-║  ⚠  Velocity      1 →  ·  Debt: →                                ║
+║  ⚠  Velocity      1 ↓  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   5d                                             ║
 ║  ✓  IGNIS         45136 FORGE  ·  1d old                         ║
@@ -108,7 +108,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▂▂▂▄  1→  (last 5 sessions)                         ║
+║  Velocity:   ▂▂▂▄  1↓  (last 5 sessions)                         ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Full canonical closeout, complete source c  ║
-║        Full canonical closeout, complete source checks and curr  ║
+║   96  [PRODUCT]      Canonical closeout, full source and stagin  ║
+║        Canonical closeout, full source and staging checks. is o  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Exact required candidate checks, authorize  ║
-║        Exact required candidate checks, authorized main publica  ║
+║   93  [PRODUCT]      Exact hosted checks, main push, full produ  ║
+║        Exact hosted checks, main push, full production and comp  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Classify the historical visual-regression   ║
-║        Classify the historical visual-regression failures again  ║
+║   90  [PRODUCT]      Classify historical visual failures before  ║
+║        Classify historical visual failures before updating base  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Reproduce run-build-check --help behavior   ║
-║        Reproduce run-build-check --help behavior in an isolated  ║
+║   87  [PRODUCT]      Isolate run-build-check --help side effect  ║
+║        Isolate run-build-check --help side effects before selec  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

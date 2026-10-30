@@ -10,7 +10,7 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 ## Rolling Status (auto-updated each closeout)
 Sparkline:939 →939 →939 →939 →939
 Avgs —3:939.0 |5:939.0 |10:unmeasured |25:unmeasured |all:unmeasured
-Velocity trend:→ |Protocol velocity:→ |Debt:→
+Velocity trend:↓ |Protocol velocity:↑ |Debt:→
 Last session:2026-10-30 | Session407 | Total:939/1000 | Velocity:1 implemented outcome, production pending
   └ S407 local browser38/0failed/7private-fixture skips;14 reviewed captures. Full source and release acceptance pending in docs/RELEASE_S407.json.
 <!-- rolling-status-end -->
@@ -2166,3 +2166,10 @@ Post-closeout commits a1a24ae8, 5d902e25, eadef059 and 5e7d08c9 finalized staged
 S407 implements browser-contract-fidelity at L2. Public IGNIS no longer requests the private five-pillars feed; all five cards explicitly say Not published. Canonical IGNIS navigation, two privacy-preserving mover cards, actual leaderboard periods, compare share/reload and independent artwork threads are checked. Focused browser acceptance:38 passed,7 existing private-fixture skips,0 failed. Four formerly skipped public-feed checks now execute. Independent source review passed;14 rendered captures across7 themes and desktop/mobile were inspected. Full source, staging, exact hosted checks, production and complete served readback remain pending in docs/RELEASE_S407.json. No authentication, pricing, membership economy or lifecycle change; no growth, field-performance or token-saving claim.
 
 SIL product rubric: Dev Health95; Creative Alignment94; Momentum92; Engagement96; Process Quality88; Cross-Repo Coherence94; Security Posture97; Ecosystem Integration91; Capital Efficiency95; Automation Coverage97. Total939/1000, unchanged; local test recovery does not prove production health or outcome uplift. Velocity1 implemented outcome, production pending. Brainstorm: classify old route-dependent visual failures; add isolated help-admission coverage for run-build-check after reproducing it. Both are committed to TASK_BOARD as future unselected SIL items.
+
+
+### Session 407 release prerequisite addendum
+
+The same S407 arc also repaired three source-gate false positives in copy-quality-word-boundaries. Complete-word tokenization preserves compounds, contractions and quoted-duplicate detection; WIRED is recognized as a publisher house style; ordinary placeholder prose is distinguished from explicit publishing stubs. Original article text is unchanged. All72 self-tests and the actual corpus pass. Independent review found one quotation-boundary regression, fixed before round2 approval. The remaining186 source steps passed diagnostically with coverageComplete:false; no complete-source acceptance is claimed.
+
+Original public outcome remains required and locally verified. Product velocity1 plus protocol velocity1; two implemented outcomes, production pending. SIL remains939/1000 with unchanged ten categories. Future SIL commitments stay unselected.
