@@ -1,7 +1,7 @@
 {
   "session": 407,
-  "observedAt": "2026-10-30T22:04:22.757Z",
-  "candidate": "23cb0eeada69c60d7b092aa2cbfc8016157f6af5",
+  "observedAt": "2026-10-30T22:07:14.075Z",
+  "candidate": "a7298742d59843a4cccb387ebbc1dc9ed86fa7e5",
   "origin": "https://website.staging.vaultsparkstudios.com",
   "state": "passed",
   "declaredStageBuildSha": "af473fae361313d95e2c2863f6b149d962bd53e1",
@@ -31,9 +31,11 @@
       "path": "api/build-sha.json",
       "observedPath": false,
       "matched": true,
-      "rawMatched": true,
+      "rawMatched": false,
       "edgeNonceNormalized": false,
-      "sha256": "66e8eb853057c7257f11cd9c06e8c6594132ff4f9b21e97b6e0751eebcb7ec35"
+      "sha256": "cbb1519aa24f383fe5a91635699a58e1f21ed837ef1bb6ec445fcf7245d1827e",
+      "applicationBaselineMatches": true,
+      "stagingMetadataStampVerified": true
     },
     {
       "path": "api/public-intelligence.json",
@@ -589,15 +591,55 @@
     "api/staging-release-browser.json",
     "api/status-proof.json",
     "data/staging-deploy-history.ndjson",
+    "data/stats-surface.json",
     "docs/RELEASE_S407.json",
     "docs/S407_staging-ceremony.json",
+    "docs/S407_staging-currentness.json",
     "docs/S407_staging-deploy.json",
+    "docs/S407_staging-metadata.json",
     "docs/visual-qa/LATEST.json",
-    "docs/visual-qa/S407-current.json"
+    "docs/visual-qa/S407-current.json",
+    "stats.json"
   ],
   "limitations": [
     "Native canonicalizeLeaf and declared OBSERVED_PATHS retained; only nonce attribute/meta removal for transformed HTML.",
     "Complete canonical production all-served parity is a separate post-release measurement."
   ],
-  "expectedBytesSource": "One integrity-verified Git cat-file --batch; exact candidate blobs, no prior HTTP rows reused."
+  "expectedBytesSource": "One integrity-verified Git cat-file --batch; exact candidate blobs, no prior HTTP rows reused.",
+  "metadataReconciliation": {
+    "receipt": "docs/S407_staging-metadata.json",
+    "metadataHead": "40b4e724fb5ee93ef74826e109948d53dd41c2db",
+    "exactReads": [
+      {
+        "path": "data/stats-surface.json",
+        "exact": true,
+        "sha256": "892f1c4fe921d9dfd2156c0d65b3cc10034123b0bcc3970c18e0e6713de49226"
+      },
+      {
+        "path": "stats.json",
+        "exact": true,
+        "sha256": "892f1c4fe921d9dfd2156c0d65b3cc10034123b0bcc3970c18e0e6713de49226"
+      },
+      {
+        "path": "api/status-proof.json",
+        "exact": true,
+        "sha256": "449b95d00ac1149241297987a031578d1eb7a4fb0650c36ff1d6336bc1745e67"
+      },
+      {
+        "path": "api/release-proof.json",
+        "exact": true,
+        "sha256": "b1963a06bd78dd2216d0cd45204961331b61e3b154547130c6d44f624f6cd27a"
+      }
+    ],
+    "transportStamp": {
+      "schemaVersion": "1.0",
+      "generatedAt": "2026-10-30",
+      "sha": "af473fae361313d95e2c2863f6b149d962bd53e1",
+      "builtAt": "2026-10-30T22:06:44.000Z",
+      "deployedBy": "staging-content-lane",
+      "contentLaneHead": "40b4e724fb5ee93ef74826e109948d53dd41c2db",
+      "contentLanePaths": "4 paths"
+    },
+    "scope": "69 canonical byte comparisons plus the separately verified original application identity and explicit four-file staging metadata transport stamp. No production stamp or content lane is inferred."
+  }
 }
