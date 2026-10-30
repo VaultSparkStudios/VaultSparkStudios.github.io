@@ -1,14 +1,14 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-30T22:00:22.146Z",
+  "generatedAt": "2026-10-30T23:21:54.768Z",
   "candidateReady": true,
   "candidateFindings": [],
-  "candidateBuildSha": "af473fae361313d95e2c2863f6b149d962bd53e1",
-  "stagingBuildSha": "af473fae361313d95e2c2863f6b149d962bd53e1",
+  "candidateBuildSha": "4d9f618220400497437639730a46c314e16b5e76",
+  "stagingBuildSha": "4d9f618220400497437639730a46c314e16b5e76",
   "artifactManifest": {
-    "candidateRoot": "34b2ae55a49b7fee89a6a36790bf38da92536cc04cee78220c0ab0bbb1dd38c4",
+    "candidateRoot": "1a962c1ce6f64ccde596839d43b0faa71bcaf7cd1fc896a5e0698de733d605f7",
     "candidateLeafCount": 70,
-    "stagingRoot": "34b2ae55a49b7fee89a6a36790bf38da92536cc04cee78220c0ab0bbb1dd38c4",
+    "stagingRoot": "1a962c1ce6f64ccde596839d43b0faa71bcaf7cd1fc896a5e0698de733d605f7",
     "stagingLeafCount": 70,
     "matched": true
   },
@@ -16,18 +16,15 @@
   "publicSafe": true,
   "production": "https://vaultsparkstudios.com",
   "staging": "https://website.staging.vaultsparkstudios.com",
-  "status": "yellow",
+  "status": "green",
   "surfaceParity": {
-    "state": "staging-ahead",
-    "productionRoutes": 310,
+    "state": "matched",
+    "productionRoutes": 312,
     "stagingRoutes": 312,
     "missingOnStaging": [],
     "missingOnStagingCount": 0,
-    "aheadOnStaging": [
-      "/news/2026-10-30/a-defense-contractor-gave-their-personal-ai-agent-access/",
-      "/news/2026-10-30/us-tech-stocks-see-sharp-falls-over-ai-cost/"
-    ],
-    "aheadOnStagingCount": 2,
+    "aheadOnStaging": [],
+    "aheadOnStagingCount": 0,
     "gating": true,
     "gatingSince": "S339",
     "remedy": "node scripts/deploy-staging-content.mjs --baseline <served-staging-build-sha>"
