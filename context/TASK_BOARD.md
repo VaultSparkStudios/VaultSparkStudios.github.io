@@ -276,6 +276,7 @@ Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
 - [ ] **[S365][PERF/P3]** Watch the next three article Lighthouse runs for stability at the unchanged 0.90 floor. Investigate if the median falls below the threshold again; preserve the reader-first order and theme evidence.
 - [ ] **[S365][OPS/P2]** Teach the closeout wipe guard to recognize a byte-preserving work-log archive move, so routine cap rotation no longer needs `--allow-wipe`; keep unarchived deletion blocking.
 - [ ] **[S365][DESK/P3]** Decode literal HTML entities in a few older Desk source-receipt excerpts (`&#x27;`, `&#8217;`), then regenerate and visually verify those pages. The S365 post-edition visual matrix exposed the artifacts in mobile source cards.
+- [ ] **[ROUTINE][DESK/P3]** `news/2026-10-10/anthropic-ai-model-submits-20-visa-applications-on-live/` shows a literal `&bull;` in its byline excerpt. Root cause fixed in `decodeEntities` (bull, middot, copy, reg, trade, times, euro, pound); the page itself stays until the Desk regenerates it with the usual receipt cascade.
 ## S364 — requested signup repair
 
 Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
