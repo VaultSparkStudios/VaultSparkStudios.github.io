@@ -1,12 +1,9 @@
-<!-- S407-closeout-checkpoint -->
-## S407 browser journey regression confidence — 2026-10-30
+<!-- S407-release-acceptance -->
+## S407 released application — 2026-10-30
 
-Session Intent: /arc then authorized direct main commit/push and full deploy.
+S407 restored current browser journey contracts and truthful public IGNIS pillars, and repaired editorial-checker false positives without editing reporting. Browser38 passed/7 existing private-fixture skips; copy72, mobile215 and14 inspected theme/viewport captures passed. Native source548/548, staging11/11 and exact hosted workflows3/3 passed. Normal full application45b74582c9a1, provider/three stamps, six existing access walls and complete3714-resource readback are verified. Mobile lab Performance92 production and82 staging are recorded separately; no field-vitals, growth or token-saving claim. Closing main publication and its full-candidate acceptance remain authoritative in docs/RELEASE_S407.json.
 
-S407 implements browser-contract-fidelity at L2. Public IGNIS no longer requests the private five-pillars feed; all five cards explicitly say Not published. Canonical IGNIS navigation, two privacy-preserving mover cards, actual leaderboard periods, compare share/reload and independent artwork threads are checked. Focused browser acceptance:38 passed,7 existing private-fixture skips,0 failed. Four formerly skipped public-feed checks now execute. Independent source review passed;14 rendered captures across7 themes and desktop/mobile were inspected. Full source, staging, exact hosted checks, production and complete served readback remain pending in docs/RELEASE_S407.json. No authentication, pricing, membership economy or lifecycle change; no growth, field-performance or token-saving claim.
-
-
-S407 release prerequisite: The same S407 arc also repaired three source-gate false positives in copy-quality-word-boundaries. Complete-word tokenization preserves compounds, contractions and quoted-duplicate detection; WIRED is recognized as a publisher house style; ordinary placeholder prose is distinguished from explicit publishing stubs. Original article text is unchanged. All72 self-tests and the actual corpus pass. Independent review found one quotation-boundary regression, fixed before round2 approval. The remaining186 source steps passed diagnostically with coverageComplete:false; no complete-source acceptance is claimed.
+Session Intent: /arc then authorized normal main commit/push and full deployment. Both L2 outcomes are independently reviewed. Original audit: docs/AUDIT_2026-10-30.json; same-session verifier prerequisite: docs/AUDIT_2026-10-30-S407.json. No authentication, pricing, membership economy or lifecycle change.
 
 ---
 

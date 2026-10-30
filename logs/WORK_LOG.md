@@ -514,3 +514,8 @@ S407 implements browser-contract-fidelity at L2. Public IGNIS no longer requests
 ### S407 release prerequisite
 
 The same S407 arc also repaired three source-gate false positives in copy-quality-word-boundaries. Complete-word tokenization preserves compounds, contractions and quoted-duplicate detection; WIRED is recognized as a publisher house style; ordinary placeholder prose is distinguished from explicit publishing stubs. Original article text is unchanged. All72 self-tests and the actual corpus pass. Independent review found one quotation-boundary regression, fixed before round2 approval. The remaining186 source steps passed diagnostically with coverageComplete:false; no complete-source acceptance is claimed.
+
+
+### S407 application release acceptance — 2026-10-30
+
+S407 restored current browser journey contracts and truthful public IGNIS pillars, and repaired editorial-checker false positives without editing reporting. Browser38 passed/7 existing private-fixture skips; copy72, mobile215 and14 inspected theme/viewport captures passed. Native source548/548, staging11/11 and exact hosted workflows3/3 passed. Normal full application45b74582c9a1, provider/three stamps, six existing access walls and complete3714-resource readback are verified. Mobile lab Performance92 production and82 staging are recorded separately; no field-vitals, growth or token-saving claim. Closing main publication and its full-candidate acceptance remain authoritative in docs/RELEASE_S407.json. Independent preparation and staging-currentness reviews passed. Original failed/interrupted attempts remain recorded; no force push or release-gate bypass. Closing-record source and deployment follow-through are part of this invocation.

@@ -1,6 +1,6 @@
 {
   "session": 407,
-  "state": "application-verified-main-and-closing-publication-pending",
+  "state": "application-verified-closing-full-candidate-pending",
   "audit": "docs/AUDIT_2026-10-30.json",
   "implementation": "docs/S407_implementation.json",
   "authorization": "Founder explicitly authorizes normal direct main commit/push and full deployment.",
@@ -208,5 +208,14 @@
     "Normal main publication preserving upstream observer commits",
     "Final canonical writeback and any resulting served metadata staging/production reconciliation",
     "Publisher restoration, final review and receipt reachability"
-  ]
+  ],
+  "closingRecords": {
+    "state": "in-progress",
+    "reason": "Public dated audit and generated search metadata require the normal full lane; content admission is preserved, never broadened.",
+    "source": "pending",
+    "staging": "pending",
+    "hosted": "pending",
+    "production": "pending",
+    "main": "pending"
+  }
 }

@@ -1,14 +1,13 @@
-<!-- S407-closeout-checkpoint -->
-## S407 browser journey regression confidence — 2026-10-30
+<!-- S407-release-acceptance -->
+## S407 verified outcomes — 2026-10-30
 
-Session Intent: /arc then authorized direct main commit/push and full deploy.
+Session Intent: /arc plus authorized normal main push and full deploy.
 
-- [x] Startup/audit; both selected admissions and premises passed.
-- [x] Browser L2 and copy-checker L2: browser38, mobile215, copy72 passed.
-- [ ] Canonical closeout, full source and staging checks.
-- [ ] Exact hosted checks, main push, full production and complete served readback.
+- [x] Fresh startup/audit; both strict admissions and premises passed.
+- [x] Browser L2 and copy-checker L2: browser38, mobile215, copy72 and14 reviewed captures.
+- [x] Application acceptance: native548, stage11, hosted3 and full production45b74582c9a1; all3714 served resources verified.
 
-Waves 1–2 complete; Wave 3 pending. Acceptance: docs/RELEASE_S407.json. S406 optional visual failures remain historical and unclassified.
+Wave3 publication and closing-record acceptance have one status source: docs/RELEASE_S407.json. No additional product work is selected.
 
 Future unselected SIL commitments:
 - [ ] [S407][SIL] Classify historical visual failures before updating baselines.

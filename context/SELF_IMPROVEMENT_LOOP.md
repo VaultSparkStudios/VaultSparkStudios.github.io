@@ -8,11 +8,14 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline:939 →939 →939 →939 →939
-Avgs —3:939.0 |5:939.0 |10:unmeasured |25:unmeasured |all:unmeasured
+Sparkline (last 8 totals): 939 · 939 · 939 · 939 · 939 · 939 · 939 · 939 ▄▄▄▄▄▄▄▄ (→)
+Avgs — 3: 939.0 | 5: 939.0 | 10: 939.0 | 25: 936.7 | v3 all: 941.0
+  └ S407: Dev 95 | Align 94 | Momentum 92 | Engage 96 | Process 88 | Coherence 94 | Security 97 | Ecosystem 91 | Capital 95 | Automation 97
 Velocity trend:↓ |Protocol velocity:↑ |Debt:→
-Last session:2026-10-30 | Session407 | Total:939/1000 | Velocity:1 implemented outcome, production pending
-  └ S407 local browser38/0failed/7private-fixture skips;14 reviewed captures. Full source and release acceptance pending in docs/RELEASE_S407.json.
+Momentum runway: N/A | Intent rate: N/A
+Last session: 2026-10-30 | Session 407 | Total: 939/1000 | Velocity: 1
+  └ S407 arc: browser38, mobile215, copy72; full application and3714-resource readback verified; closing publication tracked in release ledger
+─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 > Older entries through S401 live verbatim in `context/archive/SIL_S1-S401.md` (exact committed pre-rotation snapshot). Recent complete entries follow.
@@ -2173,3 +2176,10 @@ SIL product rubric: Dev Health95; Creative Alignment94; Momentum92; Engagement96
 The same S407 arc also repaired three source-gate false positives in copy-quality-word-boundaries. Complete-word tokenization preserves compounds, contractions and quoted-duplicate detection; WIRED is recognized as a publisher house style; ordinary placeholder prose is distinguished from explicit publishing stubs. Original article text is unchanged. All72 self-tests and the actual corpus pass. Independent review found one quotation-boundary regression, fixed before round2 approval. The remaining186 source steps passed diagnostically with coverageComplete:false; no complete-source acceptance is claimed.
 
 Original public outcome remains required and locally verified. Product velocity1 plus protocol velocity1; two implemented outcomes, production pending. SIL remains939/1000 with unchanged ten categories. Future SIL commitments stay unselected.
+
+
+#### S407 application release acceptance addendum — 2026-10-30
+
+Both selected outcomes reached the pinned release: one product improvement and one protocol improvement. S407 restored current browser journey contracts and truthful public IGNIS pillars, and repaired editorial-checker false positives without editing reporting. Browser38 passed/7 existing private-fixture skips; copy72, mobile215 and14 inspected theme/viewport captures passed. Native source548/548, staging11/11 and exact hosted workflows3/3 passed. Normal full application45b74582c9a1, provider/three stamps, six existing access walls and complete3714-resource readback are verified. Mobile lab Performance92 production and82 staging are recorded separately; no field-vitals, growth or token-saving claim. Closing main publication and its full-candidate acceptance remain authoritative in docs/RELEASE_S407.json. SIL remains939/1000 with the existing ten-category decomposition; no score increase or new session. The two unselected SIL commitments remain on TASK_BOARD.
+
+Canonical score-format clarification for this same S407 entry: Total: 939/1000 | Velocity: 1 | Protocol velocity: 1. Scores — **Dev 95** · **Align 94** · **Momentum 92** · **Engage 96** · **Process 88** · **Coherence 94** · **Security 97** · **Ecosystem 91** · **Capital 95** · **Automation 97**. The prior compact prose remains unchanged. Historical unparseable score rows are unmeasured by the native rolling parser.

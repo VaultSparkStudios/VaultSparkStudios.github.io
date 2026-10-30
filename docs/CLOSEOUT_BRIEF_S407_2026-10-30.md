@@ -5,8 +5,8 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Public metrics, browser journeys and copy-checker precision verified locally; full         ║
-║    release pending.                                                                           ║
+║    Truthful IGNIS, current browser journeys and precise copy checks released;3714-resource    ║
+║    application parity verified.                                                               ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     █████░░░░░   50/100                                                       ║
 ║  ECOSYSTEM IMPACT   █░░░░░░░░░   10/100                                                       ║
@@ -19,22 +19,21 @@
 
   [#1]  browser-contract-fidelity                                 PROJ 6  ·  ECOS 1
          ── observability-honesty ───────────────────────────────────────────────────────────
-         Public IGNIS no longer requests unpublished pillar data. Current navigation,
-         comparison sharing and reader threads passed focused browser checks; production
-         verification is pending.
+         Public IGNIS no longer requests unpublished pillar data. Browser38, mobile215,
+         fourteen inspected captures and complete application readback passed.
          → docs/S407_implementation.json
 
   [#2]  copy-quality-word-boundaries                              PROJ 4  ·  ECOS 1
          ── observability-honesty ───────────────────────────────────────────────────────────
-         Legitimate reporting remains unchanged while real repeated words and publishing
-         stubs stay blocked.72 regression cases and independent review passed; release
-         acceptance remains pending.
+         Legitimate reporting remains unchanged;72 checker cases, independent review and
+         exact hosted source checks passed.
          → docs/S407_copy-quality-acceptance.json
 
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Historical visual-regression failures remain separate, unclassified evidence.
+    • Closing publication and fresh full-candidate acceptance: docs/RELEASE_S407.json
+    • Historical optional visual failures and private-fixture skips remain explicit.
     • CDR unchanged: no new founder creative direction.
 
   BLOCKERS
