@@ -291,7 +291,7 @@
     "behaviorChanged": false
   },
   "currentBuildState": "passed",
-  "currentBuildNote": "Actual S407 application source548/548 and exact hosted source checks passed; fresh closing-source acceptance is recorded separately in the release ledger.",
+  "currentBuildNote": "Fresh complete S407 closing source548/548; actual execution and source fingerprint retained in docs/S407_closing-source.json.",
   "lastDeploySession": 407,
   "lastDeployStatus": "verified",
   "silAvg5": 939,
@@ -308,10 +308,11 @@
     "state": "accepted-application-closing-records-in-progress",
     "source": "docs/RELEASE_S407.json",
     "lastCompleteTestsSession": 407,
-    "sourceEvidence": "docs/S407_source-acceptance.json",
+    "sourceEvidence": "docs/S407_closing-source.json",
     "applicationBaseline": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
     "finalParity": "docs/S407_served-parity.json",
-    "scope": "This invocation only; final closing records require their own source and release evidence."
+    "scope": "This invocation only; final closing records require their own source and release evidence.",
+    "sourceFingerprint": "67eb6031465d20cdc72be8e3"
   },
   "metadataPublication": {
     "session": 407,
@@ -334,7 +335,7 @@
   "velocity": 1,
   "arcProgress": {
     "session": 407,
-    "phase": "application-verified-closing-transaction",
+    "phase": "closing-candidate-staging",
     "binding": "ignored .cache/arc-goals",
     "audit": "docs/AUDIT_2026-10-30.json",
     "prerequisite": "docs/AUDIT_2026-10-30-S407.json",
@@ -358,7 +359,7 @@
   "testsLabel": "measured build:check steps",
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "3cd18438e9dd1c3a99843d24",
-  "testsSourceFingerprint": "30d1891a84264c34802834a6",
+  "testsSourceFingerprint": "67eb6031465d20cdc72be8e3",
   "closeoutObservationAddendum": {
     "session": 400,
     "through": "35e5d5f181",
