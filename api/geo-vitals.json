@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-30T06:44:22.368Z",
+  "generatedAt": "2026-10-30T06:45:16.289Z",
   "generatedBy": "scripts/build-geo-vitals.mjs",
   "publicSafe": true,
   "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\" (privacy). Rows under 20 samples are confidence:\"low\" — render those as \"insufficient samples\", not as a measurement. dataWindow reports when the underlying visits actually happened; readers must surface staleness rather than trusting generatedAt.",
@@ -8,29 +8,47 @@
   "confidenceSamples": 20,
   "dataWindow": {
     "firstDay": "2026-05-25",
-    "lastDay": "2026-07-02",
-    "days": 38
+    "lastDay": "2026-10-06",
+    "days": 45
   },
   "countries": [
     {
       "country": "US",
-      "samples": 464,
-      "lcpP75": 992,
-      "ttfbP75": 157,
+      "samples": 665,
+      "lcpP75": 1140,
+      "ttfbP75": 188,
       "confidence": "high",
       "colos": [
         "ATL",
         "BOS",
+        "CLT",
         "CMH",
         "DEN",
         "DFW",
         "EWR",
         "IAD",
+        "JAX",
         "LAX",
         "MCI",
+        "MIA",
         "ORD",
         "SEA",
-        "SJC"
+        "SJC",
+        "SMF",
+        "YVR",
+        "YYZ"
+      ]
+    },
+    {
+      "country": "CA",
+      "samples": 8,
+      "lcpP75": 9960,
+      "ttfbP75": 1286,
+      "confidence": "low",
+      "colos": [
+        "YVR",
+        "YYC",
+        "YYZ"
       ]
     },
     {
@@ -54,17 +72,6 @@
         "BOM",
         "BOS",
         "SIN"
-      ]
-    },
-    {
-      "country": "CA",
-      "samples": 6,
-      "lcpP75": 9960,
-      "ttfbP75": 1286,
-      "confidence": "low",
-      "colos": [
-        "YVR",
-        "YYZ"
       ]
     },
     {
@@ -109,6 +116,18 @@
       ]
     },
     {
+      "country": "RU",
+      "samples": 3,
+      "lcpP75": 11592,
+      "ttfbP75": 558,
+      "confidence": "low",
+      "colos": [
+        "DME",
+        "FRA",
+        "GIG"
+      ]
+    },
+    {
       "country": "TR",
       "samples": 3,
       "lcpP75": 764,
@@ -120,8 +139,8 @@
     },
     {
       "country": "other",
-      "samples": 22,
-      "lcpP75": 1284,
+      "samples": 25,
+      "lcpP75": 1256,
       "ttfbP75": 538,
       "confidence": "high",
       "colos": [
@@ -129,17 +148,20 @@
         "BOM",
         "BRU",
         "BUD",
-        "DFW",
-        "DME",
         "FCO",
         "FRA",
         "GRU",
+        "HKG",
+        "KIX",
         "LIS",
         "MAD",
         "MNL",
         "MRS",
+        "NRT",
         "PRG",
         "SIN",
+        "SOF",
+        "VIE",
         "WAW"
       ]
     }
