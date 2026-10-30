@@ -1,0 +1,44 @@
+{
+  "session": 407,
+  "observedAt": "2026-10-30T19:58:20.248Z",
+  "outcome": "browser-contract-fidelity",
+  "depth": "L2",
+  "state": "locally-verified-release-pending",
+  "baseline": {
+    "passed": 25,
+    "failed": 9,
+    "skipped": 11
+  },
+  "browser": {
+    "passed": 38,
+    "failed": 0,
+    "skipped": 7,
+    "flaky": 0,
+    "existingPrivateFixtureSkips": 7,
+    "rawEvidence": ".cache/S407/browser-acceptance.json"
+  },
+  "review": {
+    "reviewer": "studio-reviewer",
+    "verdict": "pass",
+    "blockingFindings": 0,
+    "scope": "source and test diff; not release acceptance"
+  },
+  "visual": {
+    "captures": 14,
+    "themes": 7,
+    "viewportWidths": [
+      1366,
+      390
+    ],
+    "receipt": "docs/visual-qa/LATEST.json",
+    "reviewed": true,
+    "beforeImages": "ignored local storage",
+    "captureScope": "Changed pillar panel; unchanged fixed header and Spark hidden only during panel capture"
+  },
+  "mediumGate": {
+    "pass": true,
+    "reason": "advisory — verify Lighthouse Performance ≥90 mobile post-deploy",
+    "medium": "website"
+  },
+  "release": "docs/RELEASE_S407.json"
+}

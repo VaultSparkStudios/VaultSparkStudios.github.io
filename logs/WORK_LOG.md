@@ -504,3 +504,8 @@ No new creative direction, pricing, entitlement, authentication, lifecycle or la
 
 <!-- S406-explicit-final-publication-2026-10-29 -->
 Full application 0242fc75dd0034f1922c35a37ad18c1f5a24e74a plus16 staged closing metadata paths at 994191d026ea28f11dc75f7a24fd29b63277d20e is verified across all3669 served resources, with zero differences/unread. Main publication 7532eba412722d672ab37743883873eda1347a59 was independently observed remotely at 2026-10-29T21:43:20.799Z. Both publisher windows are restored. Optional E2E34 failures/60 skips remain explicit; no all-E2E-green or positive authenticated acceptance claim. Final acceptance records close this publication transaction; moving observer commits are separate.
+
+
+## S407 — 2026-10-30 — browser journey regression confidence
+
+S407 implements browser-contract-fidelity at L2. Public IGNIS no longer requests the private five-pillars feed; all five cards explicitly say Not published. Canonical IGNIS navigation, two privacy-preserving mover cards, actual leaderboard periods, compare share/reload and independent artwork threads are checked. Focused browser acceptance:38 passed,7 existing private-fixture skips,0 failed. Four formerly skipped public-feed checks now execute. Independent source review passed;14 rendered captures across7 themes and desktop/mobile were inspected. Full source, staging, exact hosted checks, production and complete served readback remain pending in docs/RELEASE_S407.json. No authentication, pricing, membership economy or lifecycle change; no growth, field-performance or token-saving claim.

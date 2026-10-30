@@ -1,3 +1,16 @@
+<!-- S407-closeout-checkpoint -->
+## S407 browser journey regression confidence — 2026-10-30
+
+Overall status: yellow — S407 local implementation accepted; complete source and full deployment remain pending in docs/RELEASE_S407.json. Historical optional visual failures and existing identity/provider/field-vitals limits remain separate.
+
+Session Intent: /arc then authorized direct main commit/push and full deploy.
+
+S407 implements browser-contract-fidelity at L2. Public IGNIS no longer requests the private five-pillars feed; all five cards explicitly say Not published. Canonical IGNIS navigation, two privacy-preserving mover cards, actual leaderboard periods, compare share/reload and independent artwork threads are checked. Focused browser acceptance:38 passed,7 existing private-fixture skips,0 failed. Four formerly skipped public-feed checks now execute. Independent source review passed;14 rendered captures across7 themes and desktop/mobile were inspected. Full source, staging, exact hosted checks, production and complete served readback remain pending in docs/RELEASE_S407.json. No authentication, pricing, membership economy or lifecycle change; no growth, field-performance or token-saving claim.
+
+Evidence distinction: baseline25pass/9fail/11skip; current38pass/0fail/7skip. Artwork comments passed this invocation without a code change. Eight baseline failures were stale assertions, one was an actual private-feed request. Historical S40634 failures remain historical; the24 snapshot failures have not been classified. No claim that the entire optional E2E lane is green. CDR unchanged because no new founder creative direction was given.
+
+---
+
 <!-- S406-explicit-closeout-current-truth -->
 # Current truth posture
 

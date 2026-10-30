@@ -11,8 +11,8 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline:939 →939 →939 →939 →939
 Avgs —3:939.0 |5:939.0 |10:unmeasured |25:unmeasured |all:unmeasured
 Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session:2026-10-29 | Session406 | Total:939/1000 | Velocity:6 prior outcomes,0 new closeout product changes
-  └ Explicit closeout: source548/548, staging11/11, hosted3/3, full production and complete served parity verified; docs/CLOSEOUT_S406_2026-10-29.json.
+Last session:2026-10-30 | Session407 | Total:939/1000 | Velocity:1 implemented outcome, production pending
+  └ S407 local browser38/0failed/7private-fixture skips;14 reviewed captures. Full source and release acceptance pending in docs/RELEASE_S407.json.
 <!-- rolling-status-end -->
 
 > Older entries through S401 live verbatim in `context/archive/SIL_S1-S401.md` (exact committed pre-rotation snapshot). Recent complete entries follow.
@@ -2155,3 +2155,14 @@ SIL remains 939/1000 across the same ten website/product categories; velocity re
 Explicit S406 closeout: fresh native source548/548, full staging plus exact generated-status reconciliations, canonical ceremony11/11 and exact required hosted workflows3/3 passed. The optional E2E diagnostic lane retains34 failures and60 skips (622 passed); identical failure names also occur on the prior accepted release, with causes not independently re-diagnosed. No all-E2E-success or positive authenticated acceptance is claimed. Normal full production candidate 0242fc75dd0034f1922c35a37ad18c1f5a24e74a, workflow40957103998, provider and three build stamps verified. Complete all-served readback3669/3669: 3659 byte-identical, 10 configured redirects, zero differences/unread. All five held publishers restored. Six prior improvements and SIL939/1000 retained; zero new product changes. Closing Git records are published separately from the pinned production candidate.
 
 No new creative direction, pricing, entitlement, authentication, lifecycle or launch promise. Prior observations retain their timestamps and scope. Dated audit is the closeout checkpoint; the new ledger owns final release acceptance. Future SIL tasks remain unselected.
+
+## Session 406 addendum — recorded during S407 startup, 2026-10-30
+
+Post-closeout commits a1a24ae8, 5d902e25, eadef059 and 5e7d08c9 finalized staged status metadata, release acceptance and derived startup summaries. These corrections extend the existing S406 record; they add no product outcome or SIL score. The original release evidence and timestamps remain authoritative. S407 is a separate fresh arc bound to its own native goal and must supply its own audit, implementation and deployment acceptance.
+
+
+## Session 407 — 2026-10-30 — browser journey regression confidence
+
+S407 implements browser-contract-fidelity at L2. Public IGNIS no longer requests the private five-pillars feed; all five cards explicitly say Not published. Canonical IGNIS navigation, two privacy-preserving mover cards, actual leaderboard periods, compare share/reload and independent artwork threads are checked. Focused browser acceptance:38 passed,7 existing private-fixture skips,0 failed. Four formerly skipped public-feed checks now execute. Independent source review passed;14 rendered captures across7 themes and desktop/mobile were inspected. Full source, staging, exact hosted checks, production and complete served readback remain pending in docs/RELEASE_S407.json. No authentication, pricing, membership economy or lifecycle change; no growth, field-performance or token-saving claim.
+
+SIL product rubric: Dev Health95; Creative Alignment94; Momentum92; Engagement96; Process Quality88; Cross-Repo Coherence94; Security Posture97; Ecosystem Integration91; Capital Efficiency95; Automation Coverage97. Total939/1000, unchanged; local test recovery does not prove production health or outcome uplift. Velocity1 implemented outcome, production pending. Brainstorm: classify old route-dependent visual failures; add isolated help-admission coverage for run-build-check after reproducing it. Both are committed to TASK_BOARD as future unselected SIL items.

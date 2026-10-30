@@ -31,9 +31,9 @@ test.describe('Header nav dropdown coverage (S136)', () => {
     expect(failures, `broken nav links:\n${failures.join('\n')}`).toEqual([]);
   });
 
-  test('Oracle is surfaced with gold accent + ⚡ marker', async ({ page }) => {
+  test('canonical IGNIS intelligence destination is visually promoted', async ({ page }) => {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
-    const oracleLink = page.locator('.nav-dropdown a[href="/oracle/"]').first();
+    const oracleLink = page.locator('.nav-dropdown a[href="/ignis/"]').first();
     await expect(oracleLink).toBeAttached();
     const styled = await oracleLink.evaluate((el) => {
       const style = el.getAttribute('style') || '';
@@ -71,6 +71,6 @@ test.describe('Header nav dropdown coverage (S136)', () => {
     await expect(headerLink).toBeVisible();
     await headerLink.click();
     await expect(page).toHaveURL(/\/news\/$/);
-    await expect(page.getByRole('heading', { level: 1 })).toContainText(/minds\./i); // the persona count changes as the Desk grows
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(/News Desk\./i);
   });
 });

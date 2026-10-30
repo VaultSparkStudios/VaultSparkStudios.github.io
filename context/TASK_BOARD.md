@@ -1,3 +1,21 @@
+<!-- S407-closeout-checkpoint -->
+## S407 browser journey regression confidence — 2026-10-30
+
+Session Intent: /arc then authorized direct main commit/push and full deploy.
+
+- [x] Fresh startup and nine-axis audit; typed premises3/3 and pending admission passed.
+- [x] browser-contract-fidelity L2 implemented and locally verified; see docs/S407_implementation.json.
+- [ ] Full canonical closeout, complete source checks and current staging.
+- [ ] Exact required candidate checks, authorized main publication, full production and complete served readback.
+
+Wave 1 complete; Wave 2 complete; Wave 3 in progress. docs/RELEASE_S407.json owns release acceptance. Existing S406 optional visual failures remain unclassified; its historical receipt is not rewritten.
+
+Future unselected SIL commitments:
+- [ ] [S407][SIL] Classify the historical visual-regression failures against canonical routes before changing snapshot baselines.
+- [ ] [S407][SIL] Reproduce run-build-check --help behavior in an isolated process before selecting a CLI admission repair; usage currently starts verification.
+
+---
+
 <!-- S406-explicit-closeout-2026-10-29 -->
 ## S406 explicit closeout
 

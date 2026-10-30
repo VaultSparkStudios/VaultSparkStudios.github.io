@@ -102,15 +102,14 @@ test.describe('IGNIS project block widget', () => {
 
 test.describe('Oracle page', () => {
   test('renders headline + stats panel populates', async ({ page }) => {
-    test.skip(IS_LOCAL, 'Oracle stats panel requires live IGNIS data — not available in local preview');
     await page.goto(`${BASE}/oracle/`, { waitUntil: 'load' });
-    await expect(page.locator('h1')).toContainText(/The Oracle/i);
+    await expect(page).toHaveURL(url => url.pathname === '/ignis/' && url.hash === '#oracle');
+    await expect(page.getByRole('heading', { name: 'The Oracle.', exact: true })).toBeVisible();
     await expect(page.locator('#oracle-stat-total')).not.toHaveText('—', { timeout: 6000 });
     await expect(page.locator('#oracle-stat-green')).not.toHaveText('—');
   });
 
   test('feed renders one or more IGNIS blocks', async ({ page }) => {
-    test.skip(IS_LOCAL, 'Oracle feed requires live IGNIS data — not available in local preview');
     await page.goto(`${BASE}/oracle/`, { waitUntil: 'load' });
     const blocks = page.locator('#oracle-feed .ignis-project-block');
     await expect(blocks.first()).toBeVisible({ timeout: 8000 });
@@ -119,7 +118,6 @@ test.describe('Oracle page', () => {
   });
 
   test('velocity chart renders with populated stats', async ({ page }) => {
-    test.skip(IS_LOCAL, 'Oracle velocity chart requires live IGNIS data — not available in local preview');
     test.setTimeout(90_000);
     await page.goto(`${BASE}/oracle/`, { waitUntil: 'load', timeout: 60_000 });
     const chart = page.locator('#oracle-velocity-chart');
@@ -150,42 +148,37 @@ test.describe('Oracle page', () => {
     await expect(greenBtn).toHaveAttribute('aria-pressed', 'false');
   });
 
-  test('IGNIS Studio Cognition hero card populates', async ({ page }) => {
-    test.skip(IS_LOCAL, 'IGNIS cognition card requires live IGNIS data — not available in local preview');
-    test.setTimeout(60_000);
+  test('canonical IGNIS score populates without the retired duplicate gauge', async ({ page }) => {
     await page.goto(`${BASE}/oracle/`, { waitUntil: 'load' });
-    await expect(page.locator('.oracle-ignis-card')).toBeVisible();
-    await expect(page.locator('#ignis-aggregate-score')).not.toHaveText('—', { timeout: 10_000 });
-    await expect(page.locator('#ignis-aggregate-tier')).not.toHaveText('Loading…', { timeout: 10_000 });
-    // Trend pill should render a known label
-    const trendText = await page.locator('#ignis-aggregate-trend').textContent();
-    expect(trendText).toMatch(/trend:\s+[↑↓→]\s+(up|down|flat)/i);
-    // Voice quote should be non-trivial
-    const quote = await page.locator('#ignis-aggregate-voice p').textContent();
-    expect((quote || '').length).toBeGreaterThan(40);
-    expect(quote).not.toMatch(/composing/i); // initial loading copy is gone
+    await expect(page.locator('#ignis-live-score')).not.toHaveText('—');
+    await expect(page.locator('#ignis-live-score')).toHaveText(/[\d,]+/);
+    await expect(page.locator('#ignis-live-tier')).toContainText(/tier/i);
+    await expect(page.locator('.oracle-ignis-card')).toHaveCount(0);
   });
 
-  test('share button is present and accessible', async ({ page }) => {
+  test('comparison share link is present and keeps the canonical destination', async ({ page }) => {
     await page.goto(`${BASE}/oracle/`, { waitUntil: 'load' });
-    const shareBtn = page.locator('#oracle-share-btn');
+    const shareBtn = page.getByRole('link', { name: 'Share this read', exact: true });
     await expect(shareBtn).toBeVisible();
-    await expect(shareBtn).toHaveText(/share the oracle/i);
+    await expect(shareBtn).toHaveAttribute('href', /^\/ignis\/\?compare=/);
   });
 });
 
 test.describe('Navigation discoverability', () => {
   // Oracle should be linked from any page that carries the propagated nav.
-  test('Studio dropdown includes Ecosystem Oracle link on homepage', async ({ page }) => {
+  test('Studio dropdown links to the canonical IGNIS destination', async ({ page }) => {
     await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
-    const oracleLinks = page.locator('a[href="/oracle/"]');
-    const count = await oracleLinks.count();
-    expect(count).toBeGreaterThanOrEqual(1);
+    const link = page.locator('.site-header .nav-dropdown a[href="/ignis/"]').first();
+    await expect(link).toHaveText('IGNIS');
+    await link.locator('xpath=ancestor::*[contains(@class, "has-dropdown")][1]').hover();
+    await link.click();
+    await expect(page).toHaveURL(url => url.pathname === '/ignis/');
+    await expect(page.getByRole('heading', { name: 'The Oracle.', exact: true })).toBeAttached();
   });
 
-  test('Footer Studio column includes Ecosystem Oracle link', async ({ page }) => {
+  test('Footer intelligence column links directly to IGNIS', async ({ page }) => {
     await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
-    const footerOracle = page.locator('footer.site-footer a[href="/oracle/"]');
-    await expect(footerOracle.first()).toHaveText(/ecosystem oracle/i);
+    const footerOracle = page.locator('footer.site-footer a[href="/ignis/"]');
+    await expect(footerOracle.first()).toHaveText('IGNIS');
   });
 });
