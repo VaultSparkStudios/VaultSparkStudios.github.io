@@ -1,18 +1,16 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-30T21:36:16.934Z",
-  "candidateReady": false,
-  "candidateFindings": [
-    "staging-artifact-root-mismatch"
-  ],
-  "candidateBuildSha": "bc441b7a64b45cbeb953ad1d424f3c765cde582d",
-  "stagingBuildSha": "bc441b7a64b45cbeb953ad1d424f3c765cde582d",
+  "generatedAt": "2026-10-30T22:00:22.146Z",
+  "candidateReady": true,
+  "candidateFindings": [],
+  "candidateBuildSha": "af473fae361313d95e2c2863f6b149d962bd53e1",
+  "stagingBuildSha": "af473fae361313d95e2c2863f6b149d962bd53e1",
   "artifactManifest": {
-    "candidateRoot": "0ef268b9a22c5ec0a34adebb2b6bcdade5982bf22be07345b1f57b80bd806d6d",
+    "candidateRoot": "34b2ae55a49b7fee89a6a36790bf38da92536cc04cee78220c0ab0bbb1dd38c4",
     "candidateLeafCount": 70,
-    "stagingRoot": "f68891c6767d54d889a53faf0d94c62cfcec1a47204d641ffb5efbcc9afbae5d",
+    "stagingRoot": "34b2ae55a49b7fee89a6a36790bf38da92536cc04cee78220c0ab0bbb1dd38c4",
     "stagingLeafCount": 70,
-    "matched": false
+    "matched": true
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
   "publicSafe": true,
@@ -20,13 +18,16 @@
   "staging": "https://website.staging.vaultsparkstudios.com",
   "status": "yellow",
   "surfaceParity": {
-    "state": "uncomparable",
-    "productionRoutes": null,
-    "stagingRoutes": 310,
+    "state": "staging-ahead",
+    "productionRoutes": 310,
+    "stagingRoutes": 312,
     "missingOnStaging": [],
-    "missingOnStagingCount": null,
-    "aheadOnStaging": [],
-    "aheadOnStagingCount": null,
+    "missingOnStagingCount": 0,
+    "aheadOnStaging": [
+      "/news/2026-10-30/a-defense-contractor-gave-their-personal-ai-agent-access/",
+      "/news/2026-10-30/us-tech-stocks-see-sharp-falls-over-ai-cost/"
+    ],
+    "aheadOnStagingCount": 2,
     "gating": true,
     "gatingSince": "S339",
     "remedy": "node scripts/deploy-staging-content.mjs --baseline <served-staging-build-sha>"
@@ -34,12 +35,31 @@
   "routes": [
     {
       "route": "/",
-      "prodStatus": 403,
+      "prodStatus": 200,
       "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": false,
-      "shellParity": false,
-      "prodShell": [],
+      "statusParity": true,
+      "shellParity": true,
+      "prodShell": [
+        "assets/after-paint.shell-0392b76d45.js",
+        "assets/ambient-core.shell-214cf44506.js",
+        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+        "assets/hero-ticker.shell-550971e267.js",
+        "assets/home-idle-loader.shell-7b976ad580.js",
+        "assets/nav-sheet.shell-c0fddc0c73.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/public-intelligence.shell-c86a6ecc39.js",
+        "assets/pwa-install.shell-30b48f0ae6.js",
+        "assets/pwa-nav.shell-5f63b6b75a.js",
+        "assets/schema-injector.shell-33115efcde.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/stats-surface.shell-b33242e1cc.js",
+        "assets/style.shell-dafcbbf695.css",
+        "assets/theme-toggle.shell-8221605898.js",
+        "assets/vault-door.shell-20bb2584bc.js"
+      ],
       "stagingShell": [
         "assets/after-paint.shell-0392b76d45.js",
         "assets/ambient-core.shell-214cf44506.js",
@@ -60,12 +80,12 @@
         "assets/theme-toggle.shell-8221605898.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
-      "headerParity": false,
+      "headerParity": true,
       "prodHeaders": {
-        "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
-        "hsts": "",
+        "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
+        "hsts": "max-age=31536000; includeSubDomains; preload",
         "xcto": "nosniff",
-        "referrer": "same-origin"
+        "referrer": "strict-origin-when-cross-origin"
       },
       "stagingHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -77,12 +97,7 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": [
-        "status-mismatch",
-        "prod-forbidden",
-        "shell-mismatch",
-        "header-mismatch"
-      ]
+      "reasonCodes": []
     },
     {
       "route": "/studio-pulse/",

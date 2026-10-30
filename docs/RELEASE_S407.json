@@ -1,6 +1,6 @@
 {
   "session": 407,
-  "state": "release-pending",
+  "state": "staging-verified-hosted-checks-pending",
   "audit": "docs/AUDIT_2026-10-30.json",
   "implementation": "docs/S407_implementation.json",
   "authorization": "Founder explicitly authorizes normal direct main commit/push and full deployment.",
@@ -13,7 +13,14 @@
       "coverageComplete": true,
       "sourceFingerprint": "30d1891a84264c34802834a6"
     },
-    "staging": "pending",
+    "staging": {
+      "state": "passed",
+      "receipt": "docs/S407_staging-deploy.json",
+      "receiptId": "6326d1271a851d416956e7a4",
+      "ceremony": "docs/S407_staging-ceremony.json",
+      "ceremonyPassed": 11,
+      "ceremonyTotal": 11
+    },
     "exactRequiredHostedChecks": "pending",
     "production": "pending",
     "completeServedReadback": "pending",
