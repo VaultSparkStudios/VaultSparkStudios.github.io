@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-30T21:36:17.002Z",
+  "generatedAt": "2026-10-30T22:09:23.234Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -20,15 +20,16 @@
     ],
     "candidateReady": false,
     "candidateFindings": [
+      "staging-build-sha-mismatch",
       "staging-artifact-root-mismatch"
     ],
     "candidateBuildSha": "bc441b7a64b45cbeb953ad1d424f3c765cde582d",
-    "deployedBuildSha": "bc441b7a64b45cbeb953ad1d424f3c765cde582d",
-    "candidateShaBound": true,
+    "deployedBuildSha": "af473fae361313d95e2c2863f6b149d962bd53e1",
+    "candidateShaBound": false,
     "artifactManifest": {
       "candidateRoot": "0ef268b9a22c5ec0a34adebb2b6bcdade5982bf22be07345b1f57b80bd806d6d",
       "candidateLeafCount": 70,
-      "stagingRoot": "f68891c6767d54d889a53faf0d94c62cfcec1a47204d641ffb5efbcc9afbae5d",
+      "stagingRoot": "34b2ae55a49b7fee89a6a36790bf38da92536cc04cee78220c0ab0bbb1dd38c4",
       "stagingLeafCount": 70,
       "matched": false
     },
@@ -70,13 +71,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 85,
-    "ageHours": 24,
-    "observedAt": "2026-10-30T21:36:17.002Z",
+    "commitsBehind": 86,
+    "ageHours": 24.5,
+    "observedAt": "2026-10-30T22:09:23.234Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-30T21:36:17.002Z",
+      "observedAt": "2026-10-30T22:09:23.234Z",
       "expectedFrom": "fdb7f729a7f8ab525b82c6bb04867a2665ef0517221a86dbbc9233edde97a584",
       "supersededBy": null,
       "ageHours": 0,
@@ -181,7 +182,7 @@
     "canonicalFavicon": true,
     "stagingReachable": true,
     "stagingCandidateReady": false,
-    "stagingCandidateShaBound": true,
+    "stagingCandidateShaBound": false,
     "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
@@ -197,6 +198,7 @@
   },
   "blockers": [
     "stagingCandidateReady",
+    "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
