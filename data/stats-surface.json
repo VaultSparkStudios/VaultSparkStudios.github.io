@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-30T18:11:51.517Z",
+  "generatedAt": "2026-10-30T18:20:02.051Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -112,7 +112,7 @@
     {
       "id": "news-stories",
       "label": "Desk stories",
-      "value": 171,
+      "value": 172,
       "unitOrDenominator": "published editorial stories",
       "period": "all published editions",
       "computedAt": "2026-10-30T00:00:00.000Z",
@@ -128,7 +128,7 @@
       "freshnessState": "fresh",
       "category": "editorial",
       "format": "integer",
-      "interpretation": "538 sourced facts across 171 stories; prediction accuracy remains withheld until the sample earns it."
+      "interpretation": "541 sourced facts across 172 stories; prediction accuracy remains withheld until the sample earns it."
     },
     {
       "id": "forge-projects",
@@ -154,7 +154,7 @@
     {
       "id": "sourced-facts",
       "label": "Sourced Desk facts",
-      "value": 538,
+      "value": 541,
       "unitOrDenominator": "source-linked factual claims",
       "period": "all published editions",
       "computedAt": "2026-10-30T00:00:00.000Z",
@@ -170,7 +170,7 @@
       "freshnessState": "fresh",
       "category": "editorial",
       "format": "integer",
-      "interpretation": "Drawn from 47 named source domains; opinions are not counted as facts."
+      "interpretation": "Drawn from 48 named source domains; opinions are not counted as facts."
     },
     {
       "id": "proof-freshness",
@@ -178,7 +178,7 @@
       "value": 83,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-10-30T18:11:51.517Z",
+      "computedAt": "2026-10-30T18:20:02.051Z",
       "source": "/api/status-proof.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/status-proof.json",
@@ -187,7 +187,7 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-10-30T18:11:51.517Z",
+      "observedThrough": "2026-10-30T18:20:02.051Z",
       "freshnessState": "fresh",
       "category": "trust",
       "format": "percent",
@@ -234,7 +234,7 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-10-30T18:11:51.517Z",
+      "computedAt": "2026-10-30T18:20:02.051Z",
       "values": {
         "fresh": 15,
         "stale": 3,
@@ -245,9 +245,9 @@
       "source": "/api/news-desk-stats.json",
       "computedAt": "2026-10-30T00:00:00.000Z",
       "values": {
-        "stories": 171,
-        "facts": 538,
-        "sources": 47,
+        "stories": 172,
+        "facts": 541,
+        "sources": 48,
         "predictionsGraded": 0
       }
     }
