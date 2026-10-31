@@ -1,6 +1,6 @@
 {
   "session": 407,
-  "state": "application-verified-closing-full-candidate-pending",
+  "state": "closing-full-production-verified-final-publication-pending",
   "audit": "docs/AUDIT_2026-10-30.json",
   "implementation": "docs/S407_implementation.json",
   "authorization": "Founder explicitly authorizes normal direct main commit/push and full deployment.",
@@ -180,8 +180,8 @@
     "result": ".cache/S407/autopilot-attempt4.json",
     "log": ".cache/logs/S407-closeout-autopilot-attempt4.log"
   },
-  "candidate": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
-  "tag": "S407-release-20261030-45b74582c9a1",
+  "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
+  "tag": "S407-closing-20261030-e4234a241941",
   "publicationAttempts": [
     {
       "record": ".cache/S407/rejected-candidate-attempt1.json",
@@ -205,9 +205,9 @@
   },
   "performance": "docs/S407_ignis-performance.json",
   "remaining": [
-    "Normal main publication preserving upstream observer commits",
-    "Final canonical writeback and any resulting served metadata staging/production reconciliation",
-    "Publisher restoration, final review and receipt reachability"
+    "Preserve later observer commits and verify any resulting public metadata reconciliation",
+    "Restore five original publisher states and send the authorized impact cargo",
+    "Publish final acceptance records and verify remote reachability"
   ],
   "closingRecords": {
     "state": "in-progress",
@@ -226,8 +226,53 @@
       "ceremony": "docs/S407_closing-ceremony.json",
       "steps": 11
     },
-    "hosted": "pending",
-    "production": "pending",
-    "main": "pending"
-  }
+    "hosted": {
+      "state": "passed",
+      "receipt": "docs/S407_closing-required-checks.json",
+      "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
+      "checks": [
+        {
+          "workflow": ".github/workflows/e2e.yml",
+          "state": "passed",
+          "runId": 41145177278
+        },
+        {
+          "workflow": ".github/workflows/lighthouse.yml",
+          "state": "passed",
+          "runId": 41145177215
+        },
+        {
+          "workflow": ".github/workflows/accessibility.yml",
+          "state": "passed",
+          "runId": 41145177275
+        }
+      ]
+    },
+    "production": {
+      "state": "passed",
+      "receipt": "docs/S407_closing-production.json",
+      "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
+      "runId": 41147027141,
+      "kind": "normal-full-pages-deploy",
+      "provider": true,
+      "stamps": 3
+    },
+    "main": {
+      "state": "published",
+      "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
+      "publishedAt": "2026-10-30T23:33:32.919Z"
+    },
+    "completeServedReadback": {
+      "state": "passed",
+      "receipt": "docs/S407_closing-served-parity.json",
+      "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
+      "checked": 3714,
+      "identical": 3704,
+      "redirected": 10,
+      "differ": 0,
+      "unread": 0
+    }
+  },
+  "initialApplicationBaseline": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+  "applicationBaseline": "e4234a24194168e989c25a38012f11e85578ae39"
 }
