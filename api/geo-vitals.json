@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-31T06:30:50.877Z",
+  "generatedAt": "2026-10-31T06:36:38.423Z",
   "generatedBy": "scripts/build-geo-vitals.mjs",
   "publicSafe": true,
   "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\" (privacy). Rows under 20 samples are confidence:\"low\" — render those as \"insufficient samples\", not as a measurement. dataWindow reports when the underlying visits actually happened; readers must surface staleness rather than trusting generatedAt.",
@@ -8,71 +8,40 @@
   "confidenceSamples": 20,
   "dataWindow": {
     "firstDay": "2026-05-25",
-    "lastDay": "2026-10-09",
-    "days": 47
+    "lastDay": "2026-07-02",
+    "days": 38
   },
   "countries": [
     {
       "country": "US",
-      "samples": 775,
-      "lcpP75": 1116,
-      "ttfbP75": 195,
+      "samples": 464,
+      "lcpP75": 992,
+      "ttfbP75": 157,
       "confidence": "high",
       "colos": [
-        "ARN",
         "ATL",
         "BOS",
-        "CLT",
         "CMH",
         "DEN",
         "DFW",
         "EWR",
         "IAD",
-        "JAX",
         "LAX",
         "MCI",
-        "MEM",
-        "MIA",
         "ORD",
-        "PDX",
         "SEA",
-        "SJC",
-        "YYZ"
+        "SJC"
       ]
     },
     {
       "country": "GB",
-      "samples": 11,
-      "lcpP75": 968,
-      "ttfbP75": 337,
+      "samples": 8,
+      "lcpP75": 1388,
+      "ttfbP75": 437,
       "confidence": "low",
       "colos": [
         "LHR",
         "MAN"
-      ]
-    },
-    {
-      "country": "CA",
-      "samples": 9,
-      "lcpP75": 979,
-      "ttfbP75": 564,
-      "confidence": "low",
-      "colos": [
-        "YVR",
-        "YYC",
-        "YYZ"
-      ]
-    },
-    {
-      "country": "CN",
-      "samples": 7,
-      "lcpP75": 1024,
-      "ttfbP75": 1124,
-      "confidence": "low",
-      "colos": [
-        "AMS",
-        "LAX",
-        "SJC"
       ]
     },
     {
@@ -85,6 +54,28 @@
         "BOM",
         "BOS",
         "SIN"
+      ]
+    },
+    {
+      "country": "CA",
+      "samples": 6,
+      "lcpP75": 9960,
+      "ttfbP75": 1286,
+      "confidence": "low",
+      "colos": [
+        "YVR",
+        "YYZ"
+      ]
+    },
+    {
+      "country": "CN",
+      "samples": 6,
+      "lcpP75": 1020,
+      "ttfbP75": 746,
+      "confidence": "low",
+      "colos": [
+        "AMS",
+        "LAX"
       ]
     },
     {
@@ -118,18 +109,6 @@
       ]
     },
     {
-      "country": "RU",
-      "samples": 3,
-      "lcpP75": 11592,
-      "ttfbP75": 558,
-      "confidence": "low",
-      "colos": [
-        "DME",
-        "FRA",
-        "GIG"
-      ]
-    },
-    {
       "country": "TR",
       "samples": 3,
       "lcpP75": 764,
@@ -140,19 +119,9 @@
       ]
     },
     {
-      "country": "UA",
-      "samples": 3,
-      "lcpP75": 2796,
-      "ttfbP75": 634,
-      "confidence": "low",
-      "colos": [
-        "VIE"
-      ]
-    },
-    {
       "country": "other",
       "samples": 23,
-      "lcpP75": 1256,
+      "lcpP75": 1284,
       "ttfbP75": 538,
       "confidence": "high",
       "colos": [
@@ -160,18 +129,17 @@
         "BOM",
         "BRU",
         "BUD",
+        "DFW",
+        "DME",
         "FCO",
         "FRA",
         "GRU",
-        "KIX",
         "LIS",
         "MAD",
         "MNL",
         "MRS",
-        "NRT",
         "PRG",
         "SIN",
-        "SOF",
         "WAW"
       ]
     }
