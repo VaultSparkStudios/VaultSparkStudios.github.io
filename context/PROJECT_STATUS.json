@@ -105,135 +105,13 @@
   "silCategoriesUpdatedSession": 407,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-10-29",
+    "date": "2026-10-31",
     "passing": 15,
     "warning": 2,
     "failing": 0,
     "blockingFailing": 0,
-    "advisoryFailing": 0,
     "total": 17,
-    "score": 88,
-    "checks": [
-      {
-        "id": "manifest",
-        "pass": true,
-        "warn": false,
-        "driftClass": "local-broken",
-        "blocking": false
-      },
-      {
-        "id": "validate",
-        "pass": true,
-        "warn": true,
-        "driftClass": "portfolio-outdated",
-        "blocking": false
-      },
-      {
-        "id": "canon",
-        "pass": true,
-        "warn": false,
-        "driftClass": "portfolio-outdated",
-        "blocking": false
-      },
-      {
-        "id": "compliance-velocity",
-        "pass": true,
-        "warn": true,
-        "driftClass": "portfolio-outdated",
-        "blocking": false
-      },
-      {
-        "id": "sanitize",
-        "pass": true,
-        "warn": false,
-        "driftClass": "portfolio-outdated",
-        "blocking": false
-      },
-      {
-        "id": "launch",
-        "pass": true,
-        "warn": true,
-        "driftClass": "expected-external",
-        "blocking": false
-      },
-      {
-        "id": "feedback",
-        "pass": true,
-        "warn": false,
-        "driftClass": "derived-stale",
-        "blocking": false
-      },
-      {
-        "id": "entropy",
-        "pass": true,
-        "warn": false,
-        "driftClass": "local-broken",
-        "blocking": false
-      },
-      {
-        "id": "revenue",
-        "pass": true,
-        "warn": false,
-        "driftClass": "derived-stale",
-        "blocking": false
-      },
-      {
-        "id": "sibling-locks",
-        "pass": false,
-        "warn": true,
-        "driftClass": "derived-stale",
-        "blocking": false
-      },
-      {
-        "id": "ignis",
-        "pass": true,
-        "warn": false,
-        "driftClass": "derived-stale",
-        "blocking": false
-      },
-      {
-        "id": "genome",
-        "pass": true,
-        "warn": false,
-        "driftClass": "local-broken",
-        "blocking": false
-      },
-      {
-        "id": "prompt-ver",
-        "pass": true,
-        "warn": false,
-        "driftClass": "local-broken",
-        "blocking": false
-      },
-      {
-        "id": "propagated-doc",
-        "pass": true,
-        "warn": false,
-        "driftClass": "expected-external",
-        "blocking": false
-      },
-      {
-        "id": "sched-staleness",
-        "pass": false,
-        "warn": true,
-        "driftClass": "derived-stale",
-        "blocking": false
-      },
-      {
-        "id": "desk-model-servability",
-        "pass": true,
-        "warn": false,
-        "driftClass": "expected-external",
-        "blocking": false
-      },
-      {
-        "id": "deploy-currency-live",
-        "pass": true,
-        "warn": true,
-        "driftClass": "local-broken",
-        "blocking": false
-      }
-    ]
+    "score": 88
   },
   "modelTier": "T3_opus",
   "modelTierDefault": "opus[1m]",
@@ -258,12 +136,13 @@
   "lastSessionSummary": "S407 released truthful IGNIS pillars and current browser contracts; browser38/7private-fixture skips, mobile215, copy72, source548, staging11, hosted3 and complete3714-resource application readback verified. Publication acceptance: docs/RELEASE_S407.json.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
-    "session": 403,
-    "started": 79,
-    "closed": 79,
+    "session": 407,
+    "enumeratedAt": "2026-10-31T01:22:57.325Z",
+    "started": 89,
+    "closed": 89,
     "running": 0,
-    "enumeratedAt": "2026-10-26T00:18:00.274Z",
-    "evidence": "docs/S403_session-hygiene.json"
+    "evidence": "docs/S407_session-hygiene.json",
+    "scope": "All persistent native exec sessions returned in this goal thread, including recovery and continuations. Short commands that returned directly are excluded; unresolved handles require direct follow-up."
   },
   "closeoutFollowthrough": {
     "session": 395,
@@ -291,58 +170,58 @@
     "behaviorChanged": false
   },
   "currentBuildState": "passed",
-  "currentBuildNote": "Fresh complete S407 closing source548/548; actual execution and source fingerprint retained in docs/S407_closing-source.json.",
+  "currentBuildNote": "Fresh complete S407 closing-content source548/548; full application and final content-overlay acceptance are separately pinned in docs/RELEASE_S407.json.",
   "lastDeploySession": 407,
   "lastDeployStatus": "verified",
   "silAvg5": 939,
   "lastReleaseAcceptance": {
     "session": 407,
     "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
+    "metadataHead": "81654c0ae4230275b550c86b7acccf60e429f240",
     "receipt": "docs/RELEASE_S407.json",
     "workflowRun": 41147027141,
-    "verifiedAt": "2026-10-30T23:59:00.425Z"
+    "metadataWorkflowRun": 41153933133,
+    "verifiedAt": "2026-10-31T01:14:42.418Z"
   },
   "truthAuditSummary": "Normal full S407 application and3714-resource readback verified; exact closing publication acceptance is authoritative in docs/RELEASE_S407.json. No all-optional-E2E or positive authenticated-data claim.",
   "currentVerification": {
     "session": 407,
-    "state": "accepted-closing-full-production",
-    "source": "docs/RELEASE_S407.json",
-    "lastCompleteTestsSession": 407,
-    "sourceEvidence": "docs/S407_closing-source.json",
+    "state": "accepted-full-application-plus-final-content",
     "applicationBaseline": "e4234a24194168e989c25a38012f11e85578ae39",
-    "finalParity": "docs/S407_closing-served-parity.json",
-    "scope": "This invocation only; final closing records require their own source and release evidence.",
-    "sourceFingerprint": "67eb6031465d20cdc72be8e3"
+    "metadataHead": "81654c0ae4230275b550c86b7acccf60e429f240",
+    "sourceEvidence": "docs/S407_metadata-source.json",
+    "sourceFingerprint": "bd342a7a347253f4dceb260f",
+    "finalParity": "docs/S407_final-served-parity.json"
   },
   "metadataPublication": {
     "session": 407,
-    "state": "closing-source-published-final-receipts-pending",
-    "publishedCommit": "e4234a24194168e989c25a38012f11e85578ae39",
-    "observedAt": "2026-10-30T23:33:32.919Z",
+    "state": "verified",
+    "publishedCommit": "81654c0ae4230275b550c86b7acccf60e429f240",
+    "observedAt": "2026-10-31T01:14:42.418Z",
     "source": "docs/RELEASE_S407.json"
   },
   "lastCompletedArc": {
-    "session": 406,
-    "phase": "complete-in-closing-publication-transaction",
-    "goalId": "01a18350-c2d7-7c32-a786-c2bd05199c33",
-    "goalCreatedAt": 1793204515,
-    "audit": "docs/AUDIT_2026-10-28-S406-website-refresh.json",
-    "releaseEvidence": "docs/RELEASE_S406.json",
-    "candidate": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
-    "metadataHead": "b0e4d7f2082461a82a1d8638b455690e85f9c83b",
-    "releaseVerifiedAt": "2026-10-29T08:56:48.686Z",
-    "completedAt": "2026-10-29T08:59:22.395Z",
-    "detail": "Six selected outcomes released, complete baseline-plus-overlay parity verified; final remote push independently checked before native completion."
+    "session": 407,
+    "phase": "complete",
+    "audit": "docs/AUDIT_2026-10-30.json",
+    "prerequisite": "docs/AUDIT_2026-10-30-S407.json",
+    "releaseEvidence": "docs/RELEASE_S407.json",
+    "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
+    "metadataHead": "81654c0ae4230275b550c86b7acccf60e429f240",
+    "releaseVerifiedAt": "2026-10-31T01:14:42.418Z",
+    "completedAt": "2026-10-31T01:15:54.000Z",
+    "detail": "This invocation completed fresh startup/audit, both selected outcomes, closeout, normal full deployment and complete final served-tree verification. Native goal completion follows final remote-record reachability."
   },
   "velocity": 1,
   "arcProgress": {
     "session": 407,
-    "phase": "closing-full-production-verified-final-publication",
+    "phase": "complete",
     "binding": "ignored .cache/arc-goals",
     "audit": "docs/AUDIT_2026-10-30.json",
     "prerequisite": "docs/AUDIT_2026-10-30-S407.json",
     "releaseEvidence": "docs/RELEASE_S407.json",
-    "candidate": "e4234a24194168e989c25a38012f11e85578ae39"
+    "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
+    "metadataHead": "81654c0ae4230275b550c86b7acccf60e429f240"
   },
   "ignisLastScored": "2026-10-29",
   "historicalTests": {

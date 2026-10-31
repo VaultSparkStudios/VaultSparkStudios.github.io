@@ -1,6 +1,6 @@
 {
   "session": 407,
-  "state": "closing-full-production-verified-final-publication-pending",
+  "state": "complete",
   "audit": "docs/AUDIT_2026-10-30.json",
   "implementation": "docs/S407_implementation.json",
   "authorization": "Founder explicitly authorizes normal direct main commit/push and full deployment.",
@@ -150,6 +150,20 @@
       "planned": 548,
       "log": ".cache/logs/S407-closeout-autopilot-attempt3.log",
       "reason": "Actual copy-quality gate falsely rejects legitimate compound phrase, publisher house style and noun usage in upstream corpus. Required verifier repair selected in same session; original reporting preserved."
+    },
+    {
+      "kind": "closing-content-source-attempt1",
+      "state": "failed",
+      "receipt": "docs/S407_metadata-source-attempt1.json",
+      "failedStep": 357,
+      "reason": "Real UTC-date drift in newsroom freshness metadata; regenerated with the native builder before complete rerun."
+    },
+    {
+      "kind": "closing-content-source-attempt2",
+      "state": "failed",
+      "receipt": "docs/S407_metadata-source-attempt2.json",
+      "failedStep": 355,
+      "reason": "Freshness receipt regeneration also required the native homepage Desk caption today-to-yesterday rebuild. Full affected graph checked coherent before final rerun."
     }
   ],
   "proofPreflight": {
@@ -204,13 +218,9 @@
     "reason": "Verified own local-preview process identity and absence after termination; no longer required after real staging acceptance."
   },
   "performance": "docs/S407_ignis-performance.json",
-  "remaining": [
-    "Preserve later observer commits and verify any resulting public metadata reconciliation",
-    "Restore five original publisher states and send the authorized impact cargo",
-    "Publish final acceptance records and verify remote reachability"
-  ],
+  "remaining": [],
   "closingRecords": {
-    "state": "in-progress",
+    "state": "complete",
     "reason": "Public dated audit and generated search metadata require the normal full lane; content admission is preserved, never broadened.",
     "source": {
       "state": "passed",
@@ -274,5 +284,110 @@
     }
   },
   "initialApplicationBaseline": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
-  "applicationBaseline": "e4234a24194168e989c25a38012f11e85578ae39"
+  "applicationBaseline": "e4234a24194168e989c25a38012f11e85578ae39",
+  "completedAt": "2026-10-31T01:15:54.000Z",
+  "finalPublication": {
+    "state": "verified-production-and-served-tree",
+    "applicationBaseline": "e4234a24194168e989c25a38012f11e85578ae39",
+    "metadataHead": "81654c0ae4230275b550c86b7acccf60e429f240",
+    "paths": [
+      "api/ai-discovery-health.json",
+      "api/analytics-summary.json",
+      "api/build-check-diagnostics.json",
+      "api/candidate-artifact-manifest.json",
+      "api/ci-status.json",
+      "api/citation.json",
+      "api/deploy-currency.json",
+      "api/field-win.json",
+      "api/geo-vitals.json",
+      "api/heartbeat.json",
+      "api/intelligence-budget.json",
+      "api/intent-map.json",
+      "api/nervous-system.json",
+      "api/news-desk-freshness.json",
+      "api/newsroom-run.json",
+      "api/og-coverage.json",
+      "api/promotion-receipt.json",
+      "api/proof-aware-projects.json",
+      "api/proof-surface-diagnostics.json",
+      "api/public-intelligence.json",
+      "api/public-status.json",
+      "api/release-dependencies.json",
+      "api/release-proof.json",
+      "api/staging-health.json",
+      "api/status-proof.json",
+      "api/uptime.json",
+      "api/worker-route-provenance.json",
+      "data/promotion-history.ndjson",
+      "data/stats-surface.json",
+      "index.html",
+      "stats.json"
+    ],
+    "receipt": "docs/S407_metadata-overlay.json",
+    "source": "docs/S407_metadata-source.json",
+    "sourceFingerprint": "bd342a7a347253f4dceb260f",
+    "sourcePassed": 548,
+    "sourceFailed": 0,
+    "sourceCoverageComplete": true,
+    "stagingExactReads": 30,
+    "publicApexLiveClock": "docs/S407_live-clock.json",
+    "metadataWorkflow": 41153933133,
+    "completeServedReadback": {
+      "receipt": "docs/S407_final-served-parity.json",
+      "against": "81654c0ae4230275b550c86b7acccf60e429f240",
+      "checked": 3714,
+      "identical": 3704,
+      "redirected": 10,
+      "differ": 0,
+      "unread": 0
+    }
+  },
+  "publisherRestoration": {
+    "state": "restored",
+    "verifiedAt": "2026-10-31T01:15:42.364Z",
+    "workflows": [
+      {
+        "path": ".github/workflows/news-publish.yml",
+        "state": "active"
+      },
+      {
+        "path": ".github/workflows/desk-content-release.yml",
+        "state": "active"
+      },
+      {
+        "path": ".github/workflows/refresh-live-data.yml",
+        "state": "active"
+      },
+      {
+        "path": ".github/workflows/rum-pull.yml",
+        "state": "active"
+      },
+      {
+        "path": ".github/workflows/cloudflare-analytics-pull.yml",
+        "state": "active"
+      }
+    ],
+    "uptimeState": "active"
+  },
+  "impactBroadcast": {
+    "session": 407,
+    "cargoId": "01K67L8OD72CE02431B3895927",
+    "shippedAt": "2026-10-31T00:20:34.734Z",
+    "verifiedAt": "2026-10-31T00:20:55.285Z",
+    "signatureVerification": {
+      "ok": true,
+      "ed": {
+        "state": "unsigned"
+      }
+    },
+    "scope": "Signed native transport log; recipient receipt/application is not inferred."
+  },
+  "publicationScope": "Accepted full application plus explicit final content overlay. Final nonserved records are pushed normally; later autonomous observer commits are separate from this pinned acceptance transaction.",
+  "postAcceptanceObserverReconciliation": {
+    "receipt": "docs/S407_observer-reconciliation.json",
+    "remoteHead": "0cae4971cf5c2a9a4e7744a0f044d25a60050938",
+    "sourceFingerprintUnchanged": true,
+    "scope": "Later autonomous observations are preserved separately from the pinned, fully verified production transaction. No newer observer data is claimed to be part of that snapshot."
+  },
+  "shellHygiene": "docs/S407_session-hygiene.json"
 }

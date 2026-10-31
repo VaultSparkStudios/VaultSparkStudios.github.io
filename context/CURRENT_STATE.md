@@ -1,9 +1,11 @@
 <!-- S407-release-acceptance -->
-## S407 released application — 2026-10-30
+## S407 completed — 2026-10-30
 
-S407 restored current browser journey contracts and truthful public IGNIS pillars, and repaired editorial-checker false positives without editing reporting. Browser38 passed/7 existing private-fixture skips; copy72, mobile215 and14 inspected theme/viewport captures passed. Native source548/548, staging11/11 and exact hosted workflows3/3 passed. Normal full application45b74582c9a1, provider/three stamps, six existing access walls and complete3714-resource readback are verified. Mobile lab Performance92 production and82 staging are recorded separately; no field-vitals, growth or token-saving claim. Closing main publication and its full-candidate acceptance remain authoritative in docs/RELEASE_S407.json.
+S407 is complete. The browser-contract and editorial-checker outcomes are released. Full application e4234a241941 passed native source548/548, staging11/11, exact hosted workflows3/3, normal full production and complete served readback. Final content overlay 81654c0ae423 carries 31 explicitly staged paths, including launch-age240→241 and the Desk caption today→yesterday required by the new observation date. Fresh source548/548, mobile215/215, four launch-age checks and28 inspected desktop/mobile theme captures across both generated date displays passed for that closing snapshot. Final complete Pages-origin served readback checked3714: 3704 byte-identical, 10 configured redirects, zero differences/unread. Both selected L2 outcomes remain the only shipped outcomes: one product and one protocol improvement. SIL remains939/1000.
 
-Session Intent: /arc then authorized normal main commit/push and full deployment. Both L2 outcomes are independently reviewed. Original audit: docs/AUDIT_2026-10-30.json; same-session verifier prerequisite: docs/AUDIT_2026-10-30-S407.json. No authentication, pricing, membership economy or lifecycle change.
+Seven existing private-fixture browser cases remain skipped; historical optional visual failures are unclassified. Anonymous access-wall checks do not prove positive authenticated private-data access. Individual lab Performance92 production/82 staging is not field-vitals or growth evidence. No further product work is selected. CDR unchanged: no new founder creative direction.
+
+Release evidence: docs/RELEASE_S407.json. Final documentation publication is independently observed in the ignored continuation record after the normal main push.
 
 ---
 
