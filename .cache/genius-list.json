@@ -1,14 +1,14 @@
 {
-  "signature": "6e1c80610e09c236",
-  "generatedAt": "2026-10-30T23:14:53.798Z",
+  "signature": "1c1e2c7029ebf445",
+  "generatedAt": "2026-10-31T01:28:38.676Z",
   "list": {
     "schemaVersion": 1,
-    "generatedAt": "2026-10-30T23:14:53.772Z",
+    "generatedAt": "2026-10-31T01:28:38.668Z",
     "project": "VaultSparkStudios.github.io",
     "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
     "ignisSource": "fallback",
     "scoreSummary": {
-      "overallOpportunityPressure": 83,
+      "overallOpportunityPressure": 80,
       "health": "yellow",
       "silScore": 939,
       "silMax": 1000,
@@ -24,16 +24,6 @@
         "gate": null,
         "rationale": "Classify historical visual failures before updating baselines. is open, local, and unblocked — can ship this session.",
         "command": ""
-      },
-      {
-        "category": "VERIFY",
-        "title": "Post-push CI confirmation",
-        "score": 96,
-        "task": "Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.",
-        "rationale": "The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.",
-        "command": "gh run list --limit 10",
-        "actionable": true,
-        "gate": null
       },
       {
         "category": "PRODUCT",
@@ -133,6 +123,16 @@
         "actionable": true,
         "gate": null,
         "rationale": "Consider per-member byte verification only if source mutation during p is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "Coordinate an evidence-backed distinction between formatting-only sou…",
+        "score": 63,
+        "task": "[SIL][S400] Coordinate an evidence-backed distinction between formatting-only source writes and actual pixel changes in visual freshness; existing mandatory gate remains enforced. Future selection only.",
+        "actionable": true,
+        "gate": null,
+        "rationale": "Coordinate an evidence-backed distinction between formatting-only sour is open, local, and unblocked — can ship this session.",
         "command": ""
       }
     ],
