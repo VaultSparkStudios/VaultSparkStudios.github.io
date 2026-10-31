@@ -1,0 +1,37 @@
+{
+  "session": 407,
+  "state": "passed",
+  "reason": "New committed metadata observation date requires homepage launch-age241; native hook rejected the previous tag before publication.",
+  "source": "docs/S407_metadata-source.json",
+  "sourceFingerprint": "bd342a7a347253f4dceb260f",
+  "sourcePassed": 548,
+  "mobile": {
+    "session": 407,
+    "startedAt": "2026-10-31T00:49:59.263Z",
+    "finishedAt": "2026-10-31T00:56:37.293Z",
+    "nativeExit": 0,
+    "previewStarted": 1,
+    "previewClosed": 1,
+    "previewRunning": 0,
+    "passed": 215,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "highSeverityFindings": 0,
+    "receipt": "docs/mobile-audit/receipt.json"
+  },
+  "generatorSelfTests": {
+    "passed": 4,
+    "total": 4
+  },
+  "coherence": "native check-content-coherence and build-launch-age --check passed",
+  "visual": {
+    "before": "docs/visual-qa/S407-launch-age-before.json",
+    "after": "docs/visual-qa/S407-launch-age.json",
+    "themes": 7,
+    "viewports": 2,
+    "manuallyInspectedBefore": 28,
+    "manuallyInspectedAfter": 28
+  },
+  "scope": "Generated public launch-age and Desk relative-date text corrections only. No new product outcome, authentication or application behavior change."
+}
