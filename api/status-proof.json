@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-10-30T03:38:10.982Z",
+  "generatedAt": "2026-10-31T04:11:32.179Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,21 +12,21 @@
     "trustScore": 83,
     "worstStale": {
       "key": "identity-migration-receipt",
-      "ageSeconds": 5623976,
+      "ageSeconds": 5712378,
       "generatedAt": "2026-08-26T01:25:14.581Z"
     },
     "seedRisk": [
       {
         "key": "identity-migration-receipt",
-        "ageHours": 1562,
+        "ageHours": 1587,
         "staleAfterH": 336,
-        "pctOfWindow": 465
+        "pctOfWindow": 472
       },
       {
         "key": "supabase-control-plane",
-        "ageHours": 225,
+        "ageHours": 250,
         "staleAfterH": 168,
-        "pctOfWindow": 134
+        "pctOfWindow": 149
       }
     ]
   },
@@ -34,19 +34,19 @@
     "uptime": {
       "present": true,
       "source": "/api/uptime.json",
-      "generatedAt": "2026-10-30T03:38:08.485Z",
-      "freshnessSeconds": 2,
+      "generatedAt": "2026-10-31T04:11:29.504Z",
+      "freshnessSeconds": 3,
       "staleAfterH": 6,
       "stale": false,
       "data": {
         "schemaVersion": "2.0",
-        "generatedAt": "2026-10-30T03:38:08.485Z",
+        "generatedAt": "2026-10-31T04:11:29.504Z",
         "generatedBy": "scripts/probe-uptime.mjs",
         "overall": "edge-unobservable",
         "liveness": {
           "endpoint": "/api/build-sha.json",
           "status": 403,
-          "ms": 32,
+          "ms": 24,
           "ok": false,
           "shape": "challenged",
           "observable": false,
@@ -55,7 +55,7 @@
         "workerIngest": {
           "endpoint": "/v/rum (OPTIONS)",
           "status": 403,
-          "ms": 30,
+          "ms": 29,
           "ok": false,
           "shape": "challenged",
           "observable": false,
@@ -64,7 +64,7 @@
         "rumIngestPost": {
           "endpoint": "/v/rum (POST)",
           "status": 403,
-          "ms": 42,
+          "ms": 43,
           "ok": false,
           "contractLive": false,
           "shape": "challenged",
@@ -85,17 +85,17 @@
           {
             "route": "/",
             "status": 200,
-            "ms": 208,
+            "ms": 201,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 208,
+              "ms": 201,
               "ok": true,
               "body": "<!DOCTYPE html>\n<html lang=\"en\" class=\"dark-mode\" data-theme=\"dark\">\n<head>\n  <meta charset=\"UTF-8\" />\n\n  <!-- Resource hints -->\n  <link rel=\"preconnect\" href=\"https://fjnpzjjyhnpmunfoycrp.supabase.co\" />\n  <link rel=\"dns-prefetch\" href=\"https://js.stripe.com\" />\n  <link rel=\"dns-prefetch\" href=\"https://fjnpzjjyhnpmunfoycrp.supabase.co\" />\n\n\n  <meta name=\"p:domain_verify\" content=\"c8175438f6c7e03b305b86ffcae36881\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n\n  <title>VaultSpark Studios — AI &amp; Super Intelligence Studio: Games, Tools, Worlds</title>\n  <meta name=\"description\" content=\"VaultSpark Studios is an AI &amp; Synthetic Intelligence (SI) studio building browser games, immersive worlds, and intelligence tools under one public operating rhythm.\" />\n  <meta name=\"keywords\" content=\"VaultSpark Studios, independent game studio, browser games, Call of Doodie, Gridiron GM, sports simulation, roguelite RPG, Solara, VaultFront, DreadSpike\" />\n  <link rel=\"canonical\" href=\"https://vaultsparkstudios.com/\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta name=\"robots\" content=\"index, follow\" />\n  <meta name=\"supabase-key\" content=\"sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij\" />\n\n  <meta property=\"og:title\" content=\"VaultSpark Studios | The Vault Is Sparked\" />\n  <meta property=\"og:description\" content=\"An independent AI &amp; Synthetic Intelligence (SI) studio forging games, cinematic worlds, and intelligence tools. From Artificial Intelligence to Synthetic Intelligence.\" />\n  <meta property=\"og:type\" content=\"website\" />\n  <meta property=\"og:url\" content=\"https://vaultsparkstudios.com/\" />\n  <meta property=\"og:image\" content=\"https://vaultsparkstudios.com/assets/og/og-home.png\" />\n  <meta property=\"og:image:width\" content=\"1200\" />\n  <meta property=\"og:image:height\" content=\"630\" />\n  <meta property=\"og:image:type\" content=\"image/png\" />\n  <meta property=\"og:image:alt\" content=\"VaultSpark Studios — The Vault Is Sparked\" />\n  <meta property=\"og:site_name\" content=\"VaultSpark Studios\" />\n\n  <meta name=\"twitter:card\" content=\"summary_large_image\" />\n  <meta name=\"twitter:site\" content=\"@VaultSparkStudios\" />\n  <meta name=\"twitter:title\" content=\"VaultSpark Studios | The Vault Is Sparked\" />\n  <meta name=\"twitter:description\" content=\"An independent AI &amp; Synthetic Intelligence (SI) studio forging games, cinematic worlds, and intelligence tools. From Artificial Intelligence to Synthetic Intelligence.\" />\n  <meta name=\"twitter:image\" content=\"https://vaultsparkstudios.com/assets/og/og-home.png\" />\n\n  <link rel=\"icon\" type=\"image/png\" href=\"assets/icon-32.png\" />\n  <link rel=\"apple-touch-icon\" href=\"assets/icon-256.png\" />\n  <link rel=\"manifest\" href=\"/manifest.json\" />\n  <style data-vs-critical-shell>:root{--max:1200px;--nav-height:78px;--bg:#07080f;--bg-soft:#0c0e18;--text:#eef2ff;--muted:#a8b4d0;--dim:#6e7fb0;--gold:#ffc400;--page-bg:#07080f;--header-bg:rgba(7,8,16,.90);--header-border:rgba(255,255,255,.05);--radius:24px;--shadow:0 18px 60px rgba(0,0,0,.55);color-scheme:dark}*{box-sizing:border-box}body{margin:0;position:relative;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;background:var(--page-bg);line-height:1.55;overflow-x:clip}a{color:inherit;text-decoration:none}.skip-link{position:absolute;top:-100%;left:1rem;z-index:9999}.skip-link:focus{top:0}img,video{max-width:100%;display:block}h1,h2,h3,h4,h5,h6{margin:0;line-height:1.1}h1,h2{font-family:Georgia,\"Times New Roman\",serif;letter-spacing:0}p{margin:0}.container{width:min(calc(100% - 2rem),var(--max));margin:0 auto}.site-header{position:sticky;top:0;z-index:100;border-bottom:1px solid var(--header-border);background:var(--header-bg)}.nav{min-height:var(--nav-height);display:flex;align-items:center;justify-content:space-between;gap:1rem}.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0;min-height:44px}.brand img{width:44px;height:44px;object-fit:contain}.brand>span{display:block;line-height:1.15;font-size:1rem;whi"
             },
             "edge": {
               "status": 403,
-              "ms": 89,
+              "ms": 105,
               "shape": "challenged",
               "note": "edge-challenged (informational; real browsers pass)"
             }
@@ -103,17 +103,17 @@
           {
             "route": "/games/",
             "status": 200,
-            "ms": 50,
+            "ms": 64,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 50,
+              "ms": 64,
               "ok": true,
               "body": "<!DOCTYPE html>\n<html lang=\"en\" class=\"dark-mode\" data-theme=\"dark\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <link rel=\"preconnect\" href=\"https://fjnpzjjyhnpmunfoycrp.supabase.co\" />\n  <link rel=\"dns-prefetch\" href=\"https://js.stripe.com\" />\n  <link rel=\"dns-prefetch\" href=\"https://fjnpzjjyhnpmunfoycrp.supabase.co\" />\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <meta name=\"supabase-key\" content=\"sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij\" />\n  <title>Games — All VaultSpark Studios Games | VaultSpark Studios</title>\n  <meta name=\"description\" content=\"Play Call of Doodie and Franchise Architect free in your browser, plus explore Solara, VaultFront, MindFrame, The Exodus and more from VaultSpark Studios.\" />\n  <meta name=\"keywords\" content=\"VaultSpark games, Call of Doodie, Gridiron GM, browser games, sports simulation, football management game, roguelite RPG, card game, VaultFront strategy game\" />\n  <link rel=\"canonical\" href=\"https://vaultsparkstudios.com/games/\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta property=\"og:title\" content=\"VaultSpark Games | Every World We've Forged\" />\n  <meta property=\"og:description\" content=\"Browse every VaultSpark Studios game — live, in development, and sealed. Sports sim, action comedy, strategy, roguelite RPG and card games.\" />\n  <meta property=\"og:type\" content=\"website\" />\n  <meta property=\"og:url\" content=\"https://vaultsparkstudios.com/games/\" />\n  <meta property=\"og:image\" content=\"https://vaultsparkstudios.com/assets/og-games.png\" />\n  <meta name=\"twitter:card\" content=\"summary_large_image\" />\n  <meta name=\"twitter:site\" content=\"@VaultSparkStudios\" />\n  <meta name=\"twitter:title\" content=\"VaultSpark Games | Every World We've Forged\" />\n  <meta name=\"twitter:image\" content=\"https://vaultsparkstudios.com/assets/og-games.png\" />\n  <link rel=\"icon\" type=\"image/png\" href=\"../assets/icon-32.png\" />\n  <link rel=\"apple-touch-icon\" href=\"../assets/icon-256.png\" />\n  <link rel=\"manifest\" href=\"/manifest.json\" />\n  <style data-vs-critical-shell>:root{--max:1200px;--nav-height:78px;--bg:#07080f;--bg-soft:#0c0e18;--text:#eef2ff;--muted:#a8b4d0;--dim:#6e7fb0;--gold:#ffc400;--page-bg:#07080f;--header-bg:rgba(7,8,16,.90);--header-border:rgba(255,255,255,.05);--radius:24px;--shadow:0 18px 60px rgba(0,0,0,.55);color-scheme:dark}*{box-sizing:border-box}body{margin:0;position:relative;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;background:var(--page-bg);line-height:1.55;overflow-x:clip}a{color:inherit;text-decoration:none}.skip-link{position:absolute;top:-100%;left:1rem;z-index:9999}.skip-link:focus{top:0}img,video{max-width:100%;display:block}h1,h2,h3,h4,h5,h6{margin:0;line-height:1.1}h1,h2{font-family:Georgia,\"Times New Roman\",serif;letter-spacing:0}p{margin:0}.container{width:min(calc(100% - 2rem),var(--max));margin:0 auto}.site-header{position:sticky;top:0;z-index:100;border-bottom:1px solid var(--header-border);background:var(--header-bg)}.nav{min-height:var(--nav-height);display:flex;align-items:center;justify-content:space-between;gap:1rem}.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0;min-height:44px}.brand img{width:44px;height:44px;object-fit:contain}.brand>span{display:block;line-height:1.15;font-size:1rem;white-space:nowrap}.brand small{display:block;color:var(--muted);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;margin-top:.16rem}.nav-center{display:flex;align-items:center;gap:.15rem;flex:1;justify-content:center}.nav-center a{color:var(--muted);font-size:.91rem;font-weight:500;padding:.44rem .8rem;border-radius:8px;white-space:nowrap}.nav-item{position:relative;display:flex;align-items:center}.nav-item>a{display:flex;align-items:center;gap:.3rem}.nav-dropdown{display:none}.mobile-nav-footer{display:none}.nav-icon-link{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;color:var(--muted);flex-shrink:0}.nav-signin{color:var(--muted);font-size:.88rem;font-weig"
             },
             "edge": {
               "status": 403,
-              "ms": 38,
+              "ms": 68,
               "shape": "challenged",
               "note": "edge-challenged (informational; real browsers pass)"
             }
@@ -121,17 +121,17 @@
           {
             "route": "/vault-member/",
             "status": 200,
-            "ms": 66,
+            "ms": 68,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 66,
+              "ms": 68,
               "ok": true,
               "body": "<!DOCTYPE html>\n<html lang=\"en\" class=\"dark-mode\" data-theme=\"dark\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <link rel=\"preconnect\" href=\"https://fjnpzjjyhnpmunfoycrp.supabase.co\" />\n  <link rel=\"dns-prefetch\" href=\"https://js.stripe.com\" />\n  <link rel=\"preconnect\" href=\"https://cdn.jsdelivr.net\" crossorigin />\n  <link rel=\"dns-prefetch\" href=\"https://fjnpzjjyhnpmunfoycrp.supabase.co\" />\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>Vault Member Portal | VaultSpark Studios Account</title>\n  <meta name=\"description\" content=\"Create your free VaultSpark Studios account. Track progress across every VaultSpark game, earn Vault Rank, and get early access drops.\" />\n  <link rel=\"canonical\" href=\"https://vaultsparkstudios.com/vault-member/\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta property=\"og:title\" content=\"Vault Member Portal | VaultSpark Studios\" />\n  <meta property=\"og:description\" content=\"Join VaultSpark Studios. Track your rank across every game, unlock exclusive lore, and get early access.\" />\n  <meta property=\"og:type\" content=\"website\" />\n  <meta property=\"og:url\" content=\"https://vaultsparkstudios.com/vault-member/\" />\n  <meta property=\"og:image\" content=\"https://vaultsparkstudios.com/assets/og-vault-member.png\" />\n  <meta name=\"twitter:card\" content=\"summary_large_image\" />\n  <meta name=\"twitter:site\" content=\"@VaultSparkStudios\" />\n  <meta name=\"robots\" content=\"noindex, follow\" />\n  <link rel=\"icon\" type=\"image/png\" href=\"../assets/icon-32.png\" />\n  <link rel=\"apple-touch-icon\" href=\"../assets/icon-256.png\" />\n  <link rel=\"manifest\" href=\"/manifest.json\" />\n  <style data-vs-critical-shell>:root{--max:1200px;--nav-height:78px;--bg:#07080f;--bg-soft:#0c0e18;--text:#eef2ff;--muted:#a8b4d0;--dim:#6e7fb0;--gold:#ffc400;--page-bg:#07080f;--header-bg:rgba(7,8,16,.90);--header-border:rgba(255,255,255,.05);--radius:24px;--shadow:0 18px 60px rgba(0,0,0,.55);color-scheme:dark}*{box-sizing:border-box}body{margin:0;position:relative;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;background:var(--page-bg);line-height:1.55;overflow-x:clip}a{color:inherit;text-decoration:none}.skip-link{position:absolute;top:-100%;left:1rem;z-index:9999}.skip-link:focus{top:0}img,video{max-width:100%;display:block}h1,h2,h3,h4,h5,h6{margin:0;line-height:1.1}h1,h2{font-family:Georgia,\"Times New Roman\",serif;letter-spacing:0}p{margin:0}.container{width:min(calc(100% - 2rem),var(--max));margin:0 auto}.site-header{position:sticky;top:0;z-index:100;border-bottom:1px solid var(--header-border);background:var(--header-bg)}.nav{min-height:var(--nav-height);display:flex;align-items:center;justify-content:space-between;gap:1rem}.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0;min-height:44px}.brand img{width:44px;height:44px;object-fit:contain}.brand>span{display:block;line-height:1.15;font-size:1rem;white-space:nowrap}.brand small{display:block;color:var(--muted);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;margin-top:.16rem}.nav-center{display:flex;align-items:center;gap:.15rem;flex:1;justify-content:center}.nav-center a{color:var(--muted);font-size:.91rem;font-weight:500;padding:.44rem .8rem;border-radius:8px;white-space:nowrap}.nav-item{position:relative;display:flex;align-items:center}.nav-item>a{display:flex;align-items:center;gap:.3rem}.nav-dropdown{display:none}.mobile-nav-footer{display:none}.nav-icon-link{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;color:var(--muted);flex-shrink:0}.nav-signin{color:var(--muted);font-size:.88rem;font-weight:600;padding:.44rem .8rem;border-radius:8px;white-space:nowrap}.nav-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0;justify-content:flex-end;min-width:292px}.nav-right::after{content:\"\";display:block;flex:0 0 92px;height:34px;order:20}.nav-right:has(.theme-picker)::after{display:none}.theme-picker{position:relative;flex:0 0 92px}.theme-picker-btn{display:flex;align-"
             },
             "edge": {
               "status": 403,
-              "ms": 32,
+              "ms": 47,
               "shape": "challenged",
               "note": "edge-challenged (informational; real browsers pass)"
             }
@@ -139,17 +139,17 @@
           {
             "route": "/membership/",
             "status": 200,
-            "ms": 57,
+            "ms": 36,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 57,
+              "ms": 36,
               "ok": true,
               "body": "<!DOCTYPE html>\n<html lang=\"en\" class=\"dark-mode\" data-theme=\"dark\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <link rel=\"preconnect\" href=\"https://fjnpzjjyhnpmunfoycrp.supabase.co\" />\n  <link rel=\"dns-prefetch\" href=\"https://js.stripe.com\" />\n  <link rel=\"dns-prefetch\" href=\"https://fjnpzjjyhnpmunfoycrp.supabase.co\" />\n\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>Vault Membership — VaultSpark Studios</title>\n  <meta name=\"description\" content=\"Vault Membership is your identity inside VaultSpark Studios. One account, every world we build. Three tiers: Vault Member (free), VaultSparked ($4.99 a month) and VaultSparked Eternal ($29.99 a month). Every game is free to play.\" />\n  <link rel=\"canonical\" href=\"https://vaultsparkstudios.com/membership/\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta name=\"robots\" content=\"index, follow\" />\n\n  <meta property=\"og:title\" content=\"Vault Membership | VaultSpark Studios\" />\n  <meta property=\"og:description\" content=\"One account. Every world we build. Every game free to play — go deeper with VaultSparked or VaultSparked Eternal.\" />\n  <meta property=\"og:type\" content=\"website\" />\n  <meta property=\"og:url\" content=\"https://vaultsparkstudios.com/membership/\" />\n  <meta property=\"og:image\" content=\"https://vaultsparkstudios.com/assets/og/og-membership.png\" />\n\n  <meta name=\"twitter:card\" content=\"summary_large_image\" />\n  <meta name=\"twitter:title\" content=\"Vault Membership | VaultSpark Studios\" />\n  <meta name=\"twitter:description\" content=\"One account. Every world we build. Every game free to play — go deeper with VaultSparked or VaultSparked Eternal.\" />\n\n  <link rel=\"icon\" type=\"image/png\" href=\"../assets/icon-32.png\" />\n  <link rel=\"apple-touch-icon\" href=\"../assets/icon-256.png\" />\n  <link rel=\"manifest\" href=\"/manifest.json\" />\n  <style data-vs-critical-shell>:root{--max:1200px;--nav-height:78px;--bg:#07080f;--bg-soft:#0c0e18;--text:#eef2ff;--muted:#a8b4d0;--dim:#6e7fb0;--gold:#ffc400;--page-bg:#07080f;--header-bg:rgba(7,8,16,.90);--header-border:rgba(255,255,255,.05);--radius:24px;--shadow:0 18px 60px rgba(0,0,0,.55);color-scheme:dark}*{box-sizing:border-box}body{margin:0;position:relative;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;background:var(--page-bg);line-height:1.55;overflow-x:clip}a{color:inherit;text-decoration:none}.skip-link{position:absolute;top:-100%;left:1rem;z-index:9999}.skip-link:focus{top:0}img,video{max-width:100%;display:block}h1,h2,h3,h4,h5,h6{margin:0;line-height:1.1}h1,h2{font-family:Georgia,\"Times New Roman\",serif;letter-spacing:0}p{margin:0}.container{width:min(calc(100% - 2rem),var(--max));margin:0 auto}.site-header{position:sticky;top:0;z-index:100;border-bottom:1px solid var(--header-border);background:var(--header-bg)}.nav{min-height:var(--nav-height);display:flex;align-items:center;justify-content:space-between;gap:1rem}.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0;min-height:44px}.brand img{width:44px;height:44px;object-fit:contain}.brand>span{display:block;line-height:1.15;font-size:1rem;white-space:nowrap}.brand small{display:block;color:var(--muted);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;margin-top:.16rem}.nav-center{display:flex;align-items:center;gap:.15rem;flex:1;justify-content:center}.nav-center a{color:var(--muted);font-size:.91rem;font-weight:500;padding:.44rem .8rem;border-radius:8px;white-space:nowrap}.nav-item{position:relative;display:flex;align-items:center}.nav-item>a{display:flex;align-items:center;gap:.3rem}.nav-dropdown{display:none}.mobile-nav-footer{display:none}.nav-icon-link{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;color:var(--muted);flex-shrink:0}.nav-signin{color:var(--muted);font-size:.88rem;font-weight:600;padding:.44rem .8rem;border-radius:8px;white-space:nowrap}.nav-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0;justify-content:flex-end;min-width:292px}.nav-right::"
             },
             "edge": {
               "status": 403,
-              "ms": 33,
+              "ms": 34,
               "shape": "challenged",
               "note": "edge-challenged (informational; real browsers pass)"
             }
@@ -157,17 +157,17 @@
           {
             "route": "/status/",
             "status": 200,
-            "ms": 77,
+            "ms": 35,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 77,
+              "ms": 35,
               "ok": true,
               "body": "<!DOCTYPE html>\n<html lang=\"en\" class=\"dark-mode\" data-theme=\"dark\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <link rel=\"preconnect\" href=\"https://fjnpzjjyhnpmunfoycrp.supabase.co\" />\n  <link rel=\"dns-prefetch\" href=\"https://js.stripe.com\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>System Status | VaultSpark Studios</title>\n  <meta name=\"description\" content=\"Real-time status of VaultSpark Studios services — Vault, games, and infrastructure.\" />\n  <link rel=\"canonical\" href=\"https://vaultsparkstudios.com/status/\" />\n  <link rel=\"alternate\" type=\"application/json\" href=\"/api/status-proof.json\" title=\"VaultSpark Studios live proof manifest\" />\n  <meta name=\"robots\" content=\"index, follow\" />\n  <meta property=\"og:title\" content=\"Studio Status | VaultSpark Studios\" />\n  <meta property=\"og:description\" content=\"Real-time status of VaultSpark Studios services — Vault, games, and infrastructure.\" />\n  <meta property=\"og:type\" content=\"website\" />\n  <meta property=\"og:url\" content=\"https://vaultsparkstudios.com/status/\" />\n  <meta property=\"og:image\" content=\"https://vaultsparkstudios.com/assets/og/og-status.png\" />\n  <meta name=\"twitter:card\" content=\"summary_large_image\" />\n  <meta name=\"twitter:site\" content=\"@VaultSparkStudios\" />\n  <meta name=\"twitter:title\" content=\"Studio Status | VaultSpark Studios\" />\n  <meta name=\"twitter:description\" content=\"Real-time status of VaultSpark Studios services — Vault, games, and infrastructure.\" />\n  <meta name=\"twitter:image\" content=\"https://vaultsparkstudios.com/assets/og/og-status.png\" />\n  <link rel=\"icon\" type=\"image/png\" href=\"/assets/icon-32.png\" />\n  <style data-vs-critical-shell>:root{--max:1200px;--nav-height:78px;--bg:#07080f;--bg-soft:#0c0e18;--text:#eef2ff;--muted:#a8b4d0;--dim:#6e7fb0;--gold:#ffc400;--page-bg:#07080f;--header-bg:rgba(7,8,16,.90);--header-border:rgba(255,255,255,.05);--radius:24px;--shadow:0 18px 60px rgba(0,0,0,.55);color-scheme:dark}*{box-sizing:border-box}body{margin:0;position:relative;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;background:var(--page-bg);line-height:1.55;overflow-x:clip}a{color:inherit;text-decoration:none}.skip-link{position:absolute;top:-100%;left:1rem;z-index:9999}.skip-link:focus{top:0}img,video{max-width:100%;display:block}h1,h2,h3,h4,h5,h6{margin:0;line-height:1.1}h1,h2{font-family:Georgia,\"Times New Roman\",serif;letter-spacing:0}p{margin:0}.container{width:min(calc(100% - 2rem),var(--max));margin:0 auto}.site-header{position:sticky;top:0;z-index:100;border-bottom:1px solid var(--header-border);background:var(--header-bg)}.nav{min-height:var(--nav-height);display:flex;align-items:center;justify-content:space-between;gap:1rem}.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0;min-height:44px}.brand img{width:44px;height:44px;object-fit:contain}.brand>span{display:block;line-height:1.15;font-size:1rem;white-space:nowrap}.brand small{display:block;color:var(--muted);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;margin-top:.16rem}.nav-center{display:flex;align-items:center;gap:.15rem;flex:1;justify-content:center}.nav-center a{color:var(--muted);font-size:.91rem;font-weight:500;padding:.44rem .8rem;border-radius:8px;white-space:nowrap}.nav-item{position:relative;display:flex;align-items:center}.nav-item>a{display:flex;align-items:center;gap:.3rem}.nav-dropdown{display:none}.mobile-nav-footer{display:none}.nav-icon-link{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;color:var(--muted);flex-shrink:0}.nav-signin{color:var(--muted);font-size:.88rem;font-weight:600;padding:.44rem .8rem;border-radius:8px;white-space:nowrap}.nav-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0;justify-content:flex-end;min-width:292px}.nav-right::after{content:\"\";display:block;flex:0 0 92px;height:34px;order:20}.nav-right:has(.theme-picker)::after{display:none}.theme-picker{position:relative;flex:0 0 92px}.theme-picker-btn{display:"
             },
             "edge": {
               "status": 403,
-              "ms": 38,
+              "ms": 44,
               "shape": "challenged",
               "note": "edge-challenged (informational; real browsers pass)"
             }
@@ -176,17 +176,17 @@
         "note": "Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; a per-route `edge.shape` of `challenged`/`unreachable` is informational only. A `served` shape confirms real content; an `error` shape (genuine 5xx, not a challenge) while content + liveness are healthy is the one apex-HTML failure the probe now pages on (S179 shape). Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path). S275: `workerIngest` (OPTIONS /v/rum expecting 204) verifies the ROUTE worker is the real build — a 405 means requests fall through to Pages, i.e. a wrong/stale worker was deployed (the 07-03 clobber that silently killed telemetry ingest for 9 days). Counts as edge-degraded. S320: `rumIngestPost` (POST /v/rum expecting 202) exercises the REAL ingest method, because the OPTIONS preflight above answers 204 unconditionally and stayed green throughout an outage in which POST returned 500 — it sends `synthetic: true` so the worker validates and replies without writing a row, and requires that flag echoed back so an older worker build cannot pass. `login` (GET /login) exercises the auth entry point, which no probe touched until production sign-in was found 500ing by accident; a named 503 `auth_store_unavailable` is an honest self-restoring degradation, while a 500/1101 crash is our own fault and is judged `down`.",
         "rollup": {
           "checks": 1488,
-          "upPct": 76.9,
-          "fullStackPct": 76.9,
-          "fullStackObservedChecks": 359,
-          "unobservableChecks": 1129,
+          "upPct": 75.1,
+          "fullStackPct": 75.1,
+          "fullStackObservedChecks": 334,
+          "unobservableChecks": 1154,
           "unresolvedLegacyChecks": 83,
           "originContentPct": 100,
           "originContentChecks": 1488,
-          "edgeLivenessPct": 77.2,
-          "edgeLivenessChecks": 359,
-          "workerIngestPct": 76.9,
-          "workerIngestChecks": 359,
+          "edgeLivenessPct": 75.4,
+          "edgeLivenessChecks": 334,
+          "workerIngestPct": 75.1,
+          "workerIngestChecks": 334,
           "lastIncidentAt": "2026-09-10T22:34:49.204Z",
           "lastIncidentState": "edge-degraded"
         }
@@ -196,7 +196,7 @@
       "present": true,
       "source": "/api/worker-route-provenance.json",
       "generatedAt": "2026-10-18T17:26:13.584Z",
-      "freshnessSeconds": 987117,
+      "freshnessSeconds": 1075519,
       "staleAfterH": 6,
       "stale": true,
       "data": {
@@ -314,7 +314,7 @@
           }
         ],
         "buildVantage": {
-          "generatedAt": "2026-10-30T03:38:10.568Z",
+          "generatedAt": "2026-10-31T04:11:31.808Z",
           "observedOrigin": "https://vaultspark-security-headers-staging.founder-d73.workers.dev",
           "attests": "build",
           "sourceSha256": "977015c38c170af9d4a0de418a9c9766015d77973b967497ece0a69a52824c44",
@@ -330,14 +330,14 @@
     "deploy-currency": {
       "present": true,
       "source": "/api/deploy-currency.json",
-      "generatedAt": "2026-10-30T03:38:09.132Z",
+      "generatedAt": "2026-10-31T04:11:30.546Z",
       "freshnessSeconds": 2,
       "staleAfterH": 6,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
         "generatedBy": "scripts/build-deploy-currency.mjs",
-        "generatedAt": "2026-10-30T03:38:09.132Z",
+        "generatedAt": "2026-10-31T04:11:30.546Z",
         "publicSafe": true,
         "privacy": {
           "responseBodiesRecorded": false,
@@ -350,18 +350,18 @@
           ]
         },
         "state": "content-current",
-        "observedAt": "2026-10-30T03:38:09.132Z",
+        "observedAt": "2026-10-31T04:11:30.546Z",
         "observedOrigin": "multi-vantage-quorum",
-        "deployedSha": "a35130aa46dbf52c7e4668b18ae5cfda8ab50b51",
-        "deployedShaShort": "a35130aa46db",
-        "repoTipShaShort": "845c5ed46003",
-        "commitsBehind": 11,
-        "deployedCommitAt": "2026-10-29T22:18:57.000Z",
-        "ageHours": 4.9,
+        "deployedSha": "81654c0ae4230275b550c86b7acccf60e429f240",
+        "deployedShaShort": "81654c0ae423",
+        "repoTipShaShort": "835503164f88",
+        "commitsBehind": 18,
+        "deployedCommitAt": "2026-10-31T01:05:38.000Z",
+        "ageHours": 2.5,
         "undeployedContentCommits": 1,
-        "oldestUndeployedContentAt": "2026-10-30T00:52:23Z",
-        "contentLagHours": 2.8,
-        "ageDays": 0.2,
+        "oldestUndeployedContentAt": "2026-10-31T01:38:34Z",
+        "contentLagHours": 2.5,
+        "ageDays": 0.1,
         "thresholds": {
           "warnHours": 12,
           "blockHours": 48,
@@ -381,15 +381,15 @@
           "state": "agreed",
           "required": 2,
           "agreementCount": 2,
-          "observedAt": "2026-10-30T03:38:09.133Z",
-          "agreedShaShort": "a35130aa46db",
-          "agreedSha256": "f9994c43776c460db9e1f59d12aa9987779470e6a4512c1a13813e94f1935bda",
+          "observedAt": "2026-10-31T04:11:30.547Z",
+          "agreedShaShort": "81654c0ae423",
+          "agreedSha256": "8ae3bde4435f5eb72936169db4583d2cb7547f739e9a1b1672d5c6f9c315e5dc",
           "evidence": [
             {
               "id": "routed-apex",
               "evidenceClass": "routed-http",
               "state": "challenged",
-              "observedAt": "2026-10-30T03:38:09.133Z",
+              "observedAt": "2026-10-31T04:11:30.547Z",
               "shaShort": null,
               "sha256": null,
               "httpStatus": 403,
@@ -403,26 +403,26 @@
               "id": "provider-origin",
               "evidenceClass": "provider-origin-http",
               "state": "observed",
-              "observedAt": "2026-10-30T03:38:09.167Z",
-              "shaShort": "0242fc75dd00",
-              "sha256": "df353770c0ab3021ecc3f8247ec7f79ca314b9aa7488211ea9f15515cb0996c0",
+              "observedAt": "2026-10-31T04:11:30.579Z",
+              "shaShort": "e4234a241941",
+              "sha256": "d072919cecb74753422b116cf124fc2cadac7bb56c2f46c325f28233cc01fb7f",
               "httpStatus": 200,
               "reason": null,
               "evidenceIdSha256": null,
-              "contentLaneHeadShort": "a35130aa46db",
-              "contentLaneHeadSha256": "f9994c43776c460db9e1f59d12aa9987779470e6a4512c1a13813e94f1935bda",
-              "contentLanePathSetSha256": "529459cd00416520d9f2466c8490d5ff6fccfb2d61204195dc064368e4a073e6"
+              "contentLaneHeadShort": null,
+              "contentLaneHeadSha256": null,
+              "contentLanePathSetSha256": null
             },
             {
               "id": "cloudflare-pages-api",
               "evidenceClass": "provider-metadata",
               "state": "observed",
-              "observedAt": "2026-10-30T03:38:09.169Z",
-              "shaShort": "a35130aa46db",
-              "sha256": "f9994c43776c460db9e1f59d12aa9987779470e6a4512c1a13813e94f1935bda",
+              "observedAt": "2026-10-31T04:11:30.580Z",
+              "shaShort": "81654c0ae423",
+              "sha256": "8ae3bde4435f5eb72936169db4583d2cb7547f739e9a1b1672d5c6f9c315e5dc",
               "httpStatus": 200,
               "reason": null,
-              "evidenceIdSha256": "251fb59c9d468b38823cd636512476ce72dc083f25a9f451f7fe5b924a21fe65",
+              "evidenceIdSha256": "31521ae402888065aa9b9fdd485288a66aa4d6d630866e96dc0f87b27d961ec9",
               "contentLaneHeadShort": null,
               "contentLaneHeadSha256": null,
               "contentLanePathSetSha256": null
@@ -431,12 +431,12 @@
               "id": "github-deploy-step",
               "evidenceClass": "workflow-attestation",
               "state": "observed",
-              "observedAt": "2026-10-30T03:38:09.171Z",
-              "shaShort": "a35130aa46db",
-              "sha256": "f9994c43776c460db9e1f59d12aa9987779470e6a4512c1a13813e94f1935bda",
+              "observedAt": "2026-10-31T04:11:30.582Z",
+              "shaShort": "81654c0ae423",
+              "sha256": "8ae3bde4435f5eb72936169db4583d2cb7547f739e9a1b1672d5c6f9c315e5dc",
               "httpStatus": 200,
               "reason": null,
-              "evidenceIdSha256": "54d0f1210ffe1a21613fb27ddfc9576f9d835ba3abe57d7ee009055e9ad3c524",
+              "evidenceIdSha256": "907665a4d42bc07fdc3e6679a84fe1f3a695b485032cf74735e8726c40f2bafc",
               "contentLaneHeadShort": null,
               "contentLaneHeadSha256": null,
               "contentLanePathSetSha256": null
@@ -444,13 +444,13 @@
           ],
           "disagreements": [
             {
-              "shaShort": "a35130aa46db",
-              "sha256": "f9994c43776c460db9e1f59d12aa9987779470e6a4512c1a13813e94f1935bda",
+              "shaShort": "81654c0ae423",
+              "sha256": "8ae3bde4435f5eb72936169db4583d2cb7547f739e9a1b1672d5c6f9c315e5dc",
               "count": 2
             },
             {
-              "shaShort": "0242fc75dd00",
-              "sha256": "df353770c0ab3021ecc3f8247ec7f79ca314b9aa7488211ea9f15515cb0996c0",
+              "shaShort": "e4234a241941",
+              "sha256": "d072919cecb74753422b116cf124fc2cadac7bb56c2f46c325f28233cc01fb7f",
               "count": 1
             }
           ]
@@ -458,7 +458,7 @@
         "shellParity": {
           "state": "matched",
           "route": "/",
-          "observedAt": "2026-10-30T03:38:09.132Z",
+          "observedAt": "2026-10-31T04:11:30.546Z",
           "expectedFrom": "fdb7f729a7f8ab525b82c6bb04867a2665ef0517221a86dbbc9233edde97a584",
           "supersededBy": null,
           "ageHours": 0,
@@ -525,8 +525,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-10-30T00:52:05.618Z",
-      "freshnessSeconds": 9965,
+      "generatedAt": "2026-10-31T00:12:33.408Z",
+      "freshnessSeconds": 14339,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -541,12 +541,12 @@
           "boundary": "2026-06-05",
           "label": "S173 critical path + S175 origin migration to CF Pages",
           "verdict": "improved",
-          "lcpDeltaPct": -71.2,
+          "lcpDeltaPct": -71.7,
           "confidence": "high",
           "preSamples": 38,
-          "postSamples": 107,
+          "postSamples": 112,
           "preLcpP75": 9489,
-          "postLcpP75": 2736
+          "postLcpP75": 2686
         },
         "confirmed": [
           {
@@ -554,51 +554,51 @@
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "improved",
-            "lcpDeltaPct": -71.2,
+            "lcpDeltaPct": -71.7,
             "confidence": "high",
             "preSamples": 38,
-            "postSamples": 107,
+            "postSamples": 112,
             "preLcpP75": 9489,
-            "postLcpP75": 2736
+            "postLcpP75": 2686
           },
           {
             "route": "/games/",
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "improved",
-            "lcpDeltaPct": -69.5,
+            "lcpDeltaPct": -62.9,
             "confidence": "low",
             "preSamples": 8,
-            "postSamples": 33,
+            "postSamples": 39,
             "preLcpP75": 2000,
-            "postLcpP75": 610
+            "postLcpP75": 741
           },
           {
             "route": "/games/gridiron-gm/",
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "regressed",
-            "lcpDeltaPct": 12.7,
+            "lcpDeltaPct": 10.8,
             "confidence": "low",
             "preSamples": 5,
-            "postSamples": 67,
+            "postSamples": 61,
             "preLcpP75": 1294,
-            "postLcpP75": 1458
+            "postLcpP75": 1434
           }
         ],
-        "generatedAt": "2026-10-30T00:52:05.618Z"
+        "generatedAt": "2026-10-31T00:12:33.408Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-10-30T00:52:21.101Z",
-      "freshnessSeconds": 9950,
+      "generatedAt": "2026-10-31T01:38:29.129Z",
+      "freshnessSeconds": 9183,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-10-30T00:52:21.101Z",
+        "generatedAt": "2026-10-31T01:38:29.129Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -626,30 +626,30 @@
     "ci-status": {
       "present": true,
       "source": "/api/ci-status.json",
-      "generatedAt": "2026-10-29T22:10:56.867Z",
-      "freshnessSeconds": 19634,
+      "generatedAt": "2026-10-31T01:49:07.563Z",
+      "freshnessSeconds": 8545,
       "staleAfterH": 96,
       "stale": false,
       "data": {
-        "generatedAt": "2026-10-29T22:10:56.867Z",
+        "generatedAt": "2026-10-31T01:49:07.563Z",
         "generatedBy": "scripts/build-ci-status-beacon.mjs",
         "allGreen": false,
-        "browserGatesGreen": false,
-        "verifiedBrowserHeadSha": null,
+        "browserGatesGreen": true,
+        "verifiedBrowserHeadSha": "d65be734d19e83eeef7a3cbbf3e933070e5e3840",
         "hasDeadCron": false,
         "hasScheduledUnknown": true,
         "hasScheduledStale": false,
         "scheduledCoverage": {
           "total": 16,
-          "observed": 5,
-          "healthy": 5,
-          "unknown": 11,
+          "observed": 3,
+          "healthy": 3,
+          "unknown": 13,
           "stale": 0,
           "dead": 0
         },
-        "terminalState": "failing",
+        "terminalState": "unknown",
         "knownTerminalBlockers": [],
-        "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
+        "summary": "CI gate status is unknown.",
         "deploymentReconciliation": {
           "state": "clear",
           "threshold": 2,
@@ -658,10 +658,10 @@
           "gradable": 20,
           "reconciled": 0,
           "reconciledPct": 0,
-          "lastStrandedAt": "2026-10-29T06:06:31.565Z",
+          "lastStrandedAt": "2026-10-30T21:19:31.294Z",
           "currentBehindStreak": 0,
-          "newestGradableAt": "2026-10-29T19:48:24.840Z",
-          "newestAgeHours": 2.4,
+          "newestGradableAt": "2026-10-31T00:06:45.627Z",
+          "newestAgeHours": 1.7,
           "maxAgeHours": 48,
           "stale": false,
           "strandedAlert": false
@@ -672,9 +672,9 @@
             "status": "success",
             "rawStatus": "completed",
             "conclusion": "success",
-            "updatedAt": "2026-10-29T22:08:55Z",
-            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/40961752229",
-            "headSha": "5e7d08c959a525224c8d1c4b672d1a9249208811",
+            "updatedAt": "2026-10-31T01:42:59Z",
+            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/41155761072",
+            "headSha": "d65be734d19e83eeef7a3cbbf3e933070e5e3840",
             "event": "push"
           },
           {
@@ -682,19 +682,19 @@
             "status": "success",
             "rawStatus": "completed",
             "conclusion": "success",
-            "updatedAt": "2026-10-29T21:57:21Z",
-            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/40961751958",
-            "headSha": "5e7d08c959a525224c8d1c4b672d1a9249208811",
+            "updatedAt": "2026-10-31T01:33:49Z",
+            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/41155761046",
+            "headSha": "d65be734d19e83eeef7a3cbbf3e933070e5e3840",
             "event": "push"
           },
           {
             "name": "Lighthouse CI",
-            "status": "failure",
+            "status": "success",
             "rawStatus": "completed",
-            "conclusion": "failure",
-            "updatedAt": "2026-10-29T22:01:57Z",
-            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/40961751885",
-            "headSha": "5e7d08c959a525224c8d1c4b672d1a9249208811",
+            "conclusion": "success",
+            "updatedAt": "2026-10-31T01:47:21Z",
+            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/41155761008",
+            "headSha": "d65be734d19e83eeef7a3cbbf3e933070e5e3840",
             "event": "push"
           },
           {
@@ -733,13 +733,15 @@
           },
           {
             "name": "The Desk Dispatch — Daily Digest",
-            "lastConclusion": "unknown",
-            "lastUpdatedAt": null,
-            "recentConclusions": [],
+            "lastConclusion": "success",
+            "lastUpdatedAt": "2026-10-30T23:34:36Z",
+            "recentConclusions": [
+              "success"
+            ],
             "dead": false,
             "streak": 0,
-            "state": "unknown",
-            "ageHours": null,
+            "state": "healthy",
+            "ageHours": 2.24,
             "staleAfterHours": 48
           },
           {
@@ -799,29 +801,26 @@
           },
           {
             "name": "The Desk — Scheduled Publish",
-            "lastConclusion": "success",
-            "lastUpdatedAt": "2026-10-29T18:24:35Z",
-            "recentConclusions": [
-              "success"
-            ],
+            "lastConclusion": "unknown",
+            "lastUpdatedAt": null,
+            "recentConclusions": [],
             "dead": false,
             "streak": 0,
-            "state": "healthy",
-            "ageHours": 3.77,
+            "state": "unknown",
+            "ageHours": null,
             "staleAfterHours": 48
           },
           {
             "name": "Cloudflare Pages Deploy",
             "lastConclusion": "success",
-            "lastUpdatedAt": "2026-10-29T18:45:30Z",
+            "lastUpdatedAt": "2026-10-31T00:50:42Z",
             "recentConclusions": [
-              "success",
               "success"
             ],
             "dead": false,
             "streak": 0,
             "state": "healthy",
-            "ageHours": 3.42,
+            "ageHours": 0.97,
             "staleAfterHours": 48
           },
           {
@@ -837,15 +836,13 @@
           },
           {
             "name": "Refresh Live Data",
-            "lastConclusion": "success",
-            "lastUpdatedAt": "2026-10-29T16:35:24Z",
-            "recentConclusions": [
-              "success"
-            ],
+            "lastConclusion": "unknown",
+            "lastUpdatedAt": null,
+            "recentConclusions": [],
             "dead": false,
             "streak": 0,
-            "state": "healthy",
-            "ageHours": 5.59,
+            "state": "unknown",
+            "ageHours": null,
             "staleAfterHours": 48
           },
           {
@@ -862,7 +859,7 @@
           {
             "name": "uptime-probe",
             "lastConclusion": "success",
-            "lastUpdatedAt": "2026-10-29T22:10:47Z",
+            "lastUpdatedAt": "2026-10-31T01:38:39Z",
             "recentConclusions": [
               "success",
               "success",
@@ -871,20 +868,18 @@
             "dead": false,
             "streak": 0,
             "state": "healthy",
-            "ageHours": 0,
+            "ageHours": 0.17,
             "staleAfterHours": 48
           },
           {
             "name": "Generate Vault Narrative",
-            "lastConclusion": "success",
-            "lastUpdatedAt": "2026-10-29T13:09:57Z",
-            "recentConclusions": [
-              "success"
-            ],
+            "lastConclusion": "unknown",
+            "lastUpdatedAt": null,
+            "recentConclusions": [],
             "dead": false,
             "streak": 0,
-            "state": "healthy",
-            "ageHours": 9.02,
+            "state": "unknown",
+            "ageHours": null,
             "staleAfterHours": 48
           },
           {
@@ -904,16 +899,16 @@
     "newsroom-run": {
       "present": true,
       "source": "/api/newsroom-run.json",
-      "generatedAt": "2026-10-29T22:10:56.867Z",
-      "freshnessSeconds": 19634,
+      "generatedAt": "2026-10-31T01:49:07.563Z",
+      "freshnessSeconds": 8545,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
         "generatedBy": "scripts/build-newsroom-run.mjs",
-        "generatedAt": "2026-10-29T22:10:56.867Z",
+        "generatedAt": "2026-10-31T01:49:07.563Z",
         "publicSafe": true,
-        "state": "observed",
+        "state": "abstained",
         "workflow": {
           "name": "The Desk — Scheduled Publish",
           "path": ".github/workflows/news-publish.yml",
@@ -924,18 +919,18 @@
             "22:07"
           ]
         },
-        "lastRunAt": "2026-10-29T18:24:35.000Z",
-        "lastConclusion": "success",
-        "lastSuccessfulStage": "scheduled-run-complete",
-        "latestEditionDate": "2026-10-29",
-        "nextExpectedRunAt": "2026-10-29T22:07:00.000Z",
+        "lastRunAt": null,
+        "lastConclusion": null,
+        "lastSuccessfulStage": null,
+        "latestEditionDate": "2026-10-30",
+        "nextExpectedRunAt": "2026-10-31T06:07:00.000Z",
         "rebuildEvidence": {
-          "feedItems": 170,
-          "corpusStories": 170,
-          "latestDayStories": 1,
+          "feedItems": 172,
+          "corpusStories": 172,
+          "latestDayStories": 2,
           "feedAndCorpusAgree": true
         },
-        "abstentionReason": null,
+        "abstentionReason": "The committed CI beacon has not observed a completed scheduled newsroom run; no partial stage is inferred.",
         "privacy": {
           "excludes": [
             "reader identifiers",
@@ -946,8 +941,8 @@
           "note": "This receipt reports run-level workflow evidence and public corpus counts only."
         },
         "sourceHashes": {
-          "ciStatusSha256": "ca8e801cc0b1810d9a81afc354ea92b4afdb9056c7bea9aa460205039076a57a",
-          "newsFeedSha256": "f65278ae5cace0a102ea7f0894a8af725dd2d10a34a7f6b9f4d1cde3f3e4a54d",
+          "ciStatusSha256": "0db10e453915c7387adc560986007c3e973610065790e0e602e7dcac71f9ec1b",
+          "newsFeedSha256": "331d10d2af4471daf63ff4e368e5abcc2e69960911e748765fa6aed1c00da79c",
           "workflowSha256": "251daca9138a0cda0346695b554bdd510e28a85e6d26ed9a0ebbd3dda5900a0c"
         }
       }
@@ -955,8 +950,8 @@
     "promotion-receipt": {
       "present": true,
       "source": "/api/promotion-receipt.json",
-      "generatedAt": "2026-10-29T19:48:24.840Z",
-      "freshnessSeconds": 28186,
+      "generatedAt": "2026-10-31T00:06:45.627Z",
+      "freshnessSeconds": 14687,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -965,19 +960,19 @@
         "publicSafe": true,
         "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
         "promoted": {
-          "sha": "87f147027f814be9ec78dd9960132f142945e178",
+          "sha": "4d9f618220400497437639730a46c314e16b5e76",
           "source": "api/build-sha.json"
         },
         "production": {
           "origin": "https://vaultsparkstudios-website.pages.dev",
-          "sha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+          "sha": "e4234a24194168e989c25a38012f11e85578ae39",
           "contentLaneHead": null,
           "reachable": true,
           "reconciliation": "ahead",
           "shellParity": {
             "state": "matched",
-            "observedAt": "2026-10-29T18:13:39.608Z",
-            "ageHours": 1.6,
+            "observedAt": "2026-10-31T00:06:32.747Z",
+            "ageHours": 0,
             "stale": false,
             "maxAgeHours": 12,
             "source": "api/deploy-currency.json → shellParity"
@@ -1052,18 +1047,18 @@
         "reconciled": false,
         "receiptState": "degraded",
         "findings": [
-          "production serves 94fe9ea3, newer than the recorded promoted 87f14702 (benign — a later rebuild moved on)",
+          "production serves e4234a24, newer than the recorded promoted 4d9f6182 (benign — a later rebuild moved on)",
           "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
         ],
-        "generatedAt": "2026-10-29T19:48:24.840Z",
+        "generatedAt": "2026-10-31T00:06:45.627Z",
         "history": {
           "window": 20,
           "gradable": 20,
           "reconciled": 0,
           "reconciledPct": 0,
-          "lastStrandedAt": "2026-10-29T06:06:31.565Z",
+          "lastStrandedAt": "2026-10-30T21:19:31.294Z",
           "currentBehindStreak": 0,
-          "newestGradableAt": "2026-10-29T19:48:24.840Z",
+          "newestGradableAt": "2026-10-31T00:06:45.627Z",
           "newestAgeHours": 0,
           "maxAgeHours": 48,
           "stale": false,
@@ -1075,7 +1070,7 @@
       "present": true,
       "source": "/api/site-health.json",
       "generatedAt": "2026-10-29T05:24:10.455Z",
-      "freshnessSeconds": 80041,
+      "freshnessSeconds": 168442,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -1102,25 +1097,23 @@
     "staging-health": {
       "present": true,
       "source": "/api/staging-health.json",
-      "generatedAt": "2026-10-30T03:38:09.054Z",
+      "generatedAt": "2026-10-31T04:11:30.478Z",
       "freshnessSeconds": 2,
       "staleAfterH": 168,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-10-30T03:38:09.054Z",
-        "candidateReady": false,
-        "candidateFindings": [
-          "staging-artifact-root-mismatch"
-        ],
-        "candidateBuildSha": "bc441b7a64b45cbeb953ad1d424f3c765cde582d",
-        "stagingBuildSha": "bc441b7a64b45cbeb953ad1d424f3c765cde582d",
+        "generatedAt": "2026-10-31T04:11:30.478Z",
+        "candidateReady": true,
+        "candidateFindings": [],
+        "candidateBuildSha": "4d9f618220400497437639730a46c314e16b5e76",
+        "stagingBuildSha": "4d9f618220400497437639730a46c314e16b5e76",
         "artifactManifest": {
-          "candidateRoot": "bd9c611e45ae93751eda31235b17ea03c776d7afc810d36d4e9172991bfd335a",
+          "candidateRoot": "db37f768f30f79ec50eec0441ccaa157f94a22c8d49cea7eb76b8add208acf98",
           "candidateLeafCount": 70,
-          "stagingRoot": "f68891c6767d54d889a53faf0d94c62cfcec1a47204d641ffb5efbcc9afbae5d",
+          "stagingRoot": "db37f768f30f79ec50eec0441ccaa157f94a22c8d49cea7eb76b8add208acf98",
           "stagingLeafCount": 70,
-          "matched": false
+          "matched": true
         },
         "generatedBy": "scripts/check-staging-parity.mjs",
         "publicSafe": true,
@@ -1130,7 +1123,7 @@
         "surfaceParity": {
           "state": "uncomparable",
           "productionRoutes": null,
-          "stagingRoutes": 310,
+          "stagingRoutes": 312,
           "missingOnStaging": [],
           "missingOnStagingCount": null,
           "aheadOnStaging": [],
@@ -1301,7 +1294,7 @@
       "present": true,
       "source": "/api/identity-migration-receipt.json",
       "generatedAt": "2026-08-26T01:25:14.581Z",
-      "freshnessSeconds": 5623976,
+      "freshnessSeconds": 5712378,
       "staleAfterH": 336,
       "stale": true,
       "data": {
@@ -1474,7 +1467,7 @@
       "present": true,
       "source": "/api/supabase-control-plane.json",
       "generatedAt": "2026-10-20T18:11:40.950Z",
-      "freshnessSeconds": 811590,
+      "freshnessSeconds": 899991,
       "staleAfterH": 168,
       "stale": true,
       "data": {
@@ -1548,13 +1541,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-10-30T03:38:10.767Z",
+      "generatedAt": "2026-10-31T04:11:31.987Z",
       "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-10-30T03:38:10.767Z",
+        "generatedAt": "2026-10-31T04:11:31.987Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\" (privacy). Rows under 20 samples are confidence:\"low\" — render those as \"insufficient samples\", not as a measurement. dataWindow reports when the underlying visits actually happened; readers must surface staleness rather than trusting generatedAt.",
@@ -1674,7 +1667,7 @@
           },
           {
             "country": "other",
-            "samples": 21,
+            "samples": 22,
             "lcpP75": 1284,
             "ttfbP75": 538,
             "confidence": "high",
@@ -1683,6 +1676,7 @@
               "BOM",
               "BRU",
               "BUD",
+              "DFW",
               "DME",
               "FCO",
               "FRA",
@@ -1703,7 +1697,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-09-10T00:00:00.000Z",
-      "freshnessSeconds": 4333091,
+      "freshnessSeconds": 4421492,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -2100,7 +2094,7 @@
       "present": true,
       "source": "/api/attention-pressure.json",
       "generatedAt": "2026-09-10T00:00:00.000Z",
-      "freshnessSeconds": 4333091,
+      "freshnessSeconds": 4421492,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -2130,13 +2124,13 @@
     "canonical-destination-reachability": {
       "present": true,
       "source": "/api/canonical-destination-reachability.json",
-      "generatedAt": "2026-10-30T00:52:10.095Z",
-      "freshnessSeconds": 9961,
+      "generatedAt": "2026-10-31T01:38:28.974Z",
+      "freshnessSeconds": 9183,
       "staleAfterH": 36,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-10-30T00:52:10.095Z",
+        "generatedAt": "2026-10-31T01:38:28.974Z",
         "generatedBy": "scripts/probe-canonical-destinations.mjs",
         "publicSafe": true,
         "source": {
@@ -2156,7 +2150,7 @@
           "passed": 18,
           "failed": 0,
           "unknown": 2,
-          "longestUnknownStreak": 521,
+          "longestUnknownStreak": 533,
           "neverKnownGood": 2
         },
         "results": [
@@ -2174,7 +2168,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2191,7 +2185,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2208,7 +2202,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2225,7 +2219,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2242,7 +2236,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2259,7 +2253,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2276,7 +2270,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2293,7 +2287,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2310,7 +2304,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2331,7 +2325,7 @@
                 "outcome": "unknown"
               }
             ],
-            "unknownStreak": 521,
+            "unknownStreak": 533,
             "lastKnownGoodAt": null,
             "lastKnownGoodAgeHours": null
           },
@@ -2349,7 +2343,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2366,7 +2360,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2383,7 +2377,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2400,7 +2394,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2417,7 +2411,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2438,7 +2432,7 @@
                 "outcome": "unknown"
               }
             ],
-            "unknownStreak": 484,
+            "unknownStreak": 496,
             "lastKnownGoodAt": null,
             "lastKnownGoodAgeHours": null
           },
@@ -2456,7 +2450,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2473,7 +2467,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2490,7 +2484,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2507,7 +2501,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-30T00:52:10.095Z",
+            "lastKnownGoodAt": "2026-10-31T01:38:28.974Z",
             "lastKnownGoodAgeHours": 0
           }
         ],
@@ -2517,14 +2511,14 @@
     "public-status": {
       "present": true,
       "source": "/api/public-status.json",
-      "generatedAt": "2026-10-30T00:00:00.000Z",
-      "freshnessSeconds": 13091,
+      "generatedAt": "2026-10-31T00:00:00.000Z",
+      "freshnessSeconds": 15092,
       "staleAfterH": 720,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
         "generatedBy": "scripts/build-public-status.mjs",
-        "generatedAt": "2026-10-30",
+        "generatedAt": "2026-10-31",
         "publicSafe": true,
         "source": "Derived from public feeds (public-intelligence + heartbeat + commit-map) until the Hub Worker /public-status endpoint is wired. Every value traces to a live source.",
         "studio": {
@@ -2533,9 +2527,9 @@
           "forge": 17,
           "vaulted": 5,
           "activeThisWeek": 1,
-          "lastArkBroadcastAt": "2026-10-29T21:54:54.000Z",
-          "ignisHeartbeatAt": "2026-10-29T20:27:49.286Z",
-          "lastShippedOn": "2026-10-29"
+          "lastArkBroadcastAt": "2026-10-31T01:31:24.000Z",
+          "ignisHeartbeatAt": "2026-10-30T21:52:13.044Z",
+          "lastShippedOn": "2026-10-31"
         },
         "edgeIntegrity": {
           "state": "matched",
@@ -2572,7 +2566,7 @@
           },
           {
             "label": "Last shipped",
-            "value": "on 2026-10-29"
+            "value": "on 2026-10-31"
           }
         ]
       }
@@ -2580,14 +2574,14 @@
     "security-posture": {
       "present": true,
       "source": "/api/security-posture.json",
-      "generatedAt": "2026-10-30T00:00:00.000Z",
-      "freshnessSeconds": 13091,
+      "generatedAt": "2026-10-31T00:00:00.000Z",
+      "freshnessSeconds": 15092,
       "staleAfterH": 720,
       "stale": false,
       "data": {
         "schemaVersion": "1.1",
         "generatedBy": "scripts/build-security-posture.mjs",
-        "generatedAt": "2026-10-30",
+        "generatedAt": "2026-10-31",
         "publicSafe": true,
         "posture": "active",
         "source": "Derived from live repo evidence at build time. Each control links the file or build gate that proves it; an unresolvable control downgrades to unverified rather than being asserted.",

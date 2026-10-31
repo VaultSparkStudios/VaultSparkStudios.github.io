@@ -1,0 +1,156 @@
+{
+  "date": "2026-10-31",
+  "overallPass": true,
+  "passing": 15,
+  "warning": 2,
+  "failing": 0,
+  "blockingFailing": 0,
+  "advisoryFailing": 0,
+  "total": 17,
+  "score": 88,
+  "checks": [
+    {
+      "id": "manifest",
+      "label": "Studio manifest",
+      "pass": true,
+      "detail": "STUDIO_MANIFEST valid",
+      "driftClass": "local-broken",
+      "blocking": false
+    },
+    {
+      "id": "validate",
+      "label": "Compliance validation",
+      "pass": true,
+      "warn": true,
+      "detail": "Compliance validation: 31 passed · 7 failed (0 self · 7 sibling-owned) · 0 skipped · 12 issue(s)",
+      "driftClass": "portfolio-outdated",
+      "blocking": false
+    },
+    {
+      "id": "canon",
+      "label": "Canon compliance",
+      "pass": true,
+      "detail": "all canons aligned",
+      "driftClass": "portfolio-outdated",
+      "blocking": false
+    },
+    {
+      "id": "compliance-velocity",
+      "label": "Compliance velocity",
+      "pass": true,
+      "warn": true,
+      "detail": "self 100% · portfolio 82% (12 sibling) → ▄▄▄▄▄▄▄▄",
+      "driftClass": "portfolio-outdated",
+      "blocking": false
+    },
+    {
+      "id": "sanitize",
+      "label": "Sanitization ratchet",
+      "pass": true,
+      "detail": "baseline holding",
+      "driftClass": "portfolio-outdated",
+      "blocking": false
+    },
+    {
+      "id": "launch",
+      "label": "Launch readiness (SPARKED)",
+      "pass": true,
+      "warn": true,
+      "detail": "self clear · 2 blocker(s) in sibling SPARKED projects",
+      "driftClass": "expected-external",
+      "blocking": false
+    },
+    {
+      "id": "feedback",
+      "label": "Feedback ledger score",
+      "pass": true,
+      "detail": "acceptance 89% · impl 100%",
+      "driftClass": "derived-stale",
+      "blocking": false
+    },
+    {
+      "id": "entropy",
+      "label": "Protocol entropy",
+      "pass": true,
+      "detail": "score: 0.000 (healthy)",
+      "driftClass": "local-broken",
+      "blocking": false
+    },
+    {
+      "id": "revenue",
+      "label": "Revenue signals freshness",
+      "pass": true,
+      "detail": "6d old ✓",
+      "driftClass": "derived-stale",
+      "blocking": false
+    },
+    {
+      "id": "sibling-locks",
+      "label": "Sibling session locks",
+      "pass": false,
+      "warn": true,
+      "detail": "5 stale / 5 total · oldest Solara 652.6h",
+      "driftClass": "derived-stale",
+      "blocking": false
+    },
+    {
+      "id": "ignis",
+      "label": "IGNIS freshness",
+      "pass": true,
+      "warn": false,
+      "detail": "1d ago (✓ fresh)",
+      "driftClass": "derived-stale",
+      "blocking": false
+    },
+    {
+      "id": "genome",
+      "label": "Protocol genome",
+      "pass": true,
+      "detail": "23/25 green",
+      "driftClass": "local-broken",
+      "blocking": false
+    },
+    {
+      "id": "prompt-ver",
+      "label": "Prompt version alignment",
+      "pass": true,
+      "detail": "v3.3 ✓ start · v3.3 ✓ closeout",
+      "driftClass": "local-broken",
+      "blocking": false
+    },
+    {
+      "id": "propagated-doc",
+      "label": "Propagated doc currency",
+      "pass": true,
+      "detail": "1 propagated doc(s) current",
+      "driftClass": "expected-external",
+      "blocking": false
+    },
+    {
+      "id": "sched-staleness",
+      "label": "Scheduled CI freshness",
+      "pass": false,
+      "warn": true,
+      "detail": "scheduled observation timed out; not evaluated",
+      "driftClass": "derived-stale",
+      "blocking": false
+    },
+    {
+      "id": "desk-model-servability",
+      "label": "Desk authoring models servable",
+      "pass": true,
+      "detail": "2/2 declared models servable",
+      "driftClass": "expected-external",
+      "blocking": false
+    },
+    {
+      "id": "deploy-currency-live",
+      "label": "Deploy currency · live (CANON-036)",
+      "pass": true,
+      "warn": true,
+      "detail": "promoted artifact matches repo (shell parity at the Pages origin — the apex Worker path is not covered) · 7 commit(s) behind of held non-content work — identity backlog unpromoted by design",
+      "driftClass": "local-broken",
+      "blocking": false
+    }
+  ]
+}

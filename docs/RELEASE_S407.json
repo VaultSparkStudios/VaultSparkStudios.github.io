@@ -1,0 +1,401 @@
+{
+  "session": 407,
+  "state": "complete",
+  "audit": "docs/AUDIT_2026-10-30.json",
+  "implementation": "docs/S407_implementation.json",
+  "authorization": "Founder explicitly authorizes normal direct main commit/push and full deployment.",
+  "acceptance": {
+    "source": {
+      "state": "passed",
+      "receipt": "docs/S407_source-acceptance.json",
+      "passed": 548,
+      "failed": 0,
+      "coverageComplete": true,
+      "sourceFingerprint": "30d1891a84264c34802834a6"
+    },
+    "staging": {
+      "state": "passed",
+      "receipt": "docs/S407_staging-deploy.json",
+      "receiptId": "6326d1271a851d416956e7a4",
+      "ceremony": "docs/S407_staging-ceremony.json",
+      "ceremonyPassed": 11,
+      "ceremonyTotal": 11,
+      "currentness": {
+        "receipt": "docs/S407_staging-currentness.json",
+        "candidate": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+        "criticalContracts": 70,
+        "rawCriticalLeafMatches": 63,
+        "transportStampSeparatelyVerified": true,
+        "metadataReceipt": "docs/S407_staging-metadata.json",
+        "exactMetadataFiles": 25
+      }
+    },
+    "exactRequiredHostedChecks": {
+      "state": "passed",
+      "receipt": "docs/S407_required-checks.json",
+      "candidate": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+      "checks": [
+        {
+          "workflow": ".github/workflows/e2e.yml",
+          "state": "passed",
+          "runId": 41136969770
+        },
+        {
+          "workflow": ".github/workflows/lighthouse.yml",
+          "state": "passed",
+          "runId": 41136980065
+        },
+        {
+          "workflow": ".github/workflows/accessibility.yml",
+          "state": "passed",
+          "runId": 41136987669
+        }
+      ]
+    },
+    "production": {
+      "state": "passed",
+      "candidate": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+      "runId": 41138429851,
+      "receipt": "docs/S407_production.json",
+      "kind": "normal-full-pages-deploy",
+      "providerVerified": true,
+      "buildStamps": 3,
+      "privatePillarRequests": 0,
+      "existingAccessWalls": 6
+    },
+    "completeServedReadback": {
+      "state": "passed",
+      "receipt": "docs/S407_served-parity.json",
+      "candidate": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+      "scope": "all-served",
+      "checked": 3714,
+      "identical": 3704,
+      "redirected": 10,
+      "differ": 0,
+      "unread": 0,
+      "coverageComplete": true
+    },
+    "remotePublication": {
+      "tagPublishedAt": "2026-10-30T22:16:06.984Z",
+      "main": "pending"
+    },
+    "publisherRestoration": {
+      "state": "pending",
+      "record": ".cache/S407-publisher-window.json",
+      "uptimeKeptActive": true
+    },
+    "mobile": {
+      "state": "passed",
+      "receipt": "docs/S407_mobile-acceptance.json",
+      "passed": 215,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "scaffold": [
+    {
+      "wave": 1,
+      "state": "complete",
+      "outcome": "fresh startup and audit"
+    },
+    {
+      "wave": 2,
+      "state": "complete",
+      "outcome": "L2 implementation and local acceptance"
+    },
+    {
+      "wave": 3,
+      "state": "in-progress",
+      "outcome": "canonical closeout, main publication and full production release"
+    }
+  ],
+  "limitations": [
+    "Seven existing private-fixture browser cases skipped; no positive authenticated acceptance claimed.",
+    "Historical optional visual-regression failures remain unclassified."
+  ],
+  "attempts": [
+    {
+      "kind": "premature-source-check",
+      "command": "run-build-check --help",
+      "state": "intentionally-stopped",
+      "accepted": false,
+      "reason": "Unsupported help flag started full verification before writeback/capture complete; no acceptance borrowed."
+    },
+    {
+      "kind": "native-closeout-source-attempt1",
+      "log": ".cache/logs/S407-closeout-autopilot.log",
+      "state": "intentionally-stopped",
+      "accepted": false,
+      "reason": "Read-only required mobile-runtime checker proved its receipt stale for the changed IGNIS source. Stopped live source pass to rerun actual mobile matrix before full acceptance.",
+      "mobileCheckerExit": 1
+    },
+    {
+      "kind": "native-closeout-source-attempt2",
+      "state": "failed",
+      "accepted": false,
+      "log": ".cache/logs/S407-closeout-autopilot-attempt2.log",
+      "actualProcessExit": 1,
+      "passed": 168,
+      "failed": 1,
+      "planned": 548,
+      "reason": "Nested proof-surface gate rejected stale visual-retention report after current screenshot receipt. Regenerated report with native tool; zero images deleted. Complete acceptance still required."
+    },
+    {
+      "kind": "native-closeout-source-attempt3",
+      "state": "failed",
+      "actualProcessExit": 1,
+      "accepted": false,
+      "passed": 361,
+      "failed": 1,
+      "planned": 548,
+      "log": ".cache/logs/S407-closeout-autopilot-attempt3.log",
+      "reason": "Actual copy-quality gate falsely rejects legitimate compound phrase, publisher house style and noun usage in upstream corpus. Required verifier repair selected in same session; original reporting preserved."
+    },
+    {
+      "kind": "closing-content-source-attempt1",
+      "state": "failed",
+      "receipt": "docs/S407_metadata-source-attempt1.json",
+      "failedStep": 357,
+      "reason": "Real UTC-date drift in newsroom freshness metadata; regenerated with the native builder before complete rerun."
+    },
+    {
+      "kind": "closing-content-source-attempt2",
+      "state": "failed",
+      "receipt": "docs/S407_metadata-source-attempt2.json",
+      "failedStep": 355,
+      "reason": "Freshness receipt regeneration also required the native homepage Desk caption today-to-yesterday rebuild. Full affected graph checked coherent before final rerun."
+    }
+  ],
+  "proofPreflight": {
+    "state": "passed",
+    "blockingPassed": 92,
+    "blockingTotal": 92,
+    "advisories": 1,
+    "log": ".cache/logs/S407-proof-preflight.log",
+    "sourceAcceptance": false,
+    "repair": "Native visual-retention report regenerated; zero images deleted. Stale build-stamp advisory refreshed separately."
+  },
+  "releasePrerequisite": "docs/AUDIT_2026-10-30-S407.json",
+  "implementationOutcomes": [
+    "docs/S407_implementation.json",
+    "docs/S407_copy-quality-acceptance.json"
+  ],
+  "remainingDiagnostic": {
+    "receipt": "docs/S407_remaining-source-diagnostic.json",
+    "passed": 186,
+    "failed": 0,
+    "firstStep": 363,
+    "planned": 548,
+    "coverageComplete": false,
+    "sourceAcceptance": false
+  },
+  "nativeCloseout": {
+    "exit": 0,
+    "result": ".cache/S407/autopilot-attempt4.json",
+    "log": ".cache/logs/S407-closeout-autopilot-attempt4.log"
+  },
+  "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
+  "tag": "S407-closing-20261030-e4234a241941",
+  "publicationAttempts": [
+    {
+      "record": ".cache/S407/rejected-candidate-attempt1.json",
+      "state": "pre-push-rejected",
+      "remoteTagAbsent": true,
+      "reason": "Staging ceremony advanced proof inputs; native stats coherence rejected before publication."
+    },
+    {
+      "record": ".cache/S407/superseded-hosted-candidate1.json",
+      "state": "superseded",
+      "candidate": "a7298742d59843a4cccb387ebbc1dc9ed86fa7e5",
+      "reason": "Locally reproduced public-status heartbeat drift after native post-commit reconciliation; fresh exact-SHA checks required.",
+      "retirement": ".cache/S407/superseded-check-retirement.json"
+    }
+  ],
+  "postCloseoutRepair": "docs/S407_post-closeout-repair.json",
+  "localHygiene": {
+    "previewStopped": true,
+    "pid": 61820,
+    "reason": "Verified own local-preview process identity and absence after termination; no longer required after real staging acceptance."
+  },
+  "performance": "docs/S407_ignis-performance.json",
+  "remaining": [],
+  "closingRecords": {
+    "state": "complete",
+    "reason": "Public dated audit and generated search metadata require the normal full lane; content admission is preserved, never broadened.",
+    "source": {
+      "state": "passed",
+      "receipt": "docs/S407_closing-source.json",
+      "passed": 548,
+      "failed": 0,
+      "coverageComplete": true,
+      "sourceFingerprint": "67eb6031465d20cdc72be8e3"
+    },
+    "staging": {
+      "state": "passed",
+      "receipt": "docs/S407_closing-staging.json",
+      "ceremony": "docs/S407_closing-ceremony.json",
+      "steps": 11
+    },
+    "hosted": {
+      "state": "passed",
+      "receipt": "docs/S407_closing-required-checks.json",
+      "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
+      "checks": [
+        {
+          "workflow": ".github/workflows/e2e.yml",
+          "state": "passed",
+          "runId": 41145177278
+        },
+        {
+          "workflow": ".github/workflows/lighthouse.yml",
+          "state": "passed",
+          "runId": 41145177215
+        },
+        {
+          "workflow": ".github/workflows/accessibility.yml",
+          "state": "passed",
+          "runId": 41145177275
+        }
+      ]
+    },
+    "production": {
+      "state": "passed",
+      "receipt": "docs/S407_closing-production.json",
+      "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
+      "runId": 41147027141,
+      "kind": "normal-full-pages-deploy",
+      "provider": true,
+      "stamps": 3
+    },
+    "main": {
+      "state": "published",
+      "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
+      "publishedAt": "2026-10-30T23:33:32.919Z"
+    },
+    "completeServedReadback": {
+      "state": "passed",
+      "receipt": "docs/S407_closing-served-parity.json",
+      "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
+      "checked": 3714,
+      "identical": 3704,
+      "redirected": 10,
+      "differ": 0,
+      "unread": 0
+    }
+  },
+  "initialApplicationBaseline": "45b74582c9a1003e6c402fa04780f3a74f8855a9",
+  "applicationBaseline": "e4234a24194168e989c25a38012f11e85578ae39",
+  "completedAt": "2026-10-31T01:15:54.000Z",
+  "finalPublication": {
+    "state": "verified-production-and-served-tree",
+    "applicationBaseline": "e4234a24194168e989c25a38012f11e85578ae39",
+    "metadataHead": "81654c0ae4230275b550c86b7acccf60e429f240",
+    "paths": [
+      "api/ai-discovery-health.json",
+      "api/analytics-summary.json",
+      "api/build-check-diagnostics.json",
+      "api/candidate-artifact-manifest.json",
+      "api/ci-status.json",
+      "api/citation.json",
+      "api/deploy-currency.json",
+      "api/field-win.json",
+      "api/geo-vitals.json",
+      "api/heartbeat.json",
+      "api/intelligence-budget.json",
+      "api/intent-map.json",
+      "api/nervous-system.json",
+      "api/news-desk-freshness.json",
+      "api/newsroom-run.json",
+      "api/og-coverage.json",
+      "api/promotion-receipt.json",
+      "api/proof-aware-projects.json",
+      "api/proof-surface-diagnostics.json",
+      "api/public-intelligence.json",
+      "api/public-status.json",
+      "api/release-dependencies.json",
+      "api/release-proof.json",
+      "api/staging-health.json",
+      "api/status-proof.json",
+      "api/uptime.json",
+      "api/worker-route-provenance.json",
+      "data/promotion-history.ndjson",
+      "data/stats-surface.json",
+      "index.html",
+      "stats.json"
+    ],
+    "receipt": "docs/S407_metadata-overlay.json",
+    "source": "docs/S407_metadata-source.json",
+    "sourceFingerprint": "bd342a7a347253f4dceb260f",
+    "sourcePassed": 548,
+    "sourceFailed": 0,
+    "sourceCoverageComplete": true,
+    "stagingExactReads": 30,
+    "publicApexLiveClock": "docs/S407_live-clock.json",
+    "metadataWorkflow": 41153933133,
+    "completeServedReadback": {
+      "receipt": "docs/S407_final-served-parity.json",
+      "against": "81654c0ae4230275b550c86b7acccf60e429f240",
+      "checked": 3714,
+      "identical": 3704,
+      "redirected": 10,
+      "differ": 0,
+      "unread": 0
+    }
+  },
+  "publisherRestoration": {
+    "state": "restored",
+    "verifiedAt": "2026-10-31T01:15:42.364Z",
+    "workflows": [
+      {
+        "path": ".github/workflows/news-publish.yml",
+        "state": "active"
+      },
+      {
+        "path": ".github/workflows/desk-content-release.yml",
+        "state": "active"
+      },
+      {
+        "path": ".github/workflows/refresh-live-data.yml",
+        "state": "active"
+      },
+      {
+        "path": ".github/workflows/rum-pull.yml",
+        "state": "active"
+      },
+      {
+        "path": ".github/workflows/cloudflare-analytics-pull.yml",
+        "state": "active"
+      }
+    ],
+    "uptimeState": "active"
+  },
+  "impactBroadcast": {
+    "session": 407,
+    "cargoId": "01K67L8OD72CE02431B3895927",
+    "shippedAt": "2026-10-31T00:20:34.734Z",
+    "verifiedAt": "2026-10-31T00:20:55.285Z",
+    "signatureVerification": {
+      "ok": true,
+      "ed": {
+        "state": "unsigned"
+      }
+    },
+    "scope": "Signed native transport log; recipient receipt/application is not inferred."
+  },
+  "publicationScope": "Accepted full application plus explicit final content overlay. Final nonserved records are pushed normally; later autonomous observer commits are separate from this pinned acceptance transaction.",
+  "postAcceptanceObserverReconciliation": {
+    "receipt": "docs/S407_observer-reconciliation.json",
+    "remoteHead": "0cae4971cf5c2a9a4e7744a0f044d25a60050938",
+    "sourceFingerprintUnchanged": true,
+    "scope": "Later autonomous observations are preserved separately from the pinned, fully verified production transaction. No newer observer data is claimed to be part of that snapshot."
+  },
+  "shellHygiene": "docs/S407_session-hygiene.json",
+  "remotePublication": {
+    "state": "verified",
+    "receipt": "docs/S407_final-publication.json",
+    "publishedCommit": "d3fc76c3e9e1db2f671f57b29ddda38c37103ce6",
+    "observedRemoteMain": "d3fc76c3e9e1db2f671f57b29ddda38c37103ce6",
+    "verifiedAt": "2026-10-31T01:26:31.984Z",
+    "scope": "Final release records independently reached main. This receipt is carried by the subsequent nonserved status-board/attestation commit; its reachability is checked separately before native completion."
+  }
+}

@@ -504,3 +504,23 @@ No new creative direction, pricing, entitlement, authentication, lifecycle or la
 
 <!-- S406-explicit-final-publication-2026-10-29 -->
 Full application 0242fc75dd0034f1922c35a37ad18c1f5a24e74a plus16 staged closing metadata paths at 994191d026ea28f11dc75f7a24fd29b63277d20e is verified across all3669 served resources, with zero differences/unread. Main publication 7532eba412722d672ab37743883873eda1347a59 was independently observed remotely at 2026-10-29T21:43:20.799Z. Both publisher windows are restored. Optional E2E34 failures/60 skips remain explicit; no all-E2E-green or positive authenticated acceptance claim. Final acceptance records close this publication transaction; moving observer commits are separate.
+
+
+## S407 — 2026-10-30 — browser journey regression confidence
+
+S407 implements browser-contract-fidelity at L2. Public IGNIS no longer requests the private five-pillars feed; all five cards explicitly say Not published. Canonical IGNIS navigation, two privacy-preserving mover cards, actual leaderboard periods, compare share/reload and independent artwork threads are checked. Focused browser acceptance:38 passed,7 existing private-fixture skips,0 failed. Four formerly skipped public-feed checks now execute. Independent source review passed;14 rendered captures across7 themes and desktop/mobile were inspected. Full source, staging, exact hosted checks, production and complete served readback remain pending in docs/RELEASE_S407.json. No authentication, pricing, membership economy or lifecycle change; no growth, field-performance or token-saving claim.
+
+
+### S407 release prerequisite
+
+The same S407 arc also repaired three source-gate false positives in copy-quality-word-boundaries. Complete-word tokenization preserves compounds, contractions and quoted-duplicate detection; WIRED is recognized as a publisher house style; ordinary placeholder prose is distinguished from explicit publishing stubs. Original article text is unchanged. All72 self-tests and the actual corpus pass. Independent review found one quotation-boundary regression, fixed before round2 approval. The remaining186 source steps passed diagnostically with coverageComplete:false; no complete-source acceptance is claimed.
+
+
+### S407 application release acceptance — 2026-10-30
+
+S407 restored current browser journey contracts and truthful public IGNIS pillars, and repaired editorial-checker false positives without editing reporting. Browser38 passed/7 existing private-fixture skips; copy72, mobile215 and14 inspected theme/viewport captures passed. Native source548/548, staging11/11 and exact hosted workflows3/3 passed. Normal full application45b74582c9a1, provider/three stamps, six existing access walls and complete3714-resource readback are verified. Mobile lab Performance92 production and82 staging are recorded separately; no field-vitals, growth or token-saving claim. Closing main publication and its full-candidate acceptance remain authoritative in docs/RELEASE_S407.json. Independent preparation and staging-currentness reviews passed. Original failed/interrupted attempts remain recorded; no force push or release-gate bypass. Closing-record source and deployment follow-through are part of this invocation.
+
+
+### S407 final acceptance — 2026-10-30
+
+S407 is complete. The browser-contract and editorial-checker outcomes are released. Full application e4234a241941 passed native source548/548, staging11/11, exact hosted workflows3/3, normal full production and complete served readback. Final content overlay 81654c0ae423 carries 31 explicitly staged paths, including launch-age240→241 and the Desk caption today→yesterday required by the new observation date. Fresh source548/548, mobile215/215, four launch-age checks and28 inspected desktop/mobile theme captures across both generated date displays passed for that closing snapshot. Final complete Pages-origin served readback checked3714: 3704 byte-identical, 10 configured redirects, zero differences/unread. Both selected L2 outcomes remain the only shipped outcomes: one product and one protocol improvement. SIL remains939/1000. All five publishers restored; authorized impact cargo signature verified. Final records are published by normal main push. Seven existing private-fixture browser cases remain skipped; historical optional visual failures are unclassified. Anonymous access-wall checks do not prove positive authenticated private-data access. Individual lab Performance92 production/82 staging is not field-vitals or growth evidence. No further product work is selected. CDR unchanged: no new founder creative direction.

@@ -1,3 +1,14 @@
+<!-- S407-release-acceptance -->
+## Current truth posture — S407 — 2026-10-30
+
+Overall status: yellow — requested release verified; existing identity/provider and field-vitals limitations remain separate.
+
+S407 is complete. The browser-contract and editorial-checker outcomes are released. Full application e4234a241941 passed native source548/548, staging11/11, exact hosted workflows3/3, normal full production and complete served readback. Final content overlay 81654c0ae423 carries 31 explicitly staged paths, including launch-age240→241 and the Desk caption today→yesterday required by the new observation date. Fresh source548/548, mobile215/215, four launch-age checks and28 inspected desktop/mobile theme captures across both generated date displays passed for that closing snapshot. Final complete Pages-origin served readback checked3714: 3704 byte-identical, 10 configured redirects, zero differences/unread. Both selected L2 outcomes remain the only shipped outcomes: one product and one protocol improvement. SIL remains939/1000.
+
+Seven existing private-fixture browser cases remain skipped; historical optional visual failures are unclassified. Anonymous access-wall checks do not prove positive authenticated private-data access. Individual lab Performance92 production/82 staging is not field-vitals or growth evidence. No further product work is selected. CDR unchanged: no new founder creative direction.
+
+---
+
 <!-- S406-explicit-closeout-current-truth -->
 # Current truth posture
 

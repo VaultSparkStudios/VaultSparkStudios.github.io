@@ -24,10 +24,18 @@ test.describe('Leaderboards main page', () => {
     await expect(page.locator('#lb-panel-weekly')).toHaveClass(/active/);
   });
 
-  test('period tabs exist on global panel', async ({ page }) => {
+  test('global periods switch between all-time and the current season', async ({ page }) => {
     await page.goto(BASE + '/leaderboards/');
-    await expect(page.locator('#lb-panel-global .lb-period-tab')).toHaveCount(3);
-    await expect(page.locator('#lb-panel-weekly .lb-period-tab')).toHaveCount(3);
+    const periods = page.locator('#lb-panel-global .lb-period-tab');
+    await expect(periods).toHaveText(['All Time', 'This Season']);
+    const season = periods.filter({ hasText: 'This Season' });
+    await season.click();
+    await expect(season).toHaveClass(/active/);
+    await expect(periods.filter({ hasText: 'All Time' })).not.toHaveClass(/active/);
+    await periods.filter({ hasText: 'All Time' }).click();
+    await expect(periods.filter({ hasText: 'All Time' })).toHaveClass(/active/);
+    await page.locator('.lb-game-tab[data-game="weekly"]').click();
+    await expect(page.locator('#lb-panel-weekly')).toBeVisible();
   });
 
   test('sort filter buttons exist', async ({ page }) => {

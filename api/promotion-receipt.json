@@ -4,19 +4,19 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "87f147027f814be9ec78dd9960132f142945e178",
+    "sha": "4d9f618220400497437639730a46c314e16b5e76",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74",
+    "sha": "e4234a24194168e989c25a38012f11e85578ae39",
     "contentLaneHead": null,
     "reachable": true,
     "reconciliation": "ahead",
     "shellParity": {
       "state": "matched",
-      "observedAt": "2026-10-29T18:13:39.608Z",
-      "ageHours": 1.6,
+      "observedAt": "2026-10-31T00:06:32.747Z",
+      "ageHours": 0,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -91,18 +91,18 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production serves 94fe9ea3, newer than the recorded promoted 87f14702 (benign — a later rebuild moved on)",
+    "production serves e4234a24, newer than the recorded promoted 4d9f6182 (benign — a later rebuild moved on)",
     "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-10-29T19:48:24.840Z",
+  "generatedAt": "2026-10-31T00:06:45.627Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-10-29T06:06:31.565Z",
+    "lastStrandedAt": "2026-10-30T21:19:31.294Z",
     "currentBehindStreak": 0,
-    "newestGradableAt": "2026-10-29T19:48:24.840Z",
+    "newestGradableAt": "2026-10-31T00:06:45.627Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,

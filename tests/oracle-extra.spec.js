@@ -48,13 +48,14 @@ test.describe('Ecosystem Oracle — S136 expansion', () => {
     await expect(donut.locator('text').first()).toContainText(/\d+/);
   });
 
-  test('Top Movers panel renders 3 leadership cards', async ({ page }) => {
+  test('Top Movers renders the two public leadership cards without activity recency', async ({ page }) => {
     const movers = page.locator('#oracle-movers article');
-    expect(await movers.count()).toBe(3);
+    await expect(movers).toHaveCount(2);
     // Each card must name a project and a metric.
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 2; i++) {
       await expect(movers.nth(i).locator('h3')).toBeVisible();
     }
+    await expect(page.locator('#oracle-movers')).not.toContainText(/days? ago|most recently|last worked/i);
   });
 
   test('Velocity chart hover shows date + values', async ({ page }) => {
@@ -101,8 +102,18 @@ test.describe('Ecosystem Oracle — S136 expansion', () => {
     await expect(cards.first()).toContainText(/friction/i);
 
     const href = await page.locator('#oracle-compare-share').getAttribute('href');
-    expect(href).toMatch(/^\/oracle\/\?compare=[^&]+(%2C|,)[^&]+/);
-    expect(page.url()).toContain('compare=');
+    const shared = new URL(href, page.url());
+    expect(shared.pathname).toBe('/ignis/');
+    const selected = [await selectA.inputValue(), await selectB.inputValue()];
+    expect(shared.searchParams.get('compare')).toBe(selected.join(','));
+    await selectA.selectOption(await selectA.locator('option').last().getAttribute('value'));
+    const changed = [await selectA.inputValue(), await selectB.inputValue()];
+    await expect.poll(() => page.locator('#oracle-compare-share').getAttribute('href'))
+      .toContain(encodeURIComponent(changed.join(',')));
+    const reloadHref = await page.locator('#oracle-compare-share').getAttribute('href');
+    await page.goto(reloadHref, { waitUntil: 'load' });
+    await expect(selectA).toHaveValue(changed[0]);
+    await expect(selectB).toHaveValue(changed[1]);
   });
 
   test('Layer 3 gravity panel renders public relationship cards', async ({ page }) => {
@@ -144,6 +155,13 @@ test.describe('Ecosystem Oracle — S136 expansion', () => {
     expect(feedRequests).toContain('/api/ecosystem-state.json');
     expect(feedRequests).toContain('/api/ecosystem-velocity.json');
     expect(feedRequests.some((pathname) => pathname.startsWith('/ignis/output/'))).toBe(false);
+
+    const pillars = page.locator('.ignis-pillar');
+    await expect(pillars).toHaveCount(5);
+    for (const pillar of await pillars.all()) {
+      await expect(pillar.locator('[data-pillar-pct]')).toHaveText('—');
+      await expect(pillar.locator('[data-pillar-grade]')).toHaveText('Not published');
+    }
 
     const favicon = await page.request.get('/favicon.ico');
     expect(favicon.ok()).toBe(true);

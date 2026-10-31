@@ -1,3 +1,20 @@
+<!-- S407-release-acceptance -->
+## S407 verified outcomes — 2026-10-30
+
+Session Intent: /arc plus authorized normal main push and full deploy.
+
+- [x] Fresh startup/audit; both strict admissions and premises passed.
+- [x] Browser L2 and copy-checker L2: browser38, mobile215, copy72 and14 reviewed captures.
+- [x] Application acceptance: native548, stage11, hosted3 and full production45b74582c9a1; all3714 served resources verified.
+
+Wave3 publication and closing-record acceptance have one status source: docs/RELEASE_S407.json. No additional product work is selected.
+
+Future unselected SIL commitments:
+- [ ] [S407][SIL] Classify historical visual failures before updating baselines.
+- [ ] [S407][SIL] Isolate run-build-check --help side effects before selecting a repair.
+
+---
+
 <!-- S406-explicit-closeout-2026-10-29 -->
 ## S406 explicit closeout
 

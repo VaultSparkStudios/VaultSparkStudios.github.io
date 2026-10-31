@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-10-29T21:03:53.415Z
-Receipt: `06747d9420a8a9d33ff65251` · coverage 109/109
+Generated: 2026-10-31T01:02:40.967Z
+Receipt: `814d5bfe6453f7f7f1873c20` · coverage 109/109
 
-Latest: **108/109** passed · blocking 92/92 · advisory findings 1/17 · total 64.3s
+Latest: **108/109** passed · blocking 92/92 · advisory findings 1/17 · total 45.2s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 49 | blocking | 6.3s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 46 | blocking | 4.7s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 106 | advisory | 3.1s | 1 | `node scripts/generate-build-sha.mjs --check` |
-| 90 | blocking | 2.5s | 0 | `node scripts/check-visual-qa-retention.mjs --check` |
-| 82 | blocking | 2.2s | 0 | `node scripts/build-route-consolidation.mjs --check` |
-| 37 | blocking | 2.1s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 14 | blocking | 2.1s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 65 | blocking | 1.9s | 0 | `node scripts/check-content-coherence.mjs` |
-| 78 | blocking | 1.5s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
-| 38 | blocking | 1.3s | 0 | `node scripts/generate-news-pages.mjs --check` |
+| 106 | advisory | 2.4s | 1 | `node scripts/generate-build-sha.mjs --check` |
+| 49 | blocking | 1.7s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 65 | blocking | 1.4s | 0 | `node scripts/check-content-coherence.mjs` |
+| 78 | blocking | 1.3s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
+| 35 | blocking | 1.2s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 37 | blocking | 1.1s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 82 | blocking | 1.1s | 0 | `node scripts/build-route-consolidation.mjs --check` |
+| 22 | blocking | 1.0s | 0 | `node scripts/check-schema-coverage.mjs` |
+| 38 | blocking | 0.9s | 0 | `node scripts/generate-news-pages.mjs --check` |
+| 87 | blocking | 0.7s | 0 | `node scripts/check-receipt-ordering.mjs --self-test` |
 
 ## Failures
 

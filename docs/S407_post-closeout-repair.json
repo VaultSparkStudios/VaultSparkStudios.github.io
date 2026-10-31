@@ -1,0 +1,38 @@
+{
+  "session": 407,
+  "at": "2026-10-30T22:14:11.827Z",
+  "supersededCandidate": {
+    "session": 407,
+    "candidate": "a7298742d59843a4cccb387ebbc1dc9ed86fa7e5",
+    "tag": "S407-release-20261030-a7298742d598",
+    "createdAt": "2026-10-30T22:07:14.096Z",
+    "publishedAt": "2026-10-30T22:07:28.680Z",
+    "workflows": [
+      {
+        "workflow": ".github/workflows/e2e.yml",
+        "runId": 41135964833
+      },
+      {
+        "workflow": ".github/workflows/lighthouse.yml",
+        "runId": 41135969512
+      },
+      {
+        "workflow": ".github/workflows/accessibility.yml",
+        "runId": 41135974203
+      }
+    ]
+  },
+  "localReproduction": {
+    "command": "node scripts/build-public-status.mjs --check",
+    "exit": 1,
+    "field": "studio.ignisHeartbeatAt",
+    "reason": "Native post-commit heartbeat reconciliation advanced the source after complete verification."
+  },
+  "repair": "Canonical full derived-build order, with all producers successful; no application-source change.",
+  "proof": {
+    "blockingFailed": 0,
+    "advisoryFailed": 0,
+    "receipt": "api/proof-surface-diagnostics.json"
+  },
+  "hostedConclusion": "Earlier hosted runs remain actual history; local stale-feed evidence alone prevents promotion. No production dispatch."
+}

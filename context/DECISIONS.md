@@ -1160,3 +1160,13 @@ No new creative direction, pricing, entitlement, authentication, lifecycle or la
 
 <!-- S406-explicit-final-publication-2026-10-29 -->
 Full application 0242fc75dd0034f1922c35a37ad18c1f5a24e74a plus16 staged closing metadata paths at 994191d026ea28f11dc75f7a24fd29b63277d20e is verified across all3669 served resources, with zero differences/unread. Main publication 7532eba412722d672ab37743883873eda1347a59 was independently observed remotely at 2026-10-29T21:43:20.799Z. Both publisher windows are restored. Optional E2E34 failures/60 skips remain explicit; no all-E2E-green or positive authenticated acceptance claim. Final acceptance records close this publication transaction; moving observer commits are separate.
+
+
+## S407 — preserve canonical routes and public measurement boundaries
+
+Repair stale tests around /oracle/ consolidation into /ignis/#oracle rather than restoring duplicate navigation or the privacy-removed third mover. Remove the public page request for the unpublished pillar source and label unavailable metrics explicitly; do not expose private measurements or substitute invented scores. Existing CANON-045 STRONG gap remains unchanged and outside this content-only release scope; routine promotion follows RELEASE_PROMOTION_PROTOCOL. Existing founder authorization covers normal main push and full deployment; release proof remains pending in docs/RELEASE_S407.json.
+
+
+## S407 release prerequisite — precise editorial gate boundaries
+
+Preserve the unchanged October30 article rather than rewriting legitimate prose to satisfy a false-positive detector. Compare complete word tokens, including compounds and contractions; recognize WIRED in the existing house-style list; treat uppercase, bracketed and standalone/labelled placeholder stubs as markers rather than rejecting every ordinary noun occurrence. Negative fixtures retain genuine defect detection. Review round1 found a quoted-word regression; it was fixed and round2 passed. This is a required same-session release repair, not a new arc or identity-policy change.

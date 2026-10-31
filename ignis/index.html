@@ -321,11 +321,11 @@
         <div class="eyebrow" style="margin-bottom:1rem;">What IGNIS measures</div>
         <h2 id="pillars-heading" style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);letter-spacing:-0.03em;margin:0 0 1.5rem;">Five pillars. One score.</h2>
         <div class="ignis-pillars">
-          <article class="ignis-pillar" data-pillar-id="velocity"><div class="pnum">01 · Velocity</div><h3>Shipped work per session</h3><p>Did the vault actually move this week? Features, content, decisions, playable builds. No "planning sprints."</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct></span><span class="pillar-grade" data-pillar-grade></span><div class="pillar-bar"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
-          <article class="ignis-pillar" data-pillar-id="learning"><div class="pnum">02 · Learning</div><h3>Loops closed per session</h3><p>Self-improvement entries, playtest signals integrated, audits acted on. Learning without follow-through doesn't count.</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct></span><span class="pillar-grade" data-pillar-grade></span><div class="pillar-bar"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
-          <article class="ignis-pillar" data-pillar-id="focus"><div class="pnum">03 · Focus</div><h3>Focus discipline</h3><p>Always knowing the next most important thing, and keeping every project consistent with the others. Focus is a muscle that atrophies fast.</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct></span><span class="pillar-grade" data-pillar-grade></span><div class="pillar-bar"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
-          <article class="ignis-pillar" data-pillar-id="truth"><div class="pnum">04 · Truth</div><h3>Drift between plan and reality</h3><p>If the site says one thing and the code says another, IGNIS drops. Transparency is not a slogan.</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct></span><span class="pillar-grade" data-pillar-grade></span><div class="pillar-bar"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
-          <article class="ignis-pillar" data-pillar-id="compound"><div class="pnum">05 · Compound</div><h3>Reuse and ecosystem gravity</h3><p>Shared tooling across projects, cross-surface handoffs, one vault — not ten islands.</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct></span><span class="pillar-grade" data-pillar-grade></span><div class="pillar-bar"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
+          <article class="ignis-pillar" data-pillar-id="velocity"><div class="pnum">01 · Velocity</div><h3>Shipped work per session</h3><p>Did the vault actually move this week? Features, content, decisions, playable builds. No "planning sprints."</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct aria-label="Score not published">—</span><span class="pillar-grade" data-pillar-grade>Not published</span><div class="pillar-bar" aria-hidden="true"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
+          <article class="ignis-pillar" data-pillar-id="learning"><div class="pnum">02 · Learning</div><h3>Loops closed per session</h3><p>Self-improvement entries, playtest signals integrated, audits acted on. Learning without follow-through doesn't count.</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct aria-label="Score not published">—</span><span class="pillar-grade" data-pillar-grade>Not published</span><div class="pillar-bar" aria-hidden="true"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
+          <article class="ignis-pillar" data-pillar-id="focus"><div class="pnum">03 · Focus</div><h3>Focus discipline</h3><p>Always knowing the next most important thing, and keeping every project consistent with the others. Focus is a muscle that atrophies fast.</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct aria-label="Score not published">—</span><span class="pillar-grade" data-pillar-grade>Not published</span><div class="pillar-bar" aria-hidden="true"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
+          <article class="ignis-pillar" data-pillar-id="truth"><div class="pnum">04 · Truth</div><h3>Drift between plan and reality</h3><p>If the site says one thing and the code says another, IGNIS drops. Transparency is not a slogan.</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct aria-label="Score not published">—</span><span class="pillar-grade" data-pillar-grade>Not published</span><div class="pillar-bar" aria-hidden="true"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
+          <article class="ignis-pillar" data-pillar-id="compound"><div class="pnum">05 · Compound</div><h3>Reuse and ecosystem gravity</h3><p>Shared tooling across projects, cross-surface handoffs, one vault — not ten islands.</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct aria-label="Score not published">—</span><span class="pillar-grade" data-pillar-grade>Not published</span><div class="pillar-bar" aria-hidden="true"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
         </div>
       </div>
     </section>
@@ -587,25 +587,7 @@
         <p style="color:var(--muted);max-width:560px;margin:0 0 0.5rem;">A poetic, precise, vault-aware oracle. Ask what is sparked, what is in the forge, what to play next, or anything about the studio you can see from the outside. <strong style="color:var(--text);font-weight:600;">VaultSparked members get a monthly quota; Eternal members get unlimited access.</strong></p>
         <div data-vault-oracle data-vault-oracle-context="User is on /ignis/ — the IGNIS explainer page. They are likely curious about the score, the studio's pulse, or membership."></div>
         <script src="/assets/vault-oracle.js" defer></script>
-        <script>
-        (function(){
-          fetch('/ignis/output/five-pillars.json')
-            .then(function(r){return r.json();})
-            .then(function(data){
-              (data.pillars||[]).forEach(function(p){
-                var card=document.querySelector('[data-pillar-id="'+p.id+'"]');
-                if(!card)return;
-                var pctEl=card.querySelector('[data-pillar-pct]');
-                var gradeEl=card.querySelector('[data-pillar-grade]');
-                var barEl=card.querySelector('[data-pillar-bar]');
-                if(pctEl) pctEl.textContent=(p.pct!=null?p.pct+'%':'—');
-                if(gradeEl) gradeEl.textContent=(p.grade||'?');
-                if(barEl) barEl.style.width=Math.min(100,p.pct||0)+'%';
-              });
-            })
-            .catch(function(){});
-        })();
-        </script>
+
       </div>
     </section>
 
