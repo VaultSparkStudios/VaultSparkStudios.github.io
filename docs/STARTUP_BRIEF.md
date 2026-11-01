@@ -123,9 +123,6 @@
 ║   96  [PRODUCT]      Classify historical visual failures before  ║
 ║        Classify historical visual failures before updating base  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      Isolate run-build-check --help side effect  ║
 ║        Isolate run-build-check --help side effects before selec  ║
 ║                                                                  ║
@@ -134,6 +131,9 @@
 ║                                                                  ║
 ║   90  [SECURITY]     Measure help startup separately from probe  ║
 ║        Measure help startup separately from probe execution bef  ║
+║                                                                  ║
+║   87  [PRODUCT]      Consider extending help-only process fixtu  ║
+║        Consider extending help-only process fixtures to another  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
