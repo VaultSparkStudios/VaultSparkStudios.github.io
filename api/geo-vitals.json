@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-01T06:35:07.852Z",
+  "generatedAt": "2026-11-01T06:38:27.531Z",
   "generatedBy": "scripts/build-geo-vitals.mjs",
   "publicSafe": true,
   "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\" (privacy). Rows under 20 samples are confidence:\"low\" — render those as \"insufficient samples\", not as a measurement. dataWindow reports when the underlying visits actually happened; readers must surface staleness rather than trusting generatedAt.",
@@ -8,44 +8,36 @@
   "confidenceSamples": 20,
   "dataWindow": {
     "firstDay": "2026-05-25",
-    "lastDay": "2026-10-12",
-    "days": 49
+    "lastDay": "2026-07-02",
+    "days": 38
   },
   "countries": [
     {
       "country": "US",
-      "samples": 860,
-      "lcpP75": 1108,
-      "ttfbP75": 186,
+      "samples": 464,
+      "lcpP75": 992,
+      "ttfbP75": 157,
       "confidence": "high",
       "colos": [
-        "ARN",
         "ATL",
         "BOS",
-        "CLT",
         "CMH",
         "DEN",
         "DFW",
         "EWR",
         "IAD",
-        "JAX",
         "LAX",
         "MCI",
-        "MEM",
-        "MIA",
-        "OMA",
         "ORD",
-        "PDX",
         "SEA",
-        "SJC",
-        "YYZ"
+        "SJC"
       ]
     },
     {
       "country": "GB",
-      "samples": 13,
-      "lcpP75": 976,
-      "ttfbP75": 323,
+      "samples": 8,
+      "lcpP75": 1388,
+      "ttfbP75": 437,
       "confidence": "low",
       "colos": [
         "LHR",
@@ -53,40 +45,37 @@
       ]
     },
     {
-      "country": "CA",
-      "samples": 11,
-      "lcpP75": 979,
-      "ttfbP75": 564,
-      "confidence": "low",
-      "colos": [
-        "YVR",
-        "YYC",
-        "YYZ"
-      ]
-    },
-    {
       "country": "IN",
-      "samples": 10,
-      "lcpP75": 1264,
-      "ttfbP75": 708,
+      "samples": 7,
+      "lcpP75": 1340,
+      "ttfbP75": 906,
       "confidence": "low",
       "colos": [
         "BOM",
         "BOS",
-        "MRS",
         "SIN"
       ]
     },
     {
+      "country": "CA",
+      "samples": 6,
+      "lcpP75": 9960,
+      "ttfbP75": 1286,
+      "confidence": "low",
+      "colos": [
+        "YVR",
+        "YYZ"
+      ]
+    },
+    {
       "country": "CN",
-      "samples": 7,
-      "lcpP75": 1024,
-      "ttfbP75": 1124,
+      "samples": 6,
+      "lcpP75": 1020,
+      "ttfbP75": 746,
       "confidence": "low",
       "colos": [
         "AMS",
-        "LAX",
-        "SJC"
+        "LAX"
       ]
     },
     {
@@ -110,28 +99,6 @@
       ]
     },
     {
-      "country": "TR",
-      "samples": 4,
-      "lcpP75": 5270,
-      "ttfbP75": 464,
-      "confidence": "low",
-      "colos": [
-        "FRA",
-        "SOF"
-      ]
-    },
-    {
-      "country": "BR",
-      "samples": 3,
-      "lcpP75": 1500,
-      "ttfbP75": 538,
-      "confidence": "low",
-      "colos": [
-        "GIG",
-        "GRU"
-      ]
-    },
-    {
       "country": "NL",
       "samples": 3,
       "lcpP75": 2992,
@@ -142,58 +109,36 @@
       ]
     },
     {
-      "country": "PH",
+      "country": "TR",
       "samples": 3,
-      "lcpP75": 1888,
-      "ttfbP75": 1382,
+      "lcpP75": 764,
+      "ttfbP75": 307,
       "confidence": "low",
       "colos": [
-        "MNL",
-        "SIN"
-      ]
-    },
-    {
-      "country": "RU",
-      "samples": 3,
-      "lcpP75": 11592,
-      "ttfbP75": 558,
-      "confidence": "low",
-      "colos": [
-        "DME",
-        "FRA",
-        "GIG"
-      ]
-    },
-    {
-      "country": "UA",
-      "samples": 3,
-      "lcpP75": 2796,
-      "ttfbP75": 634,
-      "confidence": "low",
-      "colos": [
-        "VIE"
+        "FRA"
       ]
     },
     {
       "country": "other",
       "samples": 21,
-      "lcpP75": 1256,
-      "ttfbP75": 456,
+      "lcpP75": 1284,
+      "ttfbP75": 538,
       "confidence": "high",
       "colos": [
         "ARN",
         "BOM",
         "BRU",
         "BUD",
+        "DME",
         "FCO",
         "FRA",
+        "GRU",
         "LIS",
         "MAD",
-        "MEL",
+        "MNL",
         "MRS",
-        "NRT",
         "PRG",
-        "SOF",
+        "SIN",
         "WAW"
       ]
     }
