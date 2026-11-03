@@ -134,8 +134,8 @@ test('corrupt flow state fails closed before token exchange', async () => {
     `https://vaultsparkstudios.com/auth/callback?code=one-time-code&state=${encodeURIComponent(state)}`,
     { headers: { Cookie: `vs_obelisk_flow=${flowCookie}` } }
   ), env, null, { fetchImpl });
-  assert.equal(callback.status, 400);
-  assert.equal((await callback.json()).code, 'invalid_flow_state');
+  assert.equal(callback.status, 302);
+  assert.equal(new URL(callback.headers.get('location'), 'https://vaultsparkstudios.com').searchParams.get('auth_error'), 'flow_expired');
   assert.equal(await kv.get(`auth:flow:${state}`), null);
 });
 

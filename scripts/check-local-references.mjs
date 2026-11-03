@@ -38,7 +38,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SKIP_PREFIXES = ['.cache/', 'docs/', 'tests/', 'context/', 'logs/', 'scripts/', 'supabase/', 'cloudflare/', 'node_modules/'];
 
 // Served by the edge Worker, not by a file in the tree.
-const RUNTIME_ROUTES = new Set(['/login', '/login/', '/auth/callback', '/auth/callback/']);
+const RUNTIME_ROUTES = new Set(['/login', '/login/', '/auth/callback', '/auth/callback/', '/api/auth/account']);
 
 // Bodies only: the opening <script src> tag is a real reference and must stay.
 // <template data-after-paint> blocks are kept whole — their parked tags load

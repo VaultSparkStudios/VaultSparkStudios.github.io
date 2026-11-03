@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "session": 409,
+  "recordedAt": "2026-11-03T05:10:14.411Z",
+  "audit": "docs/AUDIT_2026-11-03-S409-access.json",
+  "scope": "Dedicated investor gateway, application, private workspace and recovery/navigation experience",
+  "source": [
+    {
+      "file": "assets/investor-auth.js",
+      "sha256": "19fe6f9313aa003f420a6315cc64ff7a4cf9760db61f8bdfea7d6718928dadfc"
+    },
+    {
+      "file": "assets/investor-experience.js",
+      "sha256": "7d165ff86233b818e772d7f33e45a68ba0b1f0944317ab7d747be267437c2637"
+    },
+    {
+      "file": "assets/investor-theme.css",
+      "sha256": "0962e1f6514aeb7b4375594fd54368222536dcbaa2a3fd2a74db50830763dd11"
+    },
+    {
+      "file": "investor-portal/index.html",
+      "sha256": "e739dd04482d78e3057ab737df0f0fab9f4fdfed1bef33a6811eb9c52959cee4"
+    },
+    {
+      "file": "investor-portal/login/index.html",
+      "sha256": "63ce793ab1c2ac2c6b687afba1214a670aa58e8aa87ed685aa0fdedd3ea6211c"
+    },
+    {
+      "file": "investor-portal/apply/index.html",
+      "sha256": "3be87cd271c9e62c6349629d56c0b2259507aae645bf5f298476b9ee6b90488e"
+    },
+    {
+      "file": "investor-portal/updates/index.html",
+      "sha256": "47e06cd1ebea030e7c4354ff8729437bacfaec3c1ec7095637508486e1667cce"
+    },
+    {
+      "file": "investor-portal/documents/index.html",
+      "sha256": "b26a59e7443c29db82a4475db31280ad5f866f54545b88603ab6775fa5aba3c7"
+    },
+    {
+      "file": "investor-portal/message/index.html",
+      "sha256": "51ff9aebe4803f017b9206b13af461eeb983d894fc8252d58e1dcdd8839cc04b"
+    },
+    {
+      "file": "investor-portal/profile/index.html",
+      "sha256": "b7aa580b0bf0dda3e01854cdbd18fd68bd75b376140c0ac9d244a83208c975e9"
+    },
+    {
+      "file": "investor-portal/admin/index.html",
+      "sha256": "b100f0e7ff9398c316e390b84d8b0372e0b36a59965d0a0473993d3a8bb6968e"
+    },
+    {
+      "file": "tests/investor-access.unit.spec.mjs",
+      "sha256": "5b37fbed5c9210c519e06c464a79de16a5de774dd6f95ac8e0e27b1c0f2d24fb"
+    }
+  ],
+  "implementation": [
+    "A distinct blue/platinum Investor Relations shell in all seven existing themes, with a desktop navigation rail and mobile workspace drawer.",
+    "Separate identity sign-in/create links and an accurately named investor introduction application.",
+    "Safe private deep-link continuity across legacy absolute next, gateway, identity return, and application confirmation.",
+    "Existing investor RPC and approval gate retained; ordinary member identities keep their session and receive a separate access-request path.",
+    "Pending application data remains unavailable to ordinary clients; only a timestamp-only browser submission receipt is shown, explicitly separate from approval or live review status.",
+    "Application writes preserve the existing schema, validate required fields, admit one in-flight write, keep answers on failure and show success only after acknowledgement.",
+    "Fast identity bridge readiness is dispatched after page-owned event subscribers register; admin onboarding date remains unavailable rather than generated.",
+    "Profile exposes identity security separately from investor approval and the membership experience."
+  ],
+  "checks": [
+    {
+      "command": "node --test tests/investor-access.unit.spec.mjs",
+      "exitCode": 0,
+      "tests": 11,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 59957.2021,
+      "environment": "Isolated browser fixtures; external traffic aborted, identity/data providers stubbed; not live authentication evidence."
+    }
+  ],
+  "beforeEvidence": {
+    "main": "docs/visual-qa/S409-investor-before.json",
+    "onboarding": "docs/visual-qa/S409-investor-before-onboarding.json",
+    "mainCaptures": 112,
+    "onboardingStrips": 14,
+    "rootInspectionConfirmed": true
+  },
+  "visualIteration": {
+    "state": "complete in local real-page fixtures against actual generated shell assets; external providers stubbed",
+    "inspected": [
+      "docs/visual-qa/S409-investor-after-login-dark-desktop.png",
+      "docs/visual-qa/S409-investor-after-dashboard-dark-desktop.png",
+      "docs/visual-qa/S409-investor-after-login-dark-mobile.png",
+      "docs/visual-qa/S409-investor-after-apply-dark-mobile.png"
+    ],
+    "corrections": [
+      "Removed the redundant mobile preview so sign-in appears earlier.",
+      "Added a direct mobile application jump.",
+      "Made required-field instructions visible without relying on a missing visually-hidden utility.",
+      "Added a full-height mobile navigation drawer, explicit close state and workspace switch.",
+      "Reserved at least44px for both investor brand links as touched navigation targets."
+    ]
+  },
+  "limitations": [
+    "No live private investor or member data was read.",
+    "No real application, message, account, approval or financial record was created.",
+    "These fixtures do not prove positive Obelisk authentication, production RLS or real provider availability.",
+    "RLS, approval/tier policy, prices, entitlements and identity authority remain unchanged.",
+    "Root owns shared fingerprints, package suite wiring, complete rendered acceptance, release gates and deployment."
+  ],
+  "status": "implemented-focused-tests-passed; lane-rendered-review-passed; root review and release pending",
+  "generatedRuntime": {
+    "recordedAt": "2026-11-03T05:19:44.913Z",
+    "actualHtmlAndHashedAssets": true,
+    "sourceOverrides": false,
+    "mainReceipt": "docs/visual-qa/S409-investor-after.json",
+    "mainCaptures": 112,
+    "stateReceipt": "docs/visual-qa/S409-investor-after-states.json",
+    "stateStrips": 14,
+    "renderedComponentStates": 63,
+    "rootInspection": "pending",
+    "laneInspection": "complete",
+    "blockingPixelFindings": 0
+  }
+}

@@ -439,11 +439,18 @@
       try {
         const { data: { session } } = await VSSupabase.auth.getSession();
         if (!session) throw new Error('Session expired. Please sign in again.');
+        // Referral attribution is optional; unavailable browser storage must not
+        // prevent an authenticated visitor from completing their profile.
+        const validReferral = value => typeof value === 'string' && /^[a-zA-Z0-9_]{1,32}$/.test(value) ? value : '';
+        let referrer = validReferral(new URLSearchParams(window.location.search).get('ref'));
+        if (!referrer) {
+          try { referrer = validReferral(sessionStorage.getItem('vs_ref')); } catch (_) {}
+        }
         const { data: rpcData, error: rpcErr } = await VSSupabase.rpc('register_open', {
           p_invite_code: invite || '',
           p_username: username,
           p_subscribe: subscribe,
-          p_ref_by: sessionStorage.getItem('vs_ref') || '',
+          p_ref_by: referrer,
         });
         if (rpcErr) throw new Error(rpcErr.message);
         // `register_open` reports a taken handle as DATA, not as an rpc error, so
@@ -453,9 +460,12 @@
         if (rpcRejection) throw new Error(rpcRejection);
 
         const { data: row } = await VSSupabase.from('vault_members').select('*').eq('id', session.user.id).single();
+        if (!row) throw new Error('Your Vault profile could not be loaded. Please try again.');
 
-        // The account now exists. Show it BEFORE anything optional runs.
-        if (row) { showDashboard(buildMember(session.user, row)); }
+        // The profile now exists: resume its requested surface, or show the
+        // dashboard, before anything optional runs.
+        const resuming = window.VSMemberEntry && window.VSMemberEntry.resumeAfterProfile();
+        if (!resuming) showDashboard(buildMember(session.user, row));
 
         // Newsletter opt-in is a side effect and must never be able to fail
         // registration. This previously called `VS.kitSubscribe`, which was never

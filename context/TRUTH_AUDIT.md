@@ -1,3 +1,8 @@
+<!-- S409-writeback -->
+## S409 — two live journey defects reproduced
+
+A real share-to-contact draft was discarded; three immediate real reaction clicks produced three inserts. Both now have browser regressions and independent review. Full release evidence remains separately pending in docs/RELEASE_S409.json. Context usage is unmeasured. Startup Canon suggestion timed out once then completed explicitly; zero ABSOLUTE conformance gaps. The IGNIS delegation shim resolved the foreign control-plane subject; its attempted process was stopped and no local refresh is claimed from it. Existing identity/provider, private-fixture and field-outcome limits remain.
+
 <!-- S408-release-acceptance -->
 ## Verified truth posture — S408
 
@@ -1913,3 +1918,15 @@ Prior accepted application baseline: 94fe9ea36566d4ba63fb78fb9b61ae3dda5e6c74; v
 
 Status: records reconciled; fresh native closeout verification, current staging, exact required checks, full production and readback remain pending for this explicit request. Existing identity/provider and field-vitals limitations remain separate. No new product features, prices, entitlements, creative direction, financial figures or growth claims are introduced.
 
+
+
+### S409 recipient-owned score refresh
+The local ownership-guarded scorer completed on this website and proved fresh history/mind outputs:45081 FORGE. The foreign delegation attempt is not counted. No sibling score or write is claimed.
+
+
+<!-- S409-account-truth -->
+## S409 account candidate — release evidence pending
+
+The redesigned member and investor surfaces are source changes, not a completed production release. Focused member/onboarding tests17/17 and independent review pass; provider cards have actual public rendering evidence, while private data in local UI captures is fixture data. Nine deployed staging Worker recovery checks pass. Live public starts still send both intents to the provider sign-in screen; this does not prove open enrollment or successful authentication.
+
+A staging snapshot was uploaded, then correctly rejected by parity after the source changed. It is not final staging acceptance. The complete final source gate, refreshed mobile matrix, exact staging/hosted candidate, affected authenticated journeys, production Worker/Pages readback and main publication remain separately tracked in docs/RELEASE_S409.json. No field-vitals, conversion, retention or global exactly-once feedback claim is made.

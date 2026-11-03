@@ -1,3 +1,9 @@
+<!-- S409-writeback -->
+## S409 — local implementation, release pending
+Open member signup; investor approval retained. Five local implementations; release acceptance: docs/RELEASE_S409.json. Resume S409 if unfinished. Full notes in [archive](archive/task-board/2026-11-03-S409-access-budget/TASK_BOARD.full.md).
+- [ ] [S409][SIL] Reproduce offline retry failure before selection.
+- [ ] [S409][SIL] Review share URL schemes separately.
+
 <!-- S408-writeback -->
 ## S408
 
@@ -6,19 +12,10 @@ Wave1 audit done. Wave2 five L2 outcomes verified. Wave3: docs/RELEASE_S408.json
 - [ ] [S408][SIL] Benchmark history only after failure (future).
 
 <!-- S407-release-acceptance -->
-## S407 verified outcomes — 2026-10-30
-
-Session Intent: /arc plus authorized normal main push and full deploy.
-
-- [x] Fresh startup/audit; both strict admissions and premises passed.
-- [x] Browser L2 and copy-checker L2: browser38, mobile215, copy72 and14 reviewed captures.
-- [x] Application acceptance: native548, stage11, hosted3 and full production45b74582c9a1; all3714 served resources verified.
-
-Wave3 publication and closing-record acceptance have one status source: docs/RELEASE_S407.json. No additional product work is selected.
-
-Future unselected SIL commitments:
-- [ ] [S407][SIL] Classify historical visual failures before updating baselines.
-- [ ] [S407][SIL] Isolate run-build-check --help side effects before selecting a repair.
+## S407
+Verified release: docs/RELEASE_S407.json. Future unselected:
+- [ ] [S407][SIL] Classify historical visual failures.
+- [ ] [S407][SIL] Isolate build-check help side effects.
 
 ---
 

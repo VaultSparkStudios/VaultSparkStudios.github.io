@@ -61,6 +61,8 @@ const SKIP_FILES = new Set([
   'franchise-architect/404.html',
   '404.html', 'offline.html',
   'share/index.html',
+  // S409: branded account chooser; mirrors the explicit propagation exemption.
+  'sign-in/index.html',
   'vault-member/admin/ignis-spend/index.html',
   'vault-member/passport/index.html',
   // S207: Obelisk Passport login + OAuth callback — auth utility pages, own minimal layout.

@@ -25,6 +25,8 @@ function check(fixtures = null) {
     member: read('vault-member/index.html'),
     memberAuth: read('vault-member/portal-auth.js'),
     investor: read('investor-portal/login/index.html'),
+    investorApply: read('investor-portal/apply/index.html'),
+    investorExperience: read('assets/investor-experience.js'),
     tests: read('tests/obelisk-auth.unit.spec.js'),
     packageJson: read('package.json'),
     readiness: read('scripts/check-obelisk-redirect-readiness.mjs'),
@@ -83,7 +85,45 @@ function check(fixtures = null) {
       `${name} Obelisk seal does not declare the relying party it authenticates`, failures);
   }
   assert(!/id="signupPassword"/.test(files.investor), 'investor enrollment still asks VaultSpark to create a password', failures);
-  assert(/investor_requests/.test(files.investor) && /prior_gaming:/.test(files.investor), 'investor application workflow was not preserved', failures);
+  // The branded gateway delegates the application to its dedicated route.
+  // Check the complete public route -> form -> submit wiring, rather than
+  // requiring the former duplicate application handler inside login HTML.
+  assert(/<a\b[^>]*id="investorApplyLink"[^>]*href="\/investor-portal\/apply\/(?:[?#][^"]*)?"/.test(files.investor),
+    'investor gateway does not link to the application route', failures);
+  for (const [name, html] of [['gateway', files.investor], ['application', files.investorApply]]) {
+    assert(/<script\b[^>]*src="\/assets\/investor-experience(?:\.shell-[a-f0-9]+)?\.js"/.test(html),
+      `investor ${name} does not load the consolidated experience handler`, failures);
+  }
+  assert(/<form\b[^>]*id="applyForm"/.test(files.investorApply), 'investor application form is missing', failures);
+  for (const id of ['applyName', 'applyEmail', 'applyWhyApprove', 'applyWhyVS']) {
+    const field = files.investorApply.match(new RegExp(`<(?:input|textarea)\\b[^>]*\\bid="${id}"[^>]*>`));
+    assert(field && /\brequired\b/.test(field[0]), `investor application required field ${id} is missing`, failures);
+  }
+  const emailField = files.investorApply.match(/<input\b[^>]*id="applyEmail"[^>]*>/);
+  assert(emailField && /type="email"/.test(emailField[0]), 'investor application email validation is missing', failures);
+  for (const value of ['yes', 'no']) {
+    assert(new RegExp(`<input\\b[^>]*type="radio"[^>]*name="priorGaming"[^>]*value="${value}"`).test(files.investorApply),
+      `investor application prior gaming choice ${value} is missing`, failures);
+  }
+  assert(/<button\b[^>]*type="submit"[^>]*id="applyBtn"/.test(files.investorApply), 'investor application submit control is missing', failures);
+  const application = files.investorExperience.match(/function initApplication\(\)\s*\{([\s\S]*?)\n  function initNavigation/);
+  const applicationSource = application?.[1] || '';
+  const submit = applicationSource.match(/form\.addEventListener\(['"]submit['"],\s*async function\s*\(event\)\s*\{([\s\S]*?)\n\s*\}\);/);
+  assert(/document\.getElementById\('applyForm'\)/.test(applicationSource) && submit,
+    'investor application submit listener is missing', failures);
+  const submission = submit?.[1] || '';
+  assert(/event\.preventDefault\(\)/.test(submission) && /form\.reportValidity\(\)/.test(submission),
+    'investor application submit validation is missing', failures);
+  assert(/VSSupabase\.from\('investor_requests'\)\.insert\(\{/.test(submission),
+    'investor application does not write investor_requests on submit', failures);
+  for (const [column, id] of [['full_name', 'applyName'], ['email', 'applyEmail'], ['why_approve', 'applyWhyApprove'], ['why_vaultspark', 'applyWhyVS']]) {
+    assert(new RegExp(`${column}:\\s*get\\('${id}'\\)`).test(submission),
+      `investor application submission lost ${column}`, failures);
+  }
+  assert(/prior_gaming:\s*document\.querySelector\('input\[name="priorGaming"\]:checked'\)\.value === 'yes'/.test(submission),
+    'investor application submission lost prior_gaming', failures);
+  assert(/initGateway\(\);\s*initApplication\(\);/.test(files.investorExperience),
+    'investor application handler is not initialized', failures);
   assert(/register_open/.test(files.memberAuth), 'member profile onboarding was not preserved', failures);
 
   assert(/authorization-code \+ PKCE callback creates a live edge session/.test(files.tests), 'behavioral round-trip test is missing', failures);
@@ -124,7 +164,20 @@ function selfTest() {
     chipLoader: 'VSSignedInState.getSession',
     member: '<div data-obelisk-seal data-rp="vaultsparkstudios-website" data-login-url="/login?intent=signin"></div> /login?intent=signin',
     memberAuth: 'register_open',
-    investor: '<div data-obelisk-seal data-rp="vaultsparkstudios-website" data-login-url="/login?intent=signin"></div> /login?intent=signin investor_requests prior_gaming:',
+    investor: '<div data-obelisk-seal data-rp="vaultsparkstudios-website" data-login-url="/login?intent=signin"></div> /login?intent=signin <a id="investorApplyLink" href="/investor-portal/apply/">Apply</a><script src="/assets/investor-experience.js"></script>',
+    investorApply: '<script src="/assets/investor-experience.js"></script><form id="applyForm"><input id="applyName" required><input type="email" id="applyEmail" required><textarea id="applyWhyApprove" required></textarea><textarea id="applyWhyVS" required></textarea><input type="radio" name="priorGaming" value="yes"><input type="radio" name="priorGaming" value="no" checked><button type="submit" id="applyBtn">Submit</button></form>',
+    investorExperience: `function initApplication() {
+    var form = document.getElementById('applyForm');
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault(); if (!form.reportValidity()) return;
+      await window.VSSupabase.from('investor_requests').insert({
+        full_name: get('applyName'), email: get('applyEmail'), why_approve: get('applyWhyApprove'), why_vaultspark: get('applyWhyVS'),
+        prior_gaming: document.querySelector('input[name="priorGaming"]:checked').value === 'yes',
+      });
+    });
+  }
+  function initNavigation() {}
+  initGateway(); initApplication();`,
     tests: 'authorization-code + PKCE callback creates a live edge session without exposing Obelisk tokens bridge outage rejects a stale browser session corrupt flow state fails closed',
     packageJson: 'obelisk-auth.unit.spec.js',
     readiness: 'altered-callback-host foreign-client publicSafe: true',
@@ -144,7 +197,19 @@ function selfTest() {
   if (!ambientBypass.some((item) => item.includes('browser-persisted'))) throw new Error('ambient persisted-session bypass was not rejected');
   const missingRedirectGate = check({ ...good, deployStaging: 'deploy without identity preflight' });
   if (!missingRedirectGate.some((item) => item.includes('fail fast'))) throw new Error('missing redirect deploy gate was not rejected');
-  console.log('check-obelisk-passport-contract --self-test: OK (activation + 5 negative paths)');
+  const applicationNegatives = [
+    ['missing application route', { investor: good.investor.replace('/investor-portal/apply/', '/contact/') }, 'does not link'],
+    ['missing required field', { investorApply: good.investorApply.replace('id="applyName" required', 'id="applyName"') }, 'required field applyName'],
+    ['missing handler script', { investorApply: good.investorApply.replace('<script src="/assets/investor-experience.js"></script>', '') }, 'does not load'],
+    ['removed submit listener', { investorExperience: good.investorExperience.replace("addEventListener('submit'", "addEventListener('click'") }, 'submit listener'],
+    ['wrong application table', { investorExperience: good.investorExperience.replace("from('investor_requests')", "from('unrelated')") }, 'write investor_requests'],
+    ['lost prior gaming answer', { investorExperience: good.investorExperience.replace('prior_gaming:', 'old_answer:') }, 'lost prior_gaming'],
+    ['uninitialized application', { investorExperience: good.investorExperience.replace('initGateway(); initApplication();', 'initGateway();') }, 'not initialized'],
+  ];
+  for (const [name, change, expected] of applicationNegatives) {
+    if (!check({ ...good, ...change }).some(item => item.includes(expected))) throw new Error(`${name} was not rejected`);
+  }
+  console.log('check-obelisk-passport-contract --self-test: OK (activation + 12 negative paths)');
 }
 
 if (process.argv.includes('--self-test')) {

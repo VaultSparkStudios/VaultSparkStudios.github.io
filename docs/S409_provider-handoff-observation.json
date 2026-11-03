@@ -1,0 +1,108 @@
+{
+  "session": 409,
+  "state": "observed-not-authenticated",
+  "at": "2026-11-03T05:31:02.697Z",
+  "scope": "Public start/authorize handoff only. No credential submission, identity creation or private-data acceptance.",
+  "observations": [
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "intent": "signin",
+      "at": "2026-11-03T05:31:00.883Z",
+      "websiteStatus": 302,
+      "providerOrigin": "https://obeliskgate.com",
+      "providerPath": "/auth/authorize",
+      "sentIntent": {
+        "login_hint": "signin",
+        "screen_hint": null
+      },
+      "providerStatus": 302,
+      "next": {
+        "origin": "https://obeliskgate.com",
+        "path": "/auth",
+        "screen": "signin",
+        "continuation": {
+          "sameProvider": true,
+          "path": "/auth/authorize/complete",
+          "queryKeys": [
+            "req"
+          ]
+        }
+      }
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "intent": "signup",
+      "at": "2026-11-03T05:31:01.522Z",
+      "websiteStatus": 302,
+      "providerOrigin": "https://obeliskgate.com",
+      "providerPath": "/auth/authorize",
+      "sentIntent": {
+        "login_hint": "signup",
+        "screen_hint": null
+      },
+      "providerStatus": 302,
+      "next": {
+        "origin": "https://obeliskgate.com",
+        "path": "/auth",
+        "screen": "signin",
+        "continuation": {
+          "sameProvider": true,
+          "path": "/auth/authorize/complete",
+          "queryKeys": [
+            "req"
+          ]
+        }
+      }
+    },
+    {
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "intent": "signin",
+      "at": "2026-11-03T05:31:01.918Z",
+      "websiteStatus": 302,
+      "providerOrigin": "https://obeliskgate.com",
+      "providerPath": "/auth/authorize",
+      "sentIntent": {
+        "login_hint": "signin",
+        "screen_hint": null
+      },
+      "providerStatus": 302,
+      "next": {
+        "origin": "https://obeliskgate.com",
+        "path": "/auth",
+        "screen": "signin",
+        "continuation": {
+          "sameProvider": true,
+          "path": "/auth/authorize/complete",
+          "queryKeys": [
+            "req"
+          ]
+        }
+      }
+    },
+    {
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "intent": "signup",
+      "at": "2026-11-03T05:31:02.417Z",
+      "websiteStatus": 302,
+      "providerOrigin": "https://obeliskgate.com",
+      "providerPath": "/auth/authorize",
+      "sentIntent": {
+        "login_hint": "signup",
+        "screen_hint": null
+      },
+      "providerStatus": 302,
+      "next": {
+        "origin": "https://obeliskgate.com",
+        "path": "/auth",
+        "screen": "signin",
+        "continuation": {
+          "sameProvider": true,
+          "path": "/auth/authorize/complete",
+          "queryKeys": [
+            "req"
+          ]
+        }
+      }
+    }
+  ]
+}

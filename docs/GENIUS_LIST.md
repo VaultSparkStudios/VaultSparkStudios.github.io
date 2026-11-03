@@ -1,4 +1,4 @@
-# Genius Hit List — Session 408
+# Genius Hit List — Session 409
 
 Generated: 2026-11-03
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **83/100**
+- Overall opportunity pressure: **82/100**
 - Health: **yellow**
 - Current SIL: **939/1000**
 - CI health: **check gh run list**
-- Current focus: S408: reliable release verification and readable archive sharing.
+- Current focus: S409: distinct member and premium investor journeys; open member signup, investor approval retained.
 
 ## Strategic Read
 
@@ -22,10 +22,10 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Classify old visual failures (future).
+#### 1. [PRODUCT] Reproduce offline retry failure before selection.
 Final score: **96**
-[S408][SIL] Classify old visual failures (future).
-Why it matters: Classify old visual failures (future). is open, local, and unblocked — can ship this session.
+[S409][SIL] Reproduce offline retry failure before selection.
+Why it matters: Reproduce offline retry failure before selection. is open, local, and unblocked — can ship this session.
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -34,34 +34,34 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Benchmark history only after failure (future).
-Final score: **93**
+#### 3. [PRODUCT] Classify old visual failures (future).
+Final score: **90**
+[S408][SIL] Classify old visual failures (future).
+Why it matters: Classify old visual failures (future). is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] Benchmark history only after failure (future).
+Final score: **87**
 [S408][SIL] Benchmark history only after failure (future).
 Why it matters: Benchmark history only after failure (future). is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Classify historical visual failures before updating baselines.
-Final score: **90**
-[S407][SIL] Classify historical visual failures before updating baselines.
-Why it matters: Classify historical visual failures before updating baselines. is open, local, and unblocked — can ship this session.
-
 ### NEXT
 
-#### 1. [PRODUCT] Isolate run-build-check --help side effects before selecting a repair.
-Final score: **87**
-[S407][SIL] Isolate run-build-check --help side effects before selecting a repair.
-Why it matters: Isolate run-build-check --help side effects before selecting a repair. is open, local, and unblocked — can ship this session.
-
-#### 2. [SECURITY] Measure help startup separately from probe execution before attemptin…
+#### 1. [SECURITY] Measure help startup separately from probe execution before attemptin…
 Final score: **84**
 [S406][SIL] Measure help startup separately from probe execution before attempting runtime optimization. No performance or token saving is currently claimed.
 Why it matters: Measure help startup separately from probe execution before attempting lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
 
+#### 2. [PRODUCT] Review share URL schemes separately.
+Final score: **81**
+[S409][SIL] Review share URL schemes separately.
+Why it matters: Review share URL schemes separately. is open, local, and unblocked — can ship this session.
+
 #### 3. [VERIFY] Reproduce the34 optional E2E failures before changing implementation,…
 Final score: **81**
 [S406][FOLLOW-UP] Reproduce the34 optional E2E failures before changing implementation, baselines or CI policy; same failure names exist on the accepted baseline. Unselected; docs/S406_explicit-closeout-optional-e2e.json.
-Why it matters: Reproduce the34 optional E2E failures before changing implementation,  was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
+Why it matters: Reproduce the34 optional E2E failures before changing implementation,  was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -136,12 +136,12 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Classify old visual failures (future).
+1. Reproduce offline retry failure before selection.
 2. Post-push CI confirmation
-3. Benchmark history only after failure (future).
-4. Classify historical visual failures before updating baselines.
-5. Isolate run-build-check --help side effects before selecting a repair.
-6. Measure help startup separately from probe execution before attemptin…
+3. Classify old visual failures (future).
+4. Benchmark history only after failure (future).
+5. Measure help startup separately from probe execution before attemptin…
+6. Review share URL schemes separately.
 7. Reproduce the34 optional E2E failures before changing implementation,…
 8. Consider extending help-only process fixtures to another operator CLI…
 9. Consider migration of scheduled text probes only after measuring cove…

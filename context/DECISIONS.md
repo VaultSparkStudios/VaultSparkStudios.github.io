@@ -1191,3 +1191,19 @@ Native source169 found the November archive share asset missing. Existing templa
 ### S408 complete Git capture and preview delivery
 The same >1MiB inventory failure recurred in resync-derived and also affects the full staging manifest. Fix the existing shared process boundary with a bounded16MiB Git default; retain explicit caps, non-Git defaults, all paths and existing window/environment guards. Actual inventory controls,18reconciler checks and independent review passed.
 The changed OG template also serves the public preview Worker. Bind preview cache identity to actual SVG bytes so deployment cannot retain the previous template; HEAD stores a GET representation and returns no body. The canonical website staging DNS is deliberately unproxied, so the preview component uses a persistent isolated staging Worker; its16GET/8HEAD readbacks passed. Production routing and website staging DNS/auth paths remain unchanged.
+
+
+<!-- S409-writeback -->
+## S409 — preserve incoming drafts and feedback intent
+
+Consume the existing share subject/body contract as bounded plain text in empty fields; keep submission verification and topic routing. First in-page reaction wins; persist pending payload before await, acknowledge only its matching current record, and preserve unrelated/newer records. No server idempotency claim, identity/trust-policy change, pricing change or lifecycle transition. Existing CANON-045 STRONG readiness gap stays explicit; routine promotion follows RELEASE_PROMOTION_PROTOCOL. CANON-055 reaches Contact and the shared rating widget through a fully verified candidate, not report-only updates.
+
+
+<!-- S409-account-direction -->
+## S409 — distinct audiences, one identity
+
+The founder explicitly selected open member signup while retaining investor approval. Vault Membership uses its own community branding; Investor Relations uses a separate premium workspace and application journey. Both delegate credentials and sessions to Obelisk. Pricing, membership benefits, investor roles and data permissions remain authoritative and unchanged. This supersedes the initial two-repair scope's statement that identity flows were unchanged.
+
+Creation, profile completion and investor approval are separate steps. Member callbacks traverse the member portal; a requested member destination resumes only after an existing or newly created member row is confirmed. Referrals use bounded query continuity and tolerate unavailable optional browser storage. Provider cards mount in dedicated empty elements only after their safe destinations are prepared, and follow the applied light/dark theme.
+
+Open enrollment is a release requirement, not a claim inferred from website copy: verify the website-specific provider policy, supported signup intent and real authenticated journeys before production promotion. No global provider enrollment policy or investor approval bypass is authorized.

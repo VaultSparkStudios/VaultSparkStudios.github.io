@@ -1071,7 +1071,7 @@
     },
     {
       // rate-page: emoji feedback widget — content pages, skip portals/admin/api.
-      src: '/assets/rate-page.shell-7ca5d9e98f.js',
+      src: '/assets/rate-page.shell-f047c9d940.js',
       when: function () {
         return false; // Spark owns requested discovery.
       },

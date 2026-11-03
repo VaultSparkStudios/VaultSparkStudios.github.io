@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-6789332512cbb8be';
+const CACHE_NAME = 'vaultspark-shell-46e421de4215fca7';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -34,14 +34,22 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/vault-member/portal-logic.shell-7928261818.js',
   '/vault-member/portal-dashboard.shell-c353dfa54a.js',
   '/vault-member/portal.shell-0007bdfdfe.css',
-  '/assets/investor-theme.shell-9ce155cfc3.css',
-  '/assets/investor-experience.shell-f72aa84b07.js',
+  '/assets/investor-theme.shell-34033980bc.css',
+  '/assets/investor-experience.shell-a2811f3789.js',
+  '/assets/member-access.shell-5bb645300d.css',
+  '/assets/account-entry.shell-c3ddf1fcd0.js',
+  '/vault-member/portal-settings.shell-da00f91e01.js',
+  '/vault-member/portal-auth.shell-c4606e6160.js',
+  '/assets/obelisk-seal-entry.shell-281c25ac75.js',
+  '/assets/investor-auth.shell-19fe6f9313.js',
+  '/assets/investor-ui.shell-bd0d41782d.js',
+  '/assets/contact-page.shell-da428b9351.js',
   '/assets/sentry-init.shell-8b1d92d92b.js',
   '/assets/vault-pulse.shell-141c057d30.js',
   '/assets/recent-ships.shell-001af71d31.js',
   '/assets/members-directory.shell-2c3992e2b6.js',
   '/assets/home-idle-loader.shell-7b976ad580.js',
-  '/assets/ambient-core.shell-214cf44506.js',
+  '/assets/ambient-core.shell-a3a5da83ce.js',
   '/assets/ambient-feature.shell-9b5baeb1ab.js',
   '/assets/proof-verify.shell-4b68e2855f.js',
   '/assets/desk-reactions.shell-523b04a01e.js',
@@ -70,7 +78,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/oracle-insights-compute.shell-355aaa84cf.js',
   '/assets/proof-card.shell-1af2012142.js',
   '/assets/pwa-nav.shell-5f63b6b75a.js',
-  '/assets/rate-page.shell-7ca5d9e98f.js',
+  '/assets/rate-page.shell-f047c9d940.js',
   '/assets/schema-injector.shell-33115efcde.js',
   '/assets/security-posture.shell-cb874aa5e8.js',
   '/assets/studio-pulse-live.shell-5fc734ef84.js',
@@ -96,6 +104,14 @@ const NON_CACHEABLE_SHELL_SOURCES = [
   '/vault-member/portal.css',
   '/assets/investor-theme.css',
   '/assets/investor-experience.js',
+  '/assets/member-access.css',
+  '/assets/account-entry.js',
+  '/vault-member/portal-settings.js',
+  '/vault-member/portal-auth.js',
+  '/assets/obelisk-seal-entry.js',
+  '/assets/investor-auth.js',
+  '/assets/investor-ui.js',
+  '/assets/contact-page.js',
   '/assets/sentry-init.js',
   '/assets/vault-pulse.js',
   '/assets/recent-ships.js',
@@ -143,7 +159,7 @@ const STATIC_ASSETS = [
   '/',
   '/assets/style.shell-dafcbbf695.css',
   '/assets/shell-health.shell-0995bd7945.js',
-  '/assets/ambient-core.shell-214cf44506.js',
+  '/assets/ambient-core.shell-a3a5da83ce.js',
   '/assets/ambient-feature.shell-9b5baeb1ab.js',
   '/assets/kit.js',
   '/assets/icon-32.png',
@@ -240,7 +256,7 @@ const STATIC_ASSETS = [
   '/assets/eternal-credits.js',
   // S113 (P7 + P3) — sitewide ambient additions
   '/assets/breadcrumb-render.js',
-  '/assets/rate-page.shell-7ca5d9e98f.js',
+  '/assets/rate-page.shell-f047c9d940.js',
   '/assets/account-chip.js',
   '/assets/studio-living.js',
   '/studio-pulse/',

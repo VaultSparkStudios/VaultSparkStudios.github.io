@@ -8,12 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 8 totals): 939 · 939 · 939 · 939 · 939 · 939 · 939 · 939 ▄▄▄▄▄▄▄▄ (→)
-Avgs — 3: 939.0 | 5: 939.0 | 10: 939.0
-  └ S408: Dev95 | Align94 | Momentum92 | Engage96 | Process88 | Coherence94 | Security97 | Ecosystem91 | Capital95 | Automation97
-Velocity trend:→ |Protocol velocity:↑ |Debt:→
-Last session: 2026-11-02 | Session 408 | Total: 939/1000 | Velocity: 1
-  └ Release evidence: docs/RELEASE_S408.json; local implementation alone is not production acceptance.
+Sparkline (last8):939 ·939 ·939 ·939 ·939 ·939 ·939 ·939 ▄▄▄▄▄▄▄▄ (→)
+Avgs — 3:939.0 |5:939.0 |10:939.0
+  └ S409: Dev95 |Align94 |Momentum92 |Engage96 |Process88 |Coherence94 |Security97 |Ecosystem91 |Capital95 |Automation97
+Last session:2026-11-03 |Session 409 |Total:939/1000 |Velocity:2
+  └ Release evidence: docs/RELEASE_S409.json; local implementation is not production acceptance.
 <!-- rolling-status-end -->
 
 > Older entries through S401 live verbatim in `context/archive/SIL_S1-S401.md` (exact committed pre-rotation snapshot). Recent complete entries follow.
@@ -2216,3 +2215,22 @@ Five locally accepted outcomes: product1, protocol4. Shared Git captures now ret
 #### S408 verified release addendum
 
 Five S408 outcomes are verified: safe build-check help, merge-closeout observation, complete privacy inventory, readable archive sharing/live previews, and bounded complete Git capture. Candidate 0105e4646789 passed two complete548-step native runs, mobile215/215,84 inspected before/after page-component images across seven themes, staging11/11 and exact hosted workflows3/3. Normal full Pages production run41572219005 is verified by provider identity and three build stamps. Complete Pages-origin readback checked3824: 3814 identical,10 configured redirects,0 differences/unread. Live OG Workere4b3070a-1090-49aa-b99d-d7ef44f6c192 passed16exact GET/8HEAD reads. All five publishers are restored; uptime stayed active. SIL939/1000 (product1/protocol4). The later full-run process-status flake was corrected by asserting both native/wrapped ENOBUFS capture errors, retaining explicit caps and full byte controls; independent review approved. Failed attempts remain recorded. Product velocity1, protocol velocity4 and SIL939/1000 remain unchanged. The two existing future SIL commitments stay unselected on TASK_BOARD.
+
+
+<!-- S409-writeback -->
+## Session 409 — 2026-11-03 — shared messages and reliable reactions
+
+Two selected L2 public journeys are locally verified: shared Contact drafts retain editable text; page reactions admit one in-page submission and preserve pending retries without stale-store overwrite. Focused browser tests: Contact4/4 and feedback15/15, no skips. Independent reviews passed. Full source, staging, hosted checks, production, readback and main publication remain separately tracked in docs/RELEASE_S409.json; local acceptance is not deployment proof.
+
+Dev Health:95 | Creative Alignment:94 | Momentum:92 | Engagement:96 | Process Quality:88 | Cross-Repo Coherence:94 | Security Posture:97 | Ecosystem Integration:91 | Capital Efficiency:95 | Automation Coverage:97
+Total:939/1000. Product velocity:2; protocol velocity:0. No score increase for unmeasured conversion, retention or field performance.
+
+Brainstorm: reproduce transient offline recovery before changing retries; review arbitrary shared URL handling separately. Both are future unselected SIL tasks. CDR unchanged.
+
+
+<!-- S409-account-scope-addendum -->
+### S409 account scope addendum — acceptance in progress
+
+Founder direction expands the original two local repairs to three account outcomes. SIL remains939/1000 across the existing ten categories; no additional shipped velocity or measured user gain is claimed before release.
+
+Lesson: account-page fixtures that block the identity provider cannot validate its destructive mount behavior, snapshotted destination or loaded layout. Pair local states with actual public provider rendering and affected authenticated journeys. Preserve the initial two unselected follow-up commitments; do not add unrelated work.

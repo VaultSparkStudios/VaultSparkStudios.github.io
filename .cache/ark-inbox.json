@@ -1,9 +1,79 @@
 {
-  "drainedAt": "2026-11-02T23:54:39.236Z",
+  "drainedAt": "2026-11-03T06:37:19.584Z",
   "slug": "vaultsparkstudios-website",
-  "count": 0,
-  "cargo": [],
+  "count": 1,
+  "cargo": [
+    {
+      "id": "01K6G18LLIE284C0772578A2F2",
+      "type": "session-impact-summary",
+      "from": "statvault",
+      "shippedAt": "2026-11-03T06:24:09.814Z",
+      "payload": {
+        "session": 352,
+        "project": "statvault",
+        "sil": {
+          "from": 922,
+          "to": 924
+        },
+        "shipped": [
+          "NFL career ratios from paired seasons: Johnston Ctch% 14,700 -> 50.0; 289 profiles repaired; 0 of 8,484 displayed and 6,596 hydrated career lines above 100%",
+          "Declared percent scales for NBA/NHL/MLS and corpus-compare",
+          "Bounded paging on 11 API routes (limit=-1 no longer drops a user pick)",
+          "Argument-string entity hygiene rule",
+          "GitHub CI: 5 of 8 jobs green for the first time since 2026-08-25; 13 colour-only in-text links and 1 dangling aria-controls fixed"
+        ],
+        "release": {
+          "commit": "c32cb2b290",
+          "buildId": "kMcvEnNByOwOIXjtz8JV5",
+          "origins": [
+            "staging",
+            "production"
+          ]
+        },
+        "doctor": "213/213 blockingFailing 0",
+        "lessons": [
+          "A page that re-derives a ratio from stored counts must be fixed in the runtime and loader, not only the stored rate; read back the serialized payload",
+          "Verify with the real function over the real corpus"
+        ],
+        "open": [
+          "Studio Hub #38: 18 stale-or-regressed Playwright specs",
+          "SIL S352.a NHL impossible shot lines",
+          "SIL S352.b displayed-share doctor probe"
+        ]
+      },
+      "msg": {
+        "v": 2,
+        "type": "inform",
+        "level": "P3",
+        "thread": "t-2ee6ba6dd6b2f95a",
+        "due": null,
+        "channel": "feed",
+        "supersedes": "01K50DV2IM2920A8DD5A44C87C",
+        "derived": false
+      }
+    }
+  ],
   "sigFailures": [],
-  "threads": [],
-  "supersededIds": []
+  "threads": [
+    {
+      "id": "01K6G18LLIE284C0772578A2F2",
+      "type": "session-impact-summary",
+      "from": "statvault",
+      "shippedAt": "2026-11-03T06:24:09.814Z",
+      "title": "session-impact-summary",
+      "msg": {
+        "v": 2,
+        "type": "inform",
+        "level": "P3",
+        "thread": "t-2ee6ba6dd6b2f95a",
+        "due": null,
+        "channel": "feed",
+        "supersedes": "01K50DV2IM2920A8DD5A44C87C",
+        "derived": false
+      }
+    }
+  ],
+  "supersededIds": [
+    "01K50DV2IM2920A8DD5A44C87C"
+  ]
 }

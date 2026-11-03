@@ -30,6 +30,15 @@ const SHELL_ASSETS = [
   { key: 'memberPortalStyle', source: 'vault-member/portal.css', stem: 'portal.shell', attribute: 'href' },
   { key: 'investorTheme', source: 'assets/investor-theme.css', stem: 'investor-theme.shell', attribute: 'href' },
   { key: 'investorExperience', source: 'assets/investor-experience.js', stem: 'investor-experience.shell', attribute: 'src' },
+  // Account journeys must update for returning browsers as one consistent release.
+  { key: 'memberAccessStyle', source: 'assets/member-access.css', stem: 'member-access.shell', attribute: 'href' },
+  { key: 'accountEntry', source: 'assets/account-entry.js', stem: 'account-entry.shell', attribute: 'src' },
+  { key: 'memberPortalSettings', source: 'vault-member/portal-settings.js', stem: 'portal-settings.shell', attribute: 'src' },
+  { key: 'memberPortalAuth', source: 'vault-member/portal-auth.js', stem: 'portal-auth.shell', attribute: 'src' },
+  { key: 'obeliskSealEntry', source: 'assets/obelisk-seal-entry.js', stem: 'obelisk-seal-entry.shell', attribute: 'src' },
+  { key: 'investorAuth', source: 'assets/investor-auth.js', stem: 'investor-auth.shell', attribute: 'src' },
+  { key: 'investorUi', source: 'assets/investor-ui.js', stem: 'investor-ui.shell', attribute: 'src' },
+  { key: 'contactPage', source: 'assets/contact-page.js', stem: 'contact-page.shell', attribute: 'src' },
   { key: 'sentryInit', source: 'assets/sentry-init.js', stem: 'sentry-init.shell', attribute: 'src' },
   // The homepage idle loader imports this module dynamically. A query-string
   // revision still shares a mutable cache key at some edge layers and the

@@ -1,3 +1,25 @@
+
+<!-- S409-onboarding-current -->
+## S409 current account acceptance
+
+Open member signup; investor approval retained. Member/onboarding17/17 and independent review pass, including confirmed-profile destination resume, denied storage and safe returns. Final post-onboarding build passed; investor state selectors were regenerated and pass all nine mobile contracts. Complete source/mobile, current staging/hosted checks, actual provider signup/private journeys and production/main publication remain pending. Public provider cards and fixtures are not positive authentication proof. Resume the bound S409 goal; this is not final closeout. See docs/RELEASE_S409.json and docs/S409_access-implementation.json.
+
+
+
+<!-- S409-access-current -->
+## S409 account experience expansion — implementation verified locally, release pending
+
+Founder direction supersedes the initial two-outcome scope and its earlier “no creative direction” statement: open member signup; keep investor approval. Member entrance, profile completion and premium Investor Relations are separate branded journeys. Callback recovery retains trusted audience and initiating mode and fails closed when trust is absent. No investor roles, access policies, tier benefits or pricing changed.
+
+Local focused checks passed: member entrance7, profile completion3, public enrollment5, investor11, audience recovery22 (plus existing Obelisk regressions). Real rendered review covers seven themes on desktop/mobile; canonical aggregate receipt is being finalized. Complete build passed at 2026-11-03T05:27:36.623Z; this is not full source, staging or production acceptance. The initial Contact4 and reactions15 repairs remain selected.
+
+Open acceptance: supported provider signup intent and website-specific enrollment must be applied and verified; real member/new-account/approved-investor journeys must pass. Ark owner request01K6FT1400D39BF1F9F1C30A4E is sent, not acknowledged or applied. No positive live authentication claim. Full final source/mobile, staging, exact hosted checks, Worker/Pages release, readback and normal main push remain pending in docs/RELEASE_S409.json. Five temporary publisher holds were restored; uptime stayed active. Resume S409 and the bound goal; do not start a new arc or treat this as final closeout.
+
+<!-- S409-writeback -->
+## S409 — preserve shared messages and reliable reactions
+
+Two selected L2 public journeys are locally verified: shared Contact drafts retain editable text; page reactions admit one in-page submission and preserve pending retries without stale-store overwrite. Focused browser tests: Contact4/4 and feedback15/15, no skips. Independent reviews passed. Full source, staging, hosted checks, production, readback and main publication remain separately tracked in docs/RELEASE_S409.json; local acceptance is not deployment proof.
+
 <!-- S408-release-acceptance -->
 ## S408 verified release — 2026-11-02
 

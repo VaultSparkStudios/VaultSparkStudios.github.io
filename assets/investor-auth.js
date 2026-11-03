@@ -90,7 +90,7 @@
 
   function getRedirectUrl(errorCode) {
     const base = window.location.origin + LOGIN_URL;
-    const next = encodeURIComponent(window.location.href);
+    const next = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
     return errorCode
       ? `${base}?error=${errorCode}&next=${next}`
       : `${base}?next=${next}`;
@@ -142,7 +142,7 @@
         investment_amount:  null,
         equity_percentage:  null,
         investment_date:    null,
-        onboarded_at:       new Date().toISOString(),
+        onboarded_at:       null,
         update_count:       0,
         document_count:     0,
         is_admin:           true,
@@ -169,7 +169,8 @@
     }
 
     if (profile.error) {
-      window.location.replace(APPLY_URL + '?reason=not_investor');
+      window.location.replace(APPLY_URL + '?reason=not_investor&next=' +
+        encodeURIComponent(window.location.pathname + window.location.search + window.location.hash));
       return;
     }
 
@@ -253,10 +254,15 @@
   window.VSInvestorAuth = VSInvestorAuth;
 
   // Auto-init when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initInvestorAuth);
+  function startAfterPageReady() {
+    // Page-owned listeners subscribe to investor:ready on DOMContentLoaded.
+    // A warm identity bridge can resolve before those listeners register.
+    setTimeout(() => { initInvestorAuth().catch(() => redirect('rpc_error')); }, 0);
+  }
+  if (document.readyState !== 'complete') {
+    document.addEventListener('DOMContentLoaded', startAfterPageReady, { once: true });
   } else {
-    initInvestorAuth();
+    startAfterPageReady();
   }
 
 })(window);

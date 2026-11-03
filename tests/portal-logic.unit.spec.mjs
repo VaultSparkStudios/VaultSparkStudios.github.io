@@ -320,7 +320,7 @@ test('dashboard duplicates are consolidated', () => {
 test('portal scripts load pure logic before the code that uses it', () => {
   const html = read('vault-member/index.html');
   const shell = JSON.parse(read('assets/shell-manifest.json'));
-  const order = ['/assets/seasons-rivals.js', '/' + shell.assets.memberPortalLogic.path, 'portal-core.js', 'portal-auth.js', 'portal-loop.js', '/' + shell.assets.memberPortalDashboard.path, 'portal-settings.js'];
+  const order = ['/assets/seasons-rivals.js', '/' + shell.assets.memberPortalLogic.path, 'portal-core.js', '/' + shell.assets.memberPortalAuth.path, 'portal-loop.js', '/' + shell.assets.memberPortalDashboard.path, '/' + shell.assets.memberPortalSettings.path];
   const idx = order.map((src) => html.indexOf('src="' + src + '"'));
   idx.forEach((i, n) => assert.ok(i > 0, order[n] + ' is loaded'));
   for (let n = 1; n < idx.length; n += 1) assert.ok(idx[n] > idx[n - 1], order[n] + ' loads after ' + order[n - 1]);
@@ -352,6 +352,6 @@ test('investor gate keeps non-investors signed in and has a real logo', () => {
   assert.ok(fs.existsSync(path.join(ROOT, 'assets/vaultspark-icon.webp')));
   const gate = src.slice(src.indexOf('async function initInvestorAuth'), src.indexOf('// ── Public API'));
   assert.doesNotMatch(gate, /signOut\(/, 'the gate never signs a member out');
-  assert.match(gate, /APPLY_URL \+ '\?reason=not_investor'/);
+  assert.match(gate, /window\.location\.replace\(APPLY_URL \+ '\?reason=not_investor&next=' \+/);
   assert.match(src, /async signOut\(\)/, 'explicit sign-out remains available');
 });

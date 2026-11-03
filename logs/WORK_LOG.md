@@ -544,3 +544,15 @@ S408 final local implementation:5outcomes accepted (product1/protocol4). Shared 
 ### S408 final release acceptance — 2026-11-03T03:46:51.947Z
 
 Five S408 outcomes are verified: safe build-check help, merge-closeout observation, complete privacy inventory, readable archive sharing/live previews, and bounded complete Git capture. Candidate 0105e4646789 passed two complete548-step native runs, mobile215/215,84 inspected before/after page-component images across seven themes, staging11/11 and exact hosted workflows3/3. Normal full Pages production run41572219005 is verified by provider identity and three build stamps. Complete Pages-origin readback checked3824: 3814 identical,10 configured redirects,0 differences/unread. Live OG Workere4b3070a-1090-49aa-b99d-d7ef44f6c192 passed16exact GET/8HEAD reads. All five publishers are restored; uptime stayed active. SIL939/1000 (product1/protocol4). Apex authored bytes also match after separately verified CSP nonces and the pinned Cloudflare JSD addition;4tamper controls reject. Native impact cargo01K6FNT4RVDDB9E41E3F05D638 passed HMAC-policy verification (Ed25519 unsigned; no recipient-application claim). Existing identity/provider gaps, historical optional visual limitations and unmeasured field-vitals/user outcomes remain separate. Anonymous guards do not prove positive private-data authentication. No further product work is selected; CDR is unchanged. Final nonserved records follow normal main publication.
+
+
+<!-- S409-writeback -->
+## Session 409 — 2026-11-03
+
+Two selected L2 public journeys are locally verified: shared Contact drafts retain editable text; page reactions admit one in-page submission and preserve pending retries without stale-store overwrite. Focused browser tests: Contact4/4 and feedback15/15, no skips. Independent reviews passed. Full source, staging, hosted checks, production, readback and main publication remain separately tracked in docs/RELEASE_S409.json; local acceptance is not deployment proof.
+
+
+<!-- S409-account-expansion -->
+## Session 409 account experience expansion — in progress
+
+Expanded the selected work to separate member and premium investor experiences, with open member registration and retained investor approval. Rebuilt account entry, profile completion, investor application/workspace and trusted callback recovery. Actual browser checks caught and corrected denied-storage registration failure, destructive provider-card mounting, return-URL timing, theme propagation and new-identity profile bypass. Member/onboarding source checks17/17 and independent review pass; other focused regressions remain recorded in the implementation evidence. Final acceptance and production publication are pending; no completed release is claimed.
