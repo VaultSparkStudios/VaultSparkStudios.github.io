@@ -10,11 +10,24 @@
       "receipt": "docs/S408_implementation.json"
     },
     "source": {
-      "state": "pending",
-      "note": "All remaining diagnostic prefixes reached their final step, but partial ranges do not satisfy the required complete fresh native source run."
+      "state": "passed",
+      "receipt": "docs/S408_source-acceptance.json",
+      "passed": 548,
+      "plannedCommandCount": 548,
+      "coverageComplete": true,
+      "sourceFingerprint": "a84ce55dc4501e1191a1001b"
     },
     "staging": {
-      "state": "pending"
+      "state": "passed",
+      "receipt": "docs/S408_staging-ceremony.json",
+      "deployReceipt": "docs/S408_staging-deploy.json",
+      "steps": 11,
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "servedReceiptAndHistory": "verified: chain203, receipt186aa923be297a36c0bcc852",
+      "earlierAttempt": {
+        "receipt": "docs/S408_staging-ceremony-attempt1.json",
+        "reason": "Post-deployment continuity summary required native regeneration; first attempt10/11. No source or gate relaxation."
+      }
     },
     "exactRequiredHostedChecks": {
       "state": "pending"
@@ -166,5 +179,12 @@
       "reason": "Both real non-Git controls reported ENOBUFS, but overflow termination statuses raced(null versus0). Removed status equality only; retained both overflow errors, full Git byte controls and explicit caps. Focused2tests and independent review passed. New final-source proof still required.",
       "log": ".cache/S408-final-autopilot-4.log"
     }
-  ]
+  ],
+  "nativeCloseout": {
+    "exit": 0,
+    "startedAt": "2026-11-03T02:30:50.269Z",
+    "finishedAt": "2026-11-03T02:44:02.815Z",
+    "sourceReceipt": "docs/S408_source-acceptance.json",
+    "scope": "Local full source and closeout. Remote publication and production remain separate."
+  }
 }

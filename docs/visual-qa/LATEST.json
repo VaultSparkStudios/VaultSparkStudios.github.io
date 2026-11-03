@@ -2848,9 +2848,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "2cd86ea9587ca830ca31dd17355fbf362656d2a31d1a6a413141b0d57dcf6e3a",
-    "candidateSha": "4d9f618220400497437639730a46c314e16b5e76",
-    "root": "a6a9842adc9cb71f256101c199185e4f0d9d6a06a018c24ec33ccd9c3f00affa"
+    "manifestSha256": "0183985d52e0d5045ee827eca98ed68591bd2adc9c054c362df739e6a347c264",
+    "candidateSha": "2728324c119a3825de464410e62ccfc0bcd964ec",
+    "root": "0c3859aa57acd6e82351c0e0f70f1cd65f839772580678d835c1164b2c1c11d5"
   },
   "matrix": {
     "routes": [
@@ -3929,5 +3929,15 @@
   "captureProvenance": "Aggregate completion uses the final actual API capture time. Home captures retain their original per-capture time and unchanged home/shared asset source. Only api/index.html was added/changed for the API route; separate source bindings and actual capture timestamps are preserved in related receipts. Cadence captures are new real browser images of the sole subsequent homepage text change; clock and API panel pixels are unaffected. Source binding now includes this generated date label.",
   "artifactReviews": [
     "docs/S408_card-acceptance.json"
-  ]
+  ],
+  "metadataRebind": {
+    "at": "2026-11-03T02:46:51.140Z",
+    "previousCandidate": {
+      "manifest": "api/candidate-artifact-manifest.json",
+      "manifestSha256": "2cd86ea9587ca830ca31dd17355fbf362656d2a31d1a6a413141b0d57dcf6e3a",
+      "candidateSha": "4d9f618220400497437639730a46c314e16b5e76",
+      "root": "a6a9842adc9cb71f256101c199185e4f0d9d6a06a018c24ec33ccd9c3f00affa"
+    },
+    "reason": "Current committed build stamp metadata only. Every bound UI source and manually reviewed pixel hash is unchanged; original capture/review times retained."
+  }
 }
