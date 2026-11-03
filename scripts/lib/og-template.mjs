@@ -52,7 +52,11 @@ export function wrapTitle(text, maxChars) {
 
 export function renderSvg({ title, eyebrow, status, theme }) {
   const t = THEMES[theme] || THEMES.dark;
-  const s = STATUS_COLORS[status] || STATUS_COLORS.sparked;
+  const baseStatus = STATUS_COLORS[status] || STATUS_COLORS.sparked;
+  const lightStatusInk = { sparked: '#235875', forge: '#765600', vaulted: '#59606b', sealed: '#235875' };
+  const s = t === THEMES.light
+    ? { ...baseStatus, fg: lightStatusInk[status] || lightStatusInk.sparked }
+    : baseStatus;
   const lines = wrapTitle(clamp(title || 'VaultSpark Studios', 80), 22);
 
   const titleLines = lines.map((line, i) => {
@@ -87,7 +91,7 @@ export function renderSvg({ title, eyebrow, status, theme }) {
 
   <!-- status chip -->
   <g transform="translate(80, 140)">
-    <rect x="0" y="0" width="${20 + s.label.length * 14}" height="44" rx="22" fill="${s.bg}" stroke="${s.fg}" stroke-opacity="0.42" stroke-width="1.2" />
+    <rect x="0" y="0" width="${60 + s.label.length * 14}" height="44" rx="22" fill="${s.bg}" stroke="${s.fg}" stroke-opacity="0.42" stroke-width="1.2" />
     <circle cx="22" cy="22" r="6" fill="${s.fg}" />
     <text x="40" y="29" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-weight="600" fill="${s.fg}" letter-spacing="2.4">${escapeXml(s.label)}</text>
   </g>
@@ -99,7 +103,7 @@ export function renderSvg({ title, eyebrow, status, theme }) {
 
   <!-- footer wordmark -->
   <text x="80" y="565" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700" fill="${t.text}" letter-spacing="1.8">VAULTSPARK</text>
-  <text x="280" y="565" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="400" fill="${t.muted}" letter-spacing="1.8">STUDIOS</text>
+  <text x="320" y="565" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="400" fill="${t.muted}" letter-spacing="1.8">STUDIOS</text>
   <text x="80" y="595" font-family="Georgia, 'Times New Roman', serif" font-size="14" fill="${t.muted}" letter-spacing="1.4">vaultsparkstudios.com</text>
 
   <!-- right-side sigil -->

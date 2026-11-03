@@ -13,6 +13,7 @@ import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
 import { fingerprintCommands, receiptIdFor, runBuildCheckEvidenceSelfTest, validateBuildCheckEvidence, verificationSurfaceFingerprint } from './lib/build-check-evidence.mjs';
 import { writeJsonAtomic, writeTextAtomic } from './lib/evidence-io.mjs';
+import { printHelpIfRequested } from './lib/cli-contract.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -223,6 +224,14 @@ function selfTest() {
 }
 
 function main() {
+  if (printHelpIfRequested(process.argv.slice(2), `Usage: node scripts/run-build-check.mjs [options]
+Run the ordered build:check:steps and write source-bound diagnostic receipts.
+  --help, -h           Show usage without running checks, acquiring a lock or writing receipts
+  --quiet              Print step summaries; replay captured output on failures
+  --from=N             Start at step N (partial evidence, not a complete suite proof)
+  --check-diagnostics  Validate existing complete diagnostic receipts against current source
+  --self-test          Run runner/evidence and impact-planner regression fixtures
+Normal verification sanitizes the public feed before freezing the source tree.`)) return;
   if (process.argv.includes('--self-test')) {
     selfTest();
     return;

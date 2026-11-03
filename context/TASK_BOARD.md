@@ -1,3 +1,10 @@
+<!-- S408-writeback -->
+## S408
+
+Wave1 audit done. Wave2 five L2 outcomes verified. Wave3: docs/RELEASE_S408.json.
+- [ ] [S408][SIL] Classify old visual failures (future).
+- [ ] [S408][SIL] Benchmark history only after failure (future).
+
 <!-- S407-release-acceptance -->
 ## S407 verified outcomes — 2026-10-30
 

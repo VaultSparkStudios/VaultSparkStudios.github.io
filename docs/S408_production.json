@@ -1,0 +1,367 @@
+{
+  "session": 408,
+  "observedAt": "2026-11-03T03:38:48.399Z",
+  "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+  "run": {
+    "id": 41572219005,
+    "head_sha": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+    "event": "workflow_dispatch",
+    "status": "completed",
+    "conclusion": "success",
+    "path": ".github/workflows/pages-deploy.yml",
+    "html_url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/41572219005",
+    "created_at": "2026-11-03T03:26:31Z",
+    "updated_at": "2026-11-03T03:31:34Z",
+    "run_attempt": 1
+  },
+  "steps": [
+    {
+      "name": "Run canonical release ceremony",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-03T03:28:46Z",
+      "completed_at": "2026-11-03T03:29:59Z"
+    },
+    {
+      "name": "Build clean dist (git-tracked files only)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15,
+      "started_at": "2026-11-03T03:29:59Z",
+      "completed_at": "2026-11-03T03:30:18Z"
+    },
+    {
+      "name": "Stamp honest deployed SHA into build-sha.json",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 16,
+      "started_at": "2026-11-03T03:30:18Z",
+      "completed_at": "2026-11-03T03:30:18Z"
+    },
+    {
+      "name": "Deploy to Cloudflare Pages",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 19,
+      "started_at": "2026-11-03T03:30:18Z",
+      "completed_at": "2026-11-03T03:30:31Z"
+    },
+    {
+      "name": "Purge edge HTML cache",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 20,
+      "started_at": "2026-11-03T03:30:31Z",
+      "completed_at": "2026-11-03T03:30:31Z"
+    },
+    {
+      "name": "Post-purge edge liveness check",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 22,
+      "started_at": "2026-11-03T03:30:31Z",
+      "completed_at": "2026-11-03T03:30:34Z"
+    }
+  ],
+  "provider": {
+    "id": "0c57ec62-3c48-4e87-88a3-0bfa6b3a2025",
+    "url": "https://0c57ec62.vaultsparkstudios-website.pages.dev",
+    "environment": "production",
+    "commit": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+    "branch": "main",
+    "latestStage": {
+      "name": "deploy",
+      "started_on": null,
+      "ended_on": "2026-11-03T03:30:30.311045Z",
+      "status": "success"
+    }
+  },
+  "stamps": [
+    {
+      "origin": "https://0c57ec62.vaultsparkstudios-website.pages.dev",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-11-03",
+        "sha": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+        "builtAt": "2026-11-03T03:30:18.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-11-03",
+        "sha": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+        "builtAt": "2026-11-03T03:30:18.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-11-03",
+        "sha": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+        "builtAt": "2026-11-03T03:30:18.000Z",
+        "deployedBy": "pages-deploy",
+        "baselineSha": null,
+        "contentLaneHead": null,
+        "contentLanePaths": null,
+        "contentLanePathSetSha256": null,
+        "workflowRunId": null
+      }
+    }
+  ],
+  "reads": [
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "agents.json",
+      "exact": true,
+      "sha256": "9e9c551d3c49e3babf2a241fac4b5c4f614c497334cdfba15aec8342ead8f205"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "agents.json",
+      "exact": true,
+      "sha256": "9e9c551d3c49e3babf2a241fac4b5c4f614c497334cdfba15aec8342ead8f205"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/public-status.json",
+      "exact": true,
+      "sha256": "2a460d0cc621e1866452d368a1beffe9971a32eaeafa3101629c6a95dc3f3943"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/public-status.json",
+      "exact": true,
+      "sha256": "2a460d0cc621e1866452d368a1beffe9971a32eaeafa3101629c6a95dc3f3943"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "audits/2026-11-02.json",
+      "exact": true,
+      "sha256": "ea1325c1ca53dbc53bf249a91795f2b8c2f680f93dec9dad58638d3e605ab019"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "audits/2026-11-02.json",
+      "exact": true,
+      "sha256": "ea1325c1ca53dbc53bf249a91795f2b8c2f680f93dec9dad58638d3e605ab019"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/public-intelligence.json",
+      "exact": true,
+      "sha256": "4134a2953fdab4dd50218126d7ab92c539b8276a671d5b26dc6e27123dc0ba45"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/public-intelligence.json",
+      "exact": true,
+      "sha256": "4134a2953fdab4dd50218126d7ab92c539b8276a671d5b26dc6e27123dc0ba45"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "api/intent-map.json",
+      "exact": true,
+      "sha256": "3e5347ca27b5423b04a6db266824573537e2e9ee8b1bf8e970c683f707bf73b9"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/intent-map.json",
+      "exact": true,
+      "sha256": "3e5347ca27b5423b04a6db266824573537e2e9ee8b1bf8e970c683f707bf73b9"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "data/stats-surface.json",
+      "exact": true,
+      "sha256": "6f0cffe795f655b3088e31bc8ad4cdc38cd89dbff8ad0f4bf433bc2187b6a4b2"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "data/stats-surface.json",
+      "exact": true,
+      "sha256": "6f0cffe795f655b3088e31bc8ad4cdc38cd89dbff8ad0f4bf433bc2187b6a4b2"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "stats.json",
+      "exact": true,
+      "sha256": "6f0cffe795f655b3088e31bc8ad4cdc38cd89dbff8ad0f4bf433bc2187b6a4b2"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "stats.json",
+      "exact": true,
+      "sha256": "6f0cffe795f655b3088e31bc8ad4cdc38cd89dbff8ad0f4bf433bc2187b6a4b2"
+    }
+  ],
+  "htmlReads": [
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "/ignis/",
+      "status": 200,
+      "unpublishedPillars": 5,
+      "privatePillarReference": false
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "/ignis/",
+      "status": 200,
+      "unpublishedPillars": 5,
+      "privatePillarReference": false
+    }
+  ],
+  "walls": [
+    {
+      "route": "/investor-portal/",
+      "status": 302,
+      "correctReturn": true,
+      "loginStatus": 200,
+      "identityOrigin": "https://obeliskgate.com",
+      "identityPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true
+    },
+    {
+      "route": "/investor-portal/updates/",
+      "status": 302,
+      "correctReturn": true,
+      "loginStatus": 200,
+      "identityOrigin": "https://obeliskgate.com",
+      "identityPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true
+    },
+    {
+      "route": "/investor-portal/documents/",
+      "status": 302,
+      "correctReturn": true,
+      "loginStatus": 200,
+      "identityOrigin": "https://obeliskgate.com",
+      "identityPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true
+    },
+    {
+      "route": "/investor-portal/message/",
+      "status": 302,
+      "correctReturn": true,
+      "loginStatus": 200,
+      "identityOrigin": "https://obeliskgate.com",
+      "identityPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true
+    },
+    {
+      "route": "/investor-portal/profile/",
+      "status": 302,
+      "correctReturn": true,
+      "loginStatus": 200,
+      "identityOrigin": "https://obeliskgate.com",
+      "identityPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true
+    },
+    {
+      "route": "/investor-portal/admin/",
+      "status": 302,
+      "correctReturn": true,
+      "loginStatus": 200,
+      "identityOrigin": "https://obeliskgate.com",
+      "identityPath": "/auth",
+      "project": "VaultSpark Studios",
+      "authorizeCompletion": true
+    }
+  ],
+  "browserReads": [
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "path": "/ignis/",
+      "grades": 5,
+      "unpublished": 5,
+      "scoresAreUnavailable": true,
+      "privatePillarRequests": 0
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "path": "/ignis/",
+      "grades": 5,
+      "unpublished": 5,
+      "scoresAreUnavailable": true,
+      "privatePillarRequests": 0
+    }
+  ],
+  "affectedReads": [
+    {
+      "matched": true,
+      "authoredSha256": "4bc2c5fba2e70c93af4f5be971420b4a6a59597b664b68052762850766850fb5",
+      "providerAdditions": [
+        {
+          "type": "Cloudflare JavaScript Detections bootstrap",
+          "count": 1,
+          "templateSha256": "f2d1f80b3680834b1b584ff2ab0c5ced5ae4d5ed1fe3bf20d90672d1690030a0",
+          "rawSha256": "d79ca88cdd99b53d9254120c51c5b5b90d475bde5aaf552bc13fb2a25e16cf1f",
+          "responseRayMatched": true,
+          "cspNonceMatched": true,
+          "timestampFresh": true,
+          "documentation": "https://developers.cloudflare.com/cloudflare-challenges/challenge-types/javascript-detections/"
+        }
+      ],
+      "scope": "Exact authored bytes after native nonce normalization and one independently bound, pinned provider bootstrap. No other script or content is removed.",
+      "origin": "https://vaultsparkstudios.com",
+      "path": "index.html",
+      "status": 200,
+      "normalization": "scripts/deploy-staging-content.mjs#normaliseEdgeNonces; only nonce attributes and CSP nonce meta are removed; all other bytes remain compared",
+      "sha256": "08194a1b25fb35c7e58067c69912bd17d3bacdcfed7a5981b0db185c87388eca"
+    },
+    {
+      "matched": true,
+      "authoredSha256": "4dd2046ae73a66b32f837808e1d20ba9668ff3b59e37854f6f7822aa289cfed9",
+      "providerAdditions": [
+        {
+          "type": "Cloudflare JavaScript Detections bootstrap",
+          "count": 1,
+          "templateSha256": "f2d1f80b3680834b1b584ff2ab0c5ced5ae4d5ed1fe3bf20d90672d1690030a0",
+          "rawSha256": "f73d4e877118366560ee4b2f0a3d1811d0da16415d7b3f903195b38858722b40",
+          "responseRayMatched": true,
+          "cspNonceMatched": true,
+          "timestampFresh": true,
+          "documentation": "https://developers.cloudflare.com/cloudflare-challenges/challenge-types/javascript-detections/"
+        }
+      ],
+      "scope": "Exact authored bytes after native nonce normalization and one independently bound, pinned provider bootstrap. No other script or content is removed.",
+      "origin": "https://vaultsparkstudios.com",
+      "path": "api/index.html",
+      "status": 200,
+      "normalization": "scripts/deploy-staging-content.mjs#normaliseEdgeNonces; only nonce attributes and CSP nonce meta are removed; all other bytes remain compared",
+      "sha256": "e8da0bae5747e3b95323887417ee2bb7b4906636ddb9ee4499c5aa8029830535"
+    },
+    {
+      "matched": true,
+      "authoredSha256": "8b95ce2449b798cac77f7805cc05d0aea792fa02dd0ec6962a6773aac06b5b37",
+      "providerAdditions": [],
+      "scope": "Exact authored bytes after native nonce normalization and one independently bound, pinned provider bootstrap. No other script or content is removed.",
+      "origin": "https://vaultsparkstudios.com",
+      "path": "assets/og/og-news-archive-2026-11.png",
+      "status": 200,
+      "normalization": null,
+      "sha256": "8b95ce2449b798cac77f7805cc05d0aea792fa02dd0ec6962a6773aac06b5b37"
+    }
+  ],
+  "scope": "Actual normal full production workflow, provider identity and three served stamps; three changed apex HTML/image reads (native nonce normalization and separately verified pinned Cloudflare JSD addition for HTML),14 exact metadata/data reads, two IGNIS HTML contracts, two real-browser pillar checks and six existing apex access walls. Complete all-served parity is separate. Anonymous guards do not prove authenticated private-data access."
+}

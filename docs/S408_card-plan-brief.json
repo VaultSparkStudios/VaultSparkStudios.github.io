@@ -1,0 +1,22 @@
+{
+  "kind": "plan",
+  "session": 408,
+  "date": "2026-11-02",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Restore a readable November archive share card",
+  "items": [
+    {
+      "id": 4,
+      "slug": "archive-card-fit",
+      "title": "Restore the November archive share image with readable template spacing",
+      "axis": "ui-ux-feedback",
+      "leftScore": 6,
+      "rightScore": 2,
+      "insight": "Required native step169 reports the November archive OG asset missing. Rendering it through the existing template visibly overflows the status badge and overlaps the footer wordmark under the installed Georgia font. People sharing the archive receive a legible branded preview rather than a missing image.",
+      "evidence": "Native OG check passes with missing asset restored; 1200×630 card visually inspected. Actual browser SVG glyph bounds fit the badge with padding and the two footer words do not intersect. Existing template/card self-tests pass; no page copy, CSS, identity or lifecycle change."
+    }
+  ],
+  "blockers": [],
+  "followUps": []
+}

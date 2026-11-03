@@ -1,16 +1,9 @@
-<!-- Session 407 · source: docs/AUDIT_2026-10-30-S407.json -->
-# S407 browser confidence and release prerequisites
+<!-- Session 408 · source: docs/AUDIT_2026-11-02-S408-git.json -->
+# S408 complete Git inventory capture
 
-Session Intent: /arc then authorized direct main commit/push and full deployment.
+Original2verifier outcomes, privacy capacity and archive-card outcomes remain accepted locally under their S408 sidecars.
+Wave1 audit done; Wave2 original implementation done; Wave3 full release/closeout acceptance remains in docs/RELEASE_S408.json.
 
-Original outcome: browser-contract-fidelity at L2 remains implemented under docs/AUDIT_2026-10-30.json and docs/S407_implementation.json; it is preserved, not replaced.
-
-Wave 1 complete: fresh startup and nine-axis audit.
-Wave 2: original outcome complete; required source-gate prerequisite copy-quality-word-boundaries at L2 locally verified;72 self-tests/corpus and review passed.
-Correct doubled-word matching at complete hyphenated-word boundaries, recognize WIRED in the existing all-caps brand allowlist, and distinguish the ordinary noun placeholder from explicit publishing markers. Keep true duplicate, shouting, bracketed/uppercase/standalone stub and other placeholder detectors active. Preserve article prose and add positive/negative regression fixtures in the existing self-test.
-
-Acceptance: Actual corpus passes without changing its article text. Existing54 self-tests plus explicit positive/negative boundary, brand and publishing-marker regressions pass. Genuine repeated words, unknown shouted words, and explicit placeholder stubs still fail. Independent review passes before source/full release acceptance.
-
-Wave 3 remains pending: complete native source verification, current staging, exact required hosted checks, authorized main publication, full production and complete served readback. All five publishing workflows must be restored.
-
-Rollback: bounded revert of S407 changes; retain previous accepted full application and metadata evidence in docs/CLOSEOUT_S406_2026-10-29.json. Preserve identity, pricing, economy and lifecycle holds.
+L2: In existing safe-spawn hardening, supply a16MiB default output buffer only for Git captures when the caller has not supplied maxBuffer. Preserve explicit limits, non-Git defaults, windowsHide and guarded environment behavior. Verify actual full Git inventory against an explicit bounded control, retain fail-closed overflow with a smaller explicit limit, and verify non-Git capacity is unchanged.
+Acceptance: Shared captured Git stdout equals an explicit16MiB native control on the complete real inventory. Explicit smaller capacity still fails closed. Non-Git output keeps the native default. Existing safe-spawn/window guard tests, resync self-test and independent review pass.
+Rollback: bounded revert of default Git capacity and its regression; no Git arguments, permissions, history or credentials are changed.

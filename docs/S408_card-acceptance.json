@@ -1,0 +1,113 @@
+{
+  "session": 408,
+  "state": "passed",
+  "source": [
+    {
+      "path": "scripts/lib/og-template.mjs",
+      "sha256": "33dc8d30897f390299a3d3035b2397ec032581354be6f4dc5a2b200e3b33ee80"
+    },
+    {
+      "path": "tests/og-template-fit.unit.spec.mjs",
+      "sha256": "e11b7d20f028814d20ea25892b6a5ca7857d3fa90a953471292d5dc3a3cec1cc"
+    }
+  ],
+  "artifact": {
+    "path": "assets/og/og-news-archive-2026-11.png",
+    "sha256": "8b95ce2449b798cac77f7805cc05d0aea792fa02dd0ec6962a6773aac06b5b37",
+    "width": 1200,
+    "height": 630
+  },
+  "before": {
+    "file": "docs/visual-qa/S408-card/before.png",
+    "sha256": "c6acfbf37c9a04202656649db11daa4290f7947952e71a1c07391ca962e4db4f",
+    "observed": "SPARKED text exceeds chip; footer words overlap. The page previously referenced a missing file."
+  },
+  "after": {
+    "reviewed": true,
+    "reviewer": "Codex actual raster-image inspection; independent reviewer also inspected actual archive PNG",
+    "variants": [
+      {
+        "theme": "dark",
+        "status": "sparked",
+        "file": "docs/visual-qa/S408-card/dark-sparked.png",
+        "sha256": "3718b518d365f2cf46a40a4766a7fcb3abbff739c3c99713326c48733d96546b",
+        "reviewed": true
+      },
+      {
+        "theme": "dark",
+        "status": "forge",
+        "file": "docs/visual-qa/S408-card/dark-forge.png",
+        "sha256": "f6ee3e1acedb458a13c7d70827ebed92019e93dce51e5109bfe643f936d8782e",
+        "reviewed": true
+      },
+      {
+        "theme": "dark",
+        "status": "vaulted",
+        "file": "docs/visual-qa/S408-card/dark-vaulted.png",
+        "sha256": "1ed53159412428245ffcf1c18328b1462272c1b02f6452a55be4ba834364ef2a",
+        "reviewed": true
+      },
+      {
+        "theme": "dark",
+        "status": "sealed",
+        "file": "docs/visual-qa/S408-card/dark-sealed.png",
+        "sha256": "da9b197576e7ba7266090199805e85a70f7ea4977942114de2df117092754086",
+        "reviewed": true
+      },
+      {
+        "theme": "light",
+        "status": "sparked",
+        "file": "docs/visual-qa/S408-card/light-sparked.png",
+        "sha256": "a6e465359fde0cc8d2d4af7ae4bce982fc7f913fee544d90b1320a6a214e765e",
+        "reviewed": true
+      },
+      {
+        "theme": "light",
+        "status": "forge",
+        "file": "docs/visual-qa/S408-card/light-forge.png",
+        "sha256": "07ab86f7abc17a117d9066182bc22141cb6b7cad0e9ffeec63eeab2196dc376a",
+        "reviewed": true
+      },
+      {
+        "theme": "light",
+        "status": "vaulted",
+        "file": "docs/visual-qa/S408-card/light-vaulted.png",
+        "sha256": "8c2b50f2bce73d8aa163b06f1cb4225526f3367ddb5e17e020f4181900f5eb50",
+        "reviewed": true
+      },
+      {
+        "theme": "light",
+        "status": "sealed",
+        "file": "docs/visual-qa/S408-card/light-sealed.png",
+        "sha256": "f7d0bfb460aac870e9f7f6baa52cf3edecaededf8d71bea42b61a0929faaac4d",
+        "reviewed": true
+      }
+    ],
+    "findings": [
+      "All four badge labels fit inside chips in both shared card themes.",
+      "Footer words have a visible gap. Light badge ink is dark and legible; dark palette unchanged.",
+      "Archive title is complete on two lines; only the new archive PNG was rendered for publication."
+    ]
+  },
+  "tests": {
+    "before": "Actual browser glyph regression failed: label.right229.25 > badge.right206; footer first.right299.61 > second.left288.",
+    "after": "One browser/raster test passed across8combinations, including≥4.5 sampled badge text contrast. Existing21card self-tests passed. Native OG check passes,26existing uniqueness warnings advisory."
+  },
+  "review": {
+    "verdict": "pass",
+    "findings": 0
+  },
+  "limitation": "No claim that older published card PNGs were regenerated or that a light PNG is newly published.",
+  "runtimeFollowThrough": {
+    "worker": "cloudflare/og-image-worker.js",
+    "sourceHash": "f81da3aa8c1fead7c6444486c4f3e0312aa41eb71b92c6eb257222ed7eadb4e4",
+    "cache": "SHA256 of actual SVG bytes in GET cache identity; HEAD body empty without poisoning GET storage",
+    "tests": {
+      "passed": 2,
+      "geometryCombinations": 8
+    },
+    "staging": "docs/S408_og-staging.json",
+    "production": "pending in docs/RELEASE_S408.json",
+    "review": "Independent pass, no remaining findings"
+  }
+}

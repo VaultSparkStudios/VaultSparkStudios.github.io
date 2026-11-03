@@ -1,0 +1,51 @@
+{
+  "session": 408,
+  "state": "locally-verified",
+  "inventoryBytes": 1049222,
+  "defaultGitCapacity": 16777216,
+  "tests": {
+    "capture": 2,
+    "reconciler": 18,
+    "windowHide": {
+      "files": 706,
+      "failed": 0
+    },
+    "unitParity": {
+      "declared": 63,
+      "executed": 63,
+      "tracked": 63
+    }
+  },
+  "review": {
+    "round1": "Fixed a scheduling-sensitive overflow-length assertion.",
+    "round2": "Pass, zero remaining findings."
+  },
+  "guarantees": [
+    "Full real inventory equals explicitly bounded native control across execFileSync/spawnSync/execSync.",
+    "Explicit64-byte capacity remains fail-closed.",
+    "Non-Git default still raises native ENOBUFS for the same workload.",
+    "Git arguments, privileges, window hiding and guarded environment remain unchanged."
+  ],
+  "source": [
+    {
+      "path": "scripts/lib/safe-spawn.mjs",
+      "sha256": "6930ef62551a558d9f29c8cdb086cec3608f2ecad858404fdf663fe2eb020910"
+    },
+    {
+      "path": "tests/git-capture-capacity.unit.spec.mjs",
+      "sha256": "735cfdb4f571260f3776a280e49731278fea4cc79bbf094278da9cdabfb1e29a"
+    }
+  ],
+  "scope": "Native process capacity, not test-gate bypass or source inventory filtering.",
+  "overflowTestCorrection": {
+    "at": "2026-11-03T02:30:50.176Z",
+    "reason": "Actual post-signal rerun exposed native process-exit race after ENOBUFS; error code is the capture failure contract.",
+    "removedAssertion": "wrapped.status === native.status on independent overflowing child processes",
+    "retained": "Both native/wrapped ENOBUFS; explicit64-byte Git cap; complete actual Git inventory matches native16MiB control for all3capture APIs.",
+    "focusedTests": {
+      "passed": 2,
+      "failed": 0
+    },
+    "independentReview": "review_s408 approved; no other timing-dependent assertions."
+  }
+}

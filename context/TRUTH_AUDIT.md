@@ -1,3 +1,10 @@
+<!-- S408-release-acceptance -->
+## Verified truth posture — S408
+
+Five S408 outcomes are verified: safe build-check help, merge-closeout observation, complete privacy inventory, readable archive sharing/live previews, and bounded complete Git capture. Candidate 0105e4646789 passed two complete548-step native runs, mobile215/215,84 inspected before/after page-component images across seven themes, staging11/11 and exact hosted workflows3/3. Normal full Pages production run41572219005 is verified by provider identity and three build stamps. Complete Pages-origin readback checked3824: 3814 identical,10 configured redirects,0 differences/unread. Live OG Workere4b3070a-1090-49aa-b99d-d7ef44f6c192 passed16exact GET/8HEAD reads. All five publishers are restored; uptime stayed active. SIL939/1000 (product1/protocol4).
+
+Complete raw resource parity is against the Pages origin. Apex HTML adds the documented Cloudflare JSD bootstrap; a pinned source template, actual response Ray/CSP nonce and fresh timestamp are verified separately before requiring exact authored bytes. No security policy was changed. Existing identity/provider gaps, historical optional visual limitations and unmeasured field-vitals/user outcomes remain separate. Anonymous guards do not prove positive private-data authentication. No further product work is selected; CDR is unchanged.
+
 <!-- S407-release-acceptance -->
 ## Current truth posture — S407 — 2026-10-30
 

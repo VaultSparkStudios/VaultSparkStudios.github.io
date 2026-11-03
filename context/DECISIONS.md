@@ -1170,3 +1170,24 @@ Repair stale tests around /oracle/ consolidation into /ignis/#oracle rather than
 ## S407 release prerequisite — precise editorial gate boundaries
 
 Preserve the unchanged October30 article rather than rewriting legitimate prose to satisfy a false-positive detector. Compare complete word tokens, including compounds and contractions; recognize WIRED in the existing house-style list; treat uppercase, bracketed and standalone/labelled placeholder stubs as markers rather than rejecting every ordinary noun occurrence. Negative fixtures retain genuine defect detection. Review round1 found a quoted-word regression; it was fixed and round2 passed. This is a required same-session release repair, not a new arc or identity-policy change.
+
+
+<!-- S408-writeback -->
+## S408 — 2026-11-02 — preserve operational semantics while fixing inspection
+
+Reuse cli-contract to return help before sanitizer/locking/diagnostic branches. Observe merge changes with --diff-merges=first-parent, preserving full graph traversal and one commit record per merge. Default Git merge diffs hid the real S407 SIL anchor. Never infer recovery from that unmeasured result.
+
+CANON-045 remains a STRONG existing readiness gap. This routine release changes no identity/trust flows and does not claim positive authenticated acceptance or a lifecycle transition. Public metrics, private fixtures and field-vitals limits remain explicit.
+
+
+### S408 release prerequisite — full privacy inventory capacity
+The native source gate proved Git inventory exceeds the default1MiB buffer. Increase only that process output capacity to16MiB; keep all inventory arguments, matchers, exemptions and assertions intact. Actual inventory1052523bytes and10privacy assertions passed; independent review approved. Existing schema-lite TODO remains unselected. Generated date/preload drift was repaired with existing generators and actual before/after rendered review.
+
+
+### S408 archive share-preview prerequisite
+Native source169 found the November archive share asset missing. Existing template rendering exposed real status-chip overflow and footer overlap. Correct two horizontal spacing values and use dark status ink only on the existing light theme. Publish only the new November card; no mass legacy rerender. Actual browser glyph/raster contrast regression covers4statuses×2themes;21nativecard self-tests and independent review passed.
+
+
+### S408 complete Git capture and preview delivery
+The same >1MiB inventory failure recurred in resync-derived and also affects the full staging manifest. Fix the existing shared process boundary with a bounded16MiB Git default; retain explicit caps, non-Git defaults, all paths and existing window/environment guards. Actual inventory controls,18reconciler checks and independent review passed.
+The changed OG template also serves the public preview Worker. Bind preview cache identity to actual SVG bytes so deployment cannot retain the previous template; HEAD stores a GET representation and returns no body. The canonical website staging DNS is deliberately unproxied, so the preview component uses a persistent isolated staging Worker; its16GET/8HEAD readbacks passed. Production routing and website staging DNS/auth paths remain unchanged.

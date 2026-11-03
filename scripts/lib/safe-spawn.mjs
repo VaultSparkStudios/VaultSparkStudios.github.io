@@ -70,6 +70,13 @@ function harden(args) {
   // the promisify.custom paths below). fork() is unaffected by construction: its
   // first argument is a module path, which can never equal process.execPath.
   const a = substituteNodeExe(args).slice();
+  // Complete inventories now exceed Node's default 1MiB capture limit. Apply
+  // a bounded Git default centrally; explicit caller caps and non-Git defaults
+  // retain their native semantics. Streaming spawn ignores this capture option.
+  const gitCommand = typeof a[0] === 'string' && (
+    /(?:^|[\\/])git(?:\.exe)?$/i.test(a[0]) || /^\s*git(?:\.exe)?(?:\s|$)/i.test(a[0])
+  );
+  const gitCapture = gitCommand ? { maxBuffer: 16 * 1024 * 1024 } : {};
   let optIdx = -1;
   for (let i = a.length - 1; i >= 0; i--) {
     const v = a[i];
@@ -84,15 +91,16 @@ function harden(args) {
   if (optIdx >= 0) {
     a[optIdx] = {
       ...a[optIdx],
+      ...(a[optIdx].maxBuffer === undefined ? gitCapture : {}),
       windowsHide: a[optIdx].windowsHide === undefined ? true : a[optIdx].windowsHide,
       env: withGitWindowGuardEnv(a[optIdx].env || process.env),
     };
     return a;
   }
   if (a.length && typeof a[a.length - 1] === 'function') {
-    a.splice(a.length - 1, 0, { windowsHide: true, env: withGitWindowGuardEnv() });
+    a.splice(a.length - 1, 0, { ...gitCapture, windowsHide: true, env: withGitWindowGuardEnv() });
   } else {
-    a.push({ windowsHide: true, env: withGitWindowGuardEnv() });
+    a.push({ ...gitCapture, windowsHide: true, env: withGitWindowGuardEnv() });
   }
   return a;
 }

@@ -9,13 +9,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 8 totals): 939 · 939 · 939 · 939 · 939 · 939 · 939 · 939 ▄▄▄▄▄▄▄▄ (→)
-Avgs — 3: 939.0 | 5: 939.0 | 10: 939.0 | 25: 936.7 | v3 all: 941.0
-  └ S407: Dev 95 | Align 94 | Momentum 92 | Engage 96 | Process 88 | Coherence 94 | Security 97 | Ecosystem 91 | Capital 95 | Automation 97
-Velocity trend:↓ |Protocol velocity:↑ |Debt:→
-Momentum runway: N/A | Intent rate: N/A
-Last session: 2026-10-30 | Session 407 | Total: 939/1000 | Velocity: 1
-  └ S407 arc: browser38, mobile215, copy72; full application and3714-resource readback verified; closing publication tracked in release ledger
-─────────────────────────────────────────────────────────────────────
+Avgs — 3: 939.0 | 5: 939.0 | 10: 939.0
+  └ S408: Dev95 | Align94 | Momentum92 | Engage96 | Process88 | Coherence94 | Security97 | Ecosystem91 | Capital95 | Automation97
+Velocity trend:→ |Protocol velocity:↑ |Debt:→
+Last session: 2026-11-02 | Session 408 | Total: 939/1000 | Velocity: 1
+  └ Release evidence: docs/RELEASE_S408.json; local implementation alone is not production acceptance.
 <!-- rolling-status-end -->
 
 > Older entries through S401 live verbatim in `context/archive/SIL_S1-S401.md` (exact committed pre-rotation snapshot). Recent complete entries follow.
@@ -2188,3 +2186,33 @@ Canonical score-format clarification for this same S407 entry: Total: 939/1000 |
 #### Publication acceptance addendum for S407
 
 Both selected outcomes and their final surface follow-through are verified in docs/RELEASE_S407.json. The required generated launch-age update is closing coherence work, not another shipped product outcome. SIL939/1000, product velocity1 and protocol velocity1 remain unchanged. The two existing future SIL commitments remain unselected on TASK_BOARD. No new session or extra score is recorded.
+
+
+<!-- S408-writeback -->
+## Session 408 — 2026-11-02 — reliable release inspection
+
+Intent: full fresh arc plus authorized normal main push and full deployment; actual release outcome in docs/RELEASE_S408.json.
+
+Both selected L2 protocol outcomes are locally verified: safe build help (12 process tests) and merge closeout observation (real Git fixture). Independent review fixed missing native-suite registration and then approved. Full release acceptance is owned by docs/RELEASE_S408.json; local tests do not prove deployment.
+
+Dev Health:95 | Creative Alignment:94 | Momentum:92 | Engagement:96 | Process Quality:88 | Cross-Repo Coherence:94 | Security Posture:97 | Ecosystem Integration:91 | Capital Efficiency:95 | Automation Coverage:97
+Total: 939/1000. Product velocity:0; protocol velocity:2. No score increase for operator-only repairs or unmeasured user outcomes.
+
+Brainstorm: classify old visual failures before baseline replacement; benchmark large merge-history observation only with a reproduced scale problem. Both recorded as future unselected SIL items. CDR unchanged; no new founder creative direction.
+
+
+### Session 408 implementation addendum
+Required privacy-inventory-capacity L2 also locally verified:10privacy assertions on1052523-byte inventory. Independent review approved. Mobile215/215 and56actual before/after theme captures passed for required generated date refreshes. Three protocol repairs total; product velocity0, protocol velocity3, SIL remains939/1000. Full source and deployment acceptance remain independently owned by docs/RELEASE_S408.json.
+
+
+### Session 408 archive-card addendum
+Missing November share preview restored, shared badge/footer geometry repaired and light-theme ink made readable. Native8status/theme geometry/contrast cases,21card self-tests and actual image inspection passed; independent review approved. Four implemented outcomes: product1, protocol3; SIL remains939/1000. Full release is independently tracked in docs/RELEASE_S408.json.
+
+
+### Session 408 final local implementation addendum
+Five locally accepted outcomes: product1, protocol4. Shared Git captures now retain full inventory within16MiB, preserving explicit limits and non-Git defaults;2regressions,18reconciler checks and independent approval. OG preview cache follows actual rendered bytes;2runtime/geometry tests include8status/theme combinations, and live component staging passed16GET/8HEAD reads. Mobile215 and56page before/after images remain accepted. SIL stays939/1000. Complete native source, canonical site staging, hosted checks, full production, main publication and publisher restoration remain pending in docs/RELEASE_S408.json.
+
+
+#### S408 verified release addendum
+
+Five S408 outcomes are verified: safe build-check help, merge-closeout observation, complete privacy inventory, readable archive sharing/live previews, and bounded complete Git capture. Candidate 0105e4646789 passed two complete548-step native runs, mobile215/215,84 inspected before/after page-component images across seven themes, staging11/11 and exact hosted workflows3/3. Normal full Pages production run41572219005 is verified by provider identity and three build stamps. Complete Pages-origin readback checked3824: 3814 identical,10 configured redirects,0 differences/unread. Live OG Workere4b3070a-1090-49aa-b99d-d7ef44f6c192 passed16exact GET/8HEAD reads. All five publishers are restored; uptime stayed active. SIL939/1000 (product1/protocol4). The later full-run process-status flake was corrected by asserting both native/wrapped ENOBUFS capture errors, retaining explicit caps and full byte controls; independent review approved. Failed attempts remain recorded. Product velocity1, protocol velocity4 and SIL939/1000 remain unchanged. The two existing future SIL commitments stay unselected on TASK_BOARD.

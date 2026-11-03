@@ -1,0 +1,283 @@
+{
+  "session": 408,
+  "goal": "01a19ead-e025-7e52-8475-e71416abe95d",
+  "state": "complete",
+  "audit": "docs/AUDIT_2026-11-02.json",
+  "authorization": "Founder explicitly authorizes normal direct main commit/push and full deployment.",
+  "acceptance": {
+    "implementation": {
+      "state": "passed",
+      "receipt": "docs/S408_implementation.json"
+    },
+    "source": {
+      "state": "passed",
+      "receipt": "docs/S408_source-acceptance.json",
+      "passed": 548,
+      "plannedCommandCount": 548,
+      "coverageComplete": true,
+      "sourceFingerprint": "a84ce55dc4501e1191a1001b"
+    },
+    "staging": {
+      "state": "passed",
+      "receipt": "docs/S408_staging-ceremony.json",
+      "deployReceipt": "docs/S408_staging-deploy.json",
+      "steps": 11,
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "servedReceiptAndHistory": "verified: chain203, receipt186aa923be297a36c0bcc852",
+      "earlierAttempt": {
+        "receipt": "docs/S408_staging-ceremony-attempt1.json",
+        "reason": "Post-deployment continuity summary required native regeneration; first attempt10/11. No source or gate relaxation."
+      }
+    },
+    "exactRequiredHostedChecks": {
+      "state": "passed",
+      "receipt": "docs/S408_required-checks.json",
+      "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+      "checks": [
+        {
+          "workflow": ".github/workflows/e2e.yml",
+          "state": "passed",
+          "runId": 41569816491
+        },
+        {
+          "workflow": ".github/workflows/lighthouse.yml",
+          "state": "passed",
+          "runId": 41569818824
+        },
+        {
+          "workflow": ".github/workflows/accessibility.yml",
+          "state": "passed",
+          "runId": 41569821105
+        }
+      ]
+    },
+    "production": {
+      "state": "passed",
+      "receipt": "docs/S408_production.json",
+      "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+      "workflow": 41572219005,
+      "providerDeployment": "0c57ec62-3c48-4e87-88a3-0bfa6b3a2025",
+      "normalFull": true
+    },
+    "completeServedReadback": {
+      "state": "passed",
+      "receipt": "docs/S408_served-parity.json",
+      "against": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+      "checked": 3824,
+      "identical": 3814,
+      "redirected": 10,
+      "differ": 0,
+      "unread": 0,
+      "coverageComplete": true
+    },
+    "remotePublication": {
+      "state": "passed",
+      "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+      "sourcePublication": {
+        "session": 408,
+        "at": "2026-11-03T03:25:21.776Z",
+        "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+        "pushedHead": "7376882f7a5e35add79bb05d0044a5ad6c3b3953",
+        "remoteHead": "7376882f7a5e35add79bb05d0044a5ad6c3b3953",
+        "candidateReachable": true,
+        "closingRecordsRemaining": true
+      },
+      "scope": "The candidate and initial release records are already main-reachable. Final nonserved closing-record reachability is independently verified after its normal push."
+    },
+    "publisherRestoration": {
+      "state": "passed",
+      "receipt": "docs/S408_publishers-restored.json",
+      "originalStatesRestored": true,
+      "uptimeActive": true
+    },
+    "prerequisites": {
+      "state": "passed",
+      "receipt": "docs/S408_prerequisites.json"
+    },
+    "mobile": {
+      "state": "passed",
+      "passed": 215,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "highSeverityFindings": 0,
+      "receipt": "docs/mobile-audit/receipt.json",
+      "startedAt": "2026-11-03T01:58:20.595Z",
+      "finishedAt": "2026-11-03T02:06:47.128Z",
+      "note": "Full new execution after the final generated homepage date correction."
+    },
+    "visual": {
+      "state": "passed",
+      "receipt": "docs/visual-qa/LATEST.json",
+      "reviewedBefore": 42,
+      "reviewedAfter": 42
+    },
+    "archiveCard": {
+      "state": "passed",
+      "receipt": "docs/S408_card-acceptance.json"
+    },
+    "gitCapacity": {
+      "state": "passed",
+      "receipt": "docs/S408_git-acceptance.json"
+    },
+    "ogWorker": {
+      "staging": {
+        "state": "passed",
+        "receipt": "docs/S408_og-staging.json",
+        "versionId": "82f1fe7c-d1ab-4693-aa95-253abd96116d",
+        "scope": "Persistent isolated component staging; canonical website staging separate."
+      },
+      "production": {
+        "state": "passed",
+        "receipt": "docs/S408_og-production.json",
+        "versionId": "e4b3070a-1090-49aa-b99d-d7ef44f6c192",
+        "GET": 16,
+        "HEAD": 8,
+        "sourceBound": true
+      },
+      "rollback": "docs/S408_og-rollback.json"
+    },
+    "closingWriteback": {
+      "state": "complete",
+      "record": "Canonical S408 current state, handoff, log, SIL, truth audit, status, memory and impact brief; TASK_BOARD owns Wave3 by reference to this ledger."
+    }
+  },
+  "waves": [
+    {
+      "name": "fresh startup and audit",
+      "state": "complete"
+    },
+    {
+      "name": "selected implementation",
+      "state": "complete"
+    },
+    {
+      "name": "release and closeout publication",
+      "state": "complete"
+    }
+  ],
+  "limitations": [
+    "Existing identity/provider and positive authenticated acceptance are unresolved independently.",
+    "Historical optional visual failures are unclassified; no baseline changes selected.",
+    "Field-vitals and user outcomes remain unmeasured."
+  ],
+  "prerequisiteAudit": "docs/AUDIT_2026-11-02-S408.json",
+  "cardAudit": "docs/AUDIT_2026-11-02-S408-card.json",
+  "implementedOutcomes": 5,
+  "gitAudit": "docs/AUDIT_2026-11-02-S408-git.json",
+  "audits": [
+    "docs/AUDIT_2026-11-02.json",
+    "docs/AUDIT_2026-11-02-S408.json",
+    "docs/AUDIT_2026-11-02-S408-card.json",
+    "docs/AUDIT_2026-11-02-S408-git.json"
+  ],
+  "localDiagnostics": {
+    "state": "completed-nonaccepting",
+    "lastRange": {
+      "first": 438,
+      "last": 548,
+      "passed": 111
+    },
+    "repairs": [
+      "Conservative S408-only task prose compaction",
+      "Existing generated CSS preload, API feed dates, launch age, image placeholder map and News freshness reconciled",
+      "Missing archive card restored and real template geometry/light ink corrected",
+      "Current site-health rebuild truthfully abstains on field data",
+      "Current public-profile rank query snapshot; no private-data/global ranking inference",
+      "Privacy and shared Git inventory output capacity fixed without filtering",
+      "Closeout boundary rendered with canonical S408 naming and cache input"
+    ]
+  },
+  "utcFreshnessRepair": {
+    "observedFailure": "Full native run stopped at355/548: homepage said today while actual freshness said yesterday.",
+    "generator": "scripts/build-home-desk-module.mjs",
+    "visualReceipt": "docs/visual-qa/S408-cadence-after.json",
+    "note": "All28 before/after captures inspected. Failed full run retained and is not acceptance."
+  },
+  "sourceAttempts": [
+    {
+      "state": "failed",
+      "startedAt": "2026-11-03T01:35:09.716Z",
+      "finishedAt": "2026-11-03T01:45:56.843Z",
+      "failedStep": 355,
+      "reason": "UTC midnight freshness changed today→yesterday; native homepage generator and28 actual visual captures repaired the date label.",
+      "log": ".cache/S408-final-autopilot.log"
+    },
+    {
+      "state": "failed",
+      "startedAt": "2026-11-03T01:50:57.077Z",
+      "finishedAt": "2026-11-03T01:57:15.350Z",
+      "failedStep": 169,
+      "reason": "Proof ordering correctly rejected old mobile index.html binding after the date change. Full mobile suite rerun required; no restamping.",
+      "log": ".cache/S408-final-autopilot-2.log"
+    },
+    {
+      "state": "failed",
+      "startedAt": "2026-11-03T02:07:15.596Z",
+      "finishedAt": "2026-11-03T02:14:12.887Z",
+      "failedStep": 169,
+      "reason": "Native proof gate found visual-retention report stale after new real captures. Regenerated native inventory:4242bound,2074archival candidates,zero deleted. Mobile ordering passed.",
+      "log": ".cache/S408-final-autopilot-3.log"
+    },
+    {
+      "state": "failed-final-reconciliation",
+      "startedAt": "2026-11-03T02:18:19.790Z",
+      "finishedAt": "2026-11-03T02:28:13.053Z",
+      "initialCompleteRun": {
+        "passed": 548,
+        "planned": 548,
+        "coverageComplete": true
+      },
+      "failedStep": 2,
+      "reason": "Both real non-Git controls reported ENOBUFS, but overflow termination statuses raced(null versus0). Removed status equality only; retained both overflow errors, full Git byte controls and explicit caps. Focused2tests and independent review passed. New final-source proof still required.",
+      "log": ".cache/S408-final-autopilot-4.log"
+    }
+  ],
+  "nativeCloseout": {
+    "exit": 0,
+    "startedAt": "2026-11-03T02:30:50.269Z",
+    "finishedAt": "2026-11-03T02:44:02.815Z",
+    "sourceReceipt": "docs/S408_source-acceptance.json",
+    "scope": "Local full source and closeout. Remote publication and production remain separate."
+  },
+  "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+  "tag": "S408-release-20261102-0105e4646789",
+  "mainPublicationPreparation": {
+    "observedRemote": "0a35d11d03a0e5e0790bf4be6cb27c2467c72998",
+    "method": "Normal merge preserves the intervening uptime commit. Its old-subject staging finding is retained separately; fresh native parity and72exact candidate reads prove the accepted staging subject. Verified source fingerprint unchanged."
+  },
+  "completedAt": "2026-11-03T03:46:51.947Z",
+  "impactBroadcast": {
+    "session": 408,
+    "cargoId": "01K6FNT4RVDDB9E41E3F05D638",
+    "shippedAt": "2026-11-03T03:40:35.094Z",
+    "verifiedAt": "2026-11-03T03:40:35.112Z",
+    "signatureVerification": {
+      "ok": true,
+      "ed": {
+        "state": "unsigned"
+      }
+    },
+    "scope": "Actual native cargo shipment and transport authenticity verification. Recipient receipt, application or fleet adoption is not inferred."
+  },
+  "shellHygiene": {
+    "session": 408,
+    "enumeratedAt": "2026-11-03T03:40:35.394Z",
+    "started": 56,
+    "closed": 56,
+    "running": 0,
+    "scope": "Snapshot before final record publication; final native goal observation checks any later publication handle separately."
+  },
+  "remaining": [],
+  "publicationScope": "Accepted immutable normal full production candidate plus live OG Worker. Final nonserved acceptance records are published normally. Later autonomous observations are separate moving transactions; no future commit is claimed as already deployed.",
+  "providerTransformEvidence": {
+    "receipt": "docs/S408_provider-transform-checks.json",
+    "strictApexAttempt": "docs/S408_production-readback-attempt1.json",
+    "documentation": "https://developers.cloudflare.com/cloudflare-challenges/challenge-types/javascript-detections/"
+  },
+  "closingRecordPublication": {
+    "state": "verified",
+    "publishedCommit": "dc05361d7905e208e5aef453938a5a945242c82d",
+    "scope": "Actual normal main publication of canonical closeout records; this final wave-field correction is verified by the subsequent native ref observation."
+  }
+}

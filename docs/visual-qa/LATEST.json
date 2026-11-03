@@ -1,8 +1,9 @@
 {
+  "captureHandling": "Fixed header and Spark hidden only for unobscured component capture.",
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-10-31T00:53:20.365Z",
-  "generatedBy": ".cache/S407-capture-closing-clock.mjs; native browser capture of generated launch-age and Desk freshness; unchanged fixed header/Spark hidden",
+  "capturedAt": "2026-11-03T01:50:01.788Z",
+  "generatedBy": "S408 aggregate: actual clock, API cards and UTC freshness-label captures",
   "themes": [
     "dark",
     "light",
@@ -14,8 +15,9 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "e546fa752e9e3aeca32ec7fa0d62b3e775aa0ccee3d75ceaf534becd0ead2f2c",
+    "sha256": "3413d91da8a6a36c26ccbe3fdc61fafc33f72ba58d0bebe5263ac995549a08f2",
     "files": [
+      "api/index.html",
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
       "assets/cookie-consent.js",
@@ -582,6 +584,10 @@
       "vault-member/portal.css"
     ],
     "entries": [
+      {
+        "path": "api/index.html",
+        "sha256": "4dd2046ae73a66b32f837808e1d20ba9668ff3b59e37854f6f7822aa289cfed9"
+      },
       {
         "path": "assets/ambient-loader.js",
         "sha256": "ff3f592fc5877a109d669253914d63d7c2e357e2a49640a64cc8304b50394b33"
@@ -2780,7 +2786,7 @@
       },
       {
         "path": "index.html",
-        "sha256": "32b984f54233be5535eb263e218358c5ec9044ac34a524f92826b4fb1268dd2e"
+        "sha256": "4bc2c5fba2e70c93af4f5be971420b4a6a59597b664b68052762850766850fb5"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -2842,13 +2848,14 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "e27067768ebfb4cfa5bf9a7536351c5bbeb72595203f912e96a1a7f59b57f74b",
-    "candidateSha": "4d9f618220400497437639730a46c314e16b5e76",
-    "root": "db37f768f30f79ec50eec0441ccaa157f94a22c8d49cea7eb76b8add208acf98"
+    "manifestSha256": "0183985d52e0d5045ee827eca98ed68591bd2adc9c054c362df739e6a347c264",
+    "candidateSha": "2728324c119a3825de464410e62ccfc0bcd964ec",
+    "root": "0c3859aa57acd6e82351c0e0f70f1cd65f839772580678d835c1164b2c1c11d5"
   },
   "matrix": {
     "routes": [
-      "/"
+      "/",
+      "/api/"
     ],
     "themes": [
       "dark",
@@ -2872,29 +2879,34 @@
       }
     ],
     "states": [
-      "launch-age",
-      "desk-freshness"
+      "changed-panel"
     ],
     "expectedCaptures": 28,
-    "completedCaptures": 28
+    "completedCaptures": 42
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 28,
-      "manuallyReviewed": 28,
+      "totalCaptures": 42,
+      "manuallyReviewed": 42,
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Codex rendered-image inspection",
+    "reviewer": "Codex actual before/after image inspection",
     "findings": [
-      "Launch-age241 is legible in all themes. Desk yesterday caption wraps onto a complete second mobile line without clipping."
+      "244 and Days since launch are fully visible in all seven themes, on desktop1366px and mobile390px. Light theme uses dark gold and dark text; dark themes preserve legible gold and light labels.",
+      "No clipping, overlap or illegible text found in the touched panel.",
+      "Both changed date rows are complete, legible and unobscured across all seven themes at1366px desktop and390px mobile. Forge Ledger shows November2; Desk retains November2 with a source timestamp refresh.",
+      "Light theme dark text/gold links and dark-theme light text/gold links remain readable. Card spacing, wrapping and date/link separation are intact.",
+      "All seven themes preserve readable cadence copy. Mobile yesterday wraps to a second line with complete text and no clipping; desktop stays on one line."
     ],
     "fixesApplied": [
-      "Capture finite hero animations at their finished state using the canonical animations-disabled screenshot option. This is capture handling, not a product edit."
+      "Use the existing deterministic generator to correct243→244 from the committed observation clock.",
+      "Regenerate the two feed timestamps from the existing feed sources; no copy, styling or subscription behavior changes.",
+      "Regenerate current measured freshness label today→yesterday after UTC midnight."
     ],
     "blockingDefectsOpen": 0,
-    "limitation": "Focused generated date displays; original S407 IGNIS review is retained separately."
+    "limitation": "Generated clock and two subscription-date rows only; no whole-site visual claim."
   },
   "captures": [
     {
@@ -2909,37 +2921,17 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S407-clock-after-dark-desktop-launch-age.png",
-      "sha256": "e5b85ef07b2e07c9344890e9bbb09f9a8d9593ff1958b9c16c610f19af1926b9",
+      "file": "S408-clock-after-dark-desktop.png",
+      "sha256": "cd5cdb49996e97147a5e2d69fbaf0da696b121c54324d9ecc4a89f7a13a32279",
       "page": "/",
-      "state": "launch-age",
+      "state": "changed-panel",
+      "observedText": "244",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex image inspection of all28 actual before/after captures in labelled contact sheets"
       },
-      "observedText": "241"
-    },
-    {
-      "theme": "dark",
-      "observedTheme": {
-        "stored": "dark",
-        "root": "dark"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S407-clock-after-dark-desktop-desk-freshness.png",
-      "sha256": "1012a1500aa6ab0d706aea966b518aac7a62c3df424405982c02c503166e4183",
-      "page": "/",
-      "state": "desk-freshness",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
-      },
-      "observedText": "Daily cadence · Latest edition 2026-10-30 — yesterday."
+      "capturedAt": "2026-11-03T00:14:42.148Z",
+      "originalState": "launch-age"
     },
     {
       "theme": "light",
@@ -2953,37 +2945,17 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S407-clock-after-light-desktop-launch-age.png",
-      "sha256": "8525e33f0ec86a8202f77820d11898206719545db33ee419e6e8de905d5042de",
+      "file": "S408-clock-after-light-desktop.png",
+      "sha256": "2657835404b30564a5e179f3006f97c7561ea1c0a39fda22995049204793ed6a",
       "page": "/",
-      "state": "launch-age",
+      "state": "changed-panel",
+      "observedText": "244",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex image inspection of all28 actual before/after captures in labelled contact sheets"
       },
-      "observedText": "241"
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S407-clock-after-light-desktop-desk-freshness.png",
-      "sha256": "68c91473dea3ceddaa86096cef83788cca3eef636ef08c17846047a9a16a3666",
-      "page": "/",
-      "state": "desk-freshness",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
-      },
-      "observedText": "Daily cadence · Latest edition 2026-10-30 — yesterday."
+      "capturedAt": "2026-11-03T00:14:42.148Z",
+      "originalState": "launch-age"
     },
     {
       "theme": "ambient",
@@ -2997,37 +2969,17 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S407-clock-after-ambient-desktop-launch-age.png",
-      "sha256": "f98e93b8f364578356b2d60c32da89b90699b149f1bad9fd4d124b7f79778d67",
+      "file": "S408-clock-after-ambient-desktop.png",
+      "sha256": "884991b87e586a078f92b20a9f2b53761f6f65c97b14fbf39aabe14608a26050",
       "page": "/",
-      "state": "launch-age",
+      "state": "changed-panel",
+      "observedText": "244",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex image inspection of all28 actual before/after captures in labelled contact sheets"
       },
-      "observedText": "241"
-    },
-    {
-      "theme": "ambient",
-      "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S407-clock-after-ambient-desktop-desk-freshness.png",
-      "sha256": "bfb30a7b40eec252aac4fc5db8111f92061157975ea5489e33875375d1718cf7",
-      "page": "/",
-      "state": "desk-freshness",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
-      },
-      "observedText": "Daily cadence · Latest edition 2026-10-30 — yesterday."
+      "capturedAt": "2026-11-03T00:14:42.148Z",
+      "originalState": "launch-age"
     },
     {
       "theme": "warm",
@@ -3041,37 +2993,17 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S407-clock-after-warm-desktop-launch-age.png",
-      "sha256": "59d2e66fe915c7b0d595ea6d101c47573f46ec2f4daf0f8924083fb6a6218330",
+      "file": "S408-clock-after-warm-desktop.png",
+      "sha256": "82bedf0d45df009bf006427ec5808380ccf368d6c9e2b5fbc6eb41fc3e4359b4",
       "page": "/",
-      "state": "launch-age",
+      "state": "changed-panel",
+      "observedText": "244",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex image inspection of all28 actual before/after captures in labelled contact sheets"
       },
-      "observedText": "241"
-    },
-    {
-      "theme": "warm",
-      "observedTheme": {
-        "stored": "warm",
-        "root": "warm"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S407-clock-after-warm-desktop-desk-freshness.png",
-      "sha256": "8eac72bc486707fb0682b69acab705acd8a15ffa3083fe3d9d04f5373542a63f",
-      "page": "/",
-      "state": "desk-freshness",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
-      },
-      "observedText": "Daily cadence · Latest edition 2026-10-30 — yesterday."
+      "capturedAt": "2026-11-03T00:14:42.148Z",
+      "originalState": "launch-age"
     },
     {
       "theme": "cool",
@@ -3085,37 +3017,17 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S407-clock-after-cool-desktop-launch-age.png",
-      "sha256": "a2772a2b97fe19e1dbb25686b52087cf48fe25cb1a5263ae5550e05ce8266662",
+      "file": "S408-clock-after-cool-desktop.png",
+      "sha256": "c9e203b11c4c52f4e0195275bd5c68089bd46a15c66c196cb8d39d9d970ff72f",
       "page": "/",
-      "state": "launch-age",
+      "state": "changed-panel",
+      "observedText": "244",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex image inspection of all28 actual before/after captures in labelled contact sheets"
       },
-      "observedText": "241"
-    },
-    {
-      "theme": "cool",
-      "observedTheme": {
-        "stored": "cool",
-        "root": "cool"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S407-clock-after-cool-desktop-desk-freshness.png",
-      "sha256": "ded16d44987a0278a0747ceb045f2dbac44b19fc040d1edbd740da9caf6e8c3e",
-      "page": "/",
-      "state": "desk-freshness",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
-      },
-      "observedText": "Daily cadence · Latest edition 2026-10-30 — yesterday."
+      "capturedAt": "2026-11-03T00:14:42.148Z",
+      "originalState": "launch-age"
     },
     {
       "theme": "lava",
@@ -3129,37 +3041,17 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S407-clock-after-lava-desktop-launch-age.png",
-      "sha256": "f8d14ce056fe4896e5a3974eb8d44d79eb6fd37997649bb23706fb5d38bfe2c6",
+      "file": "S408-clock-after-lava-desktop.png",
+      "sha256": "ed6a5eac0c187a0d7e9633c0e819fd65c599192cad8074e0d0658c46bfd7bbfb",
       "page": "/",
-      "state": "launch-age",
+      "state": "changed-panel",
+      "observedText": "244",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex image inspection of all28 actual before/after captures in labelled contact sheets"
       },
-      "observedText": "241"
-    },
-    {
-      "theme": "lava",
-      "observedTheme": {
-        "stored": "lava",
-        "root": "lava"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S407-clock-after-lava-desktop-desk-freshness.png",
-      "sha256": "bfc1dc0325545980a49e044712546ff8b424bc4d0b29289a449c550e26df9218",
-      "page": "/",
-      "state": "desk-freshness",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
-      },
-      "observedText": "Daily cadence · Latest edition 2026-10-30 — yesterday."
+      "capturedAt": "2026-11-03T00:14:42.148Z",
+      "originalState": "launch-age"
     },
     {
       "theme": "high-contrast",
@@ -3173,37 +3065,17 @@
         "width": 1366,
         "height": 900
       },
-      "file": "S407-clock-after-high-contrast-desktop-launch-age.png",
-      "sha256": "b2a1a3c47318ee40a346c04813ab3ab199568146149d1e9f027e62a6cddd43e4",
+      "file": "S408-clock-after-high-contrast-desktop.png",
+      "sha256": "92c4597a486f3d47664118626cc8c05541cb7e9351e8abfc6b7f64803f7c99ab",
       "page": "/",
-      "state": "launch-age",
+      "state": "changed-panel",
+      "observedText": "244",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex image inspection of all28 actual before/after captures in labelled contact sheets"
       },
-      "observedText": "241"
-    },
-    {
-      "theme": "high-contrast",
-      "observedTheme": {
-        "stored": "high-contrast",
-        "root": "high-contrast"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "S407-clock-after-high-contrast-desktop-desk-freshness.png",
-      "sha256": "7aff85fbf59936abdd302035ca43f593f0895e9a939b364e44f5a846c88a1838",
-      "page": "/",
-      "state": "desk-freshness",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
-      },
-      "observedText": "Daily cadence · Latest edition 2026-10-30 — yesterday."
+      "capturedAt": "2026-11-03T00:14:42.148Z",
+      "originalState": "launch-age"
     },
     {
       "theme": "dark",
@@ -3217,15 +3089,329 @@
         "width": 390,
         "height": 844
       },
-      "file": "S407-clock-after-dark-mobile-launch-age.png",
-      "sha256": "7d7be10b05507d761a121892c4e41f86ad257030cfe6017f19d086608f437d5f",
+      "file": "S408-clock-after-dark-mobile.png",
+      "sha256": "a618d0196d41e2b58b93894a8865c75fc43c101a5b659a396f89fe25c5507f85",
       "page": "/",
-      "state": "launch-age",
+      "state": "changed-panel",
+      "observedText": "244",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex image inspection of all28 actual before/after captures in labelled contact sheets"
       },
-      "observedText": "241"
+      "capturedAt": "2026-11-03T00:14:42.148Z",
+      "originalState": "launch-age"
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S408-clock-after-light-mobile.png",
+      "sha256": "9766bae0978fa5a2483518f49364ca5d2aacd7b45c1d0f4e23e12a19f46d965e",
+      "page": "/",
+      "state": "changed-panel",
+      "observedText": "244",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of all28 actual before/after captures in labelled contact sheets"
+      },
+      "capturedAt": "2026-11-03T00:14:42.148Z",
+      "originalState": "launch-age"
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S408-clock-after-ambient-mobile.png",
+      "sha256": "75a8eb9c78bbf6b323f9ac1c74ded86f277f19c22a1517b223f06cfc7dd89e0e",
+      "page": "/",
+      "state": "changed-panel",
+      "observedText": "244",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of all28 actual before/after captures in labelled contact sheets"
+      },
+      "capturedAt": "2026-11-03T00:14:42.148Z",
+      "originalState": "launch-age"
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S408-clock-after-warm-mobile.png",
+      "sha256": "44c999720121292ca3f3c636385eab32d5a84a1fffdda869358160253b386837",
+      "page": "/",
+      "state": "changed-panel",
+      "observedText": "244",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of all28 actual before/after captures in labelled contact sheets"
+      },
+      "capturedAt": "2026-11-03T00:14:42.148Z",
+      "originalState": "launch-age"
+    },
+    {
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S408-clock-after-cool-mobile.png",
+      "sha256": "2e73211cc56814664225b811d570af63409f6d0b29bfdae8fea56502f5e01211",
+      "page": "/",
+      "state": "changed-panel",
+      "observedText": "244",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of all28 actual before/after captures in labelled contact sheets"
+      },
+      "capturedAt": "2026-11-03T00:14:42.148Z",
+      "originalState": "launch-age"
+    },
+    {
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S408-clock-after-lava-mobile.png",
+      "sha256": "eef90f8b4fb0e1d15ac79885782ce40632b3641efe6a4e7bf6f8459f667b947a",
+      "page": "/",
+      "state": "changed-panel",
+      "observedText": "244",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of all28 actual before/after captures in labelled contact sheets"
+      },
+      "capturedAt": "2026-11-03T00:14:42.148Z",
+      "originalState": "launch-age"
+    },
+    {
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S408-clock-after-high-contrast-mobile.png",
+      "sha256": "cd15844d0d7e0ec4f897a31d16496c84e4983115f88eec550b53790441991c69",
+      "page": "/",
+      "state": "changed-panel",
+      "observedText": "244",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of all28 actual before/after captures in labelled contact sheets"
+      },
+      "capturedAt": "2026-11-03T00:14:42.148Z",
+      "originalState": "launch-age"
+    },
+    {
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S408-api-after-dark-desktop.png",
+      "sha256": "0cc3f2223c1ff5f1444572958529f459c58bb4ae73159c883fbcffdeccadbefd",
+      "page": "/api/",
+      "state": "changed-panel",
+      "observedText": "Latest item: 2026-11-02 UTC",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of both changed subscription cards in all28 actual before/after captures"
+      },
+      "capturedAt": "2026-11-03T00:27:09.325Z",
+      "originalState": "publication-dates"
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S408-api-after-light-desktop.png",
+      "sha256": "8a24681c3617141a513a568c2f722f07fdbb3a9fa6c6240bccca2c39d6ac77f5",
+      "page": "/api/",
+      "state": "changed-panel",
+      "observedText": "Latest item: 2026-11-02 UTC",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of both changed subscription cards in all28 actual before/after captures"
+      },
+      "capturedAt": "2026-11-03T00:27:09.325Z",
+      "originalState": "publication-dates"
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S408-api-after-ambient-desktop.png",
+      "sha256": "95262563a7df9486e46f69d0b21a27bb783a10af6015fb6e81a646b2dab8f3c2",
+      "page": "/api/",
+      "state": "changed-panel",
+      "observedText": "Latest item: 2026-11-02 UTC",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of both changed subscription cards in all28 actual before/after captures"
+      },
+      "capturedAt": "2026-11-03T00:27:09.325Z",
+      "originalState": "publication-dates"
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S408-api-after-warm-desktop.png",
+      "sha256": "b5a20c998e6f2fabbda613aea041491d4ca12e932c301c021c386d071aef06e8",
+      "page": "/api/",
+      "state": "changed-panel",
+      "observedText": "Latest item: 2026-11-02 UTC",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of both changed subscription cards in all28 actual before/after captures"
+      },
+      "capturedAt": "2026-11-03T00:27:09.325Z",
+      "originalState": "publication-dates"
+    },
+    {
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S408-api-after-cool-desktop.png",
+      "sha256": "ece82c52132ace925433941d4872c1f1af6b7edd9984237e84bd4239fd13c8ed",
+      "page": "/api/",
+      "state": "changed-panel",
+      "observedText": "Latest item: 2026-11-02 UTC",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of both changed subscription cards in all28 actual before/after captures"
+      },
+      "capturedAt": "2026-11-03T00:27:09.325Z",
+      "originalState": "publication-dates"
+    },
+    {
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S408-api-after-lava-desktop.png",
+      "sha256": "15d7116b619d40c4caa5f7d57abb7fb17d6e94930d560498a02887a0484f85db",
+      "page": "/api/",
+      "state": "changed-panel",
+      "observedText": "Latest item: 2026-11-02 UTC",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of both changed subscription cards in all28 actual before/after captures"
+      },
+      "capturedAt": "2026-11-03T00:27:09.325Z",
+      "originalState": "publication-dates"
+    },
+    {
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S408-api-after-high-contrast-desktop.png",
+      "sha256": "5261b3bbcf687d11b5d2c5fc707c6d7f59e3f0ee3ccc79c8c61b086b90a46f4e",
+      "page": "/api/",
+      "state": "changed-panel",
+      "observedText": "Latest item: 2026-11-02 UTC",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of both changed subscription cards in all28 actual before/after captures"
+      },
+      "capturedAt": "2026-11-03T00:27:09.325Z",
+      "originalState": "publication-dates"
     },
     {
       "theme": "dark",
@@ -3239,15 +3425,17 @@
         "width": 390,
         "height": 844
       },
-      "file": "S407-clock-after-dark-mobile-desk-freshness.png",
-      "sha256": "2f6f272858c168a411812eff0e80470d7caa06f066e610bc1df4d877861ffd9b",
-      "page": "/",
-      "state": "desk-freshness",
+      "file": "S408-api-after-dark-mobile.png",
+      "sha256": "83a3d0198e8d67d56164d2f1bb385a73e3b5ebcebd48e840d558df5207e869be",
+      "page": "/api/",
+      "state": "changed-panel",
+      "observedText": "Latest item: 2026-11-02 UTC",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex image inspection of both changed subscription cards in all28 actual before/after captures"
       },
-      "observedText": "Daily cadence · Latest edition 2026-10-30 — yesterday."
+      "capturedAt": "2026-11-03T00:27:09.325Z",
+      "originalState": "publication-dates"
     },
     {
       "theme": "light",
@@ -3261,15 +3449,329 @@
         "width": 390,
         "height": 844
       },
-      "file": "S407-clock-after-light-mobile-launch-age.png",
-      "sha256": "e48d659bdf65098c5bb2a8c6ceb842d52562358268391c1c3cc6a13fd3271756",
-      "page": "/",
-      "state": "launch-age",
+      "file": "S408-api-after-light-mobile.png",
+      "sha256": "5a143b1dcb3fb8fa42c234af33aa4c9c2da32e35203b56e67c44615813d87d6c",
+      "page": "/api/",
+      "state": "changed-panel",
+      "observedText": "Latest item: 2026-11-02 UTC",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex image inspection of both changed subscription cards in all28 actual before/after captures"
       },
-      "observedText": "241"
+      "capturedAt": "2026-11-03T00:27:09.325Z",
+      "originalState": "publication-dates"
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S408-api-after-ambient-mobile.png",
+      "sha256": "ef029637da592d31daba922e0edfed69905fe862f9be546b386ea38ffc5f65d3",
+      "page": "/api/",
+      "state": "changed-panel",
+      "observedText": "Latest item: 2026-11-02 UTC",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of both changed subscription cards in all28 actual before/after captures"
+      },
+      "capturedAt": "2026-11-03T00:27:09.325Z",
+      "originalState": "publication-dates"
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S408-api-after-warm-mobile.png",
+      "sha256": "b0ca5141029b2361a8fb886040e25e59bfbe62ed394ecca51987383c14b5a154",
+      "page": "/api/",
+      "state": "changed-panel",
+      "observedText": "Latest item: 2026-11-02 UTC",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of both changed subscription cards in all28 actual before/after captures"
+      },
+      "capturedAt": "2026-11-03T00:27:09.325Z",
+      "originalState": "publication-dates"
+    },
+    {
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S408-api-after-cool-mobile.png",
+      "sha256": "6dd53de598016eb9e8b148b8a811813f477fe9c4a02101f58b84d19901444279",
+      "page": "/api/",
+      "state": "changed-panel",
+      "observedText": "Latest item: 2026-11-02 UTC",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of both changed subscription cards in all28 actual before/after captures"
+      },
+      "capturedAt": "2026-11-03T00:27:09.325Z",
+      "originalState": "publication-dates"
+    },
+    {
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S408-api-after-lava-mobile.png",
+      "sha256": "ead000f071269233422f2b1962364525ce63cfe20dac5c0983a114866c14ca0c",
+      "page": "/api/",
+      "state": "changed-panel",
+      "observedText": "Latest item: 2026-11-02 UTC",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of both changed subscription cards in all28 actual before/after captures"
+      },
+      "capturedAt": "2026-11-03T00:27:09.325Z",
+      "originalState": "publication-dates"
+    },
+    {
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S408-api-after-high-contrast-mobile.png",
+      "sha256": "27e900cdfd08590f0e09af0abd9f2aa010dd5bcc425d5ce7c41a697654058f70",
+      "page": "/api/",
+      "state": "changed-panel",
+      "observedText": "Latest item: 2026-11-02 UTC",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image inspection of both changed subscription cards in all28 actual before/after captures"
+      },
+      "capturedAt": "2026-11-03T00:27:09.325Z",
+      "originalState": "publication-dates"
+    },
+    {
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S408-cadence-after-dark-desktop.png",
+      "sha256": "ae57aa9ebd439faed05a64fabff8261f07fd65e67b8c4c56336b784bd7db22a7",
+      "page": "/",
+      "state": "changed-panel",
+      "observedText": "Daily cadence · Latest edition 2026-11-02 — yesterday.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex actual image inspection of all28 cadence captures"
+      },
+      "capturedAt": "2026-11-03T01:50:01.788Z",
+      "originalState": "cadence-date"
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S408-cadence-after-light-desktop.png",
+      "sha256": "cf1e58ca951784b6d5efa9955b7a7a2efedfbf575618f9c1c8ceb5073aadb01b",
+      "page": "/",
+      "state": "changed-panel",
+      "observedText": "Daily cadence · Latest edition 2026-11-02 — yesterday.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex actual image inspection of all28 cadence captures"
+      },
+      "capturedAt": "2026-11-03T01:50:01.788Z",
+      "originalState": "cadence-date"
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S408-cadence-after-ambient-desktop.png",
+      "sha256": "93293eaa705f7f1ac3fc2d0cfbb47ee679c285f636566141fb156134d5455551",
+      "page": "/",
+      "state": "changed-panel",
+      "observedText": "Daily cadence · Latest edition 2026-11-02 — yesterday.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex actual image inspection of all28 cadence captures"
+      },
+      "capturedAt": "2026-11-03T01:50:01.788Z",
+      "originalState": "cadence-date"
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S408-cadence-after-warm-desktop.png",
+      "sha256": "bb7f895949b52648f432e8edfaef51ffeab8a50135108c691141c5889bede37e",
+      "page": "/",
+      "state": "changed-panel",
+      "observedText": "Daily cadence · Latest edition 2026-11-02 — yesterday.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex actual image inspection of all28 cadence captures"
+      },
+      "capturedAt": "2026-11-03T01:50:01.788Z",
+      "originalState": "cadence-date"
+    },
+    {
+      "theme": "cool",
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S408-cadence-after-cool-desktop.png",
+      "sha256": "40029869f25a99c4646b10373aa0a13c1645645a0832a739ff2b583034922dd7",
+      "page": "/",
+      "state": "changed-panel",
+      "observedText": "Daily cadence · Latest edition 2026-11-02 — yesterday.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex actual image inspection of all28 cadence captures"
+      },
+      "capturedAt": "2026-11-03T01:50:01.788Z",
+      "originalState": "cadence-date"
+    },
+    {
+      "theme": "lava",
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S408-cadence-after-lava-desktop.png",
+      "sha256": "355841d207b9caa495ffff1f66fbbbf703d43ae6cda9435962b15a525ee48ddf",
+      "page": "/",
+      "state": "changed-panel",
+      "observedText": "Daily cadence · Latest edition 2026-11-02 — yesterday.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex actual image inspection of all28 cadence captures"
+      },
+      "capturedAt": "2026-11-03T01:50:01.788Z",
+      "originalState": "cadence-date"
+    },
+    {
+      "theme": "high-contrast",
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "S408-cadence-after-high-contrast-desktop.png",
+      "sha256": "0c0f9b2e521f6082995bfd8f46a346527821ed81d915305b0e51afd1c83cd40e",
+      "page": "/",
+      "state": "changed-panel",
+      "observedText": "Daily cadence · Latest edition 2026-11-02 — yesterday.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex actual image inspection of all28 cadence captures"
+      },
+      "capturedAt": "2026-11-03T01:50:01.788Z",
+      "originalState": "cadence-date"
+    },
+    {
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "S408-cadence-after-dark-mobile.png",
+      "sha256": "ab9ea07ea42d1b552f2db9e5f9cc6ddce4bfdb4a1db67fa3717316b2f475227d",
+      "page": "/",
+      "state": "changed-panel",
+      "observedText": "Daily cadence · Latest edition 2026-11-02 — yesterday.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex actual image inspection of all28 cadence captures"
+      },
+      "capturedAt": "2026-11-03T01:50:01.788Z",
+      "originalState": "cadence-date"
     },
     {
       "theme": "light",
@@ -3283,15 +3785,17 @@
         "width": 390,
         "height": 844
       },
-      "file": "S407-clock-after-light-mobile-desk-freshness.png",
-      "sha256": "9cca6a24f6ee1557b4674ddc9ba3d28a6b593298edc3aa9d59162cca0e781d44",
+      "file": "S408-cadence-after-light-mobile.png",
+      "sha256": "6dd8dbb1b8e1475c893d96284355d486154ce591f77fd5f7ae624df45e377e89",
       "page": "/",
-      "state": "desk-freshness",
+      "state": "changed-panel",
+      "observedText": "Daily cadence · Latest edition 2026-11-02 — yesterday.",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex actual image inspection of all28 cadence captures"
       },
-      "observedText": "Daily cadence · Latest edition 2026-10-30 — yesterday."
+      "capturedAt": "2026-11-03T01:50:01.788Z",
+      "originalState": "cadence-date"
     },
     {
       "theme": "ambient",
@@ -3305,37 +3809,17 @@
         "width": 390,
         "height": 844
       },
-      "file": "S407-clock-after-ambient-mobile-launch-age.png",
-      "sha256": "8d413bc19ddae196eb09d910a6ff5c944f93bde87142c75aac7bf41141c579b4",
+      "file": "S408-cadence-after-ambient-mobile.png",
+      "sha256": "e1c86788db398ec989db2939678015136219bae2d7ee983aeb9351bde4d55911",
       "page": "/",
-      "state": "launch-age",
+      "state": "changed-panel",
+      "observedText": "Daily cadence · Latest edition 2026-11-02 — yesterday.",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex actual image inspection of all28 cadence captures"
       },
-      "observedText": "241"
-    },
-    {
-      "theme": "ambient",
-      "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S407-clock-after-ambient-mobile-desk-freshness.png",
-      "sha256": "93dbec5f9da04334763b1787e4445e61b7b5e9f899929cb2409a29fcf4b47b6b",
-      "page": "/",
-      "state": "desk-freshness",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
-      },
-      "observedText": "Daily cadence · Latest edition 2026-10-30 — yesterday."
+      "capturedAt": "2026-11-03T01:50:01.788Z",
+      "originalState": "cadence-date"
     },
     {
       "theme": "warm",
@@ -3349,37 +3833,17 @@
         "width": 390,
         "height": 844
       },
-      "file": "S407-clock-after-warm-mobile-launch-age.png",
-      "sha256": "9e452f4a49af9ae3f6f6b0e4f92d1acef8505dbf146eabd6c8b31cd4f5c18972",
+      "file": "S408-cadence-after-warm-mobile.png",
+      "sha256": "75bb4dd2db7145280c6e42b56cb35fa439cfc48be377e9872f7d4e5dad2c0870",
       "page": "/",
-      "state": "launch-age",
+      "state": "changed-panel",
+      "observedText": "Daily cadence · Latest edition 2026-11-02 — yesterday.",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex actual image inspection of all28 cadence captures"
       },
-      "observedText": "241"
-    },
-    {
-      "theme": "warm",
-      "observedTheme": {
-        "stored": "warm",
-        "root": "warm"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S407-clock-after-warm-mobile-desk-freshness.png",
-      "sha256": "d18c561546d5badf216e4bd5ae6b9f1ab82178f848bb3583e70380287d922ed5",
-      "page": "/",
-      "state": "desk-freshness",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
-      },
-      "observedText": "Daily cadence · Latest edition 2026-10-30 — yesterday."
+      "capturedAt": "2026-11-03T01:50:01.788Z",
+      "originalState": "cadence-date"
     },
     {
       "theme": "cool",
@@ -3393,37 +3857,17 @@
         "width": 390,
         "height": 844
       },
-      "file": "S407-clock-after-cool-mobile-launch-age.png",
-      "sha256": "e717048b60fb4607ad9ec7730e67192bd27c7f274fc9651f6b81a99f3ad2e51c",
+      "file": "S408-cadence-after-cool-mobile.png",
+      "sha256": "1e5a0999ac524f48a437dd917b412e88f37cdf576d365cdfc8990320a7057ee0",
       "page": "/",
-      "state": "launch-age",
+      "state": "changed-panel",
+      "observedText": "Daily cadence · Latest edition 2026-11-02 — yesterday.",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex actual image inspection of all28 cadence captures"
       },
-      "observedText": "241"
-    },
-    {
-      "theme": "cool",
-      "observedTheme": {
-        "stored": "cool",
-        "root": "cool"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S407-clock-after-cool-mobile-desk-freshness.png",
-      "sha256": "9655597941cc24a9c9142a07a0d4ff319468488115b88e3cc33f43828bf1a433",
-      "page": "/",
-      "state": "desk-freshness",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
-      },
-      "observedText": "Daily cadence · Latest edition 2026-10-30 — yesterday."
+      "capturedAt": "2026-11-03T01:50:01.788Z",
+      "originalState": "cadence-date"
     },
     {
       "theme": "lava",
@@ -3437,37 +3881,17 @@
         "width": 390,
         "height": 844
       },
-      "file": "S407-clock-after-lava-mobile-launch-age.png",
-      "sha256": "b720aaf5a669691880dac3e6bf3b6caa4ef1bf4746c75fbb740d0ad8d5af68c0",
+      "file": "S408-cadence-after-lava-mobile.png",
+      "sha256": "1b68ace8fb1075a8b7086f884d4e7e59599ff34e16c32d8e27cc13cfcab0103e",
       "page": "/",
-      "state": "launch-age",
+      "state": "changed-panel",
+      "observedText": "Daily cadence · Latest edition 2026-11-02 — yesterday.",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex actual image inspection of all28 cadence captures"
       },
-      "observedText": "241"
-    },
-    {
-      "theme": "lava",
-      "observedTheme": {
-        "stored": "lava",
-        "root": "lava"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S407-clock-after-lava-mobile-desk-freshness.png",
-      "sha256": "3e2f2caec245039283e87247f411b4a4c17fee8caf55fcc749c590a5e38b04b6",
-      "page": "/",
-      "state": "desk-freshness",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
-      },
-      "observedText": "Daily cadence · Latest edition 2026-10-30 — yesterday."
+      "capturedAt": "2026-11-03T01:50:01.788Z",
+      "originalState": "cadence-date"
     },
     {
       "theme": "high-contrast",
@@ -3481,47 +3905,39 @@
         "width": 390,
         "height": 844
       },
-      "file": "S407-clock-after-high-contrast-mobile-launch-age.png",
-      "sha256": "711a3db0249ae58c0c372ec5ae754d609156d2468f043b4454e2f50458b0cfc4",
+      "file": "S408-cadence-after-high-contrast-mobile.png",
+      "sha256": "c4148264ad2157bd0fe99aea603e8fb234d4f9270ddc0118788c1b34adb1195f",
       "page": "/",
-      "state": "launch-age",
+      "state": "changed-panel",
+      "observedText": "Daily cadence · Latest edition 2026-11-02 — yesterday.",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
+        "reviewer": "Codex actual image inspection of all28 cadence captures"
       },
-      "observedText": "241"
-    },
-    {
-      "theme": "high-contrast",
-      "observedTheme": {
-        "stored": "high-contrast",
-        "root": "high-contrast"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "S407-clock-after-high-contrast-mobile-desk-freshness.png",
-      "sha256": "f03d0d9a2577e4e72685b4cb264c9aab93c407516d6fbd80419e7a50a1a1d891",
-      "page": "/",
-      "state": "desk-freshness",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-image inspection of all seven themes and both viewports"
-      },
-      "observedText": "Daily cadence · Latest edition 2026-10-30 — yesterday."
+      "capturedAt": "2026-11-03T01:50:01.788Z",
+      "originalState": "cadence-date"
     }
   ],
+  "relatedReceipts": [
+    "docs/visual-qa/S408-clock-before.json",
+    "docs/visual-qa/S408-clock-after.json",
+    "docs/visual-qa/S408-api-before.json",
+    "docs/visual-qa/S408-api-after.json",
+    "docs/visual-qa/S408-cadence-before.json",
+    "docs/visual-qa/S408-cadence-after.json"
+  ],
+  "captureProvenance": "Aggregate completion uses the final actual API capture time. Home captures retain their original per-capture time and unchanged home/shared asset source. Only api/index.html was added/changed for the API route; separate source bindings and actual capture timestamps are preserved in related receipts. Cadence captures are new real browser images of the sole subsequent homepage text change; clock and API panel pixels are unaffected. Source binding now includes this generated date label.",
+  "artifactReviews": [
+    "docs/S408_card-acceptance.json"
+  ],
   "metadataRebind": {
-    "at": "2026-10-31T00:56:38.299Z",
+    "at": "2026-11-03T02:46:51.140Z",
     "previousCandidate": {
       "manifest": "api/candidate-artifact-manifest.json",
-      "manifestSha256": "e27067768ebfb4cfa5bf9a7536351c5bbeb72595203f912e96a1a7f59b57f74b",
+      "manifestSha256": "2cd86ea9587ca830ca31dd17355fbf362656d2a31d1a6a413141b0d57dcf6e3a",
       "candidateSha": "4d9f618220400497437639730a46c314e16b5e76",
-      "root": "db37f768f30f79ec50eec0441ccaa157f94a22c8d49cea7eb76b8add208acf98"
+      "root": "a6a9842adc9cb71f256101c199185e4f0d9d6a06a018c24ec33ccd9c3f00affa"
     },
-    "reason": "Candidate metadata changed after reviewed launch-age captures; bound source and reviewed pixel hashes remain unchanged."
+    "reason": "Current committed build stamp metadata only. Every bound UI source and manually reviewed pixel hash is unchanged; original capture/review times retained."
   }
 }
