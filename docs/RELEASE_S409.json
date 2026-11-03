@@ -28,16 +28,32 @@
       "state": "pending"
     },
     "publisherRestoration": {
-      "state": "held",
-      "receipt": ".cache/S409-publisher-window.json"
+      "state": "passed",
+      "receipt": "docs/S409_publisher-restoration.json",
+      "workflows": 5,
+      "uptimeActive": true
     },
     "expandedAccountExperience": {
-      "state": "pending",
-      "audit": "docs/AUDIT_2026-11-03-S409-access.json"
+      "state": "locally-verified-release-pending",
+      "audit": "docs/AUDIT_2026-11-03-S409-access.json",
+      "receipt": "docs/S409_access-implementation.json"
     },
     "authenticatedJourneys": {
       "state": "pending",
-      "scope": "Affected member, invited signup and investor role/private-data journeys; fixtures do not prove live access."
+      "scope": "Existing member, new open member/profile completion, approved investor/private data, ordinary-member application and access denial. Fixtures and public cards do not prove positive authentication."
+    },
+    "localVisual": {
+      "state": "passed",
+      "captures": 350,
+      "manual": 350,
+      "receipt": "docs/visual-qa/LATEST.json",
+      "sourceSha256": "90e82ae88001e5199dd0f388ecf6d8b81293e3ae97e08968f1f66357c951c39b"
+    },
+    "localMobile": {
+      "state": "refresh-required-after-pathway-bootstrap",
+      "previousPassed": 215,
+      "receipt": "docs/mobile-audit/receipt.json",
+      "note": "A referenced pathway page gained real menu/theme bootstrap; rerun full matrix rather than rebind changed runtime source."
     }
   },
   "waves": [
@@ -72,7 +88,19 @@
     "authenticatedJourneys": "pending",
     "buildNativeExit": 0,
     "fullFinalSource": "pending",
-    "finalMobile": "pending",
-    "production": "pending"
+    "finalMobile": "refresh-required",
+    "production": "pending",
+    "updatedAt": "2026-11-03T08:06:37.391Z",
+    "localVisual": "passed350",
+    "memberOnboardingTests": 17,
+    "publicEntrypointTests": 11
+  },
+  "knownPending": {
+    "providerSignup": "Actual intent support and open enrollment remain unverified",
+    "realAuthentication": "Pending",
+    "staging": "Earlier snapshot deployed but parity rejected; fresh exact-code deployment required",
+    "completeSource": "Partial diagnostic ranges are not a full passing548-step receipt",
+    "remoteMain": "Not pushed",
+    "production": "Not promoted"
   }
 }

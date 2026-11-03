@@ -1,6 +1,6 @@
 {
   "session": 409,
-  "state": "local-verification-in-progress-release-pending",
+  "state": "local-functional-checks-pass-release-pending",
   "founderDecision": "Open member signup; keep investor approval",
   "outcomes": [
     "Separate member and Investor Relations entrances and branded workspaces",
@@ -10,13 +10,12 @@
     "Dedicated provider seal mounts with ordered loading, safe returns and theme updates"
   ],
   "focusedTests": {
-    "memberEntranceAndLoadedSeal": 9,
-    "memberProfileCompletion": 3,
-    "publicEnrollmentEntrypoints": 5,
+    "publicEnrollmentEntrypoints": 11,
     "investorExperience": 11,
     "audienceRecovery": 22,
     "existingObeliskRegressions": 42,
-    "existingWorkerRegressions": 76
+    "existingWorkerRegressions": 76,
+    "memberOnboardingCombined": 17
   },
   "localBuild": {
     "nativeExit": 0,
@@ -28,7 +27,7 @@
     "actualRecoveryChecks": "docs/S409_staging-auth-recovery.json",
     "providerHandoffObservation": "docs/S409_provider-handoff-observation.json",
     "stagingPreview": "deployed older snapshot; parity rejected after source changed; not release acceptance",
-    "production": "not promoted"
+    "production": "not-promoted"
   },
   "externalAcceptance": {
     "latestOwnerRequest": "01K6FU93KQ4C570E1F82A57222",
@@ -46,5 +45,14 @@
     "tests": 17,
     "independentReview": "pass",
     "scope": "All provider returns traverse the member portal; destination resumes only after a confirmed member row. No live authentication claim."
+  },
+  "visual": {
+    "receipt": "docs/visual-qa/LATEST.json",
+    "manual": 350
+  },
+  "pathwayFollowThrough": {
+    "state": "passed",
+    "scope": "Existing shared navigation/theme bootstraps restored on six generated pages; no new navigation logic",
+    "tests": 11
   }
 }

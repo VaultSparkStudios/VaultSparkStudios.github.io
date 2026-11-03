@@ -1,7 +1,7 @@
 import test, { before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { launchBrowser, openFixture } from './fixtures/browser-harness.mjs';
+import { launchBrowser, openFixture, html } from './fixtures/browser-harness.mjs';
 
 const pages = {
   '/': fs.readFileSync('index.html', 'utf8'),
@@ -63,3 +63,45 @@ test('legacy invitation contact URL offers account help without an approval prom
   assert.doesNotMatch(source, /invite-led|reply with an invite|Vault invite request/);
   assert.match(source, /event: 'invite_request_view'/, 'existing analytics contract remains stable');
 });
+
+for (const slug of ['players', 'builders', 'investors', 'lore', 'press', 'supporters']) {
+  test(`${slug} pathway: actual mobile account navigation and theme controls work`, async () => {
+    const route = `/pathways/${slug}/`;
+    const source = fs.readFileSync(`pathways/${slug}/index.html`, 'utf8');
+    const manifest = JSON.parse(fs.readFileSync('assets/shell-manifest.json', 'utf8'));
+    const themeTag = `<script src="/${manifest.assets.themeToggle.path}" defer></script>`;
+    const navTag = `<script src="/${manifest.assets.navToggle.path}" defer></script>`;
+    assert.ok(source.includes(themeTag) && source.includes(navTag));
+    assert.ok(source.indexOf(themeTag) < source.indexOf(navTag), 'theme bootstrap precedes nav bootstrap');
+    const f = await openFixture(browser, {
+      pages: { [route]: source, '/sign-in/': html({ body: '<h1>Neutral account entrance</h1>' }), '/vault-member/': html({ body: '<h1>Member account entrance</h1>' }) },
+      contextOptions: { viewport: { width: 390, height: 844 } },
+      initScripts: [() => { localStorage.setItem('vs-nav-style', 'classic'); localStorage.setItem('vs_cookie_consent', 'declined'); }],
+    });
+    try {
+      await f.goto(route);
+      await f.page.locator('#hamburger').click();
+      await f.page.waitForFunction(() => document.querySelector('#hamburger').getAttribute('aria-expanded') === 'true');
+      assert.equal(await f.page.locator('#nav-menu').evaluate(el => el.classList.contains('open')), true);
+      const theme = f.page.locator('#mobile-theme-bar [data-theme="light"]');
+      await theme.click();
+      assert.equal(await f.page.locator('html').getAttribute('data-theme'), 'light');
+      const signin = f.page.locator('#nav-menu .mobile-nav-signin');
+      const create = f.page.locator('#nav-menu a[data-vs-join]');
+      assert.equal(await signin.getAttribute('href'), '/sign-in/');
+      assert.equal(await create.getAttribute('href'), '/vault-member/#register');
+      assert.equal(await signin.isVisible(), true);
+      assert.equal(await create.isVisible(), true);
+      await f.page.keyboard.press('Escape');
+      await f.page.waitForFunction(() => document.querySelector('#hamburger').getAttribute('aria-expanded') === 'false');
+      assert.equal(await f.page.locator('#hamburger').evaluate(el => document.activeElement === el), true);
+      await f.page.locator('#hamburger').click();
+      await signin.click();
+      await f.page.waitForURL('**/sign-in/');
+      await f.goto(route);
+      await f.page.locator('#hamburger').click();
+      await f.page.locator('#nav-menu a[data-vs-join]').click();
+      await f.page.waitForURL('**/vault-member/#register');
+    } finally { await f.close(); }
+  });
+}

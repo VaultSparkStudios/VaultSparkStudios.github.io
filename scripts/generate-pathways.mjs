@@ -150,6 +150,15 @@ const SAMPLE_STYLE = (sample.match(/href="(?:\.\.\/)*(assets\/style\.shell-[a-f0
 // build-shell-assets injects the nav-sheet loader per page — emit it so the
 // generated file is byte-identical with the reconciled one (S305).
 const NAV_SHEET_TAG = (sample.match(/<script src="\/assets\/nav-sheet\.shell-[a-f0-9]+\.js" defer><\/script>/) || [''])[0];
+// These controls are not in the ambient bundles. A visible hamburger and theme
+// chooser need the existing shell bootstraps on every generated pathway too.
+const ACCOUNT_NAV_BOOTSTRAP = ['themeToggle', 'navToggle'].map((key) => {
+  const asset = shellManifest.assets?.[key]?.path;
+  if (typeof asset !== 'string' || !/^assets\/[a-z-]+\.shell-[a-f0-9]+\.js$/.test(asset) || !existsSync(join(ROOT, asset))) {
+    throw new Error(`generate-pathways: missing current ${key} shell asset`);
+  }
+  return `<script src="/${asset}" defer></script>`;
+}).join('\n');
 
 function buildPage(p) {
   const depthPrefix = '../../';
@@ -174,7 +183,9 @@ function buildPage(p) {
         </button>
       </div>
     </div>
-${deskWireBlock ? deskWireBlock + '\n' : ''}  </header><main id="main-content"><section class="container" style="padding:5rem 0"><span class="eyebrow">${escapeHtml(p.eyebrow)}</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.5rem)">${escapeHtml(p.headline)}</h1><p style="color:var(--muted);max-width:70ch">${escapeHtml(p.lede)}</p><p style="margin-top:1.5rem">${buildCtas(p.ctas)}</p>${buildRoute(p.steps)}</section></main>${footerForDepth(depthPrefix)}  ${ambientBlock}
+${deskWireBlock ? deskWireBlock + '\n' : ''}  </header><main id="main-content"><section class="container" style="padding:5rem 0"><span class="eyebrow">${escapeHtml(p.eyebrow)}</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.5rem)">${escapeHtml(p.headline)}</h1><p style="color:var(--muted);max-width:70ch">${escapeHtml(p.lede)}</p><p style="margin-top:1.5rem">${buildCtas(p.ctas)}</p>${buildRoute(p.steps)}</section></main>${footerForDepth(depthPrefix)}
+${ACCOUNT_NAV_BOOTSTRAP}
+${ambientBlock}
 ${NAV_SHEET_TAG ? `${NAV_SHEET_TAG}\n` : ''}</body></html>
 `;
 }
