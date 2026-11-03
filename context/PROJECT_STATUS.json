@@ -258,13 +258,11 @@
   "lastSessionSummary": "S408: safe build introspection and accurate merge-closeout recovery evidence.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
-    "session": 407,
-    "enumeratedAt": "2026-10-31T01:28:37.108Z",
-    "started": 90,
-    "closed": 90,
-    "running": 0,
-    "evidence": "docs/S407_session-hygiene.json",
-    "scope": "All persistent native exec sessions returned in this goal thread, including recovery and continuations. Short commands that returned directly are excluded; unresolved handles require direct follow-up."
+    "session": 408,
+    "enumeratedAt": "2026-11-03T03:40:35.394Z",
+    "started": 56,
+    "closed": 56,
+    "running": 0
   },
   "closeoutFollowthrough": {
     "session": 395,
@@ -278,8 +276,8 @@
   "sessionState": {
     "version": 1,
     "durableSession": 408,
-    "currentFocus": "S408: safe build introspection and accurate merge-closeout recovery evidence.",
-    "nextMilestone": "Verify the S408 full release and closing publication in docs/RELEASE_S408.json; future visual failure classification remains unselected.",
+    "currentFocus": "S408: reliable release verification and readable archive sharing.",
+    "nextMilestone": "Classify historical optional visual failures before baseline changes; publisher-cascade follow-up remains unselected.",
     "lastSessionSummary": "S408: safe build introspection and accurate merge-closeout recovery evidence."
   },
   "s378RecordRecovery": {
@@ -292,58 +290,61 @@
     "behaviorChanged": false
   },
   "currentBuildState": "passed",
-  "currentBuildNote": "Fresh complete S407 closing-content source548/548; full application and final content-overlay acceptance are separately pinned in docs/RELEASE_S407.json.",
+  "currentBuildNote": "S408: two complete native548-step runs; full Pages/OG production and complete3824-resource readback verified in docs/RELEASE_S408.json.",
   "lastDeploySession": 407,
   "lastDeployStatus": "verified",
   "silAvg5": 939,
   "lastReleaseAcceptance": {
-    "session": 407,
-    "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
-    "metadataHead": "81654c0ae4230275b550c86b7acccf60e429f240",
-    "receipt": "docs/RELEASE_S407.json",
-    "workflowRun": 41147027141,
-    "metadataWorkflowRun": 41153933133,
-    "verifiedAt": "2026-10-31T01:14:42.418Z"
+    "session": 408,
+    "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+    "receipt": "docs/RELEASE_S408.json",
+    "workflowRun": 41572219005,
+    "providerDeployment": "0c57ec62-3c48-4e87-88a3-0bfa6b3a2025",
+    "ogWorkerVersion": "e4b3070a-1090-49aa-b99d-d7ef44f6c192",
+    "verifiedAt": "2026-11-03T03:38:48.399Z"
   },
   "truthAuditSummary": "Normal full S407 application and3714-resource readback verified; exact closing publication acceptance is authoritative in docs/RELEASE_S407.json. No all-optional-E2E or positive authenticated-data claim.",
   "currentVerification": {
-    "session": 407,
-    "state": "accepted-full-application-plus-final-content",
-    "applicationBaseline": "e4234a24194168e989c25a38012f11e85578ae39",
-    "metadataHead": "81654c0ae4230275b550c86b7acccf60e429f240",
-    "sourceEvidence": "docs/S407_metadata-source.json",
-    "sourceFingerprint": "bd342a7a347253f4dceb260f",
-    "finalParity": "docs/S407_final-served-parity.json"
+    "session": 408,
+    "state": "accepted-full-production",
+    "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+    "sourceEvidence": "docs/S408_source-acceptance.json",
+    "sourceFingerprint": "a84ce55dc4501e1191a1001b",
+    "finalParity": "docs/S408_served-parity.json"
   },
   "metadataPublication": {
-    "session": 407,
-    "state": "verified",
-    "publishedCommit": "81654c0ae4230275b550c86b7acccf60e429f240",
-    "observedAt": "2026-10-31T01:14:42.418Z",
-    "source": "docs/RELEASE_S407.json"
+    "session": 408,
+    "state": "verified-main-candidate",
+    "publishedCommit": "7376882f7a5e35add79bb05d0044a5ad6c3b3953",
+    "observedAt": "2026-11-03T03:25:21.776Z",
+    "source": "docs/RELEASE_S408.json"
   },
   "lastCompletedArc": {
-    "session": 407,
+    "session": 408,
     "phase": "complete",
-    "audit": "docs/AUDIT_2026-10-30.json",
-    "prerequisite": "docs/AUDIT_2026-10-30-S407.json",
-    "releaseEvidence": "docs/RELEASE_S407.json",
-    "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
-    "metadataHead": "81654c0ae4230275b550c86b7acccf60e429f240",
-    "releaseVerifiedAt": "2026-10-31T01:14:42.418Z",
-    "completedAt": "2026-10-31T01:15:54.000Z",
-    "detail": "This invocation completed fresh startup/audit, both selected outcomes, closeout, normal full deployment and complete final served-tree verification. Native goal completion follows final remote-record reachability."
+    "goalThreadId": "01a19ead-e025-7e52-8475-e71416abe95d",
+    "goalCreatedAt": 1793663568,
+    "audit": "docs/AUDIT_2026-11-02.json",
+    "audits": [
+      "docs/AUDIT_2026-11-02.json",
+      "docs/AUDIT_2026-11-02-S408.json",
+      "docs/AUDIT_2026-11-02-S408-card.json",
+      "docs/AUDIT_2026-11-02-S408-git.json"
+    ],
+    "releaseEvidence": "docs/RELEASE_S408.json",
+    "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+    "completedAt": "2026-11-03T03:46:51.947Z",
+    "detail": "This invocation completed fresh startup/audit, five selected outcomes, native closeout, exact candidate checks, full Pages and OG deployment, complete served parity and publisher restoration. Native goal completion follows final record reachability."
   },
   "velocity": 1,
   "arcProgress": {
-    "session": 407,
+    "session": 408,
     "phase": "complete",
     "binding": "ignored .cache/arc-goals",
-    "audit": "docs/AUDIT_2026-10-30.json",
-    "prerequisite": "docs/AUDIT_2026-10-30-S407.json",
-    "releaseEvidence": "docs/RELEASE_S407.json",
-    "candidate": "e4234a24194168e989c25a38012f11e85578ae39",
-    "metadataHead": "81654c0ae4230275b550c86b7acccf60e429f240"
+    "goalThreadId": "01a19ead-e025-7e52-8475-e71416abe95d",
+    "audit": "docs/AUDIT_2026-11-02.json",
+    "releaseEvidence": "docs/RELEASE_S408.json",
+    "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1"
   },
   "ignisLastScored": "2026-10-29",
   "historicalTests": {
@@ -406,7 +407,7 @@
     }
   },
   "silProtocolVelocity": 1,
-  "protocolVelocity": 1,
+  "protocolVelocity": 4,
   "silSparkline": [
     939,
     939,

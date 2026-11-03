@@ -1,0 +1,9 @@
+{
+  "session": 408,
+  "state": "supplemental-apex-comparison-rejected",
+  "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+  "observedAt": "2026-11-03T03:38:36.235Z",
+  "reason": "Strict additional apex HTML comparison found the Cloudflare-managed JavaScript Detections bootstrap. Complete native Pages-origin parity passed3824resources with0differences/0unread. Official current Cloudflare docs confirm HTML injection with CSP nonce support. No production security setting or app source was changed.",
+  "followThrough": "Apex comparison now separately verifies one manually reviewed pinned provider template, response Ray ID, CSP nonce and fresh provider timestamp, then requires all authored bytes to match. Other differences reject.",
+  "documentation": "https://developers.cloudflare.com/cloudflare-challenges/challenge-types/javascript-detections/"
+}

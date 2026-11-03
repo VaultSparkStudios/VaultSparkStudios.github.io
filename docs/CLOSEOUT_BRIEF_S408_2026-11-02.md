@@ -5,7 +5,8 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Reliable release verification and readable archive sharing; full release pending           ║
+║    Reliable release verification and readable archive sharing are fully deployed; complete    ║
+║    served readback verified.                                                                  ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     ██████░░░░   62/100                                                       ║
 ║  ECOSYSTEM IMPACT   ███░░░░░░░   32/100                                                       ║
@@ -20,7 +21,7 @@
          ── speed-organization-efficiency ───────────────────────────────────────────────────
          Verification and staging retain the full repository inventory within an explicit
          bounded capture limit. Smaller caller limits and all non-Git defaults remain intact.
-         → docs/S408_git-acceptance.json; complete release remains pending.
+         → docs/S408_git-acceptance.json; full release verified: docs/RELEASE_S408.json
 
   [3]  privacy-inventory-capacity                                 PROJ 6  ·  ECOS 3
          ── security ────────────────────────────────────────────────────────────────────────
@@ -52,7 +53,9 @@
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Existing identity, field-vitals and unclassified visual limitations remain separate.
+    • Verified production/source/staging/main evidence: docs/RELEASE_S408.json
+    • Existing identity/provider, field-vitals and historical optional visual limitations remain separate.
+    • CDR unchanged; the two future SIL commitments remain unselected.
 
   BLOCKERS
     (none)

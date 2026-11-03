@@ -1,7 +1,7 @@
 {
   "session": 408,
   "goal": "01a19ead-e025-7e52-8475-e71416abe95d",
-  "state": "release-pending",
+  "state": "complete",
   "audit": "docs/AUDIT_2026-11-02.json",
   "authorization": "Founder explicitly authorizes normal direct main commit/push and full deployment.",
   "acceptance": {
@@ -52,17 +52,42 @@
       ]
     },
     "production": {
-      "state": "pending"
+      "state": "passed",
+      "receipt": "docs/S408_production.json",
+      "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+      "workflow": 41572219005,
+      "providerDeployment": "0c57ec62-3c48-4e87-88a3-0bfa6b3a2025",
+      "normalFull": true
     },
     "completeServedReadback": {
-      "state": "pending"
+      "state": "passed",
+      "receipt": "docs/S408_served-parity.json",
+      "against": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+      "checked": 3824,
+      "identical": 3814,
+      "redirected": 10,
+      "differ": 0,
+      "unread": 0,
+      "coverageComplete": true
     },
     "remotePublication": {
-      "state": "pending"
+      "state": "passed",
+      "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+      "sourcePublication": {
+        "session": 408,
+        "at": "2026-11-03T03:25:21.776Z",
+        "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+        "pushedHead": "7376882f7a5e35add79bb05d0044a5ad6c3b3953",
+        "remoteHead": "7376882f7a5e35add79bb05d0044a5ad6c3b3953",
+        "candidateReachable": true,
+        "closingRecordsRemaining": true
+      },
+      "scope": "The candidate and initial release records are already main-reachable. Final nonserved closing-record reachability is independently verified after its normal push."
     },
     "publisherRestoration": {
-      "state": "held",
-      "record": ".cache/S408-publisher-window.json",
+      "state": "passed",
+      "receipt": "docs/S408_publishers-restored.json",
+      "originalStatesRestored": true,
       "uptimeActive": true
     },
     "prerequisites": {
@@ -103,9 +128,18 @@
         "scope": "Persistent isolated component staging; canonical website staging separate."
       },
       "production": {
-        "state": "pending"
+        "state": "passed",
+        "receipt": "docs/S408_og-production.json",
+        "versionId": "e4b3070a-1090-49aa-b99d-d7ef44f6c192",
+        "GET": 16,
+        "HEAD": 8,
+        "sourceBound": true
       },
       "rollback": "docs/S408_og-rollback.json"
+    },
+    "closingWriteback": {
+      "state": "complete",
+      "record": "Canonical S408 current state, handoff, log, SIL, truth audit, status, memory and impact brief; TASK_BOARD owns Wave3 by reference to this ledger."
     }
   },
   "waves": [
@@ -211,5 +245,34 @@
   "mainPublicationPreparation": {
     "observedRemote": "0a35d11d03a0e5e0790bf4be6cb27c2467c72998",
     "method": "Normal merge preserves the intervening uptime commit. Its old-subject staging finding is retained separately; fresh native parity and72exact candidate reads prove the accepted staging subject. Verified source fingerprint unchanged."
+  },
+  "completedAt": "2026-11-03T03:46:51.947Z",
+  "impactBroadcast": {
+    "session": 408,
+    "cargoId": "01K6FNT4RVDDB9E41E3F05D638",
+    "shippedAt": "2026-11-03T03:40:35.094Z",
+    "verifiedAt": "2026-11-03T03:40:35.112Z",
+    "signatureVerification": {
+      "ok": true,
+      "ed": {
+        "state": "unsigned"
+      }
+    },
+    "scope": "Actual native cargo shipment and transport authenticity verification. Recipient receipt, application or fleet adoption is not inferred."
+  },
+  "shellHygiene": {
+    "session": 408,
+    "enumeratedAt": "2026-11-03T03:40:35.394Z",
+    "started": 56,
+    "closed": 56,
+    "running": 0,
+    "scope": "Snapshot before final record publication; final native goal observation checks any later publication handle separately."
+  },
+  "remaining": [],
+  "publicationScope": "Accepted immutable normal full production candidate plus live OG Worker. Final nonserved acceptance records are published normally. Later autonomous observations are separate moving transactions; no future commit is claimed as already deployed.",
+  "providerTransformEvidence": {
+    "receipt": "docs/S408_provider-transform-checks.json",
+    "strictApexAttempt": "docs/S408_production-readback-attempt1.json",
+    "documentation": "https://developers.cloudflare.com/cloudflare-challenges/challenge-types/javascript-detections/"
   }
 }

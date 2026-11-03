@@ -1,0 +1,43 @@
+{
+  "session": 408,
+  "at": "2026-11-03T03:40:03.278Z",
+  "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+  "state": "passed",
+  "actualApexComparison": {
+    "matched": true,
+    "authoredSha256": "4bc2c5fba2e70c93af4f5be971420b4a6a59597b664b68052762850766850fb5",
+    "providerAdditions": [
+      {
+        "type": "Cloudflare JavaScript Detections bootstrap",
+        "count": 1,
+        "templateSha256": "f2d1f80b3680834b1b584ff2ab0c5ced5ae4d5ed1fe3bf20d90672d1690030a0",
+        "rawSha256": "a3b12396336392a9fc4af5be5ca3917ce4fcff2ad577739adaca7c23206694c0",
+        "responseRayMatched": true,
+        "cspNonceMatched": true,
+        "timestampFresh": true,
+        "documentation": "https://developers.cloudflare.com/cloudflare-challenges/challenge-types/javascript-detections/"
+      }
+    ],
+    "scope": "Exact authored bytes after native nonce normalization and one independently bound, pinned provider bootstrap. No other script or content is removed."
+  },
+  "positiveControls": 1,
+  "negativeControls": [
+    {
+      "name": "authored text change",
+      "rejected": true
+    },
+    {
+      "name": "provider code tamper",
+      "rejected": true
+    },
+    {
+      "name": "unexpected added script",
+      "rejected": true
+    },
+    {
+      "name": "provider Ray mismatch",
+      "rejected": true
+    }
+  ],
+  "scope": "Read-only proof adapter checks. Authored changes, provider code changes, new scripts and unrelated Ray IDs all reject. No security configuration or deployed code change."
+}
