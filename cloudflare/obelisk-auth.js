@@ -188,10 +188,35 @@ function errorReturnPath(flow, code, detail) {
   const context = recoveryContext(flow);
   const entry = context.audience === 'investor' ? '/investor-portal/login/'
     : context.audience === 'member' ? '/vault-member/' : '/sign-in/';
-  const target = new URL(entry, 'https://vaultsparkstudios.com');
+  const original = new URL(context.returnTo, 'https://vaultsparkstudios.com');
+  // These two entry pages already carry a bounded, client-validated handoff.
+  // Keep their signed query context at that entry rather than wrapping the
+  // entire entry again in `next` (which the clients correctly reject as a loop).
+  // Never follow a nested URL here: this recognizes only exact local entry paths.
+  const memberEntry = context.audience === 'member'
+    && ['/vault-member', '/vault-member/'].includes(original.pathname)
+    && ['return', 'next', 'ref'].some(key => original.searchParams.has(key));
+  const investorEntry = context.audience === 'investor'
+    && ['/investor-portal/login', '/investor-portal/login/'].includes(original.pathname)
+    && original.searchParams.has('next');
+  const preserveEntry = memberEntry || investorEntry;
+  const target = new URL(preserveEntry ? original.pathname : entry, 'https://vaultsparkstudios.com');
+  if (preserveEntry) {
+    const key = memberEntry && original.searchParams.has('return') ? 'return' : 'next';
+    const handoff = safeReturnPath(original.searchParams.get(key), '');
+    if (handoff && flowAudience(handoff) === context.audience) target.searchParams.set(key, handoff);
+    if (memberEntry) {
+      const ref = original.searchParams.get('ref');
+      if (ref && /^[a-zA-Z0-9_]{1,32}$/.test(ref)) target.searchParams.set('ref', ref);
+    } else {
+      if (original.searchParams.get('identity') === 'created') target.searchParams.set('identity', 'created');
+      if (original.searchParams.get('application') === 'submitted') target.searchParams.set('application', 'submitted');
+    }
+  }
   target.searchParams.set('auth_error', code);
+  target.searchParams.delete('auth_detail');
   if (context.audience) {
-    target.searchParams.set('next', context.returnTo);
+    if (!preserveEntry) target.searchParams.set('next', context.returnTo);
     target.searchParams.set('auth_intent', context.intent);
     if (context.audience === 'member') target.hash = context.intent === 'signup' ? 'register' : 'login';
   }

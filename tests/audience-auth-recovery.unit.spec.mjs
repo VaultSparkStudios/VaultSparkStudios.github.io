@@ -1,9 +1,13 @@
-import test from 'node:test';
+import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import { handleObeliskAuthRequest, safeReturnPath, __test } from '../cloudflare/obelisk-auth.js';
 import { portalGateRedirect } from '../cloudflare/worker-lib.mjs';
+import { launchBrowser, openFixture, html, waitFor } from './fixtures/browser-harness.mjs';
 
 const origin = 'https://vaultsparkstudios.com';
+let browser;
+after(async () => { await browser?.close(); });
 let sequence = 0;
 async function journey(returnTo, intent = 'signin') {
   const values = new Map();
@@ -204,4 +208,160 @@ test('investor protected gates preserve safe deep link through branded gateway w
     const fallback = destination(portalGateRedirect(origin, bad));
     assert.equal(fallback.searchParams.get('return'), '/');
   }
+});
+
+// Compose the real entry controllers and member bootstrap/profile listener with
+// the real edge start/callback handlers. Only identity/data providers and final
+// destination content are local fixtures; no browser URL construction is mocked.
+async function entryComposition(run, { member = true, intent = 'signin' } = {}) {
+  browser ||= await launchBrowser();
+  let authenticated = false;
+  const row = { username: 'VaultPerson', points: 10, created_at: '2026-01-01T00:00:00Z', achievements: [] };
+  const dataScript = () => `(() => {
+    const session = ${authenticated ? JSON.stringify({ user: { id: 'composition-person', email: 'person@example.test' } }) : 'null'};
+    let hasMember = ${member && intent === 'signin'};
+    function q(table) {
+      const result = {};
+      for (const key of ['select','eq','gte','lt','lte','order','limit','in','is']) result[key] = () => result;
+      result.then = (yes,no) => Promise.resolve({data:[],error:null}).then(yes,no);
+      result.single = result.maybeSingle = async () => ({data:hasMember?${JSON.stringify(row)}:null,error:null});
+      return result;
+    }
+    window.VSSupabase = {from:q,rpc:async(name) => {
+      if(name==='get_member_bootstrap')return {data:{member:hasMember?${JSON.stringify(row)}:null},error:null};
+      if(name==='register_open'){hasMember=true;return {data:{},error:null};}
+      if(name==='get_my_investor_profile')return {data:{id:'approved-investor'},error:null};
+      return {data:null,error:null};
+    },auth:{getSession:async()=>({data:{session},error:null}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}})}};
+    window.VSObeliskIdentity=session?{sub:'fixture-sub',supabaseUserId:session.user.id,email:session.user.email}:null;
+    window.VSCompatibilitySession=session?{...session,access_token:'fixture-compatibility-access'}:null;
+    window.VSAuthReady=Promise.resolve();
+    window.VSGate={getNextAppName:()=>null,redirect:()=>false};
+  })();`;
+  const f = await openFixture(browser, {
+    pages: {
+      '/vault-member/': fs.readFileSync('vault-member/index.html', 'utf8'),
+      '/investor-portal/login/': fs.readFileSync('investor-portal/login/index.html', 'utf8'),
+      '/vault-member/passport/': html({ body: '<h1>Member destination fixture</h1>' }),
+      '/investor-portal/documents/': html({ body: '<h1>Investor destination fixture</h1>' }),
+    },
+    handlers: [
+      { match: u => u.pathname.startsWith('/assets/supabase-client'), handle: r => r.fulfill({ contentType: 'application/javascript', body: dataScript() }) },
+      { match: u => /^\/assets\/(?:account-entry|investor-experience)(?:\.shell-[a-f0-9]+)?\.js$/.test(u.pathname), handle: (r, req) => {
+        const name = new URL(req.url()).pathname.includes('account-entry') ? 'account-entry' : 'investor-experience';
+        return r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(`assets/${name}.js`, 'utf8') });
+      } },
+      { match: u => /^\/vault-member\/[a-zA-Z0-9.-]+\.(?:js|css)$/.test(u.pathname), handle: (r, req) => {
+        const file = new URL(req.url()).pathname.slice(1).replace(/\.shell-[a-f0-9]+(?=\.(?:js|css)$)/, '');
+        return r.fulfill({ contentType: file.endsWith('.css') ? 'text/css' : 'application/javascript', body: fs.readFileSync(file, 'utf8') });
+      } },
+    ],
+  });
+  try { await run(f, () => { authenticated = true; }); } finally { await f.close(); }
+}
+
+for (const audience of ['member', 'investor']) for (const intent of ['signin', 'signup']) {
+  test(`${audience} ${intent}: actual entry -> signed edge denial -> actual retry -> confirmed destination`, async () => {
+    const member = audience === 'member';
+    await entryComposition(async (f, authenticate) => {
+      const leaf = member ? '/vault-member/passport/?view=progress#achievements' : '/investor-portal/documents/?type=legal#record';
+      const entry = member ? '/vault-member/' : '/investor-portal/login/';
+      await f.goto(entry + '?' + new URLSearchParams({ next: leaf, ...(member ? { ref: 'VaultFriend' } : {}) }) + (member ? (intent === 'signup' ? '#register' : '#login') : ''));
+      const selector = member ? (intent === 'signup' ? '#obelisk-create-account' : '#obelisk-sign-in')
+        : (intent === 'signup' ? '#investorCreateIdentity' : '#investorObeliskSignIn');
+      const first = new URL(await f.page.locator(selector).getAttribute('href'), origin);
+      assert.equal(first.searchParams.get('intent'), intent);
+      const originalReturn = first.searchParams.get('return');
+      if (member || intent === 'signup') assert.equal(new URL(originalReturn, origin).pathname, entry);
+      const flow = await journey(originalReturn, intent);
+      const recovery = destination(await flow.callback({ error: 'access_denied', return: '//evil.test/', audience: 'other', intent: 'other' }));
+      assert.equal(recovery.pathname, entry);
+      assert.equal(recovery.searchParams.get('auth_intent'), intent);
+      assert.equal(recovery.searchParams.get('auth_error'), 'provider_denied');
+      assert.equal(recovery.searchParams.get(member ? 'return' : 'next'), leaf);
+      if (member) {
+        assert.equal(recovery.searchParams.get('next'), null, 'member root must not be wrapped in another next');
+        assert.equal(recovery.searchParams.get('ref'), 'VaultFriend');
+        assert.equal(recovery.hash, intent === 'signup' ? '#register' : '#login');
+      }
+      await f.goto(recovery.pathname + recovery.search + recovery.hash);
+      if (member) assert.equal(await f.page.locator(intent === 'signup' ? '#panel-register' : '#panel-login').isVisible(), true);
+      const retry = new URL(await f.page.locator(selector).getAttribute('href'), origin);
+      assert.equal(retry.searchParams.get('intent'), intent);
+      const retryReturn = retry.searchParams.get('return');
+      const resumed = new URL(retryReturn, origin);
+      if (member) {
+        assert.equal(resumed.pathname, '/vault-member/');
+        assert.equal(resumed.searchParams.get('return'), leaf);
+        assert.equal(resumed.searchParams.get('ref'), 'VaultFriend');
+      } else if (intent === 'signup') {
+        assert.equal(resumed.pathname, '/investor-portal/login/');
+        assert.equal(resumed.searchParams.get('next'), leaf);
+        assert.equal(resumed.searchParams.get('identity'), 'created');
+      } else assert.equal(retryReturn, leaf);
+      const second = await journey(retryReturn, intent);
+      await second.prepareToken();
+      const success = destination(await second.callback());
+      authenticate();
+      await f.goto(success.pathname + success.search + success.hash);
+      if (member && intent === 'signup') {
+        await f.page.locator('#panel-oauth-complete').waitFor({ state: 'visible' });
+        assert.equal(new URL(f.page.url()).pathname, '/vault-member/', 'identity alone does not bypass profile completion');
+        await f.page.locator('#oauth-username').fill('VaultPerson');
+        await f.page.locator('#oauth-subscribe').uncheck();
+        await f.page.locator('#oauth-complete-form button[type="submit"]').click();
+      }
+      await waitFor(async () => new URL(f.page.url()).pathname === new URL(leaf, origin).pathname);
+      const arrived = new URL(f.page.url());
+      assert.equal(arrived.searchParams.get(member ? 'view' : 'type'), member ? 'progress' : 'legal');
+      assert.equal(arrived.hash, member ? '#achievements' : '#record');
+      if (member) assert.equal(arrived.searchParams.get('ref'), 'VaultFriend');
+    }, { member, intent });
+  });
+}
+
+test('known-entry recovery allowlists handoff context and drops unbounded auth/query decoration', async () => {
+  for (const [path, params, key, leaf] of [
+    ['/vault-member/', { return: '/vault-member/passport/', ref: 'VaultFriend' }, 'return', '/vault-member/passport/'],
+    ['/vault-member/', { next: '/vault-member/passport/', ref: 'VaultFriend' }, 'next', '/vault-member/passport/'],
+    ['/investor-portal/login/', { next: '/investor-portal/documents/', identity: 'created', application: 'submitted' }, 'next', '/investor-portal/documents/'],
+  ]) {
+    const original = path + '?' + new URLSearchParams({ ...params, auth_error: 'forged', auth_intent: 'forged', auth_detail: 'forged', extra: 'unbounded' });
+    const flow = await journey(original, 'signup');
+    flow.values.clear();
+    const recovery = destination(await flow.callback({ error: 'ignored' }));
+    assert.equal(recovery.pathname, path);
+    assert.equal(recovery.searchParams.get(key), leaf);
+    assert.equal(recovery.searchParams.get('auth_error'), 'flow_expired');
+    assert.equal(recovery.searchParams.get('auth_intent'), 'signup');
+    assert.equal(recovery.searchParams.get('auth_detail'), null);
+    assert.equal(recovery.searchParams.get('extra'), null);
+    if (params.ref) assert.equal(recovery.searchParams.get('ref'), params.ref);
+    if (params.identity) assert.equal(recovery.searchParams.get('identity'), 'created');
+    if (params.application) assert.equal(recovery.searchParams.get('application'), 'submitted');
+  }
+});
+
+test('signed nested hostile or recursive entry fields never become external or recursive client retries', async () => {
+  for (const member of [true, false]) await entryComposition(async f => {
+    const entry = member ? '/vault-member/' : '/investor-portal/login/';
+    const key = member ? 'return' : 'next';
+    for (const hostile of ['https://evil.test/', '//evil.test/', '/\\evil.test/', entry + '?next=' + encodeURIComponent(entry), member ? '/investor-portal/documents/' : '/vault-member/passport/']) {
+      const original = entry + '?' + new URLSearchParams({ [key]: hostile, ref: '<bad>', identity: 'unbounded', application: 'unbounded', auth_detail: 'forged' });
+      const flow = await journey(original, 'signup');
+      const recovery = destination(await flow.callback({ error: 'denied' }));
+      assert.equal(recovery.origin, origin);
+      assert.equal(recovery.pathname, entry);
+      assert.equal(recovery.searchParams.get('ref'), null);
+      assert.equal(recovery.searchParams.get('identity'), null);
+      assert.equal(recovery.searchParams.get('application'), null);
+      assert.equal(recovery.searchParams.get('auth_detail'), null);
+      await f.goto(recovery.pathname + recovery.search + recovery.hash);
+      const retry = new URL(await f.page.locator(member ? '#obelisk-create-account' : '#investorCreateIdentity').getAttribute('href'), origin);
+      const back = new URL(retry.searchParams.get('return'), origin);
+      assert.equal(back.origin, origin);
+      assert.equal(back.pathname, entry);
+      assert.equal(back.searchParams.get(key), member ? null : '/investor-portal/');
+    }
+  }, { member, intent: 'signup' });
 });
