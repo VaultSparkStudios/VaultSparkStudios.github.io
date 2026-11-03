@@ -30,7 +30,26 @@
       }
     },
     "exactRequiredHostedChecks": {
-      "state": "pending"
+      "state": "passed",
+      "receipt": "docs/S408_required-checks.json",
+      "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+      "checks": [
+        {
+          "workflow": ".github/workflows/e2e.yml",
+          "state": "passed",
+          "runId": 41569816491
+        },
+        {
+          "workflow": ".github/workflows/lighthouse.yml",
+          "state": "passed",
+          "runId": 41569818824
+        },
+        {
+          "workflow": ".github/workflows/accessibility.yml",
+          "state": "passed",
+          "runId": 41569821105
+        }
+      ]
     },
     "production": {
       "state": "pending"
@@ -186,5 +205,11 @@
     "finishedAt": "2026-11-03T02:44:02.815Z",
     "sourceReceipt": "docs/S408_source-acceptance.json",
     "scope": "Local full source and closeout. Remote publication and production remain separate."
+  },
+  "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
+  "tag": "S408-release-20261102-0105e4646789",
+  "mainPublicationPreparation": {
+    "observedRemote": "0a35d11d03a0e5e0790bf4be6cb27c2467c72998",
+    "method": "Normal merge preserves the intervening uptime commit. Its old-subject staging finding is retained separately; fresh native parity and72exact candidate reads prove the accepted staging subject. Verified source fingerprint unchanged."
   }
 }
