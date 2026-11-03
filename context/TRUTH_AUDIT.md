@@ -1,3 +1,11 @@
+<!-- S408-writeback -->
+S408 local implementation now totals5outcomes: original2verifiers, privacy inventory, archive sharing, shared bounded Git capture. OG component staging16exact GET/8HEAD checks passed; canonical website staging/full source/hosted/production remain pending in docs/RELEASE_S408.json.
+S408 archive preview prerequisite also locally verified: missing November card restored; shared badge/wordmark fit and light ink corrected;8status/theme glyph/contrast cases and21native self-tests passed. Actual pixels inspected; docs/S408_card-acceptance.json.
+S408 release prerequisites: bounded full-inventory privacy scan10/10, mobile215/215, and56 actually inspected before/after theme captures. Deterministic clock, feed dates and CSS preload regenerated. docs/S408_prerequisites.json; full release remains pending.
+## S408 — merge history observation corrected
+
+The pre-fix checker reported no SIL anchor despite the actual S407 merge closeout. Real Git regression confirms default merge path omission. Corrected first-parent merge diffs measure S407 current; source/staging/hosted/production/readback for S408 remain distinct in docs/RELEASE_S408.json. Existing identity/provider, private-fixture and field evidence limits remain.
+
 <!-- S407-release-acceptance -->
 ## Current truth posture — S407 — 2026-10-30
 

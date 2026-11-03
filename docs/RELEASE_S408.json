@@ -1,0 +1,170 @@
+{
+  "session": 408,
+  "goal": "01a19ead-e025-7e52-8475-e71416abe95d",
+  "state": "release-pending",
+  "audit": "docs/AUDIT_2026-11-02.json",
+  "authorization": "Founder explicitly authorizes normal direct main commit/push and full deployment.",
+  "acceptance": {
+    "implementation": {
+      "state": "passed",
+      "receipt": "docs/S408_implementation.json"
+    },
+    "source": {
+      "state": "pending",
+      "note": "All remaining diagnostic prefixes reached their final step, but partial ranges do not satisfy the required complete fresh native source run."
+    },
+    "staging": {
+      "state": "pending"
+    },
+    "exactRequiredHostedChecks": {
+      "state": "pending"
+    },
+    "production": {
+      "state": "pending"
+    },
+    "completeServedReadback": {
+      "state": "pending"
+    },
+    "remotePublication": {
+      "state": "pending"
+    },
+    "publisherRestoration": {
+      "state": "held",
+      "record": ".cache/S408-publisher-window.json",
+      "uptimeActive": true
+    },
+    "prerequisites": {
+      "state": "passed",
+      "receipt": "docs/S408_prerequisites.json"
+    },
+    "mobile": {
+      "state": "passed",
+      "passed": 215,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "highSeverityFindings": 0,
+      "receipt": "docs/mobile-audit/receipt.json",
+      "startedAt": "2026-11-03T01:58:20.595Z",
+      "finishedAt": "2026-11-03T02:06:47.128Z",
+      "note": "Full new execution after the final generated homepage date correction."
+    },
+    "visual": {
+      "state": "passed",
+      "receipt": "docs/visual-qa/LATEST.json",
+      "reviewedBefore": 42,
+      "reviewedAfter": 42
+    },
+    "archiveCard": {
+      "state": "passed",
+      "receipt": "docs/S408_card-acceptance.json"
+    },
+    "gitCapacity": {
+      "state": "passed",
+      "receipt": "docs/S408_git-acceptance.json"
+    },
+    "ogWorker": {
+      "staging": {
+        "state": "passed",
+        "receipt": "docs/S408_og-staging.json",
+        "versionId": "82f1fe7c-d1ab-4693-aa95-253abd96116d",
+        "scope": "Persistent isolated component staging; canonical website staging separate."
+      },
+      "production": {
+        "state": "pending"
+      },
+      "rollback": "docs/S408_og-rollback.json"
+    }
+  },
+  "waves": [
+    {
+      "name": "fresh startup and audit",
+      "state": "complete"
+    },
+    {
+      "name": "selected implementation",
+      "state": "complete"
+    },
+    {
+      "name": "release and closeout publication",
+      "state": "pending"
+    }
+  ],
+  "limitations": [
+    "Existing identity/provider and positive authenticated acceptance are unresolved independently.",
+    "Historical optional visual failures are unclassified; no baseline changes selected.",
+    "Field-vitals and user outcomes remain unmeasured."
+  ],
+  "prerequisiteAudit": "docs/AUDIT_2026-11-02-S408.json",
+  "cardAudit": "docs/AUDIT_2026-11-02-S408-card.json",
+  "implementedOutcomes": 5,
+  "gitAudit": "docs/AUDIT_2026-11-02-S408-git.json",
+  "audits": [
+    "docs/AUDIT_2026-11-02.json",
+    "docs/AUDIT_2026-11-02-S408.json",
+    "docs/AUDIT_2026-11-02-S408-card.json",
+    "docs/AUDIT_2026-11-02-S408-git.json"
+  ],
+  "localDiagnostics": {
+    "state": "completed-nonaccepting",
+    "lastRange": {
+      "first": 438,
+      "last": 548,
+      "passed": 111
+    },
+    "repairs": [
+      "Conservative S408-only task prose compaction",
+      "Existing generated CSS preload, API feed dates, launch age, image placeholder map and News freshness reconciled",
+      "Missing archive card restored and real template geometry/light ink corrected",
+      "Current site-health rebuild truthfully abstains on field data",
+      "Current public-profile rank query snapshot; no private-data/global ranking inference",
+      "Privacy and shared Git inventory output capacity fixed without filtering",
+      "Closeout boundary rendered with canonical S408 naming and cache input"
+    ]
+  },
+  "utcFreshnessRepair": {
+    "observedFailure": "Full native run stopped at355/548: homepage said today while actual freshness said yesterday.",
+    "generator": "scripts/build-home-desk-module.mjs",
+    "visualReceipt": "docs/visual-qa/S408-cadence-after.json",
+    "note": "All28 before/after captures inspected. Failed full run retained and is not acceptance."
+  },
+  "sourceAttempts": [
+    {
+      "state": "failed",
+      "startedAt": "2026-11-03T01:35:09.716Z",
+      "finishedAt": "2026-11-03T01:45:56.843Z",
+      "failedStep": 355,
+      "reason": "UTC midnight freshness changed today→yesterday; native homepage generator and28 actual visual captures repaired the date label.",
+      "log": ".cache/S408-final-autopilot.log"
+    },
+    {
+      "state": "failed",
+      "startedAt": "2026-11-03T01:50:57.077Z",
+      "finishedAt": "2026-11-03T01:57:15.350Z",
+      "failedStep": 169,
+      "reason": "Proof ordering correctly rejected old mobile index.html binding after the date change. Full mobile suite rerun required; no restamping.",
+      "log": ".cache/S408-final-autopilot-2.log"
+    },
+    {
+      "state": "failed",
+      "startedAt": "2026-11-03T02:07:15.596Z",
+      "finishedAt": "2026-11-03T02:14:12.887Z",
+      "failedStep": 169,
+      "reason": "Native proof gate found visual-retention report stale after new real captures. Regenerated native inventory:4242bound,2074archival candidates,zero deleted. Mobile ordering passed.",
+      "log": ".cache/S408-final-autopilot-3.log"
+    },
+    {
+      "state": "failed-final-reconciliation",
+      "startedAt": "2026-11-03T02:18:19.790Z",
+      "finishedAt": "2026-11-03T02:28:13.053Z",
+      "initialCompleteRun": {
+        "passed": 548,
+        "planned": 548,
+        "coverageComplete": true
+      },
+      "failedStep": 2,
+      "reason": "Both real non-Git controls reported ENOBUFS, but overflow termination statuses raced(null versus0). Removed status equality only; retained both overflow errors, full Git byte controls and explicit caps. Focused2tests and independent review passed. New final-source proof still required.",
+      "log": ".cache/S408-final-autopilot-4.log"
+    }
+  ]
+}

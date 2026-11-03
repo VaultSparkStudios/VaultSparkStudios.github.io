@@ -1,0 +1,22 @@
+{
+  "kind": "audit",
+  "session": 408,
+  "date": "2026-11-02",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Complete bounded Git inventory capture",
+  "items": [
+    {
+      "id": 5,
+      "slug": "git-inventory-capacity",
+      "title": "Keep complete Git inventories within an explicit shared capture bound",
+      "axis": "speed-organization-efficiency",
+      "leftScore": 8,
+      "rightScore": 3,
+      "insight": "Required native source294 failed resync-derived self-test with git ls-files -z ENOBUFS. The same default1MiB cap affects full staging inventory capture. Current actual inventory exceeds1MiB; changing caller after caller leaves the common failure intact. Maintainers can verify and stage the full source tree without truncation, lost paths or bypassing checks.",
+      "evidence": "Shared captured Git stdout equals an explicit16MiB native control on the complete real inventory. Explicit smaller capacity still fails closed. Non-Git output keeps the native default. Existing safe-spawn/window guard tests, resync self-test and independent review pass."
+    }
+  ],
+  "blockers": [],
+  "followUps": []
+}

@@ -1,0 +1,70 @@
+{
+  "kind": "closeout",
+  "session": "S408",
+  "date": "2026-11-02",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Reliable release verification and readable archive sharing; full release pending",
+  "silBefore": 939,
+  "silAfter": 939,
+  "items": [
+    {
+      "id": 1,
+      "slug": "build-check-help",
+      "title": "Make build-check help safe to inspect",
+      "axis": "speed-organization-efficiency",
+      "projectImpact": 6,
+      "ecosystemImpact": 3,
+      "insight": "Maintainers can discover verification options without starting or mutating a release verification run. Both help aliases print documented options without sanitizing, spawning, locking or changing receipts; normal and self-test lanes remain operational.",
+      "evidence": "docs/S408_implementation.json; full release: docs/RELEASE_S408.json"
+    },
+    {
+      "id": 2,
+      "slug": "merge-closeout-anchor",
+      "title": "Observe file changes in merge closeouts",
+      "axis": "observability-honesty",
+      "projectImpact": 6,
+      "ecosystemImpact": 3,
+      "insight": "Maintainers can find the actual last closeout without launching false recovery work. Real merge closeouts produce an observable SIL anchor; subsequent substantive work still becomes debt; live S407 triage can be measured without inventing recovery.",
+      "evidence": "docs/S408_implementation.json; full release: docs/RELEASE_S408.json"
+    },
+    {
+      "id": 3,
+      "slug": "privacy-inventory-capacity",
+      "title": "Preserve complete privacy scanning beyond the default process buffer",
+      "axis": "security",
+      "projectImpact": 6,
+      "ecosystemImpact": 3,
+      "insight": "The privacy guard can scan the complete current source inventory. Its scope and privacy assertions remain unchanged.",
+      "evidence": "docs/S408_prerequisites.json:1052523bytes,10privacy checks and independent approval."
+    },
+    {
+      "id": 4,
+      "slug": "archive-card-fit",
+      "title": "Restore the November archive share image with readable template spacing",
+      "axis": "ui-ux-feedback",
+      "projectImpact": 6,
+      "ecosystemImpact": 3,
+      "insight": "Sharing the November archive now has a complete branded preview. Shared badge/footer geometry and light-theme ink are verified against rendered pixels.",
+      "evidence": "docs/S408_card-acceptance.json; exact full release remains in docs/RELEASE_S408.json"
+    },
+    {
+      "id": 5,
+      "slug": "git-inventory-capacity",
+      "title": "Keep complete Git inventories within an explicit shared capture bound",
+      "axis": "speed-organization-efficiency",
+      "projectImpact": 7,
+      "ecosystemImpact": 4,
+      "insight": "Verification and staging retain the full repository inventory within an explicit bounded capture limit. Smaller caller limits and all non-Git defaults remain intact.",
+      "evidence": "docs/S408_git-acceptance.json; complete release remains pending."
+    }
+  ],
+  "blockers": [],
+  "followUps": [
+    "Existing identity, field-vitals and unclassified visual limitations remain separate."
+  ],
+  "silDelta": {
+    "previous": 939,
+    "current": 939
+  }
+}

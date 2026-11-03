@@ -524,3 +524,18 @@ S407 restored current browser journey contracts and truthful public IGNIS pillar
 ### S407 final acceptance — 2026-10-30
 
 S407 is complete. The browser-contract and editorial-checker outcomes are released. Full application e4234a241941 passed native source548/548, staging11/11, exact hosted workflows3/3, normal full production and complete served readback. Final content overlay 81654c0ae423 carries 31 explicitly staged paths, including launch-age240→241 and the Desk caption today→yesterday required by the new observation date. Fresh source548/548, mobile215/215, four launch-age checks and28 inspected desktop/mobile theme captures across both generated date displays passed for that closing snapshot. Final complete Pages-origin served readback checked3714: 3704 byte-identical, 10 configured redirects, zero differences/unread. Both selected L2 outcomes remain the only shipped outcomes: one product and one protocol improvement. SIL remains939/1000. All five publishers restored; authorized impact cargo signature verified. Final records are published by normal main push. Seven existing private-fixture browser cases remain skipped; historical optional visual failures are unclassified. Anonymous access-wall checks do not prove positive authenticated private-data access. Individual lab Performance92 production/82 staging is not field-vitals or growth evidence. No further product work is selected. CDR unchanged: no new founder creative direction.
+
+
+<!-- S408-writeback -->
+## Session 408 — 2026-11-02
+
+Both selected L2 protocol outcomes are locally verified: safe build help (12 process tests) and merge closeout observation (real Git fixture). Independent review fixed missing native-suite registration and then approved. Full release acceptance is owned by docs/RELEASE_S408.json; local tests do not prove deployment. Native goal association is recorded in LATEST_HANDOFF. Fresh startup, audit and implementation completed; release and closing publication remain independently tracked.
+
+
+S408 prerequisite addendum: privacy10/10 with complete >1MiB inventory; generated clock/feed-date/preload drift repaired. Mobile215/215 and all56before/after images actually inspected. Partial source attempts retain nonpassing dispositions in docs/S408_prerequisites.json. Full release remains pending.
+
+
+S408 share-preview prerequisite: one missing November archive card added. Two template spacing constants and light-only badge ink corrected after actual image inspection; meaningful rendered geometry/contrast regression and independent review passed. No bulk legacy-card regeneration. Full release remains pending.
+
+
+S408 final local implementation:5outcomes accepted (product1/protocol4). Shared Git capacity fixed at the process boundary after actual repeated ENOBUFS; preview cache keys follow current render bytes. Live isolated OG staging16GET/8HEAD reads passed. All partial source attempts remain nonaccepting; final native source and full release remain pending.

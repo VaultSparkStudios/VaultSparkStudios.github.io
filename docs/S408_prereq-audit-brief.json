@@ -1,0 +1,22 @@
+{
+  "kind": "audit",
+  "session": 408,
+  "date": "2026-11-02",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Keep privacy verification complete at current inventory size",
+  "items": [
+    {
+      "id": 3,
+      "slug": "privacy-inventory-capacity",
+      "title": "Preserve complete privacy scanning beyond the default process buffer",
+      "axis": "security",
+      "leftScore": 8,
+      "rightScore": 2,
+      "insight": "Native source step128 failed both privacy assertions with git ENOBUFS; the full ls-files output exceeds1MiB. The scanner never reached matching, rather than finding forbidden public content. Visitors retain the same privacy protection while maintainers can verify the full source inventory.",
+      "evidence": "Both actual privacy assertions pass on the unchanged full inventory, measured >1MiB. No scan path, privacy token, exclusion, assertion or TODO policy changes. Larger-than16MiB remains fail-closed; independent review passes."
+    }
+  ],
+  "blockers": [],
+  "followUps": []
+}

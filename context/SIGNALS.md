@@ -1,19 +1,19 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         548/548 passing (2026-10-29)                   ║
-║  ⚠  Velocity      1 ↓  ·  Debt: →                                ║
+║  ✓  Tests         548/548 passing (2026-11-03)                   ║
+║  ⛔  Velocity      0 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ✓  Context age   5d                                             ║
-║  ✓  IGNIS         45136 FORGE  ·  1d old                         ║
-║  ⛔  Truth         yellow — S407 local implementation…            ║
+║  ⚠  Context age   9d                                             ║
+║  ✓  IGNIS         45136 FORGE  ·  4d old                         ║
+║  ⛔  Truth         yellow — requested release verified;…          ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.174  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  6d old (2026-10-24)                            ║
+║  ⚠  Revenue sig.  9d old (2026-10-24)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
+║  ⛔  Doctor        15/17 (88%)  ·  1 failing                      ║
 ║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  4/55 pending review                            ║
 ║  Open current tasks 36 / Human-action entries 6                  ║

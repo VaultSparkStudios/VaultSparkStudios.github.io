@@ -538,7 +538,10 @@ export function readCommits(root = ROOT, limit = null) {
       if (parent.status === 0) range = [`${String(parent.stdout).trim()}..HEAD`];
     }
   }
-  const res = spawnSync('git', ['log', ...(limit === null ? range : [`-${limit}`]), '--name-only', '--date=iso-strict',
+  // Default log diff output omits merge paths, even when the merge itself
+  // records the SIL closeout. Compare each merge to its first parent once;
+  // -m would duplicate the commit per parent and distort debt counts.
+  const res = spawnSync('git', ['log', ...(limit === null ? range : [`-${limit}`]), '--diff-merges=first-parent', '--name-only', '--date=iso-strict',
     '--format=%x00%H%x1f%ad%x1f%s%x1f%ae'], { cwd: root, encoding: 'utf8', windowsHide: true });
   if (res.status !== 0) throw new Error('cannot observe write-back history');
   const commits = [];

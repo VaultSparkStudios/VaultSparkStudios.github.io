@@ -1,0 +1,299 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-11-02",
+  "generatedAt": "2026-11-02T23:57:19.400Z",
+  "session": 408,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S408 full arc: safe build introspection and accurate closeout recovery evidence, then authorized full staging/production release.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "portfolio-expansion",
+          "premise": "Add another discovery directory",
+          "evidence": "projects/index.html and agents.json already provide project discovery."
+        },
+        {
+          "slug": "member-release-centre",
+          "premise": "Add member return information",
+          "evidence": "portal/index.html already includes S406 return information; no reproduced missing journey."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "replace-navigation",
+          "premise": "Replace Desk navigation",
+          "evidence": "scripts/propagate-nav.mjs has the intentional Desk label; no evidence for an information-architecture replacement."
+        },
+        {
+          "slug": "visual-baseline-refresh",
+          "premise": "Regenerate historical snapshots",
+          "evidence": "Historical optional failures remain unclassified; baseline replacement without current reproduction cannot establish an improvement."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "tier-rebalance",
+          "premise": "Change rank economy",
+          "evidence": "SOUL.md requires coherent nine-tier membership; no economy defect has been reproduced."
+        },
+        {
+          "slug": "new-period",
+          "premise": "Add another leaderboard period",
+          "evidence": "leaderboards/index.html already has the implemented All Time and This Season scopes."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "confidence-itinerary",
+          "premise": "Build a confidence-ranked itinerary",
+          "evidence": "Novel candidate; api/intent-map.json already serves deterministic discovery and no failed user decision is evidenced."
+        },
+        {
+          "slug": "agent-repair-proposal",
+          "premise": "Generate agent repair proposals",
+          "evidence": "Novel candidate; agents.json already exposes contracts, and no measured demand supports paid inference."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "identity-replacement",
+          "premise": "Repair identity as part of CLI stabilization",
+          "evidence": "Current conformance records the existing CANON-045 gap; changing security flows requires distinct scoped direction."
+        },
+        {
+          "slug": "header-rewrite",
+          "premise": "Rewrite security headers",
+          "evidence": "_headers and cloudflare retain existing protections; no demonstrated regression supports a policy change."
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "surviving": [
+        "build-check-help"
+      ],
+      "rejectedOnVerify": []
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "inference-cache",
+          "premise": "Cache inferred release explanations",
+          "evidence": "Novel candidate; selected operations perform no paid inference, so savings would be invented."
+        },
+        {
+          "slug": "context-compression",
+          "premise": "Compress task context",
+          "evidence": "task-slice returned7934 characters below its8000 cap; no overrun demonstrated."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [
+        "merge-closeout-anchor"
+      ],
+      "rejectedOnVerify": []
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "browser-rewrite",
+          "premise": "Repair optional browser failures blindly",
+          "evidence": "S407 already repaired browser contracts; remaining visual failures require reproduction and classification before product or baseline edits."
+        },
+        {
+          "slug": "broad-runtime-optimization",
+          "premise": "Optimize help startup speed",
+          "evidence": "No benchmark yet separates module startup from probe work; selected help repair claims safety rather than speed."
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "build-check-help",
+      "title": "Make build-check help safe to inspect",
+      "axis": "speed-organization-efficiency",
+      "tier": "⚡",
+      "effortHours": 1.5,
+      "impact": 7,
+      "innovation": 3,
+      "priority": 11.619189868967355,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "why": "Current main has no help guard; isolated reproduction will distinguish help from sanitizer execution before repair.",
+      "recipe": "Reuse cli-contract help before every operational branch. Extend isolated process fixtures with spawn tripwires, byte snapshots, flag precedence and normal/self-test controls.",
+      "acceptance": "Both help aliases print documented options without sanitizing, spawning, locking or changing receipts; normal and self-test lanes remain operational.",
+      "userOutcome": "Maintainers can discover verification options without starting or mutating a release verification run.",
+      "readinessArea": "supported-release reliability",
+      "stageRationale": "Repair demonstrated operator reliability failures before the authorized promotion.",
+      "premises": [
+        {
+          "claim": "Make build-check help safe to inspect",
+          "adapter": "file-content",
+          "target": "scripts/run-build-check.mjs",
+          "pattern": "if (process.argv.includes('--self-test'))",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Repair only the demonstrated case."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Reuse cli-contract help before every operational branch. Extend isolated process fixtures with spawn tripwires, byte snapshots, flag precedence and normal/self-test controls."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Broader CLI/history redesign is unselected; measure a separate need first."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-11-03T00:02:19.767Z",
+          "status": "shipped",
+          "depth": "L2",
+          "verification": "docs/S408_implementation.json",
+          "note": "Local implementation acceptance only; full deployment independently tracked."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "merge-closeout-anchor",
+      "title": "Observe file changes in merge closeouts",
+      "axis": "observability-honesty",
+      "tier": "⚡",
+      "effortHours": 1.5,
+      "impact": 7,
+      "innovation": 3,
+      "priority": 11.619189868967355,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "why": "Live readCommits sees200 commits but the real SIL merge anchor has no paths in default git log --name-only output.",
+      "recipe": "Observe merge file changes explicitly using Git diff semantics, retaining complete anchor-bounded history and fail-closed behavior. Prove real merge, ordinary closeout and later unrecorded work with temporary Git repositories.",
+      "acceptance": "Real merge closeouts produce an observable SIL anchor; subsequent substantive work still becomes debt; live S407 triage can be measured without inventing recovery.",
+      "userOutcome": "Maintainers can find the actual last closeout without launching false recovery work.",
+      "readinessArea": "supported-release reliability",
+      "stageRationale": "Repair demonstrated operator reliability failures before the authorized promotion.",
+      "premises": [
+        {
+          "claim": "Observe file changes in merge closeouts",
+          "adapter": "file-content",
+          "target": "scripts/check-writeback-currency.mjs",
+          "pattern": "'--name-only', '--date=iso-strict'",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Repair only the demonstrated case."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Observe merge file changes explicitly using Git diff semantics, retaining complete anchor-bounded history and fail-closed behavior. Prove real merge, ordinary closeout and later unrecorded work with temporary Git repositories."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Broader CLI/history redesign is unselected; measure a separate need first."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-11-03T00:02:19.770Z",
+          "status": "shipped",
+          "depth": "L2",
+          "verification": "docs/S408_implementation.json",
+          "note": "Local implementation acceptance only; full deployment independently tracked."
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "items": 2,
+    "priority": 23.23837973793471,
+    "count": 2,
+    "top3": [
+      "build-check-help",
+      "merge-closeout-anchor"
+    ]
+  },
+  "executionLog": [],
+  "research": {
+    "internalFirst": "Reuse cli-contract, diagnostic-help process fixtures, existing history classifier, native Git and installed test tools. No dependency, paid service or new auth required."
+  },
+  "baseline": {
+    "startHead": "f33494b3552bb0fbd53d3a194338c41917893326",
+    "writeback": "S407 SIL merge exists; default merge path observation omits it. Other post-closeout work is bot/receipted routine work or S407 closeout tail."
+  },
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-11-02T23:57:22.128Z",
+    "head": "f33494b3552bb0fbd53d3a194338c41917893326",
+    "sidecar": "docs/AUDIT_2026-11-02.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "860c437dc753c1e76ba5c376b0ab82bccd79f146bee6c916651a3726d3982db2",
+    "implementationDirty": [
+      "docs/GENIUS_LIST.md",
+      "portfolio/compiled/FORECAST_LEDGER.json",
+      "docs/S408_audit-brief.json",
+      "docs/S408_plan-brief.json"
+    ]
+  },
+  "admission": {
+    "state": "passed",
+    "command": "check-audit-plan-preflight --root .",
+    "verifiedAt": "2026-11-03T00:00:51.508Z",
+    "note": "Explicit root used with control-plane checker because local copy absent; schema, pending selection, nine-axis coverage and both brief identities passed before implementation."
+  }
+}

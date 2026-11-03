@@ -1,16 +1,16 @@
-# Genius Hit List — Session 407
+# Genius Hit List — Session 408
 
-Generated: 2026-10-31
+Generated: 2026-11-03
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **80/100**
+- Overall opportunity pressure: **83/100**
 - Health: **yellow**
 - Current SIL: **939/1000**
 - CI health: **check gh run list**
-- Current focus: S407: truthful public IGNIS and current browser journey contracts.
+- Current focus: S408: reliable release verification and readable archive sharing.
 
 ## Strategic Read
 
@@ -22,73 +22,75 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Classify historical visual failures before updating baselines.
+#### 1. [PRODUCT] Classify old visual failures (future).
 Final score: **96**
+[S408][SIL] Classify old visual failures (future).
+Why it matters: Classify old visual failures (future). is open, local, and unblocked — can ship this session.
+
+#### 2. [VERIFY] Post-push CI confirmation
+Final score: **96**
+Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
+Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
+
+First command: `gh run list --limit 10`
+
+#### 3. [PRODUCT] Benchmark history only after failure (future).
+Final score: **93**
+[S408][SIL] Benchmark history only after failure (future).
+Why it matters: Benchmark history only after failure (future). is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] Classify historical visual failures before updating baselines.
+Final score: **90**
 [S407][SIL] Classify historical visual failures before updating baselines.
 Why it matters: Classify historical visual failures before updating baselines. is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Isolate run-build-check --help side effects before selecting a repair.
-Final score: **93**
+### NEXT
+
+#### 1. [PRODUCT] Isolate run-build-check --help side effects before selecting a repair.
+Final score: **87**
 [S407][SIL] Isolate run-build-check --help side effects before selecting a repair.
 Why it matters: Isolate run-build-check --help side effects before selecting a repair. is open, local, and unblocked — can ship this session.
 
-#### 3. [VERIFY] Reproduce the34 optional E2E failures before changing implementation,…
-Final score: **92**
-[S406][FOLLOW-UP] Reproduce the34 optional E2E failures before changing implementation, baselines or CI policy; same failure names exist on the accepted baseline. Unselected; docs/S406_explicit-closeout-optional-e2e.json.
-Why it matters: Reproduce the34 optional E2E failures before changing implementation,  shipped last session — confirm it works in production before piling new work on top.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 4. [SECURITY] Measure help startup separately from probe execution before attemptin…
-Final score: **90**
+#### 2. [SECURITY] Measure help startup separately from probe execution before attemptin…
+Final score: **84**
 [S406][SIL] Measure help startup separately from probe execution before attempting runtime optimization. No performance or token saving is currently claimed.
 Why it matters: Measure help startup separately from probe execution before attempting lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
 
-### NEXT
+#### 3. [VERIFY] Reproduce the34 optional E2E failures before changing implementation,…
+Final score: **81**
+[S406][FOLLOW-UP] Reproduce the34 optional E2E failures before changing implementation, baselines or CI policy; same failure names exist on the accepted baseline. Unselected; docs/S406_explicit-closeout-optional-e2e.json.
+Why it matters: Reproduce the34 optional E2E failures before changing implementation,  was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
 
-#### 1. [PRODUCT] Consider extending help-only process fixtures to another operator CLI…
-Final score: **87**
+First command: `npm run build:check && node scripts/csp-audit.mjs`
+
+#### 4. [PRODUCT] Consider extending help-only process fixtures to another operator CLI…
+Final score: **81**
 [S406][SIL] Consider extending help-only process fixtures to another operator CLI only after reproducing its side effects.
 Why it matters: Consider extending help-only process fixtures to another operator CLI  is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Consider migration of scheduled text probes only after measuring cove…
-Final score: **81**
+#### 5. [PRODUCT] Consider migration of scheduled text probes only after measuring cove…
+Final score: **75**
 [SIL][S405] Consider migration of scheduled text probes only after measuring coverage and compatibility for each caller; future, unselected.
 Why it matters: Consider migration of scheduled text probes only after measuring cover is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Consider redirect-target body verification only if a real redirected …
-Final score: **78**
+### LATER
+
+#### 1. [PRODUCT] Consider redirect-target body verification only if a real redirected …
+Final score: **72**
 [SIL][S405] Consider redirect-target body verification only if a real redirected destination failure is reproduced; future, unselected.
 Why it matters: Consider redirect-target body verification only if a real redirected d is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Consider response-body streaming only if measured remote readback mem…
-Final score: **75**
+#### 2. [PRODUCT] Consider response-body streaming only if measured remote readback mem…
+Final score: **69**
 [SIL][S404] Consider response-body streaming only if measured remote readback memory pressure justifies it; future, unselected.
 Why it matters: Consider response-body streaming only if measured remote readback memo is open, local, and unblocked — can ship this session.
 
-#### 5. [PRODUCT] Consider native positive-manifest text parity as a separately reviewe…
-Final score: **72**
+#### 3. [PRODUCT] Consider native positive-manifest text parity as a separately reviewe…
+Final score: **66**
 [SIL][S404] Consider native positive-manifest text parity as a separately reviewed default migration; preserve legacy default in this session. Future, unselected.
 Why it matters: Consider native positive-manifest text parity as a separately reviewed is open, local, and unblocked — can ship this session.
-
-### LATER
-
-#### 1. [PRODUCT] Extend method-specific corroboration coverage if additional signals a…
-Final score: **69**
-[SIL][S402] Extend method-specific corroboration coverage if additional signals are introduced; future, unselected.
-Why it matters: Extend method-specific corroboration coverage if additional signals ar is open, local, and unblocked — can ship this session.
-
-#### 2. [PRODUCT] Consider per-member byte verification only if source mutation during …
-Final score: **66**
-[SIL][S401] Consider per-member byte verification only if source mutation during packaging is observed; not selected in this arc.
-Why it matters: Consider per-member byte verification only if source mutation during p is open, local, and unblocked — can ship this session.
-
-#### 3. [PRODUCT] Coordinate an evidence-backed distinction between formatting-only sou…
-Final score: **63**
-[SIL][S400] Coordinate an evidence-backed distinction between formatting-only source writes and actual pixel changes in visual freshness; existing mandatory gate remains enforced. Future selection only.
-Why it matters: Coordinate an evidence-backed distinction between formatting-only sour is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -134,18 +136,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Classify historical visual failures before updating baselines.
-2. Isolate run-build-check --help side effects before selecting a repair.
-3. Reproduce the34 optional E2E failures before changing implementation,…
-4. Measure help startup separately from probe execution before attemptin…
-5. Consider extending help-only process fixtures to another operator CLI…
-6. Consider migration of scheduled text probes only after measuring cove…
-7. Consider redirect-target body verification only if a real redirected …
-8. Consider response-body streaming only if measured remote readback mem…
-9. Consider native positive-manifest text parity as a separately reviewe…
-10. Extend method-specific corroboration coverage if additional signals a…
-11. Consider per-member byte verification only if source mutation during …
-12. Coordinate an evidence-backed distinction between formatting-only sou…
+1. Classify old visual failures (future).
+2. Post-push CI confirmation
+3. Benchmark history only after failure (future).
+4. Classify historical visual failures before updating baselines.
+5. Isolate run-build-check --help side effects before selecting a repair.
+6. Measure help startup separately from probe execution before attemptin…
+7. Reproduce the34 optional E2E failures before changing implementation,…
+8. Consider extending help-only process fixtures to another operator CLI…
+9. Consider migration of scheduled text probes only after measuring cove…
+10. Consider redirect-target body verification only if a real redirected …
+11. Consider response-body streaming only if measured remote readback mem…
+12. Consider native positive-manifest text parity as a separately reviewe…
 
 ## Best Immediate Move
 

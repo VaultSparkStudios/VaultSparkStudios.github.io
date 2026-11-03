@@ -1,0 +1,362 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-11-02",
+  "generatedAt": "2026-11-03T00:33:02.042Z",
+  "session": 408,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "S408 required native source-gate prerequisite: preserve complete privacy scanning at current repository inventory size.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "portfolio-expansion",
+          "premise": "Add another discovery directory",
+          "evidence": "projects/index.html and agents.json already provide project discovery."
+        },
+        {
+          "slug": "member-release-centre",
+          "premise": "Add member return information",
+          "evidence": "portal/index.html already includes S406 return information; no reproduced missing journey."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "replace-navigation",
+          "premise": "Replace Desk navigation",
+          "evidence": "scripts/propagate-nav.mjs has the intentional Desk label; no evidence for an information-architecture replacement."
+        },
+        {
+          "slug": "visual-baseline-refresh",
+          "premise": "Regenerate historical snapshots",
+          "evidence": "Historical optional failures remain unclassified; baseline replacement without current reproduction cannot establish an improvement."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "tier-rebalance",
+          "premise": "Change rank economy",
+          "evidence": "SOUL.md requires coherent nine-tier membership; no economy defect has been reproduced."
+        },
+        {
+          "slug": "new-period",
+          "premise": "Add another leaderboard period",
+          "evidence": "leaderboards/index.html already has the implemented All Time and This Season scopes."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "confidence-itinerary",
+          "premise": "Build a confidence-ranked itinerary",
+          "evidence": "Novel candidate; api/intent-map.json already serves deterministic discovery and no failed user decision is evidenced."
+        },
+        {
+          "slug": "agent-repair-proposal",
+          "premise": "Generate agent repair proposals",
+          "evidence": "Novel candidate; agents.json already exposes contracts, and no measured demand supports paid inference."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [
+        "privacy-inventory-capacity"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "identity-replacement",
+          "premise": "Repair identity as part of CLI stabilization",
+          "evidence": "Current conformance records the existing CANON-045 gap; changing security flows requires distinct scoped direction."
+        },
+        {
+          "slug": "header-rewrite",
+          "premise": "Rewrite security headers",
+          "evidence": "_headers and cloudflare retain existing protections; no demonstrated regression supports a policy change."
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "original-speed-organization-efficiency",
+          "premise": "Expand this prerequisite into another axis",
+          "evidence": "Original S408 outcomes remain locally accepted under docs/AUDIT_2026-11-02.json; no additional outcome is selected in this prerequisite."
+        }
+      ]
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "inference-cache",
+          "premise": "Cache inferred release explanations",
+          "evidence": "Novel candidate; selected operations perform no paid inference, so savings would be invented."
+        },
+        {
+          "slug": "context-compression",
+          "premise": "Compress task context",
+          "evidence": "task-slice returned7934 characters below its8000 cap; no overrun demonstrated."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "original-observability-honesty",
+          "premise": "Expand this prerequisite into another axis",
+          "evidence": "Original S408 outcomes remain locally accepted under docs/AUDIT_2026-11-02.json; no additional outcome is selected in this prerequisite."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "browser-rewrite",
+          "premise": "Repair optional browser failures blindly",
+          "evidence": "S407 already repaired browser contracts; remaining visual failures require reproduction and classification before product or baseline edits."
+        },
+        {
+          "slug": "broad-runtime-optimization",
+          "premise": "Optimize help startup speed",
+          "evidence": "No benchmark yet separates module startup from probe work; selected help repair claims safety rather than speed."
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": 3,
+      "slug": "privacy-inventory-capacity",
+      "title": "Preserve complete privacy scanning beyond the default process buffer",
+      "axis": "security",
+      "tier": "🔥",
+      "effortHours": 0.5,
+      "impact": 8,
+      "innovation": 2,
+      "priority": 12.10353275785648,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "why": "Native source step128 failed both privacy assertions with git ENOBUFS; the full ls-files output exceeds1MiB. The scanner never reached matching, rather than finding forbidden public content.",
+      "recipe": "Increase only the privacy inventory subprocess output capacity to16MiB, keep all cached and untracked/nonignored files and existing privacy matchers, and set windowsHide:true at this spawn. Verify both actual privacy assertions against the full >1MiB inventory; do not truncate or exclude paths.",
+      "acceptance": "Both actual privacy assertions pass on the unchanged full inventory, measured >1MiB. No scan path, privacy token, exclusion, assertion or TODO policy changes. Larger-than16MiB remains fail-closed; independent review passes.",
+      "userOutcome": "Visitors retain the same privacy protection while maintainers can verify the full source inventory.",
+      "readinessArea": "required source-gate reliability",
+      "stageRationale": "A demonstrated required source failure blocks the already authorized full release.",
+      "premises": [
+        {
+          "claim": "The privacy file inventory uses the default output capacity",
+          "adapter": "file-content",
+          "target": "tests/founder-presence-absent.unit.spec.js",
+          "pattern": "maxBuffer",
+          "operator": "eq",
+          "expected": false
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.2,
+          "recipe": "Raise bounded inventory capacity."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "Increase only the privacy inventory subprocess output capacity to16MiB, keep all cached and untracked/nonignored files and existing privacy matchers, and set windowsHide:true at this spawn. Verify both actual privacy assertions against the full >1MiB inventory; do not truncate or exclude paths."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Evaluate a streaming inventory only after measuring a need beyond the bounded capacity; unselected."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-11-03T00:35:31.610Z",
+          "status": "shipped",
+          "depth": "L2",
+          "verification": "docs/S408_prerequisites.json",
+          "note": "Actual1052523-byte inventory, all10privacy assertions passed, independent reviewer approved; same scope/matchers/assertions and fail-closed overflow."
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "count": 1,
+    "top3": [
+      "privacy-inventory-capacity"
+    ],
+    "priority": 12.10353275785648
+  },
+  "executionLog": [],
+  "research": {
+    "internalFirst": "Reuse cli-contract, diagnostic-help process fixtures, existing history classifier, native Git and installed test tools. No dependency, paid service or new auth required."
+  },
+  "baseline": {
+    "startHead": "f33494b3552bb0fbd53d3a194338c41917893326",
+    "writeback": "S407 SIL merge exists; default merge path observation omits it. Other post-closeout work is bot/receipted routine work or S407 closeout tail."
+  },
+  "admission": {
+    "state": "passed",
+    "note": "Typed premise and explicit-root candidate admission passed before privacy test edit."
+  },
+  "kind": "release-prerequisite",
+  "sourceAudit": "docs/AUDIT_2026-11-02.json",
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-11-03T00:33:02.823Z",
+    "head": "f33494b3552bb0fbd53d3a194338c41917893326",
+    "sidecar": "docs/AUDIT_2026-11-02-S408.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 1,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "c5052735572f7ade4041bd22cba07dc28c2be5a9f672aff4bc91e63419f6ac2b",
+    "implementationDirty": [
+      "_headers",
+      "api/ai-discovery-health.json",
+      "api/analytics-summary.json",
+      "api/build-check-diagnostics.json",
+      "api/candidate-artifact-manifest.json",
+      "api/citation.json",
+      "api/field-win.json",
+      "api/heartbeat.json",
+      "api/index.html",
+      "api/intelligence-budget.json",
+      "api/intent-map.json",
+      "api/nervous-system.json",
+      "api/og-coverage.json",
+      "api/oracle-insights.json",
+      "api/promotion-receipt.json",
+      "api/proof-aware-projects.json",
+      "api/public-intelligence.json",
+      "api/public-status.json",
+      "api/release-dependencies.json",
+      "api/release-proof.json",
+      "api/status-proof.json",
+      "data/ignis-search-index.json",
+      "data/perf-history.ndjson",
+      "data/promotion-history.ndjson",
+      "data/stats-surface.json",
+      "docs/BUILD_CHECK_DIAGNOSTICS.md",
+      "docs/GENIUS_LIST.md",
+      "docs/INTELLIGENCE_BUDGET_LEDGER.md",
+      "docs/visual-qa/LATEST.json",
+      "index.html",
+      "oracle/answers/index.json",
+      "package.json",
+      "portfolio/compiled/FORECAST_LEDGER.json",
+      "portfolio/ops/review-loop-receipts.ndjson",
+      "scripts/check-writeback-currency.mjs",
+      "scripts/run-build-check.mjs",
+      "stats.json",
+      "tests/diagnostic-help.unit.spec.mjs",
+      "tests/writeback-history.unit.spec.mjs",
+      ".codex/memory/S408.md",
+      "audits/2026-11-02.json",
+      "docs/RELEASE_S408.json",
+      "docs/S408_audit-brief.json",
+      "docs/S408_board-detail.md",
+      "docs/S408_closeout-brief.json",
+      "docs/S408_implementation.json",
+      "docs/S408_plan-brief.json",
+      "docs/S408_prereq-audit-brief.json",
+      "docs/S408_prereq-plan-brief.json",
+      "docs/archive/audits/AUDIT_2026-10-15.json",
+      "docs/archive/audits/AUDIT_2026-10-15.md",
+      "docs/visual-qa/S408-api-after-ambient-desktop.png",
+      "docs/visual-qa/S408-api-after-ambient-mobile.png",
+      "docs/visual-qa/S408-api-after-cool-desktop.png",
+      "docs/visual-qa/S408-api-after-cool-mobile.png",
+      "docs/visual-qa/S408-api-after-dark-desktop.png",
+      "docs/visual-qa/S408-api-after-dark-mobile.png",
+      "docs/visual-qa/S408-api-after-high-contrast-desktop.png",
+      "docs/visual-qa/S408-api-after-high-contrast-mobile.png",
+      "docs/visual-qa/S408-api-after-lava-desktop.png",
+      "docs/visual-qa/S408-api-after-lava-mobile.png",
+      "docs/visual-qa/S408-api-after-light-desktop.png",
+      "docs/visual-qa/S408-api-after-light-mobile.png",
+      "docs/visual-qa/S408-api-after-warm-desktop.png",
+      "docs/visual-qa/S408-api-after-warm-mobile.png",
+      "docs/visual-qa/S408-api-after.json",
+      "docs/visual-qa/S408-api-before-ambient-desktop.png",
+      "docs/visual-qa/S408-api-before-ambient-mobile.png",
+      "docs/visual-qa/S408-api-before-cool-desktop.png",
+      "docs/visual-qa/S408-api-before-cool-mobile.png",
+      "docs/visual-qa/S408-api-before-dark-desktop.png",
+      "docs/visual-qa/S408-api-before-dark-mobile.png",
+      "docs/visual-qa/S408-api-before-high-contrast-desktop.png",
+      "docs/visual-qa/S408-api-before-high-contrast-mobile.png",
+      "docs/visual-qa/S408-api-before-lava-desktop.png",
+      "docs/visual-qa/S408-api-before-lava-mobile.png",
+      "docs/visual-qa/S408-api-before-light-desktop.png",
+      "docs/visual-qa/S408-api-before-light-mobile.png",
+      "docs/visual-qa/S408-api-before-warm-desktop.png",
+      "docs/visual-qa/S408-api-before-warm-mobile.png",
+      "docs/visual-qa/S408-api-before.json",
+      "docs/visual-qa/S408-clock-after-ambient-desktop.png",
+      "docs/visual-qa/S408-clock-after-ambient-mobile.png",
+      "docs/visual-qa/S408-clock-after-cool-desktop.png",
+      "docs/visual-qa/S408-clock-after-cool-mobile.png",
+      "docs/visual-qa/S408-clock-after-dark-desktop.png",
+      "docs/visual-qa/S408-clock-after-dark-mobile.png",
+      "docs/visual-qa/S408-clock-after-high-contrast-desktop.png",
+      "docs/visual-qa/S408-clock-after-high-contrast-mobile.png",
+      "docs/visual-qa/S408-clock-after-lava-desktop.png",
+      "docs/visual-qa/S408-clock-after-lava-mobile.png",
+      "docs/visual-qa/S408-clock-after-light-desktop.png",
+      "docs/visual-qa/S408-clock-after-light-mobile.png",
+      "docs/visual-qa/S408-clock-after-warm-desktop.png",
+      "docs/visual-qa/S408-clock-after-warm-mobile.png",
+      "docs/visual-qa/S408-clock-after.json",
+      "docs/visual-qa/S408-clock-before-ambient-desktop.png",
+      "docs/visual-qa/S408-clock-before-ambient-mobile.png",
+      "docs/visual-qa/S408-clock-before-cool-desktop.png",
+      "docs/visual-qa/S408-clock-before-cool-mobile.png",
+      "docs/visual-qa/S408-clock-before-dark-desktop.png",
+      "docs/visual-qa/S408-clock-before-dark-mobile.png",
+      "docs/visual-qa/S408-clock-before-high-contrast-desktop.png",
+      "docs/visual-qa/S408-clock-before-high-contrast-mobile.png",
+      "docs/visual-qa/S408-clock-before-lava-desktop.png",
+      "docs/visual-qa/S408-clock-before-lava-mobile.png",
+      "docs/visual-qa/S408-clock-before-light-desktop.png",
+      "docs/visual-qa/S408-clock-before-light-mobile.png",
+      "docs/visual-qa/S408-clock-before-warm-desktop.png",
+      "docs/visual-qa/S408-clock-before-warm-mobile.png",
+      "docs/visual-qa/S408-clock-before.json"
+    ]
+  }
+}

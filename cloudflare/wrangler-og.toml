@@ -3,6 +3,10 @@ main = "og-image-worker.js"
 compatibility_date = "2025-01-01"
 workers_dev = true
 
+[env.staging]
+workers_dev = true
+routes = []
+
 [env.production]
 workers_dev = true
 routes = [

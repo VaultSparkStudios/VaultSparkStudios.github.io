@@ -27,9 +27,6 @@ export default {
     }
     const url = new URL(request.url);
     const cache = caches.default;
-    const cached = await cache.match(request);
-    if (cached) return cached;
-
     const params = url.searchParams;
     const title   = clamp(params.get('title') || 'VaultSpark Studios', 80);
     const eyebrow = clamp(params.get('eyebrow') || 'Vault · Sparked', 40);
@@ -37,6 +34,16 @@ export default {
     const theme   = (params.get('theme') || 'dark').toLowerCase();
 
     const svg = renderSvg({ title, eyebrow, status, theme });
+    // Bind cached previews to the actual render bytes. A template deployment
+    // must not keep serving the previous template from a day-long URL cache.
+    const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(svg));
+    const version = [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join('');
+    const cacheUrl = new URL(url);
+    cacheUrl.searchParams.set('__vs_og_render', version);
+    const cacheKey = new Request(cacheUrl, { method: 'GET' });
+    const cached = await cache.match(cacheKey);
+    if (cached) return request.method === 'HEAD' ? new Response(null, cached) : cached;
+
     const res = new Response(svg, {
       status: 200,
       headers: {
@@ -45,7 +52,7 @@ export default {
         'X-Robots-Tag': 'noai, noimageai',
       },
     });
-    ctx.waitUntil(cache.put(request, res.clone()));
-    return res;
+    ctx.waitUntil(cache.put(cacheKey, res.clone()));
+    return request.method === 'HEAD' ? new Response(null, res) : res;
   },
 };

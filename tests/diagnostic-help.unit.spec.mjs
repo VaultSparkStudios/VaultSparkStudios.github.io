@@ -13,7 +13,7 @@ function fixture(script, run) {
     fs.mkdirSync(path.join(temp, 'scripts/lib'), { recursive: true });
     fs.mkdirSync(path.join(temp, 'context'));
     fs.copyFileSync(path.join(root, `scripts/${script}.mjs`), path.join(temp, `scripts/${script}.mjs`));
-    for (const lib of ['scheduled-probe-result', 'cli-contract']) {
+    for (const lib of ['scheduled-probe-result', 'cli-contract', 'build-check-evidence', 'evidence-io']) {
       fs.copyFileSync(path.join(root, `scripts/lib/${lib}.mjs`), path.join(temp, `scripts/lib/${lib}.mjs`));
     }
     fs.writeFileSync(path.join(temp, 'scripts/lib/safe-spawn.mjs'), 'export function spawnSync(){throw new Error("HELP_SPAWN_TRIPWIRE");}\n');
@@ -32,10 +32,10 @@ function snapshot(dir) {
   ]);
 }
 
-for (const script of ['run-doctor', 'verify-clean-checkout']) {
+for (const script of ['run-doctor', 'verify-clean-checkout', 'run-build-check']) {
   const mutationArgs = script === 'run-doctor'
     ? ['--fix', '--loop', '--update-json', '--json', '--self-test']
-    : ['--keep', '--ref=not-a-commit', '--from=999', '--self-test'];
+    : ['--keep', '--ref=not-a-commit', '--from=999', '--quiet', '--check-diagnostics', '--self-test'];
 
   for (const [name, extra] of [['alone', []], ['before operational flags', mutationArgs]]) {
     test(`${script}: both help aliases ${name} print usage without probes or writes`, () => {
@@ -73,6 +73,17 @@ for (const script of ['run-doctor', 'verify-clean-checkout']) {
   });
 
   test(`${script}: existing self-test still runs`, () => {
+    // This runner's self-test deliberately invokes the impact planners. Keep
+    // that real integration control outside the no-spawn help sandbox.
+    if (script === 'run-build-check') {
+      const result = spawnSync(process.execPath, [path.join(root, 'scripts/run-build-check.mjs'), '--self-test'], {
+        cwd: root, encoding: 'utf8', timeout: 60_000, windowsHide: true,
+      });
+      assert.equal(result.error, undefined);
+      assert.equal(result.status, 0, result.stderr);
+      assert.match(result.stdout, /run-build-check --self-test: all passed/);
+      return;
+    }
     fixture(script, (_temp, run) => {
       const result = run(['--self-test']);
       assert.equal(result.error, undefined);
