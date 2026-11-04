@@ -245,6 +245,22 @@
     ],
     "artifactDownload": "Package-trust BLOCK; exact screenshot-artifact override requested and unanswered; no archive downloaded",
     "visualCapture": {
+      "state": "capture-completed-with-one-retry",
+      "receipt": "docs/S410_visual-capture-attempt2.json",
+      "passed": 69,
+      "flaky": 1,
+      "failed": 0,
+      "downloaded": false,
+      "adopted": false
+    },
+    "focusedProof": "docs/S410_release-repair-progress.json",
+    "currentReadiness": {
+      "state": "passed",
+      "cases": 70,
+      "scene": "engaged and reduced motion",
+      "pixelComparisonToCommittedBaselines": "pending"
+    },
+    "visualCapturePrevious": {
       "state": "failed",
       "receipt": "docs/S410_visual-capture-attempt1.json",
       "passed": 54,
@@ -253,12 +269,19 @@
       "adopted": false,
       "diagnosis": "Actual ambient loader uses12second quiet-visit ceiling plus1200ms queue delay; currently proving explicit real-keyboard engaged scene while preserving5second readiness bound. No fakeDOM state or tolerance change."
     },
-    "focusedProof": "docs/S410_release-repair-progress.json",
-    "currentReadiness": {
-      "state": "passed",
-      "cases": 70,
-      "scene": "engaged and reduced motion",
-      "pixelComparisonToCommittedBaselines": "pending"
+    "controlPlaneCredentialDiscovery": {
+      "state": "exact-project-existing-key-discovered-owner-intake-request-shipped",
+      "projectRef": "fjnpzjjyhnpmunfoycrp",
+      "projectStatus": "ACTIVE_HEALTHY",
+      "projectIdentityVerified": true,
+      "metadataRequests": [
+        200,
+        200
+      ],
+      "credentialValuesPersisted": false,
+      "ownerRequest": "01K6J03U6U190E2EAFA0447A1A",
+      "capabilityReady": false,
+      "scope": "Read-only management discovery; no positive member/investor acceptance."
     }
   }
 }

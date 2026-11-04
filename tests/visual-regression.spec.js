@@ -65,11 +65,12 @@ async function waitForVisualReadiness(page) {
   // Wait for actual app state, then require the visible layout to stop moving.
   let previous = null;
   let stableSince = 0;
+  let lastReadiness = null;
   // A quiet visit delays the ambient queue for 12s (+1.2s scheduling). Exercise
   // its real engagement path without changing focus or activating a control.
   await page.keyboard.press('Shift');
   await expect.poll(async () => {
-    const sample = await page.evaluate(() => {
+    const sample = await page.evaluate((allowedPaths) => {
       const wire = document.querySelector('.site-header [data-desk-wire]');
       const wireState = wire?.getAttribute('data-desk-wire-state');
       // The ambient loader intentionally skips hidden mobile strips and portals.
@@ -93,9 +94,16 @@ async function waitForVisualReadiness(page) {
       });
       return {
         ready,
-        diagnostics: { path: location.pathname, hash: location.hash, theme: document.body.dataset.theme,
-          fonts: document.fonts.status, missingStylesheets, wireExpected, wireState,
-          rankExpected, anchorShellReady, afterPaint: window.VSAfterPaint || null },
+        diagnostics: {
+          path: allowedPaths.includes(location.pathname) ? location.pathname : 'other',
+          hash: ['', '#main-content'].includes(location.hash) ? location.hash : 'other',
+          theme: ['dark', 'light'].includes(document.body.dataset.theme) ? document.body.dataset.theme : 'other',
+          fonts: ['loaded', 'loading'].includes(document.fonts.status) ? document.fonts.status : 'unknown',
+          missingStylesheetCount: Math.min(missingStylesheets.length, 9999),
+          wireExpected, wireState: wireState == null ? 'absent' : ['live', 'latest'].includes(wireState) ? wireState : 'other',
+          rankExpected, anchorShellReady,
+          afterPaint: window.VSAfterPaint ? { started: window.VSAfterPaint.started === true, done: window.VSAfterPaint.done === true } : null,
+        },
         fingerprint: JSON.stringify(visible.map(element => {
           const rect = element.getBoundingClientRect();
           const style = getComputedStyle(element);
@@ -104,15 +112,23 @@ async function waitForVisualReadiness(page) {
             style.transform, element.childElementCount ? '' : element.textContent];
         })),
       };
-    });
+    }, SURFACES.map(surface => surface.path));
     if (!sample.ready || sample.fingerprint !== previous) {
       previous = sample.fingerprint;
       stableSince = Date.now();
+      lastReadiness = { ready: sample.ready === true, layoutStable: false, ...sample.diagnostics };
       return { ready: sample.ready, layoutStable: false, ...sample.diagnostics };
     }
-    return { ready: true, layoutStable: Date.now() - stableSince >= 500, ...sample.diagnostics };
+    const layoutStable = Date.now() - stableSince >= 500;
+    lastReadiness = { ready: true, layoutStable, ...sample.diagnostics };
+    return { ready: true, layoutStable, ...sample.diagnostics };
   }, { timeout: 5000, intervals: [100, 250, 500], message: 'app state and visible layout settle before visual comparison' })
-    .toMatchObject({ ready: true, layoutStable: true });
+    .toMatchObject({ ready: true, layoutStable: true })
+    .catch(error => {
+      // Print only bounded named flags, never the layout fingerprint or DOM text.
+      try { console.error('Visual readiness failure flags: ' + JSON.stringify(lastReadiness)); } catch { /* Preserve the original readiness failure. */ }
+      throw error;
+    });
 }
 
 for (const vp of VIEWPORTS) {

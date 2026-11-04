@@ -1,7 +1,7 @@
 {
   "session": 410,
-  "at": "2026-11-04T09:29:34.654Z",
-  "state": "final-focused-repair-passed-fresh-linux-review-pending",
+  "at": "2026-11-04T10:02:49.743Z",
+  "state": "focused-repairs-passed-capture-received-pixel-review-pending",
   "trigger": "docs/S410_hosted-attempt1.json",
   "scope": "Required release acceptance repairs; public runtime remains byte-identical to QA42ffd.",
   "runtimeUnchanged": true,
@@ -113,7 +113,7 @@
     },
     {
       "path": "tests/visual-regression.spec.js",
-      "sha256": "b79b108f09c04876dd202e88c70c0f3710ba63a06953e459f1392e2022ed6440"
+      "sha256": "a3e8e0ebb2f805155732455aa985121732d8580d82ab01e0dd442f9ac8676d7d"
     },
     {
       "path": "tests/desk-artwork.spec.js",
@@ -126,5 +126,23 @@
     "Refresh full source acceptance for final repaired candidate",
     "Actual member and approved-investor journeys; main/production/readback"
   ],
-  "previousFocusedVersion": "docs/S410_release-repair-progress-cf0fe4f9f1.json"
+  "previousFocusedVersion": "docs/S410_release-repair-progress-cf0fe4f9f1.json",
+  "diagnosticExtension": {
+    "source": "tests/visual-regression.spec.js",
+    "sourceSha256": "a3e8e0ebb2f805155732455aa985121732d8580d82ab01e0dd442f9ac8676d7d",
+    "positiveMatrixSourceUnchanged": "b79b108f09c04876dd202e88c70c0f3710ba63a06953e459f1392e2022ed6440",
+    "passSemanticsUnchanged": true,
+    "negativeProbe": {
+      "nativeExit": 1,
+      "expectedFailure": true,
+      "originalErrorPreserved": true,
+      "untrustedMetadataExcluded": true
+    },
+    "review": {
+      "reviewer": "arc_boundary_review",
+      "verdict": "APPROVE"
+    },
+    "scope": "Failure observability only; positive70 proof remains bound to its original source hash. Final full-suite acceptance remains pending."
+  },
+  "linuxCapture": "docs/S410_visual-capture-attempt2.json"
 }
