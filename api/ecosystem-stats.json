@@ -1,7 +1,7 @@
 {
   "schemaVersion": "ecosystem-stats/v1",
-  "generatedAt": "2026-11-02T06:51:43.240Z",
-  "observedThrough": "2026-11-02",
+  "generatedAt": "2026-11-03T06:43:05.256Z",
+  "observedThrough": "2026-11-03",
   "publicSafe": true,
   "title": "VaultSpark Studio Ecosystem Analytics",
   "policy": {
@@ -21,53 +21,55 @@
   "windows": {
     "seven": {
       "days": 7,
-      "start": "2026-10-26",
-      "endExclusive": "2026-11-02",
+      "start": "2026-10-27",
+      "endExclusive": "2026-11-03",
       "timezone": "UTC",
       "completeDaysOnly": true
     },
     "thirty": {
       "days": 30,
-      "start": "2026-10-03",
-      "endExclusive": "2026-11-02",
+      "start": "2026-10-04",
+      "endExclusive": "2026-11-03",
       "timezone": "UTC",
       "completeDaysOnly": true
     }
   },
   "totals": {
     "publicProjects": 22,
-    "audienceMeasuredProjects": 4,
+    "audienceMeasuredProjects": 9,
     "edgeMeasuredProjects": 16,
     "humanPageLoads30": {
-      "estimate": 5300,
-      "lower": 0,
-      "upper": 13886,
-      "sampleSize": 52
+      "estimate": 5870,
+      "lower": 2106,
+      "upper": 10120,
+      "sampleSize": 577
     },
     "humanVisits30": {
-      "estimate": 4000,
-      "lower": 0,
-      "upper": 10506,
-      "sampleSize": 40
+      "estimate": 3760,
+      "lower": 1153,
+      "upper": 6851,
+      "sampleSize": 375
     },
-    "edgeRequests30": 4036742,
-    "htmlResponses30": 679528,
-    "cachedRequests30": 989351,
-    "bytes30": 49635616136,
-    "threats30": 47859
+    "edgeRequests30": 4049587,
+    "htmlResponses30": 683072,
+    "cachedRequests30": 983647,
+    "bytes30": 49592394016,
+    "threats30": 48630
   },
   "coverage": {
     "zonesRegistered": 31,
     "zonesMeasured30": 28,
-    "productionHostsMeasured30": 6,
-    "projectsWithAudience30": 5,
+    "productionHostsMeasured30": 11,
+    "projectsWithAudience30": 10,
     "projectsWithEdge30": 20,
-    "excludedHosts30": 4,
-    "unmappedHosts30": [],
+    "excludedHosts30": 7,
+    "unmappedHosts30": [
+      "app-social-dashboard.vaultsparkstudios.com"
+    ],
     "activeZonesAccessible": 31,
     "registryComplete": true,
     "publicProjects": 22,
-    "audienceProjectCoveragePct": 18,
+    "audienceProjectCoveragePct": 41,
     "edgeProjectCoveragePct": 73,
     "feedCoverageNote": "Project-specific Analytica Feed v1 coverage is independent from Cloudflare audience and edge coverage and must not be merged into one flattering percentage."
   },
@@ -89,28 +91,28 @@
       ],
       "audience30": {
         "pageLoads": {
-          "estimate": 2500,
-          "lower": 0,
-          "upper": 6672,
-          "sampleSize": 24
+          "estimate": 2350,
+          "lower": 980,
+          "upper": 3750,
+          "sampleSize": 230
         },
         "visits": {
-          "estimate": 1900,
-          "lower": 0,
-          "upper": 5130,
-          "sampleSize": 19
+          "estimate": 1720,
+          "lower": 717,
+          "upper": 2815,
+          "sampleSize": 172
         },
-        "sampleIntervalMax": 200,
+        "sampleIntervalMax": 14,
         "sampled": true,
         "available": true
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 822282,
-        "htmlPageViews": 146977,
-        "cachedRequests": 35536,
-        "bytes": 15115151458,
-        "threats": 13969
+        "edgeRequests": 826272,
+        "htmlPageViews": 148713,
+        "cachedRequests": 35682,
+        "bytes": 15215403425,
+        "threats": 14475
       }
     },
     {
@@ -167,28 +169,28 @@
       ],
       "audience30": {
         "pageLoads": {
-          "estimate": 1900,
-          "lower": 0,
-          "upper": 4787,
-          "sampleSize": 19
+          "estimate": 2550,
+          "lower": 1046,
+          "upper": 4088,
+          "sampleSize": 253
         },
         "visits": {
-          "estimate": 1300,
-          "lower": 0,
-          "upper": 3245,
-          "sampleSize": 13
+          "estimate": 1320,
+          "lower": 385,
+          "upper": 2305,
+          "sampleSize": 131
         },
-        "sampleIntervalMax": 100,
+        "sampleIntervalMax": 10.714285714285714,
         "sampled": true,
         "available": true
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 1722135,
-        "htmlPageViews": 144820,
-        "cachedRequests": 802634,
-        "bytes": 23849472067,
-        "threats": 2739
+        "edgeRequests": 1720701,
+        "htmlPageViews": 144364,
+        "cachedRequests": 799882,
+        "bytes": 23754670920,
+        "threats": 3017
       }
     },
     {
@@ -198,23 +200,38 @@
       "vaultStatus": "forge",
       "health": "green",
       "liveUrl": "https://callofdoodie.wtf/",
-      "measurementState": "edge-only",
+      "measurementState": "audience-and-edge",
       "zones": [
         "callofdoodie.wtf",
         "playcallofdoodie.com"
       ],
-      "hostsMeasured": [],
+      "hostsMeasured": [
+        "callofdoodie.wtf"
+      ],
       "audience30": {
-        "available": false,
-        "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+        "pageLoads": {
+          "estimate": 180,
+          "lower": 0,
+          "upper": 469,
+          "sampleSize": 18
+        },
+        "visits": {
+          "estimate": 140,
+          "lower": 0,
+          "upper": 379,
+          "sampleSize": 14
+        },
+        "sampleIntervalMax": 10,
+        "sampled": true,
+        "available": true
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 107033,
-        "htmlPageViews": 44771,
+        "edgeRequests": 106025,
+        "htmlPageViews": 45482,
         "cachedRequests": 45,
-        "bytes": 1009508297,
-        "threats": 924
+        "bytes": 945881660,
+        "threats": 895
       }
     },
     {
@@ -233,28 +250,28 @@
       ],
       "audience30": {
         "pageLoads": {
-          "estimate": 700,
-          "lower": 0,
-          "upper": 1837,
-          "sampleSize": 7
+          "estimate": 400,
+          "lower": 57,
+          "upper": 860,
+          "sampleSize": 40
         },
         "visits": {
-          "estimate": 600,
-          "lower": 0,
-          "upper": 1542,
-          "sampleSize": 6
+          "estimate": 340,
+          "lower": 51,
+          "upper": 725,
+          "sampleSize": 34
         },
-        "sampleIntervalMax": 100,
+        "sampleIntervalMax": 10,
         "sampled": true,
         "available": true
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 324927,
-        "htmlPageViews": 16772,
-        "cachedRequests": 1898,
-        "bytes": 2218545585,
-        "threats": 319
+        "edgeRequests": 326785,
+        "htmlPageViews": 17134,
+        "cachedRequests": 1876,
+        "bytes": 2310198732,
+        "threats": 331
       }
     },
     {
@@ -294,10 +311,10 @@
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 32069,
-        "htmlPageViews": 5001,
-        "cachedRequests": 1259,
-        "bytes": 142439164,
+        "edgeRequests": 30517,
+        "htmlPageViews": 4839,
+        "cachedRequests": 111,
+        "bytes": 102667120,
         "threats": 353
       }
     },
@@ -320,11 +337,11 @@
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 22306,
+        "edgeRequests": 22022,
         "htmlPageViews": 0,
         "cachedRequests": 4,
-        "bytes": 43843192,
-        "threats": 157
+        "bytes": 43647545,
+        "threats": 156
       }
     },
     {
@@ -343,28 +360,28 @@
       ],
       "audience30": {
         "pageLoads": {
-          "estimate": 100,
+          "estimate": 70,
           "lower": 0,
-          "upper": 295,
-          "sampleSize": 1
+          "upper": 190,
+          "sampleSize": 6
         },
         "visits": {
-          "estimate": 100,
+          "estimate": 50,
           "lower": 0,
-          "upper": 295,
-          "sampleSize": 1
+          "upper": 132,
+          "sampleSize": 5
         },
-        "sampleIntervalMax": 100,
+        "sampleIntervalMax": 20,
         "sampled": true,
         "available": true
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 21106,
-        "htmlPageViews": 15693,
-        "cachedRequests": 1225,
-        "bytes": 65198440,
-        "threats": 96
+        "edgeRequests": 23754,
+        "htmlPageViews": 16969,
+        "cachedRequests": 1227,
+        "bytes": 69691461,
+        "threats": 108
       }
     },
     {
@@ -374,23 +391,38 @@
       "vaultStatus": "forge",
       "health": "green",
       "liveUrl": "https://promogrind.bet",
-      "measurementState": "edge-only",
+      "measurementState": "audience-and-edge",
       "zones": [
         "promogrind.app",
         "promogrind.bet"
       ],
-      "hostsMeasured": [],
+      "hostsMeasured": [
+        "promogrind.bet"
+      ],
       "audience30": {
-        "available": false,
-        "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+        "pageLoads": {
+          "estimate": 200,
+          "lower": 23,
+          "upper": 430,
+          "sampleSize": 18
+        },
+        "visits": {
+          "estimate": 80,
+          "lower": 0,
+          "upper": 182,
+          "sampleSize": 8
+        },
+        "sampleIntervalMax": 20,
+        "sampled": true,
+        "available": true
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 99293,
-        "htmlPageViews": 50187,
-        "cachedRequests": 3914,
-        "bytes": 550273048,
-        "threats": 473
+        "edgeRequests": 99266,
+        "htmlPageViews": 50339,
+        "cachedRequests": 3932,
+        "bytes": 550553691,
+        "threats": 469
       }
     },
     {
@@ -421,22 +453,37 @@
       "vaultStatus": "forge",
       "health": "yellow",
       "liveUrl": "https://thelivingprotocol.life",
-      "measurementState": "edge-only",
+      "measurementState": "audience-and-edge",
       "zones": [
         "thelivingprotocol.life"
       ],
-      "hostsMeasured": [],
+      "hostsMeasured": [
+        "thelivingprotocol.life"
+      ],
       "audience30": {
-        "available": false,
-        "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+        "pageLoads": {
+          "estimate": 30,
+          "lower": 0,
+          "upper": 86,
+          "sampleSize": 3
+        },
+        "visits": {
+          "estimate": 30,
+          "lower": 0,
+          "upper": 86,
+          "sampleSize": 3
+        },
+        "sampleIntervalMax": 10,
+        "sampled": true,
+        "available": true
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 82102,
-        "htmlPageViews": 15776,
-        "cachedRequests": 11681,
-        "bytes": 876935987,
-        "threats": 1654
+        "edgeRequests": 82388,
+        "htmlPageViews": 16034,
+        "cachedRequests": 11405,
+        "bytes": 881716554,
+        "threats": 2162
       }
     },
     {
@@ -457,11 +504,11 @@
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 93953,
-        "htmlPageViews": 38563,
-        "cachedRequests": 14560,
-        "bytes": 987979339,
-        "threats": 893
+        "edgeRequests": 91350,
+        "htmlPageViews": 36866,
+        "cachedRequests": 13566,
+        "bytes": 961763586,
+        "threats": 848
       }
     },
     {
@@ -483,11 +530,11 @@
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 159238,
-        "htmlPageViews": 58537,
-        "cachedRequests": 9149,
-        "bytes": 1389642329,
-        "threats": 998
+        "edgeRequests": 164064,
+        "htmlPageViews": 58200,
+        "cachedRequests": 9459,
+        "bytes": 1407546427,
+        "threats": 984
       }
     },
     {
@@ -527,11 +574,11 @@
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 88040,
-        "htmlPageViews": 15177,
-        "cachedRequests": 1807,
-        "bytes": 549974305,
-        "threats": 11310
+        "edgeRequests": 87995,
+        "htmlPageViews": 15419,
+        "cachedRequests": 1929,
+        "bytes": 537252064,
+        "threats": 11049
       }
     },
     {
@@ -560,23 +607,38 @@
       "vaultStatus": "forge",
       "health": "yellow",
       "liveUrl": "https://syntha.music",
-      "measurementState": "edge-only",
+      "measurementState": "audience-and-edge",
       "zones": [
         "syntha.music",
         "synthamusic.com"
       ],
-      "hostsMeasured": [],
+      "hostsMeasured": [
+        "syntha.music"
+      ],
       "audience30": {
-        "available": false,
-        "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+        "pageLoads": {
+          "estimate": 30,
+          "lower": 0,
+          "upper": 86,
+          "sampleSize": 3
+        },
+        "visits": {
+          "estimate": 30,
+          "lower": 0,
+          "upper": 86,
+          "sampleSize": 3
+        },
+        "sampleIntervalMax": 10,
+        "sampled": true,
+        "available": true
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 85388,
-        "htmlPageViews": 23322,
-        "cachedRequests": 1814,
-        "bytes": 420083912,
-        "threats": 657
+        "edgeRequests": 86984,
+        "htmlPageViews": 23816,
+        "cachedRequests": 1755,
+        "bytes": 426200336,
+        "threats": 663
       }
     },
     {
@@ -598,11 +660,11 @@
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 55612,
-        "htmlPageViews": 24193,
-        "cachedRequests": 25363,
-        "bytes": 181616654,
-        "threats": 393
+        "edgeRequests": 57306,
+        "htmlPageViews": 24818,
+        "cachedRequests": 25976,
+        "bytes": 183925542,
+        "threats": 401
       }
     },
     {
@@ -612,22 +674,37 @@
       "vaultStatus": "forge",
       "health": "yellow",
       "liveUrl": "https://atlasaipaths.com",
-      "measurementState": "edge-only",
+      "measurementState": "audience-and-edge",
       "zones": [
         "atlasaipaths.com"
       ],
-      "hostsMeasured": [],
+      "hostsMeasured": [
+        "atlasaipaths.com"
+      ],
       "audience30": {
-        "available": false,
-        "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+        "pageLoads": {
+          "estimate": 20,
+          "lower": 0,
+          "upper": 57,
+          "sampleSize": 2
+        },
+        "visits": {
+          "estimate": 20,
+          "lower": 0,
+          "upper": 57,
+          "sampleSize": 2
+        },
+        "sampleIntervalMax": 10,
+        "sampled": true,
+        "available": true
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 37331,
-        "htmlPageViews": 13822,
-        "cachedRequests": 835,
-        "bytes": 163819975,
-        "threats": 286
+        "edgeRequests": 36807,
+        "htmlPageViews": 13972,
+        "cachedRequests": 557,
+        "bytes": 155160846,
+        "threats": 292
       }
     },
     {
@@ -649,11 +726,11 @@
       },
       "infrastructure30": {
         "available": true,
-        "edgeRequests": 71677,
-        "htmlPageViews": 25892,
-        "cachedRequests": 46342,
-        "bytes": 862997309,
-        "threats": 470
+        "edgeRequests": 70987,
+        "htmlPageViews": 26030,
+        "cachedRequests": 46124,
+        "bytes": 858909430,
+        "threats": 415
       }
     }
   ],
