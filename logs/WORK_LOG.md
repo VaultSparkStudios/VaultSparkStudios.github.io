@@ -556,3 +556,9 @@ Two selected L2 public journeys are locally verified: shared Contact drafts reta
 ## Session 409 account experience expansion — in progress
 
 Expanded the selected work to separate member and premium investor experiences, with open member registration and retained investor approval. Rebuilt account entry, profile completion, investor application/workspace and trusted callback recovery. Actual browser checks caught and corrected denied-storage registration failure, destructive provider-card mounting, return-URL timing, theme propagation and new-identity profile bypass. Member/onboarding source checks17/17 and independent review pass; other focused regressions remain recorded in the implementation evidence. Final acceptance and production publication are pending; no completed release is claimed.
+
+
+<!-- S409-partial-recovery-2026-11-04 -->
+### S409 recovery addendum — 2026-11-04
+
+Preserved failed source attempt128/549 (failure129), current mobile215 and reviewed visual406. Fixed bounded archive packaging timeout and browser-batch resource contention; refreshed dated generated content with actual before/after review. Recorded a partial recovery handoff so the new invocation can run its own full arc. Authenticated-account acceptance and all final release/publication work remain pending. No production or main push occurred.

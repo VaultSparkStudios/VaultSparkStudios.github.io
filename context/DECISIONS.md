@@ -1207,3 +1207,9 @@ The founder explicitly selected open member signup while retaining investor appr
 Creation, profile completion and investor approval are separate steps. Member callbacks traverse the member portal; a requested member destination resumes only after an existing or newly created member row is confirmed. Referrals use bounded query continuity and tolerate unavailable optional browser storage. Provider cards mount in dedicated empty elements only after their safe destinations are prepared, and follow the applied light/dark theme.
 
 Open enrollment is a release requirement, not a claim inferred from website copy: verify the website-specific provider policy, supported signup intent and real authenticated journeys before production promotion. No global provider enrollment policy or investor approval bypass is authorized.
+
+
+<!-- S409-partial-recovery-2026-11-04 -->
+### S409 recovery boundary — 2026-11-04
+
+Use SESSION_PROTOCOL §3.0 partial handoff at the genuine authenticated-account dependency; S409 production success is not a prerequisite for this new invocation’s fresh startup/audit. Preserve the old release ledger, failed source receipt and existing score. Later bookkeeping does not rebind frozen proof. Continue pending release work within the new arc; identity changes still require affected real journeys before promotion.

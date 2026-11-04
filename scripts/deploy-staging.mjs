@@ -192,10 +192,10 @@ try {
   // NUL framing is required on Windows: BSD tar can otherwise interpret CRLF
   // and edge-case path bytes as empty entries.
   fs.writeFileSync(listPath, Buffer.from(manifest.join('\0'), 'utf8'));
-  // The tracked release archive includes roughly 2 GiB of existing assets and QA
-  // evidence. Windows tar can exceed five minutes on that input; keep a bounded
-  // archive allowance separate from the shorter upload and remote-command limits.
-  checked(run('tar', ['-czf', archiveRel, '--null', '-T', listRel], { timeout: 900_000 }), 'release archive');
+  // The release archive is roughly 4 GB with existing assets and QA evidence.
+  // Windows tar was still making progress at the former 15-minute limit. Keep
+  // packaging bounded at 30 minutes, separate from upload/remote-command limits.
+  checked(run('tar', ['-czf', archiveRel, '--null', '-T', listRel], { timeout: 1_800_000 }), 'release archive');
   const archiveInventory = await verifyStagingArchive(ROOT, archiveRel, manifest);
   console.log(`deploy-staging: verified exact archive inventory · ${archiveInventory.fileCount} regular files · ${archiveInventory.inventorySha256}`);
   const archiveBytes = fs.statSync(archivePath).size;

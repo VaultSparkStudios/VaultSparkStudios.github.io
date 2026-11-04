@@ -1,3 +1,13 @@
+<!-- S409-partial-recovery-2026-11-04 -->
+## S409 recovery disposition
+
+- [x] Bounded staging packaging timeout repaired; browser-heavy source batch serialized without dropping files. Dated homepage generators repaired with actual rendered review.
+- [x] Current local mobile215 and reviewed visual406 verified.
+- [ ] Source acceptance: full attempt failed129 (128/549 passed); diagnose duplicate reaction event and Windows cleanup in the fresh audit.
+- [ ] Current staging, exact hosted checks, real member/investor acceptance, main publication, production and readback remain pending.
+
+Wave1 recovery: partial handoff recorded. Wave2 fresh startup/audit: pending for the new native goal. Wave3 selected implementation and Wave4 authorized release/closeout: pending. Existing future SIL items remain unselected.
+
 <!-- S409-writeback -->
 ## S409 — local implementation, release pending
 Open member signup; investor approval retained. Five local implementations; release acceptance: docs/RELEASE_S409.json. Resume S409 if unfinished. Full notes in [archive](archive/task-board/2026-11-03-S409-access-budget/TASK_BOARD.full.md).

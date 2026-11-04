@@ -2234,3 +2234,9 @@ Brainstorm: reproduce transient offline recovery before changing retries; review
 Founder direction expands the original two local repairs to three account outcomes. SIL remains939/1000 across the existing ten categories; no additional shipped velocity or measured user gain is claimed before release.
 
 Lesson: account-page fixtures that block the identity provider cannot validate its destructive mount behavior, snapshotted destination or loaded layout. Pair local states with actual public provider rendering and affected authenticated journeys. Preserve the initial two unselected follow-up commitments; do not add unrelated work.
+
+
+<!-- S409-partial-recovery-2026-11-04 -->
+### S409 recovery addendum — partial handoff
+
+Source attempt failed at129 with128/549 passing steps; current mobile215 and reviewed visual406 pass locally. Final release remains pending. Existing SIL939/1000, ten categories, product velocity2 and protocol velocity0 are unchanged. No additional scored session or shipped velocity is recorded. Preserve the existing two unselected SIL commitments. Lesson: end recovery at a truthful dependency boundary; never count recovery as a fresh arc or rebind failed/frozen receipts after bookkeeping.

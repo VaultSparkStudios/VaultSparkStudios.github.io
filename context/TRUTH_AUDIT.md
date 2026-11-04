@@ -1,3 +1,8 @@
+<!-- S409-partial-recovery-2026-11-04 -->
+## S409 recovery truth — 2026-11-04
+
+Session409 is already spent in SIL/history; release completion is unproven. The current complete-source attempt failed129 after128passes, with original evidence in docs/S409_source-recovery-attempt4.json. Local mobile215 and aggregate reviewed visual406 are verified; positive account journeys and final staging/main/production/readback are pending. New native goal01a1a424-fcbc-7f91-9461-d697bb287c76 still requires a fresh arc. No old completion or fingerprint is borrowed.
+
 <!-- S409-writeback -->
 ## S409 — two live journey defects reproduced
 
