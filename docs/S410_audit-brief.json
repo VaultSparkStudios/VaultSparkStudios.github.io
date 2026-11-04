@@ -1,0 +1,44 @@
+{
+  "kind": "audit",
+  "session": 410,
+  "date": "2026-11-04",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Make release verification deterministic and current",
+  "items": [
+    {
+      "id": 1,
+      "slug": "reaction-fixture-order",
+      "title": "Prove early reaction clicks before installing the handler",
+      "axis": "ui-ux-feedback",
+      "leftScore": 8,
+      "rightScore": 4,
+      "insight": "The reaction replay fixture calls an assumed early click after only a300ms response delay; the failed run observed both clicks before replay completed. Replace the response sleep with a held promise. Assert the early click precedes handler installation, then release it; prove the live second click is delivered once before and after the late script completes.",
+      "evidence": "Run the actual after-paint browser file: queued A is superseded by live B, completion does not replay B, and a later normal click is handled once. Preserve the preceding two-bar latest-tap case."
+    },
+    {
+      "id": 2,
+      "slug": "browser-fixture-cleanup",
+      "title": "Finish candidate-origin browser checks with bounded cleanup",
+      "axis": "speed-organization-efficiency",
+      "leftScore": 7,
+      "rightScore": 4,
+      "insight": "Actual candidate-origin browser assertions reached fixture cleanup and failed with Windows EPERM on its guarded temporary directory. Use the existing Node recursive-removal retry options on this exact guarded fixture root. Retain origin/decoy assertions, process close waits, root guards and server cleanup. Keep terminal cleanup failures visible.",
+      "evidence": "Run the real browser-collection unit file including broken-candidate and decoy mutation controls; require native exit0 and no fixture child remaining. No test retry or assertion removal."
+    },
+    {
+      "id": 3,
+      "slug": "startup-source-evidence",
+      "title": "Report current source verification without borrowing historical green",
+      "axis": "observability-honesty",
+      "leftScore": 8,
+      "rightScore": 4,
+      "insight": "The freshly generated brief says548/548 passing and Deploy verified while the latest native source attempt failed129 after128/549 and S409 release is pending. Reuse build-check-evidence validation to resolve the latest native command receipt before rendering test claims. Preserve partial, failed, stale, malformed and missing evidence as nonpassing; use one reading in summary and signals. Qualify deployment from the active release record without treating local checks as promotion.",
+      "evidence": "Exercise complete green, partial failure, stale fingerprints, malformed/missing receipts and pending release against historical green fields. Render the actual brief and confirm every current-source/deployment claim agrees; keep historical records unchanged."
+    }
+  ],
+  "blockers": [
+    "Authenticated member/investor acceptance remains pending for the changed identity candidate."
+  ],
+  "followUps": []
+}

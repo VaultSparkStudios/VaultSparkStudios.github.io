@@ -1,0 +1,97 @@
+{
+  "session": 410,
+  "observedAt": "2026-11-04T04:27:19.660Z",
+  "state": "locally-verified-release-pending",
+  "items": [
+    "reaction-fixture-order",
+    "browser-fixture-cleanup",
+    "startup-source-evidence"
+  ],
+  "browser": {
+    "command": "node --test --test-concurrency=1 tests/after-paint.unit.spec.js tests/browser-collection.unit.spec.mjs",
+    "nativeExit": 0,
+    "passed": 17,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 96547.7314
+  },
+  "kernel": {
+    "command": "node scripts/run-build-check.mjs --self-test",
+    "nativeExit": 0,
+    "evidenceCases": 31,
+    "allPassed": true
+  },
+  "renderedBrief": {
+    "receipt": "docs/STARTUP_BRIEF.md",
+    "formatValid": true,
+    "sourceReading": "UNVERIFIED:128/549 steps;1failed;partial",
+    "deploymentReading": "S409 release pending"
+  },
+  "independentReview": {
+    "reviewer": "s410_implementation_review",
+    "verdict": "pass",
+    "findings": 0,
+    "round": 1
+  },
+  "mediumGate": {
+    "pass": true,
+    "reason": "Website gate advisory; no public page/runtime/layout change in these three selected items."
+  },
+  "lifecycleCheck": {
+    "command": "node scripts/smoke-startup-scripts.mjs",
+    "nativeExit": 1,
+    "passed": 59,
+    "total": 60,
+    "failed": "startup-session-coherence: active S410 board versus pre-closeout brief; final closeout projection remains required"
+  },
+  "premiseTiming": {
+    "nativeVerdict": "after-implementation",
+    "nativePassing": false,
+    "reason": "230 inherited dirty implementation paths at gate. No selected implementation file was dirty at the gate; no selected repair existed before it.",
+    "selectedFilesCleanAtGate": true,
+    "baselineReplay": [
+      {
+        "slug": "reaction-fixture-order",
+        "target": "tests/after-paint.unit.spec.js",
+        "verified": true,
+        "baselineHead": "e6535f0b761e403d7027447e2a3e884cd8b16456"
+      },
+      {
+        "slug": "browser-fixture-cleanup",
+        "target": "tests/browser-collection.unit.spec.mjs",
+        "verified": true,
+        "baselineHead": "e6535f0b761e403d7027447e2a3e884cd8b16456"
+      },
+      {
+        "slug": "startup-source-evidence",
+        "target": "scripts/render-startup-brief.mjs",
+        "verified": true,
+        "baselineHead": "e6535f0b761e403d7027447e2a3e884cd8b16456"
+      }
+    ],
+    "policy": "Preserve native nonpassing result and replay evidence; no gate bypass or fabricated passing timing receipt."
+  },
+  "sourceFiles": [
+    {
+      "path": "tests/after-paint.unit.spec.js",
+      "sha256": "f961b1ae4cb77395fae491136569a2331ac6807e77291d5adb43429d4e1f8c2b"
+    },
+    {
+      "path": "tests/browser-collection.unit.spec.mjs",
+      "sha256": "7f59edfce9f9f75c9f2c5d808ed61f3344598df47ad728367358810a05f64be3"
+    },
+    {
+      "path": "scripts/lib/build-check-evidence.mjs",
+      "sha256": "c783a48e10c0c7fc3fb7c14d0ec8bc2a330344c234c5e92dda65541caf876234"
+    },
+    {
+      "path": "scripts/render-startup-brief.mjs",
+      "sha256": "d2883a8c1d2d6b68d5fd95f76cfc836d8590d27c71fa7af063355847ec87b307"
+    }
+  ],
+  "release": {
+    "state": "pending",
+    "ledger": "docs/RELEASE_S409.json",
+    "scope": "Combined source, current staging, hosted/account checks, main, production and readback still required."
+  }
+}

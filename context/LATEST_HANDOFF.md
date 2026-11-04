@@ -1,3 +1,17 @@
+<!-- S410-implementation-verified -->
+## S410 selected implementation verified locally
+
+All three selected L2 repairs pass local acceptance and independent review: deterministic reaction fixture, guarded bounded Windows fixture cleanup, and current-source/release truth in the startup brief. Browser17/17 and native evidence-kernel cases pass; actual brief reads128/549 failed partial source and S409 release pending. Full source is not yet accepted.
+
+Wave1 fresh startup/audit complete. Wave2 three scoped implementations locally verified. Wave3 combined source/current staging/hosted/account verification pending. Wave4 authorized main publication/production/readback/full closeout pending. Source: docs/AUDIT_2026-11-04.json; acceptance: docs/S410_implementation.json. Native timing checker still flags inherited dirty files; selected targets were clean at the recorded gate and all three premises replay against its start-head blobs. No native timing pass is claimed.
+
+<!-- S410-arc-current -->
+## Session 410 — fresh arc in progress
+
+Session Intent: complete the fresh S410 startup, audit, three selected L2 verification repairs, and authorized combined main publication/deployment once applicable acceptance passes. Native goal01a1a424-fcbc-7f91-9461-d697bb287c76, created1793755268, is bound to S410; recovery checkpoint e6535f0b76 is separate.
+
+Wave1 startup/audit complete: docs/AUDIT_2026-11-04.json; three premises and candidate admission pass. Wave2 implementation in progress. Wave3 source/staging/hosted/account acceptance and Wave4 authorized release/closeout pending. Prior S409 failed source and positive-account dependency remain explicit. No production/main completion claim.
+
 <!-- S409-partial-recovery-2026-11-04 -->
 ## S409 recovery handoff — release incomplete
 

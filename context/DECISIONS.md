@@ -1213,3 +1213,9 @@ Open enrollment is a release requirement, not a claim inferred from website copy
 ### S409 recovery boundary — 2026-11-04
 
 Use SESSION_PROTOCOL §3.0 partial handoff at the genuine authenticated-account dependency; S409 production success is not a prerequisite for this new invocation’s fresh startup/audit. Preserve the old release ledger, failed source receipt and existing score. Later bookkeeping does not rebind frozen proof. Continue pending release work within the new arc; identity changes still require affected real journeys before promotion.
+
+
+<!-- S410-implementation-verified -->
+### S410 bounded verification repairs
+
+Keep actual runtime reaction behavior unchanged: the failure was a300ms fixture scheduling assumption. Use a held response and preserve replay/normal-click assertions. Retry only the guarded temporary fixture removal with bounded native Windows cleanup options. Current source truth comes from validated command evidence, not historical green counters; active release status stays separate. The broad timing checker flags inherited S409 WIP; preserve its failed verdict and baseline replay of all three unchanged selected source targets. Final closeout must reconcile active-session coherence; neither limitation is silently green.

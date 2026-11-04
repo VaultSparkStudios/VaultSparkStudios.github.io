@@ -39,6 +39,7 @@ import { buildBriefSemanticFingerprint, formatBriefSemanticFingerprint } from '.
 import { run as codexTrustedProjectRun } from './check-codex-trusted-project.mjs';
 import { readableDoctorScore } from './lib/doctor-score-coherence.mjs';
 import { isMeasured as isMeasuredCompliance } from './lib/compliance-measurement.mjs';
+import { buildCheckBriefSignal, fingerprintCommands, verificationSurfaceFingerprint, releaseBriefLabel } from './lib/build-check-evidence.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -939,6 +940,39 @@ if (typeof status.testsPassing === 'number' && typeof status.testsTotal === 'num
   sigTests = '⚠';
   testsLabel = `${status.testsTotal ?? '?'}/? passing`;
 }
+// This project's native source runner writes a measured command receipt. The
+// older file-count cache/status must not conceal its failed or partial run.
+let sourceSignal = null;
+let currentReleaseLabel = null;
+let nativeSourceSelected = false;
+try {
+  const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+  const steps = pkg.scripts?.['build:check:steps'];
+  if (typeof steps === 'string' && steps.trim()) {
+    nativeSourceSelected = true;
+    let evidence = null;
+    try { evidence = JSON.parse(fs.readFileSync(path.join(root, 'api/build-check-diagnostics.json'), 'utf8')); } catch { /* unknown */ }
+    sourceSignal = buildCheckBriefSignal(evidence, {
+      expectedPlanFingerprint: fingerprintCommands(steps.split(/\s*&&\s*/).filter(Boolean)),
+      expectedSourceFingerprint: verificationSurfaceFingerprint(root),
+    });
+    sigTests = testSignalMark(sourceSignal);
+    testsLabel = sourceSignal.detail;
+    status.testingSurfaces = (status.testingSurfaces || []).map(surface => /build:check/.test(surface.command || '')
+      ? { ...surface, status: sourceSignal.ok ? 'green' : sourceSignal.state === 'red' ? 'red' : 'yellow', note: testsLabel } : surface);
+    let release = null;
+    try { release = JSON.parse(fs.readFileSync(path.join(root, `docs/RELEASE_S${status.currentSession}.json`), 'utf8')); } catch { /* unknown */ }
+    currentReleaseLabel = releaseBriefLabel(release);
+  }
+} catch {
+  // Once selected, an unreadable native contract must not fall back to old green.
+  if (nativeSourceSelected) {
+    sourceSignal = { state: 'unknown', ok: false, detail: 'Source UNVERIFIED: receipt resolution failed' };
+    sigTests = testSignalMark(sourceSignal);
+    testsLabel = sourceSignal.detail;
+    currentReleaseLabel = 'current release UNVERIFIED';
+  }
+}
 const sigVel    = sig(velocity, v => v >= 2, v => v === 1);
 // S311 [audit #7] — unknown is ⚠, never ✓. `sig()` cannot express a third state, so
 // the unrecognised case is decided before it is consulted.
@@ -1338,7 +1372,8 @@ const lines = [
   // S181 [audit #2] — was `${testsTotal} passing`, which labelled the TOTAL as
   // PASSING (179 "passing" while 10 failed) — a CANON-031 lying surface that
   // contradicted the SIGNALS block. Show passing/total, matching testsLabel.
-  row(`Tests:    ${typeof status.testsPassing === 'number' ? `${status.testsPassing}/${status.testsTotal ?? '?'}` : (status.testsTotal ?? '?')} passing  ·  Deploy: ${status.lastDeployStatus || 'N/A'}`),
+  row(`Tests:    ${sourceSignal ? testsLabel : `${typeof status.testsPassing === 'number' ? `${status.testsPassing}/${status.testsTotal ?? '?'}` : (status.testsTotal ?? '?')} passing`}`),
+  row(`Deploy:   ${currentReleaseLabel || status.lastDeployStatus || 'N/A'}`),
   bot(),
   ``,
   // ── CONTEXT METER (S119 founder directive — was buried, now first-class) ──

@@ -252,6 +252,8 @@ test('a reaction tapped before its parked script has run is delivered once, the 
 });
 
 test('a tap the reactions script already handled is not delivered again while a later parked script loads', async () => {
+  let releaseReactions;
+  const reactionsHeld = new Promise((resolve) => { releaseReactions = resolve; });
   let releaseLate;
   const lateHeld = new Promise((resolve) => { releaseLate = resolve; });
   const body = `<div data-desk-reactions="one"><button data-reaction="a">A</button><button data-reaction="b">B</button></div>
@@ -263,7 +265,7 @@ test('a tap the reactions script already handled is not delivered again while a 
       {
         match: (u) => u.origin === ORIGIN && u.pathname === '/assets/__reactions.js',
         handle: async (route) => {
-          await new Promise((done) => setTimeout(done, 300));
+          await reactionsHeld;
           await route.fulfill({
             status: 200,
             contentType: 'application/javascript',
@@ -281,6 +283,8 @@ test('a tap the reactions script already handled is not delivered again while a 
     await f.page.goto(`${ORIGIN}/story/`, { waitUntil: 'domcontentloaded' });
     // An early tap on A, before any handler exists.
     await f.page.click('[data-reaction="a"]');
+    assert.equal(await f.page.evaluate(() => typeof window.__got), 'undefined', 'A precedes reaction handler installation');
+    releaseReactions();
     await waitFor(async () => (await f.page.evaluate(() => Array.isArray(window.__got))), { message: 'the reactions script to run' });
     // The reactions script is live, the second parked script is still loading:
     // this tap on B is handled at once and replaces the earlier tap on A.
@@ -290,5 +294,7 @@ test('a tap the reactions script already handled is not delivered again while a 
     await waitFor(async () => (await f.page.evaluate(() => window.VSAfterPaint.done)), { message: 'parked scripts to finish' });
     await settle(200);
     assert.deepEqual(await f.page.evaluate(() => window.__got), ['b'], 'nothing is delivered a second time');
-  } finally { releaseLate(); await f.close(); }
+    await f.page.click('[data-reaction="a"]');
+    assert.deepEqual(await f.page.evaluate(() => window.__got), ['b', 'a'], 'a later normal click is delivered once');
+  } finally { releaseReactions(); releaseLate(); await f.close(); }
 });

@@ -186,7 +186,9 @@ test('actual nav and visual specs audit the candidate, with an explicit visual o
     await Promise.all(servers.map(server => new Promise(resolve => { server.close(resolve); server.closeAllConnections(); })));
     assert.equal(path.dirname(path.resolve(dir)), path.resolve(os.tmpdir()));
     assert.ok(path.basename(dir).startsWith('vs-browser-origins-'));
-    fs.rmSync(dir, { recursive: true, force: true });
+    // Windows may release Chromium/report handles just after child close.
+    // Retry this guarded fixture root briefly; persistent cleanup errors fail.
+    fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
   }
 });
 
