@@ -114,3 +114,7 @@ Seven existing private-fixture browser cases remain skipped; historical optional
 
 <!-- S410-staging-acceptance -->
 S410 current verification: full549 native0/source fingerprint6a8a78dd9aab8fcc72282f89; actual18006-file staging deployment and served206-entry receipt ledger verified; candidate parity green. Native ceremony11/11 passed in scoped mode. Explicit unscoped browser6/6 (held0,failed0,skipped0,flaky0) and attention15/15 passed. First explicit attempt had one Firefox navigation flake and remains recorded. Main publication, exact candidate hosted workflows, real positive member/investor journeys and full production/readback remain pending. Authoritative ledger: docs/RELEASE_S410.json.
+
+## S410 recovery checkpoint — 2026-11-04
+
+Recovered post-closeout test corrections and integrated newer published content. No release completion claimed. Current doctor14/17,3 warnings; staged secrets0. Visual QA requires review of the combined source; affected authenticated account proof remains unverified. New native goal01a1a847-1613-7113-906c-9eb77c60d4d6 (created1793824623) requires a fresh arc after this recovery checkpoint. Existing S410 belongs to its prior goal; preserve all pending release evidence.

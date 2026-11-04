@@ -2255,3 +2255,7 @@ Brainstorm: inspect another timer-driven browser fixture only after reproduction
 
 <!-- S410-premise-composition-clarification -->
 S410 timing-record clarification: the230 dirty paths at the gate comprised226 inherited paths plus4 newly written audit/plan admission records. None of the four selected implementation source files was dirty. Preserve the native nonpassing timing verdict and baseline replay; no score, velocity or historical test result changes.
+
+## Session 410 addendum — recovery checkpoint (2026-11-04)
+
+Recovered the four post-closeout verification corrections through195a385f6a and integrated current published observations through21d0be269b. Generated conflict projections use the newer published versions; dependent regeneration and final candidate acceptance remain pending. Native doctor14/17 passes with3 warnings and no blocking doctor failures; staged secret scan reports0 findings. These checks do not establish release acceptance. Visual conformance explicitly fails after integration because225 changed UI files postdate the receipt. Positive affected account journeys, current complete source, staging/hosted acceptance, main publication and production/readback remain incomplete. Preserve the existing SIL score and velocity; no new score or product completion is claimed.

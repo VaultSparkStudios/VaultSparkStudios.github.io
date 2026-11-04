@@ -582,3 +582,7 @@ S410 acceptance correction: full source attempt4 failed at129 after128 passes. T
 
 <!-- S410-staging-acceptance -->
 S410 current verification: full549 native0/source fingerprint6a8a78dd9aab8fcc72282f89; actual18006-file staging deployment and served206-entry receipt ledger verified; candidate parity green. Native ceremony11/11 passed in scoped mode. Explicit unscoped browser6/6 (held0,failed0,skipped0,flaky0) and attention15/15 passed. First explicit attempt had one Firefox navigation flake and remains recorded. Main publication, exact candidate hosted workflows, real positive member/investor journeys and full production/readback remain pending. Authoritative ledger: docs/RELEASE_S410.json.
+
+## S410 recovery addendum — 2026-11-04
+
+Preserved unpublished verification/account work and merged newer public observations. Recovery is partial: final release and authenticated acceptance remain pending. No production promotion occurred.
