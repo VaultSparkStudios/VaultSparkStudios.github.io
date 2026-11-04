@@ -1,0 +1,304 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-11-04",
+  "generatedAt": "2026-11-04T20:46:55.422Z",
+  "session": 411,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S411 nine-axis stabilization audit after partial S410 recovery; one selected L2 repair plus existing authorized combined release acceptance.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status",
+    "releaseTarget": null
+  },
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "replace-enrollment",
+          "premise": "Enrollment policy needs replacement",
+          "evidence": "S409 decisions and current member/profile flows already implement the selected policy; affected real-account proof remains required."
+        },
+        {
+          "slug": "intent-path-envelope",
+          "premise": "Add a subject/candidate-bound journey envelope (novel)",
+          "evidence": "verify-provider-journey.mjs has individual callback/role observations; missing full new-member proof requires actual acceptance, not an additional public feature."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "contact-rebuild",
+          "premise": "Contact drafts need a new sharing flow",
+          "evidence": "assets/contact-page.js retains bounded editable drafts; no new failure reproduced."
+        },
+        {
+          "slug": "feedback-replay-inspector",
+          "premise": "Add a feedback delivery replay inspector (novel)",
+          "evidence": "assets/desk-reactions.js already serializes requests and retains failures; no reproduced delivery defect warrants new UI."
+        },
+        {
+          "slug": "partial-evidence-breadcrumbs",
+          "premise": "Add public partial-evidence breadcrumbs (novel)",
+          "evidence": "agents.json and api/release-proof.json already expose release discovery; no visitor info-finding failure demonstrated."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "first-action-guide",
+          "premise": "Membership has no first-action guidance",
+          "evidence": "assets/membership-proof-loop.js already supplies first-action guidance."
+        },
+        {
+          "slug": "rank-redesign",
+          "premise": "Change ranks to improve engagement",
+          "evidence": "SOUL.md makes nine-tier identity load-bearing; no measured engagement failure supports a policy change."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "agent-manifest",
+          "premise": "Add agent discovery manifest",
+          "evidence": "agents.json already exists."
+        },
+        {
+          "slug": "article-provenance",
+          "premise": "Add claim-to-article provenance",
+          "evidence": "scripts/check-news-claim-parity.mjs already checks hashes, anchors and rendered claims."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "bypass-provider",
+          "premise": "Relax provider policy to unblock release",
+          "evidence": "RELEASE_PROMOTION_PROTOCOL requires affected authenticated journeys; bypass is not verification."
+        },
+        {
+          "slug": "verifier-routing",
+          "premise": "Treat generic database credentials as website-specific",
+          "evidence": "verify-provider-journey.mjs uses generic supabase.admin; canonical website.supabase-admin is missing. Queue scoped routing review, never claim current positive account acceptance."
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "surviving": [
+        "consistent-session-carryover"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "impacted-as-full",
+          "premise": "Use impacted checks as full acceptance",
+          "evidence": "run-impacted-checks.mjs explicitly preserves partial coverage and refuses complete acceptance authority."
+        }
+      ]
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "runtime-model",
+          "premise": "Replace cached public intelligence with runtime inference",
+          "evidence": "build-intelligence-budget.mjs documents cached/local no-runtime-AI-cost surfaces; no measured need supports paid inference."
+        },
+        {
+          "slug": "task-loader",
+          "premise": "Build a bounded task loader",
+          "evidence": "task-slice.mjs --audit-context already bounds the147KB board to8000characters."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "borrow-visual",
+          "premise": "Reuse pre-merge visual proof",
+          "evidence": "Native changed-surface check reports225 UI paths newer than the visual receipt. Fresh combined-source review remains required."
+        },
+        {
+          "slug": "aggregate-role-proof",
+          "premise": "Use aggregate watch results as positive role acceptance",
+          "evidence": "verify-provider-journey.mjs aggregate receipts and anonymous denials cannot prove positive new-member/profile or approved-investor reads."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "force-green",
+          "premise": "Raise SIL score after recovery",
+          "evidence": "Prior score939 is historical; partial recovery does not prove better product outcomes."
+        },
+        {
+          "slug": "automatic-backlog",
+          "premise": "Implement all historical SIL ideas",
+          "evidence": "Current execution contract stops at selected verified outcomes; unrelated backlog does not expand this stabilization selection."
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "consistent-session-carryover",
+      "title": "Rotate session identity together with its timestamp and starting commit",
+      "axis": "speed-organization-efficiency",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 1,
+      "priority": 20.18975211428664,
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-11-04T20:50:13.165Z",
+          "status": "shipped",
+          "depth": "L2",
+          "verification": "docs/S411_implementation.json",
+          "note": "Local selected outcome verified; full combined release remains pending.",
+          "telemetry": {
+            "mediumGate": "advisory-pass",
+            "tests": 1,
+            "measuredUserGain": null
+          }
+        }
+      ],
+      "selectedDepth": "L2",
+      "why": "Rotation discards old time/head but still feeds old lockText to the active-session resolver.",
+      "recipe": "Use one retained-lock decision for timestamp, start head and ID; forced, stale or invalid timestamps discard the old ID. Preserve ordinary repeat starts and explicit declaration validation. Verify actual CLI behavior in isolated fixtures.",
+      "userOutcome": "Operators find the correct current release record rather than attaching new work to an old session.",
+      "readinessArea": "supported-release reliability",
+      "stageRationale": "Repair a directly observed verification identity failure before feature breadth.",
+      "acceptance": "Isolated CLI regression: fresh repeat preserves ID/time/head; forced/stale/invalid rotation allocates above closed and spent history; explicit declaration remains valid; invalid declaration leaves bytes unchanged.",
+      "premises": [
+        {
+          "claim": "The writer passes an existing lock to session resolution regardless of the timestamp carryover decision.",
+          "adapter": "file-content",
+          "target": "scripts/write-session-lock.mjs",
+          "pattern": "lockText: fs.existsSync(lockPath) ? fs.readFileSync(lockPath, 'utf8') : ''",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Correct forced rotation only."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Use one retained-lock decision for timestamp, start head and ID; forced, stale or invalid timestamps discard the old ID. Preserve ordinary repeat starts and explicit declaration validation. Verify actual CLI behavior in isolated fixtures."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "An atomic multi-process lock allocation redesign requires separate demonstrated concurrent-writer evidence; unselected."
+        }
+      }
+    }
+  ],
+  "totals": {
+    "count": 1,
+    "priority": 20.18975211428664,
+    "top3": [
+      "consistent-session-carryover"
+    ]
+  },
+  "innovationReserve": [],
+  "notes": "Prior audit and execution history preserved in AUDIT_2026-11-04.json. New dated variant belongs solely to S411. Publication, staging, hosted checks, positive affected-account journeys, production/readback and full closeout remain required and unverified.",
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-11-04T20:47:01.509Z",
+    "head": "6bc3175f5bec2ac1f1385fca50843003ccd57699",
+    "sidecar": "docs/AUDIT_2026-11-04-S411.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 1,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "4e0b2cbf63de2dd9e5af9fb70c19a430d7b54c6808f686d7b733ace0a457f367",
+    "implementationDirty": [
+      "scripts/git-hooks/commit-msg",
+      ".codex/memory/S410.md",
+      "docs/S411_audit-brief.json",
+      "docs/S411_audit-brief.md",
+      "docs/S411_plan-brief.json",
+      "docs/S411_plan-brief.md"
+    ]
+  },
+  "implementation": {
+    "session": 411,
+    "at": "2026-11-04T20:50:13.165Z",
+    "state": "selected-outcome-locally-verified",
+    "outcome": "consistent-session-carryover",
+    "baseline": {
+      "nativeExit": 1,
+      "actual": "410",
+      "expected": "411",
+      "assertion": "forced rotation must not reuse S410"
+    },
+    "acceptance": {
+      "nativeExit": 0,
+      "tests": 1,
+      "fail": 0,
+      "skipped": 0,
+      "durationMs": 27108.8507,
+      "scope": [
+        "ordinary fresh repeat ID/time/head",
+        "forced rotation",
+        "13-hour stale rotation",
+        "invalid timestamp rotation",
+        "committed history above lagging closed surfaces",
+        "explicit valid declaration",
+        "invalid declaration preserves bytes"
+      ],
+      "realLockMutated": false
+    },
+    "independentReview": {
+      "reviewer": "audit_review",
+      "verdict": "approve",
+      "requiredFindings": 0
+    },
+    "nativePremiseTiming": {
+      "state": "nonpassing-inherited-dirty-paths",
+      "implementationPathsDirtyAtGate": 6,
+      "selectedWriterCleanAtGate": true,
+      "startHeadReplay": true,
+      "startHead": "6bc3175f5bec2ac1f1385fca50843003ccd57699",
+      "note": "Native checker reports inherited startup/propagation implementation paths. Preserve nonpassing result; no timing pass claimed."
+    },
+    "fullRelease": "pending"
+  }
+}

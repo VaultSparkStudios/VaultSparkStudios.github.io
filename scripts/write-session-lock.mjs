@@ -81,6 +81,7 @@ if (args.includes('--help') || args.includes('-h')) {
   --trigger <t>    bounded trigger (default: ad-hoc)
   --model <id>     model identity
   --note <text>    freeform note
+  --force          rotate timestamp, starting commit and inferred session ID together
   --session <n>    declare the session number (recorded as session_source: declared;
                    refused at or below the newest CLOSED session)
   session_id       otherwise derived from closed SIL/status + numbers spent in git
@@ -160,6 +161,9 @@ let sessionStart = now;
 // A carried-over lock with no start_head (written before S373) stays without one: the
 // current HEAD is not where that session started, and absent is the honest value.
 let startHead = gitHeadSha;
+// Identity must follow the same carryover boundary as time and start_head.
+// A forced/stale rotation with the previous ID would bind new work to old evidence.
+let retainedLockText = '';
 if (!FORCE && fs.existsSync(lockPath)) {
   const prior = fs.readFileSync(lockPath, 'utf8');
   const m = prior.match(/^session_start:\s*(\S+)/m);
@@ -167,6 +171,7 @@ if (!FORCE && fs.existsSync(lockPath)) {
     const priorTs = new Date(m[1]).getTime();
     // Only carry over if the prior lock is <12h old — otherwise treat as stale.
     if (Date.now() - priorTs < 12 * 3600 * 1000) {
+      retainedLockText = prior;
       sessionStart = m[1];
       const priorHead = prior.match(/^start_head:\s*([0-9a-f]{40,64})\s*$/im)?.[1] || null;
       startHead = priorHead;
@@ -209,7 +214,7 @@ if (args.includes('--session')) {
   sessionSource = 'declared';
 } else {
   sessionId = resolveSessionIdentity(ROOT, {
-    lockText: fs.existsSync(lockPath) ? fs.readFileSync(lockPath, 'utf8') : '',
+    lockText: retainedLockText,
     gitLogText,
   });
 }
