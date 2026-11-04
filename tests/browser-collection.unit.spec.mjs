@@ -109,7 +109,7 @@ test('actual nav and visual specs audit the candidate, with an explicit visual o
       }
       const links = Array.from({ length: 20 }, (_, i) => `<a href="/candidate-link-${i}/">Link ${i}</a>`).join('');
       const external = `<a href="//${new URL(decoyOrigin).host}/external-only/">External protocol-relative link</a>`;
-      res.end(`<html><body data-theme="dark"><script src="/fixture-theme.js"></script><header class="site-header"><nav class="nav-center"><div class="nav-item has-dropdown"><div class="nav-dropdown">${links}${external}</div></div></nav></header><h1>${name}</h1></body></html>`);
+      res.end(`<html><body data-theme="dark"><script src="/fixture-theme.js"></script><header class="site-header"><nav class="nav-center"><div class="nav-item has-dropdown"><div class="nav-dropdown">${links}${external}</div></div></nav></header><h1 id="hero-heading"><span class="forge-letter">${name}</span></h1></body></html>`);
     });
     servers.push(server);
     server.listen(0, '127.0.0.1');

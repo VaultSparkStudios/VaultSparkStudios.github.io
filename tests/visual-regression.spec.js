@@ -56,25 +56,34 @@ function emulationOnly(config) {
 }
 
 async function waitForVisualReadiness(page) {
+  // Snapshot scene: genuinely engaged, reduced-motion, settled UI. This uses
+  // the shipped accessible motion preference, preserving every component.
+  // Initial quiet-visit paint
+  // and loading performance are verified by the separate first-viewport proof.
   // `load` precedes deferred shell enhancement. In particular the Desk feed
   // changes the header after fonts have already loaded, moving hash targets.
   // Wait for actual app state, then require the visible layout to stop moving.
   let previous = null;
   let stableSince = 0;
+  // A quiet visit delays the ambient queue for 12s (+1.2s scheduling). Exercise
+  // its real engagement path without changing focus or activating a control.
+  await page.keyboard.press('Shift');
   await expect.poll(async () => {
     const sample = await page.evaluate(() => {
       const wire = document.querySelector('.site-header [data-desk-wire]');
       const wireState = wire?.getAttribute('data-desk-wire-state');
       // The ambient loader intentionally skips hidden mobile strips and portals.
-      const wireExpected = wire && wire.getBoundingClientRect().height > 0 &&
+      const wireExpected = Boolean(wire && wire.getBoundingClientRect().height > 0 &&
         !/^\/(vault-member|investor-portal|admin|api)\//.test(location.pathname) &&
-        !document.documentElement.hasAttribute('data-no-strip') && !document.body.hasAttribute('data-no-strip');
-      // These legacy routes redirect to hash targets. Their initial scroll
-      // starts the real idle enhancement queue, including the header rank orb.
-      const redirectedAnchor = ['/changelog/', '/ignis/'].includes(location.pathname) && location.hash;
-      const anchorShellReady = !redirectedAnchor || !!document.querySelector('.nav-right .vs-rank-orb');
-      const ready = document.fonts.status === 'loaded' &&
-        [...document.querySelectorAll('link[rel="stylesheet"]')].every(link => !!link.sheet || link.disabled) &&
+        !document.documentElement.hasAttribute('data-no-strip') && !document.body.hasAttribute('data-no-strip'));
+      // The engagement queue also mounts the rank orb on public headers. Its
+      // presence reserves real header geometry even where the Desk is hidden.
+      const rankExpected = Boolean(document.querySelector('.nav-right')) &&
+        !/^\/(vault-member|investor-portal|admin|api)\//.test(location.pathname);
+      const anchorShellReady = !rankExpected || !!document.querySelector('.nav-right .vs-rank-orb');
+      const missingStylesheets = [...document.querySelectorAll('link[rel="stylesheet"]')]
+        .filter(link => !link.sheet && !link.disabled).map(link => link.getAttribute('href'));
+      const ready = document.fonts.status === 'loaded' && missingStylesheets.length === 0 &&
         (!wireExpected || wireState === 'live' || wireState === 'latest') &&
         anchorShellReady &&
         (!window.VSAfterPaint || window.VSAfterPaint.done);
@@ -84,6 +93,9 @@ async function waitForVisualReadiness(page) {
       });
       return {
         ready,
+        diagnostics: { path: location.pathname, hash: location.hash, theme: document.body.dataset.theme,
+          fonts: document.fonts.status, missingStylesheets, wireExpected, wireState,
+          rankExpected, anchorShellReady, afterPaint: window.VSAfterPaint || null },
         fingerprint: JSON.stringify(visible.map(element => {
           const rect = element.getBoundingClientRect();
           const style = getComputedStyle(element);
@@ -96,16 +108,17 @@ async function waitForVisualReadiness(page) {
     if (!sample.ready || sample.fingerprint !== previous) {
       previous = sample.fingerprint;
       stableSince = Date.now();
-      return false;
+      return { ready: sample.ready, layoutStable: false, ...sample.diagnostics };
     }
-    return Date.now() - stableSince >= 500;
-  }, { timeout: 5000, intervals: [100, 250, 500], message: 'app state and visible layout settle before visual comparison' }).toBe(true);
+    return { ready: true, layoutStable: Date.now() - stableSince >= 500, ...sample.diagnostics };
+  }, { timeout: 5000, intervals: [100, 250, 500], message: 'app state and visible layout settle before visual comparison' })
+    .toMatchObject({ ready: true, layoutStable: true });
 }
 
 for (const vp of VIEWPORTS) {
   for (const theme of THEMES) {
     test.describe(`visual regression · ${vp.name} · ${theme}`, () => {
-      test.use(emulationOnly(vp.config));
+      test.use({ ...emulationOnly(vp.config), reducedMotion: 'reduce' });
 
       for (const surface of SURFACES) {
         test(`${surface.name} · ${vp.name} · ${theme}`, async ({ page, baseURL }) => {
@@ -134,6 +147,10 @@ for (const vp of VIEWPORTS) {
           `,
         });
         await waitForVisualReadiness(page);
+        if (surface.name === 'home') {
+          await expect(page.locator('#hero-heading')).toBeVisible();
+          await expect(page.locator('#hero-heading .forge-letter').first()).toHaveCSS('opacity', '1');
+        }
         await expect(page).toHaveScreenshot(`${surface.name}-${vp.name}-${theme}.png`, {
           fullPage: false,
           maxDiffPixelRatio: PIXEL_RATIO_TOLERANCE,

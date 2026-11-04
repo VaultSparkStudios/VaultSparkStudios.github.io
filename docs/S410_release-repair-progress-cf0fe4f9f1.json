@@ -1,0 +1,90 @@
+{
+  "session": 410,
+  "at": "2026-11-04T08:46:47.595Z",
+  "state": "focused-verification-passed-linux-pixel-review-pending",
+  "trigger": "docs/S410_hosted-attempt1.json",
+  "scope": "Required release acceptance repairs; public runtime remains byte-identical to QA42ffd.",
+  "runtimeUnchanged": true,
+  "focused": {
+    "unit": {
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "nativeExit": 0,
+      "durationMs": 71638.6187
+    },
+    "navigationAndPages": {
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "nativeExit": 0
+    },
+    "deskArtwork": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "nativeExit": 0,
+      "unchangedSpec": true,
+      "scope": "Hosted failure not reproduced; no speculative runtime patch."
+    },
+    "visualReadiness": {
+      "routes": 2,
+      "viewportThemeCombinations": 8,
+      "capturesPerCombination": 3,
+      "identicalPixelsAtReadyPlus500Plus1000": true,
+      "readinessMs": [
+        2460,
+        3008
+      ],
+      "actualThemesAsserted": true,
+      "source": ".cache/S410/visual-readiness-summary.json"
+    }
+  },
+  "reviews": [
+    {
+      "reviewer": "s410_implementation_review",
+      "scope": "workflow/config/browser-collection",
+      "verdict": "APPROVE"
+    },
+    {
+      "reviewer": "arc_boundary_review",
+      "scope": "visual readiness and actual-theme assertion",
+      "verdict": "APPROVE"
+    }
+  ],
+  "sources": [
+    {
+      "path": ".github/workflows/e2e.yml",
+      "sha256": "608746a496b0ad22d08a98a7f9449e38bc908cca7c294172de552cc470abf6f5"
+    },
+    {
+      "path": "playwright.config.js",
+      "sha256": "721388c62849ce6c6aa6156bfcfe0941116b5b3fe2ac3c46670cad6365882bd0"
+    },
+    {
+      "path": "tests/browser-collection.unit.spec.mjs",
+      "sha256": "f5b3afb3d6a56fcc2213333d08f7547ed9afd9e82ca291acfd3e5e489a21eaf9"
+    },
+    {
+      "path": "tests/navigation.spec.js",
+      "sha256": "8af89771f8516c03c346c3ee4fe13d75e79638cb35adc955ea4e7096a339b83e"
+    },
+    {
+      "path": "tests/pages.spec.js",
+      "sha256": "9b1a592d335818968a906a67ea14a7a1d7aa578ed757e5a0887ca227470fb409"
+    },
+    {
+      "path": "tests/visual-regression.spec.js",
+      "sha256": "deb77e345e27f3bbcbe5f8ae3e550bc1ba03b1d8d1bc6ca48b69a8521c476448"
+    }
+  ],
+  "pending": [
+    "Inspect failed and fresh genuine Linux screenshots before any baseline replacement",
+    "Run the full hardened E2E suite; no allowed-failure masking",
+    "Refresh full source acceptance for final repaired candidate",
+    "Actual member and approved-investor journeys; main/production/readback"
+  ]
+}

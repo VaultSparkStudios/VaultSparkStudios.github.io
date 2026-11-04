@@ -1,7 +1,7 @@
 {
   "session": 410,
-  "at": "2026-11-04T08:46:47.595Z",
-  "state": "focused-verification-passed-linux-pixel-review-pending",
+  "at": "2026-11-04T09:29:34.654Z",
+  "state": "final-focused-repair-passed-fresh-linux-review-pending",
   "trigger": "docs/S410_hosted-attempt1.json",
   "scope": "Required release acceptance repairs; public runtime remains byte-identical to QA42ffd.",
   "runtimeUnchanged": true,
@@ -12,7 +12,7 @@
       "skipped": 0,
       "flaky": 0,
       "nativeExit": 0,
-      "durationMs": 71638.6187
+      "durationMs": 42207.8212
     },
     "navigationAndPages": {
       "passed": 20,
@@ -28,19 +28,44 @@
       "flaky": 0,
       "nativeExit": 0,
       "unchangedSpec": true,
-      "scope": "Hosted failure not reproduced; no speculative runtime patch."
+      "scope": "Original actions/assertions pass; hosted issue not reproduced. Failure-only diagnostics now allowlisted and preserve the original failure.",
+      "durationMs": 7532.071999999999,
+      "sourceSha256": "4bd74fc59d09771ace81943954b1d71b42745492d0add19cd394463ed7110c14",
+      "negativePrivacy": {
+        "nativeExit": 1,
+        "forcedFailureExpected": true,
+        "originalErrorPreserved": true,
+        "boundedLogAndAttachmentVerified": true,
+        "syntheticUntrustedMessageAndNameExcluded": true
+      }
     },
     "visualReadiness": {
-      "routes": 2,
-      "viewportThemeCombinations": 8,
-      "capturesPerCombination": 3,
-      "identicalPixelsAtReadyPlus500Plus1000": true,
-      "readinessMs": [
-        2460,
-        3008
-      ],
-      "actualThemesAsserted": true,
-      "source": ".cache/S410/visual-readiness-summary.json"
+      "nativeExit": 0,
+      "passed": 70,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "matrix": {
+        "surfaces": 7,
+        "viewports": 5,
+        "actualThemes": [
+          "dark",
+          "light"
+        ],
+        "cases": 70
+      },
+      "scene": "Real Shift engagement plus genuine reducedMotion:reduce; actual body theme and visible home heading/forge-letter assertions. Initial quiet-visit/normal-motion/LCP proof remains separate.",
+      "sourceSha256": "b79b108f09c04876dd202e88c70c0f3710ba63a06953e459f1392e2022ed6440",
+      "frameStability": {
+        "captures": 210,
+        "rawIdenticalCases": 60,
+        "zeroPerceptualDifferenceCases": 70,
+        "withinUnchangedPixelRatio015": 70,
+        "method": "Installed Playwright PNG comparator default threshold0.2, maxDiffPixelRatio0 and unchanged0.015",
+        "receipt": ".cache/S410/readiness-matrix-reduced/frame-summary.json"
+      },
+      "baselineAcceptance": false,
+      "LinuxCaptureAcceptance": false
     }
   },
   "reviews": [
@@ -52,6 +77,16 @@
     {
       "reviewer": "arc_boundary_review",
       "scope": "visual readiness and actual-theme assertion",
+      "verdict": "APPROVE"
+    },
+    {
+      "reviewer": "arc_boundary_review",
+      "scope": "Final engaged reduced-motion settled scene",
+      "verdict": "APPROVE"
+    },
+    {
+      "reviewer": "s410_implementation_review",
+      "scope": "Final diagnostic privacy schema",
       "verdict": "APPROVE"
     }
   ],
@@ -66,7 +101,7 @@
     },
     {
       "path": "tests/browser-collection.unit.spec.mjs",
-      "sha256": "f5b3afb3d6a56fcc2213333d08f7547ed9afd9e82ca291acfd3e5e489a21eaf9"
+      "sha256": "5883cdfa39702c397832c9169816c4c427b193e67b84581ff341b6030a6a58ea"
     },
     {
       "path": "tests/navigation.spec.js",
@@ -78,7 +113,11 @@
     },
     {
       "path": "tests/visual-regression.spec.js",
-      "sha256": "deb77e345e27f3bbcbe5f8ae3e550bc1ba03b1d8d1bc6ca48b69a8521c476448"
+      "sha256": "b79b108f09c04876dd202e88c70c0f3710ba63a06953e459f1392e2022ed6440"
+    },
+    {
+      "path": "tests/desk-artwork.spec.js",
+      "sha256": "4bd74fc59d09771ace81943954b1d71b42745492d0add19cd394463ed7110c14"
     }
   ],
   "pending": [
@@ -86,5 +125,6 @@
     "Run the full hardened E2E suite; no allowed-failure masking",
     "Refresh full source acceptance for final repaired candidate",
     "Actual member and approved-investor journeys; main/production/readback"
-  ]
+  ],
+  "previousFocusedVersion": "docs/S410_release-repair-progress-cf0fe4f9f1.json"
 }

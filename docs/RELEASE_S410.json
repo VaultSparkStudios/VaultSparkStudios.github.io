@@ -129,11 +129,15 @@
       "positiveAuthenticatedJourneys": "unverified; anonymous browser boundary is not positive-role proof"
     },
     "exactRequiredHostedChecks": {
-      "state": "failed",
-      "candidateCommit": "42ffd505d07d4f7b9152d28f2da41f66225d708c",
-      "workflowConclusions": "3 success",
-      "executedPublicE2E": "625 passed,34 failed,56 skipped; nonzero step was previously allowed",
-      "receipt": "docs/S410_hosted-attempt1.json"
+      "state": "pending",
+      "previousNonpassing": {
+        "state": "failed",
+        "candidateCommit": "42ffd505d07d4f7b9152d28f2da41f66225d708c",
+        "workflowConclusions": "3 success",
+        "executedPublicE2E": "625 passed,34 failed,56 skipped; nonzero step was previously allowed",
+        "receipt": "docs/S410_hosted-attempt1.json"
+      },
+      "reason": "Fresh hardened source and reviewed baselines must be verified; no prior green workflow conclusion is borrowed."
     },
     "authenticatedJourneys": {
       "state": "pending",
@@ -239,6 +243,22 @@
       "Inspect visual diffs/readiness; never blind-rebaseline or raise tolerance",
       "Diagnose hosted Desk artwork failure; local original3/3 and controlled timing passed, no speculative runtime fix"
     ],
-    "artifactDownload": "Package-trust BLOCK; exact screenshot-artifact override requested and unanswered; no archive downloaded"
+    "artifactDownload": "Package-trust BLOCK; exact screenshot-artifact override requested and unanswered; no archive downloaded",
+    "visualCapture": {
+      "state": "failed",
+      "receipt": "docs/S410_visual-capture-attempt1.json",
+      "passed": 54,
+      "failed": 16,
+      "downloaded": false,
+      "adopted": false,
+      "diagnosis": "Actual ambient loader uses12second quiet-visit ceiling plus1200ms queue delay; currently proving explicit real-keyboard engaged scene while preserving5second readiness bound. No fakeDOM state or tolerance change."
+    },
+    "focusedProof": "docs/S410_release-repair-progress.json",
+    "currentReadiness": {
+      "state": "passed",
+      "cases": 70,
+      "scene": "engaged and reduced motion",
+      "pixelComparisonToCommittedBaselines": "pending"
+    }
   }
 }
