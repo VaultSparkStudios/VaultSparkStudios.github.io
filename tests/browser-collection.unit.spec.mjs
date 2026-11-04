@@ -44,7 +44,10 @@ test('actual project configuration excludes throwing JS and ESM unit fixtures in
       .replace("require('@playwright/test')", `require(${JSON.stringify(pw)})`);
     const configPath = path.join(dir, 'playwright.config.cjs');
     fs.writeFileSync(configPath, config);
-    fs.writeFileSync(path.join(dir, 'tests/browser.spec.js'), `const {test}=require(${JSON.stringify(pw)});test('browser sentinel',()=>{});`);
+    for (const file of ['.env.playwright.local', '.env.playwright.local.private']) {
+      fs.writeFileSync(path.join(dir, file), 'VS_PLAYWRIGHT_FILE_SENTINEL=fixture-file-must-not-be-loaded\n');
+    }
+    fs.writeFileSync(path.join(dir, 'tests/browser.spec.js'), `const {test}=require(${JSON.stringify(pw)});if(process.env.VS_PLAYWRIGHT_FILE_SENTINEL==='fixture-file-must-not-be-loaded')throw new Error('LOCAL_DOTENV_READ');test('browser sentinel',()=>{});`);
     for (const extension of ['js', 'mjs']) {
       fs.writeFileSync(path.join(dir, `tests/throw.unit.spec.${extension}`), "throw new Error('UNIT_FIXTURE_EXECUTED');");
     }
@@ -90,10 +93,15 @@ test('actual nav and visual specs audit the candidate, with an explicit visual o
   let broken = false;
   let decoyOrigin;
   let primaryError;
+  const themeScript = fs.readFileSync(new URL('../assets/theme-toggle.js', import.meta.url), 'utf8');
   const servers = [];
   const listen = async (name) => {
     const server = http.createServer((req, res) => {
       requests[name].push(req.url);
+      if (req.url === '/fixture-theme.js') {
+        res.setHeader('Content-Type', 'application/javascript');
+        return res.end(themeScript);
+      }
       res.setHeader('Content-Type', 'text/html');
       if (name === 'candidate' && broken && req.url === '/candidate-link-0/') {
         res.writeHead(404);
@@ -101,7 +109,7 @@ test('actual nav and visual specs audit the candidate, with an explicit visual o
       }
       const links = Array.from({ length: 20 }, (_, i) => `<a href="/candidate-link-${i}/">Link ${i}</a>`).join('');
       const external = `<a href="//${new URL(decoyOrigin).host}/external-only/">External protocol-relative link</a>`;
-      res.end(`<html><body><header class="site-header"><nav class="nav-center"><div class="nav-item has-dropdown"><div class="nav-dropdown">${links}${external}</div></div></nav></header><h1>${name}</h1></body></html>`);
+      res.end(`<html><body data-theme="dark"><script src="/fixture-theme.js"></script><header class="site-header"><nav class="nav-center"><div class="nav-item has-dropdown"><div class="nav-dropdown">${links}${external}</div></div></nav></header><h1>${name}</h1></body></html>`);
     });
     servers.push(server);
     server.listen(0, '127.0.0.1');
@@ -239,4 +247,19 @@ test('visual PR workflow starts its candidate preview and retains an explicit ma
   assert.throws(() => verify(source.replace("github.event_name == 'workflow_dispatch' && github.event.inputs.base_url || ''", "github.event.inputs.base_url || 'https://vaultsparkstudios.com'")), assert.AssertionError);
   assert.throws(() => verify(source.replace('node scripts/local-preview-server.mjs &', 'echo preview omitted')), assert.AssertionError);
   assert.throws(() => verify(source.replace('if: always()', 'if: success()')), assert.AssertionError);
+});
+
+test('executed public E2E failures gate CI independently of optional account credentials', () => {
+  const source = fs.readFileSync(new URL('../.github/workflows/e2e.yml', import.meta.url), 'utf8');
+  const verify = text => {
+    const job = text.split('\n  e2e:\n')[1];
+    assert.ok(job, 'the public E2E job must exist');
+    assert.doesNotMatch(job.split('\n    steps:')[0], /continue-on-error:/);
+    const step = job.match(/- name: Run E2E tests\n([\s\S]*?)(?=\n      - name:|$)/)?.[1];
+    assert.ok(step, 'the browser suite must execute');
+    assert.doesNotMatch(step, /continue-on-error:/, 'missing account credentials cannot hide executed public failures');
+  };
+  verify(source);
+  assert.throws(() => verify(source.replace('run: npx playwright test --project=chromium', '$&\n        continue-on-error: true')), assert.AssertionError);
+  assert.throws(() => verify(source.replace('\n  e2e:\n', '\n  e2e:\n    continue-on-error: true\n')), assert.AssertionError);
 });

@@ -24,3 +24,8 @@ Acceptance: Exercise complete green, partial failure, stale fingerprints, malfor
 Wave1 startup/audit complete after admission; Wave2 selected implementation pending. Wave3 combined final-source/staging/account/hosted checks and Wave4 authorized main/production/readback/closeout pending. Preserve existing auth policy, failed receipts, publisher states and deployment authorization. No new UI styling or membership terms selected.
 
 Rollback: revert only these scoped verification/reporting changes with a normal commit; previous full Pages/Worker versions remain available. No production claim before applicable gates pass.
+
+
+### S410 hosted acceptance feedback
+
+QA42ffd had three successful workflow conclusions but its allowed-failure E2E command failed34 public tests (625passed,56skipped). The release remains nonpassing. Required repairs harden executed-failure propagation, remove local dotenv loading, update the already-authorized member/investor test contracts, and capture actual theme/readiness before separately reviewed Linux baselines. Focused18unit,20navigation/pages and3unchanged Desk cases pass; eight visual-readiness combinations are stable. No public runtime change or pixel-tolerance increase. See docs/S410_hosted-attempt1.json and docs/S410_release-repair-progress.json. The original three audit outcomes and premise record are preserved; this is release feedback, not a new arc.

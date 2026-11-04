@@ -57,26 +57,42 @@ test.describe('Miscellaneous pages', () => {
     await expect(page.locator('h1')).toBeVisible();
   });
 
-  /**
-   * This asserted `form, input[type="password"], #login-form, .auth-card` — and
-   * the page has none of them. Sign-in is delegated to Obelisk (CANON-045), so
-   * there is no local credential form to find; the gate is a relying-party seal
-   * and a handoff link. The test had been red behind the S340 smoke pre-gate,
-   * proving nothing about a page that was working correctly.
-   *
-   * Assert what a delegated gate actually promises: the card is present and it
-   * offers an Obelisk sign-in handoff that returns to the portal. That still
-   * fails if the gate vanishes, and — unlike the old selector — it would also
-   * fail if the page quietly grew a local password form, which for an
-   * Obelisk-delegated surface is the more serious regression.
-   */
-  test('Investor portal shows login gate', async ({ page }) => {
-    await page.goto(BASE + '/investor-portal/login/');
-    await expect(page.locator('.login-card')).toBeVisible({ timeout: 8000 });
+  // S409: the dedicated gateway delegates identity to Obelisk; creating an
+  // identity never grants investor approval. Test the live, safe handoff links.
+  for (const journey of [
+    { name: 'default workspace', query: '', destination: '/investor-portal/' },
+    { name: 'document destination', query: '?next=%2Finvestor-portal%2Fdocuments%2F', destination: '/investor-portal/documents/' },
+    { name: 'external destination rejected', query: '?next=https%3A%2F%2Fexample.invalid%2Fprivate', destination: '/investor-portal/' },
+  ]) {
+    test(`Investor gateway preserves separate approval and safe identity handoff: ${journey.name}`, async ({ page }) => {
+      await page.goto(BASE + '/investor-portal/login/' + journey.query);
+      const gateway = page.locator('section[aria-labelledby="investor-signin-heading"]');
+      await expect(gateway).toBeVisible({ timeout: 8000 });
+      await expect(gateway.getByRole('heading', { name: 'Welcome back.' })).toBeVisible();
+      await expect(gateway.getByText('Investor access is approved separately by VaultSpark Studios.', { exact: false })).toBeVisible();
+      await expect(gateway.getByText('Creating an account does not grant entry to this private workspace.', { exact: false })).toBeVisible();
 
-    const signin = page.locator('#panelSignin');
-    await expect(signin.locator('[data-obelisk-seal]')).toHaveCount(1);
-    await expect(signin.locator('a[href*="/login?intent=signin"]').first()).toBeVisible();
-    await expect(signin.locator('input[type="password"]')).toHaveCount(0);
-  });
+      const signin = gateway.locator('#investorObeliskSignIn');
+      const signup = gateway.locator('#investorCreateIdentity');
+      await expect(signin).toBeVisible();
+      await expect(signup).toBeVisible();
+      const origin = new URL(BASE).origin;
+      const identityDestination = '/investor-portal/login/?' + new URLSearchParams({ next: journey.destination, identity: 'created' });
+      for (const [link, intent, destination] of [[signin, 'signin', journey.destination], [signup, 'signup', identityDestination]]) {
+        await expect.poll(async () => {
+          const url = new URL(await link.getAttribute('href'), page.url());
+          return { origin: url.origin, path: url.pathname, intent: url.searchParams.get('intent'), destination: url.searchParams.get('return') };
+        }).toEqual({ origin, path: '/login', intent, destination });
+      }
+      const seal = gateway.locator('[data-obelisk-seal]');
+      await expect(seal).toHaveCount(1);
+      await expect(seal).toHaveAttribute('data-rp', 'vaultsparkstudios-website');
+      await expect(seal).toHaveAttribute('data-login-url', await signin.getAttribute('href'));
+      const apply = gateway.getByRole('link', { name: /Request investor access/ });
+      await expect(apply).toBeVisible();
+      await expect(apply).toHaveAttribute('href', '/investor-portal/apply/?' + new URLSearchParams({ next: journey.destination }));
+      await expect(gateway.getByRole('link', { name: /Open Vault Membership/ })).toHaveAttribute('href', '/vault-member/#login');
+      await expect(page.locator('input[type="password"]')).toHaveCount(0);
+    });
+  }
 });

@@ -9,11 +9,12 @@
   ],
   "browser": {
     "command": "node --test --test-concurrency=1 tests/after-paint.unit.spec.js tests/browser-collection.unit.spec.mjs",
-    "nativeExit": 0,
-    "passed": 17,
+    "passed": 18,
     "failed": 0,
     "skipped": 0,
-    "durationMs": 119207.7477
+    "flaky": 0,
+    "nativeExit": 0,
+    "durationMs": 71638.6187
   },
   "kernel": {
     "command": "node scripts/run-build-check.mjs --self-test",
@@ -93,7 +94,7 @@
     },
     {
       "path": "tests/browser-collection.unit.spec.mjs",
-      "sha256": "d2e46b421206734f59219822f29e458cdb171da03263e4c4eafc85dea6570ad3"
+      "sha256": "f5b3afb3d6a56fcc2213333d08f7547ed9afd9e82ca291acfd3e5e489a21eaf9"
     },
     {
       "path": "scripts/lib/build-check-evidence.mjs",
@@ -124,6 +125,15 @@
       "failed": 0,
       "skipped": 0,
       "durationMs": 96547.7314
+    },
+    {
+      "command": "node --test --test-concurrency=1 tests/after-paint.unit.spec.js tests/browser-collection.unit.spec.mjs",
+      "nativeExit": 0,
+      "passed": 17,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 119207.7477
     }
-  ]
+  ],
+  "releaseAcceptanceRepairProgress": "docs/S410_release-repair-progress.json"
 }

@@ -69,11 +69,23 @@ test.describe('Site navigation', () => {
     expect(labels.sort()).toEqual(expected);
   });
 
-  test('Request Invite CTA button exists in nav', async ({ page }) => {
-    // D-S367.2: enrolment is invite-led, so the header CTA requests an invite.
+  test('Create Account CTA opens free Vault Membership signup', async ({ page }) => {
+    // S409: open member signup is separate from approved investor access.
     await page.goto(BASE + '/');
-    const joinBtn = page.locator('.nav-right a[data-vs-join][href="/contact/?topic=invite"]');
+    const joinBtn = page.locator('.nav-right a[data-vs-join]');
     await expect(joinBtn).toBeVisible();
+    await expect(joinBtn).toHaveText('Create Account');
+    await expect(joinBtn).toHaveAttribute('href', '/vault-member/#register');
+    await joinBtn.click();
+    await expect(page).toHaveURL(new URL('/vault-member/#register', BASE).href);
+    const signup = page.locator('#obelisk-create-account');
+    await expect(signup).toBeVisible();
+    await expect(signup).toContainText('Create your free account');
+    await expect(page.getByText('No membership invite or payment card required.', { exact: true })).toBeVisible();
+    await expect.poll(async () => {
+      const url = new URL(await signup.getAttribute('href'), page.url());
+      return { origin: url.origin, path: url.pathname, intent: url.searchParams.get('intent'), destination: url.searchParams.get('return') };
+    }).toEqual({ origin: new URL(BASE).origin, path: '/login', intent: 'signup', destination: '/vault-member/#register' });
   });
 
   test('Sign In link exists in nav', async ({ page }) => {

@@ -55,6 +55,53 @@ function emulationOnly(config) {
   return rest;
 }
 
+async function waitForVisualReadiness(page) {
+  // `load` precedes deferred shell enhancement. In particular the Desk feed
+  // changes the header after fonts have already loaded, moving hash targets.
+  // Wait for actual app state, then require the visible layout to stop moving.
+  let previous = null;
+  let stableSince = 0;
+  await expect.poll(async () => {
+    const sample = await page.evaluate(() => {
+      const wire = document.querySelector('.site-header [data-desk-wire]');
+      const wireState = wire?.getAttribute('data-desk-wire-state');
+      // The ambient loader intentionally skips hidden mobile strips and portals.
+      const wireExpected = wire && wire.getBoundingClientRect().height > 0 &&
+        !/^\/(vault-member|investor-portal|admin|api)\//.test(location.pathname) &&
+        !document.documentElement.hasAttribute('data-no-strip') && !document.body.hasAttribute('data-no-strip');
+      // These legacy routes redirect to hash targets. Their initial scroll
+      // starts the real idle enhancement queue, including the header rank orb.
+      const redirectedAnchor = ['/changelog/', '/ignis/'].includes(location.pathname) && location.hash;
+      const anchorShellReady = !redirectedAnchor || !!document.querySelector('.nav-right .vs-rank-orb');
+      const ready = document.fonts.status === 'loaded' &&
+        [...document.querySelectorAll('link[rel="stylesheet"]')].every(link => !!link.sheet || link.disabled) &&
+        (!wireExpected || wireState === 'live' || wireState === 'latest') &&
+        anchorShellReady &&
+        (!window.VSAfterPaint || window.VSAfterPaint.done);
+      const visible = [...document.querySelectorAll('body *')].filter(element => {
+        const rect = element.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.top < innerHeight;
+      });
+      return {
+        ready,
+        fingerprint: JSON.stringify(visible.map(element => {
+          const rect = element.getBoundingClientRect();
+          const style = getComputedStyle(element);
+          return [element.tagName, element.id, Math.round(rect.x), Math.round(rect.y),
+            Math.round(rect.width), Math.round(rect.height), style.opacity, style.visibility,
+            style.transform, element.childElementCount ? '' : element.textContent];
+        })),
+      };
+    });
+    if (!sample.ready || sample.fingerprint !== previous) {
+      previous = sample.fingerprint;
+      stableSince = Date.now();
+      return false;
+    }
+    return Date.now() - stableSince >= 500;
+  }, { timeout: 5000, intervals: [100, 250, 500], message: 'app state and visible layout settle before visual comparison' }).toBe(true);
+}
+
 for (const vp of VIEWPORTS) {
   for (const theme of THEMES) {
     test.describe(`visual regression · ${vp.name} · ${theme}`, () => {
@@ -63,7 +110,7 @@ for (const vp of VIEWPORTS) {
       for (const surface of SURFACES) {
         test(`${surface.name} · ${vp.name} · ${theme}`, async ({ page, baseURL }) => {
         await page.addInitScript((t) => {
-          try { localStorage.setItem('vs-theme', t); } catch (_) {}
+          try { localStorage.setItem('vs_theme', t); } catch (_) {}
         }, theme);
 
         // Use 'load' (not 'networkidle') — pages like /oracle/ have ongoing beacon
@@ -72,6 +119,7 @@ for (const vp of VIEWPORTS) {
         // Use the candidate selected by Playwright. Dedicated manual baseline
         // capture can still choose an explicit alternate VR_BASE_URL.
         await page.goto(new URL(surface.path, process.env.VR_BASE_URL || baseURL).href, { waitUntil: 'load', timeout: 30000 });
+        await expect(page.locator('body')).toHaveAttribute('data-theme', theme);
         // Suppress ambient animations + live-data flicker so snapshots are
         // deterministic. The genome-strip + sigil read from /api shards and
         // pulse — pin to a stable opacity for the snapshot.
@@ -85,7 +133,7 @@ for (const vp of VIEWPORTS) {
             .vs-genome-strip, .vs-sigil-ring, .vs-tour-offer { opacity: 1 !important; }
           `,
         });
-        await page.waitForTimeout(600); // extra settle for deferred/async renders post-load
+        await waitForVisualReadiness(page);
         await expect(page).toHaveScreenshot(`${surface.name}-${vp.name}-${theme}.png`, {
           fullPage: false,
           maxDiffPixelRatio: PIXEL_RATIO_TOLERANCE,

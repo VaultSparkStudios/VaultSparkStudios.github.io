@@ -11,22 +11,26 @@
       "receipt": "docs/S410_implementation.json"
     },
     "source": {
-      "state": "passed",
-      "nativeExit": 0,
-      "receipt": "docs/S410_source-acceptance.json",
-      "passed": 549,
-      "failed": 0,
-      "firstStep": 1,
-      "coverageComplete": true,
-      "sourceFingerprint": "6a8a78dd9aab8fcc72282f89",
-      "planFingerprint": "ebc0abfb1bddc9f7b788a1b0",
-      "completedAt": "2026-11-04T07:12:26.969Z",
-      "priorAttempts": [
-        "docs/S410_source-attempt1.json",
-        "docs/S410_source-attempt2.json",
-        "docs/S410_source-attempt3.json",
-        "docs/S410_source-attempt4.json"
-      ]
+      "state": "pending",
+      "previousVerified": {
+        "state": "passed",
+        "nativeExit": 0,
+        "receipt": "docs/S410_source-acceptance.json",
+        "passed": 549,
+        "failed": 0,
+        "firstStep": 1,
+        "coverageComplete": true,
+        "sourceFingerprint": "6a8a78dd9aab8fcc72282f89",
+        "planFingerprint": "ebc0abfb1bddc9f7b788a1b0",
+        "completedAt": "2026-11-04T07:12:26.969Z",
+        "priorAttempts": [
+          "docs/S410_source-attempt1.json",
+          "docs/S410_source-attempt2.json",
+          "docs/S410_source-attempt3.json",
+          "docs/S410_source-attempt4.json"
+        ]
+      },
+      "reason": "Source is changing to repair actual hosted public failures; previous full549 proof remains bound to its original snapshot."
     },
     "localMobile": {
       "state": "passed",
@@ -125,7 +129,11 @@
       "positiveAuthenticatedJourneys": "unverified; anonymous browser boundary is not positive-role proof"
     },
     "exactRequiredHostedChecks": {
-      "state": "pending"
+      "state": "failed",
+      "candidateCommit": "42ffd505d07d4f7b9152d28f2da41f66225d708c",
+      "workflowConclusions": "3 success",
+      "executedPublicE2E": "625 passed,34 failed,56 skipped; nonzero step was previously allowed",
+      "receipt": "docs/S410_hosted-attempt1.json"
     },
     "authenticatedJourneys": {
       "state": "pending",
@@ -221,5 +229,16 @@
     "root": "4e6c93cf66bccdae932e5dbf56f5ecb227f85726d4c6ae0a570451fe033d6549",
     "workingTreeSnapshot": true,
     "note": "Source and staging proof bind actual working bytes; normal publication and exact hosted acceptance remain pending."
+  },
+  "currentReleaseRepair": {
+    "state": "in-progress",
+    "scope": [
+      "Fail executed E2E regardless of absent optional credentials",
+      "Remove configuration dotenv reads; public checks remain credential-free",
+      "Validate current member and investor gateway test contracts",
+      "Inspect visual diffs/readiness; never blind-rebaseline or raise tolerance",
+      "Diagnose hosted Desk artwork failure; local original3/3 and controlled timing passed, no speculative runtime fix"
+    ],
+    "artifactDownload": "Package-trust BLOCK; exact screenshot-artifact override requested and unanswered; no archive downloaded"
   }
 }
