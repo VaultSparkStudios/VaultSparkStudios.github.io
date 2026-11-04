@@ -1,50 +1,47 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-03T06:04:30.742Z",
+  "generatedAt": "2026-11-04T07:36:38.749Z",
   "generatedBy": "scripts/deploy-staging.mjs",
   "publicSafe": true,
-  "state": "degraded",
+  "state": "verified",
   "source": {
-    "commitSha": "a74a3ac59d3bb227c651dc89666224c12a240029",
-    "fingerprint": "50e9ca07fc925eb6e74574d6"
+    "commitSha": "c5799e951308e9e0bd5a24d173aee3e432476080",
+    "fingerprint": "6a8a78dd9aab8fcc72282f89"
   },
   "candidate": {
-    "artifactRoot": "51bfbcdc9a3b293fb065e254bed2dfdfbc44ae47aa2808bdd50c323adf71eeb4",
+    "artifactRoot": "4e6c93cf66bccdae932e5dbf56f5ecb227f85726d4c6ae0a570451fe033d6549",
     "leafCount": 76
   },
   "archive": {
-    "sha256": "cbad661a3e27b5f727f74e26983700e4238e2a644dfcc174d6312bb835883895",
-    "bytes": 3945540636,
+    "sha256": "20d5e48ac5fb12d35fbe59dc5bcf2cc5f7596753ac2021d0e61fc248758ce86b",
+    "bytes": 4180182137,
     "inventory": {
       "schemaVersion": 1,
-      "fileCount": 17183,
+      "fileCount": 18006,
       "regularFilesOnly": true,
-      "inventorySha256": "07a6f3981e52685b1827a7877c87ff772fa8edc99e4ec9f188a4a4eb7b4d20f1"
+      "inventorySha256": "bcafcbf708255679b9c856c07a883617e7525489ad4a0be0f44d912d24b5297c"
     }
   },
   "deploy": {
-    "id": "20261103054607",
-    "manifestFileCount": 17183,
-    "remoteFileCount": 17183,
+    "id": "20261104071821",
+    "manifestFileCount": 18006,
+    "remoteFileCount": 18006,
     "remoteRoot": "/opt/studio/staging/website",
-    "rollbackPath": "/opt/studio/staging/website/.rollback/20261103054607"
+    "rollbackPath": "/opt/studio/staging/website/.rollback/20261104071821"
   },
   "parity": {
-    "generatedAt": "2026-11-03T06:04:30.661Z",
-    "candidateReady": false,
-    "findings": [
-      "staging-artifact-root-mismatch",
-      "staging-artifact-leaf-count-mismatch"
-    ],
-    "candidateBuildSha": "a74a3ac59d3bb227c651dc89666224c12a240029",
-    "stagingBuildSha": "a74a3ac59d3bb227c651dc89666224c12a240029",
-    "candidateRoot": "51bfbcdc9a3b293fb065e254bed2dfdfbc44ae47aa2808bdd50c323adf71eeb4",
-    "stagingRoot": "af3252cfb54478c4ff3923ef72a061d1a34ecc5140c79950e9d255ef7d7fbf23",
-    "matched": false
+    "generatedAt": "2026-11-04T07:36:38.687Z",
+    "candidateReady": true,
+    "findings": [],
+    "candidateBuildSha": "c5799e951308e9e0bd5a24d173aee3e432476080",
+    "stagingBuildSha": "c5799e951308e9e0bd5a24d173aee3e432476080",
+    "candidateRoot": "4e6c93cf66bccdae932e5dbf56f5ecb227f85726d4c6ae0a570451fe033d6549",
+    "stagingRoot": "4e6c93cf66bccdae932e5dbf56f5ecb227f85726d4c6ae0a570451fe033d6549",
+    "matched": true
   },
   "remoteVerification": {
     "method": "atomic-install-and-byte-equality",
     "verified": true
   },
-  "receiptId": "f1557efdfb07134bf7e2706e"
+  "receiptId": "090b1ac6f0fc6fb093c5c46e"
 }

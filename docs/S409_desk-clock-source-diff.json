@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-11-04T03:14:10.839Z",
+  "beforeSnapshotAt": "2026-11-04T03:10:20.542Z",
+  "changedHtml": [
+    {
+      "path": "index.html",
+      "sha256": "8677f08b51d4dc1d8d97585d5117fd48810480a82ffbada6cae9076610667b25",
+      "currentSha256": "5d68af856c374446b570ca411a11f36a3483d3f2923d61107103474a57d8ef44"
+    }
+  ],
+  "previousFreshness": {
+    "schemaVersion": "1.0",
+    "generatedAt": "2026-11-03",
+    "generatedBy": "scripts/build-news-freshness.mjs",
+    "publicSafe": true,
+    "state": "daily",
+    "cadenceLabel": "Daily",
+    "latestEditionDate": "2026-11-02",
+    "observedThrough": "2026-11-02",
+    "ageDays": 1,
+    "dailyEvidenceWindowDays": 1,
+    "pauseAfterDays": 7,
+    "overdue": false,
+    "recoveryRequired": false,
+    "recoveryCommand": "gh workflow run news-publish.yml",
+    "publicationPolicy": "Editions are drafted and published automatically on the edition schedule. An edition publishes only after the standards desk clears it: any unsourced figure or failed editorial gate drops that edition, which is then retried at the next scheduled slot."
+  },
+  "currentFreshness": {
+    "schemaVersion": "1.0",
+    "generatedAt": "2026-11-04",
+    "generatedBy": "scripts/build-news-freshness.mjs",
+    "publicSafe": true,
+    "state": "periodic",
+    "cadenceLabel": "Periodic",
+    "latestEditionDate": "2026-11-02",
+    "observedThrough": "2026-11-02",
+    "ageDays": 2,
+    "dailyEvidenceWindowDays": 1,
+    "pauseAfterDays": 7,
+    "overdue": true,
+    "recoveryRequired": true,
+    "recoveryCommand": "gh workflow run news-publish.yml",
+    "publicationPolicy": "Editions are drafted and published automatically on the edition schedule. An edition publishes only after the standards desk clears it: any unsourced figure or failed editorial gate drops that edition, which is then retried at the next scheduled slot."
+  },
+  "scope": "Native dated freshness feed, generated news pages and home Desk module. Actual HTML differences measured; no UI acceptance inferred from generator exit."
+}

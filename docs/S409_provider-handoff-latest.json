@@ -1,0 +1,266 @@
+{
+  "schema": "s409-public-provider-handoff-observation-v1",
+  "session": 409,
+  "recordedAt": "2026-11-03T09:01:32.315Z",
+  "scope": "Public unauthenticated GET inspection only. No credentials, registration, synthetic session, private-data access, sibling writes or deployment. Opaque authorization, cookie and request values omitted.",
+  "handoff": {
+    "session": 409,
+    "state": "observed-not-authenticated",
+    "at": "2026-11-03T08:54:09.200Z",
+    "scope": "Fresh public GET start/authorize only; no credential submission, identity creation, enrollment policy proof or private-data acceptance. Opaque state, nonce, PKCE challenge and request values intentionally excluded.",
+    "observations": [
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "intent": "signin",
+        "at": "2026-11-03T08:54:07.583Z",
+        "websiteStatus": 302,
+        "providerOrigin": "https://obeliskgate.com",
+        "providerPath": "/auth/authorize",
+        "sentIntent": {
+          "login_hint": "signin",
+          "screen_hint": null
+        },
+        "providerStatus": 302,
+        "next": {
+          "origin": "https://obeliskgate.com",
+          "path": "/auth",
+          "screen": "signin",
+          "continuation": {
+            "sameProvider": true,
+            "path": "/auth/authorize/complete",
+            "queryKeys": [
+              "req"
+            ]
+          }
+        }
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "intent": "signup",
+        "at": "2026-11-03T08:54:08.121Z",
+        "websiteStatus": 302,
+        "providerOrigin": "https://obeliskgate.com",
+        "providerPath": "/auth/authorize",
+        "sentIntent": {
+          "login_hint": "signup",
+          "screen_hint": null
+        },
+        "providerStatus": 302,
+        "next": {
+          "origin": "https://obeliskgate.com",
+          "path": "/auth",
+          "screen": "signin",
+          "continuation": {
+            "sameProvider": true,
+            "path": "/auth/authorize/complete",
+            "queryKeys": [
+              "req"
+            ]
+          }
+        }
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "intent": "signin",
+        "at": "2026-11-03T08:54:08.455Z",
+        "websiteStatus": 302,
+        "providerOrigin": "https://obeliskgate.com",
+        "providerPath": "/auth/authorize",
+        "sentIntent": {
+          "login_hint": "signin",
+          "screen_hint": null
+        },
+        "providerStatus": 302,
+        "next": {
+          "origin": "https://obeliskgate.com",
+          "path": "/auth",
+          "screen": "signin",
+          "continuation": {
+            "sameProvider": true,
+            "path": "/auth/authorize/complete",
+            "queryKeys": [
+              "req"
+            ]
+          }
+        }
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "intent": "signup",
+        "at": "2026-11-03T08:54:08.864Z",
+        "websiteStatus": 302,
+        "providerOrigin": "https://obeliskgate.com",
+        "providerPath": "/auth/authorize",
+        "sentIntent": {
+          "login_hint": "signup",
+          "screen_hint": null
+        },
+        "providerStatus": 302,
+        "next": {
+          "origin": "https://obeliskgate.com",
+          "path": "/auth",
+          "screen": "signin",
+          "continuation": {
+            "sameProvider": true,
+            "path": "/auth/authorize/complete",
+            "queryKeys": [
+              "req"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "signupSwitch": {
+    "at": "2026-11-03T09:00:42.355Z",
+    "scope": "Public GET only; served UI/source inspection and navigation reconstruction, not a browser click or completed registration.",
+    "observations": [
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "at": "2026-11-03T09:00:40.836Z",
+        "signin": {
+          "status": 200,
+          "screen": "signin",
+          "createAccountAction": true,
+          "servedGoFunction": "function go(screen){var u=new URL(location.href);u.searchParams.set('screen',screen);var un=uname();if(un)u.searchParams.set('user',un);location.href=u.pathname+u.search;}",
+          "servedGoFunctionSha256": "133a7afa3e9f8c8c754f0a2e8a993f773986296342e1081ca85d7d8bcdd36546",
+          "validatedContinuationRendered": true
+        },
+        "signup": {
+          "status": 200,
+          "screen": "signup",
+          "sameContinuationInRequestedUrl": true,
+          "sameValidatedContinuationInServedConfig": true,
+          "continuation": {
+            "origin": "https://obeliskgate.com",
+            "path": "/auth/authorize/complete",
+            "queryKeys": [
+              "req"
+            ]
+          },
+          "signupActionPresent": true,
+          "passkeyEnrollmentActionPresent": true,
+          "signupRelatedActions": [
+            "signup",
+            "enroll-passkey",
+            "goto-signin",
+            "login-passkey",
+            "enroll-passkey"
+          ],
+          "signupClosedCopy": false,
+          "returnRejected": false
+        }
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "at": "2026-11-03T09:00:41.677Z",
+        "signin": {
+          "status": 200,
+          "screen": "signin",
+          "createAccountAction": true,
+          "servedGoFunction": "function go(screen){var u=new URL(location.href);u.searchParams.set('screen',screen);var un=uname();if(un)u.searchParams.set('user',un);location.href=u.pathname+u.search;}",
+          "servedGoFunctionSha256": "133a7afa3e9f8c8c754f0a2e8a993f773986296342e1081ca85d7d8bcdd36546",
+          "validatedContinuationRendered": true
+        },
+        "signup": {
+          "status": 200,
+          "screen": "signup",
+          "sameContinuationInRequestedUrl": true,
+          "sameValidatedContinuationInServedConfig": true,
+          "continuation": {
+            "origin": "https://obeliskgate.com",
+            "path": "/auth/authorize/complete",
+            "queryKeys": [
+              "req"
+            ]
+          },
+          "signupActionPresent": true,
+          "passkeyEnrollmentActionPresent": true,
+          "signupRelatedActions": [
+            "signup",
+            "enroll-passkey",
+            "goto-signin",
+            "login-passkey",
+            "enroll-passkey"
+          ],
+          "signupClosedCopy": false,
+          "returnRejected": false
+        }
+      }
+    ],
+    "policies": [
+      {
+        "origin": "https://obeliskgate.com",
+        "at": "2026-11-03T09:00:42.260Z",
+        "status": 200,
+        "signup": "open",
+        "turnstile": "enforced",
+        "enrolmentBudget": "open"
+      },
+      {
+        "origin": "https://staging.obeliskgate.com",
+        "at": "2026-11-03T09:00:42.355Z",
+        "status": 200,
+        "signup": "invite",
+        "turnstile": "enforced",
+        "enrolmentBudget": "not-engaged"
+      }
+    ],
+    "method": "Read the actual served Create your account action and go(screen) implementation; GET the same URL with screen changed to signup, retaining its in-memory continuation. This is source/navigation inspection, not an automated browser click."
+  },
+  "findings": [
+    "Production and website staging both use the production Obelisk issuer. Website signup and signin intent currently both enter its signin screen.",
+    "Production provider health reports global signup=open with Turnstile=enforced and enrolment budget=open. Provider staging reports invite, but website staging does not use that issuer.",
+    "The production served signup switch preserves the authorization continuation; the resulting signup page renders signup and passkey enrollment actions for both website origins. Signup is not observed to be closed.",
+    "Global open policy plus a rendered signup form does not prove RP-specific open configuration, completed registration, successful website callback, confirmed membership creation or investor approval.",
+    "The direct Create Account intent currently reaches signin. A supported initial-signup-screen contract remains unverified; no parameter was guessed and no provider URL was rewritten in website code."
+  ],
+  "ownerSourceSnapshot": {
+    "readOnly": true,
+    "observedAt": "2026-11-03T09:01:32.316Z",
+    "deploymentProof": false,
+    "files": [
+      {
+        "path": "portfolio/RELYING_PARTIES.json",
+        "sha256": "00f5dc0c3634b95927b5df0011c3d70fa7475192692e7db3787e73390f26ce70"
+      },
+      {
+        "path": "packages/console/src/routes/authorization-routes.js",
+        "sha256": "ef12afaf9846f1cfd2a30415b1dbbc9aa65f6789055d5a34e9613e2946c16b8f"
+      },
+      {
+        "path": "packages/console/src/app-enrollment.js",
+        "sha256": "5ec08268f475e81381a863a058c33cabae7dac5f38e371a02c7b2fc400eaf8ad"
+      }
+    ],
+    "observations": [
+      "Website RP enrollment override absent in local registry snapshot; the declared trust profile still says registration=closed. These local declarations do not establish deployed enrollment behavior.",
+      "Local authorize route hardcodes screen=signin; local app enrollment code supports explicit RP enrollment=open. Source snapshots alone are not deployment evidence."
+    ]
+  },
+  "coordination": {
+    "thread": "website-S409-open-member-signup",
+    "requestId": "01K6FU93KQ4C570E1F82A57222",
+    "observedState": "sent",
+    "observedAt": "2026-11-03T09:01:32.318Z",
+    "ownerReplyFound": false,
+    "meaning": "No reply found in the inspected thread. A transport acknowledgement is not a deployment permission gate or functional acceptance."
+  },
+  "positiveFixtureDiscovery": {
+    "scope": "Read-only capability and owner test/helper inspection; not an exhaustive claim that no fixture exists.",
+    "supabaseAdminCapability": "READY, but database administration is not an authorized Obelisk identity fixture.",
+    "consulted": [
+      "Studio capability lookup",
+      "Obelisk local WebAuthn and one-tap signup tests",
+      "Studio Ops smoke-obelisk-authenticated-rp.mjs",
+      "Obelisk prove-windows-hello-ceremony.mjs",
+      "Website staging release tests"
+    ],
+    "result": "No sanctioned deployed Passport v2 website identity fixture was identified in these sources. Existing software authenticators are local test fixtures. The Studio Ops helper mints a synthetic Passport v1 session for a different allowlisted surface and was not run. The Windows Hello helper requires a real operator ceremony and was not run."
+  },
+  "remainingAcceptanceEvidence": [
+    "Supported provider contract or observed supported behavior for starting the signup screen directly from website Create Account intent.",
+    "Deployed RP-specific enrollment enforcement, or authoritative evidence that inherited production-open policy is the intended website contract.",
+    "Authorized positive identity fixture and affected end-to-end signup/signin/callback/profile-completion evidence; investor approval must remain separately enforced."
+  ]
+}

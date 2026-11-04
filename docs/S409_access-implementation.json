@@ -12,33 +12,35 @@
   "focusedTests": {
     "publicEnrollmentEntrypoints": 11,
     "investorExperience": 11,
-    "audienceRecovery": 22,
+    "audienceRecovery": 28,
     "existingObeliskRegressions": 42,
     "existingWorkerRegressions": 76,
     "memberOnboardingCombined": 17
   },
   "localBuild": {
     "nativeExit": 0,
-    "completedAt": "2026-11-03T06:36:55.258Z",
-    "scope": "Post-onboarding full build; subsequent three-selector investor CSS state guard was regenerated and passed all9 mobile contracts. Full source acceptance pending."
+    "completedAt": "2026-11-03T08:54:48.301Z",
+    "scope": "Complete native build after final server recovery fix; full548step source acceptance remains separate."
   },
   "runtime": {
-    "stagingWorkerVersion": "d7f05313-8ec1-4147-ae3d-bfe6fd85cdd5",
+    "stagingWorkerVersion": "aee4bf30-af7d-412d-b493-edb76de57bac",
     "actualRecoveryChecks": "docs/S409_staging-auth-recovery.json",
-    "providerHandoffObservation": "docs/S409_provider-handoff-observation.json",
-    "stagingPreview": "deployed older snapshot; parity rejected after source changed; not release acceptance",
-    "production": "not-promoted"
+    "providerHandoffObservation": "docs/S409_provider-handoff-latest.json",
+    "stagingPreview": "R2 snapshot e822 passed native parity; newest caebbc server fix static manifest refresh pending",
+    "production": "not-promoted",
+    "actualComposedCancellation": "docs/visual-qa/S409-cancel-after.json"
   },
   "externalAcceptance": {
-    "latestOwnerRequest": "01K6FU93KQ4C570E1F82A57222",
-    "state": "sent-not-acknowledged",
+    "latestOwnerRequest": "01K6GAAQG1C5DFD95B4FFD9507",
+    "state": "followup-delivered-owner-response-not-observed",
     "required": [
-      "Provider honors supported signup intent while retaining validated authorization request",
-      "Website member enrollment is open under provider controls",
+      "Direct website Create account intent opens the provider signup screen with validated continuation",
+      "Provider enrollment contract for this relying party is verified against deployed controls",
       "Real new-member and existing-member journeys complete",
-      "Real approved-investor destination/private access and ordinary-member denial pass"
+      "Real approved-investor private destination and ordinary-member access denial pass"
     ],
-    "limitation": "Fixtures, public provider cards, redirect responses and anonymous access walls do not prove positive authenticated account or private-data behavior"
+    "limitation": "Fixtures, public provider cards, redirect responses and anonymous access walls do not prove positive authenticated account or private-data behavior",
+    "observed": "Provider reports global enrollment open; its served signup switch preserves validated continuation. No closed enrollment claim and no completed account claim."
   },
   "profileResumeFix": {
     "state": "source-and-hermetic-flow-reviewed",
@@ -48,11 +50,25 @@
   },
   "visual": {
     "receipt": "docs/visual-qa/LATEST.json",
-    "manual": 350
+    "manual": 378
   },
   "pathwayFollowThrough": {
     "state": "passed",
     "scope": "Existing shared navigation/theme bootstraps restored on six generated pages; no new navigation logic",
     "tests": 11
+  },
+  "cancellationRecovery": {
+    "state": "independent-source-review-passed-live-recapture-in-progress",
+    "combinedObeliskAndAudienceTests": 70,
+    "independentNewCases": 6,
+    "checkpoint": "caebbc4c72",
+    "scope": "Exact member/investor entry handoffs survive provider cancellation without recursive returns"
+  },
+  "sourceDiagnostic": {
+    "state": "passed",
+    "passed": 548,
+    "planned": 548,
+    "receipt": "docs/S409_source-acceptance.json",
+    "sourceFingerprint": "3f5691fbee145e1c598fff02"
   }
 }

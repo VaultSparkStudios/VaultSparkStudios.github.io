@@ -1,3 +1,15 @@
+<!-- S410-local-runtime-acceptance -->
+## S410 current local runtime acceptance
+
+Native full build/postbuild passed. The actual215-case mobile audit passed at2026-11-04T05:21:19.019Z; owned preview closed. Visual406 is current:392 original primary frames retained,14 fresh full-Desk after frames and14 historical before frames directly inspected. Source/candidate/PNG hashes passed native validation. See docs/S410_mobile-acceptance.json and docs/RELEASE_S410.json. Complete source549, current staging, exact hosted/account checks and authorized publication/production/readback remain pending; these local results do not prove real private-role access.
+
+<!-- S410-closeout-writeback -->
+## S410 local implementation; combined release pending
+
+Three selected verification repairs are locally accepted: deterministic early-reaction ordering, bounded guarded Windows fixture cleanup, and startup source/release evidence. Browser17/17,31 evidence-kernel cases and independent review pass. Combined release acceptance remains pending; historical source548/mobile215/visual406 do not prove the merged candidate.
+
+The new native goal01a1a424-fcbc-7f91-9461-d697bb287c76 owns fresh S410, begun2026-11-04T04:15:49.861Z. S409 partial recovery checkpoint e6535f0b76 is distinct. New audit: docs/AUDIT_2026-11-04.json; implementation: docs/S410_implementation.json; combined release: docs/RELEASE_S410.json. Current main integration c5799e9513 preserves upstream November3 Desk content; stash3997c53d82a07dec0441caaf1c5254aafcd83dec remains retained. Real member/investor journeys remain unverified, and existing authorization does not substitute for functional proof.
+
 <!-- S409-partial-recovery-2026-11-04 -->
 ## S409 recovery handoff — release incomplete
 
@@ -215,3 +227,7 @@ Source attempt2 remains failed evidence:167passing of168executed/547planned. No 
 
 <!-- S406-cache-follow-through -->
 The final delivery check found week-long caching on mutable portal assets. The existing shell builder now fingerprints five member/investor resources, resolves registered member assets relative to each page, preserves defer order and leaves unrelated/external URLs intact. Focused shell tests15/15, real persistent-browser warm-cache proof, current portal20/message46 interactions, native mobile215/215, and392 freshly captured/reviewed all-theme desktop/mobile views passed. Earlier full548 source acceptance at d161f7 is preserved as pre-cache-fix evidence; this source still requires fresh complete verification, staging, hosted checks and production/readback. No authentication, membership, pricing, financial document or outbound-message change was made. Release state remains docs/RELEASE_S406.json.
+
+
+<!-- S410-staging-acceptance -->
+S410 current verification: full549 native0/source fingerprint6a8a78dd9aab8fcc72282f89; actual18006-file staging deployment and served206-entry receipt ledger verified; candidate parity green. Native ceremony11/11 passed in scoped mode. Explicit unscoped browser6/6 (held0,failed0,skipped0,flaky0) and attention15/15 passed. First explicit attempt had one Firefox navigation flake and remains recorded. Main publication, exact candidate hosted workflows, real positive member/investor journeys and full production/readback remain pending. Authoritative ledger: docs/RELEASE_S410.json.

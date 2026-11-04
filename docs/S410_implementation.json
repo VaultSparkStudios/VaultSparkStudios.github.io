@@ -13,7 +13,7 @@
     "passed": 17,
     "failed": 0,
     "skipped": 0,
-    "durationMs": 96547.7314
+    "durationMs": 119207.7477
   },
   "kernel": {
     "command": "node scripts/run-build-check.mjs --self-test",
@@ -42,12 +42,17 @@
     "nativeExit": 1,
     "passed": 59,
     "total": 60,
-    "failed": "startup-session-coherence: active S410 board versus pre-closeout brief; final closeout projection remains required"
+    "failed": "startup-session-coherence: active S410 board versus pre-closeout brief; final closeout projection remains required",
+    "resolution": {
+      "command": "node scripts/check-startup-session-coherence.mjs",
+      "nativeExit": 0,
+      "note": "S410 writeback now yields canonical next-session411 brief. The original59/60 mid-session smoke result remains historical; complete source acceptance is still pending."
+    }
   },
   "premiseTiming": {
     "nativeVerdict": "after-implementation",
     "nativePassing": false,
-    "reason": "230 inherited dirty implementation paths at gate. No selected implementation file was dirty at the gate; no selected repair existed before it.",
+    "reason": "226 inherited dirty paths and4 new audit/plan admission records were classified as implementation at the gate; all selected implementation source files were clean. No selected repair existed before the gate.",
     "selectedFilesCleanAtGate": true,
     "baselineReplay": [
       {
@@ -69,7 +74,17 @@
         "baselineHead": "e6535f0b761e403d7027447e2a3e884cd8b16456"
       }
     ],
-    "policy": "Preserve native nonpassing result and replay evidence; no gate bypass or fabricated passing timing receipt."
+    "policy": "Preserve native nonpassing result and replay evidence; no gate bypass or fabricated passing timing receipt.",
+    "dirtyComposition": {
+      "total": 230,
+      "inherited": 226,
+      "newAuditRecords": [
+        "docs/PLAN_BRIEF_410_2026-11-04.md",
+        "docs/S410_audit-admission.json",
+        "docs/S410_audit-brief.json",
+        "docs/S410_plan-brief.json"
+      ]
+    }
   },
   "sourceFiles": [
     {
@@ -78,7 +93,7 @@
     },
     {
       "path": "tests/browser-collection.unit.spec.mjs",
-      "sha256": "7f59edfce9f9f75c9f2c5d808ed61f3344598df47ad728367358810a05f64be3"
+      "sha256": "d2e46b421206734f59219822f29e458cdb171da03263e4c4eafc85dea6570ad3"
     },
     {
       "path": "scripts/lib/build-check-evidence.mjs",
@@ -91,7 +106,24 @@
   ],
   "release": {
     "state": "pending",
-    "ledger": "docs/RELEASE_S409.json",
-    "scope": "Combined source, current staging, hosted/account checks, main, production and readback still required."
-  }
+    "ledger": "docs/RELEASE_S410.json",
+    "scope": "Combined source, current staging, hosted/account checks, main, production and readback still required.",
+    "historicalCarry": "docs/RELEASE_S409.json"
+  },
+  "preSourceDocumentationCorrection": {
+    "at": "2026-11-04T05:33:20.437Z",
+    "reviewer": "s410_closeout_preflight",
+    "scope": "Correct combined release link, pending list/current local truth and exact gate-record composition; no test outcome or original native gate verdict changed."
+  },
+  "browserLifecycleAcceptance": "docs/S410_browser-lifecycle-acceptance.json",
+  "browserHistory": [
+    {
+      "command": "node --test --test-concurrency=1 tests/after-paint.unit.spec.js tests/browser-collection.unit.spec.mjs",
+      "nativeExit": 0,
+      "passed": 17,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 96547.7314
+    }
+  ]
 }

@@ -1,6 +1,6 @@
-# Genius Hit List — Session 409
+# Genius Hit List — Session 410
 
-Generated: 2026-11-03
+Generated: 2026-11-04
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **939/1000**
 - CI health: **check gh run list**
-- Current focus: S409: distinct member and premium investor journeys; open member signup, investor approval retained.
+- Current focus: S410: three scoped verification repairs locally accepted; combined release acceptance in progress.
 
 ## Strategic Read
 
@@ -22,10 +22,10 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Reproduce offline retry failure before selection.
+#### 1. [PRODUCT] Review another sleep-based browser fixture only after a reproduced or…
 Final score: **96**
-[S409][SIL] Reproduce offline retry failure before selection.
-Why it matters: Reproduce offline retry failure before selection. is open, local, and unblocked — can ship this session.
+[S410][SIL] Review another sleep-based browser fixture only after a reproduced ordering failure.
+Why it matters: Review another sleep-based browser fixture only after a reproduced ord is open, local, and unblocked — can ship this session.
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -34,63 +34,63 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
+#### 3. [PRODUCT] Consider an inherited-WIP timing baseline only after owner-scoped pro…
+Final score: **93**
+[S410][SIL] Consider an inherited-WIP timing baseline only after owner-scoped proof design; preserve current strict checker and its native verdict.
+Why it matters: Consider an inherited-WIP timing baseline only after owner-scoped proo is open, local, and unblocked — can ship this session.
+
+#### 4. [INTELLIGENCE] Source acceptance: full attempt failed129 (128/549 passed); diagnose …
+Final score: **93**
+Source acceptance: full attempt failed129 (128/549 passed); diagnose duplicate reaction event and Windows cleanup in the fresh audit.
+Why it matters: Source acceptance: full attempt failed129 (128/549 passed); diagnose d keeps the ranked audit current so later sessions don't iterate on stale signal.
+
+First command: `node scripts/generate-genius-list.mjs`
+
+### NEXT
+
+#### 1. [PRODUCT] Current staging, exact hosted checks, real member/investor acceptance…
+Final score: **87**
+Current staging, exact hosted checks, real member/investor acceptance, main publication, production and readback remain pending.
+Why it matters: Current staging, exact hosted checks, real member/investor acceptance, is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Reproduce offline retry failure before selection.
+Final score: **84**
+[S409][SIL] Reproduce offline retry failure before selection.
+Why it matters: Reproduce offline retry failure before selection. is open, local, and unblocked — can ship this session.
+
 #### 3. [PRODUCT] Classify old visual failures (future).
-Final score: **90**
+Final score: **78**
 [S408][SIL] Classify old visual failures (future).
 Why it matters: Classify old visual failures (future). is open, local, and unblocked — can ship this session.
 
 #### 4. [PRODUCT] Benchmark history only after failure (future).
-Final score: **87**
+Final score: **75**
 [S408][SIL] Benchmark history only after failure (future).
 Why it matters: Benchmark history only after failure (future). is open, local, and unblocked — can ship this session.
 
-### NEXT
+#### 5. [PRODUCT] Classify historical visual failures.
+Final score: **72**
+[S407][SIL] Classify historical visual failures.
+Why it matters: Classify historical visual failures. is open, local, and unblocked — can ship this session.
 
-#### 1. [SECURITY] Measure help startup separately from probe execution before attemptin…
-Final score: **84**
+### LATER
+
+#### 1. [PRODUCT] Review share URL schemes separately.
+Final score: **69**
+[S409][SIL] Review share URL schemes separately.
+Why it matters: Review share URL schemes separately. is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Isolate build-check help side effects.
+Final score: **69**
+[S407][SIL] Isolate build-check help side effects.
+Why it matters: Isolate build-check help side effects. is open, local, and unblocked — can ship this session.
+
+#### 3. [SECURITY] Measure help startup separately from probe execution before attemptin…
+Final score: **66**
 [S406][SIL] Measure help startup separately from probe execution before attempting runtime optimization. No performance or token saving is currently claimed.
 Why it matters: Measure help startup separately from probe execution before attempting lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
-
-#### 2. [PRODUCT] Review share URL schemes separately.
-Final score: **81**
-[S409][SIL] Review share URL schemes separately.
-Why it matters: Review share URL schemes separately. is open, local, and unblocked — can ship this session.
-
-#### 3. [VERIFY] Reproduce the34 optional E2E failures before changing implementation,…
-Final score: **81**
-[S406][FOLLOW-UP] Reproduce the34 optional E2E failures before changing implementation, baselines or CI policy; same failure names exist on the accepted baseline. Unselected; docs/S406_explicit-closeout-optional-e2e.json.
-Why it matters: Reproduce the34 optional E2E failures before changing implementation,  was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 4. [PRODUCT] Consider extending help-only process fixtures to another operator CLI…
-Final score: **81**
-[S406][SIL] Consider extending help-only process fixtures to another operator CLI only after reproducing its side effects.
-Why it matters: Consider extending help-only process fixtures to another operator CLI  is open, local, and unblocked — can ship this session.
-
-#### 5. [PRODUCT] Consider migration of scheduled text probes only after measuring cove…
-Final score: **75**
-[SIL][S405] Consider migration of scheduled text probes only after measuring coverage and compatibility for each caller; future, unselected.
-Why it matters: Consider migration of scheduled text probes only after measuring cover is open, local, and unblocked — can ship this session.
-
-### LATER
-
-#### 1. [PRODUCT] Consider redirect-target body verification only if a real redirected …
-Final score: **72**
-[SIL][S405] Consider redirect-target body verification only if a real redirected destination failure is reproduced; future, unselected.
-Why it matters: Consider redirect-target body verification only if a real redirected d is open, local, and unblocked — can ship this session.
-
-#### 2. [PRODUCT] Consider response-body streaming only if measured remote readback mem…
-Final score: **69**
-[SIL][S404] Consider response-body streaming only if measured remote readback memory pressure justifies it; future, unselected.
-Why it matters: Consider response-body streaming only if measured remote readback memo is open, local, and unblocked — can ship this session.
-
-#### 3. [PRODUCT] Consider native positive-manifest text parity as a separately reviewe…
-Final score: **66**
-[SIL][S404] Consider native positive-manifest text parity as a separately reviewed default migration; preserve legacy default in this session. Future, unselected.
-Why it matters: Consider native positive-manifest text parity as a separately reviewed is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -136,18 +136,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Reproduce offline retry failure before selection.
+1. Review another sleep-based browser fixture only after a reproduced or…
 2. Post-push CI confirmation
-3. Classify old visual failures (future).
-4. Benchmark history only after failure (future).
-5. Measure help startup separately from probe execution before attemptin…
-6. Review share URL schemes separately.
-7. Reproduce the34 optional E2E failures before changing implementation,…
-8. Consider extending help-only process fixtures to another operator CLI…
-9. Consider migration of scheduled text probes only after measuring cove…
-10. Consider redirect-target body verification only if a real redirected …
-11. Consider response-body streaming only if measured remote readback mem…
-12. Consider native positive-manifest text parity as a separately reviewe…
+3. Consider an inherited-WIP timing baseline only after owner-scoped pro…
+4. Source acceptance: full attempt failed129 (128/549 passed); diagnose …
+5. Current staging, exact hosted checks, real member/investor acceptance…
+6. Reproduce offline retry failure before selection.
+7. Classify old visual failures (future).
+8. Benchmark history only after failure (future).
+9. Classify historical visual failures.
+10. Review share URL schemes separately.
+11. Isolate build-check help side effects.
+12. Measure help startup separately from probe execution before attemptin…
 
 ## Best Immediate Move
 

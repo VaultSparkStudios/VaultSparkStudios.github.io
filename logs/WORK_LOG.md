@@ -562,3 +562,23 @@ Expanded the selected work to separate member and premium investor experiences, 
 ### S409 recovery addendum — 2026-11-04
 
 Preserved failed source attempt128/549 (failure129), current mobile215 and reviewed visual406. Fixed bounded archive packaging timeout and browser-batch resource contention; refreshed dated generated content with actual before/after review. Recorded a partial recovery handoff so the new invocation can run its own full arc. Authenticated-account acceptance and all final release/publication work remain pending. No production or main push occurred.
+
+
+<!-- S410-closeout-writeback -->
+## Session 410 — 2026-11-04 — deterministic verification and truthful startup
+
+Three selected verification repairs are locally accepted: deterministic early-reaction ordering, bounded guarded Windows fixture cleanup, and startup source/release evidence. Browser17/17,31 evidence-kernel cases and independent review pass. Combined release acceptance remains pending; historical source548/mobile215/visual406 do not prove the merged candidate.
+
+The new native goal01a1a424-fcbc-7f91-9461-d697bb287c76 owns fresh S410, begun2026-11-04T04:15:49.861Z. S409 partial recovery checkpoint e6535f0b76 is distinct. New audit: docs/AUDIT_2026-11-04.json; implementation: docs/S410_implementation.json; combined release: docs/RELEASE_S410.json. Current main integration c5799e9513 preserves upstream November3 Desk content; stash3997c53d82a07dec0441caaf1c5254aafcd83dec remains retained. Real member/investor journeys remain unverified, and existing authorization does not substitute for functional proof.
+
+Wave1 fresh startup/audit complete. Wave2 three selected L2 repairs locally verified. Wave3 combined-source/current staging/hosted/account acceptance and Wave4 main/production/readback/final closeout follow the live RELEASE_S410 ledger; they are not claimed complete by this writeback. Keep S410 lock/binding on continuation. No new audit or session on automatic continuation.
+
+Normal local commits23525b80e0 and c5799e9513 preserve selected work and upstream history. No S410 main push or production promotion is claimed. Actual release/account acceptance stays in the release ledger.
+
+
+<!-- S410-browser-lifecycle-correction -->
+S410 acceptance correction: full source attempt4 failed at129 after128 passes. The browser fixture hit its45second parent-only cancellation and cleanup EPERM; retrying removal alone was insufficient. The selected cleanup outcome now uses an explicit120second deadline, bounded owned process-tree termination, bounded close wait and combined primary/cleanup error reporting. Final focused17/17 passed; forced-timeout negative probe failed explicitly and removed its fixture, with no owned CLI/direct descendants remaining. Independent lifecycle review approved. Full source and release remain pending; no additional shipped item, score or velocity is claimed. Evidence: docs/S410_browser-lifecycle-acceptance.json.
+
+
+<!-- S410-staging-acceptance -->
+S410 current verification: full549 native0/source fingerprint6a8a78dd9aab8fcc72282f89; actual18006-file staging deployment and served206-entry receipt ledger verified; candidate parity green. Native ceremony11/11 passed in scoped mode. Explicit unscoped browser6/6 (held0,failed0,skipped0,flaky0) and attention15/15 passed. First explicit attempt had one Firefox navigation flake and remains recorded. Main publication, exact candidate hosted workflows, real positive member/investor journeys and full production/readback remain pending. Authoritative ledger: docs/RELEASE_S410.json.

@@ -1,0 +1,129 @@
+{
+  "session": 409,
+  "at": "2026-11-03T09:20:36.638Z",
+  "previousGoalTurnClassification": "progress: completed full548 source verification and sealed visual378 acceptance",
+  "currentGoalTurnClassification": "no-progress: revalidated unchanged external integration dependency",
+  "consecutiveGoalTurnAudits": 2,
+  "ownerReplyObserved": false,
+  "arkDrainNewCargo": 0,
+  "provider": {
+    "session": 409,
+    "state": "observed-not-authenticated",
+    "at": "2026-11-03T09:20:00.348Z",
+    "scope": "Fresh public GET start/authorize only; no credential submission, identity creation, enrollment policy proof or private-data acceptance. Opaque state, nonce, PKCE challenge and request values intentionally excluded.",
+    "observations": [
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "intent": "signin",
+        "at": "2026-11-03T09:19:58.457Z",
+        "websiteStatus": 302,
+        "providerOrigin": "https://obeliskgate.com",
+        "providerPath": "/auth/authorize",
+        "sentIntent": {
+          "login_hint": "signin",
+          "screen_hint": null
+        },
+        "providerStatus": 302,
+        "next": {
+          "origin": "https://obeliskgate.com",
+          "path": "/auth",
+          "screen": "signin",
+          "continuation": {
+            "sameProvider": true,
+            "path": "/auth/authorize/complete",
+            "queryKeys": [
+              "req"
+            ]
+          }
+        }
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "intent": "signup",
+        "at": "2026-11-03T09:19:59.238Z",
+        "websiteStatus": 302,
+        "providerOrigin": "https://obeliskgate.com",
+        "providerPath": "/auth/authorize",
+        "sentIntent": {
+          "login_hint": "signup",
+          "screen_hint": null
+        },
+        "providerStatus": 302,
+        "next": {
+          "origin": "https://obeliskgate.com",
+          "path": "/auth",
+          "screen": "signin",
+          "continuation": {
+            "sameProvider": true,
+            "path": "/auth/authorize/complete",
+            "queryKeys": [
+              "req"
+            ]
+          }
+        }
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "intent": "signin",
+        "at": "2026-11-03T09:19:59.549Z",
+        "websiteStatus": 302,
+        "providerOrigin": "https://obeliskgate.com",
+        "providerPath": "/auth/authorize",
+        "sentIntent": {
+          "login_hint": "signin",
+          "screen_hint": null
+        },
+        "providerStatus": 302,
+        "next": {
+          "origin": "https://obeliskgate.com",
+          "path": "/auth",
+          "screen": "signin",
+          "continuation": {
+            "sameProvider": true,
+            "path": "/auth/authorize/complete",
+            "queryKeys": [
+              "req"
+            ]
+          }
+        }
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "intent": "signup",
+        "at": "2026-11-03T09:19:59.980Z",
+        "websiteStatus": 302,
+        "providerOrigin": "https://obeliskgate.com",
+        "providerPath": "/auth/authorize",
+        "sentIntent": {
+          "login_hint": "signup",
+          "screen_hint": null
+        },
+        "providerStatus": 302,
+        "next": {
+          "origin": "https://obeliskgate.com",
+          "path": "/auth",
+          "screen": "signin",
+          "continuation": {
+            "sameProvider": true,
+            "path": "/auth/authorize/complete",
+            "queryKeys": [
+              "req"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "browser": {
+    "state": "unavailable",
+    "error": "The browser access host is unavailable"
+  },
+  "sourceProof": {
+    "state": "still-valid",
+    "passed": 548,
+    "receiptId": "df3dc1bead8f227c3faf4390"
+  },
+  "remaining": "Supported direct signup intent and affected real member/investor authenticated journeys; then exact final candidate release, main publication and full arc closeout",
+  "nativeGoalState": "active",
+  "completion": false
+}

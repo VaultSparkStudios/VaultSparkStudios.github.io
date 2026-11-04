@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-04T07:49:19.559Z",
+  "publicSafe": true,
+  "origin": "https://website.staging.vaultsparkstudios.com",
+  "suite": "tests/staging-release.spec.js",
+  "state": "rejected",
+  "expectedTests": 6,
+  "observedTests": 6,
+  "executedTests": 6,
+  "passed": 5,
+  "failed": 0,
+  "flaky": 1,
+  "skipped": 0,
+  "held": 0,
+  "heldContracts": [],
+  "heldSurfaces": [
+    "identity",
+    "worker:identity"
+  ],
+  "reasons": [
+    "flaky-1"
+  ],
+  "failures": [
+    {
+      "title": "anonymous Obelisk boundary is fail-closed and reaches the provider",
+      "project": "firefox",
+      "message": "TimeoutError: page.waitForURL: Timeout 20000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+      "files": [
+        "tests/staging-release.spec.js"
+      ],
+      "evidenceTruncated": false
+    }
+  ],
+  "failureEvidence": {
+    "projects": [
+      "firefox"
+    ],
+    "tests": [
+      "anonymous Obelisk boundary is fail-closed and reaches the provider"
+    ],
+    "files": [
+      "tests/staging-release.spec.js"
+    ],
+    "truncated": false
+  }
+}

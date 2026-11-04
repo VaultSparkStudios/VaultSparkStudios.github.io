@@ -637,7 +637,7 @@
   "premiseTimingDisposition": {
     "nativeVerdict": "after-implementation",
     "nativePassing": false,
-    "reason": "230 inherited dirty implementation paths at gate. No selected implementation file was dirty at the gate; no selected repair existed before it.",
+    "reason": "226 inherited dirty paths and4 new audit/plan admission records were classified as implementation at the gate; all selected implementation source files were clean. No selected repair existed before the gate.",
     "selectedFilesCleanAtGate": true,
     "baselineReplay": [
       {
@@ -659,6 +659,23 @@
         "baselineHead": "e6535f0b761e403d7027447e2a3e884cd8b16456"
       }
     ],
-    "policy": "Preserve native nonpassing result and replay evidence; no gate bypass or fabricated passing timing receipt."
+    "policy": "Preserve native nonpassing result and replay evidence; no gate bypass or fabricated passing timing receipt.",
+    "dirtyComposition": {
+      "total": 230,
+      "inherited": 226,
+      "newAuditRecords": [
+        "docs/PLAN_BRIEF_410_2026-11-04.md",
+        "docs/S410_audit-admission.json",
+        "docs/S410_audit-brief.json",
+        "docs/S410_plan-brief.json"
+      ]
+    }
+  },
+  "browserCleanupAcceptanceSupplement": {
+    "at": "2026-11-04T06:53:31.198Z",
+    "receipt": "docs/S410_browser-lifecycle-acceptance.json",
+    "discovery": "Full-suite repeat exposed a45second parent-only cancellation hidden by cleanup EPERM. Completed the selected outcome with owned process-tree shutdown and explicit timeout, preserving original premise/gate history.",
+    "acceptedLocally": true,
+    "fullSource": "pending"
   }
 }

@@ -1,3 +1,12 @@
+<!-- S410-closeout-writeback -->
+## S410 current truth — combined release pending
+
+Overall status: yellow — S410 local implementation verified; combined release pending.
+
+Three selected verification repairs are locally accepted: deterministic early-reaction ordering, bounded guarded Windows fixture cleanup, and startup source/release evidence. Browser17/17,31 evidence-kernel cases and independent review pass. Combined release acceptance remains pending; historical source548/mobile215/visual406 do not prove the merged candidate.
+
+Failed source129/549 is preserved exactly in docs/S409_source-recovery-attempt4.json. Current full build/postbuild passed. Fresh mobile215 passed with its owned preview closed; visual406 has392 retained unchanged primary frames plus14 freshly inspected full-Desk primary frames and14 historical before frames. Exact scoped continuity and native source/candidate/PNG validation are recorded in docs/S410_mobile-acceptance.json and docs/visual-qa/S410-postbuild-source-continuity.json. Complete source549 and the release remain pending. Latest actual published Desk edition is November3, preserved from origin. Native timing/lifecycle limitations are recorded without green overrides in docs/S410_implementation.json. The new native goal01a1a424-fcbc-7f91-9461-d697bb287c76 owns fresh S410, begun2026-11-04T04:15:49.861Z. S409 partial recovery checkpoint e6535f0b76 is distinct. New audit: docs/AUDIT_2026-11-04.json; implementation: docs/S410_implementation.json; combined release: docs/RELEASE_S410.json. Current main integration c5799e9513 preserves upstream November3 Desk content; stash3997c53d82a07dec0441caaf1c5254aafcd83dec remains retained. Real member/investor journeys remain unverified, and existing authorization does not substitute for functional proof.
+
 <!-- S409-partial-recovery-2026-11-04 -->
 ## S409 recovery truth — 2026-11-04
 

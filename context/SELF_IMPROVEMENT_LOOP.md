@@ -10,9 +10,9 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last8):939 ·939 ·939 ·939 ·939 ·939 ·939 ·939 ▄▄▄▄▄▄▄▄ (→)
 Avgs — 3:939.0 |5:939.0 |10:939.0
-  └ S409: Dev95 |Align94 |Momentum92 |Engage96 |Process88 |Coherence94 |Security97 |Ecosystem91 |Capital95 |Automation97
-Last session:2026-11-03 |Session 409 |Total:939/1000 |Velocity:2
-  └ Release evidence: docs/RELEASE_S409.json; local implementation is not production acceptance.
+  └ S410: Dev95 |Align94 |Momentum92 |Engage96 |Process88 |Coherence94 |Security97 |Ecosystem91 |Capital95 |Automation97
+Last session:2026-11-04 |Session 410 |Total:939/1000 |Velocity:0 |Protocol velocity:3
+  └ Release evidence: docs/RELEASE_S410.json; local implementation is not production acceptance.
 <!-- rolling-status-end -->
 
 > Older entries through S401 live verbatim in `context/archive/SIL_S1-S401.md` (exact committed pre-rotation snapshot). Recent complete entries follow.
@@ -2240,3 +2240,18 @@ Lesson: account-page fixtures that block the identity provider cannot validate i
 ### S409 recovery addendum — partial handoff
 
 Source attempt failed at129 with128/549 passing steps; current mobile215 and reviewed visual406 pass locally. Final release remains pending. Existing SIL939/1000, ten categories, product velocity2 and protocol velocity0 are unchanged. No additional scored session or shipped velocity is recorded. Preserve the existing two unselected SIL commitments. Lesson: end recovery at a truthful dependency boundary; never count recovery as a fresh arc or rebind failed/frozen receipts after bookkeeping.
+
+
+<!-- S410-closeout-writeback -->
+## Session 410 — 2026-11-04 — deterministic verification and truthful startup
+
+Three selected verification repairs are locally accepted: deterministic early-reaction ordering, bounded guarded Windows fixture cleanup, and startup source/release evidence. Browser17/17,31 evidence-kernel cases and independent review pass. Combined release acceptance remains pending; historical source548/mobile215/visual406 do not prove the merged candidate.
+
+Dev Health:95 | Creative Alignment:94 | Momentum:92 | Engagement:96 | Process Quality:88 | Cross-Repo Coherence:94 | Security Posture:97 | Ecosystem Integration:91 | Capital Efficiency:95 | Automation Coverage:97
+Total:939/1000. Product velocity:0; protocol velocity:3. No score increase or measured conversion/performance claim. Final release remains pending in docs/RELEASE_S410.json.
+
+Brainstorm: inspect another timer-driven browser fixture only after reproduction; design owner-scoped inherited-WIP timing evidence without weakening the existing strict checker. Both are future unselected TASK_BOARD commitments. Broad timing checker remains nonpassing over inherited dirty paths; selected source targets were clean at the recorded gate and premises replay against the baseline. CDR unchanged; no new founder creative direction.
+
+
+<!-- S410-premise-composition-clarification -->
+S410 timing-record clarification: the230 dirty paths at the gate comprised226 inherited paths plus4 newly written audit/plan admission records. None of the four selected implementation source files was dirty. Preserve the native nonpassing timing verdict and baseline replay; no score, velocity or historical test result changes.

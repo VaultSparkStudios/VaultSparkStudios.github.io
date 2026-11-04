@@ -1,0 +1,2126 @@
+{
+  "schemaVersion": 1,
+  "inspectionSchemaVersion": 2,
+  "capturedAt": "2026-11-03T08:42:49.372Z",
+  "source": {
+    "algorithm": "sha256",
+    "sha256": "5a2b8bb485f29837f52c60a822896227cb9e587452bab4f1f841466b08001c11",
+    "files": [
+      "assets/account-entry.js",
+      "assets/investor-auth.js",
+      "assets/investor-experience.js",
+      "assets/investor-theme.css",
+      "assets/investor-ui.js",
+      "assets/member-access.css",
+      "assets/obelisk-seal-entry.js",
+      "assets/shell-manifest.json",
+      "investor-portal/login/index.html",
+      "vault-member/index.html",
+      "vault-member/portal-auth.js",
+      "vault-member/portal-settings.js",
+      "vault-member/portal.css"
+    ],
+    "entries": [
+      {
+        "path": "assets/account-entry.js",
+        "sha256": "c3ddf1fcd0d466a63f7b19b1903525f043c2b6f114bb58542691aa2f708f0924"
+      },
+      {
+        "path": "assets/investor-auth.js",
+        "sha256": "19fe6f9313aa003f420a6315cc64ff7a4cf9760db61f8bdfea7d6718928dadfc"
+      },
+      {
+        "path": "assets/investor-experience.js",
+        "sha256": "a2811f37892866630e1ffaa059a1a915fc43c0c165ddd32821baf64e2c1dcf4b"
+      },
+      {
+        "path": "assets/investor-theme.css",
+        "sha256": "6f7d17b5cb5f3f5ebe87ba9c785ea7fa9533a333509282686c542bf7107abe13"
+      },
+      {
+        "path": "assets/investor-ui.js",
+        "sha256": "bd0d41782d0a062df56d37547759cdc01e54e4da31fb8c32b8ac157f6559ac5d"
+      },
+      {
+        "path": "assets/member-access.css",
+        "sha256": "855ca196b547c78d34acea32eab84f885852c8132b49c96947d541ae55446ac3"
+      },
+      {
+        "path": "assets/obelisk-seal-entry.js",
+        "sha256": "281c25ac7564c47ad1d2c3a909c2e608b7b3a272195249b166499499a402a171"
+      },
+      {
+        "path": "assets/shell-manifest.json",
+        "sha256": "931e29465e3bb4a310052d90e1e848f3aa18591da80c983919384c67a6cd0f1c"
+      },
+      {
+        "path": "investor-portal/login/index.html",
+        "sha256": "660b44f3c7949213d33da64c8c9f3f55f41cb2daba8f1917bae21be70d0a81c8"
+      },
+      {
+        "path": "vault-member/index.html",
+        "sha256": "a3b2b7508c6f949cea8a2b161737a582dc49fc1750dca80056674a3e44be9357"
+      },
+      {
+        "path": "vault-member/portal-auth.js",
+        "sha256": "c4606e6160566bc52c151501d35f8fafc9489b4f8a3039bce9729a02daf94a08"
+      },
+      {
+        "path": "vault-member/portal-settings.js",
+        "sha256": "da00f91e01db815809e19b212a4cadefc2e9614fa1174259ea11cd6bc04eb4eb"
+      },
+      {
+        "path": "vault-member/portal.css",
+        "sha256": "22bd3d1b0505a3548c3887324c48b2ed7238eebb98b4e779f9ce60609b1aab5e"
+      }
+    ]
+  },
+  "historicalSource": {
+    "frontendGitContext": "e82297778d",
+    "backend": {
+      "gitCommit": "e82297778d",
+      "file": "cloudflare/obelisk-auth.js",
+      "sha256": "9bfd45e78c3040df9c175f5755f00d3f6d5693a67e2dad0353b3c2d9f0786d26",
+      "scope": "Immutable code context supplied for deployed before Worker; actual HTTP behavior separately observed, Worker deployment version is root-attested."
+    },
+    "provider": "Public provider observations are current at capture times, not claimed historical provider versions"
+  },
+  "backendSource": {
+    "gitCommit": "e82297778d",
+    "file": "cloudflare/obelisk-auth.js",
+    "sha256": "9bfd45e78c3040df9c175f5755f00d3f6d5693a67e2dad0353b3c2d9f0786d26",
+    "scope": "Immutable code context supplied for deployed before Worker; actual HTTP behavior separately observed, Worker deployment version is root-attested."
+  },
+  "serverObservations": [
+    {
+      "id": "member-cancel-before",
+      "audience": "member",
+      "initialFrontendPath": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+      "actualFrontendSignupHref": "/login?intent=signup&return=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register",
+      "loginStatus": 302,
+      "callbackStatus": 302,
+      "cancelError": "access_denied",
+      "callbackPathOnly": "/auth/callback",
+      "cookieAndStateKeptOnlyInMemory": true,
+      "startedAt": "2026-11-03T08:42:08.217Z",
+      "observedAt": "2026-11-03T08:42:08.970Z",
+      "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+      "workerDeploymentRootAttestation": "d7f05313",
+      "note": "One real matched-state cancellation roundtrip per audience; its returned Location is rendered independently in14 fresh anonymous browser contexts across themes and viewports. No credential submission, token exchange or authenticated callback."
+    },
+    {
+      "id": "investor-cancel-before",
+      "audience": "investor",
+      "initialFrontendPath": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F",
+      "actualFrontendSignupHref": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated",
+      "loginStatus": 302,
+      "callbackStatus": 302,
+      "cancelError": "access_denied",
+      "callbackPathOnly": "/auth/callback",
+      "cookieAndStateKeptOnlyInMemory": true,
+      "startedAt": "2026-11-03T08:42:38.634Z",
+      "observedAt": "2026-11-03T08:42:39.233Z",
+      "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+      "workerDeploymentRootAttestation": "d7f05313",
+      "note": "One real matched-state cancellation roundtrip per audience; its returned Location is rendered independently in14 fresh anonymous browser contexts across themes and viewports. No credential submission, token exchange or authenticated callback."
+    }
+  ],
+  "publicResponses": [
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:08.149Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:09.350Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "fa0ea6996c0cae2a19993899447c9dac6c0929d0558c12ace513bb10b711f066",
+      "observedAt": "2026-11-03T08:42:10.181Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:11.425Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "cdebc3ad41eabf6244e10fd69666dd5b9044f47f0288c89b6fd93c4e8809def4",
+      "observedAt": "2026-11-03T08:42:12.369Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:13.430Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=light&size=md",
+      "status": 200,
+      "sha256": "aa2f73fd7231ed5c0ef0e0b8c16aa69a1cc3b3ff15dcd552a45be0bc7721277c",
+      "observedAt": "2026-11-03T08:42:14.417Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:15.993Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=light&size=md",
+      "status": 200,
+      "sha256": "a81070494ace72d99c7c917ad1672beeed50437c036755e7bb7269a872f563ae",
+      "observedAt": "2026-11-03T08:42:16.964Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:18.092Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "e3019bb55114be2d08087591e20a1c5eb259ea4edb4e26812acb0062d3acb33b",
+      "observedAt": "2026-11-03T08:42:18.892Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:20.442Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "1f16bd0954395fc3badb57e1934c3b85ab265e53f658c0a75a4ab8ec4a481dbf",
+      "observedAt": "2026-11-03T08:42:21.437Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:22.378Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "5db1082ad3f03aaa0bcf4ddae6780a4487c6f7a276c34331d35022167c827c7a",
+      "observedAt": "2026-11-03T08:42:23.212Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:24.535Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "906f0919a73f19b1651b65e407c0eea68f78242d74dbd7f1a0fb6234e2bd73f6",
+      "observedAt": "2026-11-03T08:42:25.437Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:26.326Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "12c15ace2ac9d0476363ee9321adeef415d73351aaf43cfd6972dfd36d05077a",
+      "observedAt": "2026-11-03T08:42:27.226Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:28.575Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "96b8768e6d75a5197ebd603b6bff79e341d9bd7052122a5badb85bbf5ce2dcf7",
+      "observedAt": "2026-11-03T08:42:29.509Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:30.712Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "6f28c63b94f8c819b65167cb2ac0ce8bae4d6d164610bcc4f30a08bd872f14b3",
+      "observedAt": "2026-11-03T08:42:31.569Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:32.900Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "840335da99ee035cc12f9ff52d85532997f5296beae011056741d7c8c071fe9c",
+      "observedAt": "2026-11-03T08:42:33.976Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:34.969Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "e96a9a98f46f47456235d1726031f890a02509f12b043568f3c81ef451eb518b",
+      "observedAt": "2026-11-03T08:42:35.863Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:37.016Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "1c8a0259c2f26a4777807aa46f38b462616420ad5b2600a321815cb746d3480c",
+      "observedAt": "2026-11-03T08:42:37.886Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:38.542Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "3120cb5353592d09b7f075a66f8592a2c4f7f3a8fe2402866207c0b591aa9051",
+      "observedAt": "2026-11-03T08:42:38.627Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:39.429Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "602fb8280bfd631af2de896183019f53789b8af9babe99dbf234e3bbed75333b",
+      "observedAt": "2026-11-03T08:42:39.514Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:40.357Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "c4ed5e7c50728e2c3f09acd329d40ef497e6ad37f3f02eaaabc9c0f2a0936f13",
+      "observedAt": "2026-11-03T08:42:40.453Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:40.958Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=light&size=md",
+      "status": 200,
+      "sha256": "3277206bdd6807db3507c73667d69380cb2f650d341e8965405380dceec40ecc",
+      "observedAt": "2026-11-03T08:42:41.029Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:41.700Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=light&size=md",
+      "status": 200,
+      "sha256": "dc64807929491eeb07fe134de26fe30c8f6e61a652d24e98483335491cac2dec",
+      "observedAt": "2026-11-03T08:42:41.752Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:42.306Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "34ba11c0836449ecc09a6e65bb736ccbff98f96e1ba10b950cb49408d0824bc6",
+      "observedAt": "2026-11-03T08:42:42.408Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:43.147Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "0496c79272c74f9cd90a207c7cc327f101eaf3ef5e8068d99b11d75d8a4c3362",
+      "observedAt": "2026-11-03T08:42:43.200Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:43.812Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "e750e5dd6007763e3c3d631a1b598b3d3b8c9d9e17bff7369b66244a5df4d6d9",
+      "observedAt": "2026-11-03T08:42:43.868Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:44.616Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "f68aadbfb3fef425431d60c955156c2bd3925bded25bd098edee5d1a2f039aa8",
+      "observedAt": "2026-11-03T08:42:44.660Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:45.207Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "0b6d5e0f714a51bb242d7890053f86bbc9676dcfe93cee43088dccd48cb4c43b",
+      "observedAt": "2026-11-03T08:42:45.272Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:46.132Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "ba52bc21f9bb61a0a4754d37f55767e27b4e28657226059eb8ba031e0907d341",
+      "observedAt": "2026-11-03T08:42:46.233Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:46.726Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "ff0fab435314a1c021dc28fa7048221fbbc31d3bba8ad29fb5ec6b3233be4a4c",
+      "observedAt": "2026-11-03T08:42:46.797Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:47.546Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "c0c38f3c36124be2ecb8b81b542f2ebe212fb2d70689cf3036dc7175696dc7c4",
+      "observedAt": "2026-11-03T08:42:47.614Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:48.188Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "47a337ff6c994d90bc94ee0a4be0738bc08bf714e44112ab83846ee11c2c9118",
+      "observedAt": "2026-11-03T08:42:48.257Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T08:42:48.866Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "0637bec170062e802817556817345047df86913b93ce5e62a76bb00f1e115604",
+      "observedAt": "2026-11-03T08:42:48.928Z"
+    }
+  ],
+  "matrix": {
+    "routes": [
+      "/vault-member/",
+      "/investor-portal/login/"
+    ],
+    "themes": [
+      "dark",
+      "light",
+      "ambient",
+      "warm",
+      "cool",
+      "lava",
+      "high-contrast"
+    ],
+    "viewports": [
+      "desktop",
+      "mobile"
+    ],
+    "states": [
+      "cancel-context-before"
+    ],
+    "expectedCaptures": 28,
+    "completedCaptures": 28
+  },
+  "generatedBy": "S409 actual matched-cookie/state staging cancellation response composed with actual candidate entrance rendering; no credentials, private data or authenticated access proof. Raw state/cookie values never persisted.",
+  "captures": [
+    {
+      "file": "S409-cancel-before-member-dark-desktop.png",
+      "sha256": "ca61c6f9b8578e4645639d355b3871d8256563148bb3d4dcaea4682d874ba747",
+      "bytes": 1233834,
+      "page": "/vault-member/",
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T08:42:11.051Z",
+      "serverObservationId": "member-cancel-before",
+      "landing": {
+        "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+        "ref": null,
+        "return": null,
+        "next": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 816.0625,
+          "y": 600.453125,
+          "width": 420,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.281Z",
+        "originalImageInspected": "S409-cancel-before-member-dark-desktop.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-member-dark-mobile.png",
+      "sha256": "9fa1fecdfdafc6e00b8f1a2dddc7d7162baae4f8d42c5b15370d040558f5432f",
+      "bytes": 596785,
+      "page": "/vault-member/",
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T08:42:12.897Z",
+      "serverObservationId": "member-cancel-before",
+      "landing": {
+        "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+        "ref": null,
+        "return": null,
+        "next": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 37.796875,
+          "y": 460.46875,
+          "width": 314.40625,
+          "height": 300
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.282Z",
+        "originalImageInspected": "S409-cancel-before-member-dark-mobile.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-member-light-desktop.png",
+      "sha256": "215eaac961d76b4abbf13cf794edc467de4ace9ebd0ac061e09dd5af31432127",
+      "bytes": 1172904,
+      "page": "/vault-member/",
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T08:42:15.566Z",
+      "serverObservationId": "member-cancel-before",
+      "landing": {
+        "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+        "ref": null,
+        "return": null,
+        "next": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=light&size=md",
+        "box": {
+          "x": 816.0625,
+          "y": 600.453125,
+          "width": 420,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.284Z",
+        "originalImageInspected": "S409-cancel-before-member-light-desktop.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-member-light-mobile.png",
+      "sha256": "9a6acc4d018da7dc09ca27e16a6a612d6ee532f123fc0ea425c0cb5e6736b30c",
+      "bytes": 537400,
+      "page": "/vault-member/",
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T08:42:17.454Z",
+      "serverObservationId": "member-cancel-before",
+      "landing": {
+        "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+        "ref": null,
+        "return": null,
+        "next": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=light&size=md",
+        "box": {
+          "x": 37.796875,
+          "y": 460.46875,
+          "width": 314.40625,
+          "height": 300
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.284Z",
+        "originalImageInspected": "S409-cancel-before-member-light-mobile.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-member-ambient-desktop.png",
+      "sha256": "04b45f2f46331084b3688d7f845146a8aa63f59c636eb8a5f3d9fda0848bce45",
+      "bytes": 1262922,
+      "page": "/vault-member/",
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T08:42:19.948Z",
+      "serverObservationId": "member-cancel-before",
+      "landing": {
+        "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+        "ref": null,
+        "return": null,
+        "next": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 816.0625,
+          "y": 600.453125,
+          "width": 420,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.286Z",
+        "originalImageInspected": "S409-cancel-before-member-ambient-desktop.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-member-ambient-mobile.png",
+      "sha256": "d72863660372fe548f1cf5850f392c76fdef68cee67ec76ba9e771435f0b168a",
+      "bytes": 603470,
+      "page": "/vault-member/",
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T08:42:21.954Z",
+      "serverObservationId": "member-cancel-before",
+      "landing": {
+        "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+        "ref": null,
+        "return": null,
+        "next": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 37.796875,
+          "y": 460.46875,
+          "width": 314.40625,
+          "height": 300
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.286Z",
+        "originalImageInspected": "S409-cancel-before-member-ambient-mobile.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-member-warm-desktop.png",
+      "sha256": "fe08129ceffd8c2dea7361ec0ab46ca828416562bd2737da75669ad5e109a2d0",
+      "bytes": 1165958,
+      "page": "/vault-member/",
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T08:42:24.184Z",
+      "serverObservationId": "member-cancel-before",
+      "landing": {
+        "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+        "ref": null,
+        "return": null,
+        "next": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 816.0625,
+          "y": 600.453125,
+          "width": 420,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.287Z",
+        "originalImageInspected": "S409-cancel-before-member-warm-desktop.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-member-warm-mobile.png",
+      "sha256": "bbcb9de918fb8dc43157ab5320add909d1c82f126d20fe2654a8761aab4dd0e9",
+      "bytes": 563443,
+      "page": "/vault-member/",
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T08:42:25.945Z",
+      "serverObservationId": "member-cancel-before",
+      "landing": {
+        "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+        "ref": null,
+        "return": null,
+        "next": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 37.796875,
+          "y": 460.46875,
+          "width": 314.40625,
+          "height": 300
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.288Z",
+        "originalImageInspected": "S409-cancel-before-member-warm-mobile.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-member-cool-desktop.png",
+      "sha256": "1915f980c999d6f94050ed634577189f3933b752676e17c0bebf1376b90b9d0e",
+      "bytes": 1237008,
+      "page": "/vault-member/",
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T08:42:28.215Z",
+      "serverObservationId": "member-cancel-before",
+      "landing": {
+        "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+        "ref": null,
+        "return": null,
+        "next": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 816.0625,
+          "y": 600.453125,
+          "width": 420,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.289Z",
+        "originalImageInspected": "S409-cancel-before-member-cool-desktop.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-member-cool-mobile.png",
+      "sha256": "6b02c4159dade3eb2b3428c49801aaffeabedf958b85bbb2a51397eca661fd48",
+      "bytes": 590099,
+      "page": "/vault-member/",
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T08:42:30.157Z",
+      "serverObservationId": "member-cancel-before",
+      "landing": {
+        "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+        "ref": null,
+        "return": null,
+        "next": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 37.796875,
+          "y": 460.46875,
+          "width": 314.40625,
+          "height": 300
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.290Z",
+        "originalImageInspected": "S409-cancel-before-member-cool-mobile.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-member-lava-desktop.png",
+      "sha256": "f1f3fc69114dab8e3d4866da9291f60cbad1cf4d69a96418f3cd8102a2840ed0",
+      "bytes": 1123753,
+      "page": "/vault-member/",
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T08:42:32.518Z",
+      "serverObservationId": "member-cancel-before",
+      "landing": {
+        "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+        "ref": null,
+        "return": null,
+        "next": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 816.0625,
+          "y": 600.453125,
+          "width": 420,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.291Z",
+        "originalImageInspected": "S409-cancel-before-member-lava-desktop.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-member-lava-mobile.png",
+      "sha256": "a904266806bd751a785cdcde497519860eade831378c4824b2e15bddb6622f0c",
+      "bytes": 551169,
+      "page": "/vault-member/",
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T08:42:34.567Z",
+      "serverObservationId": "member-cancel-before",
+      "landing": {
+        "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+        "ref": null,
+        "return": null,
+        "next": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 37.796875,
+          "y": 460.46875,
+          "width": 314.40625,
+          "height": 300
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.292Z",
+        "originalImageInspected": "S409-cancel-before-member-lava-mobile.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-member-high-contrast-desktop.png",
+      "sha256": "c4aff520cc7f43cd978803aedf2231d9fac7244d64bd459be125efacdef54898",
+      "bytes": 814857,
+      "page": "/vault-member/",
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T08:42:36.672Z",
+      "serverObservationId": "member-cancel-before",
+      "landing": {
+        "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+        "ref": null,
+        "return": null,
+        "next": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 816.0625,
+          "y": 600.453125,
+          "width": 420,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.292Z",
+        "originalImageInspected": "S409-cancel-before-member-high-contrast-desktop.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-member-high-contrast-mobile.png",
+      "sha256": "f990faa956f6fb7afd7e91ed499cd519724e61fcde1240605b62db862022f6d7",
+      "bytes": 487629,
+      "page": "/vault-member/",
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T08:42:38.332Z",
+      "serverObservationId": "member-cancel-before",
+      "landing": {
+        "actualLocation": "/vault-member/?auth_error=provider_denied&next=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register&auth_intent=signup#register",
+        "ref": null,
+        "return": null,
+        "next": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 37.796875,
+          "y": 460.46875,
+          "width": 314.40625,
+          "height": 300
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.293Z",
+        "originalImageInspected": "S409-cancel-before-member-high-contrast-mobile.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-investor-dark-desktop.png",
+      "sha256": "080d09646f8b68172fdb6a32e0f64c0383f767ba3e6c944191c767058931fa97",
+      "bytes": 262249,
+      "page": "/investor-portal/login/",
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-gateway"
+      ],
+      "capturedAt": "2026-11-03T08:42:40.050Z",
+      "serverObservationId": "investor-cancel-before",
+      "landing": {
+        "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+        "ref": null,
+        "return": null,
+        "next": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F&identity=created",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "investorCreateIdentity": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252F%26identity%3Dcreated",
+          "investorObeliskSignIn": "/login?intent=signin&return=%2Finvestor-portal%2F",
+          "investorApplyLink": "/investor-portal/apply/?next=%2Finvestor-portal%2F"
+        },
+        "visibleErrors": [
+          "Sign-in was cancelled. Your investor access has not changed. You can try again when ready."
+        ],
+        "activeMemberPanel": null
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 801.3125,
+          "y": 454.25,
+          "width": 390.6875,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Finvestor-portal%2F"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.293Z",
+        "originalImageInspected": "S409-cancel-before-investor-dark-desktop.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-investor-dark-mobile.png",
+      "sha256": "4a59238cf58fb6b7f30301070b1f41559b21ed9610398eb6f90fbe0247b5fa1f",
+      "bytes": 137578,
+      "page": "/investor-portal/login/",
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-gateway"
+      ],
+      "capturedAt": "2026-11-03T08:42:40.725Z",
+      "serverObservationId": "investor-cancel-before",
+      "landing": {
+        "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+        "ref": null,
+        "return": null,
+        "next": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F&identity=created",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "investorCreateIdentity": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252F%26identity%3Dcreated",
+          "investorObeliskSignIn": "/login?intent=signin&return=%2Finvestor-portal%2F",
+          "investorApplyLink": "/investor-portal/apply/?next=%2Finvestor-portal%2F"
+        },
+        "visibleErrors": [
+          "Sign-in was cancelled. Your investor access has not changed. You can try again when ready."
+        ],
+        "activeMemberPanel": null
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 43.390625,
+          "y": 629.53125,
+          "width": 303.21875,
+          "height": 335
+        },
+        "loginUrl": "/login?intent=signin&return=%2Finvestor-portal%2F"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.293Z",
+        "originalImageInspected": "S409-cancel-before-investor-dark-mobile.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-investor-light-desktop.png",
+      "sha256": "a3fbc2ae24786a6fcd4726b8e2634ddf7f9a5c33b7af50ad81e2289298d3f3a1",
+      "bytes": 193065,
+      "page": "/investor-portal/login/",
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-gateway"
+      ],
+      "capturedAt": "2026-11-03T08:42:41.467Z",
+      "serverObservationId": "investor-cancel-before",
+      "landing": {
+        "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+        "ref": null,
+        "return": null,
+        "next": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F&identity=created",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "investorCreateIdentity": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252F%26identity%3Dcreated",
+          "investorObeliskSignIn": "/login?intent=signin&return=%2Finvestor-portal%2F",
+          "investorApplyLink": "/investor-portal/apply/?next=%2Finvestor-portal%2F"
+        },
+        "visibleErrors": [
+          "Sign-in was cancelled. Your investor access has not changed. You can try again when ready."
+        ],
+        "activeMemberPanel": null
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=light&size=md",
+        "box": {
+          "x": 801.3125,
+          "y": 454.25,
+          "width": 390.6875,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Finvestor-portal%2F"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.294Z",
+        "originalImageInspected": "S409-cancel-before-investor-light-desktop.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-investor-light-mobile.png",
+      "sha256": "3fd35fd8d8476ece1686bd439201461702540683427767c0bcae3a398666d4d8",
+      "bytes": 112111,
+      "page": "/investor-portal/login/",
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-gateway"
+      ],
+      "capturedAt": "2026-11-03T08:42:42.099Z",
+      "serverObservationId": "investor-cancel-before",
+      "landing": {
+        "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+        "ref": null,
+        "return": null,
+        "next": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F&identity=created",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "investorCreateIdentity": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252F%26identity%3Dcreated",
+          "investorObeliskSignIn": "/login?intent=signin&return=%2Finvestor-portal%2F",
+          "investorApplyLink": "/investor-portal/apply/?next=%2Finvestor-portal%2F"
+        },
+        "visibleErrors": [
+          "Sign-in was cancelled. Your investor access has not changed. You can try again when ready."
+        ],
+        "activeMemberPanel": null
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=light&size=md",
+        "box": {
+          "x": 43.390625,
+          "y": 502.53125,
+          "width": 303.21875,
+          "height": 335
+        },
+        "loginUrl": "/login?intent=signin&return=%2Finvestor-portal%2F"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.294Z",
+        "originalImageInspected": "S409-cancel-before-investor-light-mobile.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-investor-ambient-desktop.png",
+      "sha256": "417f3a39567ba5acf149d021715b4390b24cc58cabcf09bb992e47c3134a2c41",
+      "bytes": 251823,
+      "page": "/investor-portal/login/",
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-gateway"
+      ],
+      "capturedAt": "2026-11-03T08:42:42.932Z",
+      "serverObservationId": "investor-cancel-before",
+      "landing": {
+        "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+        "ref": null,
+        "return": null,
+        "next": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F&identity=created",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "investorCreateIdentity": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252F%26identity%3Dcreated",
+          "investorObeliskSignIn": "/login?intent=signin&return=%2Finvestor-portal%2F",
+          "investorApplyLink": "/investor-portal/apply/?next=%2Finvestor-portal%2F"
+        },
+        "visibleErrors": [
+          "Sign-in was cancelled. Your investor access has not changed. You can try again when ready."
+        ],
+        "activeMemberPanel": null
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 801.3125,
+          "y": 454.25,
+          "width": 390.6875,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Finvestor-portal%2F"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.295Z",
+        "originalImageInspected": "S409-cancel-before-investor-ambient-desktop.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-investor-ambient-mobile.png",
+      "sha256": "9596fc7a9c09e56bd93307ac33f84b2732d7762b4fb7ab2bc7834f4f455d49b5",
+      "bytes": 134820,
+      "page": "/investor-portal/login/",
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-gateway"
+      ],
+      "capturedAt": "2026-11-03T08:42:43.559Z",
+      "serverObservationId": "investor-cancel-before",
+      "landing": {
+        "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+        "ref": null,
+        "return": null,
+        "next": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F&identity=created",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "investorCreateIdentity": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252F%26identity%3Dcreated",
+          "investorObeliskSignIn": "/login?intent=signin&return=%2Finvestor-portal%2F",
+          "investorApplyLink": "/investor-portal/apply/?next=%2Finvestor-portal%2F"
+        },
+        "visibleErrors": [
+          "Sign-in was cancelled. Your investor access has not changed. You can try again when ready."
+        ],
+        "activeMemberPanel": null
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 43.390625,
+          "y": 502.53125,
+          "width": 303.21875,
+          "height": 335
+        },
+        "loginUrl": "/login?intent=signin&return=%2Finvestor-portal%2F"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.295Z",
+        "originalImageInspected": "S409-cancel-before-investor-ambient-mobile.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-investor-warm-desktop.png",
+      "sha256": "df16dbcbe7615363a0c957241ecd214705cf1abe7701a731f8befa86782fa601",
+      "bytes": 248554,
+      "page": "/investor-portal/login/",
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-gateway"
+      ],
+      "capturedAt": "2026-11-03T08:42:44.421Z",
+      "serverObservationId": "investor-cancel-before",
+      "landing": {
+        "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+        "ref": null,
+        "return": null,
+        "next": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F&identity=created",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "investorCreateIdentity": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252F%26identity%3Dcreated",
+          "investorObeliskSignIn": "/login?intent=signin&return=%2Finvestor-portal%2F",
+          "investorApplyLink": "/investor-portal/apply/?next=%2Finvestor-portal%2F"
+        },
+        "visibleErrors": [
+          "Sign-in was cancelled. Your investor access has not changed. You can try again when ready."
+        ],
+        "activeMemberPanel": null
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 801.3125,
+          "y": 454.25,
+          "width": 390.6875,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Finvestor-portal%2F"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.295Z",
+        "originalImageInspected": "S409-cancel-before-investor-warm-desktop.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-investor-warm-mobile.png",
+      "sha256": "7ab374640c595dd7206cdd64352b17d112eb87362fc6853871313dcf5d4e4e2a",
+      "bytes": 133915,
+      "page": "/investor-portal/login/",
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-gateway"
+      ],
+      "capturedAt": "2026-11-03T08:42:45.005Z",
+      "serverObservationId": "investor-cancel-before",
+      "landing": {
+        "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+        "ref": null,
+        "return": null,
+        "next": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F&identity=created",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "investorCreateIdentity": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252F%26identity%3Dcreated",
+          "investorObeliskSignIn": "/login?intent=signin&return=%2Finvestor-portal%2F",
+          "investorApplyLink": "/investor-portal/apply/?next=%2Finvestor-portal%2F"
+        },
+        "visibleErrors": [
+          "Sign-in was cancelled. Your investor access has not changed. You can try again when ready."
+        ],
+        "activeMemberPanel": null
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 43.390625,
+          "y": 502.53125,
+          "width": 303.21875,
+          "height": 335
+        },
+        "loginUrl": "/login?intent=signin&return=%2Finvestor-portal%2F"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.295Z",
+        "originalImageInspected": "S409-cancel-before-investor-warm-mobile.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-investor-cool-desktop.png",
+      "sha256": "35cff6458012dfe733a4b2374337acee56bf0b2a4375963325f1211a41f9b191",
+      "bytes": 250289,
+      "page": "/investor-portal/login/",
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-gateway"
+      ],
+      "capturedAt": "2026-11-03T08:42:45.823Z",
+      "serverObservationId": "investor-cancel-before",
+      "landing": {
+        "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+        "ref": null,
+        "return": null,
+        "next": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F&identity=created",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "investorCreateIdentity": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252F%26identity%3Dcreated",
+          "investorObeliskSignIn": "/login?intent=signin&return=%2Finvestor-portal%2F",
+          "investorApplyLink": "/investor-portal/apply/?next=%2Finvestor-portal%2F"
+        },
+        "visibleErrors": [
+          "Sign-in was cancelled. Your investor access has not changed. You can try again when ready."
+        ],
+        "activeMemberPanel": null
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 801.3125,
+          "y": 454.25,
+          "width": 390.6875,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Finvestor-portal%2F"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.296Z",
+        "originalImageInspected": "S409-cancel-before-investor-cool-desktop.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-investor-cool-mobile.png",
+      "sha256": "d34fb40d2e00c91238d7c5238e86695a6c650cebcc83b679c9cd3b10408d527c",
+      "bytes": 134355,
+      "page": "/investor-portal/login/",
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-gateway"
+      ],
+      "capturedAt": "2026-11-03T08:42:46.524Z",
+      "serverObservationId": "investor-cancel-before",
+      "landing": {
+        "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+        "ref": null,
+        "return": null,
+        "next": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F&identity=created",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "investorCreateIdentity": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252F%26identity%3Dcreated",
+          "investorObeliskSignIn": "/login?intent=signin&return=%2Finvestor-portal%2F",
+          "investorApplyLink": "/investor-portal/apply/?next=%2Finvestor-portal%2F"
+        },
+        "visibleErrors": [
+          "Sign-in was cancelled. Your investor access has not changed. You can try again when ready."
+        ],
+        "activeMemberPanel": null
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 43.390625,
+          "y": 629.53125,
+          "width": 303.21875,
+          "height": 335
+        },
+        "loginUrl": "/login?intent=signin&return=%2Finvestor-portal%2F"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.296Z",
+        "originalImageInspected": "S409-cancel-before-investor-cool-mobile.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-investor-lava-desktop.png",
+      "sha256": "e31a154a6afd031825bd46674faaed8e5e9149174d4bc53db4a53abdc00d27a9",
+      "bytes": 255038,
+      "page": "/investor-portal/login/",
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-gateway"
+      ],
+      "capturedAt": "2026-11-03T08:42:47.323Z",
+      "serverObservationId": "investor-cancel-before",
+      "landing": {
+        "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+        "ref": null,
+        "return": null,
+        "next": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F&identity=created",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "investorCreateIdentity": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252F%26identity%3Dcreated",
+          "investorObeliskSignIn": "/login?intent=signin&return=%2Finvestor-portal%2F",
+          "investorApplyLink": "/investor-portal/apply/?next=%2Finvestor-portal%2F"
+        },
+        "visibleErrors": [
+          "Sign-in was cancelled. Your investor access has not changed. You can try again when ready."
+        ],
+        "activeMemberPanel": null
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 801.3125,
+          "y": 454.25,
+          "width": 390.6875,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Finvestor-portal%2F"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.296Z",
+        "originalImageInspected": "S409-cancel-before-investor-lava-desktop.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-investor-lava-mobile.png",
+      "sha256": "e52a3f6cfc815a3890a8c321da2e5ef594cf7e374d25ccfbd10e14055f6dafeb",
+      "bytes": 136333,
+      "page": "/investor-portal/login/",
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-gateway"
+      ],
+      "capturedAt": "2026-11-03T08:42:47.951Z",
+      "serverObservationId": "investor-cancel-before",
+      "landing": {
+        "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+        "ref": null,
+        "return": null,
+        "next": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F&identity=created",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "investorCreateIdentity": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252F%26identity%3Dcreated",
+          "investorObeliskSignIn": "/login?intent=signin&return=%2Finvestor-portal%2F",
+          "investorApplyLink": "/investor-portal/apply/?next=%2Finvestor-portal%2F"
+        },
+        "visibleErrors": [
+          "Sign-in was cancelled. Your investor access has not changed. You can try again when ready."
+        ],
+        "activeMemberPanel": null
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 43.390625,
+          "y": 502.53125,
+          "width": 303.21875,
+          "height": 335
+        },
+        "loginUrl": "/login?intent=signin&return=%2Finvestor-portal%2F"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.297Z",
+        "originalImageInspected": "S409-cancel-before-investor-lava-mobile.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-investor-high-contrast-desktop.png",
+      "sha256": "d8d4668affb4876bb3c0b15edbbe6ab26f7ed1888a8d6a083a2da24f7471aad4",
+      "bytes": 196503,
+      "page": "/investor-portal/login/",
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-gateway"
+      ],
+      "capturedAt": "2026-11-03T08:42:48.647Z",
+      "serverObservationId": "investor-cancel-before",
+      "landing": {
+        "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+        "ref": null,
+        "return": null,
+        "next": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F&identity=created",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "investorCreateIdentity": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252F%26identity%3Dcreated",
+          "investorObeliskSignIn": "/login?intent=signin&return=%2Finvestor-portal%2F",
+          "investorApplyLink": "/investor-portal/apply/?next=%2Finvestor-portal%2F"
+        },
+        "visibleErrors": [
+          "Sign-in was cancelled. Your investor access has not changed. You can try again when ready."
+        ],
+        "activeMemberPanel": null
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 801.3125,
+          "y": 454.25,
+          "width": 390.6875,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Finvestor-portal%2F"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.297Z",
+        "originalImageInspected": "S409-cancel-before-investor-high-contrast-desktop.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    },
+    {
+      "file": "S409-cancel-before-investor-high-contrast-mobile.png",
+      "sha256": "74950c00777e87bb58e2713d601baef4fca68ea532917a82e62b2b7e91c20585",
+      "bytes": 116811,
+      "page": "/investor-portal/login/",
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "cancel-context-before",
+      "states": [
+        "actual-cancel-signup-gateway"
+      ],
+      "capturedAt": "2026-11-03T08:42:49.230Z",
+      "serverObservationId": "investor-cancel-before",
+      "landing": {
+        "actualLocation": "/investor-portal/login/?auth_error=provider_denied&next=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252Fdocuments%252F%26identity%3Dcreated&auth_intent=signup",
+        "ref": null,
+        "return": null,
+        "next": "/investor-portal/login/?next=%2Finvestor-portal%2Fdocuments%2F&identity=created",
+        "referralBannerVisible": false,
+        "referralBannerText": null,
+        "retryHrefs": {
+          "investorCreateIdentity": "/login?intent=signup&return=%2Finvestor-portal%2Flogin%2F%3Fnext%3D%252Finvestor-portal%252F%26identity%3Dcreated",
+          "investorObeliskSignIn": "/login?intent=signin&return=%2Finvestor-portal%2F",
+          "investorApplyLink": "/investor-portal/apply/?next=%2Finvestor-portal%2F"
+        },
+        "visibleErrors": [
+          "Sign-in was cancelled. Your investor access has not changed. You can try again when ready."
+        ],
+        "activeMemberPanel": null
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 43.390625,
+          "y": 502.53125,
+          "width": 303.21875,
+          "height": 335
+        },
+        "loginUrl": "/login?intent=signin&return=%2Finvestor-portal%2F"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T08:47:56.297Z",
+        "originalImageInspected": "S409-cancel-before-investor-high-contrast-mobile.png",
+        "findings": [],
+        "blockingDefectsOpen": 0
+      }
+    }
+  ],
+  "failures": [],
+  "inspection": {
+    "renderedPixelsReviewed": true,
+    "reviewer": "Codex investor lane",
+    "reviewedAt": "2026-11-03T08:47:56.297Z",
+    "coverage": {
+      "totalCaptures": 28,
+      "manuallyReviewed": 28,
+      "automatedOnly": 0,
+      "complete": true
+    },
+    "baselineOnly": true,
+    "findings": [
+      "Actual staging cancellation reproduces both recovery-composition defects: member referral banner absent and retry loses passport/ref; investor retry loses documents destination.",
+      "All28 baseline PNGs individually image-inspected; cancellation text and public provider card readable in all7themes and both viewports. Known functional defects are historical baseline observations, not release approval."
+    ],
+    "blockingDefectsOpen": 0,
+    "limitation": "Two actual matched-state/cookie server cancellation observations are rendered across28 fresh anonymous candidate-frontend contexts. Member strip contains actual signup cancellation landing, then actual user Sign-in tab selection to expose the live public seal. No authenticated flow, credential, private data, application send or RLS proof; state/cookie never stored."
+  }
+}

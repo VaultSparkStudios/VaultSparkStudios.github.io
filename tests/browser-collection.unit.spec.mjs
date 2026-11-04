@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import http from 'node:http';
 import { once } from 'node:events';
-import { spawn } from '../scripts/lib/safe-spawn.mjs';
+import { spawn, spawnSync } from '../scripts/lib/safe-spawn.mjs';
 import { collectBrowserTests, validateBrowserCollection } from '../scripts/verify-browser-collection.mjs';
 
 test('preconnect gate checks public pages while preserving operator reports', async () => {
@@ -89,6 +89,7 @@ test('actual nav and visual specs audit the candidate, with an explicit visual o
   const requests = { candidate: [], decoy: [] };
   let broken = false;
   let decoyOrigin;
+  let primaryError;
   const servers = [];
   const listen = async (name) => {
     const server = http.createServer((req, res) => {
@@ -142,12 +143,34 @@ test('actual nav and visual specs audit the candidate, with an explicit visual o
       let output = '';
       child.stdout.on('data', chunk => { output += chunk; });
       child.stderr.on('data', chunk => { output += chunk; });
-      const timer = setTimeout(() => child.kill(), 45000);
+      let timedOut = false;
+      let shutdownTimer;
+      let rejectShutdown;
+      const shutdownDeadline = new Promise((_, reject) => { rejectShutdown = reject; });
+      // A loaded full suite can spend longer than45s starting Chromium. Keep a
+      // bounded allowance, and terminate this owned CLI's descendants as well:
+      // killing only its parent on Windows leaves workers holding fixture files.
+      const timer = setTimeout(() => {
+        timedOut = true;
+        if (process.platform === 'win32' && Number.isInteger(child.pid)) {
+          const stopped = spawnSync('taskkill', ['/PID', String(child.pid), '/T', '/F'], {
+            windowsHide: true, encoding: 'utf8', timeout: 10000,
+          });
+          if (stopped.status !== 0) output += `\nOwned process-tree termination failed: ${stopped.error?.message || stopped.stderr || stopped.status}`;
+        }
+        if (child.exitCode === null && child.signalCode === null) child.kill();
+        shutdownTimer = setTimeout(() => {
+          child.stdout.destroy();
+          child.stderr.destroy();
+          rejectShutdown(new Error(`Browser fixture exceeded120s and failed to close within10s: ${name}\n${output}`));
+        }, 10000);
+      }, 120000);
       try {
-        const [status] = await once(child, 'close');
+        const [status] = await Promise.race([once(child, 'close'), shutdownDeadline]);
+        assert.equal(timedOut, false, `Browser fixture exceeded120s: ${name}\n${output}`);
         assert.doesNotMatch(output, /No tests found/);
         return { status, output };
-      } finally { clearTimeout(timer); }
+      } finally { clearTimeout(timer); clearTimeout(shutdownTimer); }
     };
     const nav = sources['nav-dropdown-coverage'];
     let result = await run('nav-dropdown-coverage', nav);
@@ -182,13 +205,21 @@ test('actual nav and visual specs audit the candidate, with an explicit visual o
     assert.equal(result.status, 0, result.output);
     assert.equal(requests.candidate.length, 0, 'the old fallback bypasses the configured candidate');
     assert.ok(requests.decoy.includes('/'), 'origin observations detect the old fallback mutation');
+  } catch (error) {
+    primaryError = error;
+    throw error;
   } finally {
     await Promise.all(servers.map(server => new Promise(resolve => { server.close(resolve); server.closeAllConnections(); })));
     assert.equal(path.dirname(path.resolve(dir)), path.resolve(os.tmpdir()));
     assert.ok(path.basename(dir).startsWith('vs-browser-origins-'));
     // Windows may release Chromium/report handles just after child close.
     // Retry this guarded fixture root briefly; persistent cleanup errors fail.
-    fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
+    try {
+      fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
+    } catch (cleanupError) {
+      if (primaryError) throw new AggregateError([primaryError, cleanupError], 'Browser fixture failed and cleanup also failed', { cause: primaryError });
+      throw cleanupError;
+    }
   }
 });
 

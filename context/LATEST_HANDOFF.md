@@ -1,3 +1,19 @@
+<!-- S410-local-runtime-acceptance -->
+## S410 current local runtime acceptance
+
+Native full build/postbuild passed. The actual215-case mobile audit passed at2026-11-04T05:21:19.019Z; owned preview closed. Visual406 is current:392 original primary frames retained,14 fresh full-Desk after frames and14 historical before frames directly inspected. Source/candidate/PNG hashes passed native validation. See docs/S410_mobile-acceptance.json and docs/RELEASE_S410.json. Complete source549, current staging, exact hosted/account checks and authorized publication/production/readback remain pending; these local results do not prove real private-role access.
+
+<!-- S410-closeout-writeback -->
+## Where We Left Off (Session 410)
+
+Three selected verification repairs are locally accepted: deterministic early-reaction ordering, bounded guarded Windows fixture cleanup, and startup source/release evidence. Browser17/17,31 evidence-kernel cases and independent review pass. Combined release acceptance remains pending; historical source548/mobile215/visual406 do not prove the merged candidate.
+
+The new native goal01a1a424-fcbc-7f91-9461-d697bb287c76 owns fresh S410, begun2026-11-04T04:15:49.861Z. S409 partial recovery checkpoint e6535f0b76 is distinct. New audit: docs/AUDIT_2026-11-04.json; implementation: docs/S410_implementation.json; combined release: docs/RELEASE_S410.json. Current main integration c5799e9513 preserves upstream November3 Desk content; stash3997c53d82a07dec0441caaf1c5254aafcd83dec remains retained. Real member/investor journeys remain unverified, and existing authorization does not substitute for functional proof.
+
+Wave1 fresh startup/audit complete. Wave2 three selected L2 repairs locally verified. Wave3 combined-source/current staging/hosted/account acceptance and Wave4 main/production/readback/final closeout follow the live RELEASE_S410 ledger; they are not claimed complete by this writeback. Keep S410 lock/binding on continuation. No new audit or session on automatic continuation.
+
+Session Intent: full fresh arc plus existing authorized normal main push and full deployment. Local selection is verified; overall requested release is incomplete. Positive account proof, current complete source, current staging, exact hosted checks, normal main publication, production and complete served readback remain required. CDR reviewed: no new founder creative direction this invocation; prior S409 direction remains authoritative. No source fingerprint or private identity is borrowed.
+
 <!-- S410-implementation-verified -->
 ## S410 selected implementation verified locally
 
@@ -94,3 +110,7 @@ Seven existing private-fixture browser cases remain skipped; historical optional
 ---
 
 <!-- S406-explicit-closeout-2026-10-29 -->
+
+
+<!-- S410-staging-acceptance -->
+S410 current verification: full549 native0/source fingerprint6a8a78dd9aab8fcc72282f89; actual18006-file staging deployment and served206-entry receipt ledger verified; candidate parity green. Native ceremony11/11 passed in scoped mode. Explicit unscoped browser6/6 (held0,failed0,skipped0,flaky0) and attention15/15 passed. First explicit attempt had one Firefox navigation flake and remains recorded. Main publication, exact candidate hosted workflows, real positive member/investor journeys and full production/readback remain pending. Authoritative ledger: docs/RELEASE_S410.json.

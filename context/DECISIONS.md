@@ -1219,3 +1219,17 @@ Use SESSION_PROTOCOL §3.0 partial handoff at the genuine authenticated-account 
 ### S410 bounded verification repairs
 
 Keep actual runtime reaction behavior unchanged: the failure was a300ms fixture scheduling assumption. Use a held response and preserve replay/normal-click assertions. Retry only the guarded temporary fixture removal with bounded native Windows cleanup options. Current source truth comes from validated command evidence, not historical green counters; active release status stays separate. The broad timing checker flags inherited S409 WIP; preserve its failed verdict and baseline replay of all three unchanged selected source targets. Final closeout must reconcile active-session coherence; neither limitation is silently green.
+
+
+<!-- S410-local-runtime-acceptance -->
+### S410 release boundary and Canon posture
+
+CANON-045 STRONG gap remains explicit: real affected member/investor acceptance is unverified; retain the canonical provider, signed flow and approval/data gates. Existing deployment authorization is valid. Read-only GitHub API confirms legacy warm Pages publishes main; Cloudflare/Worker push interlocks hold their own production steps. Do not publish changed identity behavior to the warm origin or change the unresolved warm-origin architecture to bypass missing functional acceptance. The Obelisk owner request01K6IFCUOP330741545BEDEAE6 is shipped, not an applied fix or deployment signature.
+
+
+<!-- S410-premise-composition-clarification -->
+S410 timing-record clarification: the230 dirty paths at the gate comprised226 inherited paths plus4 newly written audit/plan admission records. None of the four selected implementation source files was dirty. Preserve the native nonpassing timing verdict and baseline replay; no score, velocity or historical test result changes.
+
+
+<!-- S410-browser-lifecycle-correction -->
+S410 acceptance correction: full source attempt4 failed at129 after128 passes. The browser fixture hit its45second parent-only cancellation and cleanup EPERM; retrying removal alone was insufficient. The selected cleanup outcome now uses an explicit120second deadline, bounded owned process-tree termination, bounded close wait and combined primary/cleanup error reporting. Final focused17/17 passed; forced-timeout negative probe failed explicitly and removed its fixture, with no owned CLI/direct descendants remaining. Independent lifecycle review approved. Full source and release remain pending; no additional shipped item, score or velocity is claimed. Evidence: docs/S410_browser-lifecycle-acceptance.json.

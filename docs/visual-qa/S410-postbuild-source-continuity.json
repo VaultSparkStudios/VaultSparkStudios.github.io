@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-11-04T05:08:04.223Z",
+  "previousReceipt": "S410-master-after-camera-before-build.json",
+  "previousReceiptSha256": "88c885ad3c47b8f662d70ed1e02580481dc5c00ad692e498c37cc4c8754ec0ae",
+  "changedSourceFiles": [
+    "api/index.html",
+    "assets/shell-manifest.json"
+  ],
+  "checks": {
+    "allRenderedHtmlAndJavascriptCssByteIdentical": true,
+    "shellManifestPayloadsDeepEqualExcludingGeneratedAt": true,
+    "apiDirectoryOutsideEveryObservedRoute": true,
+    "all406PngHashesUnchanged": true
+  },
+  "scope": "The full native build changes only API directory HTML and shell generatedAt within this receipt source set. All actual captured HTML, JavaScript, CSS and other bound files match capture-time bytes. Retain every real capture/inspection timestamp; update only source/candidate association.",
+  "sourceBefore": "b359893b3fe23b835978eb73707d1c0d358d0161516f4cb52ce4ff23136496bd",
+  "sourceAfter": "c888a65ea39b6f208f92db879aa448438c0c001728931048e13a03c05eb36f25"
+}
