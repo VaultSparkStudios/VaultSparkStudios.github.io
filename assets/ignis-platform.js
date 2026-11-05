@@ -32,6 +32,52 @@
   var API_URL  = '/api/ignis-platform-status.json';
   var CACHE_MS = 10 * 60 * 1000; // 10 minutes
 
+  // This panel can arrive after the browser has followed the Oracle fragment.
+  // Reconcile that initial arrival once, without overriding a visitor's intent.
+  function initialOracleArrival() {
+    if (location.hash !== '#oracle') return { settle: function () {} };
+    // The comparison panel adds its default query with replaceState during
+    // hydration; that automatic metadata update is not visitor navigation.
+    var initialUrl = location.pathname + location.hash;
+    var active = true;
+    var frame = null;
+    var timer = null;
+    var intentEvents = ['wheel', 'touchstart', 'touchmove', 'pointerdown', 'hashchange', 'popstate', 'pagehide'];
+    var scrollingKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End', ' ', 'Tab'];
+    function cleanup() {
+      active = false;
+      clearTimeout(timer);
+      if (frame !== null) cancelAnimationFrame(frame);
+      intentEvents.forEach(function (event) { window.removeEventListener(event, cleanup); });
+      window.removeEventListener('keydown', onKey);
+    }
+    function onKey(event) {
+      if (scrollingKeys.indexOf(event.key) !== -1) cleanup();
+    }
+    intentEvents.forEach(function (event) { window.addEventListener(event, cleanup, { passive: true }); });
+    window.addEventListener('keydown', onKey);
+    timer = setTimeout(cleanup, 10000);
+    return {
+      settle: function (hydrated) {
+        if (!active) return;
+        if (!hydrated || location.pathname + location.hash !== initialUrl) { cleanup(); return; }
+        frame = requestAnimationFrame(function () {
+          frame = null;
+          if (!active) return;
+          var target = document.getElementById('oracle');
+          if (target && location.pathname + location.hash === initialUrl) {
+            var margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+            if (Math.abs(target.getBoundingClientRect().top - margin) > 1) {
+              target.scrollIntoView({ block: 'start', behavior: 'instant' });
+            }
+          }
+          cleanup();
+        });
+      }
+    };
+  }
+  var oracleArrival = initialOracleArrival();
+
   var STATUS_COLORS = {
     green:  '#22c55e',
     yellow: '#eab308',
@@ -124,7 +170,7 @@
   }
 
   function hydrate(data) {
-    if (!data || data._placeholder) return;
+    if (!data || data._placeholder) return false;
 
     // SIL metrics
     var sil = data.sil || {};
@@ -172,15 +218,17 @@
       el.style.display = '';
       el.setAttribute('aria-hidden', 'false');
     });
+    return true;
   }
 
   function init() {
     loadData(function (err, data) {
       if (err) {
         console.warn('ignis-platform: failed to load data', err);
+        oracleArrival.settle(false);
         return;
       }
-      hydrate(data);
+      oracleArrival.settle(hydrate(data));
     });
   }
 

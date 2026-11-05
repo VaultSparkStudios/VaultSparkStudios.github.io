@@ -1,0 +1,108 @@
+{
+  "session": "S411",
+  "scope": "Read-only discovery of website-owned isolated staging data capability",
+  "outcome": "No existing isolated website Supabase-compatible staging data target found in bounded metadata inspected. Existing host capacity and root SSH provide an agent path; Ops must provide a website-owned endpoint/gateway keys/schema/seeds. Website owns existing Worker and browser data-plane targeting and verification; new Obelisk bridge registration is not established as necessary.",
+  "resourcesMutated": false,
+  "credentialsMutated": false,
+  "privateApplicationRowsRead": false,
+  "networkSurface": "Canonical shared-host SSH only; no cloud resources created",
+  "gateway": {
+    "library": "../vaultspark-studio-ops/scripts/lib/hetzner-ssh.mjs",
+    "secretResolver": "getSecret from scripts/lib/secrets.mjs",
+    "capabilities": {
+      "studio.postgres.admin": "MISSING: STUDIO_PG_ADMIN_URL",
+      "supabase.admin": "READY: 2/2 keys present, provider acceptance recorded 2026-11-04",
+      "hetzner.ssh": "Live read-only root SSH succeeded"
+    }
+  },
+  "probes": [
+    {
+      "command": "node ../vaultspark-studio-ops/scripts/check-secrets.mjs --for studio.postgres.admin",
+      "exitCode": 1,
+      "result": "Admin DSN missing"
+    },
+    {
+      "command": "node ../vaultspark-studio-ops/scripts/ops.mjs blocker-preflight",
+      "exitCode": 0,
+      "result": "Agent-attemptable supabase.admin path identified; service role does not confer shared Postgres owner DSN or isolated target"
+    },
+    {
+      "command": "node ../vaultspark-studio-ops/scripts/check-secrets.mjs --for supabase.admin",
+      "exitCode": 0,
+      "result": "Ready"
+    },
+    {
+      "command": "node ../vaultspark-studio-ops/scripts/check-supabase-image-set.mjs --json",
+      "exitCode": 0,
+      "result": "102 containers measured; 5 Supabase stacks, each off canonical image set. Metadata shows existing other-project ownership; no website stack."
+    },
+    {
+      "command": "node .cache/S411-db-readonly-probe.mjs",
+      "exitCode": 0,
+      "sshExitCode": 0,
+      "result": "uid 0; root filesystem 150G total,70G used,75G available,49%; memory31337MB total,10136MB available; swap4095MB used of4095MB. Only website directory found at /opt/studio/staging/website. Legacy provisioner exists."
+    },
+    {
+      "command": "node .cache/S411-db-readonly-probe.mjs provisioner",
+      "exitCode": 0,
+      "sshExitCode": 0,
+      "result": "Read source only. Legacy copier uses count-derived ports, copies existing template, appends shared Caddy configuration and reloads, runs docker compose, prints freshly generated credentials, and reads a direct SMTP environment variable. Not executed."
+    },
+    {
+      "command": "node .cache/S411-db-readonly-probe.mjs metadata",
+      "exitCode": 0,
+      "sshExitCode": 0,
+      "result": "Legacy template exists. Shared canonical stack catalog SELECTs found zero website-named database/schema/role. This is bounded name-based catalog evidence, not proof of absence in every possible service."
+    }
+  ],
+  "artifactVersions": {
+    "canonicalProvisioner": "../vaultspark-studio-ops/scripts/provision-project-db.mjs, schema-per-project Model B, dry-run by default; reviewed source",
+    "canonicalImagePin": "../vaultspark-studio-ops/portfolio/SUPABASE_IMAGE_SET.json; reviewed source",
+    "hostLegacyProvisioner": "/opt/studio/scripts/new-project.sh, 1920bytes, mtime2026-04-02; reviewed source only",
+    "discoveryScript": ".cache/S411-db-readonly-probe.mjs"
+  },
+  "ownerDependencies": [
+    {
+      "owner": "Studio Ops",
+      "requestedOutcome": "Website-owned isolated Supabase-compatible staging endpoint with gateway keys, schema and synthetic seeds",
+      "actualDependency": "Approved scoped provisioning artifact on existing host; no legacy copier execution or sibling resource reuse",
+      "acceptanceEvidenceRequired": "Isolated endpoint differs from production; scoped credentials/roles/RLS; schema/seeds and health; bounded ports/routes/images; rollback and no sibling data access"
+    },
+    {
+      "owner": "Website root agent",
+      "requestedOutcome": "Apply and verify Worker/browser isolated data-plane targeting using existing Obelisk provider contract",
+      "actualDependency": "Ops endpoint, gateway keys/schema/seeds applied; website Worker already owns supabaseUrl/anon key/serviceRole, identity-link and compatibility-session creation",
+      "sourceEvidence": [
+        "cloudflare/obelisk-auth.js:149-153",
+        "cloudflare/obelisk-auth.js:482+",
+        "cloudflare/obelisk-auth.js:834-840"
+      ],
+      "acceptanceEvidenceRequired": "Worker and browser target same isolated endpoint; synthetic account session/member-data sign-in/logout evidence; production untouched; no new deployment-owner signature required"
+    },
+    {
+      "owner": "Obelisk (conditional only)",
+      "requestedOutcome": "Sanctioned test mailbox/enrollment procedure if provider intervention proves required",
+      "actualDependency": "Actual provider-contract or enrollment need; new bridge registration is not mandatory on current evidence. Existing issuer/client/redirect may remain.",
+      "acceptanceEvidenceRequired": "Only if required: sanctioned synthetic enrollment evidence; existing signup challenge200 alone is not completed account fixture"
+    }
+  ],
+  "acceptance": {
+    "readOnlyDiscovery": "verified",
+    "existingIsolatedTarget": "unproven",
+    "provisionedEndpoint": "not performed",
+    "authBridge": "Website-owned existing bridge configuration; new provider registration not established as necessary",
+    "isolatedAccountFixture": "not passing",
+    "newBillingRequired": "not established; existing host has capacity but topology resource bounds need owner review",
+    "humanBlocked": false,
+    "arkFollowup": "Await root review; no cargo sent by this subagent"
+  },
+  "reviewedAt": "2026-11-04T23:01:51.433Z",
+  "artifactHashes": {
+    "../vaultspark-studio-ops/scripts/provision-project-db.mjs": "502db8b26f1a20143cfced9606bd4c0ef17b10d71f01c7e68ab5bbed4f95694a",
+    "../vaultspark-studio-ops/scripts/lib/hetzner-ssh.mjs": "218737acc964d310908e3ead2dbe7aefd5b0f1c638c082979a493c28357604f2",
+    "../vaultspark-studio-ops/portfolio/SUPABASE_IMAGE_SET.json": "2aeccd217b0e8d4904dce4de62ee5b34ab49681ff7ffedb2c817a0b6257a9e52",
+    ".cache/S411-db-readonly-probe.mjs": "85b8b440804476f103ba933e0c6341ef78b4793d35f5f9d8b191c54ad1b90383",
+    "cloudflare/obelisk-auth.js": "dc806de939ab5125d995693c8d5f82bf5380d8b36fba21f00754abd9821b4ac8"
+  },
+  "ownershipCorrection": "Root source-evidence correction incorporated; no new deployment-owner-signature requirement"
+}

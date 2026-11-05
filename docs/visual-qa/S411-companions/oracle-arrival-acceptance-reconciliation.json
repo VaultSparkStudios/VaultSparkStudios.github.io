@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "session": 411,
+  "reconciledAt": "2026-11-05T06:19:54.984Z",
+  "currentModuleSha256": "fb8d402bb6c4139ef9bc5b6f5539c5dda070b45ff29dc6d8d087449eb7b21031",
+  "currentTestSha256": "fce216455a035d64a15b819623ebc4347c548001e3fd732258ece71279591ca0",
+  "currentCandidateRoot": "915ae0498b796e1a283467295635a0173634b5488fc70bb107a5111acc2595e9",
+  "observedBeforeBug": {
+    "nativeBefore14": {
+      "file": ".cache/S411/oracle-arrival-before/manifest.json",
+      "sha256": "0b0ebb03599404b869bbfc7a169fe98406835cc0bfe7cb12575cc7bc5a8fd667"
+    },
+    "actualImageReview": {
+      "file": ".cache/S411/oracle-arrival-before-image-review.json",
+      "sha256": "040adcaf15b381fa52181e006e0ace495eeb90ffd75c5ed8e732603bb9d11c35"
+    },
+    "timeline": {
+      "file": ".cache/S411/oracle-arrival-timeline/manifest.json",
+      "sha256": "7360b320a1f625596f4eb6425439faba3d7d28b39434bb5f5dde1d54cc030edb"
+    },
+    "scope": "Actual real-redirect warm mobile before frame showed Learning/Focus instead of Oracle; measured asynchronous platform-panel expansion after initial native fragment landing."
+  },
+  "currentPassing": {
+    "durableNative6": {
+      "file": ".cache/S411/oracle-arrival-native-tests-final-tab/manifest.json",
+      "sha256": "7370f64e2142b15566fc81cd7a97deed7ecf795c38c58fecafccefdf733e6d4b"
+    },
+    "normalNative14": {
+      "file": ".cache/S411/oracle-arrival-after-final/manifest.json",
+      "sha256": "c2458e1d8bba2845de1246788164f2f0f1784a6992fc956a0fbe26f9c8d3b7c0"
+    },
+    "actual14ImageReview": {
+      "file": ".cache/S411/oracle-arrival-after-final-image-review.json",
+      "sha256": "4bdb2daecdba014662b41783f061a60bfca8948742b59aaab5928e63cffd119a"
+    }
+  },
+  "preservedNonpassing": [
+    {
+      "manifest": {
+        "file": ".cache/S411/oracle-arrival-native-tests/manifest.json",
+        "sha256": "ec428c3c8087f0fc235ba1eb680cd0d352d8b7d020c35a8df36f014f907315ed"
+      },
+      "classification": "All6 rejected legitimate app comparison query before behavior assertions; exact original spec+recipe preserved."
+    },
+    {
+      "manifest": {
+        "file": ".cache/S411/oracle-arrival-native-tests-final/manifest.json",
+        "sha256": "22ea745a44e278e1bbec48deae0eaa6107ef91663f4b8d143ada4d864909781c"
+      },
+      "classification": "4pass/2Tab premise failures: oneTab focused already-visible control; exact original spec+recipe preserved. Replaced by actual keyboard navigation until viewport changes."
+    },
+    {
+      "manifest": {
+        "file": ".cache/S411/oracle-arrival-regression/manifest.json",
+        "sha256": "e0fdee3b1a9b37dfcd0b18fc0e60ee397cd9e489544f169aab63e9cdc526f230"
+      },
+      "classification": "Current8cases pass; old negative invalid acquisition because redirect routing bypassed old HTML fixture."
+    },
+    {
+      "manifest": {
+        "file": ".cache/S411/oracle-arrival-regression-final/manifest.json",
+        "sha256": "ef43c2a36f6cd72e37f2279eeaf120ec47c8a17dbd1aa3ff1d99c97e2ff3b26a"
+      },
+      "classification": "Current8cases pass including timeout/error cleanup; old negative invalid acquisition because redirect routing bypassed old HTML fixture."
+    },
+    {
+      "manifest": {
+        "file": ".cache/S411/oracle-arrival-fixture-direct/manifest.json",
+        "sha256": "b9e35e51667e616c4ce91c64944a55d788db016450e0d3ea63d0f463a1c5539b"
+      },
+      "classification": "Valid exact-old destination fixture fulfilled both old HTML/module hashes; negative remained inconclusive because native browser anchored naturally. Native1 retained, never relabeled green. Current direct destination positive passed."
+    }
+  ],
+  "limitations": [
+    "Normal14 preserves cookie banner and covers only actual initial arrival viewport, not full body/provider responses.",
+    "No forced scroll, CSS anchoring disablement or enlarged pixel/geometry tolerance was introduced to manufacture a negative reproduction.",
+    "Actual prior before bug remains evidence; controlled direct-destination old negative is inconclusive and does not disprove that observed race.",
+    "No claim that every current slow-case run invoked the corrective branch: browser native anchoring can compensate naturally.",
+    "All native resources are closed and served-source/candidate guards remained stable."
+  ],
+  "globalReleaseAcceptance": false
+}

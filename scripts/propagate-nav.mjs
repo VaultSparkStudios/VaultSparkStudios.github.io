@@ -29,6 +29,8 @@ const SKIP_DIRS = new Set([
   // generated changelog draft failed check-nav-orphans at build:check step 237.
   '_drafts',
   'node_modules', 'playwright-report', 'test-results',
+  // Evidence snapshots are historical inputs, never deployable pages.
+  '.cache', '.ops-cache',
   'investor', 'investor-portal', 'studio-hub',
   '.ai', '.git', '.well-known', 'scripts',
   // S356: agent worktrees (.claude/worktrees/<name>/) are full repo checkouts; a

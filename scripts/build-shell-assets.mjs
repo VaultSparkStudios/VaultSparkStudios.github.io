@@ -39,6 +39,10 @@ const SHELL_ASSETS = [
   { key: 'investorAuth', source: 'assets/investor-auth.js', stem: 'investor-auth.shell', attribute: 'src' },
   { key: 'investorUi', source: 'assets/investor-ui.js', stem: 'investor-ui.shell', attribute: 'src' },
   { key: 'contactPage', source: 'assets/contact-page.js', stem: 'contact-page.shell', attribute: 'src' },
+  // These fixes must reach browsers that still cache the mutable module URLs.
+  { key: 'membershipInterview', source: 'assets/membership-interview.js', stem: 'membership-interview.shell', attribute: 'src' },
+  { key: 'membershipIdleLoader', source: 'assets/membership-idle-loader.js', stem: 'membership-idle-loader.shell', attribute: 'src' },
+  { key: 'ignisPlatform', source: 'assets/ignis-platform.js', stem: 'ignis-platform.shell', attribute: 'src' },
   { key: 'sentryInit', source: 'assets/sentry-init.js', stem: 'sentry-init.shell', attribute: 'src' },
   // The homepage idle loader imports this module dynamically. A query-string
   // revision still shares a mutable cache key at some edge layers and the
@@ -150,6 +154,7 @@ const SHELL_ASSETS = [
 // child change rotates the parent too and both ride the content lane together.
 const NESTED_SHELL_REFERENCES = {
   homeIdleLoader: ['vaultPulse', 'trustDepth', 'recentShips'],
+  membershipIdleLoader: ['membershipInterview'],
 };
 
 const HTML_SKIP_DIRS = new Set([

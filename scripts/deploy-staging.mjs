@@ -201,7 +201,9 @@ try {
   const archiveBytes = fs.statSync(archivePath).size;
   const archiveSha256 = await fileSha256(archivePath);
   // scp shares tar's colon-parsing: a `C:\` source reads as host `C`. Relative.
-  checked(run('scp', ['-i', key, '-o', 'BatchMode=yes', '-o', 'StrictHostKeyChecking=accept-new', archiveRel, `${sshTarget}:${remoteArchive}`], { timeout: 300_000 }), 'staging upload');
+  // S411: the verified 4 GiB archive was still transferring at five minutes.
+  // Bound transfer separately from remote commands, without accepting a partial upload.
+  checked(run('scp', ['-i', key, '-o', 'BatchMode=yes', '-o', 'StrictHostKeyChecking=accept-new', archiveRel, `${sshTarget}:${remoteArchive}`], { timeout: 1_200_000 }), 'staging upload');
 
   const deploy = [
     'set -eu',

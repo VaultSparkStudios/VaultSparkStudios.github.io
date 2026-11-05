@@ -1,9 +1,9 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         Source UNVERIFIED: 23/549 steps; 1 failed;…    ║
+║  ✓  Tests         Source 549/549 steps passing                   ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⚠  Context age   10d                                            ║
-║  ✓  IGNIS         45133 FORGE  ·  0d old                         ║
+║  ⚠  Context age   11d                                            ║
+║  ✓  IGNIS         45133 FORGE  ·  1d old                         ║
 ║  ⛔  Truth         yellow — S410 local implementation…            ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
@@ -11,7 +11,7 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  0d old (2026-11-04)                            ║
+║  ✓  Revenue sig.  1d old (2026-11-04)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
 ║  ✓  Codex trust   trusted project active                         ║

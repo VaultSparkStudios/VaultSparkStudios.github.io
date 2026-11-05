@@ -1,0 +1,54 @@
+{
+  "scope": "Read-only review of proposed page-local inline CSS; no source edit or after acceptance",
+  "source": "vault/tombstones/index.html",
+  "sourceSha256": "8a32fe7c6494361abdc5086a55e40748d1727839b17ac412569bf4cd60ed3f5b",
+  "loadedStylesheet": "assets/style.shell-dafcbbf695.css",
+  "loadedLightTokens": {
+    "bg": "#f6efe5",
+    "panel-strong": "rgba(255,249,242,0.97)",
+    "line": "rgba(22,32,51,0.12)",
+    "text": "#162033",
+    "muted": "#334155",
+    "gold": "#8a6000 (later body.light-mode rule overrides initial #7a5c00)"
+  },
+  "proposal": "tombstones-readability-proposed.patch",
+  "specificity": [
+    "Existing page-local .tomb-card and .tomb-kind selectors retained; stylesheet link precedes inline CSS.",
+    "No !important, global selector, theme root override, layout, markup, auth or behavior change.",
+    "--tomb-accent scoped to each .tomb-card and inherited by its pseudo-elements only.",
+    "Theme tokens are inherited from active body class; no fixed light/dark foreground-surface conflict.",
+    "Existing focus-visible rules and link semantics remain in force; hover uses theme gold tint."
+  ],
+  "contrastReview": {
+    "method": "WCAG relative-luminance calculation using conservative light background #f6efe5 darkened by full6% muted overlay. Successor backgrounds then tinted8% default/14% hover with loaded gold. Estimates are not rendered-pixel acceptance.",
+    "mainTextMinimumEstimate": 10.88,
+    "mutedTextMinimumEstimate": 6.91,
+    "newAccent": "color-mix(in srgb, var(--gold) 80%, var(--text))",
+    "accentMinimumEstimateOnHover": 4.71,
+    "reasonForAccent": "Pure loaded gold estimated3.73 on conservative hover tint; redundant arrow/bullet symbols receive stronger scoped foreground rather than relying on decorative status.",
+    "borders": "Decorative surfaces and outlines retain themed low-opacity lines; no 3:1 claim for decorative borders. Labels remain readable independently of border."
+  },
+  "beforeEvidence": {
+    "originalsActuallyViewed": 84,
+    "themes": 7,
+    "widths": [
+      1366,
+      390,
+      320
+    ],
+    "receipt": "tombstones-before-image-review.json",
+    "nativeExit": 0,
+    "allServedSourceBytesStable": true,
+    "browserClosed": true,
+    "serverClosed": true,
+    "findings": [
+      "Severe light card foreground contrast across all four cards and all three widths.",
+      "320px successor labels and headings wrap without horizontal card clipping.",
+      "Fixed origin/status dot contacts first lesson line right edge at one320px scroll position; visible chrome retained, separate global concern."
+    ]
+  },
+  "afterRecipe": ".cache/S411-capture-tombstones-after.mjs",
+  "afterRecipeStatus": "Prepared, not executed; same7themes and1366/390/320 viewports, real viewport scroll steps, visible chrome, localGET/HEAD restrictions, immutable output, source guard and cleanup as before recipe. Adds recipe and before manifest hash binding.",
+  "applyStatus": "Waiting root edit window; tracked source unchanged",
+  "globalAcceptance": false
+}

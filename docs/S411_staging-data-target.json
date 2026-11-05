@@ -1,0 +1,58 @@
+{
+  "session": 411,
+  "observedAt": "2026-11-04T21:54:15.961Z",
+  "method": "Actual anonymous HTML and referenced browser-safe client GETs; no account/private-row reads.",
+  "observations": [
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "entranceStatus": 200,
+      "scriptStatus": 200,
+      "scriptPath": "/assets/supabase-client.shell-bd7ccf3b3d.js",
+      "scriptSha256": "bd7ccf3b3d02bdb1c3edf4b1ce6d854d4739cfbf4e7eb93ef7f00a22ae6171e1",
+      "publicDataOrigin": "https://fjnpzjjyhnpmunfoycrp.supabase.co",
+      "projectRef": "fjnpzjjyhnpmunfoycrp"
+    },
+    {
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "entranceStatus": 200,
+      "scriptStatus": 200,
+      "scriptPath": "/assets/supabase-client.shell-bd7ccf3b3d.js",
+      "scriptSha256": "bd7ccf3b3d02bdb1c3edf4b1ce6d854d4739cfbf4e7eb93ef7f00a22ae6171e1",
+      "publicDataOrigin": "https://fjnpzjjyhnpmunfoycrp.supabase.co",
+      "projectRef": "fjnpzjjyhnpmunfoycrp"
+    }
+  ],
+  "sameBrowserProject": true,
+  "samePublicKey": true,
+  "keyValuesPersisted": false,
+  "appliedDatabasePoliciesIndependentlyQueried": false,
+  "conclusion": "Separate browser business-data target not demonstrated. Do not grant test investor rights until isolated target or a separately scoped safe fixture policy is established.",
+  "sourceEvidence": {
+    "client": "assets/supabase-client.js synchronously creates client from these constants; no staging override currently present.",
+    "investorPolicy": "supabase-investor-phase1.sql79–95 source is keyed by authenticated UUID and investor tier/status; applied database policy remains unqueried."
+  },
+  "additionalDiscovery": {
+    "observedAt": "2026-11-04T22:43:24.121Z",
+    "managedCloudProjects": 2,
+    "isolatedWebsiteStagingTargetVerified": false,
+    "privateEvidence": ".cache/S411/existing-data-project-discovery.json",
+    "note": "Secondary cloud project appears in existing reviewed application contracts; metadata does not establish it as sanctioned isolated website staging. No resource created or project repurposed."
+  },
+  "deployedPolicyMetadata": {
+    "projectRef": "fjnpzjjyhnpmunfoycrp",
+    "observed": true,
+    "providerEnforcedReadOnly": true,
+    "relations": [
+      "investor_requests",
+      "investors",
+      "obelisk_identity_link",
+      "profiles"
+    ],
+    "allRlsEnabled": true,
+    "policyCount": 8,
+    "privateEvidence": ".cache/S411/own-access-policy-metadata.json",
+    "applicationRowsRead": 0,
+    "policyChanges": 0,
+    "limitations": "Definitions observed, not authenticated runtime access or isolated fixture proof. Helper-function semantics and actual caller reads remain unverified."
+  }
+}

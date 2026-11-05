@@ -9,6 +9,7 @@
 // the static slot. Any one of those missing turns a zero-CLS strip into a shift.
 
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
 
 const ROOT = process.cwd();
@@ -98,10 +99,50 @@ const REQUIRED_MATRIX_PATTERNS = [
   { id: 'disk-preflight-flag', pattern: /valueFor\('--min-disk-mb'\)/ },
 ];
 
-const REQUIRED_MEMBERSHIP_PATTERNS = [
-  { id: 'membership-idle-loader-script', pattern: /<script src="\/assets\/membership-idle-loader\.js" defer><\/script>/ },
-  { id: 'membership-no-eager-rank-projector', pattern: /<script src="\/assets\/rank-projector\.js" defer><\/script>/, absent: true },
-];
+// Shell filenames are accepted only through the producer's manifest identity.
+// The loader embeds the fingerprinted interview path, so compare its actual
+// bytes with the normalized source plus that one verified child substitution.
+function membershipFailures(membershipSource, shellManifest, readAsset) {
+  const failures = [];
+  const rawLoader = 'assets/membership-idle-loader.js';
+  const scripts = [...membershipSource.matchAll(/<script\b[^>]*\bsrc\s*=\s*["']([^"']+)["'][^>]*>[\s\S]*?<\/script>/g)];
+  const loaders = scripts.filter((match) => match[1].startsWith('/assets/membership-idle-loader'));
+  let expectedPath = rawLoader;
+  if (loaders.some((match) => match[1] !== '/' + rawLoader)) {
+    try {
+      const verifyEntry = (key, source, expectedText = null) => {
+        const entry = shellManifest?.assets?.[key];
+        if (!entry || entry.source !== source || !/^[a-f0-9]{10}$/.test(entry.hash || '')
+            || entry.path !== source.slice(0, -3) + '.shell-' + entry.hash + '.js') {
+          throw new Error('invalid shell mapping');
+        }
+        const bytes = Buffer.from(readAsset(entry.path));
+        if (createHash('sha256').update(bytes).digest('hex').slice(0, 10) !== entry.hash) {
+          throw new Error('stale shell hash');
+        }
+        const expected = expectedText ?? Buffer.from(readAsset(source)).toString('utf8').replace(/\r\n/g, '\n');
+        if (!bytes.equals(Buffer.from(expected, 'utf8'))) throw new Error('shell bytes differ from source');
+        return entry;
+      };
+      const child = verifyEntry('membershipInterview', 'assets/membership-interview.js');
+      const expectedLoader = Buffer.from(readAsset(rawLoader)).toString('utf8').replace(/\r\n/g, '\n')
+        .replace(/\/assets\/membership-interview(?:\.shell-[a-f0-9]{10})?\.js(?:\?[^'"]*)?/g, '/' + child.path);
+      expectedPath = verifyEntry('membershipIdleLoader', rawLoader, expectedLoader).path;
+    } catch {
+      failures.push('membership/index.html: invalid membership-idle-loader-manifest');
+      expectedPath = null;
+    }
+  }
+  if (loaders.length !== 1 || !expectedPath
+      || loaders[0][0] !== '<script src="/' + expectedPath + '" defer></script>') {
+    failures.push('membership/index.html: missing membership-idle-loader-script');
+  }
+  // Direct rank scripts defeat idle loading, regardless of defer/attribute order.
+  if (scripts.some((match) => /^\/assets\/rank-projector(?:\.shell-[a-f0-9]{10})?\.js(?:[?#].*)?$/.test(match[1]))) {
+    failures.push('membership/index.html: unexpected membership-no-eager-rank-projector');
+  }
+  return failures;
+}
 
 function extractCriticalShell(source) {
   const match = source.match(/const CRITICAL_SHELL_CSS = '([\s\S]*?)';/);
@@ -113,7 +154,7 @@ function extractCriticalShell(source) {
     .replace('@media(min-width:641px) and (max-width:980px){.container', '@media(min-width:641px) and (max-width:1024px){.container') : '';
 }
 
-function collectFailures({ shellSource, styleSource, perfSource, membershipSource, navSource }) {
+function collectFailures({ shellSource, styleSource, perfSource, membershipSource, navSource, shellManifest, readAsset }) {
   const critical = extractCriticalShell(shellSource);
   const failures = [];
 
@@ -130,10 +171,7 @@ function collectFailures({ shellSource, styleSource, perfSource, membershipSourc
   for (const check of REQUIRED_MATRIX_PATTERNS) {
     if (!check.pattern.test(perfSource)) failures.push(`measure-page-performance: missing ${check.id}`);
   }
-  for (const check of REQUIRED_MEMBERSHIP_PATTERNS) {
-    const found = check.pattern.test(membershipSource);
-    if (check.absent ? found : !found) failures.push(`membership/index.html: ${check.absent ? 'unexpected' : 'missing'} ${check.id}`);
-  }
+  failures.push(...membershipFailures(membershipSource, shellManifest, readAsset));
 
   return failures;
 }
@@ -189,6 +227,49 @@ function runSelfTest() {
   const noCompactionStyle = collectFailures({ ...base, styleSource: goodStyle.replace('padding-inline: 0.35rem', 'padding-inline: 0.8rem') });
   if (!noCompaction.includes('critical-shell: missing desktop-nav-compaction')) throw new Error('self-test did not catch a critical shell missing the desktop nav compaction block');
   if (!noCompactionStyle.includes('style.css: missing desktop-nav-compaction-full-css')) throw new Error('self-test did not catch style.css losing the desktop nav compaction block');
+  // Use producer-shaped fixtures; arbitrary fingerprint-looking URLs must fail.
+  const childSource = 'window.interviewFixture = true;\n';
+  const loaderSource = "load('/assets/membership-interview.js');\n";
+  const shortHash = (text) => createHash('sha256').update(text).digest('hex').slice(0, 10);
+  const childHash = shortHash(childSource);
+  const childPath = 'assets/membership-interview.shell-' + childHash + '.js';
+  const loaderBytes = loaderSource.replace('/assets/membership-interview.js', '/' + childPath);
+  const loaderHash = shortHash(loaderBytes);
+  const loaderPath = 'assets/membership-idle-loader.shell-' + loaderHash + '.js';
+  const fixtureManifest = { assets: {
+    membershipInterview: { source: 'assets/membership-interview.js', path: childPath, hash: childHash },
+    membershipIdleLoader: { source: 'assets/membership-idle-loader.js', path: loaderPath, hash: loaderHash },
+  } };
+  const fixtureFiles = new Map([
+    ['assets/membership-interview.js', childSource], [childPath, childSource],
+    ['assets/membership-idle-loader.js', loaderSource], [loaderPath, loaderBytes],
+  ]);
+  const fixtureRead = (file) => {
+    if (!fixtureFiles.has(file)) throw new Error('missing fixture asset');
+    return Buffer.from(fixtureFiles.get(file));
+  };
+  const hashedTag = '<script src="/' + loaderPath + '" defer></script>';
+  const hashed = { ...base, membershipSource: hashedTag, shellManifest: fixtureManifest, readAsset: fixtureRead };
+  const checks = [
+    ['valid manifest-resolved alias', collectFailures(hashed).length === 0],
+    ['missing manifest', collectFailures({ ...hashed, shellManifest: null }).some((x) => x.includes('invalid membership-idle-loader-manifest'))],
+    ['malformed manifest entry', collectFailures({ ...hashed, shellManifest: { assets: { ...fixtureManifest.assets, membershipIdleLoader: { ...fixtureManifest.assets.membershipIdleLoader, hash: 'not-a-hash' } } } }).some((x) => x.includes('invalid membership-idle-loader-manifest'))],
+    ['unknown alias', collectFailures({ ...hashed, membershipSource: hashedTag.replace(loaderHash, '0000000000') }).some((x) => x.includes('missing membership-idle-loader-script'))],
+    ['missing alias bytes', collectFailures({ ...hashed, readAsset: (file) => { if (file === loaderPath) throw new Error('missing'); return fixtureRead(file); } }).some((x) => x.includes('invalid membership-idle-loader-manifest'))],
+    ['stale alias bytes', collectFailures({ ...hashed, readAsset: (file) => file === loaderPath ? Buffer.from(loaderBytes + '// stale') : fixtureRead(file) }).some((x) => x.includes('invalid membership-idle-loader-manifest'))],
+    ['wrong source mapping', collectFailures({ ...hashed, shellManifest: { assets: { ...fixtureManifest.assets, membershipIdleLoader: { ...fixtureManifest.assets.membershipIdleLoader, source: 'assets/other.js' } } } }).some((x) => x.includes('invalid membership-idle-loader-manifest'))],
+    ['wrong path mapping', collectFailures({ ...hashed, shellManifest: { assets: { ...fixtureManifest.assets, membershipIdleLoader: { ...fixtureManifest.assets.membershipIdleLoader, path: '../' + loaderPath } } } }).some((x) => x.includes('invalid membership-idle-loader-manifest'))],
+    ['changed raw source', collectFailures({ ...hashed, readAsset: (file) => file === 'assets/membership-idle-loader.js' ? Buffer.from(loaderSource + '// changed') : fixtureRead(file) }).some((x) => x.includes('invalid membership-idle-loader-manifest'))],
+    ['stale child bytes', collectFailures({ ...hashed, readAsset: (file) => file === childPath ? Buffer.from(childSource + '// stale') : fixtureRead(file) }).some((x) => x.includes('invalid membership-idle-loader-manifest'))],
+    ['missing defer', collectFailures({ ...hashed, membershipSource: hashedTag.replace(' defer', '') }).some((x) => x.includes('missing membership-idle-loader-script'))],
+    ['async instead of defer', collectFailures({ ...hashed, membershipSource: hashedTag.replace(' defer', ' async') }).some((x) => x.includes('missing membership-idle-loader-script'))],
+    ['missing loader', collectFailures({ ...hashed, membershipSource: '' }).some((x) => x.includes('missing membership-idle-loader-script'))],
+    ['duplicate loader', collectFailures({ ...hashed, membershipSource: hashedTag + hashedTag }).some((x) => x.includes('missing membership-idle-loader-script'))],
+    ['eager raw rank', collectFailures({ ...hashed, membershipSource: hashedTag + '<script src="/assets/rank-projector.js" defer></script>' }).some((x) => x.includes('unexpected membership-no-eager-rank-projector'))],
+    ['eager rank without defer', collectFailures({ ...hashed, membershipSource: hashedTag + '<script src="/assets/rank-projector.js"></script>' }).some((x) => x.includes('unexpected membership-no-eager-rank-projector'))],
+    ['eager hashed rank', collectFailures({ ...hashed, membershipSource: hashedTag + '<script src="/assets/rank-projector.shell-aaaaaaaaaa.js" defer></script>' }).some((x) => x.includes('unexpected membership-no-eager-rank-projector'))],
+  ];
+  for (const [name, ok] of checks) if (!ok) throw new Error('self-test membership alias: ' + name);
   console.log('critical-shell-geometry self-test passed');
 }
 
@@ -203,7 +284,10 @@ function main() {
   const perfSource = readFileSync(resolve(ROOT, 'scripts/measure-page-performance.mjs'), 'utf8');
   const membershipSource = readFileSync(resolve(ROOT, 'membership/index.html'), 'utf8');
   const navSource = readFileSync(resolve(ROOT, 'scripts/propagate-nav.mjs'), 'utf8');
-  const failures = collectFailures({ shellSource, styleSource, perfSource, membershipSource, navSource });
+  let shellManifest = null;
+  try { shellManifest = JSON.parse(readFileSync(resolve(ROOT, 'assets/shell-manifest.json'), 'utf8')); } catch { /* alias validation fails closed */ }
+  const readAsset = (relative) => readFileSync(resolve(ROOT, relative));
+  const failures = collectFailures({ shellSource, styleSource, perfSource, membershipSource, navSource, shellManifest, readAsset });
 
   if (failures.length) {
     console.error('check-critical-shell-geometry failed:');

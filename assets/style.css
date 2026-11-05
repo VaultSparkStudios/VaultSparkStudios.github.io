@@ -5163,6 +5163,15 @@ body.light-mode .intel-suite a[aria-current="page"] small {
 .nav-right .vs-palette-loader-trigger {
   flex: 0 0 86px;
 }
+@media (max-width: 360px) {
+  .site-header .nav { gap: 0.2rem; }
+  .site-header .nav-right { gap: 0.2rem; }
+  .site-header .nav-right .vs-palette-loader-trigger {
+    flex-basis: 74px;
+    gap: 0.2rem;
+    padding-inline: 0.3rem;
+  }
+}
 @media (max-width: 640px) {
   .nav-right {
     min-width: 139.6px;
