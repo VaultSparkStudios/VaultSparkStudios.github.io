@@ -18,3 +18,6 @@ The last verified staging readback describes the earlier artifact root beginning
 Next, seal and verify the exact QA commit through required hosted checks, deploy and verify the current staging candidate, and complete real new-member/profile and approved-investor private-data journeys. Main publication and production promotion remain pending release requirements despite existing authorization. Production access policy remains unchanged.
 
 No full closeout or completed release is claimed. [RELEASE_S411.json](../docs/RELEASE_S411.json) records the public technical release state.
+
+
+Local release followup repairs the delayed membership bar covering an open mobile drawer and illustration discussions not initializing after explicit opening. Seven focused browser cases and26 comment unit cases passed. The742-primary-capture visual receipt preserves the earlier644 objects and retains147 new before plus147 new after originals. This development delivery candidate requires canonical integration/build, current hosted checks, isolated authenticated journeys, staging and production acceptance.

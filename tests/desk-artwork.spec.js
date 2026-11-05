@@ -77,3 +77,42 @@ test('expanded story overview leads artwork and illustration labels stay fully v
   expect(await labels.evaluateAll(ns=>ns.every(n=>n.scrollWidth<=n.clientWidth+1&&getComputedStyle(n).textOverflow!=='ellipsis'))).toBe(true);
  }
 });
+
+for (const mode of ['already-open-before-module', 'open-after-initialization']) {
+ test(`image comments honor explicit open intent (${mode})`,async({page})=>{
+  await page.setViewportSize({width:1366,height:900});
+  const gets=[];let release,requested;
+  const gate=new Promise(r=>release=r),held=new Promise(r=>requested=r);
+  await page.route(/\/assets\/desk-comments(?:\.shell-[a-f0-9]+)?\.js$/,async route=>{
+   requested();await gate;await route.continue();
+  });
+  await page.route('**/v/desk-comments?*',async route=>{
+   const slug=new URL(route.request().url()).searchParams.get('slug');gets.push(slug);
+   await route.fulfill({json:{ok:true,slug,count:0,comments:[]}});
+  });
+  // No POST is issued by these tests. Unexpected writes fail rather than reaching a backend.
+  await page.route('**/v/desk-comments',route=>route.abort());
+  try{
+   await page.goto(ROUTE);await held;
+   const image=page.locator('[data-comment-target="editorial-illustration-1"]');
+   const cartoon=page.locator('[data-comment-target="satire-cartoon"]');
+   const slug=await image.getAttribute('data-slug'),other=await cartoon.getAttribute('data-slug');
+   expect(slug).not.toBe(other);expect(gets).not.toContain(slug);expect(gets).not.toContain(other);
+   if(mode==='already-open-before-module')await page.getByText('Comment on the illustration',{exact:true}).click();
+   release();await page.waitForFunction(()=>window.VSAfterPaint?.done===true);
+   if(mode==='open-after-initialization')await page.getByText('Comment on the illustration',{exact:true}).click();
+   await expect(image.locator('textarea')).toBeVisible();
+   expect(gets.filter(s=>s===slug)).toHaveLength(1);expect(gets).not.toContain(other);
+   await page.getByText('Comment on the illustration',{exact:true}).click();
+   await expect(image.locator('textarea')).toBeHidden();
+   await page.getByText('Comment on the illustration',{exact:true}).click();
+   await expect(image.locator('textarea')).toBeVisible();
+   expect(gets.filter(s=>s===slug)).toHaveLength(1);expect(gets).not.toContain(other);
+   await page.getByText('Comment on the cartoon',{exact:true}).click();
+   await expect(cartoon.locator('textarea')).toBeVisible();
+   expect(gets.filter(s=>s===other)).toHaveLength(1);
+   expect(await cartoon.getAttribute('data-slug')).toBe(other);
+   expect(await image.getAttribute('data-slug')).toBe(slug);
+  }finally{release();}
+ });
+}
