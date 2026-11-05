@@ -14,13 +14,13 @@ jobs:
   compliance:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # build-sha ancestry is a compliance assertion; a shallow checkout
           # cannot distinguish a recent ancestor from an unrelated SHA.
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
 
@@ -145,7 +145,7 @@ jobs:
 
       - name: Upload compliance results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: compliance-results
           path: playwright-report/
@@ -153,7 +153,7 @@ jobs:
 
       - name: Upload mobile runtime proof
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: mobile-runtime-proof
           path: docs/mobile-audit/
@@ -161,7 +161,7 @@ jobs:
 
       - name: Upload light-mode screenshots
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: light-mode-screenshots
           path: test-results/
@@ -173,9 +173,9 @@ jobs:
     # Only run when auth secrets are available (skips gracefully on forks/dependabot)
     if: ${{ vars.E2E_ENABLED != 'false' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
 
@@ -215,7 +215,7 @@ jobs:
 
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-results
           path: |
