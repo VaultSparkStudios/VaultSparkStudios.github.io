@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "session": 411,
   "state": "in-progress",
-  "updatedAt": "2026-11-05T10:26:13.754Z",
+  "updatedAt": "2026-11-05T11:01:25.245Z",
   "authorization": "Existing direct main commit/push and full staging-to-production deployment authorization persists.",
   "audit": "docs/AUDIT_2026-11-04-S411.json",
   "implementation": "docs/S411_implementation.json",
@@ -128,6 +128,11 @@
     "handoffRepair": {
       "state": "passed-focused-check",
       "scope": "Historical Session410 reference restored; Session411 and deployment explicitly unfinished; public intelligence stays in sync."
+    },
+    "postVerificationChange": {
+      "state": "hosted-verification-pending",
+      "scope": "Exact Wrangler4.90.0 dependency pin and decision record",
+      "limitation": "The complete local549-step pass predates the manifest-only Wrangler4.90.0 pin and its decision record. The installed CLI and runtime artifact are unchanged. Exact final-commit hosted verification remains pending; the recorded source fingerprint is historical."
     }
   },
   "staging": {

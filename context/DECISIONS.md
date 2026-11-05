@@ -1233,3 +1233,8 @@ S410 timing-record clarification: the230 dirty paths at the gate comprised226 in
 
 <!-- S410-browser-lifecycle-correction -->
 S410 acceptance correction: full source attempt4 failed at129 after128 passes. The browser fixture hit its45second parent-only cancellation and cleanup EPERM; retrying removal alone was insufficient. The selected cleanup outcome now uses an explicit120second deadline, bounded owned process-tree termination, bounded close wait and combined primary/cleanup error reporting. Final focused17/17 passed; forced-timeout negative probe failed explicitly and removed its fixture, with no owned CLI/direct descendants remaining. Independent lifecycle review approved. Full source and release remain pending; no additional shipped item, score or velocity is claimed. Evidence: docs/S410_browser-lifecycle-acceptance.json.
+
+
+## S411 — pin the verified release CLI
+
+The release keeps Wrangler4.90.0, the installed CLI used for the completed local checks, as an exact dependency instead of a caret range. Live registry review found the range would select a release published minutes earlier. The retained version has a verified npm registry signature, the expected Cloudflare source repository, established publisher continuity and no install lifecycle scripts. Other dependencies remain unchanged. This is a build-tool resolution constraint; it changes no public authentication, access policy or runtime UI. Hosted checks must verify the final QA commit after this manifest change.
