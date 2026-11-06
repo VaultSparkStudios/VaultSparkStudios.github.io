@@ -19,9 +19,9 @@ jobs:
     # CF_API_TOKEN needs Zone / Cache Purge permission.
     # CF_ZONE_ID is the zone ID for vaultsparkstudios.com (found in Cloudflare dashboard).
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
 
