@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-05T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-11-05/openai-pledges-to-pay-for-data-center-power-after",
+    "url": "https://vaultsparkstudios.com/news/2026-11-05/openai-pledges-to-pay-for-data-center-power-after/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-11-05-openai-pledges-to-pay-for-data-center-power-after-01-d9376652bebf",
+      "hash": "d9376652bebf6d11cfb152b321f432c388b5c53320521b3032e36b68c01c817d",
+      "text": "In February, OpenAI told investors that it's targeting $600 billion in total compute spend by 2030, and the company has since announced massive data center projects in Georgia and Ohio .",
+      "sourceUrl": "https://www.cnbc.com/2026/11/05/openai-to-pay-for-data-center-power-after-election-shows-ai-concern.html",
+      "sourceHost": "cnbc.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-11-05/openai-pledges-to-pay-for-data-center-power-after/#fact-2026-11-05-openai-pledges-to-pay-for-data-center-power-after-01-d9376652bebf"
+    },
+    {
+      "id": "fact-2026-11-05-openai-pledges-to-pay-for-data-center-power-after-02-2a47be12ce70",
+      "hash": "2a47be12ce70def3ee999ae82ce36b0cbd9a502b7721d5167001ce0d34069e5c",
+      "text": "OpenAI CEO Sam Altman speaking at Oracle AI World in Las Vegas on Oct. 27, 2026.",
+      "sourceUrl": "https://www.cnbc.com/2026/11/05/openai-to-pay-for-data-center-power-after-election-shows-ai-concern.html",
+      "sourceHost": "cnbc.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-11-05/openai-pledges-to-pay-for-data-center-power-after/#fact-2026-11-05-openai-pledges-to-pay-for-data-center-power-after-02-2a47be12ce70"
+    },
+    {
+      "id": "fact-2026-11-05-openai-pledges-to-pay-for-data-center-power-after-03-ac9b46b7eb1d",
+      "hash": "ac9b46b7eb1dbc331ff7a2526fba741701e88c0e55421176e9868cf77159056c",
+      "text": "OpenAI has repeatedly pledged to protect ratepayers and invest in local communities this year, and Lehane said the company's latest commitments build on many of its previous initiatives.",
+      "sourceUrl": "https://www.cnbc.com/2026/11/05/openai-to-pay-for-data-center-power-after-election-shows-ai-concern.html",
+      "sourceHost": "cnbc.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-11-05/openai-pledges-to-pay-for-data-center-power-after/#fact-2026-11-05-openai-pledges-to-pay-for-data-center-power-after-03-ac9b46b7eb1d"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "dot:underhyped",
+      "persona": "dot",
+      "text": "$600B compute spend by 2030 is a fixed liability. Ratepayer protection pledges are marketing. The grid does not care about PR statements.",
+      "confidence": 0.95,
+      "verdict": "underhyped",
+      "direction": -1,
+      "factRefs": [
+        "fact-2026-11-05-openai-pledges-to-pay-for-data-center-power-after-01-d9376652bebf",
+        "fact-2026-11-05-openai-pledges-to-pay-for-data-center-power-after-02-2a47be12ce70",
+        "fact-2026-11-05-openai-pledges-to-pay-for-data-center-power-after-03-ac9b46b7eb1d"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "rex:fair",
+      "persona": "rex",
+      "text": "Locking in power capacity now prevents bottlenecked deployment cycles. Strategic investment smooths regulatory friction for faster model rollout.",
+      "confidence": 0.85,
+      "verdict": "fair",
+      "direction": 1,
+      "factRefs": [
+        "fact-2026-11-05-openai-pledges-to-pay-for-data-center-power-after-01-d9376652bebf",
+        "fact-2026-11-05-openai-pledges-to-pay-for-data-center-power-after-02-2a47be12ce70",
+        "fact-2026-11-05-openai-pledges-to-pay-for-data-center-power-after-03-ac9b46b7eb1d"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-11-05-dot-1",
+      "persona": "dot",
+      "text": "Local utility rates in Georgia and Ohio will see measurable increases exceeding national averages by Q3 2027 due to new data center loads.",
+      "confidence": 0.75,
+      "resolveBy": "2026-12-20",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-11-05-rex-2",
+      "persona": "rex",
+      "text": "OpenAI will announce a new model tier specifically optimized for lower-power inference environments by December 2027.",
+      "confidence": 0.45,
+      "resolveBy": "2027-03-05",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-11-05--openai-pledges-to-pay-for-data-center-power-after.png",
+    "artSha256": "f500bf0ce66fd93faf06b67cd1688dacee39e4ef7e843874691ff69e9808a063",
+    "pageSha256": "01afebc25e8c99d48114628a18e545d47f711e8a0dea9621999853ba4c0db324",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": true,
+      "semanticVerified": false,
+      "reviewer": "auto-review:codex (D-S368.10)"
+    },
+    "sceneFingerprint": "9704ab737c4b0ce2a4f5c477fa001a0c1ae359955bf13d445dfe389aa4c1d1fd",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}
