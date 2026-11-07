@@ -1,7 +1,8 @@
 {
   "date": "2026-11-07",
   "simulated": false,
-  "leadSlug": "openai-reportedly-raises-an-additional-11-billion-at-a",
+  "leadSlug": "ai-begins-resisting-human-control-anthropic-researchers-identify-emerging",
+  "quietStorySlug": "ai-begins-resisting-human-control-anthropic-researchers-identify-emerging",
   "stories": [
     {
       "slug": "anthropic-ipo-buyers-see-valuation-as-low-as-1",
@@ -441,6 +442,131 @@
         "fellBack": false,
         "attempt": 1,
         "at": "2026-11-07T18:17:38.467Z"
+      }
+    },
+    {
+      "slug": "ai-begins-resisting-human-control-anthropic-researchers-identify-emerging",
+      "format": "explainer",
+      "kind": "quiet",
+      "edition": "latenight",
+      "headline": "Anthropic data shows AI is reshaping researcher workflows, not taking over",
+      "hook": "New Anthropic research reveals where researchers actually spend time with AI tools.",
+      "tldr": "Anthropic’s latest research into how scientists use Claude offers a grounded look at current capabilities versus future expectations. By 2030, most researchers expect AI to match human performance in data analysis and writing, yet scientific breakthroughs remain distant. Currently, data analysis dominates session usage, far exceeding actual time spent on the task. This gap suggests AI is becoming a primary interface for information processing rather than just a helper. The findings highlight a shift in daily workflow that precedes any major autonomous leaps.",
+      "facts": [
+        {
+          "text": "By 2030, 94% expect AI will match the best researchers in data analysis, 89% in writing, and 72% each in ideation and data gathering.",
+          "sourceUrl": "https://www.anthropic.com/research/how-researchers-use-claude"
+        },
+        {
+          "text": "Expectations that AI will autonomously produce scientific breakthroughs are more cautious still, with approximately half of researchers expecting this to occur only after 2035, if ever.",
+          "sourceUrl": "https://www.anthropic.com/research/how-researchers-use-claude"
+        },
+        {
+          "text": "Data analysis accounts for 33.7% of sessions on Claude and 48.1% on Claude Code, compared with 27.6% of researcher time.",
+          "sourceUrl": "https://www.anthropic.com/research/how-researchers-use-claude"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "rex",
+          "direction": 1,
+          "horizon": 1,
+          "verdict": "fair",
+          "confidence": 0.85,
+          "position": "The surge in data analysis sessions signals an immediate shift in how knowledge workers process information, unlocking faster iteration cycles before broader autonomy arrives.",
+          "sources": [
+            "https://www.anthropic.com/research/how-researchers-use-claude"
+          ]
+        },
+        {
+          "personaId": "dot",
+          "direction": -1,
+          "horizon": 0,
+          "verdict": "underhyped",
+          "confidence": 0.9,
+          "position": "Data analysis accounts for 33.7% of sessions but only 27.6% of time, indicating a cost inefficiency in tool adoption that requires scrutiny before scaling.",
+          "sources": [
+            "https://www.anthropic.com/research/how-researchers-use-claude"
+          ]
+        }
+      ],
+      "predictions": [],
+      "transcript": [
+        {
+          "personaId": "rex",
+          "text": "Look at the session counts. Data analysis is eating up 33.7% of all interactions on Claude. That is not a side quest. It is the main event. You are watching the interface of research change in real time."
+        },
+        {
+          "personaId": "dot",
+          "text": "Sessions do not equal hours. Researchers spend 27.6% of their time on data analysis. The tool is being used more frequently than the task demands. That is friction. That is waste."
+        }
+      ],
+      "memeLine": {
+        "text": "AI isn't taking over science yet; it's just doing the spreadsheet work you hate.",
+        "personaId": "rex"
+      },
+      "body": [
+        {
+          "voice": "rex",
+          "text": "We are past the phase of asking if AI can write code or summarize papers. The question now is where it fits into the actual rhythm of discovery. Anthropic’s new report on how researchers use Claude provides the first hard look at this integration. The data shows a clear preference for data analysis, which accounts for 33.7% of sessions on Claude and 48.1% on Claude Code. This is significantly higher than the 27.6% of researcher time actually spent on the task. You are seeing a tool that is being adopted as a primary lens for viewing information, not just a secondary assistant. The expectation for this capability is high: by 2030, 94% of researchers expect AI to match the best humans in data analysis. We are moving toward that reality, one session at a time."
+        },
+        {
+          "voice": "dot",
+          "text": "High session volume does not mean high value. If data analysis takes up 33.7% of sessions but only 27.6% of time, the ratio is skewed. Researchers are interacting with the model more often than their core workflow requires. This could indicate inefficient prompting, excessive verification, or simply a learning curve that has not yet flattened. Writing is expected to match human performance by 2030 according to 89% of respondents, yet ideation and data gathering sit at 72%. The gap between expectation and current utility is wide. Until the session-to-time ratio aligns, the efficiency gains are theoretical. You are paying for access, not necessarily output quality."
+        },
+        {
+          "voice": "rex",
+          "text": "Don't miss the horizon. While data analysis is the present, the long game is autonomous breakthroughs. Expectations here are cautious: approximately half of researchers expect this to occur only after 2035, if ever. This restraint is healthy. It prevents the hype cycle from distorting the roadmap. The immediate impact is in the details—ideation and data gathering are already seeing significant traction. As these tools mature, they will likely expand beyond analysis into the earlier stages of hypothesis formation. The infrastructure for this shift is being built right now in the session logs. Watch what happens when the convenience of data analysis becomes the default entry point for every scientific query."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-11-07--ai-begins-resisting-human-control-anthropic-researchers-identify-emerging.png",
+        "scene": "A sterile laboratory bench where a single glowing terminal screen displays a complex dataset, surrounded by empty chairs and coffee cups, with a faint shadow of a researcher looming behind the desk. The composition shows sessions account for data analysis.",
+        "alt": "A close-up view of a computer monitor showing lines of code and data tables, with a blurred background of a quiet office space and a single chair pushed back from the desk. The composition shows sessions account for data analysis.",
+        "anchors": [
+          "data analysis accounts",
+          "researcher time",
+          "scientific breakthroughs"
+        ],
+        "relationships": [
+          {
+            "id": "ai-dominates-sessions",
+            "subject": [
+              "sessions"
+            ],
+            "action": [
+              "account for"
+            ],
+            "object": [
+              "data analysis"
+            ],
+            "evidenceAnchorRefs": [
+              "data analysis accounts"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "f047d66a80b482268200eb6361baa3dbfebea9b59e52c84adb93208234bc9734",
+          "semanticVerified": false,
+          "reviewed": false,
+          "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)",
+          "kind": "procedural-fallback",
+          "entropy": 1.135
+        },
+        "generatedArt": false,
+        "satire": {
+          "target": "The corporate tech industry's relentless pursuit of automation metrics without understanding actual user behavior",
+          "setup": "Companies boast about AI replacing jobs while ignoring that users are just using it to do more of the same work faster",
+          "payoff": "Researchers spend less time on actual analysis because the tool creates more sessions, not fewer hours of labor",
+          "institutional": true
+        }
+      },
+      "authoredBy": {
+        "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "requested": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "fellBack": false,
+        "attempt": 2,
+        "at": "2026-11-07T22:14:42.239Z"
       }
     }
   ]
