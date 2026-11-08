@@ -58,7 +58,8 @@ const REQUIRED_CRITICAL_PATTERNS = [
   // overflowed and pushed .nav-right 71.1px right of its settled x — measured
   // on the async-CSS routes (/ and /status/) as a ~0.0021 shift naming
   // .nav-right as a source even though its own width never changed.
-  { id: 'desktop-nav-compaction', pattern: /@media\(min-width:1025px\)\{\.nav\{gap:\.6rem\}\.nav-center>a,\.nav-center>\.nav-item>a\{padding-inline:\.35rem\}\}/ },
+  { id: 'desktop-nav-compaction', pattern: /@media\(min-width:1025px\)\{\.nav\{gap:\.6rem\}\.nav-center\{gap:\.1rem\}\.nav-right\{gap:\.35rem\}\.nav-center>a,\.nav-center>\.nav-item>a\{padding-inline:\.2rem\}\}/ },
+  { id: 'desktop-brand-fit', pattern: /@media\(min-width:1025px\) and \(max-width:1366px\)\{\.brand small,\.brand \.brand-suffix\{display:none\}\}/ },
   { id: 'desk-wire-height-reservation', pattern: /\.desk-wire\{height:36px;overflow:hidden;/ },
   { id: 'desk-wire-label-fixed-basis', pattern: /\.desk-wire__label\{flex:0 0 9\.5rem;/ },
   { id: 'desk-wire-headline-flex-ellipsis', pattern: /\.desk-wire__headline\{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap\}/ },
@@ -84,7 +85,8 @@ const REQUIRED_STYLE_PATTERNS = [
   { id: 'nav-right-tablet-reservation-full-css', pattern: /@media \(min-width: 721px\) and \(max-width: 1024px\)\s*\{\s*\.nav-right\s*\{\s*min-width:\s*145\.6px;/ },
   // The critical shell mirrors this block verbatim; if it is edited here and
   // not there, first paint diverges from the stylesheet again.
-  { id: 'desktop-nav-compaction-full-css', pattern: /@media \(min-width: 1025px\)\s*\{\s*\.nav \{ gap: 0\.6rem; \}\s*\.nav-center > a,\s*\.nav-center > \.nav-item > a \{ padding-inline: 0\.35rem; \}/ },
+  { id: 'desktop-nav-compaction-full-css', pattern: /@media \(min-width: 1025px\)\s*\{\s*\.nav \{ gap: 0\.6rem; \}\s*\.nav-center \{ gap: 0\.1rem; \}\s*\.nav-right \{ gap: 0\.35rem; \}\s*\.nav-center > a,\s*\.nav-center > \.nav-item > a \{ padding-inline: 0\.2rem; \}/ },
+  { id: 'desktop-brand-fit-full-css', pattern: /@media \(min-width: 1025px\) and \(max-width: 1366px\)\s*\{\s*\.brand small, \.brand \.brand-suffix \{ display: none; \}\s*\}/ },
 ];
 
 const REQUIRED_NAV_PATTERNS = [
@@ -146,7 +148,9 @@ function membershipFailures(membershipSource, shellManifest, readAsset) {
 
 function extractCriticalShell(source) {
   const match = source.match(/const CRITICAL_SHELL_CSS = '([\s\S]*?)';/);
-  return match ? match[1]
+  const brand = source.match(/const DESKTOP_BRAND_CSS = '([^']*)';/);
+  const consumesBrand = /const RESPONSIVE_CRITICAL_SHELL_CSS = \(CRITICAL_SHELL_CSS \+ RANK_THEME_CSS \+ DESKTOP_BRAND_CSS\)/.test(source);
+  return match ? (match[1] + (brand && consumesBrand ? brand[1] : ''))
     .replace('.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0}', '.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0;min-height:44px}')
     .replace('.hamburger{display:none}', '.hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;border:0;background:transparent;padding:0}')
     .replace('.hero-ticker{min-height:42px;', '.hero-ticker{min-height:44px;')
@@ -159,6 +163,10 @@ function collectFailures({ shellSource, styleSource, perfSource, membershipSourc
   const failures = [];
 
   if (!critical) failures.push('critical-shell: CRITICAL_SHELL_CSS not found');
+  const consumers = [...shellSource.matchAll(/<style data-vs-critical-shell>\$\{([^}]+)\}<\/style>/g)];
+  if (!consumers.length || consumers.some(match => match[1] !== 'RESPONSIVE_CRITICAL_SHELL_CSS')) {
+    failures.push('critical-shell: composed CSS not consumed by every style emission');
+  }
   for (const check of REQUIRED_CRITICAL_PATTERNS) {
     if (!check.pattern.test(critical)) failures.push(`critical-shell: missing ${check.id}`);
   }
@@ -178,8 +186,8 @@ function collectFailures({ shellSource, styleSource, perfSource, membershipSourc
 
 function runSelfTest() {
   const deskCritical = '.desk-wire{height:36px;overflow:hidden;border-top:1px solid var(--header-border)}.desk-wire__label{flex:0 0 9.5rem;display:inline-flex}.desk-wire__headline{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}@media(max-width:430px){.desk-wire{display:none}}';
-  const navRightCritical = '.nav-icon-link{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;color:var(--muted);flex-shrink:0}.nav-signin{color:var(--muted);font-size:.88rem;font-weight:600;padding:.44rem .8rem;border-radius:8px;white-space:nowrap}.nav-right .vs-palette-loader-trigger{flex:0 0 86px}@media(max-width:640px){.nav-right{min-width:139.6px}}@media(min-width:641px) and (max-width:720px){.nav-right{min-width:241.2px}}@media(min-width:721px) and (max-width:1024px){.nav-right{min-width:145.6px}}@media(min-width:1025px){.nav{gap:.6rem}.nav-center>a,.nav-center>.nav-item>a{padding-inline:.35rem}}';
-  const goodShell = "const CRITICAL_SHELL_CSS = '@media(max-width:1024px){.nav-center{display:none}.hamburger{display:flex}.nav-right{min-width:0}.nav-right::after{display:none}.nav-right .nav-signin,.nav-right .button.button-sm,.nav-right .nav-icon-link{display:none}}@media(min-width:641px) and (max-width:1024px){.container{padding-left:1.5rem;padding-right:1.5rem}}@media(max-width:768px){.brand small,.brand .brand-suffix{display:none}.brand>span{font-size:.85rem;letter-spacing:-.01em}.brand{gap:.45rem}.brand img{width:32px;height:32px}}.hero-ticker{min-height:44px;display:flex;align-items:center;justify-content:center}.theme-picker{position:relative;flex:0 0 92px}.theme-picker-btn{display:flex;min-width:92px}.forge-letter{opacity:1}" + deskCritical + navRightCritical + "';";
+  const navRightCritical = '.nav-icon-link{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;color:var(--muted);flex-shrink:0}.nav-signin{color:var(--muted);font-size:.88rem;font-weight:600;padding:.44rem .8rem;border-radius:8px;white-space:nowrap}.nav-right .vs-palette-loader-trigger{flex:0 0 86px}@media(max-width:640px){.nav-right{min-width:139.6px}}@media(min-width:641px) and (max-width:720px){.nav-right{min-width:241.2px}}@media(min-width:721px) and (max-width:1024px){.nav-right{min-width:145.6px}}@media(min-width:1025px){.nav{gap:.6rem}.nav-center{gap:.1rem}.nav-right{gap:.35rem}.nav-center>a,.nav-center>.nav-item>a{padding-inline:.2rem}}@media(min-width:1025px) and (max-width:1366px){.brand small,.brand .brand-suffix{display:none}}';
+  const goodShell = "const CRITICAL_SHELL_CSS = '@media(max-width:1024px){.nav-center{display:none}.hamburger{display:flex}.nav-right{min-width:0}.nav-right::after{display:none}.nav-right .nav-signin,.nav-right .button.button-sm,.nav-right .nav-icon-link{display:none}}@media(min-width:641px) and (max-width:1024px){.container{padding-left:1.5rem;padding-right:1.5rem}}@media(max-width:768px){.brand small,.brand .brand-suffix{display:none}.brand>span{font-size:.85rem;letter-spacing:-.01em}.brand{gap:.45rem}.brand img{width:32px;height:32px}}.hero-ticker{min-height:44px;display:flex;align-items:center;justify-content:center}.theme-picker{position:relative;flex:0 0 92px}.theme-picker-btn{display:flex;min-width:92px}.forge-letter{opacity:1}" + deskCritical + navRightCritical + "';\nconst emitted = `<style data-vs-critical-shell>${RESPONSIVE_CRITICAL_SHELL_CSS}</style>`;";
   const goodStyle = [
     '.hero-ticker { min-height: 44px; display: flex; align-items: center; justify-content: center; }',
     '.desk-wire { height: 36px; overflow: hidden; }',
@@ -191,7 +199,8 @@ function runSelfTest() {
     '@media (max-width: 640px) { .nav-right { min-width: 139.6px; } }',
     '@media (min-width: 641px) and (max-width: 720px) { .nav-right { min-width: 241.2px; } }',
     '@media (min-width: 721px) and (max-width: 1024px) { .nav-right { min-width: 145.6px; } }',
-    '@media (min-width: 1025px) { .nav { gap: 0.6rem; }\n  .nav-center > a,\n  .nav-center > .nav-item > a { padding-inline: 0.35rem; } }',
+    '@media (min-width: 1025px) { .nav { gap: 0.6rem; } .nav-center { gap: 0.1rem; } .nav-right { gap: 0.35rem; }\n  .nav-center > a,\n  .nav-center > .nav-item > a { padding-inline: 0.2rem; } }',
+    '@media (min-width: 1025px) and (max-width: 1366px) { .brand small, .brand .brand-suffix { display: none; } }',
   ].join('\n');
   const goodNav = 'return `<header class="site-header">\n    <div class="container nav"></div>\n    <div class="desk-wire" data-desk-wire>\n      <div class="container desk-wire__inner">\n        <a class="desk-wire__link" href="/news/" data-desk-wire-link>x</a>\n      </div>\n    </div>\n  </header>`;';
   const goodPerf = "const MATRIX_PROFILES = ['tablet:768x1024:dark:2200:250', 'tablet-light:768x1024:light:2400:250']; valueFor('--batch-size'); valueFor('--min-disk-mb');";
@@ -223,10 +232,24 @@ function runSelfTest() {
   if (!noPhoneBand.includes('style.css: missing nav-right-phone-reservation-full-css')) throw new Error('self-test did not catch a missing phone nav-right reservation');
   if (!noPickerSlot.includes('style.css: missing theme-picker-slot-full-css')) throw new Error('self-test did not catch a theme picker that no longer fills its reserved 92px slot');
   if (!noSigninCritical.includes('critical-shell: missing nav-signin-critical-geometry')) throw new Error('self-test did not catch missing critical .nav-signin geometry');
-  const noCompaction = collectFailures({ ...base, shellSource: goodShell.replace('@media(min-width:1025px){.nav{gap:.6rem}.nav-center>a,.nav-center>.nav-item>a{padding-inline:.35rem}}', '') });
-  const noCompactionStyle = collectFailures({ ...base, styleSource: goodStyle.replace('padding-inline: 0.35rem', 'padding-inline: 0.8rem') });
+  const noCompaction = collectFailures({ ...base, shellSource: goodShell.replace('@media(min-width:1025px){.nav{gap:.6rem}.nav-center{gap:.1rem}.nav-right{gap:.35rem}.nav-center>a,.nav-center>.nav-item>a{padding-inline:.2rem}}', '') });
+  const noCompactionStyle = collectFailures({ ...base, styleSource: goodStyle.replace('padding-inline: 0.2rem', 'padding-inline: 0.8rem') });
   if (!noCompaction.includes('critical-shell: missing desktop-nav-compaction')) throw new Error('self-test did not catch a critical shell missing the desktop nav compaction block');
   if (!noCompactionStyle.includes('style.css: missing desktop-nav-compaction-full-css')) throw new Error('self-test did not catch style.css losing the desktop nav compaction block');
+  const noDesktopBrand = collectFailures({ ...base, shellSource: goodShell.replace('@media(min-width:1025px) and (max-width:1366px){.brand small,.brand .brand-suffix{display:none}}', '') });
+  const noDesktopBrandStyle = collectFailures({ ...base, styleSource: goodStyle.replace('.brand small, .brand .brand-suffix { display: none; }', '.brand .brand-suffix { display: inline; }') });
+  if (!noDesktopBrand.includes('critical-shell: missing desktop-brand-fit')) throw new Error('self-test did not catch missing critical desktop brand fit');
+  if (!noDesktopBrandStyle.includes('style.css: missing desktop-brand-fit-full-css')) throw new Error('self-test did not catch missing full stylesheet desktop brand fit');
+  const brandRule = '@media(min-width:1025px) and (max-width:1366px){.brand small,.brand .brand-suffix{display:none}}';
+  const composedBrandShell = goodShell.replace(brandRule, '') + "\nconst DESKTOP_BRAND_CSS = '" + brandRule + "';\nconst RESPONSIVE_CRITICAL_SHELL_CSS = (CRITICAL_SHELL_CSS + RANK_THEME_CSS + DESKTOP_BRAND_CSS)";
+  if (collectFailures({ ...base, shellSource: composedBrandShell }).length) throw new Error('self-test rejected consumed desktop brand CSS');
+  const unusedBrand = collectFailures({ ...base, shellSource: composedBrandShell.replace(' + DESKTOP_BRAND_CSS)', ')') });
+  if (!unusedBrand.includes('critical-shell: missing desktop-brand-fit')) throw new Error('self-test accepted unconsumed desktop brand CSS');
+  const noCaption = collectFailures({ ...base, shellSource: goodShell.replace(brandRule, brandRule.replace('.brand small,', '')) });
+  const noSuffix = collectFailures({ ...base, shellSource: goodShell.replace(brandRule, brandRule.replace(',.brand .brand-suffix', '')) });
+  if (!noCaption.includes('critical-shell: missing desktop-brand-fit') || !noSuffix.includes('critical-shell: missing desktop-brand-fit')) throw new Error('self-test accepted a partial compact brand rule');
+  const baseOnlyEmission = collectFailures({ ...base, shellSource: goodShell.replaceAll('${RESPONSIVE_CRITICAL_SHELL_CSS}', '${CRITICAL_SHELL_CSS}') });
+  if (!baseOnlyEmission.includes('critical-shell: composed CSS not consumed by every style emission')) throw new Error('self-test accepted base-only HTML style emission');
   // Use producer-shaped fixtures; arbitrary fingerprint-looking URLs must fail.
   const childSource = 'window.interviewFixture = true;\n';
   const loaderSource = "load('/assets/membership-interview.js');\n";

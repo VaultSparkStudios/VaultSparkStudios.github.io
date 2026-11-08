@@ -166,6 +166,10 @@ for (const vp of VIEWPORTS) {
           `,
         });
         await waitForVisualReadiness(page);
+        if (vp.name === 'desktop-1280') {
+          await expect(page.locator('.site-header .vs-palette-loader-trigger'))
+            .toBeInViewport({ ratio: 1 });
+        }
         if (surface.name === 'home') {
           await expect(page.locator('#hero-heading')).toBeVisible();
           await expect(page.locator('#hero-heading .forge-letter').first()).toHaveCSS('opacity', '1');

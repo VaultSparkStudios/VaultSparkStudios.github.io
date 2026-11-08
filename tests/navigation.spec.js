@@ -7,13 +7,14 @@ const path = require('path');
 const hasGamePage = (slug) => fs.existsSync(path.join(__dirname, '..', 'games', slug, 'index.html'));
 
 for (const width of [1280, 1366]) {
-  test(`Desktop header keeps every control inside its container at ${width}px`, async ({ page }) => {
+ for (const theme of ['dark', 'light', 'ambient', 'warm', 'cool', 'lava', 'high-contrast']) {
+  test(`Desktop header keeps every control inside its container at ${width}px · ${theme}`, async ({ page }) => {
     test.setTimeout(45000);
     await page.setViewportSize({ width, height: 900 });
-    await page.addInitScript(() => localStorage.setItem('vs_theme', 'high-contrast'));
+    await page.addInitScript(t => localStorage.setItem('vs_theme', t), theme);
     await page.goto(BASE + '/');
+    await page.keyboard.press('Shift');
     {
-      const theme = 'high-contrast';
       await page.mouse.move(-100, -100);
       await expect(page.locator('body')).toHaveAttribute('data-theme', theme);
       await page.waitForFunction(() => document.fonts.status === 'loaded' &&
@@ -37,6 +38,7 @@ for (const width of [1280, 1366]) {
       }
     }
   });
+ }
 }
 
 test('Anonymous header rank cue and tooltip have readable contrast in light theme', async ({ page }) => {

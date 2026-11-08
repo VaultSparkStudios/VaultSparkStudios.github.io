@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-08T09:51:33.024Z",
+  "scope": "Public-safe bounded continuation of pending S411 outcome5; no fresh arc, release acceptance or account/backend proof.",
+  "sourceHead": "3942b45cfd8ed7afcddd83417740ba91bde3503d",
+  "selectedSourceCleanBeforeAdmission": true,
+  "selectedSourceBefore": [
+    {
+      "file": "assets/style.css",
+      "sha256": "afb2378088ccce2d4c903334fcbe5cab88d931a3f0fdfb9b961408291accea3a"
+    },
+    {
+      "file": "scripts/build-shell-assets.mjs",
+      "sha256": "515db483957aedc35083c465c4377e6fa67b43897398149ac83b11e700dd779e"
+    },
+    {
+      "file": "tests/navigation.spec.js",
+      "sha256": "03c4d36f8cd044c6319ea48ddb2654b8120b673bcfa39d36668039ffe223bac2"
+    },
+    {
+      "file": "scripts/check-critical-shell-geometry.mjs",
+      "sha256": "8918d0a66a0f71d25304d1c323a4bf5f3b2753b65ff0d9400c88cea3142820d2"
+    },
+    {
+      "file": ".github/workflows/visual-regression.yml",
+      "sha256": "e3c8978f137540e1bedc244b01a386c80e59affdd6b8d8f097d5acd3d3c969c2"
+    },
+    {
+      "file": "tests/visual-regression.spec.js",
+      "sha256": "703fbefea9587d9bf06db7ac03e306aed574cb65bdc4a09b83e9e323444dba02"
+    }
+  ],
+  "priorContracts": [
+    {
+      "file": "docs/AUDIT_2026-11-08-S411.json",
+      "sha256": "9a0291f1d57a4660b8fc1f6d75e40e853c6aa1f0508c63b8aaea30d8a6e5a420"
+    },
+    {
+      "file": "docs/IMPLEMENT_PLAN.md",
+      "sha256": "707711f902f2431f1c97b2be682bfd1f02445ec0104c5cd91360f772a0938674"
+    }
+  ],
+  "nativeSourceCheck": {
+    "steps": 549,
+    "failedStep": 97,
+    "nativeExit": 1,
+    "reasonCodes": [
+      "critical-shell: missing desktop-nav-compaction",
+      "style.css: missing desktop-nav-compaction-full-css"
+    ],
+    "evidenceHash": "a9f5647dbc1f012dfd497209c9a4f5ecf855b1fc8a013585367372f907925262"
+  },
+  "linuxCapture": {
+    "run": 42467679680,
+    "sourceCommit": "ab775a24ff22ec59226f1a98130285c395029ea7",
+    "artifactId": 13612512494,
+    "artifactSha256": "sha256:18b57dbf451d81285c7955cc863b570ae0814e8d5be3b2b2c6db0c6df7cb18f3",
+    "artifactBytes": 41133073,
+    "nativePassed": 70,
+    "updateMode": "bare --update-snapshots",
+    "oldTrackedLinuxHashesRetained": 11,
+    "retainedKeys": [
+      "games-desktop-1280-dark",
+      "games-ipad-mini-dark",
+      "games-iphone-se-dark",
+      "home-ipad-mini-dark",
+      "home-pixel-5-dark",
+      "tombstones-desktop-1280-dark",
+      "tombstones-ipad-mini-dark",
+      "tombstones-iphone-13-dark",
+      "tombstones-iphone-se-dark",
+      "tombstones-pixel-5-dark",
+      "vault-member-iphone-se-dark"
+    ],
+    "freshAll70Proven": false,
+    "confirmedFinding": "Spark header control clipped at desktop1280 light; root direct pixel review confirmed.",
+    "oracleRepairSelected": false,
+    "modeInference": "Root inspected installed matcher and CLI: bare --update-snapshots selects changed mode; explicit all is required to replace every baseline. No speculative hydration repair selected."
+  },
+  "historicalWholeS411Timing": "nonpassing; preserved",
+  "freshArcComplete": false,
+  "productionPromoted": false
+}

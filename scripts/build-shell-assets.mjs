@@ -252,7 +252,9 @@ const CRITICAL_SHELL_CSS = ':root{--max:1200px;--nav-height:78px;--bg:#07080f;--
 
 const RANK_THEME_CSS = '.site-header .vs-rank-orb-anon::before{border-color:var(--muted,#a8b4d0)}.site-header .vs-rank-orb-anon .vs-rank-orb-num{color:var(--muted,#a8b4d0)}.site-header .vs-rank-orb-tip{background:var(--bg-soft,#0c0e18);color:var(--text,#eef2ff);border-color:var(--header-border)}';
 
-const RESPONSIVE_CRITICAL_SHELL_CSS = (CRITICAL_SHELL_CSS + RANK_THEME_CSS)
+const DESKTOP_BRAND_CSS = '@media(min-width:1025px) and (max-width:1366px){.brand small,.brand .brand-suffix{display:none}}';
+
+const RESPONSIVE_CRITICAL_SHELL_CSS = (CRITICAL_SHELL_CSS + RANK_THEME_CSS + DESKTOP_BRAND_CSS)
   .replace('.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0}', '.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0;min-height:44px}')
   .replace('.hamburger{display:none}', '.hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;border:0;background:transparent;padding:0}')
   .replace('.hero-ticker{min-height:42px;', '.hero-ticker{min-height:44px;')
