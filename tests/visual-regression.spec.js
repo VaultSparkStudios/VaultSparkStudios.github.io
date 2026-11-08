@@ -148,6 +148,9 @@ for (const vp of VIEWPORTS) {
         // Use the candidate selected by Playwright. Dedicated manual baseline
         // capture can still choose an explicit alternate VR_BASE_URL.
         await page.goto(new URL(surface.path, process.env.VR_BASE_URL || baseURL).href, { waitUntil: 'load', timeout: 30000 });
+        // The public genome strip can appear under Chromium's default (0,0)
+        // pointer and open its tooltip. Baselines describe neutral entry state.
+        await page.mouse.move(-100, -100);
         await expect(page.locator('body')).toHaveAttribute('data-theme', theme);
         // Suppress ambient animations + live-data flicker so snapshots are
         // deterministic. The genome-strip + sigil read from /api shards and

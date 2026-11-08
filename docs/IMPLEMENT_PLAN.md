@@ -1,12 +1,28 @@
-<!-- Session 411 · source: docs/AUDIT_2026-11-06-S411.json -->
-# S411 recovery: accurate quoted-question boundaries
+<!-- Session 411 · source: docs/AUDIT_2026-11-08-S411.json -->
+# S411 recovery: private packaging and header fit
 
-The sigil repair is locally verified; full release is pending. Selected pending outcome3: quoted-question-continuation, depthL2. This recovery addendum is not the new native goal's fresh audit.
+Existing QA source is pushed and static staging verified; full release and the native invocation's fresh arc remain pending.
 
-Keep an embedded quoted question/exclamation attached to an explicit lowercase clause continuation, while retaining detection of genuine lowercase new sentences and unquoted boundaries. Cover both live corpus examples and straight/curly quotation/control cases in the existing native self-test. Do not change published prose or suppress findings globally.
+## Outcome 4: private-staging-packaging — depth L2
 
-User outcome: Valid published prose passes the copy gate while genuine lowercase sentence defects remain rejected.
+Reuse lib/served-surface.mjs in full staging safeManifest; exclude compiled/operator portfolio data in the positive manifest; preserve public discovery and docs/visual-proof. Keep rollback directories private. Add native regressions that fail before the fix and verify denied operational paths after the next deployment.
 
-Acceptance: Add regressions that fail before the parser repair; pass them after repair, preserve all prior self-tests and pass the real full-corpus gate. Genuine unquoted and quoted new lowercase sentences still fail. Preserve the executed failure receipt.
+User outcome: Operational state stays private while the website and advertised discovery remain available.
 
-Rollback: revert the focused parser/self-test changes. No runtime UI, authentication or published prose changes.
+Acceptance: Native packaging/pruning regressions fail before and pass after; real advertised routes survive; staged operational URLs deny access and public page/API/discovery return200; no private contents, auth policy, identity provider or membership tier changes.
+
+Rollback: revert the focused source change; preserve privacy containment until replacement deployment verifies exclusions.
+
+## Outcome 5: stable-header-visual-state — depth L2
+
+Tighten desktop-only top-level nav/control spacing and mirror critical-shell producer. Preserve typography, controls and mobile layout. Set an explicit neutral pointer before visual snapshots; retain public genome hover behavior. Verify geometry, inspect real before/after images, capture/review Linux baselines without loosening tolerance.
+
+User outcome: Every header control remains visible and clickable across supported desktop themes; visual comparisons describe the intended neutral entry state.
+
+Acceptance: Reproduce container overflow before repair; pass desktop1280/1366 all7themes and mobile390 parity; inspect actual images; Linux and Windows visual baselines reviewed before acceptance. No control removed and snapshot tolerance remains1.5%.
+
+Rollback: revert the focused source change; preserve privacy containment until replacement deployment verifies exclusions.
+
+Wave1 recovery QA publication and static staging complete. Wave2 selected fixes in progress after admission. Wave3 exact CI/account acceptance and main/production pending. Wave4 full closeout and this native invocation's fresh arc remain pending.
+
+Execution note, November 8: direct before-image inspection and a browser contrast regression confirmed that the anonymous rank cue and hover tooltip are unreadable in light mode. Outcome 5 includes semantic palette overrides in the already selected stylesheet and critical-shell producer, preserving dimensions and identity behavior. The pre-fix contrast regression failed; current acceptance remains pending.

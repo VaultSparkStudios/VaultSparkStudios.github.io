@@ -24,6 +24,7 @@ import { appendStagingDeployHistory, parseStagingDeployHistory, renderStagingDep
 import { createStagingDeployReceipt, runStagingDeployReceiptSelfTest, validateStagingDeployReceipt } from './lib/staging-deploy-receipt.mjs';
 import { ROLLBACK_PREFLIGHT, ROLLBACK_ARCHIVE } from './archive-staging-rollbacks.mjs';
 import { assertArchiveSources, verifyStagingArchive } from './lib/staging-archive.mjs';
+import { isServed } from './lib/served-surface.mjs';
 
 import { admitDeployment } from './lib/deploy-argv.mjs';
 const admitted = admitDeployment({"name":"deploy-staging","boolFlags":["--self-test","--probe"],"modes":["--self-test","--probe"],"usage":"node scripts/deploy-staging.mjs [--probe | --self-test]"});
@@ -40,6 +41,7 @@ const HISTORY_REL = 'data/staging-deploy-history.ndjson';
 const HISTORY_OUT = path.join(ROOT, HISTORY_REL);
 const STAGING_ORIGIN = 'website-origin.staging.vaultsparkstudios.com';
 const SENSITIVE = /(^|\/)(?:\.env(?:\..*)?|secrets?)(?:\/|$)|\.(?:pem|key|p12|pfx)$/i;
+const SERVED_MANIFEST = JSON.parse(fs.readFileSync(path.join(ROOT, 'config', 'served-surface.json'), 'utf8'));
 
 export async function fileSha256(file) {
   const hash = crypto.createHash('sha256');
@@ -54,6 +56,7 @@ export function safeManifest(files) {
     .filter((file) => !/^(?:\.git|\.playwright-cli|node_modules|output|test-results|playwright-report|ignis\/output)(?:\/|$)/.test(file))
     .filter((file) => !/^\.tmp(?:-|\.|$)/.test(file))
     .filter((file) => !/^\.cache\/staging-tmp(?:\/|$)/.test(file))
+    .filter((file) => isServed(file, SERVED_MANIFEST))
     .sort();
 }
 
@@ -108,12 +111,16 @@ if (SELF_TEST) {
     'index.html', '.well-known/llms.txt', 'assets/icon.png', '.env',
     'secrets/token.txt', 'keys/deploy.pem', ZOMBIE, 'node_modules/x.js', '.cache/staging-tmp/previous.tgz',
     '.playwright-cli/console.log', 'output/lighthouse/report.json', '.tmp-wrangler-gateway.mjs', RECEIPT_REL,
+    '.cache/ark-inbox.json', 'context/PROJECT_STATUS.json', 'scripts/deploy-staging.mjs',
+    'portfolio/compiled/FORECAST_LEDGER.json', 'portfolio/ops/review-loop-receipts.ndjson',
+    'docs/SESSION_PROTOCOL.md', 'data/news-desk/art/source.png',
   ]);
   const cases = [
     ['streamed archive hash matches exact multi-chunk bytes', streamedHashMatches],
     ['streamed archive hash rejects unreadable input', missingFileRejected],
     ['keeps public files', manifest.includes('index.html') && manifest.includes('.well-known/llms.txt')],
     ['rejects secrets, local evidence, temporary helpers, and ignored trees', manifest.length === 3],
+    ['keeps advertised public visual proof', safeManifest(['docs/visual-proof/index.html']).length === 1],
     ['rejects zombie helper', !manifest.includes(ZOMBIE)],
     ['accepts bounded web roots', safeRemoteRoot('/var/www/website/staging') && safeRemoteRoot('/srv/www/vaultspark') && safeRemoteRoot('/opt/studio/staging/website')],
     ['rejects dangerous roots', !safeRemoteRoot('/') && !safeRemoteRoot('/var/www') && !safeRemoteRoot('/srv/site/../other')],
@@ -133,6 +140,10 @@ if (!PROBE) {
   checked(
     run(process.execPath, [path.join(ROOT, 'scripts', 'check-obelisk-redirect-readiness.mjs'), '--require-ready'], { timeout: 60_000 }),
     'Obelisk staging redirect readiness',
+  );
+  checked(
+    run(process.execPath, [path.join(ROOT, 'scripts', 'prune-served-surface.mjs'), '--check']),
+    'public served-surface reachability',
   );
 }
 
@@ -223,6 +234,7 @@ try {
     'test -f "$STAGE/api/ecosystem-state.json"',
     'test -f "$STAGE/favicon.ico"',
     'mkdir -p "$ROOT" "$ROOT/.rollback/$STAMP"',
+    'chmod 700 "$ROOT/.rollback" "$ROOT/.rollback/$STAMP"',
     'rsync -a --delete --exclude=.rollback/ --backup --backup-dir="$ROOT/.rollback/$STAMP" "$STAGE/" "$ROOT/"',
     // Windows-created archives do not carry a traversable mode for the release
     // root. Normalize only the public tree; keep rollback snapshots private.

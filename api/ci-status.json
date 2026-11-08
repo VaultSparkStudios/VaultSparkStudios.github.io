@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T02:09:27.660Z",
+  "generatedAt": "2026-11-08T08:02:22.540Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,9 +9,9 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 16,
-    "observed": 6,
-    "healthy": 6,
-    "unknown": 10,
+    "observed": 9,
+    "healthy": 9,
+    "unknown": 7,
     "stale": 0,
     "dead": 0
   },
@@ -19,7 +19,7 @@
   "knownTerminalBlockers": [],
   "summary": "CI gate status is unknown.",
   "deploymentReconciliation": {
-    "state": "clear",
+    "state": "unobserved",
     "threshold": 2,
     "alert": false,
     "window": 20,
@@ -29,9 +29,9 @@
     "lastStrandedAt": "2026-10-30T21:19:31.294Z",
     "currentBehindStreak": 0,
     "newestGradableAt": "2026-11-03T02:31:55.485Z",
-    "newestAgeHours": 23.6,
+    "newestAgeHours": 125.5,
     "maxAgeHours": 48,
-    "stale": false,
+    "stale": true,
     "strandedAlert": false
   },
   "workflows": [
@@ -90,26 +90,28 @@
     },
     {
       "name": "Cloudflare Analytics Pull",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
-      "dead": false,
-      "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
-      "staleAfterHours": 48
-    },
-    {
-      "name": "The Desk Dispatch — Daily Digest",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-11-03T23:34:54Z",
+      "lastUpdatedAt": "2026-11-08T06:45:35Z",
       "recentConclusions": [
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.58,
+      "ageHours": 1.28,
+      "staleAfterHours": 48
+    },
+    {
+      "name": "The Desk Dispatch — Daily Digest",
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-11-07T23:34:16Z",
+      "recentConclusions": [
+        "success"
+      ],
+      "dead": false,
+      "streak": 0,
+      "state": "healthy",
+      "ageHours": 8.47,
       "staleAfterHours": 48
     },
     {
@@ -125,13 +127,15 @@
     },
     {
       "name": "Investor KPI Snapshot (daily)",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-11-08T07:12:14Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 0.84,
       "staleAfterHours": 48
     },
     {
@@ -147,13 +151,15 @@
     },
     {
       "name": "Generate Leaderboard API",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-11-08T06:26:03Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 1.61,
       "staleAfterHours": 48
     },
     {
@@ -170,22 +176,21 @@
     {
       "name": "The Desk — Scheduled Publish",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-11-03T22:17:01Z",
+      "lastUpdatedAt": "2026-11-08T06:23:59Z",
       "recentConclusions": [
-        "success",
         "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.87,
+      "ageHours": 1.64,
       "staleAfterHours": 48
     },
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-11-04T00:50:47Z",
+      "lastUpdatedAt": "2026-11-08T06:46:18Z",
       "recentConclusions": [
         "success",
         "success",
@@ -194,7 +199,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.31,
+      "ageHours": 1.27,
       "staleAfterHours": 48
     },
     {
@@ -211,7 +216,7 @@
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-11-04T00:44:25Z",
+      "lastUpdatedAt": "2026-11-08T04:29:27Z",
       "recentConclusions": [
         "success",
         "success",
@@ -220,11 +225,39 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.42,
+      "ageHours": 3.55,
       "staleAfterHours": 48
     },
     {
       "name": "RUM Field Pull",
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-11-08T06:32:23Z",
+      "recentConclusions": [
+        "success"
+      ],
+      "dead": false,
+      "streak": 0,
+      "state": "healthy",
+      "ageHours": 1.5,
+      "staleAfterHours": 48
+    },
+    {
+      "name": "uptime-probe",
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-11-08T07:37:03Z",
+      "recentConclusions": [
+        "success",
+        "success",
+        "success"
+      ],
+      "dead": false,
+      "streak": 0,
+      "state": "healthy",
+      "ageHours": 0.42,
+      "staleAfterHours": 48
+    },
+    {
+      "name": "Generate Vault Narrative",
       "lastConclusion": "unknown",
       "lastUpdatedAt": null,
       "recentConclusions": [],
@@ -232,34 +265,6 @@
       "streak": 0,
       "state": "unknown",
       "ageHours": null,
-      "staleAfterHours": 48
-    },
-    {
-      "name": "uptime-probe",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-11-04T01:37:44Z",
-      "recentConclusions": [
-        "success",
-        "success",
-        "success"
-      ],
-      "dead": false,
-      "streak": 0,
-      "state": "healthy",
-      "ageHours": 0.53,
-      "staleAfterHours": 48
-    },
-    {
-      "name": "Generate Vault Narrative",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-11-03T13:09:02Z",
-      "recentConclusions": [
-        "success"
-      ],
-      "dead": false,
-      "streak": 0,
-      "state": "healthy",
-      "ageHours": 13.01,
       "staleAfterHours": 48
     },
     {

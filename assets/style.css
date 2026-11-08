@@ -814,6 +814,15 @@ p { margin: 0; }
 /* Mobile-only nav footer — hidden on desktop, visible inside open mobile menu */
 .mobile-nav-footer { display: none; }
 
+/* Anonymous rank controls follow the active palette, including light mode. */
+.site-header .vs-rank-orb-anon::before { border-color: var(--muted, #a8b4d0); }
+.site-header .vs-rank-orb-anon .vs-rank-orb-num { color: var(--muted, #a8b4d0); }
+.site-header .vs-rank-orb-tip {
+  background: var(--bg-soft, #0c0e18);
+  color: var(--text, #eef2ff);
+  border-color: var(--header-border);
+}
+
 .nav-right {
   display: flex;
   align-items: center;
@@ -1912,8 +1921,10 @@ body.light-mode .text-white { color: var(--text); }
    dropdown rows and the mobile navigation retain their existing geometry. */
 @media (min-width: 1025px) {
   .nav { gap: 0.6rem; }
+  .nav-center { gap: 0.1rem; }
+  .nav-right { gap: 0.35rem; }
   .nav-center > a,
-  .nav-center > .nav-item > a { padding-inline: 0.35rem; }
+  .nav-center > .nav-item > a { padding-inline: 0.2rem; }
 }
 
 @media (max-width: 1100px) {
