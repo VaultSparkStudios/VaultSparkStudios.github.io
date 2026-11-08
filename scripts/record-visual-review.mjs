@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { acquireVisualPublicationLock } from './lib/visual-capture-provenance.mjs';
+import { writeTextArtifact } from './lib/artifact-io.mjs';
 
 const ROOT = process.cwd();
 const receiptPath = path.join(ROOT, 'docs', 'visual-qa', 'LATEST.json');
@@ -19,18 +21,20 @@ if (!reviewer) {
   process.exit(1);
 }
 
+const release = acquireVisualPublicationLock(ROOT);
+try {
 const receipt = JSON.parse(fs.readFileSync(receiptPath, 'utf8'));
 const captures = Array.isArray(receipt.captures) ? receipt.captures : [];
 if (argv.includes('--all')) for (const capture of captures) files.add(capture.file);
 if (!files.size) {
   console.error('record-visual-review: no captures selected; pass --files or --all');
-  process.exit(1);
+  throw new Error('No captures selected');
 }
 const known = new Set(captures.map((capture) => capture.file));
 const unknown = [...files].filter((file) => !known.has(file));
 if (unknown.length) {
   console.error(`record-visual-review: unknown capture(s): ${unknown.join(', ')}`);
-  process.exit(1);
+  throw new Error('Unknown captures selected');
 }
 
 for (const capture of captures) {
@@ -55,5 +59,6 @@ receipt.inspection = {
     ? null
     : 'Unreviewed captures prove rendering and hash binding only; they do not claim human-judged hierarchy, readability, or contrast.',
 };
-fs.writeFileSync(receiptPath, `${JSON.stringify(receipt, null, 2)}\n`);
+writeTextArtifact(receiptPath, `${JSON.stringify(receipt, null, 2)}\n`);
 console.log(`record-visual-review: ${manuallyReviewed}/${captures.length} capture(s) manually reviewed`);
+} finally { release(); }

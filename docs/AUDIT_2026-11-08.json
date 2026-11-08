@@ -1,0 +1,1615 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-11-08",
+  "generatedAt": "2026-11-08T15:54:53.184Z",
+  "session": 412,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh full S412 audit for this native invocation; selected stabilization and pending authorized release only.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status",
+    "releaseTarget": null
+  },
+  "axes": {
+    "features-depth": 1.5,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "reviewed": true,
+      "candidates": [
+        {
+          "slug": "existing-audience-journey-acceptance",
+          "title": "Complete the existing member and approved-investor acceptance on an isolated target",
+          "disposition": "carry-existing-required-acceptance",
+          "evidence": [
+            {
+              "file": "tests/authenticated.spec.js",
+              "line": 51,
+              "sha256": "915f5a4b3aa3ea5033a879e0df8aa285297103409cca31227cedb3b0f4d2844a",
+              "observation": "Authenticated native suite is explicitly credential-guarded."
+            },
+            {
+              "file": "tests/investor-thread.spec.js",
+              "line": 4,
+              "sha256": "1988c2049fe258b6311ad63f00710f39a27805a14a6b74b4ea1194c0897257a3",
+              "observation": "Thread contract explicitly distinguishes structural verification from signed-in runtime."
+            },
+            {
+              "file": "context/CURRENT_STATE.md",
+              "line": 6,
+              "sha256": "b947fe3327d799bb795c302452c49af54556761565e9070fa69d072e0b11bf2d",
+              "observation": "Current checkpoint keeps affected real journeys pending; parent explicitly confirms the dependency."
+            }
+          ],
+          "novel": false
+        },
+        {
+          "slug": "missing-existing-member-return-path",
+          "title": "Add a distinct existing-account return path to the membership pitch",
+          "disposition": "rejected-on-verify",
+          "evidence": [
+            {
+              "file": "membership/index.html",
+              "line": 1002,
+              "sha256": "bd5a8684b57b7518f8bff69530323c9bb6c62021b46d01086f649e349cd4a5b8",
+              "observation": "The pitch already links directly to /vault-member/."
+            },
+            {
+              "file": "assets/account-chip.js",
+              "line": 106,
+              "sha256": "24b6dad89087c038c51be6e8ec709397b5aba80e51a3d6d2a1417649ab22f266",
+              "observation": "Signed-in join suppression is explicitly truth-valued, and existing account chip behavior is already implemented."
+            },
+            {
+              "file": "tests/signed-in-member-state.spec.js",
+              "line": 37,
+              "sha256": "f86ca20f5baeed4a1381894fcb19dc5d20384864f9bac982f1d3585db8b84d3c",
+              "observation": "Existing mocked authoritative identity contract covers anonymous versus signed-in stamping."
+            }
+          ],
+          "novel": true
+        },
+        {
+          "slug": "run-market-expansion",
+          "title": "run-market-expansion",
+          "disposition": "culled-below-priority-floor",
+          "evidence": "No MARKET.json; supported-release stabilization is the requested scope. Future market maintenance is not selected.",
+          "novel": false
+        }
+      ],
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "existing-audience-journey-acceptance",
+          "premise": "Select a separate repair for Complete the existing member and approved-investor acceptance on an isolated target",
+          "evidence": "Disposition: carry-existing-required-acceptance. [{\"file\":\"tests/authenticated.spec.js\",\"line\":51,\"sha256\":\"915f5a4b3aa3ea5033a879e0df8aa285297103409cca31227cedb3b0f4d2844a\",\"observation\":\"Authenticated native suite is explicitly credential-guarded.\"},{\"file\":\"tests/investor-thread.spec.js\",\"line\":4,\"sha256\":\"1988c2049fe258b6311ad63f00710f39a27805a14a6b74b4ea1194c0897257a3\",\"observation\":\"Thread contract explicitly distinguishes structural verification from signed-in runtime.\"},{\"file\":\"context/CURRENT_STATE.md\",\"line\":6,\"sha256\":\"b947fe3327d799bb795c302452c49af54556761565e9070fa69d072e0b11bf2d\",\"observation\":\"Current checkpoint keeps affected real journeys pending; parent explicitly confirms the dependency.\"}]"
+        },
+        {
+          "slug": "missing-existing-member-return-path",
+          "premise": "Select a separate repair for Add a distinct existing-account return path to the membership pitch",
+          "evidence": "Disposition: rejected-on-verify. [{\"file\":\"membership/index.html\",\"line\":1002,\"sha256\":\"bd5a8684b57b7518f8bff69530323c9bb6c62021b46d01086f649e349cd4a5b8\",\"observation\":\"The pitch already links directly to /vault-member/.\"},{\"file\":\"assets/account-chip.js\",\"line\":106,\"sha256\":\"24b6dad89087c038c51be6e8ec709397b5aba80e51a3d6d2a1417649ab22f266\",\"observation\":\"Signed-in join suppression is explicitly truth-valued, and existing account chip behavior is already implemented.\"},{\"file\":\"tests/signed-in-member-state.spec.js\",\"line\":37,\"sha256\":\"f86ca20f5baeed4a1381894fcb19dc5d20384864f9bac982f1d3585db8b84d3c\",\"observation\":\"Existing mocked authoritative identity contract covers anonymous versus signed-in stamping.\"}]"
+        },
+        {
+          "slug": "run-market-expansion",
+          "premise": "Select a separate repair for run-market-expansion",
+          "evidence": "Disposition: culled-below-priority-floor. No MARKET.json; supported-release stabilization is the requested scope. Future market maintenance is not selected."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "reviewed": true,
+      "candidates": [
+        {
+          "slug": "oracle-initial-arrival-rewrite",
+          "title": "oracle-initial-arrival-rewrite",
+          "disposition": "not-selected-unreproduced-product-premise",
+          "evidence": "Six current controlled actual-response cases and12 original images: real33.14px upstream growth at320, native anchoring compensates; CI alternate phase remains unresolved. No artificial style/scroll fix.",
+          "novel": true
+        },
+        {
+          "slug": "replace-current-header-layout",
+          "title": "replace-current-header-layout",
+          "disposition": "rejected-on-verify",
+          "evidence": "Current source header92px contract and both latest Linux42geometry checks pass. Do not repeat the fixed clipping repair.",
+          "novel": false
+        },
+        {
+          "slug": "raise-visual-tolerance",
+          "title": "raise-visual-tolerance",
+          "disposition": "rejected",
+          "evidence": "Current mismatches are stable reference disagreements; loosening1.5% would hide evidence rather than review the intended scene.",
+          "novel": false
+        }
+      ],
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "oracle-initial-arrival-rewrite",
+          "premise": "Select a separate repair for oracle-initial-arrival-rewrite",
+          "evidence": "Disposition: not-selected-unreproduced-product-premise. Six current controlled actual-response cases and12 original images: real33.14px upstream growth at320, native anchoring compensates; CI alternate phase remains unresolved. No artificial style/scroll fix."
+        },
+        {
+          "slug": "replace-current-header-layout",
+          "premise": "Select a separate repair for replace-current-header-layout",
+          "evidence": "Disposition: rejected-on-verify. Current source header92px contract and both latest Linux42geometry checks pass. Do not repeat the fixed clipping repair."
+        },
+        {
+          "slug": "raise-visual-tolerance",
+          "premise": "Select a separate repair for raise-visual-tolerance",
+          "evidence": "Disposition: rejected. Current mismatches are stable reference disagreements; loosening1.5% would hide evidence rather than review the intended scene."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "reviewed": true,
+      "candidates": [
+        {
+          "slug": "rank-display-threshold-contract-drift",
+          "title": "Reconcile conflicting rank threshold definitions before proposing consumer changes",
+          "disposition": "verified-source-contradiction-defer-policy-selection",
+          "evidence": [
+            {
+              "file": "assets/vault-rank-bar.js",
+              "line": 16,
+              "sha256": "ebf33da5144cf498e8741dc6ce290c0d2442d7c0e8da6515ac62d47c04490c6b",
+              "observation": "Bar starts Vault Runner at50; source function100=>Rift Scout."
+            },
+            {
+              "file": "assets/rank-projector.js",
+              "line": 16,
+              "sha256": "a1d5feb0e1ea52a4c58f354efe94c3ec7ea37d670a957b5ff10aed83acd700ef",
+              "observation": "Projector starts Vault Runner at250; source function100=>Spark Initiate."
+            },
+            {
+              "file": "assets/membership-live-tier.js",
+              "line": 15,
+              "sha256": "550855b6d936520fcf902a89b91dd29166e208f232448add5c737320c796d3d4",
+              "observation": "Live membership strip agrees with250/1000 scale."
+            },
+            {
+              "file": "assets/ambient-loader.js",
+              "line": 390,
+              "sha256": "ff3f592fc5877a109d669253914d63d7c2e357e2a49640a64cc8304b50394b33",
+              "observation": "Ambient loader wires the bar."
+            },
+            {
+              "file": "assets/membership-idle-loader.js",
+              "line": 7,
+              "sha256": "038f28ab866f83d2470dd76f20e3bdb299a17ab8d822612e220c5ddfac8f3979",
+              "observation": "Membership lazy-loads the projector."
+            },
+            {
+              "file": "scripts/build-rank-climbers.mjs",
+              "line": 26,
+              "sha256": "97b29de26cc4722447750cb08852821356e1f92689a2eb0b1eef9d479eedaff6",
+              "observation": "Rank report deliberately mirrors the50-based bar, so choosing250 globally is not a harmless deduplication."
+            }
+          ],
+          "novel": false
+        },
+        {
+          "slug": "anonymous-first-climb-presence-truth",
+          "title": "Avoid awarding First Climb signup completion merely because signed-in=false is present",
+          "disposition": "source-bug-reproduced-but-rejected-as-current-release-defect",
+          "evidence": [
+            {
+              "file": "assets/rank-quest.js",
+              "line": 23,
+              "sha256": "4f47bd08621f862b59195e34006461917944f3dc607fccba15ef5250ce26518e",
+              "observation": "Pure current helper returns true for html/body data-vs-signed-in=false."
+            },
+            {
+              "file": "assets/signed-in-state.js",
+              "line": 111,
+              "sha256": "f8725423417ff02ac8081af920e87208e5024c1adfab426d1f479f9a6ca09282",
+              "observation": "Authoritative state intentionally writes false, rather than deleting the attribute."
+            },
+            {
+              "file": "assets/ambient-loader.js",
+              "line": 473,
+              "sha256": "ff3f592fc5877a109d669253914d63d7c2e357e2a49640a64cc8304b50394b33",
+              "observation": "Loader exists but requires a data-rank-quest host."
+            },
+            {
+              "file": "assets/rank-quest.js",
+              "line": 142,
+              "sha256": "4f47bd08621f862b59195e34006461917944f3dc607fccba15ef5250ce26518e",
+              "observation": "No current public HTML mount/reference found by bounded native rg search; no active visitor failure established."
+            }
+          ],
+          "novel": true
+        }
+      ],
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "rank-display-threshold-contract-drift",
+          "premise": "Select a separate repair for Reconcile conflicting rank threshold definitions before proposing consumer changes",
+          "evidence": "Disposition: verified-source-contradiction-defer-policy-selection. [{\"file\":\"assets/vault-rank-bar.js\",\"line\":16,\"sha256\":\"ebf33da5144cf498e8741dc6ce290c0d2442d7c0e8da6515ac62d47c04490c6b\",\"observation\":\"Bar starts Vault Runner at50; source function100=>Rift Scout.\"},{\"file\":\"assets/rank-projector.js\",\"line\":16,\"sha256\":\"a1d5feb0e1ea52a4c58f354efe94c3ec7ea37d670a957b5ff10aed83acd700ef\",\"observation\":\"Projector starts Vault Runner at250; source function100=>Spark Initiate.\"},{\"file\":\"assets/membership-live-tier.js\",\"line\":15,\"sha256\":\"550855b6d936520fcf902a89b91dd29166e208f232448add5c737320c796d3d4\",\"observation\":\"Live membership strip agrees with250/1000 scale.\"},{\"file\":\"assets/ambient-loader.js\",\"line\":390,\"sha256\":\"ff3f592fc5877a109d669253914d63d7c2e357e2a49640a64cc8304b50394b33\",\"observation\":\"Ambient loader wires the bar.\"},{\"file\":\"assets/membership-idle-loader.js\",\"line\":7,\"sha256\":\"038f28ab866f83d2470dd76f20e3bdb299a17ab8d822612e220c5ddfac8f3979\",\"observation\":\"Membership lazy-loads the projector.\"},{\"file\":\"scripts/build-rank-climbers.mjs\",\"line\":26,\"sha256\":\"97b29de26cc4722447750cb08852821356e1f92689a2eb0b1eef9d479eedaff6\",\"observation\":\"Rank report deliberately mirrors the50-based bar, so choosing250 globally is not a harmless deduplication.\"}]"
+        },
+        {
+          "slug": "anonymous-first-climb-presence-truth",
+          "premise": "Select a separate repair for Avoid awarding First Climb signup completion merely because signed-in=false is present",
+          "evidence": "Disposition: source-bug-reproduced-but-rejected-as-current-release-defect. [{\"file\":\"assets/rank-quest.js\",\"line\":23,\"sha256\":\"4f47bd08621f862b59195e34006461917944f3dc607fccba15ef5250ce26518e\",\"observation\":\"Pure current helper returns true for html/body data-vs-signed-in=false.\"},{\"file\":\"assets/signed-in-state.js\",\"line\":111,\"sha256\":\"f8725423417ff02ac8081af920e87208e5024c1adfab426d1f479f9a6ca09282\",\"observation\":\"Authoritative state intentionally writes false, rather than deleting the attribute.\"},{\"file\":\"assets/ambient-loader.js\",\"line\":473,\"sha256\":\"ff3f592fc5877a109d669253914d63d7c2e357e2a49640a64cc8304b50394b33\",\"observation\":\"Loader exists but requires a data-rank-quest host.\"},{\"file\":\"assets/rank-quest.js\",\"line\":142,\"sha256\":\"4f47bd08621f862b59195e34006461917944f3dc607fccba15ef5250ce26518e\",\"observation\":\"No current public HTML mount/reference found by bounded native rg search; no active visitor failure established.\"}]"
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "reviewed": true,
+      "candidates": [
+        {
+          "slug": "oracle-catalog-context-lifecycle-drift",
+          "title": "Keep the mounted Oracle catalog context aligned with current project lifecycle",
+          "disposition": "verified-input-drift-candidate-pending-root-scope-decision",
+          "evidence": [
+            {
+              "file": "assets/vault-oracle.js",
+              "line": 33,
+              "sha256": "c499fb820d8055bd38df1828fbf55108325b715d98d96a50fc7d23ab5ad9d4f4",
+              "observation": "Static context says Active projects and lists Gridiron GM without Franchise Architect."
+            },
+            {
+              "file": "games/index.html",
+              "line": 785,
+              "sha256": "33c63ab9b644545e3ad4a202d057fa08e5f6dac043381306f70d686497a3a649",
+              "observation": "Current visible catalog marks Franchise Architect Sparked."
+            },
+            {
+              "file": "games/index.html",
+              "line": 890,
+              "sha256": "33c63ab9b644545e3ad4a202d057fa08e5f6dac043381306f70d686497a3a649",
+              "observation": "Current visible catalog marks Gridiron GM Vaulted."
+            },
+            {
+              "file": "games/index.html",
+              "line": 1020,
+              "sha256": "33c63ab9b644545e3ad4a202d057fa08e5f6dac043381306f70d686497a3a649",
+              "observation": "Oracle is actually mounted on the catalog."
+            },
+            {
+              "file": "assets/vault-oracle.js",
+              "line": 258,
+              "sha256": "c499fb820d8055bd38df1828fbf55108325b715d98d96a50fc7d23ab5ad9d4f4",
+              "observation": "The context is sent by the existing request path."
+            },
+            {
+              "file": "supabase/functions/ask-ignis/index.ts",
+              "line": 157,
+              "sha256": "21b2dc7df48aca45dc03dfbbf8419c25b0c27c37cf6f676fd5e6e51fcd58c492",
+              "observation": "Backend includes supplied page context; no paid request was made to infer an answer defect."
+            }
+          ],
+          "novel": true
+        },
+        {
+          "slug": "oracle-missing-honest-failure-path",
+          "title": "Add explicit unavailable and no-answer handling to Oracle",
+          "disposition": "rejected-on-verify",
+          "evidence": [
+            {
+              "file": "assets/vault-oracle.js",
+              "line": 598,
+              "sha256": "c499fb820d8055bd38df1828fbf55108325b715d98d96a50fc7d23ab5ad9d4f4",
+              "observation": "Existing submit chain appends an explicit error state."
+            },
+            {
+              "file": "supabase/functions/ask-ignis/index.ts",
+              "line": 110,
+              "sha256": "21b2dc7df48aca45dc03dfbbf8419c25b0c27c37cf6f676fd5e6e51fcd58c492",
+              "observation": "Existing instruction prohibits inventing unsupported facts."
+            },
+            {
+              "file": "tests/s368-ask-vault.unit.spec.mjs",
+              "line": 309,
+              "sha256": "4ae7b497936655b9c6ab9a30fd95b7c2fdd032521adeec035ddcb51d4cfcd71e",
+              "observation": "Existing unit contract covers no-answer/cache/capped/upstream-error outcomes."
+            }
+          ],
+          "novel": false
+        }
+      ],
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "oracle-catalog-context-lifecycle-drift",
+          "premise": "Select a separate repair for Keep the mounted Oracle catalog context aligned with current project lifecycle",
+          "evidence": "Disposition: verified-input-drift-candidate-pending-root-scope-decision. [{\"file\":\"assets/vault-oracle.js\",\"line\":33,\"sha256\":\"c499fb820d8055bd38df1828fbf55108325b715d98d96a50fc7d23ab5ad9d4f4\",\"observation\":\"Static context says Active projects and lists Gridiron GM without Franchise Architect.\"},{\"file\":\"games/index.html\",\"line\":785,\"sha256\":\"33c63ab9b644545e3ad4a202d057fa08e5f6dac043381306f70d686497a3a649\",\"observation\":\"Current visible catalog marks Franchise Architect Sparked.\"},{\"file\":\"games/index.html\",\"line\":890,\"sha256\":\"33c63ab9b644545e3ad4a202d057fa08e5f6dac043381306f70d686497a3a649\",\"observation\":\"Current visible catalog marks Gridiron GM Vaulted.\"},{\"file\":\"games/index.html\",\"line\":1020,\"sha256\":\"33c63ab9b644545e3ad4a202d057fa08e5f6dac043381306f70d686497a3a649\",\"observation\":\"Oracle is actually mounted on the catalog.\"},{\"file\":\"assets/vault-oracle.js\",\"line\":258,\"sha256\":\"c499fb820d8055bd38df1828fbf55108325b715d98d96a50fc7d23ab5ad9d4f4\",\"observation\":\"The context is sent by the existing request path.\"},{\"file\":\"supabase/functions/ask-ignis/index.ts\",\"line\":157,\"sha256\":\"21b2dc7df48aca45dc03dfbbf8419c25b0c27c37cf6f676fd5e6e51fcd58c492\",\"observation\":\"Backend includes supplied page context; no paid request was made to infer an answer defect.\"}]"
+        },
+        {
+          "slug": "oracle-missing-honest-failure-path",
+          "premise": "Select a separate repair for Add explicit unavailable and no-answer handling to Oracle",
+          "evidence": "Disposition: rejected-on-verify. [{\"file\":\"assets/vault-oracle.js\",\"line\":598,\"sha256\":\"c499fb820d8055bd38df1828fbf55108325b715d98d96a50fc7d23ab5ad9d4f4\",\"observation\":\"Existing submit chain appends an explicit error state.\"},{\"file\":\"supabase/functions/ask-ignis/index.ts\",\"line\":110,\"sha256\":\"21b2dc7df48aca45dc03dfbbf8419c25b0c27c37cf6f676fd5e6e51fcd58c492\",\"observation\":\"Existing instruction prohibits inventing unsupported facts.\"},{\"file\":\"tests/s368-ask-vault.unit.spec.mjs\",\"line\":309,\"sha256\":\"4ae7b497936655b9c6ab9a30fd95b7c2fdd032521adeec035ddcb51d4cfcd71e\",\"observation\":\"Existing unit contract covers no-answer/cache/capped/upstream-error outcomes.\"}]"
+        }
+      ]
+    },
+    "security": {
+      "reviewed": true,
+      "candidates": [
+        {
+          "slug": "S412-SEC-1",
+          "title": "Stage data configuration still falls back to production",
+          "disposition": "confirmed-release-dependency",
+          "evidence": [
+            {
+              "file": "assets/supabase-client.js",
+              "line": 12,
+              "detail": "Browser data URL is a production literal; SDK client constructed at61."
+            },
+            {
+              "file": "cloudflare/obelisk-auth.js",
+              "line": 152,
+              "detail": "Worker data URL/anon env values fall back to production defaults15–16."
+            },
+            {
+              "file": "cloudflare/wrangler.toml",
+              "line": 122,
+              "detail": "Staging vars declare separate origin/cookies but no SUPABASE_URL/ANON binding."
+            },
+            {
+              "file": "docs/RELEASE_PROMOTION_PROTOCOL.md",
+              "line": 19,
+              "detail": "Changed auth/session/authorization requires affected authenticated journeys; denial is not positive proof."
+            }
+          ],
+          "novel": false
+        },
+        {
+          "slug": "S412-SEC-2",
+          "title": "Diagnostic native error/geometry output leaks DOM text or callback query",
+          "disposition": "rejected-phantom",
+          "evidence": [
+            {
+              "file": "tests/visual-regression.spec.js",
+              "line": 77,
+              "detail": "Native messages are finite scalar allowlist or hash, unknown path/URL omitted."
+            },
+            {
+              "file": "tests/visual-regression.spec.js",
+              "line": 143,
+              "detail": "Resolved loopback guard; geometry uses fixed selectors/rects/computed style, not DOM text/cookies/query."
+            },
+            {
+              "file": "tests/visual-regression.spec.js",
+              "line": 109,
+              "detail": "Thrown error name allowlisted; original error object preserved."
+            }
+          ],
+          "novel": true
+        }
+      ],
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s412-sec-1",
+          "premise": "Select a separate repair for Stage data configuration still falls back to production",
+          "evidence": "Disposition: confirmed-release-dependency. [{\"file\":\"assets/supabase-client.js\",\"line\":12,\"detail\":\"Browser data URL is a production literal; SDK client constructed at61.\"},{\"file\":\"cloudflare/obelisk-auth.js\",\"line\":152,\"detail\":\"Worker data URL/anon env values fall back to production defaults15–16.\"},{\"file\":\"cloudflare/wrangler.toml\",\"line\":122,\"detail\":\"Staging vars declare separate origin/cookies but no SUPABASE_URL/ANON binding.\"},{\"file\":\"docs/RELEASE_PROMOTION_PROTOCOL.md\",\"line\":19,\"detail\":\"Changed auth/session/authorization requires affected authenticated journeys; denial is not positive proof.\"}]"
+        },
+        {
+          "slug": "s412-sec-2",
+          "premise": "Select a separate repair for Diagnostic native error/geometry output leaks DOM text or callback query",
+          "evidence": "Disposition: rejected-phantom. [{\"file\":\"tests/visual-regression.spec.js\",\"line\":77,\"detail\":\"Native messages are finite scalar allowlist or hash, unknown path/URL omitted.\"},{\"file\":\"tests/visual-regression.spec.js\",\"line\":143,\"detail\":\"Resolved loopback guard; geometry uses fixed selectors/rects/computed style, not DOM text/cookies/query.\"},{\"file\":\"tests/visual-regression.spec.js\",\"line\":109,\"detail\":\"Thrown error name allowlisted; original error object preserved.\"}]"
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "reviewed": true,
+      "candidates": [
+        {
+          "slug": "S412-ARCH-1",
+          "title": "Receipt-only mode can bind old pixels to new source/candidate",
+          "disposition": "confirmed-selected-by-root",
+          "evidence": [
+            {
+              "file": "scripts/capture-theme-matrix.mjs",
+              "line": 228,
+              "detail": "Raw manifest records timestamp+shots, lacks capture-time source/candidate binding."
+            },
+            {
+              "file": "scripts/capture-theme-matrix.mjs",
+              "line": 319,
+              "detail": "Receipt stamps a new capturedAt and reads sourceBinding/candidateBinding at receipt time."
+            },
+            {
+              "file": "scripts/capture-theme-matrix.mjs",
+              "line": 353,
+              "detail": "--receipt-only passes prior shots into that current-time writer."
+            },
+            {
+              "file": "scripts/check-visual-review-receipt.mjs",
+              "line": 31,
+              "detail": "Checker verifies receipt source against current source, which newly rebound stale receipt satisfies."
+            }
+          ],
+          "novel": true
+        },
+        {
+          "slug": "S412-ARCH-2",
+          "title": "Replace real isolated data plane with installed Node/in-memory adapter to bypass OCI trust",
+          "disposition": "rejected-unsupported-shortcut",
+          "evidence": [
+            {
+              "file": "cloudflare/obelisk-auth.js",
+              "line": 575,
+              "detail": "Bridge needs real AuthAdmin user create;602 user update,634 generate_link,639 verify,655 refresh."
+            },
+            {
+              "file": "assets/investor-auth.js",
+              "line": 159,
+              "detail": "Investor gate depends on actual get_my_investor_profile/RLS data."
+            },
+            {
+              "file": "vault-member/portal-auth.js",
+              "line": 450,
+              "detail": "Register uses real register_open and confirmed member row."
+            },
+            {
+              "file": "../vaultspark-studio-ops/scripts/provision-project-db.mjs",
+              "line": 92,
+              "detail": "ModelB provisioner creates schema+role, not Auth/REST/JWT session compatibility API."
+            }
+          ],
+          "novel": false
+        },
+        {
+          "slug": "S412-EFF-1",
+          "title": "Pixel baseline reproducibility depends on floating browser toolchain",
+          "disposition": "confirmed-defer-not-current-cause",
+          "evidence": [
+            {
+              "file": "package.json",
+              "line": 105,
+              "detail": "@playwright/test uses ^1.49.0."
+            },
+            {
+              "file": ".gitignore",
+              "line": 7,
+              "detail": "Root package-lock.json ignored."
+            },
+            {
+              "file": ".github/workflows/visual-regression.yml",
+              "line": 76,
+              "detail": "Fresh npm install resolves current compatible toolchain;78 installs its browser."
+            },
+            {
+              "file": ".cache/S411/ci-cee67c9-paired-scene-analysis-v2.json",
+              "line": 25,
+              "detail": "Same-SHA paired runtime/font equality proves floating version is not an observed between-mode difference in this pair."
+            }
+          ],
+          "novel": false
+        },
+        {
+          "slug": "S412-EFF-2",
+          "title": "Capture reruns clobber retained release evidence under deterministic filenames",
+          "disposition": "confirmed-merge-with-ARCH-1",
+          "evidence": [
+            {
+              "file": "scripts/capture-theme-matrix.mjs",
+              "line": 205,
+              "detail": "Deterministic route/theme/viewport/state name under reusable OUT_DIR."
+            },
+            {
+              "file": "scripts/capture-theme-matrix.mjs",
+              "line": 272,
+              "detail": "copyFileSync overwrites same docs/visual-qa path without collision guard."
+            },
+            {
+              "file": "scripts/capture-spark-visual-proof.mjs",
+              "line": 26,
+              "detail": "Equivalent fixed Spark filenames;43 replaces LATEST."
+            },
+            {
+              "file": "scripts/commit-visual-review-receipt.mjs",
+              "line": 34,
+              "detail": "Copies deterministic filenames then61 replaces LATEST; no source rebind here, but replacement risk."
+            },
+            {
+              "file": "scripts/check-visual-qa-retention.mjs",
+              "line": 38,
+              "detail": "Declared policy says referenced current/archived captures are immutable."
+            }
+          ],
+          "novel": false
+        }
+      ],
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s412-arch-1",
+          "premise": "Select a separate repair for Receipt-only mode can bind old pixels to new source/candidate",
+          "evidence": "Disposition: confirmed-selected-by-root. [{\"file\":\"scripts/capture-theme-matrix.mjs\",\"line\":228,\"detail\":\"Raw manifest records timestamp+shots, lacks capture-time source/candidate binding.\"},{\"file\":\"scripts/capture-theme-matrix.mjs\",\"line\":319,\"detail\":\"Receipt stamps a new capturedAt and reads sourceBinding/candidateBinding at receipt time.\"},{\"file\":\"scripts/capture-theme-matrix.mjs\",\"line\":353,\"detail\":\"--receipt-only passes prior shots into that current-time writer.\"},{\"file\":\"scripts/check-visual-review-receipt.mjs\",\"line\":31,\"detail\":\"Checker verifies receipt source against current source, which newly rebound stale receipt satisfies.\"}]"
+        },
+        {
+          "slug": "s412-arch-2",
+          "premise": "Select a separate repair for Replace real isolated data plane with installed Node/in-memory adapter to bypass OCI trust",
+          "evidence": "Disposition: rejected-unsupported-shortcut. [{\"file\":\"cloudflare/obelisk-auth.js\",\"line\":575,\"detail\":\"Bridge needs real AuthAdmin user create;602 user update,634 generate_link,639 verify,655 refresh.\"},{\"file\":\"assets/investor-auth.js\",\"line\":159,\"detail\":\"Investor gate depends on actual get_my_investor_profile/RLS data.\"},{\"file\":\"vault-member/portal-auth.js\",\"line\":450,\"detail\":\"Register uses real register_open and confirmed member row.\"},{\"file\":\"../vaultspark-studio-ops/scripts/provision-project-db.mjs\",\"line\":92,\"detail\":\"ModelB provisioner creates schema+role, not Auth/REST/JWT session compatibility API.\"}]"
+        },
+        {
+          "slug": "s412-eff-1",
+          "premise": "Select a separate repair for Pixel baseline reproducibility depends on floating browser toolchain",
+          "evidence": "Disposition: confirmed-defer-not-current-cause. [{\"file\":\"package.json\",\"line\":105,\"detail\":\"@playwright/test uses ^1.49.0.\"},{\"file\":\".gitignore\",\"line\":7,\"detail\":\"Root package-lock.json ignored.\"},{\"file\":\".github/workflows/visual-regression.yml\",\"line\":76,\"detail\":\"Fresh npm install resolves current compatible toolchain;78 installs its browser.\"},{\"file\":\".cache/S411/ci-cee67c9-paired-scene-analysis-v2.json\",\"line\":25,\"detail\":\"Same-SHA paired runtime/font equality proves floating version is not an observed between-mode difference in this pair.\"}]"
+        },
+        {
+          "slug": "s412-eff-2",
+          "premise": "Select a separate repair for Capture reruns clobber retained release evidence under deterministic filenames",
+          "evidence": "Disposition: confirmed-merge-with-ARCH-1. [{\"file\":\"scripts/capture-theme-matrix.mjs\",\"line\":205,\"detail\":\"Deterministic route/theme/viewport/state name under reusable OUT_DIR.\"},{\"file\":\"scripts/capture-theme-matrix.mjs\",\"line\":272,\"detail\":\"copyFileSync overwrites same docs/visual-qa path without collision guard.\"},{\"file\":\"scripts/capture-spark-visual-proof.mjs\",\"line\":26,\"detail\":\"Equivalent fixed Spark filenames;43 replaces LATEST.\"},{\"file\":\"scripts/commit-visual-review-receipt.mjs\",\"line\":34,\"detail\":\"Copies deterministic filenames then61 replaces LATEST; no source rebind here, but replacement risk.\"},{\"file\":\"scripts/check-visual-qa-retention.mjs\",\"line\":38,\"detail\":\"Declared policy says referenced current/archived captures are immutable.\"}]"
+        }
+      ]
+    },
+    "token-cost": {
+      "reviewed": true,
+      "candidates": [
+        {
+          "slug": "S412-TOKEN-1",
+          "title": "Handoff compaction still calls an external model for every startup",
+          "disposition": "rejected-phantom",
+          "evidence": [
+            {
+              "file": "scripts/compact-handoff.mjs",
+              "line": 7,
+              "detail": "Default is deterministic source-hashed extraction, explicitly no API."
+            },
+            {
+              "file": "scripts/lib/handoff-digest.mjs",
+              "line": 6,
+              "detail": "maxChars6000 bound, source hash and omission lookup."
+            }
+          ],
+          "novel": true
+        },
+        {
+          "slug": "S412-TOKEN-2",
+          "title": "Startup context exceeds its measured ceiling and needs immediate quota increase",
+          "disposition": "rejected-current-ceiling-not-breached",
+          "evidence": [
+            {
+              "file": "scripts/check-startup-context-budget.mjs",
+              "line": 9,
+              "detail": "Current explicit ceiling42000 estimated tokens."
+            },
+            {
+              "file": "scripts/check-startup-context-budget.mjs",
+              "line": 11,
+              "detail": "Repair is rotation, not silent quota growth."
+            }
+          ],
+          "novel": false
+        }
+      ],
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s412-token-1",
+          "premise": "Select a separate repair for Handoff compaction still calls an external model for every startup",
+          "evidence": "Disposition: rejected-phantom. [{\"file\":\"scripts/compact-handoff.mjs\",\"line\":7,\"detail\":\"Default is deterministic source-hashed extraction, explicitly no API.\"},{\"file\":\"scripts/lib/handoff-digest.mjs\",\"line\":6,\"detail\":\"maxChars6000 bound, source hash and omission lookup.\"}]"
+        },
+        {
+          "slug": "s412-token-2",
+          "premise": "Select a separate repair for Startup context exceeds its measured ceiling and needs immediate quota increase",
+          "evidence": "Disposition: rejected-current-ceiling-not-breached. [{\"file\":\"scripts/check-startup-context-budget.mjs\",\"line\":9,\"detail\":\"Current explicit ceiling42000 estimated tokens.\"},{\"file\":\"scripts/check-startup-context-budget.mjs\",\"line\":11,\"detail\":\"Repair is rotation, not silent quota growth.\"}]"
+        }
+      ]
+    },
+    "observability-honesty": {
+      "reviewed": true,
+      "candidates": [
+        {
+          "slug": "S412-ARCH-1",
+          "title": "Receipt-only mode can bind old pixels to new source/candidate",
+          "disposition": "confirmed-selected-by-root",
+          "evidence": [
+            {
+              "file": "scripts/capture-theme-matrix.mjs",
+              "line": 228,
+              "detail": "Raw manifest records timestamp+shots, lacks capture-time source/candidate binding."
+            },
+            {
+              "file": "scripts/capture-theme-matrix.mjs",
+              "line": 319,
+              "detail": "Receipt stamps a new capturedAt and reads sourceBinding/candidateBinding at receipt time."
+            },
+            {
+              "file": "scripts/capture-theme-matrix.mjs",
+              "line": 353,
+              "detail": "--receipt-only passes prior shots into that current-time writer."
+            },
+            {
+              "file": "scripts/check-visual-review-receipt.mjs",
+              "line": 31,
+              "detail": "Checker verifies receipt source against current source, which newly rebound stale receipt satisfies."
+            }
+          ],
+          "novel": true
+        },
+        {
+          "slug": "S412-ARCH-2",
+          "title": "Replace real isolated data plane with installed Node/in-memory adapter to bypass OCI trust",
+          "disposition": "rejected-unsupported-shortcut",
+          "evidence": [
+            {
+              "file": "cloudflare/obelisk-auth.js",
+              "line": 575,
+              "detail": "Bridge needs real AuthAdmin user create;602 user update,634 generate_link,639 verify,655 refresh."
+            },
+            {
+              "file": "assets/investor-auth.js",
+              "line": 159,
+              "detail": "Investor gate depends on actual get_my_investor_profile/RLS data."
+            },
+            {
+              "file": "vault-member/portal-auth.js",
+              "line": 450,
+              "detail": "Register uses real register_open and confirmed member row."
+            },
+            {
+              "file": "../vaultspark-studio-ops/scripts/provision-project-db.mjs",
+              "line": 92,
+              "detail": "ModelB provisioner creates schema+role, not Auth/REST/JWT session compatibility API."
+            }
+          ],
+          "novel": false
+        },
+        {
+          "slug": "new-public-evidence-dashboard",
+          "title": "new-public-evidence-dashboard",
+          "disposition": "rejected-on-verify",
+          "evidence": "api/release-proof.json, api/status-proof.json and evidence hub already separate current holds and source-bound evidence; no new information-finding failure reproduced.",
+          "novel": true
+        }
+      ],
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "s412-arch-1",
+          "premise": "Select a separate repair for Receipt-only mode can bind old pixels to new source/candidate",
+          "evidence": "Disposition: confirmed-selected-by-root. [{\"file\":\"scripts/capture-theme-matrix.mjs\",\"line\":228,\"detail\":\"Raw manifest records timestamp+shots, lacks capture-time source/candidate binding.\"},{\"file\":\"scripts/capture-theme-matrix.mjs\",\"line\":319,\"detail\":\"Receipt stamps a new capturedAt and reads sourceBinding/candidateBinding at receipt time.\"},{\"file\":\"scripts/capture-theme-matrix.mjs\",\"line\":353,\"detail\":\"--receipt-only passes prior shots into that current-time writer.\"},{\"file\":\"scripts/check-visual-review-receipt.mjs\",\"line\":31,\"detail\":\"Checker verifies receipt source against current source, which newly rebound stale receipt satisfies.\"}]"
+        },
+        {
+          "slug": "s412-arch-2",
+          "premise": "Select a separate repair for Replace real isolated data plane with installed Node/in-memory adapter to bypass OCI trust",
+          "evidence": "Disposition: rejected-unsupported-shortcut. [{\"file\":\"cloudflare/obelisk-auth.js\",\"line\":575,\"detail\":\"Bridge needs real AuthAdmin user create;602 user update,634 generate_link,639 verify,655 refresh.\"},{\"file\":\"assets/investor-auth.js\",\"line\":159,\"detail\":\"Investor gate depends on actual get_my_investor_profile/RLS data.\"},{\"file\":\"vault-member/portal-auth.js\",\"line\":450,\"detail\":\"Register uses real register_open and confirmed member row.\"},{\"file\":\"../vaultspark-studio-ops/scripts/provision-project-db.mjs\",\"line\":92,\"detail\":\"ModelB provisioner creates schema+role, not Auth/REST/JWT session compatibility API.\"}]"
+        },
+        {
+          "slug": "new-public-evidence-dashboard",
+          "premise": "Select a separate repair for new-public-evidence-dashboard",
+          "evidence": "Disposition: rejected-on-verify. api/release-proof.json, api/status-proof.json and evidence hub already separate current holds and source-bound evidence; no new information-finding failure reproduced."
+        }
+      ]
+    },
+    "sil-debt": {
+      "reviewed": true,
+      "candidates": [],
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "no-extra-sil-debt",
+          "premise": "Add another standalone repair in this axis",
+          "evidence": "Fresh source review found no additional reproduced failure beyond the selected outcomes; no speculative expansion selected."
+        }
+      ]
+    }
+  },
+  "readinessAssessment": [
+    {
+      "area": "Core product",
+      "state": "partial",
+      "evidence": "Existing real audience acceptance pending; mocked contracts are narrower.",
+      "observedAt": "2026-11-08T15:54:53.184Z",
+      "owner": "website",
+      "sourceRevision": "ab8b12016ec8549adab889fca45f10d7ab55961b"
+    },
+    {
+      "area": "Onboarding and identity",
+      "state": "fail",
+      "evidence": "Stage data defaults still production; isolated target and positive journeys pending.",
+      "observedAt": "2026-11-08T15:54:53.184Z",
+      "owner": "website",
+      "sourceRevision": "ab8b12016ec8549adab889fca45f10d7ab55961b"
+    },
+    {
+      "area": "Accessibility and presentation",
+      "state": "partial",
+      "evidence": "42 Linux header checks pass; three reference cells remain red; controlled Oracle arrival rewrite not justified.",
+      "observedAt": "2026-11-08T15:54:53.184Z",
+      "owner": "website",
+      "sourceRevision": "ab8b12016ec8549adab889fca45f10d7ab55961b"
+    },
+    {
+      "area": "Performance and capacity",
+      "state": "partial",
+      "evidence": "Prior exact-source Lighthouse27 audits passed; LCP and field-vitals bars are not inferred.",
+      "observedAt": "2026-11-08T15:54:53.184Z",
+      "owner": "website",
+      "sourceRevision": "ab8b12016ec8549adab889fca45f10d7ab55961b"
+    },
+    {
+      "area": "Security and data",
+      "state": "partial",
+      "evidence": "Gateway discovery performed; live isolation and OCI trust remain unresolved.",
+      "observedAt": "2026-11-08T15:54:53.184Z",
+      "owner": "website",
+      "sourceRevision": "ab8b12016ec8549adab889fca45f10d7ab55961b"
+    },
+    {
+      "area": "Recovery and operations",
+      "state": "partial",
+      "evidence": "Static staging receipt exists; full promotion/readback not complete.",
+      "observedAt": "2026-11-08T15:54:53.184Z",
+      "owner": "website",
+      "sourceRevision": "ab8b12016ec8549adab889fca45f10d7ab55961b"
+    },
+    {
+      "area": "Email and notifications",
+      "state": "unknown",
+      "evidence": "No new live delivery acceptance claimed by this invocation.",
+      "observedAt": "2026-11-08T15:54:53.184Z",
+      "owner": "website",
+      "sourceRevision": "ab8b12016ec8549adab889fca45f10d7ab55961b"
+    },
+    {
+      "area": "Observability and analytics",
+      "state": "fail",
+      "evidence": "Actual canonical receipt writer can rebind old pixels; selected root repair.",
+      "observedAt": "2026-11-08T15:54:53.184Z",
+      "owner": "website",
+      "sourceRevision": "ab8b12016ec8549adab889fca45f10d7ab55961b"
+    },
+    {
+      "area": "Feedback and support",
+      "state": "partial",
+      "evidence": "Existing opened discussion mounts and feedback flow retained; no new failure reproduced.",
+      "observedAt": "2026-11-08T15:54:53.184Z",
+      "owner": "website",
+      "sourceRevision": "ab8b12016ec8549adab889fca45f10d7ab55961b"
+    },
+    {
+      "area": "Identity legal and rights",
+      "state": "partial",
+      "evidence": "Existing proprietary/branding contracts retained; no rights or tier changes.",
+      "observedAt": "2026-11-08T15:54:53.184Z",
+      "owner": "website",
+      "sourceRevision": "ab8b12016ec8549adab889fca45f10d7ab55961b"
+    },
+    {
+      "area": "Agent access",
+      "state": "partial",
+      "evidence": "Discovery exists; Oracle catalog prompt has proven source drift.",
+      "observedAt": "2026-11-08T15:54:53.184Z",
+      "owner": "website",
+      "sourceRevision": "ab8b12016ec8549adab889fca45f10d7ab55961b"
+    },
+    {
+      "area": "Release and communication",
+      "state": "fail",
+      "evidence": "Exact candidate checks, isolated journeys and production acceptance pending.",
+      "observedAt": "2026-11-08T15:54:53.184Z",
+      "owner": "website",
+      "sourceRevision": "ab8b12016ec8549adab889fca45f10d7ab55961b"
+    }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "slug": "immutable-capture-provenance",
+      "title": "Bind pixels at capture time and preserve prior image evidence",
+      "axis": "observability-honesty",
+      "tier": "⚡",
+      "impact": 9,
+      "innovation": 5,
+      "effortHours": 1.5,
+      "priority": 24.89826400493005,
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-11-08T16:21:51.654Z",
+          "status": "shipped",
+          "note": "Selected source implementation verified locally and independently; deployment remains item4, not implied by this status.",
+          "evidence": "docs/S412_implementation-verification.json",
+          "nativeExit": 0,
+          "passed": 20,
+          "skipped": 0
+        }
+      ],
+      "selectedDepth": "L2",
+      "why": "Bind pixels at capture time and preserve prior image evidence",
+      "userOutcome": "Actual-writer regression rejects stale and missing bindings before publication; repeated capture cannot overwrite old bytes; valid receipt-only flow preserves capture-time facts; existing receipt contracts pass; no canonical old image/receipt changes.",
+      "readinessArea": "observability-honesty",
+      "stageRationale": "Stabilize the existing supported release using reproduced failures; no lifecycle, identity-policy or pricing change.",
+      "recipe": "Repair the actual theme producer and helper-compatible Spark producer: capture-time source/candidate/hash provenance; immutable run namespace; fail-closed stale or missing receipt-only bindings and collisions; retain prior receipt preimages. Reuse existing helpers where suitable. Never relabel prior automated captures as manually reviewed.",
+      "acceptance": "Actual-writer regression rejects stale and missing bindings before publication; repeated capture cannot overwrite old bytes; valid receipt-only flow preserves capture-time facts; existing receipt contracts pass; no canonical old image/receipt changes.",
+      "premises": [
+        {
+          "claim": "Actual current writer can bind stale pixels to a new source.",
+          "adapter": "file-content",
+          "target": "docs/S412_audit-findings.json",
+          "pattern": "\"staleCaptureBoundAsNew\": true",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Theme producer still copies over deterministic canonical names.",
+          "adapter": "file-content",
+          "target": "scripts/capture-theme-matrix.mjs",
+          "pattern": "fs.copyFileSync(src, dest);",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.75,
+          "recipe": "Record the finding only; insufficient to resolve this selected outcome."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Repair the actual theme producer and helper-compatible Spark producer: capture-time source/candidate/hash provenance; immutable run namespace; fail-closed stale or missing receipt-only bindings and collisions; retain prior receipt preimages. Reuse existing helpers where suitable. Never relabel prior automated captures as manually reviewed."
+        },
+        "L3": {
+          "effortHours": 4.5,
+          "recipe": "Broader platform redesign is outside this selected release scope."
+        }
+      }
+    },
+    {
+      "id": 2,
+      "slug": "oracle-catalog-context",
+      "title": "Remove stale active-project claims from Oracle catalog context",
+      "axis": "ai-intelligence",
+      "tier": "⚡",
+      "impact": 6,
+      "innovation": 3,
+      "effortHours": 0.5,
+      "priority": 13.61647435258854,
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-11-08T16:21:51.654Z",
+          "status": "shipped",
+          "note": "Selected source implementation verified locally and independently; deployment remains item4, not implied by this status.",
+          "evidence": "docs/S412_implementation-verification.json",
+          "nativeExit": 0,
+          "passed": 8,
+          "skipped": 0
+        }
+      ],
+      "selectedDepth": "L2",
+      "why": "Remove stale active-project claims from Oracle catalog context",
+      "userOutcome": "The mounted games Oracle no longer calls archived Gridiron GM active or supplies an outdated exhaustive list. Context and request regressions pass without network/model use or visible layout changes.",
+      "readinessArea": "ai-intelligence",
+      "stageRationale": "Stabilize the existing supported release using reproduced failures; no lifecycle, identity-policy or pricing change.",
+      "recipe": "Replace the duplicated active-project catalog assertions with neutral current-catalog guidance. Preserve page-specific context, request payload, existing authoritative snapshot, backend/provider/budget limits and membership policy. Add an offline actual-context/payload regression; make no paid API request.",
+      "acceptance": "The mounted games Oracle no longer calls archived Gridiron GM active or supplies an outdated exhaustive list. Context and request regressions pass without network/model use or visible layout changes.",
+      "premises": [
+        {
+          "claim": "The fallback still supplies the stale active-project list.",
+          "adapter": "file-content",
+          "target": "assets/vault-oracle.js",
+          "pattern": "Active projects: Call of Doodie (satire FPS), Gridiron GM",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "The mounted source contradicts current catalog state.",
+          "adapter": "file-content",
+          "target": "docs/S412_audit-findings.json",
+          "pattern": "\"currentCatalogMarksGridironVaulted\": true",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Record the finding only; insufficient to resolve this selected outcome."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "Replace the duplicated active-project catalog assertions with neutral current-catalog guidance. Preserve page-specific context, request payload, existing authoritative snapshot, backend/provider/budget limits and membership policy. Add an offline actual-context/payload regression; make no paid API request."
+        },
+        "L3": {
+          "effortHours": 1.5,
+          "recipe": "Broader platform redesign is outside this selected release scope."
+        }
+      }
+    },
+    {
+      "id": 3,
+      "slug": "review-three-linux-references",
+      "title": "Review and correct three proven stale Linux reference cells",
+      "axis": "ui-ux-feedback",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 2,
+      "effortHours": 0.75,
+      "priority": 10.9631720977373,
+      "status": "blocked",
+      "executionLog": [
+        {
+          "at": "2026-11-08T16:21:51.654Z",
+          "status": "blocked",
+          "note": "Exact first-party image artifact download returned package-trust BLOCK; a concrete one-artifact exception question is pending. No download/import performed."
+        }
+      ],
+      "selectedDepth": "L2",
+      "why": "Review and correct three proven stale Linux reference cells",
+      "userOutcome": "All three original-resolution comparisons are reviewed and hash-bound to unchanged relevant UI; exactly three selected references change only if justified; unchanged native comparison passes. A downloaded image, generation pass or review alone is not acceptance.",
+      "readinessArea": "ui-ux-feedback",
+      "stageRationale": "Stabilize the existing supported release using reproduced failures; no lifecycle, identity-policy or pricing change.",
+      "recipe": "After exact-artifact trust permission, inspect each old expected/current actual/provisional generated original. Accept only Games iPhone13 dark/light and Membership iPhone13 light when exact chosen PNG matches independent current native capture and intended scene. Preserve old PNGs/failures and disclose historical cause unknown. Do not import Oracle or all70; keep camera/options/tolerance unchanged. Run native comparison afterward.",
+      "acceptance": "All three original-resolution comparisons are reviewed and hash-bound to unchanged relevant UI; exactly three selected references change only if justified; unchanged native comparison passes. A downloaded image, generation pass or review alone is not acceptance.",
+      "premises": [
+        {
+          "claim": "Current comparison is red.",
+          "adapter": "file-content",
+          "target": "docs/S412_audit-findings.json",
+          "pattern": "\"comparisonFailed\": true",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Independent current buffers agree for the proposed cells.",
+          "adapter": "file-content",
+          "target": "docs/S412_audit-findings.json",
+          "pattern": "\"twoIndependentCurrentRastersAgree\": true",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.375,
+          "recipe": "Record the finding only; insufficient to resolve this selected outcome."
+        },
+        "L2": {
+          "effortHours": 0.75,
+          "recipe": "After exact-artifact trust permission, inspect each old expected/current actual/provisional generated original. Accept only Games iPhone13 dark/light and Membership iPhone13 light when exact chosen PNG matches independent current native capture and intended scene. Preserve old PNGs/failures and disclose historical cause unknown. Do not import Oracle or all70; keep camera/options/tolerance unchanged. Run native comparison afterward."
+        },
+        "L3": {
+          "effortHours": 2.25,
+          "recipe": "Broader platform redesign is outside this selected release scope."
+        }
+      }
+    },
+    {
+      "id": 4,
+      "slug": "isolated-release-acceptance",
+      "title": "Complete isolated account acceptance and authorized release promotion",
+      "axis": "features-depth",
+      "tier": "⚡",
+      "impact": 10,
+      "innovation": 1,
+      "effortHours": 2,
+      "priority": 5,
+      "status": "blocked",
+      "executionLog": [
+        {
+          "at": "2026-11-08T16:21:51.654Z",
+          "status": "blocked",
+          "note": "Actual isolated backend registration/intake and OCI artifact trust remain unresolved. Static staging does not prove isolation; positive journeys have not occurred. Existing push/deployment authorization persists."
+        }
+      ],
+      "selectedDepth": "L2",
+      "why": "Complete isolated account acceptance and authorized release promotion",
+      "userOutcome": "Actual isolated targeting and positive/negative affected journeys pass; all applicable exact-candidate gates pass; authorized main and production deployment/readback is verified. Real unresolved prerequisites remain blocked, never shipped.",
+      "readinessArea": "features-depth",
+      "stageRationale": "Stabilize the existing supported release using reproduced failures; no lifecycle, identity-policy or pricing change.",
+      "recipe": "Carry the existing release outcome: obtain actual canonical staging registration and artifact trust; provision only the authorized isolated no-cost target when prerequisites pass; retarget staged browser and Worker through the gateway; prove member and approved-investor journeys. Then exact required candidate workflows, current staging, rollback, authorized main/production promotion and served readback. No production-data staging, owner-signature gate or policy bypass.",
+      "acceptance": "Actual isolated targeting and positive/negative affected journeys pass; all applicable exact-candidate gates pass; authorized main and production deployment/readback is verified. Real unresolved prerequisites remain blocked, never shipped.",
+      "premises": [
+        {
+          "claim": "Affected isolated account acceptance is not yet verified.",
+          "adapter": "file-content",
+          "target": "docs/S412_audit-findings.json",
+          "pattern": "\"positiveMemberAndInvestorAcceptance\": false",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Record the finding only; insufficient to resolve this selected outcome."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Carry the existing release outcome: obtain actual canonical staging registration and artifact trust; provision only the authorized isolated no-cost target when prerequisites pass; retarget staged browser and Worker through the gateway; prove member and approved-investor journeys. Then exact required candidate workflows, current staging, rollback, authorized main/production promotion and served readback. No production-data staging, owner-signature gate or policy bypass."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Broader platform redesign is outside this selected release scope."
+        }
+      }
+    }
+  ],
+  "totals": {
+    "count": 4,
+    "priority": 54.47791045525589,
+    "top3": [
+      "immutable-capture-provenance",
+      "oracle-catalog-context",
+      "review-three-linux-references"
+    ]
+  },
+  "innovationReserve": [],
+  "skipped": [
+    {
+      "id": "S412-SEC-1",
+      "axis": "security",
+      "title": "Stage data configuration still falls back to production",
+      "status": "confirmed-release-dependency",
+      "priority": "P1",
+      "novel": false,
+      "evidence": [
+        {
+          "file": "assets/supabase-client.js",
+          "line": 12,
+          "detail": "Browser data URL is a production literal; SDK client constructed at61."
+        },
+        {
+          "file": "cloudflare/obelisk-auth.js",
+          "line": 152,
+          "detail": "Worker data URL/anon env values fall back to production defaults15–16."
+        },
+        {
+          "file": "cloudflare/wrangler.toml",
+          "line": 122,
+          "detail": "Staging vars declare separate origin/cookies but no SUPABASE_URL/ANON binding."
+        },
+        {
+          "file": "docs/RELEASE_PROMOTION_PROTOCOL.md",
+          "line": 19,
+          "detail": "Changed auth/session/authorization requires affected authenticated journeys; denial is not positive proof."
+        }
+      ],
+      "verification": "Fresh S412 source reads confirm browser/Worker split; no account or production requests made. Existing historical stage settings evidence is supporting only.",
+      "proposal": "Carry real isolated endpoint/intake/trust dependencies; implement reviewed browser+Worker environment config variant and fail-closed production-egress verification after target exists. No owner-signature gate or new auth policy.",
+      "limits": "No exploit or real data leak was probed; current release hold prevents treating stage as isolated."
+    },
+    {
+      "id": "S412-SEC-2",
+      "axis": "security",
+      "title": "Diagnostic native error/geometry output leaks DOM text or callback query",
+      "status": "rejected-phantom",
+      "priority": null,
+      "novel": true,
+      "evidence": [
+        {
+          "file": "tests/visual-regression.spec.js",
+          "line": 77,
+          "detail": "Native messages are finite scalar allowlist or hash, unknown path/URL omitted."
+        },
+        {
+          "file": "tests/visual-regression.spec.js",
+          "line": 143,
+          "detail": "Resolved loopback guard; geometry uses fixed selectors/rects/computed style, not DOM text/cookies/query."
+        },
+        {
+          "file": "tests/visual-regression.spec.js",
+          "line": 109,
+          "detail": "Thrown error name allowlisted; original error object preserved."
+        }
+      ],
+      "verification": "Current source reread; existing independently executed helper probes confirm omission/restoration. Fresh audit does not reclassify old probes as new full acceptance.",
+      "proposal": "No repair selected; preserve optional/default-off diagnostic contract.",
+      "limits": "Permitted runtime/font/CPU metadata remains intentionally logged; not private account acceptance."
+    },
+    {
+      "id": "S412-ARCH-2",
+      "axis": "architecture",
+      "title": "Replace real isolated data plane with installed Node/in-memory adapter to bypass OCI trust",
+      "status": "rejected-unsupported-shortcut",
+      "priority": null,
+      "novel": false,
+      "evidence": [
+        {
+          "file": "cloudflare/obelisk-auth.js",
+          "line": 575,
+          "detail": "Bridge needs real AuthAdmin user create;602 user update,634 generate_link,639 verify,655 refresh."
+        },
+        {
+          "file": "assets/investor-auth.js",
+          "line": 159,
+          "detail": "Investor gate depends on actual get_my_investor_profile/RLS data."
+        },
+        {
+          "file": "vault-member/portal-auth.js",
+          "line": 450,
+          "detail": "Register uses real register_open and confirmed member row."
+        },
+        {
+          "file": "../vaultspark-studio-ops/scripts/provision-project-db.mjs",
+          "line": 92,
+          "detail": "ModelB provisioner creates schema+role, not Auth/REST/JWT session compatibility API."
+        }
+      ],
+      "verification": "Reviewed current application contract and existing bounded inventory/prepared plans; no repeated host/project discovery.",
+      "proposal": "No fake adapter acceptance. Four-container count is not a canon requirement, but no smaller already-ready compatible isolated runtime is evidenced. Preserve concrete trust/reservation/capability/bootstrap/network dependencies.",
+      "limits": "Existing shared Node/Caddy/Postgres availability alone is insufficient; this is not a claim that smaller topology is impossible."
+    },
+    {
+      "id": "S412-EFF-1",
+      "axis": "efficiency",
+      "title": "Pixel baseline reproducibility depends on floating browser toolchain",
+      "status": "confirmed-defer-not-current-cause",
+      "priority": "P2",
+      "novel": false,
+      "evidence": [
+        {
+          "file": "package.json",
+          "line": 105,
+          "detail": "@playwright/test uses ^1.49.0."
+        },
+        {
+          "file": ".gitignore",
+          "line": 7,
+          "detail": "Root package-lock.json ignored."
+        },
+        {
+          "file": ".github/workflows/visual-regression.yml",
+          "line": 76,
+          "detail": "Fresh npm install resolves current compatible toolchain;78 installs its browser."
+        },
+        {
+          "file": ".cache/S411/ci-cee67c9-paired-scene-analysis-v2.json",
+          "line": 25,
+          "detail": "Same-SHA paired runtime/font equality proves floating version is not an observed between-mode difference in this pair."
+        }
+      ],
+      "verification": "Local installed1.58.2 versus current paired CI1.65.0/Chromium158 evidence; same paired CI runtime/font metadata equal.",
+      "proposal": "Consider reviewed reproducibility contract/pin in a separately selected item after package-trust/compatibility checks. Do not claim pinning fixes current three visual failures.",
+      "limits": "Policy currently intentionally ignores lockfile; no dependency update/download authorized or made."
+    },
+    {
+      "id": "S412-EFF-2",
+      "axis": "efficiency",
+      "title": "Capture reruns clobber retained release evidence under deterministic filenames",
+      "status": "confirmed-merge-with-ARCH-1",
+      "priority": "P1",
+      "depth": "L2",
+      "novel": false,
+      "evidence": [
+        {
+          "file": "scripts/capture-theme-matrix.mjs",
+          "line": 205,
+          "detail": "Deterministic route/theme/viewport/state name under reusable OUT_DIR."
+        },
+        {
+          "file": "scripts/capture-theme-matrix.mjs",
+          "line": 272,
+          "detail": "copyFileSync overwrites same docs/visual-qa path without collision guard."
+        },
+        {
+          "file": "scripts/capture-spark-visual-proof.mjs",
+          "line": 26,
+          "detail": "Equivalent fixed Spark filenames;43 replaces LATEST."
+        },
+        {
+          "file": "scripts/commit-visual-review-receipt.mjs",
+          "line": 34,
+          "detail": "Copies deterministic filenames then61 replaces LATEST; no source rebind here, but replacement risk."
+        },
+        {
+          "file": "scripts/check-visual-qa-retention.mjs",
+          "line": 38,
+          "detail": "Declared policy says referenced current/archived captures are immutable."
+        }
+      ],
+      "verification": {
+        "nativeExit": 0,
+        "artifact": ".cache/S412/capture-provenance-probe.json",
+        "actualWriterExecuted": true,
+        "oldReferenceClobbered": true
+      },
+      "proposal": "Select withARCH-1 as one bounded outcome. Primary capture-theme-matrix; Spark equivalent only if same helper-compatible invariant. Review importer overwrite separately; no unrelated producer sweep.",
+      "limits": "Restored14 historical originals remain restored; no actual retained artifact was overwritten by this audit."
+    },
+    {
+      "id": "S412-TOKEN-1",
+      "axis": "token-cost",
+      "title": "Handoff compaction still calls an external model for every startup",
+      "status": "rejected-phantom",
+      "priority": null,
+      "novel": true,
+      "evidence": [
+        {
+          "file": "scripts/compact-handoff.mjs",
+          "line": 7,
+          "detail": "Default is deterministic source-hashed extraction, explicitly no API."
+        },
+        {
+          "file": "scripts/lib/handoff-digest.mjs",
+          "line": 6,
+          "detail": "maxChars6000 bound, source hash and omission lookup."
+        }
+      ],
+      "verification": "Fresh source inspection; no model call or compaction mutation performed.",
+      "proposal": "No new compactor, service, model switch or spend."
+    },
+    {
+      "id": "S412-TOKEN-2",
+      "axis": "token-cost",
+      "title": "Startup context exceeds its measured ceiling and needs immediate quota increase",
+      "status": "rejected-current-ceiling-not-breached",
+      "priority": null,
+      "novel": false,
+      "evidence": [
+        {
+          "file": "scripts/check-startup-context-budget.mjs",
+          "line": 9,
+          "detail": "Current explicit ceiling42000 estimated tokens."
+        },
+        {
+          "file": "scripts/check-startup-context-budget.mjs",
+          "line": 11,
+          "detail": "Repair is rotation, not silent quota growth."
+        }
+      ],
+      "verification": {
+        "command": "node scripts/check-startup-context-budget.mjs --json",
+        "nativeExit": 0,
+        "ok": true,
+        "estimatedTokens": 41685,
+        "maxEstimatedTokens": 42000,
+        "rotatableBlocks": 0
+      },
+      "proposal": "No quota increase or unrelated history rewrite. Near-ceiling observation may inform normal closeout rotation; scope remains selected outcome.",
+      "limits": "Measured estimated cost is not actual model usage; no savings claim."
+    },
+    {
+      "id": "S412-SIL-1",
+      "axis": "SIL-debt",
+      "title": "Raise session-history capture quotas because historical scale limits were observed",
+      "status": "rejected-unreproduced-current-debt",
+      "priority": null,
+      "novel": false,
+      "evidence": [
+        {
+          "file": "context/TASK_BOARD.md",
+          "line": 40,
+          "detail": "Explicit future unselected commitment is to reproduce limits before changing quotas."
+        },
+        {
+          "file": "scripts/check-visual-qa-retention.mjs",
+          "line": 38,
+          "detail": "Current policy retains referenced originals; immutable overwrite repro is a separate verified writer problem."
+        }
+      ],
+      "verification": "Fresh bounded board/source review found concrete overwrite/provenance issue, not current evidence that quotas are insufficient.",
+      "proposal": "Close only proven retention/provenance issue; leave quota hypothesis unselected until reproduced.",
+      "limits": "Does not erase historical quota observations."
+    },
+    {
+      "id": "S412-SIL-2",
+      "axis": "SIL-debt",
+      "title": "Explicit discussion open still waits for IntersectionObserver and never initializes",
+      "status": "rejected-fixed-current-code",
+      "priority": null,
+      "novel": false,
+      "evidence": [
+        {
+          "file": "context/TASK_BOARD.md",
+          "line": 41,
+          "detail": "Future discussion-coverage review requires reproduced missing state."
+        },
+        {
+          "file": "assets/desk-comments.js",
+          "line": 628,
+          "detail": "Actual open details explicitly unobserves and mount(section), independent of intersection."
+        },
+        {
+          "file": "assets/desk-comments.js",
+          "line": 638,
+          "detail": "toggle listener plus immediate mountOpened handles already-open and newly-open discussions."
+        }
+      ],
+      "verification": "Fresh live source inspection; no new failing state reproduced, no UI/network calls.",
+      "proposal": "No duplicate discussion repair or speculative broader coverage change."
+    },
+    {
+      "slug": "existing-audience-journey-acceptance",
+      "title": "Complete the existing member and approved-investor acceptance on an isolated target",
+      "axis": "features-depth",
+      "freshNovelHypothesis": false,
+      "disposition": "carry-existing-required-acceptance",
+      "premise": "Existing implemented member/investor functionality has genuine uncompleted positive acceptance; local/mocked/structural checks are not that proof.",
+      "preverifiedAt": "2026-11-08T15:52:38.043Z",
+      "evidence": [
+        {
+          "file": "tests/authenticated.spec.js",
+          "line": 51,
+          "sha256": "915f5a4b3aa3ea5033a879e0df8aa285297103409cca31227cedb3b0f4d2844a",
+          "observation": "Authenticated native suite is explicitly credential-guarded."
+        },
+        {
+          "file": "tests/investor-thread.spec.js",
+          "line": 4,
+          "sha256": "1988c2049fe258b6311ad63f00710f39a27805a14a6b74b4ea1194c0897257a3",
+          "observation": "Thread contract explicitly distinguishes structural verification from signed-in runtime."
+        },
+        {
+          "file": "context/CURRENT_STATE.md",
+          "line": 6,
+          "sha256": "b947fe3327d799bb795c302452c49af54556761565e9070fa69d072e0b11bf2d",
+          "observation": "Current checkpoint keeps affected real journeys pending; parent explicitly confirms the dependency."
+        }
+      ],
+      "acceptance": "Existing isolated member plus approved-investor native journeys produce current source/candidate-bound positive receipts without production defaults, new identity policy or tier changes.",
+      "scopeNote": "Existing required acceptance, not a new feature or newly declared human blocker. Root owns isolated backend prerequisite and actual provider/account work."
+    },
+    {
+      "slug": "missing-existing-member-return-path",
+      "title": "Add a distinct existing-account return path to the membership pitch",
+      "axis": "features-depth",
+      "freshNovelHypothesis": true,
+      "disposition": "rejected-on-verify",
+      "premise": "Hypothesis: the anonymous pitch only offers signup, stranding returning members.",
+      "preverifiedAt": "2026-11-08T15:52:38.047Z",
+      "evidence": [
+        {
+          "file": "membership/index.html",
+          "line": 1002,
+          "sha256": "bd5a8684b57b7518f8bff69530323c9bb6c62021b46d01086f649e349cd4a5b8",
+          "observation": "The pitch already links directly to /vault-member/."
+        },
+        {
+          "file": "assets/account-chip.js",
+          "line": 106,
+          "sha256": "24b6dad89087c038c51be6e8ec709397b5aba80e51a3d6d2a1417649ab22f266",
+          "observation": "Signed-in join suppression is explicitly truth-valued, and existing account chip behavior is already implemented."
+        },
+        {
+          "file": "tests/signed-in-member-state.spec.js",
+          "line": 37,
+          "sha256": "f86ca20f5baeed4a1381894fcb19dc5d20384864f9bac982f1d3585db8b84d3c",
+          "observation": "Existing mocked authoritative identity contract covers anonymous versus signed-in stamping."
+        }
+      ],
+      "acceptance": "No duplicate return feature. Preserve current links and cover them in existing positive account acceptance.",
+      "scopeNote": "Fresh cross-audience continuation hypothesis was disproved by current source; no new UI/flow selected."
+    },
+    {
+      "slug": "rank-display-threshold-contract-drift",
+      "title": "Reconcile conflicting rank threshold definitions before proposing consumer changes",
+      "axis": "gamification-immersion",
+      "freshNovelHypothesis": false,
+      "disposition": "verified-source-contradiction-defer-policy-selection",
+      "premise": "Two wired rank consumers classify identical points differently.",
+      "preverifiedAt": "2026-11-08T15:52:38.051Z",
+      "evidence": [
+        {
+          "file": "assets/vault-rank-bar.js",
+          "line": 16,
+          "sha256": "ebf33da5144cf498e8741dc6ce290c0d2442d7c0e8da6515ac62d47c04490c6b",
+          "observation": "Bar starts Vault Runner at50; source function100=>Rift Scout."
+        },
+        {
+          "file": "assets/rank-projector.js",
+          "line": 16,
+          "sha256": "a1d5feb0e1ea52a4c58f354efe94c3ec7ea37d670a957b5ff10aed83acd700ef",
+          "observation": "Projector starts Vault Runner at250; source function100=>Spark Initiate."
+        },
+        {
+          "file": "assets/membership-live-tier.js",
+          "line": 15,
+          "sha256": "550855b6d936520fcf902a89b91dd29166e208f232448add5c737320c796d3d4",
+          "observation": "Live membership strip agrees with250/1000 scale."
+        },
+        {
+          "file": "assets/ambient-loader.js",
+          "line": 390,
+          "sha256": "ff3f592fc5877a109d669253914d63d7c2e357e2a49640a64cc8304b50394b33",
+          "observation": "Ambient loader wires the bar."
+        },
+        {
+          "file": "assets/membership-idle-loader.js",
+          "line": 7,
+          "sha256": "038f28ab866f83d2470dd76f20e3bdb299a17ab8d822612e220c5ddfac8f3979",
+          "observation": "Membership lazy-loads the projector."
+        },
+        {
+          "file": "scripts/build-rank-climbers.mjs",
+          "line": 26,
+          "sha256": "97b29de26cc4722447750cb08852821356e1f92689a2eb0b1eef9d479eedaff6",
+          "observation": "Rank report deliberately mirrors the50-based bar, so choosing250 globally is not a harmless deduplication."
+        }
+      ],
+      "acceptance": "First establish the existing authoritative rank/producer contract and boundary fixture matrix; only then select a display correction with no economy/entitlement/policy change. Do not infer actual account state from the pure source counterexample.",
+      "scopeNote": "The contradiction is real, but root requested minimal authorized release work and no rank/tier policy changes. No threshold migration or new public promise selected."
+    },
+    {
+      "slug": "anonymous-first-climb-presence-truth",
+      "title": "Avoid awarding First Climb signup completion merely because signed-in=false is present",
+      "axis": "gamification-immersion",
+      "freshNovelHypothesis": true,
+      "disposition": "source-bug-reproduced-but-rejected-as-current-release-defect",
+      "premise": "Hypothesis: an active guest quest can mark signup done because its signedIn() uses attribute presence.",
+      "preverifiedAt": "2026-11-08T15:52:38.052Z",
+      "evidence": [
+        {
+          "file": "assets/rank-quest.js",
+          "line": 23,
+          "sha256": "4f47bd08621f862b59195e34006461917944f3dc607fccba15ef5250ce26518e",
+          "observation": "Pure current helper returns true for html/body data-vs-signed-in=false."
+        },
+        {
+          "file": "assets/signed-in-state.js",
+          "line": 111,
+          "sha256": "f8725423417ff02ac8081af920e87208e5024c1adfab426d1f479f9a6ca09282",
+          "observation": "Authoritative state intentionally writes false, rather than deleting the attribute."
+        },
+        {
+          "file": "assets/ambient-loader.js",
+          "line": 473,
+          "sha256": "ff3f592fc5877a109d669253914d63d7c2e357e2a49640a64cc8304b50394b33",
+          "observation": "Loader exists but requires a data-rank-quest host."
+        },
+        {
+          "file": "assets/rank-quest.js",
+          "line": 142,
+          "sha256": "4f47bd08621f862b59195e34006461917944f3dc607fccba15ef5250ce26518e",
+          "observation": "No current public HTML mount/reference found by bounded native rg search; no active visitor failure established."
+        }
+      ],
+      "acceptance": "Do not add a new quest host during release recovery. If deliberately activated later, first add false/true/missing identity regression and use value-based state without changing earned XP.",
+      "scopeNote": "Novel source interaction counterexample is genuine but dormant; reject current release repair premise rather than invent a feature to fix."
+    },
+    {
+      "slug": "oracle-catalog-context-lifecycle-drift",
+      "title": "Keep the mounted Oracle catalog context aligned with current project lifecycle",
+      "axis": "ai-intelligence",
+      "freshNovelHypothesis": true,
+      "disposition": "verified-input-drift-candidate-pending-root-scope-decision",
+      "premise": "The games Oracle context calls vaulted Gridiron GM active and omits the current Sparked Franchise Architect.",
+      "preverifiedAt": "2026-11-08T15:52:38.056Z",
+      "evidence": [
+        {
+          "file": "assets/vault-oracle.js",
+          "line": 33,
+          "sha256": "c499fb820d8055bd38df1828fbf55108325b715d98d96a50fc7d23ab5ad9d4f4",
+          "observation": "Static context says Active projects and lists Gridiron GM without Franchise Architect."
+        },
+        {
+          "file": "games/index.html",
+          "line": 785,
+          "sha256": "33c63ab9b644545e3ad4a202d057fa08e5f6dac043381306f70d686497a3a649",
+          "observation": "Current visible catalog marks Franchise Architect Sparked."
+        },
+        {
+          "file": "games/index.html",
+          "line": 890,
+          "sha256": "33c63ab9b644545e3ad4a202d057fa08e5f6dac043381306f70d686497a3a649",
+          "observation": "Current visible catalog marks Gridiron GM Vaulted."
+        },
+        {
+          "file": "games/index.html",
+          "line": 1020,
+          "sha256": "33c63ab9b644545e3ad4a202d057fa08e5f6dac043381306f70d686497a3a649",
+          "observation": "Oracle is actually mounted on the catalog."
+        },
+        {
+          "file": "assets/vault-oracle.js",
+          "line": 258,
+          "sha256": "c499fb820d8055bd38df1828fbf55108325b715d98d96a50fc7d23ab5ad9d4f4",
+          "observation": "The context is sent by the existing request path."
+        },
+        {
+          "file": "supabase/functions/ask-ignis/index.ts",
+          "line": 157,
+          "sha256": "21b2dc7df48aca45dc03dfbbf8419c25b0c27c37cf6f676fd5e6e51fcd58c492",
+          "observation": "Backend includes supplied page context; no paid request was made to infer an answer defect."
+        }
+      ],
+      "acceptance": "Offline capture of the existing context/payload must not describe vaulted titles as active or contradict current catalog; retain current snapshot grounding, costs, member tiers and error behavior. Smallest recipe is neutral catalog navigation guidance instead of duplicating lifecycle assertions, using existing page/snapshot truth.",
+      "scopeNote": "Fresh input accuracy issue, not proof of hallucinated output or provider failure. No new model, paid call, feature promise or context authority expansion selected."
+    },
+    {
+      "slug": "oracle-missing-honest-failure-path",
+      "title": "Add explicit unavailable and no-answer handling to Oracle",
+      "axis": "ai-intelligence",
+      "freshNovelHypothesis": false,
+      "disposition": "rejected-on-verify",
+      "premise": "Hypothesis: unavailable or unsupported Oracle responses lack honest error/grounding behavior.",
+      "preverifiedAt": "2026-11-08T15:52:38.060Z",
+      "evidence": [
+        {
+          "file": "assets/vault-oracle.js",
+          "line": 598,
+          "sha256": "c499fb820d8055bd38df1828fbf55108325b715d98d96a50fc7d23ab5ad9d4f4",
+          "observation": "Existing submit chain appends an explicit error state."
+        },
+        {
+          "file": "supabase/functions/ask-ignis/index.ts",
+          "line": 110,
+          "sha256": "21b2dc7df48aca45dc03dfbbf8419c25b0c27c37cf6f676fd5e6e51fcd58c492",
+          "observation": "Existing instruction prohibits inventing unsupported facts."
+        },
+        {
+          "file": "tests/s368-ask-vault.unit.spec.mjs",
+          "line": 309,
+          "sha256": "4ae7b497936655b9c6ab9a30fd95b7c2fdd032521adeec035ddcb51d4cfcd71e",
+          "observation": "Existing unit contract covers no-answer/cache/capped/upstream-error outcomes."
+        }
+      ],
+      "acceptance": "Preserve existing grounding and failure paths; do not introduce a second inference service. Actual provider and isolated account acceptance remain separately pending.",
+      "scopeNote": "Feature absence premise is disproved; no live AI availability/answer success claimed from source alone."
+    },
+    {
+      "slug": "replace-current-header-layout",
+      "axis": "ui-ux-feedback",
+      "disposition": "rejected-on-verify",
+      "evidence": "Current source header92px contract and both latest Linux42geometry checks pass. Do not repeat the fixed clipping repair."
+    },
+    {
+      "slug": "new-public-evidence-dashboard",
+      "axis": "observability-honesty",
+      "disposition": "rejected-on-verify",
+      "novel": true,
+      "evidence": "api/release-proof.json, api/status-proof.json and evidence hub already separate current holds and source-bound evidence; no new information-finding failure reproduced."
+    },
+    {
+      "slug": "raise-visual-tolerance",
+      "axis": "ui-ux-feedback",
+      "disposition": "rejected",
+      "evidence": "Current mismatches are stable reference disagreements; loosening1.5% would hide evidence rather than review the intended scene."
+    },
+    {
+      "slug": "run-market-expansion",
+      "axis": "features-depth",
+      "disposition": "culled-below-priority-floor",
+      "impact": 1,
+      "innovation": 1,
+      "effortHours": 2,
+      "priority": 0.5,
+      "evidence": "No MARKET.json; supported-release stabilization is the requested scope. Future market maintenance is not selected."
+    }
+  ],
+  "evidence": {
+    "facts": "docs/S412_audit-findings.json",
+    "freshArchitectureAuditSha256": "3d81b00c0e0dd26f35271b82adb3bbfcac9826d2a1f59e4afc5dbaef123ed466",
+    "freshProductAuditSha256": "35fa0dd56b19a096b3bb65faaaa996ff715b597312e4021796f400df6503858e",
+    "reuse": "Existing capture producers, artifact-io/archive helpers, project receipt contracts and offline payload tests reviewed. No dependency or new paid tool is selected.",
+    "patterns": "IGNIS patterns reviewed; innovation scores remain conservative, no score above5.",
+    "survey": "Budgeted sampler:7/704 script files,6000 tokens; targeted current application, producer and behavior-test reads supplement it. This is not exhaustive source coverage."
+  },
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-11-08T15:56:29.553Z",
+    "head": "ab8b12016ec8549adab889fca45f10d7ab55961b",
+    "sidecar": "docs/AUDIT_2026-11-08.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 7,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "17c657bce222b0488b8202c0335e75f9d475dfeb5614cb616a1954ce9d179f87",
+    "implementationDirty": [
+      ".ops-cache/handoff-digest.json",
+      "docs/GENIUS_LIST.md",
+      "portfolio/compiled/FORECAST_LEDGER.json",
+      "docs/S412_admission.json",
+      "docs/S412_audit-brief.json",
+      "docs/S412_audit-brief.md",
+      "docs/S412_audit-findings.json",
+      "docs/S412_plan-brief.json",
+      "docs/S412_plan-brief.md"
+    ]
+  }
+}

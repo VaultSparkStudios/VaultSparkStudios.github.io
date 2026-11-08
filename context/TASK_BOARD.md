@@ -1,3 +1,6 @@
+<!-- S412-active-waves -->
+S412: startup and audit verified; two code repairs verified locally; reference/account acceptance and closeout pending. Deployment authorization persists.
+
 <!-- S411-release-recovery-progress-2026-11-08 -->
 ## S411 release recovery — 2026-11-08, acceptance in progress
 
@@ -915,3 +918,16 @@ Native invocation 01a1b213-67c9-7af0-9148-611b5d9cbc66, created 1793988988, stil
 - [ ] Fresh invocation: actual full startup, fresh audit, selected implementation and closeout; release/account work carries pending.
 - [ ] Preserve unaccepted visual diagnostics and select a repair only from actual paired evidence.
 - [ ] Complete isolated member registration/return/recovery and approved-investor private-update acceptance before production promotion.
+
+
+<!-- S412-verified-code-checkpoint -->
+## S412 — verified code, release pending
+
+20 capture-provenance checks and8 Oracle payload checks passed with independent review. Source/release verification remains separate; details and preserved limitations: docs/S412_implementation-verification.json. No new score or production credit.
+
+- [x] S412 immutable-capture-provenance — local code verified.
+- [x] S412 oracle-catalog-context — local payload regression verified.
+- [ ] S412 three Linux reference reviews/comparison after the exact-artifact trust decision.
+- [ ] S412 isolated member/investor acceptance and authorized release promotion.
+
+Waves1–3 verified;4reference/account/release prerequisites unresolved;5full closeout pending.

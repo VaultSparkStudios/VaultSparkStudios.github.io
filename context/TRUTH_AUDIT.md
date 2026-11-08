@@ -1,3 +1,17 @@
+<!-- S412-full-local-source-verified -->
+## S412 QA checkpoint — local proof verified, release incomplete
+
+Full local source passed549/549 from step1 with native exit0, fingerprint 9278188650a7456e212ea769, plan 42a65dc546d8a359e4d6f17f; docs/S412_current-source-verified.json. The earlier step24 failure and unchanged-budget repair remain recorded. All14 fresh homepage originals across7themes and desktop/mobile were directly reviewed; scoped checks and receipt ordering pass. Prior112-frame receipt bytes remain archived. Static staging4090-file deployment and public/critical code readback pass at core f90c160227935caaf359828091e3749a17487c80e975aeb89d4455f749ffe87c, receipt a14409ff96ae324a679755f3, chronology215.
+
+This is a QA checkpoint, not a full closeout or production release. Reference-image trust/review and real isolated member/approved-investor acceptance remain pending. Existing push/deployment authorization persists. Continue the bound S412 audit; never start a new arc merely on continuation. Prior939 remains historical. See Git history for the publication commit; no main/production promotion is claimed.
+
+<!-- S412-verified-code-checkpoint -->
+## S412 — verified code; release acceptance pending
+
+Recorded 2026-11-08T16:21:51.638Z. The fresh S412 audit and implementation are bound to the current native invocation. Capture provenance repairs passed20 focused tests and independent round-two review; the neutral Oracle catalog context passed8 offline actual-payload checks and independent review. Test wiring includes both regular unit and549-step build-check commands. Details and limitations: docs/S412_implementation-verification.json. These are local code results; full current source, refreshed visual evidence and release acceptance are not inferred.
+
+The exact image-artifact decision and three Linux reference reviews/comparisons remain pending. Isolated account staging still needs actual registered target/intake and artifact trust; no member or approved-investor journey is claimed. Existing push/deployment authorization persists. Main, production, full closeout and native completion remain pending. Prior939 is historical; no new score or release credit is awarded.
+
 <!-- S411-partial-recovery-boundary-2026-11-08 -->
 ## S411 partial recovery boundary — release remains pending
 

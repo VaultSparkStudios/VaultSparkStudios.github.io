@@ -3,6 +3,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
+import { acquireVisualPublicationLock } from './lib/visual-capture-provenance.mjs';
 
 const ROOT = process.cwd();
 const argv = process.argv.slice(2);
@@ -23,7 +24,8 @@ const files = fs.readdirSync(inputDir).filter((file) => /\.png$/i.test(file)).so
 if (!files.length) throw new Error(`No PNG captures in ${inputDir}`);
 
 const receiptDir = path.join(ROOT, 'docs', 'visual-qa');
-fs.mkdirSync(receiptDir, { recursive: true });
+const release = acquireVisualPublicationLock(ROOT);
+try {
 const captures = [];
 for (const file of files) {
   const match = /^(home|stats)--(.+?)--(desktop|mobile)--(.+)\.png$/.exec(file);
@@ -62,3 +64,4 @@ const receipt = {
 };
 fs.writeFileSync(path.join(receiptDir, 'LATEST.json'), `${JSON.stringify(receipt, null, 2)}\n`);
 console.log(`commit-visual-review-receipt: ${captures.length} reviewed capture(s) committed`);
+} finally { release(); }

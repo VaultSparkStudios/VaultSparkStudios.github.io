@@ -30,7 +30,7 @@
     ['/games/vaultfront', 'User is on the Vaultfront game page. Help them learn about the project and follow its progress in the Forge.'],
     ['/games/solara', 'User is on the Solara game page. Help them learn about the project and follow its forge progress.'],
     ['/games/the-exodus', 'User is on The Exodus game page. Help them explore the project.'],
-    ['/games', 'User is browsing the VaultSpark Studios games catalog. Active projects: Call of Doodie (satire FPS), Gridiron GM (football simulator), Vaultfront, Solara, MindFrame, The Exodus. Help them find a game that fits their interest.'],
+    ['/games', 'User is browsing the VaultSpark Studios games catalog or a game page. Use current page details and the live vault snapshot for project names, lifecycle status, and availability. Help them find or explore a game that fits their interest.'],
     ['/membership-value', 'User is reading about VaultSpark membership value. Help them understand what the Vault Score system, rank progression, and member-only perks deliver vs. free access.'],
     ['/membership', 'User is on the membership page. Help them understand Vault tiers, Vault Score, rank progression, and the value of joining — or point them to the sign-up flow.'],
     ['/ranks', 'User is exploring the VaultSpark rank system and Vault Score. Help them understand how points are earned, what ranks unlock, and how to climb faster.'],
