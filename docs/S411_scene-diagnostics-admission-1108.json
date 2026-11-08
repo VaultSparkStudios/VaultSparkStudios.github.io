@@ -1,0 +1,95 @@
+{
+  "observedAt": "2026-11-08T14:32:12.183Z",
+  "strict": {
+    "nativeExit": 0,
+    "output": {
+      "audit": "AUDIT_2026-11-08-S411-scene-diagnostics.json",
+      "selectionMode": "explicit",
+      "selectionReason": "--audit docs/AUDIT_2026-11-08-S411-scene-diagnostics.json",
+      "session": null,
+      "doctorProvenance": null,
+      "total": 4,
+      "verified": 4,
+      "contradicted": 0,
+      "resolvedContradicted": 0,
+      "openContradicted": 0,
+      "shippedAbsencePersists": [],
+      "unverified": 0,
+      "volatile": 0,
+      "volatilePremises": [],
+      "unverifiableRate": 0,
+      "unverifiable": false,
+      "trustworthy": true,
+      "contradictions": [],
+      "openContradictions": [],
+      "directoryTargets": [],
+      "claimScopeMismatches": [],
+      "unresolvedCause": null,
+      "results": [
+        {
+          "itemId": 9,
+          "slug": "observe-native-visual-scene-and-matcher",
+          "status": "verified",
+          "claim": "Isolated exact-source comparison control failed.",
+          "actual": true,
+          "expected": true,
+          "reason": "evidence supports the claim (true eq true)"
+        },
+        {
+          "itemId": 9,
+          "slug": "observe-native-visual-scene-and-matcher",
+          "status": "verified",
+          "claim": "Verified installed SDK permits writing actual after a native error response during generation.",
+          "actual": true,
+          "expected": true,
+          "reason": "evidence supports the claim (true eq true)"
+        },
+        {
+          "itemId": 9,
+          "slug": "observe-native-visual-scene-and-matcher",
+          "status": "verified",
+          "claim": "Current native assertion already supplies the unchanged explicit pixel tolerance.",
+          "actual": true,
+          "expected": true,
+          "reason": "evidence supports the claim (true eq true)"
+        },
+        {
+          "itemId": 9,
+          "slug": "observe-native-visual-scene-and-matcher",
+          "status": "verified",
+          "claim": "Current workflow has no scene diagnostic input.",
+          "actual": false,
+          "expected": false,
+          "reason": "evidence supports the claim (false eq false)"
+        }
+      ]
+    }
+  },
+  "admission": {
+    "nativeExit": 0,
+    "output": {
+      "ok": true,
+      "errors": []
+    }
+  },
+  "selectedSourcePreimagesUnchanged": true,
+  "selectedSourceBefore": [
+    {
+      "file": "tests/visual-regression.spec.js",
+      "sha256": "bb781524e9573f8216ff883bdb76c83bb8356bcda84892cae298850b0ee33047"
+    },
+    {
+      "file": ".github/workflows/visual-regression.yml",
+      "sha256": "f6bab026fc165c39dd3370c0eeda0a136399e28bec8569cca93137ebe0acc089"
+    }
+  ],
+  "priorEvidencePreserved": true,
+  "wholeSessionTiming": "historical/nonpassing; no reset",
+  "publicNormalization": {
+    "observedAt": "2026-11-08T14:42:01.212Z",
+    "field": "strict.output.selectionReason",
+    "change": "Absolute local selector spelling replaced by repo-relative selector only; actual native exit, premise results, admission timestamp and source preimages unchanged.",
+    "originalRawAdmissionSha256": "db863d7fe9837f77ae4d0d81ca06cf24ab861d6cfedcaf3fd9a0ab131a14065b",
+    "rawEvidencePreservedInIgnoredWorkspace": true
+  }
+}

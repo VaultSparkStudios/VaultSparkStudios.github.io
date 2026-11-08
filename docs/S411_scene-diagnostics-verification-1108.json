@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-08T15:00:59.324Z",
+  "state": "diagnostic-code-locally-verified; full-source-and-same-SHA-CI-observations-pending",
+  "scope": "S411 diagnostic-only outcome9. No product fix, topology change, baseline acceptance or release completion.",
+  "sources": [
+    {
+      "file": "tests/visual-regression.spec.js",
+      "sha256": "7bcbbc309b3995a45b4127da8585d87d6057aade6abb1e28b5605698299a2971"
+    },
+    {
+      "file": ".github/workflows/visual-regression.yml",
+      "sha256": "28233284745a5af68061e996021641b8722def85cf7bcea0a4b0e4a6968f436b"
+    }
+  ],
+  "admission": {
+    "file": "docs/S411_scene-diagnostics-admission-1108.json",
+    "sha256": "49ac35f8d2778ca9e961731fc7c409d9b02cc7bf2e86ff0027531afd38295c19",
+    "strictPremisesVerified": 4,
+    "strictNativeExit": 0,
+    "bundleNativeExit": 0,
+    "sourcePreimagesUnchangedAtAdmission": true,
+    "originalRawAdmissionSha256": "db863d7fe9837f77ae4d0d81ca06cf24ab861d6cfedcaf3fd9a0ab131a14065b"
+  },
+  "focused": {
+    "nativeExit": 0,
+    "passed": 15,
+    "sourceSha256": "7bcbbc309b3995a45b4127da8585d87d6057aade6abb1e28b5605698299a2971",
+    "receiptSha256": "ed1a08fcc04b7204ec408b9dae2275e6df86cd841066d03fdcf2fc49b2354118",
+    "scope": "Mock delegation/error/privacy/default/local-origin checks plus an actual installed-Chromium synthetic loopback fixture. No application scene, real baseline, artifact download/install or CI acceptance."
+  },
+  "existingWorkflowContracts": {
+    "nativeExit": 0,
+    "passed": 2,
+    "skipped": 0
+  },
+  "nativeCollection": {
+    "nativeExit": 0,
+    "tests": 70,
+    "errors": 0,
+    "receiptSha256": "9825f32b01e7604e02b7243c7c7a86a24bf5eab2ca7eed6058a7d55e0de7bc2f",
+    "sourceSha256": "7bcbbc309b3995a45b4127da8585d87d6057aade6abb1e28b5605698299a2971"
+  },
+  "diffCheckNativeExit": 0,
+  "independentReview": {
+    "reviewer": "recovery_closeout_review",
+    "verdict": "pass",
+    "findings": 0,
+    "nativeHelperProbesPassed": 9,
+    "receiptSha256": "df1b31e09444290e5e1e8bd9e5e1e6b27f6b667b257ca9284208d8d29af47596",
+    "sourceSha256": "7bcbbc309b3995a45b4127da8585d87d6057aade6abb1e28b5605698299a2971"
+  },
+  "preservation": {
+    "unchangedUIFiles": 75,
+    "expectedUIFiles": 75,
+    "metadataSha256": "b5ae2dbcfbacea655583c11024e45330d554d72250ab10fbdf9811121bf2a96d",
+    "nativeAssertionOptionsUnchanged": true,
+    "readinessImplementationUnchanged": true,
+    "sceneAndViewportUnchanged": true,
+    "pixelToleranceUnchanged": 0.015,
+    "browserFlagsRetriesAndTimeoutsUnchanged": true,
+    "priorEvidenceUnchanged": true,
+    "prior": [
+      {
+        "file": "docs/AUDIT_2026-11-06-S411.json",
+        "sha256": "733a57a963150f17d8b8a52a675c7daa22567dae7fb66e1f722a1e85c43c4d36"
+      },
+      {
+        "file": "docs/S411_copy-boundary-recovery-evidence.json",
+        "sha256": "3512af320beaa1f66f2dc33df19f66391165658eda70da604b415c864c1afe46"
+      },
+      {
+        "file": "docs/S411_copy-noun-admission-1108.json",
+        "sha256": "6e5353e02b714a58cfe9d7a8da4bdf7ba4d1babd5413611fa3110e4fd2b65860"
+      },
+      {
+        "file": "docs/S411_theme-reserve-admission-1108.json",
+        "sha256": "9fd97e4b4a9a5e4024bc6556c3ecc61bf57e38a6c0193120555fc77983d68a9e"
+      }
+    ],
+    "priorEvidenceObservationAt": "2026-11-08T14:40:52.354Z",
+    "authorizedForwardCorrection": {
+      "observedAt": "2026-11-08T14:45:09.957Z",
+      "file": "docs/S411_copy-noun-admission-1108.json",
+      "rawBeforeSha256": "6e5353e02b714a58cfe9d7a8da4bdf7ba4d1babd5413611fa3110e4fd2b65860",
+      "currentNormalizedSha256": "c77f17fa019ac4c20bfdd7f336bf29b993a6f822b29ed1e590e63930e76f4ab7",
+      "explanation": "The prior fingerprint remains the exact raw artifact observed at diagnostic admission/initial seal. Later root-authorized selector privacy correction preserves those bytes ignored; the current public normalized file has a different hash."
+    },
+    "UI75RecheckedAt": "2026-11-08T15:00:59.324Z"
+  },
+  "privacy": "Manual default-false flag; configured and resolved loopback origins required. Fixed selectors, bounded geometry/line rects/platform font names and runtime versions only. No DOM text, cookie, URL/query, raw image, unrecognized native message or arbitrary error-name disclosure.",
+  "nativeObservation": "Original bound private SDK call receives the identical options object once; returns identical response or thrown object. Buffers are SHA256/length only. Diagnostic observation errors preserve native result; original own/inherited method restored in finally.",
+  "limits": [
+    "Instrumentation has observational overhead in explicit diagnostic mode; native options and readiness/timing settings stay unchanged.",
+    "Installed local SDK source/integration verified; CI runtime versions/private-method availability are explicitly reported, not assumed.",
+    "Synthetic Chromium fixture proves instrumentation mechanics; it is not an application pixel pass or a Linux failure reproduction.",
+    "Full549 and exact75 UI continuity remain root-owned before diagnostic QA publication.",
+    "Future comparison(updatefalse) and provisional generation(updatetrue) must use one diagnostic SHA and explicit loopback base_url. Capture logs are primary; no generation baseline import/acceptance is authorized."
+  ],
+  "publicEvidenceNormalization": {
+    "observedAt": "2026-11-08T14:42:01.212Z",
+    "field": "strict.output.selectionReason",
+    "change": "Absolute local selector spelling replaced by repo-relative selector only; actual native exit, premise results, admission timestamp and source preimages unchanged.",
+    "originalRawAdmissionSha256": "db863d7fe9837f77ae4d0d81ca06cf24ab861d6cfedcaf3fd9a0ab131a14065b",
+    "rawEvidencePreservedInIgnoredWorkspace": true
+  },
+  "previousVerification": {
+    "sha256": "16d37bfca55879866f712e9b2ad9d97dadc0476a4d82d0969aad94df35dc14c3",
+    "observedAt": "2026-11-08T14:40:52.354Z",
+    "sourceSha256": "c56acd9d0758415458ff2da7f0c73e26eb86a0f6b800b12d9c5c86bde8b3d28c",
+    "exactBytesPreservedInIgnoredWorkspace": true
+  },
+  "browserCollectionSuite": {
+    "nativeExit": 0,
+    "passed": 6,
+    "total": 6,
+    "skipped": 0,
+    "entireFile": "tests/browser-collection.unit.spec.mjs",
+    "logSha256": "8e8e6d7be4e71f60d4b17d8044dd46b574c8ba33a27140d6fd502b2fdc1e4bb4",
+    "candidateExplicitOverrideAndDecoyMutationVerified": true
+  },
+  "recoveryCorrection": {
+    "observedAt": "2026-11-08T15:00:59.324Z",
+    "failedFullSourceRun": {
+      "nativeExit": 1,
+      "failedStep": 129,
+      "plannedSteps": 549,
+      "sourceSha256": "c56acd9d0758415458ff2da7f0c73e26eb86a0f6b800b12d9c5c86bde8b3d28c",
+      "log": ".cache/logs/S411-check-current-scene-diagnostic-1108.log",
+      "logSha256": "1bcc2d9513dbd7f805859c9087648b8aafb22704963c3a8754eed4822bd87c61",
+      "preserved": true
+    },
+    "failure": "The existing meaningful first-occurrence decoy mutation changed the new optional guard expression rather than navigation, so the old fallback no longer bypassed the candidate in that negative fixture.",
+    "change": "Construct one targetUrl from the unique native origin expression and use it for both the configured diagnostic-origin guard and page.goto. Existing unit fixture, native assertion/options and readiness unchanged.",
+    "after": "Entire browser-collection suite6/6 plus diagnostic15/15 pass; exact-source independent review and UI75 continuity pass. Full549 rerun remains pending and is not replaced by focused checks."
+  }
+}

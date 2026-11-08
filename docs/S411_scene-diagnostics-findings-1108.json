@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-08T14:31:46.492Z",
+  "scope": "Diagnostic-only S411 outcome9. Abandon conditional topology proposal after failed isolated control. No UI repair, baseline acceptance or new arc.",
+  "control": {
+    "run": 42488235027,
+    "headSha": "304b7af4a428977c45e5a226a2fe4bfeeb4737c2",
+    "attempt": 1,
+    "conclusion": "failure",
+    "receiptSha256": "14d22bffecb987d3b219718d2c5127dc2ef450b19699cff4b1016c289f47c38b",
+    "controlFailed": true,
+    "geometryPassed": 42,
+    "visualPassed": 65,
+    "visualFailed": 3,
+    "visualFlaky": 2
+  },
+  "selectedSourcesCleanBeforeAdmission": true,
+  "selectedSourceBefore": [
+    {
+      "file": "tests/visual-regression.spec.js",
+      "sha256": "bb781524e9573f8216ff883bdb76c83bb8356bcda84892cae298850b0ee33047"
+    },
+    {
+      "file": ".github/workflows/visual-regression.yml",
+      "sha256": "f6bab026fc165c39dd3370c0eeda0a136399e28bec8569cca93137ebe0acc089"
+    }
+  ],
+  "sdk": {
+    "localVersion": "1.58.2",
+    "files": [
+      {
+        "file": "node_modules/playwright/lib/matchers/toMatchSnapshot.js",
+        "sha256": "eeed15ef535b8cd8e68f8efd56f1d5bc57cd231fb9d9fe97b4cd93a5231aac73"
+      },
+      {
+        "file": "node_modules/playwright-core/lib/client/page.js",
+        "sha256": "409b11561b319e8dfb4d1ec3f8b126fb32ab19e894fae529edbeae57c056ae84"
+      },
+      {
+        "file": "node_modules/playwright-core/lib/server/page.js",
+        "sha256": "9cdfc88c5718ddcdc4c8205dabc3cfd68378699d7bef1b5017a28e74eda6b226"
+      }
+    ],
+    "nativeSdkCanWriteActualAfterError": true,
+    "semantics": "Existing expected plus update all omits expected comparison input; matcher writes returned actual even when response errorMessage exists. Runtime diagnostic will report actual response rather than infer capture stability from workflow green."
+  },
+  "prior": [
+    {
+      "file": "docs/AUDIT_2026-11-06-S411.json",
+      "sha256": "733a57a963150f17d8b8a52a675c7daa22567dae7fb66e1f722a1e85c43c4d36"
+    },
+    {
+      "file": "docs/S411_copy-boundary-recovery-evidence.json",
+      "sha256": "3512af320beaa1f66f2dc33df19f66391165658eda70da604b415c864c1afe46"
+    },
+    {
+      "file": "docs/S411_copy-noun-admission-1108.json",
+      "sha256": "6e5353e02b714a58cfe9d7a8da4bdf7ba4d1babd5413611fa3110e4fd2b65860"
+    },
+    {
+      "file": "docs/S411_theme-reserve-admission-1108.json",
+      "sha256": "9fd97e4b4a9a5e4024bc6556c3ecc61bf57e38a6c0193120555fc77983d68a9e"
+    }
+  ],
+  "authorization": "Root explicitly authorized bounded diagnostic-only outcome9 after failed comparison control; no topology change selected."
+}

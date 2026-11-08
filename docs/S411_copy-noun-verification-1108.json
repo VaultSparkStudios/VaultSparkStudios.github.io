@@ -7,11 +7,13 @@
   "sourceAfterSha256": "ac354f34f6f91bc5a7925e89088bb696a3bb1d21e660e3db092b9d3cb6737a1b",
   "admission": {
     "file": "docs/S411_copy-noun-admission-1108.json",
-    "sha256": "6e5353e02b714a58cfe9d7a8da4bdf7ba4d1babd5413611fa3110e4fd2b65860",
+    "sha256": "c77f17fa019ac4c20bfdd7f336bf29b993a6f822b29ed1e590e63930e76f4ab7",
     "strictPremisesVerified": 3,
     "strictNativeExit": 0,
     "bundleNativeExit": 0,
-    "parserPreimageUnchangedAtAdmission": true
+    "parserPreimageUnchangedAtAdmission": true,
+    "originalRawAdmissionSha256": "6e5353e02b714a58cfe9d7a8da4bdf7ba4d1babd5413611fa3110e4fd2b65860",
+    "currentFileRole": "Forward privacy-normalized view of the preserved raw pre-implementation admission; not a newly run admission."
   },
   "before": {
     "corpusNativeExit": 1,
@@ -57,5 +59,14 @@
     "sourceSha256": "ac354f34f6f91bc5a7925e89088bb696a3bb1d21e660e3db092b9d3cb6737a1b",
     "focusedExactArrayProbesPassed": 14,
     "total": 14
+  },
+  "publicEvidenceNormalization": {
+    "observedAt": "2026-11-08T14:45:09.957Z",
+    "sourceCommit": "304b7af4a428977c45e5a226a2fe4bfeeb4737c2",
+    "field": "strict.output.selectionReason",
+    "change": "Forward public privacy correction of selector spelling only: absolute local project path replaced by repo-relative audit selector. Before verdicts, premise results, original admission timestamp and source preimages retained. No verifier rerun or history rewrite.",
+    "originalRawAdmissionSha256": "6e5353e02b714a58cfe9d7a8da4bdf7ba4d1babd5413611fa3110e4fd2b65860",
+    "rawGitBytesPreservedInIgnoredWorkspace": true,
+    "currentNormalizedFileIsNotTheRawBeforeArtifact": true
   }
 }

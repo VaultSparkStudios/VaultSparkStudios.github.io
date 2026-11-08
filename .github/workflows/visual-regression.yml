@@ -54,6 +54,11 @@ on:
           upload them as an artifact for committing. Use after intentional UI changes.
         required: false
         default: 'false'
+      scene_diagnostics:
+        description: 'Log bounded read-only scene/native-matcher diagnostics (loopback origin only; generation stays provisional)'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   snapshot:
@@ -93,6 +98,7 @@ jobs:
         env:
           BASE_URL: http://127.0.0.1:4173
           VR_BASE_URL: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.base_url || '' }}
+          VS_SCENE_DIAGNOSTICS: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.scene_diagnostics == 'true' && 'true' || '' }}
         run: >-
           npx playwright test tests/visual-regression.spec.js --project=chromium --reporter=line
           ${{ github.event.inputs.update_baselines == 'true' && '--update-snapshots=all' || '' }}

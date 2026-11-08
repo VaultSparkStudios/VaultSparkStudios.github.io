@@ -14,6 +14,9 @@
 // by separate computed-styles + accessibility specs.
 
 import { test, expect, devices } from '@playwright/test';
+import { createHash } from 'node:crypto';
+import { createRequire } from 'node:module';
+import os from 'node:os';
 
 const PIXEL_RATIO_TOLERANCE = 0.015; // 1.5%
 
@@ -54,6 +57,162 @@ function emulationOnly(config) {
   const { defaultBrowserType, browserName, ...rest } = config;
   return rest;
 }
+
+// scene-diagnostics:start — opt-in observation, never an alternate assertion.
+function diagnosticLoopback(url) {
+  try {
+    const parsed = new URL(url);
+    return ['http:', 'https:'].includes(parsed.protocol)
+      && ['localhost', '127.0.0.1', '[::1]'].includes(parsed.hostname)
+      && !parsed.username && !parsed.password;
+  } catch { return false; }
+}
+
+function diagnosticBinary(value) {
+  return value instanceof Uint8Array
+    ? { bytes: value.byteLength, sha256: createHash('sha256').update(value).digest('hex') }
+    : null;
+}
+
+function diagnosticNativeText(value) {
+  const text = typeof value === 'string' ? value.trim() : '';
+  // Native messages can contain paths/URLs. Only these observed scalar forms
+  // are safe to emit; unrecognized messages remain hash-bound, not disclosed.
+  const safe = /^(?:\d+ × )?(?:expect\.toHaveScreenshot(?: with timeout \d+ms)?|verifying given screenshot expectation|generating new stable screenshot expectation|waiting \d+ms before taking screenshot|captured a stable screenshot|screenshot matched expectation|\d+ pixels \(ratio [\d.]+ of all image pixels\) are different\.|Failed to take two consecutive stable screenshots\.|Timeout \d+ms exceeded\.)$/;
+  return { scalar: text ? (text.length <= 240 && safe.test(text) ? text : '[unrecognized native message omitted]') : null,
+    sha256: text ? createHash('sha256').update(text).digest('hex') : null };
+}
+
+function emitSceneDiagnostic(identity, phase, data) {
+  try { console.log('[vs-scene-diagnostic] ' + JSON.stringify({ identity, phase, ...data })); }
+  catch { /* Observation must not replace the native result or failure. */ }
+}
+
+function observeNativeScreenshot(page, identity) {
+  if (!diagnosticLoopback(page.url())) {
+    emitSceneDiagnostic(identity, 'native-unavailable', { reason: 'non-loopback-resolved-origin' });
+    return () => {};
+  }
+  const own = Object.getOwnPropertyDescriptor(page, '_expectScreenshot');
+  if (typeof page._expectScreenshot !== 'function') {
+    emitSceneDiagnostic(identity, 'native-unavailable', { reason: 'private-method-absent' });
+    return () => {};
+  }
+  const original = page._expectScreenshot.bind(page);
+  let call = 0;
+  page._expectScreenshot = async options => {
+    const sequence = ++call;
+    const started = Date.now();
+    let result;
+    try {
+      // Same options object, exactly one original bound call, same raw result.
+      result = await original(options);
+    } catch (error) {
+      let errorName = 'other';
+      try { if (['Error', 'TimeoutError', 'TargetClosedError'].includes(error?.name)) errorName = error.name; } catch {}
+      emitSceneDiagnostic(identity, 'native-throw', { call: sequence,
+        elapsedMs: Date.now() - started, errorName });
+      throw error;
+    }
+    try {
+      if (!diagnosticLoopback(page.url())) {
+        emitSceneDiagnostic(identity, 'native-unavailable', { reason: 'non-loopback-resolved-origin' });
+        return result;
+      }
+      emitSceneDiagnostic(identity, 'native-response', {
+        call: sequence, elapsedMs: Date.now() - started,
+        expectedPresent: options?.expected != null,
+        expected: diagnosticBinary(options?.expected),
+        options: { fullPage: options?.fullPage, animations: options?.animations,
+          maxDiffPixelRatio: options?.maxDiffPixelRatio, timeout: options?.timeout },
+        errorMessage: diagnosticNativeText(result?.errorMessage), timedOut: result?.timedOut ?? null,
+        actual: diagnosticBinary(result?.actual), previous: diagnosticBinary(result?.previous),
+        diff: diagnosticBinary(result?.diff),
+        log: Array.isArray(result?.log) ? result.log.slice(-16).map(diagnosticNativeText) : [],
+        logTruncated: Array.isArray(result?.log) && result.log.length > 16,
+      });
+    } catch { emitSceneDiagnostic(identity, 'native-observation-unavailable', { call: sequence }); }
+    return result;
+  };
+  return () => {
+    if (own) Object.defineProperty(page, '_expectScreenshot', own);
+    else delete page._expectScreenshot;
+  };
+}
+
+async function captureSceneDiagnostic(page, identity, phase) {
+  const started = Date.now();
+  try {
+    if (!diagnosticLoopback(page.url())) {
+      emitSceneDiagnostic(identity, phase, { available: false, reason: 'non-loopback-resolved-origin' });
+      return;
+    }
+    const geometry = await page.evaluate(() => {
+      const rect = r => ({ x: r.x, y: r.y, width: r.width, height: r.height,
+        top: r.top, right: r.right, bottom: r.bottom, left: r.left });
+      const visible = el => { const r = el.getBoundingClientRect(), s = getComputedStyle(el);
+        return r.width > 0 && r.height > 0 && r.bottom > 0 && r.top < innerHeight
+          && s.display !== 'none' && s.visibility !== 'hidden'; };
+      const computed = el => {
+        const s = getComputedStyle(el);
+        return Object.fromEntries(['fontFamily', 'fontSize', 'fontWeight', 'fontStyle',
+          'fontStretch', 'lineHeight', 'letterSpacing', 'fontKerning', 'fontFeatureSettings',
+          'fontVariationSettings', 'fontSynthesis', 'textRendering', 'transform', 'zoom']
+          .map(key => [key, s[key]]));
+      };
+      const sample = el => {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        const lineRects = Array.from(range.getClientRects());
+        return { rect: rect(el.getBoundingClientRect()),
+          lineRects: lineRects.slice(0, 24).map(rect), lineRectCount: lineRects.length,
+          lineRectsTruncated: lineRects.length > 24,
+          computed: computed(el) };
+      };
+      const selectors = ['.site-header', '.vs-spine', '.vs-spine-self', '.vs-spine-kin',
+        '.page-hero', '.page-hero h1', '.mem-hero', '.mem-hero h1', '#hero-heading', '#oracle', '#oracle-heading'];
+      const viewport = visualViewport;
+      return { scrollX, scrollY, dpr: devicePixelRatio, userAgent: navigator.userAgent.slice(0, 240),
+        viewport: { width: innerWidth, height: innerHeight },
+        visualViewport: viewport ? { width: viewport.width, height: viewport.height,
+          offsetLeft: viewport.offsetLeft, offsetTop: viewport.offsetTop,
+          pageLeft: viewport.pageLeft, pageTop: viewport.pageTop, scale: viewport.scale } : null,
+        body: { rect: rect(document.body.getBoundingClientRect()), scrollWidth: document.body.scrollWidth,
+          scrollHeight: document.body.scrollHeight, computed: computed(document.body) },
+        elements: selectors.map(selector => { const el = document.querySelector(selector);
+          return { selector, available: Boolean(el), ...(el ? { rect: rect(el.getBoundingClientRect()) } : {}) }; }),
+        visibleParagraphs: Array.from(document.querySelectorAll('p')).slice(0, 64).map((el, index) => ({ el, index }))
+          .filter(({ el }) => visible(el)).slice(0, 8).map(({ el, index }) => ({ index, ...sample(el) })),
+        fontsStatus: document.fonts?.status || 'unavailable',
+      };
+    });
+    const platformFonts = [];
+    let cdp;
+    try {
+      cdp = await page.context().newCDPSession(page);
+      await cdp.send('DOM.enable');
+      await cdp.send('CSS.enable');
+      const { root } = await cdp.send('DOM.getDocument', { depth: 0 });
+      for (const selector of ['.page-hero p', '.mem-hero-sub', '.vs-spine-kin a', '.site-header .brand', 'h1', '.ignis-oracle__lede', '#oracle-heading']) {
+        const { nodeId } = await cdp.send('DOM.querySelector', { nodeId: root.nodeId, selector });
+        if (!nodeId) { platformFonts.push({ selector, available: false }); continue; }
+        const { fonts } = await cdp.send('CSS.getPlatformFontsForNode', { nodeId });
+        platformFonts.push({ selector, available: true, fonts: fonts.slice(0, 8).map(font => ({
+          familyName: String(font.familyName).slice(0, 96), postScriptName: String(font.postScriptName).slice(0, 96),
+          isCustomFont: font.isCustomFont, glyphCount: font.glyphCount,
+        })) });
+      }
+    } catch { platformFonts.push({ available: false, reason: 'cdp-font-observation-unavailable' }); }
+    finally { if (cdp) await cdp.detach().catch(() => {}); }
+    let playwrightVersion = 'unavailable';
+    try { playwrightVersion = createRequire(process.cwd() + '/package.json')('@playwright/test/package.json').version; } catch {}
+    emitSceneDiagnostic(identity, phase, { elapsedMs: Date.now() - started, geometry, platformFonts,
+      runtime: { node: process.version, playwright: playwrightVersion,
+        browser: page.context().browser()?.version() || 'unavailable', platform: os.platform(), arch: os.arch(),
+        cpuModel: os.cpus()[0]?.model || 'unavailable', cpuCount: os.cpus().length, gpu: 'not-collected' } });
+  } catch { emitSceneDiagnostic(identity, phase, { available: false, reason: 'scene-observation-unavailable' }); }
+}
+// scene-diagnostics:end
 
 async function waitForVisualReadiness(page) {
   // Snapshot scene: genuinely engaged, reduced-motion, settled UI. This uses
@@ -137,7 +296,12 @@ for (const vp of VIEWPORTS) {
       test.use({ ...emulationOnly(vp.config), reducedMotion: 'reduce' });
 
       for (const surface of SURFACES) {
-        test(`${surface.name} · ${vp.name} · ${theme}`, async ({ page, baseURL }) => {
+        test(`${surface.name} · ${vp.name} · ${theme}`, async ({ page, baseURL }, testInfo) => {
+        const sceneDiagnostics = process.env.VS_SCENE_DIAGNOSTICS === 'true';
+        const targetUrl = new URL(surface.path, process.env.VR_BASE_URL || baseURL).href;
+        if (sceneDiagnostics && !diagnosticLoopback(targetUrl)) {
+          throw new Error('Scene diagnostics require a loopback candidate origin.');
+        }
         await page.addInitScript((t) => {
           try { localStorage.setItem('vs_theme', t); } catch (_) {}
         }, theme);
@@ -147,7 +311,10 @@ for (const vp of VIEWPORTS) {
         // 'load' waits for the window.load event which is sufficient for VR.
         // Use the candidate selected by Playwright. Dedicated manual baseline
         // capture can still choose an explicit alternate VR_BASE_URL.
-        await page.goto(new URL(surface.path, process.env.VR_BASE_URL || baseURL).href, { waitUntil: 'load', timeout: 30000 });
+        await page.goto(targetUrl, { waitUntil: 'load', timeout: 30000 });
+        if (sceneDiagnostics && !diagnosticLoopback(page.url())) {
+          throw new Error('Scene diagnostics require a loopback resolved origin.');
+        }
         // The public genome strip can appear under Chromium's default (0,0)
         // pointer and open its tooltip. Baselines describe neutral entry state.
         await page.mouse.move(-100, -100);
@@ -179,11 +346,20 @@ for (const vp of VIEWPORTS) {
           await expect(page.locator('#hero-heading')).toBeVisible();
           await expect(page.locator('#hero-heading .forge-letter').first()).toHaveCSS('opacity', '1');
         }
+        const identity = { surface: surface.name, viewport: vp.name, theme, retry: testInfo.retry,
+          updateSnapshots: testInfo.config.updateSnapshots };
+        if (sceneDiagnostics) await captureSceneDiagnostic(page, identity, 'before-native-matcher');
+        const restoreNative = sceneDiagnostics ? observeNativeScreenshot(page, identity) : null;
+        try {
         await expect(page).toHaveScreenshot(`${surface.name}-${vp.name}-${theme}.png`, {
           fullPage: false,
           maxDiffPixelRatio: PIXEL_RATIO_TOLERANCE,
           animations: 'disabled',
         });
+        } finally {
+          if (restoreNative) restoreNative();
+          if (sceneDiagnostics) await captureSceneDiagnostic(page, identity, 'after-native-matcher');
+        }
         });
       }
     });

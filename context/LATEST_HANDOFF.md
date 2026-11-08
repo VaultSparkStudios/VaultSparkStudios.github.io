@@ -1,3 +1,12 @@
+<!-- S411-diagnostic-checkpoint-2026-11-08 -->
+## S411 diagnostic checkpoint — visual failures unresolved
+
+Recorded 2026-11-08T15:11:49.230Z. Local full source passed549/549 fromstep1 with exit0 and fingerprint 4b4ba001f08ef6e4cd867ca0; docs/S411_scene-diagnostics-source-1108.json. This checkpoint adds optional, default-off, loopback-only scene/native-screenshot diagnostics. Existing candidate selection, readiness, screenshot options and1.5% tolerance remain unchanged; all75 bound UI source bytes and runtime root 87fd6f57753cd81ec6d1e842c937889ee3ed9ffc0b4596ae611f8925e149d499 remain unchanged. No baseline or application change is claimed.
+
+At prior QA304b7af4a4, required E2E42485293279 failed:725passed,56guardedskips,1flaky,3visual failures. Compliance passed. Isolated visual control42488235027 also failed:65passed,2flaky,3failed; its42geometry checks passed. The isolation hypothesis was not adopted. Lighthouse42485293272 passed27local audits. Candidate accessibility passed20 with3authenticated skips; its supplementary production audit actually exited1 for6meta-refresh violations, with WAF involvement unconfirmed. These observations are preserved, not waived.
+
+Next: collect paired diagnostic comparison/provisional-generation evidence at one exact source before selecting a correction. Generated images stay provisional. Main, production, positive isolated member/investor journeys, recovery closeout and this native invocation's fresh full arc remain pending. Existing deployment authorization persists. S411 lock and prior939score remain; no native completion or new session binding. Raw admission receipts remain private; public selector normalization is explicit, and Git history was not rewritten.
+
 <!-- S411-current-verified-checkpoint-2026-11-08 -->
 ## S411 QA checkpoint — release acceptance pending
 
