@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "session": 411,
+  "state": "locally-verified-release-pending",
+  "source": "scripts/check-news-copy-quality.mjs",
+  "sourceSha256": "2d24b22981d41a93d7b8b25a27e1df8c8f854214a4d6620fbb742a05ee882c30",
+  "baseline": {
+    "receipt": "docs/S411_recovery-source-remainder-attempt2.json",
+    "failedStep": 363,
+    "realCorpusFalsePositives": 2,
+    "addedCasesNativeExit": 1,
+    "addedCasesPassed": 76,
+    "addedCasesTotal": 80
+  },
+  "admission": {
+    "audit": "docs/AUDIT_2026-11-06-S411.json",
+    "premisesVerified": 2,
+    "premisesContradicted": 0,
+    "premisesUnverified": 0,
+    "strictNativeExit": 0,
+    "bundleNativeExit": 0,
+    "selectedSourceDirtyBeforeGate": false,
+    "broadTiming": "Inherited S411 implementation debt remains nonpassing; no whole-session timing pass claimed."
+  },
+  "repair": "Recognize matching quoted questions/exclamations followed by explicit lowercase clause connectives separated only by horizontal whitespace. Preserve ordinary lowercase sentence detection, paragraph boundaries and all unrelated copy rules.",
+  "review": {
+    "round1": {
+      "verdict": "fix",
+      "findings": 1,
+      "case": "Quoted question plus a new lowercase paragraph was joined."
+    },
+    "regressionBeforeCorrection": {
+      "nativeExit": 1,
+      "passed": 80,
+      "total": 83
+    },
+    "round2": {
+      "reviewer": "copy_boundary_review",
+      "verdict": "pass",
+      "newFindings": 0,
+      "previousFindingFixed": true,
+      "independentSelfTestsPassed": 83
+    }
+  },
+  "acceptance": {
+    "selfTestsNativeExit": 0,
+    "selfTestsPassed": 83,
+    "selfTestsTotal": 83,
+    "realCorpusNativeExit": 0,
+    "articleTextChanged": false,
+    "renderedRuntimeSourceChanged": false
+  },
+  "sourceRun": {
+    "diagnosticRemainder": "docs/S411_recovery-source-remainder-attempt3.json",
+    "diagnosticFirstStep": 363,
+    "diagnosticNativeExit": 0,
+    "completeFromStep1": "docs/S411_recovery-full-source-verified.json"
+  },
+  "release": "Current hosted checks, isolated staging/account journeys, main publication, production/readback, full recovery closeout and the new native invocation full arc remain pending."
+}

@@ -1,3 +1,21 @@
+<!-- S411-local-recovery-closeout -->
+## S411 current recovery truth — 2026-11-06
+
+S411 local recovery is verified: complete native source549/549 from step1, canonical runtime build26/26, mobile215/215 with zeroP0/P1, and532 reviewed public captures (372 direct current inspections;160 exact prior-pixel carries). The current artifact root is 9393bf84460da06a72b1b81df2af5ed1ea4bdb2aab60b67a8a4dea09dfb3023d. Earlier failed attempts and historical742 captures remain preserved; older Windows70 comparisons are historical. See docs/RELEASE_S411.json.
+
+Overall status: yellow — S411 local recovery verified; release pending.
+
+Source receipt 530a10d5d5ed80a02b9db5ee is complete from step1 and validates against current source; separate partial attempts are not combined. Current visual evidence is532 declared public captures, not historical742 or full private/provider acceptance. The prior Windows70 subject remains historical. Old release flags are preserved under an explicit historical envelope.
+
+CANON-019 discovery was repeated: dedicated website data-admin slot missing; management credential present and actual read/SQL/function probes succeeded. Existing-branch GET returned200 with no branches. These observations do not establish an isolated account runtime and do not prove all agent paths exhausted. The staging vhost is reachable; current deployment/account acceptance remains pending. Founder can perform both real journeys after readiness. No publication, production, trust bypass or live business-role mutation is claimed. The full new native arc is still required after recovery.
+
+<!-- S411-recovery-records -->
+## S411 recovery — 2026-11-06
+
+S411 recovery preserves the session-boundary repair, drawer visibility fix and explicit discussion initialization. Focused recovery regressions passed19/19 with no skips. Canonical integration and release acceptance remain in progress; historical source549/mobile215/visual742 evidence does not prove the integrated candidate. See docs/S411_recovery-2026-11-06.json and docs/S411_recovery-focused-tests.json.
+
+Fetched divergence was137 published-only versus17 local-only commits. Supabase probe is partial: configured data-admin key project mismatch, management/SQL/function authority ready. Dedicated website data-admin capability missing. No completed provider journey observed in previous24-hour receipts. These are observed limitations, not proof that all agent-side recovery paths are exhausted.
+
 <!-- S410-closeout-writeback -->
 ## S410 current truth — combined release pending
 

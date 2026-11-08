@@ -258,6 +258,17 @@ export function sentences(text) {
     if (!'.!?'.includes(src[i])) continue;
     const next = src.slice(i + 1);
     if (!/^["'”’)\]]*\s/.test(next) && i !== src.length - 1) continue;
+    // A question/exclamation can belong to a quoted example inside a clause:
+    // from 'what did I spend?' to 'why am I spending this?' Do not turn its
+    // explicit lowercase connective into a new sentence. Require a matching
+    // opening quote; ordinary lowercase sentences after questions still fail.
+    if (src[i] !== '.') {
+      const continuation = next.match(/^(["'”’])[^\S\r\n\u2028\u2029]+(?:and|or|but|to|than|because|while|before|after)\b/);
+      if (continuation) {
+        const opening = ({ '”': '“', '’': '‘' })[continuation[1]] || continuation[1];
+        if (new RegExp('(?:^|[\\s([{])' + opening).test(src.slice(start, i))) continue;
+      }
+    }
     if (src[i] === '.') {
       // An ellipsis is not a terminator. "It was just... there." is one
       // sentence; treating the last dot as an end made "there." read as a
@@ -628,6 +639,28 @@ function selfTest() {
     ['a markdown heading fires', () => fires('markdown-artifact', '## The stakes\nIt matters.')],
     ['a double space fires', () => fires('double-space', 'The model  shipped today.')],
     ['a lowercase sentence start fires', () => fires('sentence-starts-lowercase', 'The model shipped. it was late.')],
+    ['a quoted question can continue through to',
+      () => clean("They will move from 'what did I spend?' to 'why am I spending this?'")],
+    ['a quoted question can continue through and',
+      () => clean("You stop asking 'how much did I spend?' and start asking 'where can I redirect this?'")],
+    ['curly quoted questions can continue a clause',
+      () => clean('They move from “what did I spend?” to “why am I spending this?”')],
+    ['a quoted exclamation can continue a clause',
+      () => clean('He heard "Stop!" and left.')],
+    ['a genuine lowercase new sentence after a quotation still fires',
+      () => fires('sentence-starts-lowercase', "She asked 'Why?' it failed anyway.")],
+    ['an unquoted question does not gain a continuation exemption',
+      () => fires('sentence-starts-lowercase', 'Why? and nobody answered.')],
+    ['a capitalized sentence after a quoted question still splits',
+      () => sentences("She asked 'Why?' And nobody answered.").length === 2],
+    ['a later lowercase new sentence after a continued quotation still fires',
+      () => fires('sentence-starts-lowercase', "She asked 'Why?' and listened. it failed anyway.")],
+    ['a quoted question never joins a new lowercase paragraph',
+      () => fires('sentence-starts-lowercase', "She asked 'Why?'\n\nand nobody answered.")],
+    ['a quoted question never joins a Windows paragraph break',
+      () => fires('sentence-starts-lowercase', "She asked 'Why?'\r\n\r\nand nobody answered.")],
+    ['a quoted question never joins a Unicode paragraph separator',
+      () => fires('sentence-starts-lowercase', "She asked 'Why?'\u2029and nobody answered.")],
     // S363 — regression guards for the parenthetical-abbreviation split. The first
     // is the live 2026-09-20 corpus sentence that was wrongly reported; the second
     // and third pin that the fix did not blunt the rule it was narrowing.

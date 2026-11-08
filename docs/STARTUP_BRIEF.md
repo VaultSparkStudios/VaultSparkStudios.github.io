@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-11-05 (Session 410 closeout) -->
-<!-- semantic-freshness: hash=da5d7ff619e9ab56 next=411 silSession=410 silScore=939 handoff=- tests=- -->
+<!-- generated-at: 2026-11-06 (Session 411 closeout) -->
+<!-- semantic-freshness: hash=e17e06dad38e429c next=412 silSession=411 silScore=939 handoff=- tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 410 closeout · 2026-11-05.
+> **Fast-boot brief** — generated at Session 411 closeout · 2026-11-06.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 411 · 2026-11-05 · FOUNDER MODE                         ║
+║  Session 412 · 2026-11-06 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S410) - WHAT SHIPPED ══════════════════════════╗
-║  S410: deterministic browser verification and truthful source/r  ║
+╔══ LAST SESSION (S411) - WHAT SHIPPED ══════════════════════════╗
+║  S411: lock continuity, scrolled-control clearance and copy-gat  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
 ║    SIL v3.0  ·  Avg3: 939  ·  Velocity 0→                        ║
-║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest…   ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
 ║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -61,10 +61,10 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 410 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 411 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    Source UNVERIFIED: 549/549 steps (changed inputs)     ║
-║  Deploy:   S410 release pending                                  ║
+║  Deploy:   S411 release pending                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -77,16 +77,16 @@
 ║  ⚠  Tests         Source UNVERIFIED: 549/549 steps (changed…     ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⚠  Context age   11d                                            ║
-║  ✓  IGNIS         45133 FORGE  ·  1d old                         ║
-║  ⛔  Truth         yellow — S410 local implementation…            ║
+║  ⚠  Context age   12d                                            ║
+║  ✓  IGNIS         45126 FORGE  ·  0d old                         ║
+║  ⛔  Truth         yellow — S411 local recovery verified;…        ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.175  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  1d old (2026-11-04)                            ║
+║  ✓  Revenue sig.  2d old (2026-11-04)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
 ║  ✓  Codex trust   trusted project active                         ║
@@ -96,8 +96,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    74d · Authorize or decline immutable warm-origin migrati      ║
-║    74d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
+║    75d · Authorize or decline immutable warm-origin migrati      ║
+║    75d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -117,24 +117,24 @@
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
 ║  Projected:  0/1000  (↓939 vs current 939)                       ║
 ║  All categories forecast stable or rising.                       ║
-║  Calibration: MAE 97.5 over last 10 forecasts                    ║
+║  Calibration: MAE 191 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Review another sleep-based browser fixture  ║
-║        Review another sleep-based browser fixture only after a   ║
+║   96  [PRODUCT]      Finalize this local recovery closeout and   ║
+║        Finalize this local recovery closeout and QA checkpoint;  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Consider an inherited-WIP timing baseline   ║
-║        Consider an inherited-WIP timing baseline only after own  ║
+║   93  [PRODUCT]      Run this native invocation's fresh full ar  ║
+║        Run this native invocation's fresh full arc after recove  ║
 ║                                                                  ║
-║   93  [INTELLIGENCE]  Source acceptance: full attempt failed129  ║
-║        Source acceptance: full attempt failed129 (128/549 passe  ║
+║   90  [PRODUCT]      Complete current hosted/staging and affect  ║
+║        Complete current hosted/staging and affected real member  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Current staging, exact hosted checks, real  ║
-║        Current staging, exact hosted checks, real member/invest  ║
+║   87  [PRODUCT]      Exact current hosted checks and current st  ║
+║        Exact current hosted checks and current staging verifica  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -142,5 +142,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 410 closeout · 2026-11-05*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 411 closeout · 2026-11-06*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

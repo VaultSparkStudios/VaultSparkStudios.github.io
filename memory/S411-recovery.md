@@ -1,0 +1,7 @@
+# S411 local recovery; release pending
+
+S411 local recovery is verified: complete native source549/549 from step1, canonical runtime build26/26, mobile215/215 with zeroP0/P1, and532 reviewed public captures (372 direct current inspections;160 exact prior-pixel carries). The current artifact root is 9393bf84460da06a72b1b81df2af5ed1ea4bdb2aab60b67a8a4dea09dfb3023d. Earlier failed attempts and historical742 captures remain preserved; older Windows70 comparisons are historical. See docs/RELEASE_S411.json.
+
+Exact current hosted checks, isolated staging/account journeys, main publication, production/readback and release finalization remain pending. The founder can perform both member and existing approved-investor journeys once staging is ready. Current native goal01a1b213-67c9-7af0-9148-611b5d9cbc66 created1793988988 still requires a full fresh startup/audit/implementation/closeout after this recovery; recovery is not its completion.
+
+Use actual current receipts; never combine partial source runs or flatten historical Windows/visual claims into current acceptance. Keep failed and before-image evidence. Quoted questions may continue through explicit horizontal-space connectives; paragraph boundaries still split. The native capture writer’s generic-name collision is observed and repaired in history, but needs a fresh admitted implementation. Owner request01K6P86PIP867ACE3471F97190 is transport only; do not treat it as a functional endpoint.

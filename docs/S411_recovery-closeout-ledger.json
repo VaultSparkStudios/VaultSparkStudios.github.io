@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "session": 411,
+  "state": "writeback-complete-autopilot-rejected-release-pending",
+  "sourceReceipt": "530a10d5d5ed80a02b9db5ee",
+  "score": 939,
+  "releaseComplete": false,
+  "freshNativeArcComplete": false,
+  "surfaces": {
+    "currentState": "written",
+    "taskBoard": "written",
+    "handoff": "written-with-original-archive",
+    "workLog": "appended",
+    "decisions": "appended",
+    "sil": "appended-ten-categories",
+    "cdr": "unchanged-no-creative-direction",
+    "truthAudit": "written",
+    "projectStatus": "canonical-writer-session-projection",
+    "agentMemory": "written"
+  },
+  "authorization": "Existing normal main push/deployment authorization persists; release checks remain mandatory.",
+  "shellObservation": {
+    "scope": "Retained persistent preview plus known completed verification jobs",
+    "previewStarted": 1,
+    "previewClosed": 1,
+    "previewRunning": 0,
+    "port4173Listener": false,
+    "projectQualifiedNodeProcesses": 0,
+    "verificationJobs": "All known jobs reported terminal results; no active verification run."
+  },
+  "ignis": {
+    "nativeExit": 0,
+    "verified": true,
+    "evidence": "docs/S411_local-ignis-score.json",
+    "scope": "Current project only; global touched-project command was dry-run."
+  },
+  "memoryIndexCheck": {
+    "nativeExit": 0,
+    "bytes": 2277
+  },
+  "settingsSanitizer": {
+    "nativeExit": 0,
+    "findings": 0
+  },
+  "doctor": {
+    "nativeExit": 0,
+    "blockingFailing": 0,
+    "passing": 15,
+    "warnings": 2
+  },
+  "refresh": {
+    "entropyNativeExit": 0,
+    "entropy": 0.178,
+    "genomeNativeExit": 0,
+    "genome": "23/25",
+    "stateVectorNativeExit": 0,
+    "closeoutBoundaryNativeExit": 0,
+    "remainingAccuracyNote": "Existing state-vector renderer maps a real zero velocity to null; observed as a future fresh-audit candidate, not repaired during recovery."
+  },
+  "independentReview": {
+    "reviewer": "recovery_closeout_review",
+    "rounds": 2,
+    "round1": {
+      "findings": 1,
+      "fixed": 1
+    },
+    "round2": {
+      "findings": 2,
+      "fixed": 2,
+      "correctionsVerifiedByReviewer": true
+    },
+    "scope": "Source/merge continuity and local writeback claims. Autopilot/QA publication and release acceptance remain pending."
+  },
+  "handoffArchive": {
+    "file": "context/archive/S411-prior-handoff.md",
+    "sha256": "40c505aada71e258d5e2753d17b133eb9ac7640289cb498af0c4d7599bc7fe0e",
+    "bytesPreserved": true
+  },
+  "runtimeRefresh": {
+    "state": "verified-local-declared-scope",
+    "candidateRoot": "7e43682899e85fac6a1eab13a6277bb359685584c989793fcfff92c990ab8285",
+    "visualReceipt": "docs/visual-qa/LATEST.json",
+    "visualSha256": "ae5b45b657bdd92e6d8e5377c102faf642bb78a3d054341e4dc730584a5b58de",
+    "captures": 532,
+    "directCurrentOriginals": 290,
+    "exactPriorPixelCarries": 242,
+    "mobileCases": 215,
+    "mobileNativeExit": 0,
+    "visualNativeExit": 0,
+    "orderingNativeExit": 0,
+    "retentionNativeExit": 0,
+    "retainedOriginals": "Historical742 and pre-metadata532 unchanged",
+    "finalAutopilotSource": "pending"
+  },
+  "autopilot": {
+    "state": "rejected-before-commit",
+    "nativeExit": 1,
+    "completedAt": "2026-11-06T22:41:58.821Z",
+    "attempts": 5,
+    "passing": 15,
+    "total": 17,
+    "blockingFailing": 1,
+    "check": "deploy-currency-live",
+    "reason": "Production content receipt is beyond its48-hour validity; raw production content lag also exceeds the12-hour ceiling.",
+    "log": ".cache/logs/S411-recovery-autopilot.log",
+    "commitCreated": false,
+    "pushPerformed": false,
+    "productionPromoted": false,
+    "gateWaived": false,
+    "next": "Resolve isolated staging and current release acceptance through existing agent paths; retry mandatory closeout after release currency is genuinely repaired."
+  }
+}

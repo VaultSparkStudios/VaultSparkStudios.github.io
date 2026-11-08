@@ -1,3 +1,32 @@
+<!-- S411-local-recovery-closeout -->
+## Current recovery checkpoint and authorized continuation
+
+- [x] Scrolled freshness-link interception repaired and verified.
+- [x] Quoted-question copy-gate false positives repaired;83/83 self-tests and actual corpus pass.
+- [x] Complete current549-step native source run, mobile215 and public visual532 verified.
+- [ ] Finalize this local recovery closeout and QA checkpoint; release stays pending.
+- [ ] Run this native invocation's fresh full arc after recovery; bind the new session by native identity.
+- [ ] Complete current hosted/staging and affected real member/investor acceptance, then authorized main/production/readback.
+
+The isolated account target/adapter is agent-owned coordination work, not a request for credentials from the founder. Current request01K6P86PIP867ACE3471F97190 remains pending functional acceptance. Existing two future SIL commitments below remain unselected.
+
+<!-- S411-recovery-records -->
+## S411 recovered outcomes and pending release
+
+- [x] Session ID/time/head rotate or carry over consistently; focused regression passes.
+- [x] Delayed membership bar respects open mobile navigation; local regression recorded.
+- [x] Explicit discussion intent initializes the discussion; local regression recorded.
+- [x] Integrated local source549, scoped visual532 and mobile215 verification.
+- [ ] Exact current hosted checks and current staging verification.
+- [ ] Affected real new-member and approved-investor journeys.
+- [ ] Authorized main publication, production promotion/readback and final closeout.
+
+Wave1 prior implementation recovered; Wave2 local integration verified; Wave3 release acceptance pending. No release completion claimed.
+
+Future unselected followups:
+- [ ] [S411][SIL] Reproduce session-history scale limits before changing capture quotas.
+- [ ] [S411][SIL] Review discussion intent coverage after a reproduced missing state.
+
 <!-- S410-local-runtime-acceptance -->
 ## S410 current local runtime acceptance
 

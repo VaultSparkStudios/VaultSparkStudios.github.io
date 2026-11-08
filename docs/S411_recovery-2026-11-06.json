@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "session": 411,
+  "state": "recovery-in-progress",
+  "freshArcStillRequired": true,
+  "recoveredHead": "fdecb518a3",
+  "publishedHeadAtFetch": "101afd7355160385d143b2ddd6b184aeba3807b5",
+  "divergenceAtFetch": { "publishedOnly": 137, "localOnly": 17 },
+  "cachePreservation": "Tracked cache changes retained in named Git stash arc-recovery-cache-snapshot.",
+  "integration": {
+    "state": "conflicts-resolved-canonical-build-passed",
+    "policy": "Retain local implementation and local release-evidence seeds; retain newer published content and telemetry; regenerate derived artifacts with the canonical build.",
+    "unresolvedSourceConflicts": 0,
+    "generatedConflicts": "No unresolved conflicts; canonical build and all 26 ordered postbuild steps passed with native exit 0.",
+    "canonicalBuild": {
+      "nativeExit": 0,
+      "postbuildInvocationId": "fcb693d3-55d1-490a-b3ef-b8042da809bf",
+      "postbuildCompletedAt": "2026-11-06T18:32:17.533Z",
+      "postbuildStepsPassed": 26,
+      "artifactRoot": "ead143d5f6e2",
+      "limitation": "Recovery record updates followed this build; complete candidate acceptance remains pending."
+    }
+  },
+  "authorityProbe": {
+    "artifact": "api/supabase-control-plane.json",
+    "state": "partial",
+    "ready": ["managementApi", "sqlMigration", "edgeFunctions"],
+    "dataAdmin": "supabase-credential-project-mismatch",
+    "dedicatedWebsiteCapability": "missing"
+  },
+  "providerObservation": {
+    "mode": "existing Worker receipts from previous 24 hours",
+    "callbackObserved": false,
+    "compatibilityObserved": false,
+    "logoutObserved": false,
+    "watchStopped": true,
+    "acceptance": "unverified"
+  },
+  "remaining": [
+    "Seal and verify merged candidate after recovery record reconciliation",
+    "Verify integrated candidate and recover S411 records",
+    "Run fresh startup, audit and implementation for the new invocation",
+    "Verify exact candidate hosted checks and staging",
+    "Verify affected authenticated journeys",
+    "Authorized main publication and production deployment/readback",
+    "Full closeout"
+  ],
+  "completionClaimed": false
+}

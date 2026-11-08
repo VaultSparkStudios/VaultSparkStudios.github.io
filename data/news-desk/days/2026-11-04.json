@@ -1,7 +1,8 @@
 {
   "date": "2026-11-04",
   "simulated": false,
-  "leadSlug": "google-faces-backlash-for-plan-that-would-turn-off",
+  "leadSlug": "crowdstrike-apos-s-new-kill-switch-can-stop-rogue",
+  "quietStorySlug": "crowdstrike-apos-s-new-kill-switch-can-stop-rogue",
   "stories": [
     {
       "slug": "google-says-students-in-schools-that-ban-ai-wont",
@@ -288,19 +289,41 @@
           }
         ],
         "pixelInspection": {
-          "sha256": "4517096a731f88504c4716875843da4c9c2461d588c64e1bec7e5aa088ab158c",
+          "sha256": "ce8b594b20dcc39efd933dc71ba327f3abfd9fa0e4ada222930e0abeb474a87f",
+          "reviewed": true,
+          "reviewer": "auto-review:codex (D-S368.10)",
           "semanticVerified": false,
-          "reviewed": false,
-          "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)",
-          "kind": "procedural-fallback",
-          "entropy": 1.14
+          "kind": "source-raster",
+          "entropy": 6.448,
+          "width": 1599,
+          "height": 900,
+          "bytes": 1991427,
+          "reviewedAt": "2026-11-05"
         },
-        "generatedArt": false,
+        "generatedArt": true,
         "satire": {
           "target": "The corporate tendency to celebrate raw user volume metrics while obscuring the unsustainable infrastructure costs behind AI-powered search features.",
           "setup": "OpenAI announces a 20% volume milestone without mentioning the electricity bill.",
           "payoff": "Users get free answers; shareholders get a confusing P&L statement.",
           "institutional": true
+        },
+        "satireCartoon": {
+          "artSource": "data/news-desk/art/2026-11-04--openai-says-chatgpt-is-catching-up-to-google-in--satire.png",
+          "kind": "satire-cartoon",
+          "alt": "AI-generated satirical cartoon in JUNO’s one-figure style. A minimal cartoon shows one ordinary person dwarfed by the consequence of the story: openAI announces a 20% volume milestone without mentioning the electricity bill, and users get free answers; shareholders get a confusing P&L statement.",
+          "caption": "Google it? No, Ask Chat.",
+          "persona": "juno",
+          "register": "oneperson",
+          "caricature": false,
+          "reviewer": "auto-review:codex (D-S368.10)",
+          "reviewedAt": "2026-11-05",
+          "semanticVerified": false,
+          "sha256": "162968141539357f1cd4a71b5adbaec7fd762aa5fe077c37703608f666e9eead",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 1270932,
+          "entropy": 4.474,
+          "promptSha256": "ad115b77e1c4968c2bb8b6a400850c421dac3537151b82310e94fe2c1a3277fa"
         }
       },
       "authoredBy": {
@@ -409,19 +432,41 @@
           }
         ],
         "pixelInspection": {
-          "sha256": "78a2d6bbf4ab199604796ed192a299c75cb3035b6f1117dfc26056c572f014ac",
+          "sha256": "5d5f3dbb98d2f73a3186ee1ee2042d8de713f26976c6218a4817443e1e148bd4",
+          "reviewed": true,
+          "reviewer": "auto-review:codex (D-S368.10)",
           "semanticVerified": false,
-          "reviewed": false,
-          "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)",
-          "kind": "procedural-fallback",
-          "entropy": 1.136
+          "kind": "source-raster",
+          "entropy": 6.456,
+          "width": 1600,
+          "height": 900,
+          "bytes": 2205786,
+          "reviewedAt": "2026-11-05"
         },
-        "generatedArt": false,
+        "generatedArt": true,
         "satire": {
           "target": "The bureaucratic inertia of public school technology procurement departments that prioritize compliance over functionality",
           "setup": "An IT administrator spends three weeks configuring a firewall to block a feature that is already built into the operating system",
           "payoff": "They realize too late that the feature was mandatory all along and now they have to retrain the entire faculty",
           "institutional": true
+        },
+        "satireCartoon": {
+          "artSource": "data/news-desk/art/2026-11-04--google-faces-backlash-for-plan-that-would-turn-off--satire.png",
+          "kind": "satire-cartoon",
+          "alt": "AI-generated satirical cartoon in VERA’s 3 a.m. pager gag style. A blue-lit 3 a.m. cartoon shows an on-call engineer woken by a pager while the product falls over: an IT administrator spends three weeks configuring a firewall to block a feature that is already built into the operating system, and they realize too late that the feature was mandatory all along and now they have to retrain the entire faculty.",
+          "caption": "Search isn't broken, but Google's patience with your curriculum is.",
+          "persona": "vera",
+          "register": "pager",
+          "caricature": false,
+          "reviewer": "auto-review:codex (D-S368.10)",
+          "reviewedAt": "2026-11-05",
+          "semanticVerified": false,
+          "sha256": "4c0e9850039a1e1354ed5772e3bb5caf19fc23b3f8d867326385a3afc68dcf3f",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 2169590,
+          "entropy": 7.615,
+          "promptSha256": "49df078e1f118143375fafec01e714ef85ee0c0db4946be4f9803ebd0cc4d148"
         }
       },
       "authoredBy": {
@@ -430,6 +475,153 @@
         "fellBack": false,
         "attempt": 2,
         "at": "2026-11-04T18:19:11.139Z"
+      }
+    },
+    {
+      "slug": "crowdstrike-apos-s-new-kill-switch-can-stop-rogue",
+      "format": "explainer",
+      "kind": "quiet",
+      "edition": "latenight",
+      "headline": "CrowdStrike's AI Kill Switch: A Contained Fix for a New Problem",
+      "hook": "George Kurtz announced a kill switch for rogue AI agents at Fal.Con Europe.",
+      "tldr": "CrowdStrike CEO George Kurtz announced a new capability allowing security teams to terminate misbehaving AI agents, prevent their restart, and cut off network access. This represents a shift from protecting against external threats to managing internal autonomous risks. While the announcement is significant for cybersecurity strategy, it remains an unproven feature in production environments. The practical consequence is immediate control over specific agent behaviors, though long-term stability and efficacy against sophisticated rogue actions remain to be seen in real-world deployments.",
+      "facts": [
+        {
+          "text": "watch now VIDEO 2:10 02:10 CrowdStrike CEO George Kurtz talks new 'AI kill switch' Mad Money with Jim Cramer CrowdStrike CEO George Kurtz said Tuesday that the cybersecurity company can now shut down rogue artificial intelligence agents.",
+          "sourceUrl": "https://www.cnbc.com/2026/11/03/crowdstrikes-new-kill-switch-can-stop-rogue-ai-agents-in-their-tracks-ceo-says.html"
+        },
+        {
+          "text": "CrowdStrike's new kill switch , announced Tuesday at its Fal.Con Europe conference, allows security teams to terminate misbehaving agents, prevent them from restarting and cut off their network access.",
+          "sourceUrl": "https://www.cnbc.com/2026/11/03/crowdstrikes-new-kill-switch-can-stop-rogue-ai-agents-in-their-tracks-ceo-says.html"
+        },
+        {
+          "text": "Kurtz said Tuesday that CrowdStrike's new kill switch represents a significant shift in cybersecurity, which has traditionally focused on protecting companies from external threats.",
+          "sourceUrl": "https://www.cnbc.com/2026/11/03/crowdstrikes-new-kill-switch-can-stop-rogue-ai-agents-in-their-tracks-ceo-says.html"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "vera",
+          "direction": 0,
+          "horizon": -1,
+          "verdict": "fair",
+          "confidence": 0.85,
+          "position": "It stops the bleeding now; whether it causes a heart attack later depends on implementation. We have the lever, but not the track record of pulling it without breaking the train.",
+          "sources": [
+            "https://www.cnbc.com/2026/11/03/crowdstrikes-new-kill-switch-can-stop-rogue-ai-agents-in-their-tracks-ceo-says.html"
+          ]
+        },
+        {
+          "personaId": "rex",
+          "direction": 1,
+          "horizon": 2,
+          "verdict": "underhyped",
+          "confidence": 0.75,
+          "position": "This is the first concrete mechanism for containment in autonomous systems. It unlocks the ability to treat AI agents as ephemeral processes rather than persistent infections.",
+          "sources": [
+            "https://www.cnbc.com/2026/11/03/crowdstrikes-new-kill-switch-can-stop-rogue-ai-agents-in-their-tracks-ceo-says.html"
+          ]
+        }
+      ],
+      "predictions": [],
+      "transcript": [
+        {
+          "personaId": "vera",
+          "text": "I don't care about the press release. I care that when this 'kill switch' triggers, does it leave orphaned processes consuming CPU? Does it break the host OS? If the answer isn't in the changelog, it's a demo, not a product."
+        },
+        {
+          "personaId": "rex",
+          "text": "Look at the mechanics: terminate, prevent restart, cut network. That’s three distinct vectors of control. Most current solutions just flag or slow. This actually stops. That changes the architecture of defense."
+        }
+      ],
+      "memeLine": {
+        "text": "Shutting down your own digital employees before they shut you down.",
+        "personaId": "vera"
+      },
+      "body": [
+        {
+          "voice": "vera",
+          "text": "The announcement came Tuesday at the Fal.Con Europe conference, where CrowdStrike CEO George Kurtz detailed a new kill switch designed to stop rogue artificial intelligence agents. For security teams, this means the ability to terminate misbehaving agents, prevent them from restarting, and cut off their network access. This is a tangible tool, but tools are only as good as the hands holding them. In production, the first six months of any new control mechanism are usually defined by false positives and configuration nightmares. We know how painful it is when the wrong process gets terminated. We also know how difficult it is to distinguish between a rogue agent and a legitimate one running complex tasks. Until we see incident reports from customers who have actually used this to stop a live threat, this remains a theoretical safeguard. The evidence cannot yet establish whether this will work smoothly or cause more chaos than the rogue agents themselves."
+        },
+        {
+          "voice": "rex",
+          "text": "But let's look at what this actually unlocks. Kurtz described this as a significant shift in cybersecurity, moving away from traditional perimeter defense toward managing internal autonomous risks. This is critical. As AI agents become more embedded in enterprise workflows, they will inevitably act unpredictably. The ability to instantly sever their network access and prevent restarts is the foundational layer of trust required for wider adoption. Without this, every organization is flying blind with autonomous code that can’t be easily stopped. This isn't just a feature; it's a prerequisite for scaling AI operations safely. The direction is clear: control must precede autonomy. And right now, CrowdStrike has built the brake pedal while everyone else is still designing the engine."
+        },
+        {
+          "voice": "vera",
+          "text": "There is a risk here that needs naming. If the kill switch itself becomes a target for attackers looking to disrupt security controls, the problem compounds. Furthermore, the definition of 'misbehaving' is subjective and likely to evolve. What looks like rogue behavior today might be a novel strategy tomorrow. Security teams will need rigorous testing protocols to calibrate these thresholds. The hype cycle will push this as a silver bullet, but the reality is a complex operational burden. We will see initial successes in simple scenarios, followed by inevitable failures in edge cases. The lesson is always the same: automation requires manual oversight until the system proves it doesn't need it. And that proof takes time, not press releases."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-11-04--crowdstrike-apos-s-new-kill-switch-can-stop-rogue.png",
+        "scene": "A dark server room with a single red emergency button labeled 'KILL SWITCH' glowing under harsh fluorescent lights, surrounded by tangled cables and blinking status LEDs. The composition shows security teams terminate misbehaving agents.",
+        "alt": "Close-up of a large industrial emergency stop button illuminated in red, set against a backdrop of blurred server racks and data center infrastructure. The composition shows security teams terminate misbehaving agents.",
+        "anchors": [
+          "rogue artificial intelligence agents",
+          "prevent them from restarting",
+          "cut off their network access"
+        ],
+        "relationships": [
+          {
+            "id": "security-team-terminates-agents",
+            "subject": [
+              "security teams"
+            ],
+            "action": [
+              "terminate"
+            ],
+            "object": [
+              "misbehaving agents"
+            ],
+            "evidenceAnchorRefs": [
+              "rogue artificial intelligence agents"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "82a057129850178da64d3ce3e8f09be72c23ecfafde1b9d29d6bf9a79838d16c",
+          "reviewed": true,
+          "reviewer": "auto-review:codex (D-S368.10)",
+          "semanticVerified": false,
+          "kind": "source-raster",
+          "entropy": 6.286,
+          "width": 1599,
+          "height": 900,
+          "bytes": 2130033,
+          "reviewedAt": "2026-11-05"
+        },
+        "generatedArt": true,
+        "satire": {
+          "target": "Cybersecurity Vendor Marketing",
+          "setup": "Announcing a solution to a problem created by the technology vendors promote.",
+          "payoff": "Selling fire extinguishers to arsonists who bought their matches.",
+          "institutional": true
+        },
+        "satireCartoon": {
+          "artSource": "data/news-desk/art/2026-11-04--crowdstrike-apos-s-new-kill-switch-can-stop-rogue--satire.png",
+          "kind": "satire-cartoon",
+          "alt": "AI-generated satirical cartoon in VERA’s 3 a.m. pager gag style. A blue-lit 3 a.m. cartoon shows an on-call engineer woken by a pager while the product falls over: announcing a solution to a problem created by the technology vendors promote, and selling fire extinguishers to arsonists who bought their matches.",
+          "caption": "Shutting down your own digital employees before they shut you down.",
+          "persona": "vera",
+          "register": "pager",
+          "caricature": false,
+          "reviewer": "auto-review:codex (D-S368.10)",
+          "reviewedAt": "2026-11-05",
+          "semanticVerified": false,
+          "sha256": "f544fa56645dcbd3663856772b411036e161f192cc77a36f4182753a37a52f48",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 1684119,
+          "entropy": 7.212,
+          "promptSha256": "d2909075b58c9cc5961ff11f3bceb92b3bbc2a735643f99134e5c3c564e80821"
+        }
+      },
+      "authoredBy": {
+        "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "requested": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "fellBack": false,
+        "attempt": 1,
+        "at": "2026-11-04T22:16:00.845Z"
       }
     }
   ]

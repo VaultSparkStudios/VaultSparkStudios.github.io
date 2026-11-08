@@ -1,3 +1,20 @@
+<!-- S411-closeout-runtime-refresh -->
+Current runtime refresh after closeout metadata: core root 7e43682899e85fac6a1eab13a6277bb359685584c989793fcfff92c990ab8285;532 new public captures (290 changed originals directly inspected,242 exact prior reviewed pixel carries),215/215 fresh mobile cases, native visual/ordering/retention checks pass. Pre-metadata532 and historical742 originals remain intact. The earlier full549 source run and26-step canonical build retain their original timestamps/fingerprints; final autopilot source verification is pending. Hosted, isolated staging/accounts, main/production acceptance and the native invocation's fresh full arc remain pending.
+
+<!-- S411-local-recovery-closeout -->
+## S411 local recovery verified — release pending
+
+S411 local recovery is verified: complete native source549/549 from step1, canonical runtime build26/26, mobile215/215 with zeroP0/P1, and532 reviewed public captures (372 direct current inspections;160 exact prior-pixel carries). The current artifact root is 9393bf84460da06a72b1b81df2af5ed1ea4bdb2aab60b67a8a4dea09dfb3023d. Earlier failed attempts and historical742 captures remain preserved; older Windows70 comparisons are historical. See docs/RELEASE_S411.json.
+
+The freshness link leaves scrolled reading controls clear and returns at the entrance. The copy gate recognizes quoted questions inside continuing clauses while retaining paragraph and genuine lowercase-sentence detection;83/83 self-tests and the actual corpus pass. Session-boundary, drawer and discussion repairs are preserved.
+
+Exact current hosted checks, isolated staging/account journeys, main publication, production/readback and release finalization remain pending. The founder can perform both member and existing approved-investor journeys once staging is ready. Current native goal01a1b213-67c9-7af0-9148-611b5d9cbc66 created1793988988 still requires a full fresh startup/audit/implementation/closeout after this recovery; recovery is not its completion.
+
+<!-- S411-recovery-records -->
+## S411 recovery — local fixes; release pending
+
+S411 recovery preserves the session-boundary repair, drawer visibility fix and explicit discussion initialization. Focused recovery regressions passed19/19 with no skips. Canonical integration and release acceptance remain in progress; historical source549/mobile215/visual742 evidence does not prove the integrated candidate. See docs/S411_recovery-2026-11-06.json and docs/S411_recovery-focused-tests.json.
+
 <!-- S410-local-runtime-acceptance -->
 ## S410 current local runtime acceptance
 

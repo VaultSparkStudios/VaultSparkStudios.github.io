@@ -586,3 +586,18 @@ S410 current verification: full549 native0/source fingerprint6a8a78dd9aab8fcc722
 ## S410 recovery addendum — 2026-11-04
 
 Preserved unpublished verification/account work and merged newer public observations. Recovery is partial: final release and authenticated acceptance remain pending. No production promotion occurred.
+
+
+## S411 recovery checkpoint — 2026-11-06
+
+S411 recovery preserves the session-boundary repair, drawer visibility fix and explicit discussion initialization. Focused recovery regressions passed19/19 with no skips. Canonical integration and release acceptance remain in progress; historical source549/mobile215/visual742 evidence does not prove the integrated candidate. See docs/S411_recovery-2026-11-06.json and docs/S411_recovery-focused-tests.json.
+
+Integrated newer published observations while preserving local fixes. Dedicated website data-admin capability is missing; management/SQL/function authority works. Previous24-hour provider-receipt observation found no callback/compatibility/logout. No release or fresh-arc completion claimed.
+
+
+<!-- S411-local-recovery-closeout -->
+## Session 411 — 2026-11-06 — local recovery checkpoint
+
+S411 local recovery is verified: complete native source549/549 from step1, canonical runtime build26/26, mobile215/215 with zeroP0/P1, and532 reviewed public captures (372 direct current inspections;160 exact prior-pixel carries). The current artifact root is 9393bf84460da06a72b1b81df2af5ed1ea4bdb2aab60b67a8a4dea09dfb3023d. Earlier failed attempts and historical742 captures remain preserved; older Windows70 comparisons are historical. See docs/RELEASE_S411.json.
+
+Three selected local outcomes are verified across the original audit and two recovery addenda: session-lock continuity, scrolled freshness-link clearance and accurate quoted-question copy boundaries. Drawer/discussion followups are preserved, not counted again. Independent reviews found one paragraph-boundary regression and one stale-ledger finding; both were corrected. No hook bypass, force push, new paid service or production policy change occurred. Exact current hosted checks, isolated staging/account journeys, main publication, production/readback and release finalization remain pending. The founder can perform both member and existing approved-investor journeys once staging is ready. Current native goal01a1b213-67c9-7af0-9148-611b5d9cbc66 created1793988988 still requires a full fresh startup/audit/implementation/closeout after this recovery; recovery is not its completion.

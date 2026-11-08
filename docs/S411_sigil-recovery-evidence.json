@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "session": 411,
+  "state": "focused-source-repair-passed-release-acceptance-pending",
+  "audit": "docs/AUDIT_2026-11-06-S411.json",
+  "plan": "docs/S411_RECOVERY_PLAN.md",
+  "invocationScope": "S411 release recovery. The new native goal still requires its own full fresh arc after recovery.",
+  "problem": "A fixed44px freshness link intercepted a scrolled mobile reaction region. The real screenshot, geometry, browser visibility and hit test agreed.",
+  "before": {
+    "image": "docs/visual-qa/S411-recovery-artwork-diagnostic-1106-google/obstacle-viewport.png",
+    "manifest": "docs/visual-qa/S411-recovery-artwork-diagnostic-1106-google/manifest.json",
+    "nativeRegressionExit": 1,
+    "regressionTests": 1,
+    "failure": "Floating metadata hit target remains visible over scrolled reading controls."
+  },
+  "admission": {
+    "strictPremises": {
+      "verified": 2,
+      "contradicted": 0,
+      "unverified": 0,
+      "nativeExit": 0
+    },
+    "candidateBundleNativeExit": 0,
+    "throwawayFixtureNativeExit": 0,
+    "timing": "Native broad timing checker remains nonpassing over inherited S411 committed/generated work. No native timing pass is claimed; focused source was unmodified before its new premise/admission checks."
+  },
+  "repair": "Keep the metadata link at the page entrance; remove display, hit target and tab stop while scrollY exceeds8; restore placement at the top. Existing resize and settle callbacks do not restore it during reading.",
+  "focusedAcceptance": {
+    "nativeRegressionExit": 0,
+    "regressionTests": 1,
+    "failed": 0,
+    "skipped": 0,
+    "widths": [
+      390,
+      1366
+    ],
+    "behavior": [
+      "initial44px header clearance",
+      "normal scroll hides hit target",
+      "scrolled resize stays hidden",
+      "real reaction click stays on page",
+      "return to top restores the link"
+    ],
+    "canonicalGroupsUpdated": [
+      "test:unit",
+      "build:check:steps"
+    ],
+    "independentReview": {
+      "reviewer": "sigil_review",
+      "verdict": "pass",
+      "requiredFindings": 0
+    }
+  },
+  "otherEvidence": {
+    "mobile215": "Current post-repair canonical candidate passed215/215 with native exit0; native runtime contract passed with zeroP0/P1.",
+    "headerClearance": "Canonical full source attempt1 step1 passed, including the unmodified56-combination News clearance test and the new scroll regression.",
+    "visual": "Current532 declared public captures reviewed and native visual/source/candidate binding checks passed.372 direct current inspections plus160 exact-identical prior pixels; see canonical receipt scope ledger.",
+    "canonicalBuild": "Updated canonical build passed natively with all26 ordered postbuild steps; invocation626c88d5-9254-4243-8401-311240a35ff2 completed2026-11-06T19:21:22.032Z.",
+    "fullSource": "Original complete attempt passed78 steps then stale brief failed. Later diagnostics found tracked-test packaging and quoted-question false positives; both repaired. Remainder363..549 passed, but final full-from1 proof remains pending."
+  },
+  "release": "Exact hosted, current staging, affected authenticated journeys, main publication, production/readback and full closeout remain pending."
+}

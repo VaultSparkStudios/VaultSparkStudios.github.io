@@ -1238,3 +1238,17 @@ S410 acceptance correction: full source attempt4 failed at129 after128 passes. T
 ## S411 — pin the verified release CLI
 
 The release keeps Wrangler4.90.0, the installed CLI used for the completed local checks, as an exact dependency instead of a caret range. Live registry review found the range would select a release published minutes earlier. The retained version has a verified npm registry signature, the expected Cloudflare source repository, established publisher continuity and no install lifecycle scripts. Other dependencies remain unchanged. This is a build-tool resolution constraint; it changes no public authentication, access policy or runtime UI. Hosted checks must verify the final QA commit after this manifest change.
+
+
+## S411 recovery — 2026-11-06
+
+Preserve local implementation and newer published content/telemetry separately, then regenerate derived surfaces using the canonical lifecycle. Keep historical source and visual results scoped to their original subjects. A provider denial or fixture pass does not prove positive real member/investor behavior. Production acceptance remains pending.
+
+
+<!-- S411-local-recovery-closeout -->
+## S411 recovery decisions — 2026-11-06
+
+Keep the freshness link at the entrance and remove its floating hit target during reading. Repair quoted-question sentence boundaries at the gate rather than rewriting grammatical published prose; reject continuations across paragraph boundaries. Preserve all failed/source and before-image evidence and distinguish direct inspection from exact-pixel carry. Flattened release claims now name the actual current source/root and archive prior snapshots explicitly. Keep production promotion separate from local checks; carry the real staging/account dependency into the fresh native arc without borrowing old completion evidence.
+
+
+S411 conformance scope: CANON-045 STRONG architecture/isolation acceptance remains pending; Obelisk is the existing identity authority and this local checkpoint changes no auth policy. CANON-055 STRONG surface follow-through remains release-pending until exact hosted, staging/account and production evidence is verified. Neither gap is waived or presented as current production acceptance.

@@ -10,9 +10,9 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last8):939 ·939 ·939 ·939 ·939 ·939 ·939 ·939 ▄▄▄▄▄▄▄▄ (→)
 Avgs — 3:939.0 |5:939.0 |10:939.0
-  └ S410: Dev95 |Align94 |Momentum92 |Engage96 |Process88 |Coherence94 |Security97 |Ecosystem91 |Capital95 |Automation97
-Last session:2026-11-04 |Session 410 |Total:939/1000 |Velocity:0 |Protocol velocity:3
-  └ Release evidence: docs/RELEASE_S410.json; local implementation is not production acceptance.
+  └ S411: Dev95 |Align94 |Momentum92 |Engage96 |Process88 |Coherence94 |Security97 |Ecosystem91 |Capital95 |Automation97
+Last session:2026-11-06 |Session 411 |Total:939/1000 |Velocity:0 |Protocol velocity:2
+  └ Release evidence: docs/RELEASE_S411.json; verified local recovery is not production acceptance.
 <!-- rolling-status-end -->
 
 > Older entries through S401 live verbatim in `context/archive/SIL_S1-S401.md` (exact committed pre-rotation snapshot). Recent complete entries follow.
@@ -2259,3 +2259,22 @@ S410 timing-record clarification: the230 dirty paths at the gate comprised226 in
 ## Session 410 addendum — recovery checkpoint (2026-11-04)
 
 Recovered the four post-closeout verification corrections through195a385f6a and integrated current published observations through21d0be269b. Generated conflict projections use the newer published versions; dependent regeneration and final candidate acceptance remain pending. Native doctor14/17 passes with3 warnings and no blocking doctor failures; staged secret scan reports0 findings. These checks do not establish release acceptance. Visual conformance explicitly fails after integration because225 changed UI files postdate the receipt. Positive affected account journeys, current complete source, staging/hosted acceptance, main publication and production/readback remain incomplete. Preserve the existing SIL score and velocity; no new score or product completion is claimed.
+
+
+### S411 — recovery progress — 2026-11-06
+
+S411 recovery preserves the session-boundary repair, drawer visibility fix and explicit discussion initialization. Focused recovery regressions passed19/19 with no skips. Canonical integration and release acceptance remain in progress; historical source549/mobile215/visual742 evidence does not prove the integrated candidate. See docs/S411_recovery-2026-11-06.json and docs/S411_recovery-focused-tests.json.
+
+Dev Health:95 | Creative Alignment:94 | Momentum:92 | Engagement:96 | Process Quality:88 | Cross-Repo Coherence:94 | Security Posture:97 | Ecosystem Integration:91 | Capital Efficiency:95 | Automation Coverage:97
+Total:939/1000, carried forward without a new measured product score. No release velocity is claimed. Two future unselected SIL ideas are on TASK_BOARD. Full closeout pending; CDR unchanged because no new human creative direction was given.
+
+
+<!-- S411-local-recovery-closeout -->
+## Session 411 — 2026-11-06 — verified local recovery; release pending
+
+S411 local recovery is verified: complete native source549/549 from step1, canonical runtime build26/26, mobile215/215 with zeroP0/P1, and532 reviewed public captures (372 direct current inspections;160 exact prior-pixel carries). The current artifact root is 9393bf84460da06a72b1b81df2af5ed1ea4bdb2aab60b67a8a4dea09dfb3023d. Earlier failed attempts and historical742 captures remain preserved; older Windows70 comparisons are historical. See docs/RELEASE_S411.json.
+
+Dev Health:95 | Creative Alignment:94 | Momentum:92 | Engagement:96 | Process Quality:88 | Cross-Repo Coherence:94 | Security Posture:97 | Ecosystem Integration:91 | Capital Efficiency:95 | Automation Coverage:97
+Total:939/1000. Product/release velocity:0; protocol velocity:2 (lock continuity and copy-gate accuracy). Website lens: local runtime/mobile and theme readability are verified; field Core Web Vitals, conversion and retention improvements remain unmeasured. Content/copy quality passed without changing article prose; visual polish is limited to declared reviewed scopes. Scores remain carried forward, with no increase for unmeasured outcomes.
+
+Process limitation: inherited-WIP timing remains nonpassing; do not relabel it as a native timing pass. Brainstorm commitments remain the two already-boarded, unselected SIL items: reproduce history-scale limits before changing quotas; inspect missing discussion intent only after reproduction. The observed capture-copy collision is a fresh-audit candidate, not an extra recovery implementation. CDR unchanged: the founder supplied operational verification availability, not new creative direction. Full release and this new native invocation remain pending.
