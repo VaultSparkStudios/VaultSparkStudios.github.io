@@ -1,3 +1,27 @@
+<!-- S411-current-verified-checkpoint-2026-11-08 -->
+## S411 QA checkpoint — release acceptance pending
+
+Recorded 2026-11-08T13:20:56.311Z. The complete native source run passed549/549 from step1, exit0, source fingerprint 57f82337699976d08f358e56; see docs/S411_current-source-verified-1108.json. Frozen runtime root 87fd6f57753cd81ec6d1e842c937889ee3ed9ffc0b4596ae611f8925e149d499 has build identity a5c44a6a03b14ff4bedea24269dc2e3a064b2bd3; a source publication commit is a separate identity. Static staging receipt e87922e1b168c9d19f7a3a08 verifies4090 regular files and chronology depth214; public manifest/receipt readback plus all20 reachability checks passed. Anonymous staging browser checks passed6/6 with0held/skipped/failed/flaky. Two non-core status feeds were regenerated after deployment; the critical artifact root stayed unchanged.
+
+Current local header proof is112 newly captured and directly reviewed originals across7themes, zero scoped findings; source/candidate stayed stable. Native mobile215/215 passed,0P0/P1,133P2 diagnostics retained, automated-only. Reviewed reference baselines comprise70Windows and70Linux originals; Linux preserves an inherited P2 decorative capsule edge issue. The parser-only determined quoted-question repair passes96self-tests, the actual corpus and14independent boundary probes; UI and article bytes were unchanged. Failed runs and old532/112/215 receipts retain their actual historical scope.
+
+QA publication and all3 exact-commit required workflows follow this checkpoint; no main promotion or production deployment is claimed. Isolated staging provisioning/artifact prerequisites and affected positive member/approved-investor journeys remain pending. The founder is available for both native journeys once isolation is verified. Existing push/deployment authorization persists. No new permission for the same promotion is needed.
+
+Native goal01a1b213-67c9-7af0-9148-611b5d9cbc66, created1793988988, still requires its full fresh startup/audit/implementation/closeout after S411 recovery. No new session has been bound, lock cleared, score awarded or goal completion claimed. Current939/1000 is the prior score.
+
+<!-- S411-release-recovery-progress-2026-11-08 -->
+## S411 release recovery — 2026-11-08, acceptance in progress
+
+Founder renewed push and deployment authorization. QA source dfb3a4f2345f1928c227c61d39a966b4155f97c3 is remotely verified; no main promotion or production deployment is claimed. Current runtime root fc3ad58b984f3b4171269555d903096d726547358de0f0cd2d7b3792a9243551 was built with candidate identity a5c44a6a03b14ff4bedea24269dc2e3a064b2bd3; source commit and artifact build identity are distinct.
+
+The current static staging deployment passed public artifact readback and all20 reachability checks:12 private-path denials and8 public successes. Verified receipt f58a466345c546f964153690 covers4090 regular files; chronology depth213. Archive packaging uses the positive public served-surface inventory. This proves static staging, not isolated backend or authenticated behavior.
+
+Current local UI acceptance:43 header/contrast checks,112 directly reviewed header/picker originals across all7 themes, and70 native Windows snapshots all directly reviewed with0 concrete findings. The70 reviewed Windows originals were accepted;67 differ from prior baselines. Linux run42476258466 passed42 geometry checks and68 snapshots, with2 member-portal test-contract failures before capture; no complete70-frame acceptance was inferred. The portal absence assertion is corrected; exact-QA Linux run42477531084 is pending. The full549-step source attempt stopped at170 because prior visual/mobile receipts no longer matched the changed header. Earlier549/532/215 proofs remain historical, not current-candidate acceptance.
+
+Remaining release work: fresh mobile/desktop audit, current full-source proof, reviewed complete Linux baselines, all3 exact-candidate required workflows, isolated staging account configuration and real affected member/approved-investor journeys, authorized main/production/readback, then full recovery closeout. The founder can perform both native journeys when isolation is verified. Required staging provisioning/artifact prerequisites remain unresolved; generic deployment authorization does not silently change artifact trust policy. No sign-in invitation is issued while staging uses production data defaults.
+
+The native invocation01a1b213-67c9-7af0-9148-611b5d9cbc66 created1793988988 still requires its full new startup/audit/implementation/closeout after S411 recovery. No new session has been bound, no lock cleared and no native completion claimed. SIL939 remains the prior score; this progress checkpoint awards no new score or release credit.
+
 <!-- S411-local-recovery-closeout -->
 ## S411 current recovery truth — 2026-11-06
 

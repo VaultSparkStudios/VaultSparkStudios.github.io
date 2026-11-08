@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-08T13:08:03.367Z",
+  "scope": "Bounded S411 outcome8; outcome3 shipped connective repair and all prior admissions remain preserved. No fresh arc or release completion claim.",
+  "source": "scripts/check-news-copy-quality.mjs",
+  "sourceSha256": "2d24b22981d41a93d7b8b25a27e1df8c8f854214a4d6620fbb742a05ee882c30",
+  "selectedSourceCleanBeforeAdmission": true,
+  "before": {
+    "nativeExit": 1,
+    "stdout": "{\n  \"ok\": false,\n  \"findings\": [\n    {\n      \"file\": \"data/news-desk/days/2026-11-06.json\",\n      \"date\": \"2026-11-06\",\n      \"story\": \"perplexity-launches-ai-agents-for-work\",\n      \"field\": \"body[2].text\",\n      \"rule\": \"sentence-starts-lowercase\",\n      \"text\": \"part.\",\n      \"detail\": \"sentence starts with a lowercase letter\"\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  "self": {
+    "nativeExit": 0,
+    "stdout": "  ok related-story metadata is refused as a cited fact\n  ok publisher event promotion is refused as a cited fact\n  ok legitimate sourced prose survives the chrome rule\n  ok the corpus gate locates a bad fact in its original story\n  ok THE LIVE CASE: \"biowepon\" in a story hook is caught\n  ok THE NEXT ONE: an unknown mangling no wrong→right list contains is caught as a near-miss\n  ok a model version identifier is not mistaken for a misspelling\n  ok a brand written in its own all-caps house style passes\n  ok the live case is located in the hook field of the real story shape\n  ok a curated misspelling fires\n  ok a curated misspelling names the correction\n  ok a doubled word fires\n  ok a compound followed by its last segment is not a doubled word\n  ok repeating an entire compound still fires\n  ok a later standalone duplicate after a compound still fires\n  ok ordinary standalone duplicates remain rejected\n  ok straight single-quoted duplicates remain rejected\n  ok single-quoted duplicates inside a sentence remain rejected\n  ok curly single-quoted duplicates remain rejected\n  ok repeated straight and curly contractions remain rejected\n  ok typographic hyphens keep the complete compound boundary\n  ok quoting a legitimate compound phrase does not make it a duplicate\n  ok an unbalanced bracket fires\n  ok an odd straight quote count fires\n  ok an unbalanced curly quote fires\n  ok markdown bold fires\n  ok a markdown link fires\n  ok a markdown heading fires\n  ok a double space fires\n  ok a lowercase sentence start fires\n  ok a quoted question can continue through to\n  ok a quoted question can continue through and\n  ok curly quoted questions can continue a clause\n  ok a quoted exclamation can continue a clause\n  ok a genuine lowercase new sentence after a quotation still fires\n  ok an unquoted question does not gain a continuation exemption\n  ok a capitalized sentence after a quoted question still splits\n  ok a later lowercase new sentence after a continued quotation still fires\n  ok a quoted question never joins a new lowercase paragraph\n  ok a quoted question never joins a Windows paragraph break\n  ok a quoted question never joins a Unicode paragraph separator\n  ok a parenthetical abbreviation does not fire a lowercase start\n  ok a parenthetical whole sentence is not itself reported\n  ok a lowercase start elsewhere in the same paragraph still fires\n  ok a genuine lowercase start after a normal period still fires\n  ok a shouted word fires\n  ok a run of caps words fires\n  ok an elided quote fires\n  ok an elided straight-quoted claim fires\n  ok placeholder text fires\n  ok lorem ipsum fires\n  ok placeholder as an ordinary editorial noun passes\n  ok an uppercase placeholder publishing token still fires\n  ok a bracketed placeholder stub still fires\n  ok a standalone lowercase placeholder field still fires\n  ok a labelled lowercase placeholder field still fires\n  ok standalone placeholder copy remains a publishing stub\n  ok the named publisher is accepted without accepting arbitrary shouting\n  ok the upstream editorial wording survives without changing its meaning\n  ok real model and company names pass\n  ok Hugging Face and hyphenated products pass\n  ok dense jargon passes\n  ok acronyms in normal prose pass\n  ok a short caps run of real acronyms passes\n  ok possessives and curly apostrophes pass\n  ok THE ABBREVIATION TRAP: \"3 a.m. because\" is not a lowercase sentence start\n  ok decimals and figures do not split sentences\n  ok Inc./U.S. abbreviations do not split sentences\n  ok \"reference\" is not mistaken for \"inference\"\n  ok balanced quotes and parentheses pass\n  ok a whole quoted sentence with no elision passes\n  ok an ellipsis outside a quote is left alone\n  ok THE ELLIPSIS TRAP (live corpus): \"It was just... there.\" is one sentence, not a lowercase start\n  ok the real 2026-09-12 story shape passes once the typo is corrected\n  ok THE LIVE CASE: a headline that opens with bare SI is caught in the headline field\n  ok an expanded headline passes, and later bare SI follows it\n  ok an expansion in the hook licenses SI in the tldr\n  ok SI units are not the SI acronym\n  ok lowercase \"si\" is not the acronym\n  ok simulated days are exempt\n  ok isOneEdit sees a deletion, substitution and insertion\n  ok isOneEdit rejects identity and distance ≥2\n  ok every rule is reachable from the rule table\ncheck-news-copy-quality --self-test: 83/83 passed\n",
+    "stderr": ""
+  },
+  "fixture": {
+    "text": "The agent handles the 'where are we?' part. You handle the rest.",
+    "expectedSentences": 2,
+    "actualFragments": [
+      "The agent handles the 'where are we?'",
+      "part.",
+      "You handle the rest."
+    ],
+    "regressionFailsBefore": true
+  },
+  "prior": [
+    {
+      "file": "docs/AUDIT_2026-11-06-S411.json",
+      "sha256": "733a57a963150f17d8b8a52a675c7daa22567dae7fb66e1f722a1e85c43c4d36"
+    },
+    {
+      "file": "docs/S411_copy-boundary-recovery-evidence.json",
+      "sha256": "3512af320beaa1f66f2dc33df19f66391165658eda70da604b415c864c1afe46"
+    },
+    {
+      "file": "docs/S411_theme-reserve-admission-1108.json",
+      "sha256": "9fd97e4b4a9a5e4024bc6556c3ecc61bf57e38a6c0193120555fc77983d68a9e"
+    }
+  ],
+  "authorization": "Root explicitly authorized bounded outcome8 under existing user arc/release authorization before implementation."
+}

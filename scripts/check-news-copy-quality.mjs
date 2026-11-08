@@ -269,6 +269,16 @@ export function sentences(text) {
         if (new RegExp('(?:^|[\\s([{])' + opening).test(src.slice(start, i))) continue;
       }
     }
+    // A question can modify a terminal noun: the 'where are we?' part.
+    // Bind the actual quote pair immediately after a determiner, rather than
+    // accepting any earlier opener. Keep this separate from clause connectives:
+    // "She asked 'Why?' part of ..." is still a lowercase sentence defect.
+    if (src[i] === '?' && /^["'”’][^\S\r\n\u2028\u2029]+part\.(?=\s|$)/.test(next)) {
+      const opening = ({ '”': '“', '’': '‘' })[next[0]] || next[0];
+      const modifier = new RegExp('\\b(?:the|a|an)[^\\S\\r\\n\\u2028\\u2029]+'
+        + opening + '[^"\'“”‘’\\r\\n\\u2028\\u2029]*$', 'i');
+      if (modifier.test(src.slice(start, i))) continue;
+    }
     if (src[i] === '.') {
       // An ellipsis is not a terminator. "It was just... there." is one
       // sentence; treating the last dot as an end made "there." read as a
@@ -661,6 +671,38 @@ function selfTest() {
       () => fires('sentence-starts-lowercase', "She asked 'Why?'\r\n\r\nand nobody answered.")],
     ['a quoted question never joins a Unicode paragraph separator',
       () => fires('sentence-starts-lowercase', "She asked 'Why?'\u2029and nobody answered.")],
+    ['a determined quoted question modifies a terminal noun',
+      () => JSON.stringify(sentences("The agent handles the 'where are we?' part. You handle the rest."))
+          === JSON.stringify(["The agent handles the 'where are we?' part.", 'You handle the rest.'])
+        && !fires('sentence-starts-lowercase', "The agent handles the 'where are we?' part. You handle the rest.")],
+    ['a curly determined quoted question modifies a terminal noun',
+      () => JSON.stringify(sentences('We handle the “where are we?” part. You decide.'))
+          === JSON.stringify(['We handle the “where are we?” part.', 'You decide.'])
+        && !fires('sentence-starts-lowercase', 'We handle the “where are we?” part. You decide.')],
+    ['an independent determined quoted modifier passes',
+      () => JSON.stringify(sentences('We finished a "what happens next?" part. It reads well.'))
+          === JSON.stringify(['We finished a "what happens next?" part.', 'It reads well.'])
+        && !fires('sentence-starts-lowercase', 'We finished a "what happens next?" part. It reads well.')],
+    ['part of a new lowercase sentence remains rejected',
+      () => fires('sentence-starts-lowercase', "She asked 'Why?' part of the answer was missing.")],
+    ['a terminal part without an attributive determiner remains rejected',
+      () => fires('sentence-starts-lowercase', "She asked 'Why?' part. It ended.")],
+    ['a later lowercase sentence after the nominal modifier remains rejected',
+      () => fires('sentence-starts-lowercase', "We handle the 'where are we?' part. it failed.")],
+    ['a nominal modifier cannot cross a blank LF paragraph',
+      () => fires('sentence-starts-lowercase', "We handle the 'where are we?'\n\npart. It ended.")],
+    ['a nominal modifier cannot cross a blank CRLF paragraph',
+      () => fires('sentence-starts-lowercase', "We handle the 'where are we?'\r\n\r\npart. It ended.")],
+    ['a nominal modifier cannot cross a Unicode paragraph separator',
+      () => fires('sentence-starts-lowercase', "We handle the 'where are we?'\u2029part. It ended.")],
+    ['a nominal modifier cannot cross a Unicode line separator',
+      () => fires('sentence-starts-lowercase', "We handle the 'where are we?'\u2028part. It ended.")],
+    ['mismatched nominal quotation still exposes a lowercase sentence',
+      () => fires('sentence-starts-lowercase', 'We handle the “where are we?\' part. It ended.')],
+    ['an earlier unrelated quote does not match a nominal orphan closer',
+      () => fires('sentence-starts-lowercase', "We read the 'draft' and asked where are we?' part. It ended.")],
+    ['a nominal part-of continuation is not exempted even with a determiner',
+      () => fires('sentence-starts-lowercase', "We read the 'draft?' part of it was missing.")],
     // S363 — regression guards for the parenthetical-abbreviation split. The first
     // is the live 2026-09-20 corpus sentence that was wrongly reported; the second
     // and third pin that the fix did not blunt the rule it was narrowing.
