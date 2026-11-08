@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-07T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-11-07/openai-reportedly-raises-an-additional-11-billion-at-a",
+    "url": "https://vaultsparkstudios.com/news/2026-11-07/openai-reportedly-raises-an-additional-11-billion-at-a/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-11-07-openai-reportedly-raises-an-additional-11-billion-at-a-01-f6f19ec79fbf",
+      "hash": "f6f19ec79fbf532f82ac937de423883a8580f6cd22ced9b382acf6a81eacd79e",
+      "text": "In late September, Bloomberg reported that OpenAI was looking to raise $30 billion in the upcoming round.",
+      "sourceUrl": "https://techcrunch.com/2026/11/06/openai-reportedly-raises-an-additional-11-billion-at-a-1-25-trillion-valuation/",
+      "sourceHost": "techcrunch.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-11-07/openai-reportedly-raises-an-additional-11-billion-at-a/#fact-2026-11-07-openai-reportedly-raises-an-additional-11-billion-at-a-01-f6f19ec79fbf"
+    },
+    {
+      "id": "fact-2026-11-07-openai-reportedly-raises-an-additional-11-billion-at-a-02-1f7e0d2f55fa",
+      "hash": "1f7e0d2f55fae03e9e26a93c779c9ca052ade56b57c333164db37122c02d7634",
+      "text": "The $11 billion is part of a larger funding round that hasn’t closed yet, according to the outlet.",
+      "sourceUrl": "https://techcrunch.com/2026/11/06/openai-reportedly-raises-an-additional-11-billion-at-a-1-25-trillion-valuation/",
+      "sourceHost": "techcrunch.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-11-07/openai-reportedly-raises-an-additional-11-billion-at-a/#fact-2026-11-07-openai-reportedly-raises-an-additional-11-billion-at-a-02-1f7e0d2f55fa"
+    },
+    {
+      "id": "fact-2026-11-07-openai-reportedly-raises-an-additional-11-billion-at-a-03-38c58f1e3625",
+      "hash": "38c58f1e3625b7e737f47ac6ff742b8806f729b909de0b8de1baddc8ff832d68",
+      "text": "The round is expected to close in the coming weeks and could total about $20 billion, a source told Bloomberg.",
+      "sourceUrl": "https://techcrunch.com/2026/11/06/openai-reportedly-raises-an-additional-11-billion-at-a-1-25-trillion-valuation/",
+      "sourceHost": "techcrunch.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-11-07/openai-reportedly-raises-an-additional-11-billion-at-a/#fact-2026-11-07-openai-reportedly-raises-an-additional-11-billion-at-a-03-38c58f1e3625"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "dot:overhyped",
+      "persona": "dot",
+      "text": "$11 billion raised now, $20 billion total expected, $1.25 trillion valuation. No product shipped yet.",
+      "confidence": 0.9,
+      "verdict": "overhyped",
+      "direction": -2,
+      "factRefs": [
+        "fact-2026-11-07-openai-reportedly-raises-an-additional-11-billion-at-a-01-f6f19ec79fbf",
+        "fact-2026-11-07-openai-reportedly-raises-an-additional-11-billion-at-a-02-1f7e0d2f55fa",
+        "fact-2026-11-07-openai-reportedly-raises-an-additional-11-billion-at-a-03-38c58f1e3625"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "rex:underhyped",
+      "persona": "rex",
+      "text": "Capital enables scaling. $1.25T valuation reflects expected capability leaps, not just current metrics.",
+      "confidence": 0.7,
+      "verdict": "underhyped",
+      "direction": 1,
+      "factRefs": [
+        "fact-2026-11-07-openai-reportedly-raises-an-additional-11-billion-at-a-01-f6f19ec79fbf",
+        "fact-2026-11-07-openai-reportedly-raises-an-additional-11-billion-at-a-02-1f7e0d2f55fa",
+        "fact-2026-11-07-openai-reportedly-raises-an-additional-11-billion-at-a-03-38c58f1e3625"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-11-07-dot-1",
+      "persona": "dot",
+      "text": "The full $20 billion round will close within four weeks of the Bloomberg report.",
+      "confidence": 0.85,
+      "resolveBy": "2026-12-22",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-11-07-rex-2",
+      "persona": "rex",
+      "text": "OpenAI will announce a new model capable of significantly outperforming current leaders by Q2 2027.",
+      "confidence": 0.6,
+      "resolveBy": "2027-03-07",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-11-07--openai-reportedly-raises-an-additional-11-billion-at-a.png",
+    "artSha256": "1f68d9a1d1b2a9b65b687d2537e01e4246ab2f70e310934a03aa92640730eaeb",
+    "pageSha256": "6a0eb99fd24b216ee3244d2065a652a376fbfff6bb9a2370fd3e453331006dcb",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": true,
+      "semanticVerified": false,
+      "reviewer": "auto-review:codex (D-S368.10)"
+    },
+    "sceneFingerprint": "636319438be9709f80debf1d30c8f1d506029ff0d4807884d8a036c071de9c24",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}
