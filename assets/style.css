@@ -1931,6 +1931,22 @@ body.light-mode .text-white { color: var(--text); }
 @media (min-width: 1025px) {
   .site-header .brand small, .site-header .brand .brand-suffix { display: none; }
 }
+/* Match the existing compact header before the palette loader arrives. */
+@media (min-width: 1025px) and (max-width: 1450px) {
+  .site-header .brand { gap: .45rem; }
+  .site-header .brand img { width: 36px; height: 36px; }
+  .site-header .brand > span { font-size: .9rem; }
+  .site-header .brand small { font-size: .6rem; letter-spacing: .04em; }
+  .site-header .nav { gap: .4rem; }
+  .site-header .nav-center a { font-size: .82rem; padding-inline: .25rem; }
+  .site-header .nav-right { gap: .35rem; }
+  .site-header .nav-signin { padding-inline: .35rem; }
+}
+@media (min-width: 1451px) {
+  .site-header .container { width: min(calc(100% - 2rem), 1360px); }
+  .site-header .brand small { display: block; }
+  .site-header .brand .brand-suffix { display: inline; }
+}
 
 @media (max-width: 1100px) {
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }

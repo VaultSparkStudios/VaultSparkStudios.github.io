@@ -6,9 +6,9 @@ const path = require('path');
 // leaves the Games nav and footer, exactly as propagate-nav's deriveGameNav() renders them.
 const hasGamePage = (slug) => fs.existsSync(path.join(__dirname, '..', 'games', slug, 'index.html'));
 
-for (const width of [1280, 1366, 1440, 1920]) {
+for (const width of [1280, 1366, 1440, 1450, 1451, 1920]) {
  for (const theme of ['dark', 'light', 'ambient', 'warm', 'cool', 'lava', 'high-contrast']) {
-  test(`Desktop header keeps every control inside its container at ${width}px · ${theme}`, async ({ page }) => {
+  test(`Desktop header keeps every control inside its container at ${width}px · ${theme}`, async ({ page }, testInfo) => {
     test.setTimeout(45000);
     await page.setViewportSize({ width, height: 900 });
     await page.addInitScript(t => localStorage.setItem('vs_theme', t), theme);
@@ -29,8 +29,16 @@ for (const width of [1280, 1366, 1440, 1920]) {
           const rect = el.getBoundingClientRect();
           return { label: (el.getAttribute('aria-label') || el.textContent).trim().slice(0, 80), left: rect.left, right: rect.right };
         });
-        return { left: bounds.left, right: bounds.right, controls };
+        return { left: bounds.left, right: bounds.right, width: bounds.width, controls,
+          groups: [...nav.querySelectorAll('.brand, .nav-center, .nav-right, .theme-picker')].map(el => {
+            const r = el.getBoundingClientRect(), s = getComputedStyle(el);
+            return { className: el.className, left: r.left, right: r.right, width: r.width, gap: s.gap, font: s.font };
+          }) };
       });
+      await testInfo.attach('header-geometry.json', { body: Buffer.from(JSON.stringify({ viewportWidth: width, theme, ...geometry })), contentType: 'application/json' });
+      expect(geometry.width).toBe(width >= 1451 ? 1360 : 1200);
+      if (width >= 1451) await expect(page.locator('.site-header .brand .brand-suffix')).toBeVisible();
+      else await expect(page.locator('.site-header .brand .brand-suffix')).toBeHidden();
       expect(geometry.controls.length).toBeGreaterThan(7);
       for (const control of geometry.controls) {
         expect(control.left, `${theme}: ${control.label} left edge`).toBeGreaterThanOrEqual(geometry.left - 0.25);

@@ -14,6 +14,20 @@ import { resolve } from 'node:path';
 
 const ROOT = process.cwd();
 const SELF_TEST = process.argv.includes('--self-test');
+const WIDE_HEADER_CONTRACT = '@media(min-width:1451px){.site-header .container{width:min(calc(100% - 2rem),1360px)}.site-header .brand small{display:block}.site-header .brand .brand-suffix{display:inline}}';
+const normalizeCss = value => String(value || '').replace(/\s+/g, '').replace(/;}/g, '}');
+
+function paletteCompactRule(source = '') {
+  const match = source.match(/@media\s*\(min-width:\s*1025px\)\s*and\s*\(max-width:\s*1450px\)/);
+  if (!match) return '';
+  const start = source.indexOf('{', match.index); let depth = 0;
+  if (start < 0) return '';
+  for (let i = start; i < source.length; i++) {
+    if (source[i] === '{') depth++;
+    if (source[i] === '}' && --depth === 0) return source.slice(match.index, i + 1);
+  }
+  return '';
+}
 
 const REQUIRED_CRITICAL_PATTERNS = [
   {
@@ -160,7 +174,7 @@ function extractCriticalShell(source) {
     .replace('@media(min-width:641px) and (max-width:980px){.container', '@media(min-width:641px) and (max-width:1024px){.container') : '';
 }
 
-function collectFailures({ shellSource, styleSource, perfSource, membershipSource, navSource, shellManifest, readAsset }) {
+function collectFailures({ shellSource, styleSource, perfSource, membershipSource, navSource, paletteSource, shellManifest, readAsset }) {
   const critical = extractCriticalShell(shellSource);
   const failures = [];
 
@@ -175,6 +189,14 @@ function collectFailures({ shellSource, styleSource, perfSource, membershipSourc
   for (const check of REQUIRED_STYLE_PATTERNS) {
     if (!check.pattern.test(styleSource)) failures.push(`style.css: missing ${check.id}`);
   }
+  const compact = paletteCompactRule(paletteSource);
+  if (!compact) failures.push('palette loader: compact header authority missing');
+  else {
+    if (!normalizeCss(critical).includes(normalizeCss(compact))) failures.push('critical-shell: palette header compaction diverges');
+    if (!normalizeCss(styleSource).includes(normalizeCss(compact))) failures.push('style.css: palette header compaction diverges');
+  }
+  if (!normalizeCss(critical).includes(normalizeCss(WIDE_HEADER_CONTRACT))) failures.push('critical-shell: wide header contract missing');
+  if (!normalizeCss(styleSource).includes(normalizeCss(WIDE_HEADER_CONTRACT))) failures.push('style.css: wide header contract missing');
   for (const check of REQUIRED_NAV_PATTERNS) {
     if (!check.pattern.test(navSource)) failures.push(`propagate-nav buildNav: missing ${check.id}`);
   }
@@ -187,9 +209,11 @@ function collectFailures({ shellSource, styleSource, perfSource, membershipSourc
 }
 
 function runSelfTest() {
+  const compactHeaderCritical = "@media(min-width:1025px) and (max-width:1450px){.site-header .brand{gap:.45rem}.site-header .brand img{width:36px;height:36px}.site-header .brand>span{font-size:.9rem}.site-header .brand small{font-size:.6rem;letter-spacing:.04em}.site-header .nav{gap:.4rem}.site-header .nav-center a{font-size:.82rem;padding-inline:.25rem}.site-header .nav-right{gap:.35rem}.site-header .nav-signin{padding-inline:.35rem}}";
+  const wideHeaderCritical = WIDE_HEADER_CONTRACT;
   const deskCritical = '.desk-wire{height:36px;overflow:hidden;border-top:1px solid var(--header-border)}.desk-wire__label{flex:0 0 9.5rem;display:inline-flex}.desk-wire__headline{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}@media(max-width:430px){.desk-wire{display:none}}';
   const navRightCritical = '.nav-icon-link{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;color:var(--muted);flex-shrink:0}.nav-signin{color:var(--muted);font-size:.88rem;font-weight:600;padding:.44rem .8rem;border-radius:8px;white-space:nowrap}.nav-right .vs-palette-loader-trigger{flex:0 0 86px}@media(max-width:640px){.nav-right{min-width:139.6px}}@media(min-width:641px) and (max-width:720px){.nav-right{min-width:241.2px}}@media(min-width:721px) and (max-width:1024px){.nav-right{min-width:145.6px}}@media(min-width:1025px){.nav{gap:.6rem}.nav-center{gap:.1rem}.nav-right{gap:.35rem}.nav-center>a,.nav-center>.nav-item>a{padding-inline:.2rem}}@media(min-width:1025px){.site-header .brand small,.site-header .brand .brand-suffix{display:none}}';
-  const goodShell = "const CRITICAL_SHELL_CSS = '@media(max-width:1024px){.nav-center{display:none}.hamburger{display:flex}.nav-right{min-width:0}.nav-right::after{display:none}.nav-right .nav-signin,.nav-right .button.button-sm,.nav-right .nav-icon-link{display:none}}@media(min-width:641px) and (max-width:1024px){.container{padding-left:1.5rem;padding-right:1.5rem}}@media(max-width:768px){.brand small,.brand .brand-suffix{display:none}.brand>span{font-size:.85rem;letter-spacing:-.01em}.brand{gap:.45rem}.brand img{width:32px;height:32px}}.hero-ticker{min-height:44px;display:flex;align-items:center;justify-content:center}.theme-picker{position:relative;flex:0 0 92px;min-width:0}.theme-picker-btn{display:flex;width:100%;min-width:92px}.forge-letter{opacity:1}" + deskCritical + navRightCritical + "';\nconst emitted = `<style data-vs-critical-shell>${RESPONSIVE_CRITICAL_SHELL_CSS}</style>`;";
+  const goodShell = "const CRITICAL_SHELL_CSS = '@media(max-width:1024px){.nav-center{display:none}.hamburger{display:flex}.nav-right{min-width:0}.nav-right::after{display:none}.nav-right .nav-signin,.nav-right .button.button-sm,.nav-right .nav-icon-link{display:none}}@media(min-width:641px) and (max-width:1024px){.container{padding-left:1.5rem;padding-right:1.5rem}}@media(max-width:768px){.brand small,.brand .brand-suffix{display:none}.brand>span{font-size:.85rem;letter-spacing:-.01em}.brand{gap:.45rem}.brand img{width:32px;height:32px}}.hero-ticker{min-height:44px;display:flex;align-items:center;justify-content:center}.theme-picker{position:relative;flex:0 0 92px;min-width:0}.theme-picker-btn{display:flex;width:100%;min-width:92px}.forge-letter{opacity:1}" + deskCritical + navRightCritical + compactHeaderCritical + wideHeaderCritical + "';\nconst emitted = `<style data-vs-critical-shell>${RESPONSIVE_CRITICAL_SHELL_CSS}</style>`;";
   const goodStyle = [
     '.hero-ticker { min-height: 44px; display: flex; align-items: center; justify-content: center; }',
     '.desk-wire { height: 36px; overflow: hidden; }',
@@ -204,12 +228,13 @@ function runSelfTest() {
     '@media (min-width: 721px) and (max-width: 1024px) { .nav-right { min-width: 145.6px; } }',
     '@media (min-width: 1025px) { .nav { gap: 0.6rem; } .nav-center { gap: 0.1rem; } .nav-right { gap: 0.35rem; }\n  .nav-center > a,\n  .nav-center > .nav-item > a { padding-inline: 0.2rem; } }',
     '@media (min-width: 1025px) { .site-header .brand small, .site-header .brand .brand-suffix { display: none; } }',
+    compactHeaderCritical, wideHeaderCritical,
   ].join('\n');
   const goodNav = 'return `<header class="site-header">\n    <div class="container nav"></div>\n    <div class="desk-wire" data-desk-wire>\n      <div class="container desk-wire__inner">\n        <a class="desk-wire__link" href="/news/" data-desk-wire-link>x</a>\n      </div>\n    </div>\n  </header>`;';
   const goodPerf = "const MATRIX_PROFILES = ['tablet:768x1024:dark:2200:250', 'tablet-light:768x1024:light:2400:250']; valueFor('--batch-size'); valueFor('--min-disk-mb');";
   const goodMembership = '<script src="/assets/membership-idle-loader.js" defer></script>';
   const badShell = "const CRITICAL_SHELL_CSS = '.hero-ticker{min-height:0}';";
-  const base = { shellSource: goodShell, styleSource: goodStyle, perfSource: goodPerf, membershipSource: goodMembership, navSource: goodNav };
+  const base = { shellSource: goodShell, styleSource: goodStyle, perfSource: goodPerf, membershipSource: goodMembership, navSource: goodNav, paletteSource: compactHeaderCritical };
 
   const goodFailures = collectFailures(base);
   const badFailures = collectFailures({ ...base, shellSource: badShell });
@@ -259,6 +284,15 @@ function runSelfTest() {
   if (!noCaption.includes('critical-shell: missing desktop-brand-fit') || !noSuffix.includes('critical-shell: missing desktop-brand-fit')) throw new Error('self-test accepted a partial compact brand rule');
   const baseOnlyEmission = collectFailures({ ...base, shellSource: goodShell.replaceAll('${RESPONSIVE_CRITICAL_SHELL_CSS}', '${CRITICAL_SHELL_CSS}') });
   if (!baseOnlyEmission.includes('critical-shell: composed CSS not consumed by every style emission')) throw new Error('self-test accepted base-only HTML style emission');
+  const lateOnlyCompact = collectFailures({ ...base, shellSource: goodShell.replace(compactHeaderCritical, '') });
+  const changedCompactStyle = collectFailures({ ...base, styleSource: goodStyle.replace(compactHeaderCritical, compactHeaderCritical.replace('font-size:.82rem', 'font-size:.9rem')) });
+  const changedPaletteAuthority = collectFailures({ ...base, paletteSource: compactHeaderCritical.replace('font-size:.82rem', 'font-size:.9rem') });
+  if (!lateOnlyCompact.includes('critical-shell: palette header compaction diverges') || !changedCompactStyle.includes('style.css: palette header compaction diverges')) throw new Error('self-test accepted first-paint compaction drift');
+  if (!changedPaletteAuthority.includes('critical-shell: palette header compaction diverges') || !changedPaletteAuthority.includes('style.css: palette header compaction diverges')) throw new Error('self-test ignored changed palette header authority');
+  const noWideShell = collectFailures({ ...base, shellSource: goodShell.replace(wideHeaderCritical, '') });
+  const narrowWideStyle = collectFailures({ ...base, styleSource: goodStyle.replace(wideHeaderCritical, wideHeaderCritical.replace('1360px', '1200px')) });
+  const noWideBrandStyle = collectFailures({ ...base, styleSource: goodStyle.replace(wideHeaderCritical, wideHeaderCritical.replace('display:block', 'display:none')) });
+  if (!noWideShell.includes('critical-shell: wide header contract missing') || !narrowWideStyle.includes('style.css: wide header contract missing') || !noWideBrandStyle.includes('style.css: wide header contract missing')) throw new Error('self-test accepted a missing or narrowed wide header variant');
   // Use producer-shaped fixtures; arbitrary fingerprint-looking URLs must fail.
   const childSource = 'window.interviewFixture = true;\n';
   const loaderSource = "load('/assets/membership-interview.js');\n";
@@ -316,10 +350,11 @@ function main() {
   const perfSource = readFileSync(resolve(ROOT, 'scripts/measure-page-performance.mjs'), 'utf8');
   const membershipSource = readFileSync(resolve(ROOT, 'membership/index.html'), 'utf8');
   const navSource = readFileSync(resolve(ROOT, 'scripts/propagate-nav.mjs'), 'utf8');
+  const paletteSource = readFileSync(resolve(ROOT, 'assets/command-palette-loader.js'), 'utf8');
   let shellManifest = null;
   try { shellManifest = JSON.parse(readFileSync(resolve(ROOT, 'assets/shell-manifest.json'), 'utf8')); } catch { /* alias validation fails closed */ }
   const readAsset = (relative) => readFileSync(resolve(ROOT, relative));
-  const failures = collectFailures({ shellSource, styleSource, perfSource, membershipSource, navSource, shellManifest, readAsset });
+  const failures = collectFailures({ shellSource, styleSource, perfSource, membershipSource, navSource, paletteSource, shellManifest, readAsset });
 
   if (failures.length) {
     console.error('check-critical-shell-geometry failed:');

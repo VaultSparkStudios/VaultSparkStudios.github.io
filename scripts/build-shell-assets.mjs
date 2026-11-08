@@ -252,7 +252,7 @@ const CRITICAL_SHELL_CSS = ':root{--max:1200px;--nav-height:78px;--bg:#07080f;--
 
 const RANK_THEME_CSS = '.site-header .vs-rank-orb-anon::before{border-color:var(--muted,#a8b4d0)}.site-header .vs-rank-orb-anon .vs-rank-orb-num{color:var(--muted,#a8b4d0)}.site-header .vs-rank-orb-tip{background:var(--bg-soft,#0c0e18);color:var(--text,#eef2ff);border-color:var(--header-border)}';
 
-const DESKTOP_BRAND_CSS = '@media(min-width:1025px){.site-header .brand small,.site-header .brand .brand-suffix{display:none}}';
+const DESKTOP_BRAND_CSS = '@media(min-width:1025px){.site-header .brand small,.site-header .brand .brand-suffix{display:none}}@media(min-width:1025px) and (max-width:1450px){.site-header .brand{gap:.45rem}.site-header .brand img{width:36px;height:36px}.site-header .brand>span{font-size:.9rem}.site-header .brand small{font-size:.6rem;letter-spacing:.04em}.site-header .nav{gap:.4rem}.site-header .nav-center a{font-size:.82rem;padding-inline:.25rem}.site-header .nav-right{gap:.35rem}.site-header .nav-signin{padding-inline:.35rem}}@media(min-width:1451px){.site-header .container{width:min(calc(100% - 2rem),1360px)}.site-header .brand small{display:block}.site-header .brand .brand-suffix{display:inline}}';
 
 const RESPONSIVE_CRITICAL_SHELL_CSS = (CRITICAL_SHELL_CSS + RANK_THEME_CSS + DESKTOP_BRAND_CSS)
   .replace('.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0}', '.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0;min-height:44px}')
