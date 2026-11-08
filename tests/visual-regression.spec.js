@@ -167,8 +167,13 @@ for (const vp of VIEWPORTS) {
         });
         await waitForVisualReadiness(page);
         if (vp.name === 'desktop-1280') {
-          await expect(page.locator('.site-header .vs-palette-loader-trigger'))
-            .toBeInViewport({ ratio: 1 });
+          const spark = page.locator('.site-header .vs-palette-loader-trigger');
+          // Member portals deliberately omit public discovery controls.
+          if (surface.name === 'vault-member') {
+            await expect(spark).toHaveCount(0);
+          } else {
+            await expect(spark).toBeInViewport({ ratio: 1 });
+          }
         }
         if (surface.name === 'home') {
           await expect(page.locator('#hero-heading')).toBeVisible();
