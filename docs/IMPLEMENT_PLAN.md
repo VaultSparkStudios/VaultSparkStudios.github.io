@@ -5,6 +5,8 @@ Existing QA source is pushed and static staging verified; full release and the n
 
 ## Outcome 4: private-staging-packaging — depth L2
 
+Status: selected staging acceptance verified on November8. See [measured packaging acceptance](S411_packaging-acceptance-1108.json). Production/account release acceptance remains pending.
+
 Reuse lib/served-surface.mjs in full staging safeManifest; exclude compiled/operator portfolio data in the positive manifest; preserve public discovery and docs/visual-proof. Keep rollback directories private. Add native regressions that fail before the fix and verify denied operational paths after the next deployment.
 
 User outcome: Operational state stays private while the website and advertised discovery remain available.

@@ -6,7 +6,7 @@ const path = require('path');
 // leaves the Games nav and footer, exactly as propagate-nav's deriveGameNav() renders them.
 const hasGamePage = (slug) => fs.existsSync(path.join(__dirname, '..', 'games', slug, 'index.html'));
 
-for (const width of [1280, 1366]) {
+for (const width of [1280, 1366, 1440, 1920]) {
  for (const theme of ['dark', 'light', 'ambient', 'warm', 'cool', 'lava', 'high-contrast']) {
   test(`Desktop header keeps every control inside its container at ${width}px · ${theme}`, async ({ page }) => {
     test.setTimeout(45000);

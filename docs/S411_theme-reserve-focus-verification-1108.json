@@ -1,0 +1,60 @@
+{
+  "observedAt": "2026-11-08T10:51:41.250Z",
+  "scope": "Outcome7 focused source/browser checks; Linux geometry, reviewed baselines, full549 and production/account acceptance remain pending.",
+  "before": {
+    "nativeExit": 1,
+    "failure": "Actual dark-theme button width80.96875 did not fill its92px reservation."
+  },
+  "after": {
+    "nativeExit": 0,
+    "themes": 7,
+    "actualWrapperAndButtonWidth": 92,
+    "fullAccessibleSelectionPreserved": true
+  },
+  "unitSuite": {
+    "nativeExit": 0,
+    "passed": 10
+  },
+  "windowsGeometryAndContrast": {
+    "nativeExit": 0,
+    "geometryPassed": 28,
+    "desktopWidths": [
+      1280,
+      1366,
+      1440,
+      1920
+    ],
+    "themes": 7,
+    "lightContrastPassed": 1
+  },
+  "canonicalBuild": {
+    "nativeExit": 0,
+    "postbuildSteps": 26
+  },
+  "sources": [
+    {
+      "file": "assets/theme-toggle.js",
+      "sha256": "c2c9a3a78cf844976647bbd979d93ef94f69e63fdddda7b5f4d76a1ebd8678ac"
+    },
+    {
+      "file": "tests/theme-toggle.unit.spec.js",
+      "sha256": "fa8aa927587b98f240e3b792de22b75103b14d7c3df918ca6e4fa370889dab06"
+    },
+    {
+      "file": "assets/style.css",
+      "sha256": "095f392a93b5093eb1c0d143e8cf4a4e1427c204eae8c4cac8ba32e8b15df2c0"
+    },
+    {
+      "file": "scripts/build-shell-assets.mjs",
+      "sha256": "8cddce9a0a7de9f85dde39bdcc6cc7b07d82259865f09ac28021aac4d1ad146c"
+    },
+    {
+      "file": "scripts/check-critical-shell-geometry.mjs",
+      "sha256": "c8e61f98fef813c5be81e4102aae36e6dd8a29f01b1a06e8293adfc3be6c2142"
+    },
+    {
+      "file": "tests/navigation.spec.js",
+      "sha256": "910b9db5c92650a423c6f879948fb0884e4a4aed4d202e51f9dced030119f422"
+    }
+  ]
+}
