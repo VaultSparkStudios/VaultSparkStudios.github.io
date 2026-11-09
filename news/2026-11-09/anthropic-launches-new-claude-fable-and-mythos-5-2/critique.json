@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-09T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-11-09/anthropic-launches-new-claude-fable-and-mythos-5-2",
+    "url": "https://vaultsparkstudios.com/news/2026-11-09/anthropic-launches-new-claude-fable-and-mythos-5-2/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-11-09-anthropic-launches-new-claude-fable-and-mythos-5-2-01-b61ee3b82506",
+      "hash": "b61ee3b82506d157410d11f89a684323fdaca9d2c25833e3cf57e43ce6a08a37",
+      "text": "Anthropic is announcing two new models today: Claude Fable 5.2 and Claude Mythos 5.2, which it says are designed to take on \"daunting\" technical challenges.",
+      "sourceUrl": "https://www.theverge.com/ai-artificial-intelligence/1030005/anthropic-claude-fable-mythos-5-2",
+      "sourceHost": "theverge.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-11-09/anthropic-launches-new-claude-fable-and-mythos-5-2/#fact-2026-11-09-anthropic-launches-new-claude-fable-and-mythos-5-2-01-b61ee3b82506"
+    },
+    {
+      "id": "fact-2026-11-09-anthropic-launches-new-claude-fable-and-mythos-5-2-02-9fff4abdeade",
+      "hash": "9fff4abdeade7484d1c793fa5d0a522d03ba1d3867286fa4735da780829aee85",
+      "text": "The company claims the new models show improvements in coding, reasoning, and vision, and can generate outputs faster than the 5.1 versions of the Fable and Mythos models.",
+      "sourceUrl": "https://www.theverge.com/ai-artificial-intelligence/1030005/anthropic-claude-fable-mythos-5-2",
+      "sourceHost": "theverge.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-11-09/anthropic-launches-new-claude-fable-and-mythos-5-2/#fact-2026-11-09-anthropic-launches-new-claude-fable-and-mythos-5-2-02-9fff4abdeade"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "rex:fair",
+      "persona": "rex",
+      "text": "The claim of faster generation and better reasoning on daunting challenges suggests a usable edge for developers handling complex code or multi-step logic tasks right now.",
+      "confidence": 0.75,
+      "verdict": "fair",
+      "direction": 0,
+      "factRefs": [
+        "fact-2026-11-09-anthropic-launches-new-claude-fable-and-mythos-5-2-01-b61ee3b82506",
+        "fact-2026-11-09-anthropic-launches-new-claude-fable-and-mythos-5-2-02-9fff4abdeade"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "dot:underhyped",
+      "persona": "dot",
+      "text": "Speed improvements are only valuable if the compute cost per token drops proportionally; otherwise, you just pay more for slightly quicker answers to harder questions.",
+      "confidence": 0.85,
+      "verdict": "underhyped",
+      "direction": -1,
+      "factRefs": [
+        "fact-2026-11-09-anthropic-launches-new-claude-fable-and-mythos-5-2-01-b61ee3b82506",
+        "fact-2026-11-09-anthropic-launches-new-claude-fable-and-mythos-5-2-02-9fff4abdeade"
+      ],
+      "evidenceStatus": "linked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-11-09--anthropic-launches-new-claude-fable-and-mythos-5-2.png",
+    "artSha256": "6cb08f088c4e8b6361a36d844aad85af07029e3a335a041b09c3ab3ffc76b3b3",
+    "pageSha256": "60bf24ff95d5bc2095367518811ad359602b164b486855d229f8b6b8941bac63",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": false,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)"
+    },
+    "sceneFingerprint": "c3b577ab3f651cdacc818cffdad85d55bb966d0174b156acf10a6113c6ece51a",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}
