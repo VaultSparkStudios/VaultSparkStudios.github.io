@@ -35,6 +35,11 @@
 ║  Deploy:   S411 release pending                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
+╔══ CONTEXT METER ═══════════════════════════════════════════════╗
+║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
+║     no session lock — agent identity unavailable, so there is…   ║
+║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
+╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ⚠  Tests         Source UNVERIFIED: 552/552 steps (changed…     ║

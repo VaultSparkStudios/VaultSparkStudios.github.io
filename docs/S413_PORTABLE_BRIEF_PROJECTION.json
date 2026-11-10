@@ -4,7 +4,7 @@
   "scope": "public-safe projection of actual generated raw artifact; private copied native validator proof only",
   "rawArtifactSha256": "fd2188caa202ce42b1c783e2d02561423e8ae016494e64a4b4fc286b5f5bfb69",
   "rawReceiptSha256": "496ce56b8dde4bcf9eb2273ad8adee8cb002937030c9b6df719c051809e82d84",
-  "proposedSha256": "0720cffdae701582ed995f1b940b267f9d7bfcb9be9c55471c80131d9ec023cb",
+  "proposedSha256": "967e3366b869f935653c0a02f471b66acfd5e8b3bd0f41c427138807cf47bdde",
   "preservedMarkerLines": [
     "<!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->",
     "<!-- generated-at: 2026-11-10 (last closed Session 411; active/next Session 412) -->",
@@ -40,13 +40,6 @@
       "reason": "Retain actual historical score and required actual active/closeout age row; omit category/velocity telemetry",
       "preimageSha256": "e774698b30d98c5ccb5b9417c3f556447782f3ea0f777df551f15f5420ab9233",
       "outputSha256": "b60546077e7fbc1c03d8a36283ba0850262cd10829f4600d24fe5ee696231d89"
-    },
-    {
-      "kind": "omit-box",
-      "header": "╔══ CONTEXT METER ═══════════════════════════════════════════════╗",
-      "reason": "Omit optional operator, testing-destination, cross-portfolio or forecast panel",
-      "preimageSha256": "5936da1ea8b10a8d5b9ad1e56a58bf86ab6764118260f1adaeeb7afe147adb19",
-      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "kind": "retain-selected-existing-rows",
@@ -98,13 +91,15 @@
       "name": "format",
       "nativeExit": 0,
       "errorCode": null,
-      "stdoutSha256": "799ff7a2500a11026f8214087f267440af3e10f8d6d4cc2cc14a7ce5c9db76b2",
+      "sourceSha256": "7b307a34717ae0801ecededa0595ae3c54d06a20e2e98eeb168096bda00596e4",
+      "stdoutSha256": "8ce8039b8bbf2bd5fd3271235e2ca5ce5f00efbb02989ec45f9a9ef172a8dbf8",
       "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "coherence",
       "nativeExit": 0,
       "errorCode": null,
+      "sourceSha256": "a1d22c223f25f98ad6e5cba007650414fe4feb09ccd4e4c77ac10a269b9b1d72",
       "stdoutSha256": "3cca194e7e10b2c094383b3f3920c5b7cca4f0c4adcd77d6eab98ff20af37622",
       "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -112,7 +107,16 @@
       "name": "freshness",
       "nativeExit": 0,
       "errorCode": null,
-      "stdoutSha256": "b2de64e133d2d821c43c6feaed91e56d2898d190e9c389302c6cbfe9e4f291dd",
+      "sourceSha256": "7a247d963bfdc9c45569ef723efe51876a7d928de914cb12ea9b444fba3e4a6a",
+      "stdoutSha256": "d60c201ad50948d9cc07e873752a1c44a90c602600baa2eee3421839efa98915",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "budget",
+      "nativeExit": 0,
+      "errorCode": null,
+      "sourceSha256": "e43092b59adac951e3f5c5d5d0a23296c3d8d691bf231d5ce5ace85bde0cce95",
+      "stdoutSha256": "3781b65e6f48f35003ac08502261e3677db14acbaf32ed799410563fe9ce231e",
       "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
   ],
@@ -124,10 +128,10 @@
   "published": false,
   "finalCandidateCi": false,
   "nativeGoalContinues": 413,
-  "previousProjectionSha256": "c51675b68d18ee473372152a49d576494f294e913b1de6f4fd18f9e41ab2bc3b",
-  "previousProjectionReceiptSha256": "7c81acede8e121170bfbe7ce07add2cbde047df4a7370ca1c7ff1cfc0d941de5",
+  "previousProjectionSha256": "0720cffdae701582ed995f1b940b267f9d7bfcb9be9c55471c80131d9ec023cb",
+  "previousProjectionReceiptSha256": "e5bfdf8a1f6b071a7029912420a400e3461f22f03758b6120a00d5a6d0198c12",
   "publicReceiptFile": "docs/S413_PORTABLE_BRIEF_PROJECTION.json",
-  "revisionReason": "Restore exact actual raw active/closeout age row required by broader startup smoke contract; no checker/source change",
+  "revisionReason": "Restore entire exact raw UNMEASURED context-meter block required by actual full-plan step83; inventory all current brief consumers without changing source/checks",
   "fullSmokeAcceptance": false,
   "exactNextCandidateCiRequired": true,
   "activeAgeContract": {
@@ -156,5 +160,88 @@
         }
       ]
     }
+  },
+  "contextMeterContract": {
+    "scope": "Unmodified extracted meter pure predicates against real artifact bytes and explicitly synthetic recommendation scenarios; not full step83 or live meter observation",
+    "sourceCommit": "8dc63c922c4387ed7d7c4bc8fa84774e44814a9c",
+    "sourceFile": "scripts/check-startup-meter-freshness.mjs",
+    "sourceSha256": "ab83a1e377506b0426bf83965fa7d74ebcae279121dc6b9d99357e1413cd4961",
+    "predicateSha256": "2d9bfb9f4b5f98017ca417a0ebd94b77975f06750c6eff9f0273db9cfe340e65",
+    "extractionWrapper": "Only ESM export declaration keywords removed for VM evaluation; predicate bodies unchanged",
+    "priorMissingVerdict": {
+      "ok": false,
+      "findings": [
+        "STARTUP_BRIEF context-meter verdict missing"
+      ]
+    },
+    "restoredParsedMeter": {
+      "verdict": "UNMEASURED",
+      "confidence": null,
+      "agent": null,
+      "usedTokens": null,
+      "limit": null,
+      "pctUsed": null
+    },
+    "positiveScenarioResults": [
+      {
+        "scenario": "synthetic-UNMEASURED",
+        "ok": true,
+        "findings": []
+      },
+      {
+        "scenario": "synthetic-CONTINUE",
+        "ok": true,
+        "findings": []
+      },
+      {
+        "scenario": "synthetic-WARN_COMPACT_SOON",
+        "ok": true,
+        "findings": []
+      },
+      {
+        "scenario": "synthetic-CONSIDER_CLOSEOUT",
+        "ok": true,
+        "findings": []
+      },
+      {
+        "scenario": "synthetic-CLOSEOUT",
+        "ok": true,
+        "findings": []
+      }
+    ],
+    "urgentCounterexample": {
+      "ok": false,
+      "findings": [
+        "STARTUP_BRIEF says CLOSEOUT but live meter says CONTINUE"
+      ]
+    },
+    "liveMeasurementClaimed": false,
+    "fullMeterCheckAccepted": false
+  },
+  "consumerContractInventory": {
+    "sourceCommit": "8dc63c922c4387ed7d7c4bc8fa84774e44814a9c",
+    "documentSha256": "f1a4329ae1e84f4b9090a2ac5b2b93b9b2b5e2d8d16c81eda7b9be962ad70ccb",
+    "sourcePlanSha256": "bf7a8a0d2fce37b290b473cdd3140ab3324e846e8b4f14085a4c5822f22194b9",
+    "consumerSourceHashes": {
+      "scripts/validate-brief-format.mjs": "7b307a34717ae0801ecededa0595ae3c54d06a20e2e98eeb168096bda00596e4",
+      "scripts/check-startup-session-coherence.mjs": "a1d22c223f25f98ad6e5cba007650414fe4feb09ccd4e4c77ac10a269b9b1d72",
+      "scripts/check-brief-staleness.mjs": "7a247d963bfdc9c45569ef723efe51876a7d928de914cb12ea9b444fba3e4a6a",
+      "scripts/check-startup-context-budget.mjs": "e43092b59adac951e3f5c5d5d0a23296c3d8d691bf231d5ce5ace85bde0cce95",
+      "scripts/check-startup-meter-freshness.mjs": "ab83a1e377506b0426bf83965fa7d74ebcae279121dc6b9d99357e1413cd4961",
+      "scripts/smoke-startup-scripts.mjs": "20e45602e2802c539ed8b726e44d844eb6dc9653d9107731c9ef2bbd1a3f95bc"
+    }
+  },
+  "restoredRawContextMeter": {
+    "sha256": "5936da1ea8b10a8d5b9ad1e56a58bf86ab6764118260f1adaeeb7afe147adb19",
+    "bytes": 645,
+    "restoredVerbatim": true,
+    "position": "before existing SIGNALS box",
+    "manufacturedUsage": false
+  },
+  "fullMeterCheckAcceptance": false,
+  "exactRawProjectionReconstruction": true,
+  "whitespaceCorrection": {
+    "priorAttemptPreserved": "revisions/before-meter-whitespace-correction/",
+    "removedOnlyExtraBlankLineBeforeMeter": true
   }
 }
