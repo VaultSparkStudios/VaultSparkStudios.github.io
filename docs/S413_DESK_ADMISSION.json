@@ -1,0 +1,84 @@
+{
+  "observedAt": "2026-11-10T02:07:43.500Z",
+  "strict": {
+    "nativeExit": 0,
+    "output": {
+      "audit": "AUDIT_2026-11-09-S413-desk.json",
+      "selectionMode": "explicit",
+      "selectionReason": "--audit docs/AUDIT_2026-11-09-S413-desk.json",
+      "session": null,
+      "doctorProvenance": null,
+      "total": 3,
+      "verified": 3,
+      "contradicted": 0,
+      "resolvedContradicted": 0,
+      "openContradicted": 0,
+      "shippedAbsencePersists": [],
+      "unverified": 0,
+      "volatile": 0,
+      "volatilePremises": [],
+      "unverifiableRate": 0,
+      "unverifiable": false,
+      "trustworthy": true,
+      "contradictions": [],
+      "openContradictions": [],
+      "directoryTargets": [],
+      "claimScopeMismatches": [],
+      "unresolvedCause": null,
+      "results": [
+        {
+          "itemId": 5,
+          "slug": "desk-images-before-email",
+          "status": "verified",
+          "claim": "The actual digest uses liveness-only image probes.",
+          "actual": true,
+          "expected": true,
+          "reason": "evidence supports the claim (true eq true)"
+        },
+        {
+          "itemId": 5,
+          "slug": "desk-images-before-email",
+          "status": "verified",
+          "claim": "The actual digest omits missing image URLs instead of holding the send.",
+          "actual": true,
+          "expected": true,
+          "reason": "evidence supports the claim (true eq true)"
+        },
+        {
+          "itemId": 5,
+          "slug": "desk-images-before-email",
+          "status": "verified",
+          "claim": "The actual art review loop does not constrain pending items to explicit generation scope.",
+          "actual": true,
+          "expected": true,
+          "reason": "evidence supports the claim (true eq true)"
+        }
+      ]
+    }
+  },
+  "rehearsal": {
+    "nativeExit": 0,
+    "output": {
+      "ok": true,
+      "errors": []
+    }
+  },
+  "admission": {
+    "nativeExit": 0,
+    "output": {
+      "ok": true,
+      "errors": []
+    }
+  },
+  "selectedSourcePreimages": [
+    {
+      "file": "scripts/build-desk-dispatch-digest.mjs",
+      "sha256": "ba981be5641f9f9f117e60190f0363f9ffc6344a00fbddef2d9233b25c5221e5"
+    },
+    {
+      "file": "scripts/desk-art-autopilot.mjs",
+      "sha256": "b6412b799df897749358679f9473ed8a909d1250481b4c34704f6ec809f404ff"
+    }
+  ],
+  "scope": "Selected pending Desk amendment admission only. The entire five-outcome arc remains in AUDIT_2026-11-09.json; original repaired-source admissions and pending release outcomes are preserved."
+}

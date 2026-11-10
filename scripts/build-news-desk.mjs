@@ -20,7 +20,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { renderEditorialOverlaySvg, EDITORIAL_PANEL_ENCODINGS, EDITORIAL_PANEL_BUDGETS, storyMemeOverlayOptions, SATIRE_CARTOON_BUDGETS, SATIRE_CARTOON_DERIVATIVES, SATIRE_CARTOON_STYLES, satireCartoonAssetBase, satireCartoonBrief } from './lib/news-memes.mjs';
-import { renderSatireDerivatives } from './lib/news-satire-raster.mjs';
+import { renderArticleArt } from './lib/desk-article-art.mjs';
 import { loadPublishTimeLedger, resolveStoryTime } from './lib/news-publish-time.mjs';
 import {
   PERSONAS,
@@ -325,8 +325,7 @@ async function rasterizeSatireCartoons(day, { refreshArt = false, refreshSatireO
     const refresh = refreshArt === true || Boolean(refreshSatireOnly?.has(`${day.date}/${story.slug}`));
     if (artworkWritePlan(outputs, { refreshArt: refresh }).length === 0) continue;
     fs.mkdirSync(outDir, { recursive: true });
-    const derivatives = await renderSatireDerivatives(path.resolve(ROOT, cartoon.artSource));
-    for (const [suffix, buffer] of Object.entries(derivatives)) fs.writeFileSync(`${base}${suffix}`, buffer);
+    await renderArticleArt(ROOT, day, story, 'satire');
     count += 1;
   }
   return count;
@@ -474,6 +473,7 @@ async function rasterizeMemes(day, { refreshArt = false, refreshArtOnly = null }
   fs.mkdirSync(outDir, { recursive: true });
   let count = 0;
   for (const story of day.stories) {
+    if (storyArtRefresh(day, story, { refreshArt, refreshArtOnly })) continue;
     const persona = PERSONAS.find((p) => p.id === story.memeLine?.personaId);
     if (!persona || !story.memeLine?.text) continue;
     const overlay = renderEditorialOverlaySvg(storyMemeOverlayOptions({ date: day.date, text: story.memeLine.text, persona }));
@@ -505,6 +505,11 @@ async function rasterizeCards(day, { refreshArt = false, refreshArtOnly = null }
   fs.mkdirSync(outDir, { recursive: true });
   let count = 0;
   for (const story of day.stories) {
+    if (storyArtRefresh(day, story, { refreshArt, refreshArtOnly })) {
+      // Capture provenance only at actual scoped encoding; legacy bytes remain
+      // immutable and cannot gain provenance through a routine rebuild.
+      await renderArticleArt(ROOT, day, story, 'banner');count += 1;continue;
+    }
     const output = path.join(outDir, `${day.date}--${story.slug}.png`);
     if (artworkWritePlan([output], { refreshArt: storyArtRefresh(day, story, { refreshArt, refreshArtOnly }) }).length === 0) continue;
     const persona = PERSONAS.find((p) => p.id === story.memeLine?.personaId);
@@ -633,9 +638,12 @@ async function rebuild({ refreshArt = false, refreshArtOnly = null, refreshSatir
   // responsive derivatives before buildCarouselFromDisk verifies their
   // existence and byte budgets; checking first deadlocked every new article.
   let cardCount = 0;
-  for (const day of days) cardCount += await rasterizeCards(day, { refreshArt, refreshArtOnly });
-  for (const day of days) cardCount += await rasterizeMemes(day, { refreshArt, refreshArtOnly });
-  for (const day of days) cardCount += await rasterizeSatireCartoons(day, { refreshArt, refreshSatireOnly });
+  const scopedDays = (ids, otherKindIds) => !ids && !otherKindIds ? days : days.map(day => ({ ...day,
+    stories: day.stories.filter(story => ids?.has(`${day.date}/${story.slug}`)),
+  })).filter(day => day.stories.length);
+  for (const day of scopedDays(refreshArtOnly, refreshSatireOnly)) cardCount += await rasterizeCards(day, { refreshArt, refreshArtOnly });
+  for (const day of scopedDays(refreshArtOnly, refreshSatireOnly)) cardCount += await rasterizeMemes(day, { refreshArt, refreshArtOnly });
+  for (const day of scopedDays(refreshSatireOnly, refreshArtOnly)) cardCount += await rasterizeSatireCartoons(day, { refreshArt, refreshSatireOnly });
   cardCount += await rasterizeDispatchCard({ refreshArt });
   cardCount += await rasterizeDirectorsCard({ refreshArt });
 

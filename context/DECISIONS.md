@@ -1288,3 +1288,18 @@ Recorded 2026-11-08T16:21:51.638Z. The fresh S412 audit and implementation are b
 The exact image-artifact decision and three Linux reference reviews/comparisons remain pending. Isolated account staging still needs actual registered target/intake and artifact trust; no member or approved-investor journey is claimed. Existing push/deployment authorization persists. Main, production, full closeout and native completion remain pending. Prior939 is historical; no new score or release credit is awarded.
 
 Keep membership threshold reconciliation deferred: conflicting display consumers are recorded, but this selection changes no tier policy. Retain the CANON-045 STRONG isolation gap as a release hold; no owner-signature gate is invented. Oracle arrival code stays unchanged because six controlled actual-response cases did not reproduce a wrong arrival. Broader timing remains nonpassing for generated admission/startup artifacts; exact selected preimages and the new-scope caveat are preserved separately.
+<!-- S413-exact-artifact-exceptions -->
+## D-S413.1 — Exact artifact exceptions for release acceptance
+
+The founder approved the exact PNG-only exception for first-party CI artifact 13622863757 from run 42494683475, SHA-256 `f7dfdcc10cc2f119785c71c02dc683d5126bbf51bf707907faf840e6ad55a65e`. Verify the archive identity/digest before extracting only safe PNG entries. Only the three selected Linux references may change after direct review and unchanged native comparison; no other archive content is executable or approved.
+
+The founder approved a bounded isolated synthetic-data staging run, subject to its retained artifact, isolation, ownership and rollback conditions. No downloads, new spending or production-data use are included. This is neither a general artifact-trust override nor completed account acceptance. Exact operational conditions remain preserved in private evidence.
+
+## D-S413.2 — Prepare Desk article imagery before email delivery
+
+The founder requests a way to generate The Desk article images before marketing or subscriber emails are sent. Extend this arc with an existing-pipeline image-preparation workflow and verified send ordering. This request does not itself send emails, introduce unapproved provider spending or alter membership policy.
+
+## D-S413.3 — Scope isolated fixture policy closure to selected journeys
+
+The synthetic isolated fixture is limited to the selected member/investor journeys. Team-management parity is outside this fixture; the original selection and scope decision remain preserved in private evidence. Production schema, data and policy remain unchanged. Actual access/security acceptance is required before exposure; this scope decision does not establish it.
+

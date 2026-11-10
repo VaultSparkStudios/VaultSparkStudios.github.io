@@ -1,3 +1,21 @@
+<!-- S413-continuation-image-preparation -->
+## S413 continuation — pre-projection source checked; release remains open
+
+Continue the active S413 session; automatic continuation does not begin another arc. This invocation's fresh audit and selected implementation are recorded in docs/AUDIT_2026-11-09.json and docs/IMPLEMENT_PLAN.md. Earlier sessions and failed observations remain historical evidence, not acceptance for this candidate.
+
+Oracle response completion and active-versus-closed startup identity repairs have focused local checks and independent review. Desk image preparation now provides a readiness preview and separate generation/live-verification actions; actual Dispatch send and test paths hold the whole issue until required art verifies. See docs/DESK_ART_WORKER.md and docs/S413_IMPLEMENTATION_CHECKPOINT.md. The combined focused run passed 72 tests. No image generation or email send occurred during this work.
+
+Exactly three approved Linux visual references were reviewed and updated; unchanged native comparison remains required. Isolated staging prerequisites have been prepared and checked. This does not prove affected member/investor journeys, access-policy acceptance or production parity. Security-flow changes and data-route exposure remain held pending the required explicit decision and verified access boundaries. No production target changed.
+
+The uninterrupted pre-publication-projection worktree check passed all 552 steps from step 1 with native exit 0; the current diagnostics validator also passed. docs/S413_SOURCE_CHECKPOINT.json binds receipt 84739352eb8c6960c779f3cb and source fingerprint a6d96584879fbb425e369561 to docs/S413_source-check-receipt.json. This proves the captured intermediate worktree before these public-documentation projections. It does not prove the final publication candidate, exact-candidate CI, staging/account acceptance, deployment or closeout. Final public-candidate verification remains open after projections and final source freeze. Earlier partial runs and failed observations remain distinct historical evidence.
+
+Owner: the Website implementation/release owner maintains source and final release evidence; integration owners supply their required acceptance. Dependencies: explicit security-flow decision, isolated account/access checks, unchanged native visual comparisons, exact-candidate required workflows, current staging configuration/parity and recoverable rollback. Acceptance: all applicable evidence must identify the final candidate before the already authorized main/production promotion, served readback and full closeout. Prior SIL 939 is historical; no new score, full closeout or completed-arc claim is made.
+
+<!-- S413-active-native-arc -->
+## S413 — current work and acceptance boundary
+
+The current outcome is locally checked Oracle/startup behavior and Desk image-before-email tooling. Artifacts and owners are named above. Continue this S413 work; preserve previous evidence and keep the remaining release requirements open. No new spending, production-data staging, membership-policy change or general artifact-trust override is authorized by this summary.
+
 <!-- S412-recovery-boundary-for-new-native-goal -->
 ## S412 partial recovery; new invocation requires a fresh arc
 

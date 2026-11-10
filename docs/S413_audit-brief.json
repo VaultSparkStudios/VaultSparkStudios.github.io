@@ -1,0 +1,50 @@
+{
+  "kind": "audit",
+  "session": 413,
+  "date": "2026-11-09",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Repair response truth and finish the pending website release",
+  "items": [
+    {
+      "id": 1,
+      "slug": "oracle-stream-completion",
+      "title": "Handle empty, truncated and JSON Oracle responses honestly",
+      "axis": "ai-intelligence",
+      "leftScore": 8,
+      "rightScore": 4,
+      "insight": "Parse cached JSON replies directly and require nonempty SSE text with the service completion tail. Keep the existing fallback and request policy while verifying success and failure without provider calls. Do not count empty output as a successful answer.",
+      "evidence": "docs/S413_audit-findings.json; fresh source review."
+    },
+    {
+      "id": 2,
+      "slug": "startup-session-identity",
+      "title": "Separate active arc identity from last closed session in startup",
+      "axis": "observability-honesty",
+      "leftScore": 7,
+      "rightScore": 3,
+      "insight": "Show the active arc separately from the last completed session using the existing identity helper. Preserve ahead-of-SIL state and verify active, absent and stale locks. Regenerate and validate the actual startup brief.",
+      "evidence": "docs/S413_audit-findings.json; fresh source review."
+    },
+    {
+      "id": 3,
+      "slug": "review-three-linux-references",
+      "title": "Review and correct three proven stale Linux reference cells",
+      "axis": "ui-ux-feedback",
+      "leftScore": 8,
+      "rightScore": 2,
+      "insight": "Inspect only the three selected original Linux reference cells after the exact artifact trust decision. Preserve old images and failures, and require unchanged native comparison to pass. Generation or transport alone is not acceptance.",
+      "evidence": "docs/S413_audit-findings.json; fresh source review."
+    },
+    {
+      "id": 4,
+      "slug": "isolated-release-acceptance",
+      "title": "Complete isolated account acceptance and authorized release promotion",
+      "axis": "features-depth",
+      "leftScore": 10,
+      "rightScore": 1,
+      "insight": "Finish actual isolated staging and affected account journeys before production promotion. Verify exact candidate checks, current staging, rollback and served readback under existing deployment authorization. Unresolved trust and registration prerequisites remain pending.",
+      "evidence": "docs/S413_audit-findings.json; fresh source review."
+    }
+  ]
+}

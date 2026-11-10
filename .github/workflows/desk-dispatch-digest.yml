@@ -89,6 +89,7 @@ jobs:
             sent)                echo "::notice::Desk Dispatch sent to Brevo list 3." ;;
             already-sent)        echo "::notice::Nothing sent: today's Desk Dispatch was already dispatched." ;;
             held)                echo "Nothing sent: auto-send is held awaiting founder test approval (D-S368.6)." ;;
+            held-art)            echo "::warning::Nothing sent: reviewed article images are pending or their production bytes could not be verified. Run the Desk email image preparation command." ;;
             skipped-no-editions) echo "Nothing sent: The Desk published no editions for this day." ;;
             not-live)            echo "Nothing sent: none of the day's stories is live on production yet." ;;
             dry-run)             echo "Dry run: rendered only, nothing sent." ;;

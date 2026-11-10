@@ -1,3 +1,20 @@
+<!-- S413-active-waves -->
+
+## S413 selected outcomes and acceptance
+
+- [x] Fresh startup, nine-axis audit and selected source admission.
+- [x] Oracle completion handling and active/closed startup identity repairs, locally verified.
+- [x] Desk image preparation before email and whole-issue art hold, locally verified; actual generation/send not run.
+- [x] Approved PNG artifact review; exactly three reference updates. Unchanged native comparison remains open.
+- [x] Isolated staging prerequisites prepared and locally checked; affected account/security acceptance remains open.
+- [x] Backend compatibility and isolated fixture prerequisites checked; no account-journey, public data-route or production acceptance claimed.
+- [x] Intermediate pre-publication-projection source verification: uninterrupted 552/552 from step 1, native exit 0; docs/S413_SOURCE_CHECKPOINT.json.
+- [ ] Verify the final publication candidate after public-documentation projections and final source freeze; intermediate worktree proof does not cover those changes.
+- [ ] Complete isolated access/security acceptance and affected member/investor journeys before data-route exposure.
+- [ ] Obtain the required explicit security-flow decision before applying changes; verify installed access boundaries before data-route exposure.
+- [ ] Exact candidate native visual/required CI, current staging parity and rollback.
+- [ ] Authorized main/production promotion, served readback and full closeout.
+
 <!-- S412-active-waves -->
 S412: startup and audit verified; two code repairs verified locally; reference/account acceptance and closeout pending. Deployment authorization persists.
 
@@ -44,11 +61,6 @@ Future unselected followups:
 - [ ] [S411][SIL] Review discussion intent coverage after a reproduced missing state.
 
 <!-- S410-local-runtime-acceptance -->
-## S410 current local runtime acceptance
-
-Native full build/postbuild passed. The actual215-case mobile audit passed at2026-11-04T05:21:19.019Z; owned preview closed. Visual406 is current:392 original primary frames retained,14 fresh full-Desk after frames and14 historical before frames directly inspected. Source/candidate/PNG hashes passed native validation. See docs/S410_mobile-acceptance.json and docs/RELEASE_S410.json. Complete source549, current staging, exact hosted/account checks and authorized publication/production/readback remain pending; these local results do not prove real private-role access.
-
-<!-- S410-closeout-writeback -->
 ## S410 selected outcomes and release ownership
 
 - [x] reaction-fixture-order L2 locally verified.
@@ -62,20 +74,6 @@ Future unselected commitments:
 - [ ] [S410][SIL] Consider an inherited-WIP timing baseline only after owner-scoped proof design; preserve current strict checker and its native verdict.
 
 <!-- S410-implementation-verified -->
-## S410 selected implementation verified locally
-
-All three selected L2 repairs pass local acceptance and independent review: deterministic reaction fixture, guarded bounded Windows fixture cleanup, and current-source/release truth in the startup brief. Browser17/17 and native evidence-kernel cases pass; actual brief reads128/549 failed partial source and S409 release pending. Full source is not yet accepted.
-
-Wave1 fresh startup/audit complete. Wave2 three scoped implementations locally verified. Wave3 combined source/current staging/hosted/account verification pending. Wave4 authorized main publication/production/readback/full closeout pending. Source: docs/AUDIT_2026-11-04.json; acceptance: docs/S410_implementation.json. Native timing checker still flags inherited dirty files; selected targets were clean at the recorded gate and all three premises replay against its start-head blobs. No native timing pass is claimed.
-
-<!-- S410-arc-current -->
-## Session 410 — fresh arc in progress
-
-Session Intent: complete the fresh S410 startup, audit, three selected L2 verification repairs, and authorized combined main publication/deployment once applicable acceptance passes. Native goal01a1a424-fcbc-7f91-9461-d697bb287c76, created1793755268, is bound to S410; recovery checkpoint e6535f0b76 is separate.
-
-Wave1 startup/audit complete: docs/AUDIT_2026-11-04.json; three premises and candidate admission pass. Wave2 implementation in progress. Wave3 source/staging/hosted/account acceptance and Wave4 authorized release/closeout pending. Prior S409 failed source and positive-account dependency remain explicit. No production/main completion claim.
-
-<!-- S409-partial-recovery-2026-11-04 -->
 ## S409 recovery disposition
 
 - [x] Bounded staging packaging timeout repaired; browser-heavy source batch serialized without dropping files. Dated homepage generators repaired with actual rendered review.
@@ -401,7 +399,6 @@ Completed rows: context/archive/TASK_BOARD_ARCHIVE.md (S399 rotation).
 
 Completed single-line rows are preserved verbatim in [TASK_BOARD_ARCHIVE.md](archive/TASK_BOARD_ARCHIVE.md) (S410 startup-budget repair).
 
-
 - [x] **[SIL][S363][GATES/P2]** Make `build:check` idempotent over `ignis/output/ecosystem-state.json` — **DONE S365.** The standalone runner now sanitizes the gitignored Oracle export before freezing and fingerprinting the tree, so a prior generator cannot strand step 81 on a rerun. This repaired a real closeout gate failure.
 - [ ] **[SIL][S363][PROTOCOL/P1]** Refuse an inbound propagation that removes an exported symbol this repo's own code imports. S363 merged back eight such symbols (D-S363.4), and S316 had already restored one of them and shipped cargo upstream so the next drain would carry it — it did not. Upstream cargo alone does not hold, so the recipient needs its own check: diff exported symbols pre/post drain and fail the drain, not the next build. Seven of the eight failed loudly as named imports; the eighth degraded silently and was caught only by a contract test, so detection is currently partly luck.
 - [ ] **[SIL][S363][PROTOCOL/P2]** Reconcile the four propagated checkers that encode studio-ops' own layout (D-S363.5, D-S363.7, D-S363.8, D-S363.9): `check-windows-hide` scan roots, the wipe guard's status-row format and archive naming, and `arc-profile.mjs` resolving `PROJECT_REGISTRY` to a path that exists only inside studio-ops. Each produced a false failure or a false inference that no local change could fix. Ark cargo `01K30UDB1264A040FE519B8D8B` carries the upstream ask; this item tracks whether the next drain actually lands it.
@@ -456,8 +453,6 @@ Completed single-line rows are preserved verbatim in [TASK_BOARD_ARCHIVE.md](arc
 
 - [ ] **[S351][CI/P1] The `[skip ci]` publishers still do not cascade their derived artifacts.** `b67c283d1 feat(desk): publish the latenight edition [skip ci]` added news pages plus art and changed `index.html` at 22:20Z, then skipped CI — leaving the sitemap stale, five images missing from `data/lqip-map.json`, the mobile receipt bound to a superseded `index.html`, and the startup brief disagreeing with the shared revenue resolver. S351 ran that cascade BY HAND (lqip-map, sitemap, news-freshness, home-desk-module, oracle feed sanitizer, oracle answers, candidate manifest, plus a 215-cell mobile re-capture) and the repo was green afterwards. The debt is structural, not one bad commit: any publisher that takes `[skip ci]` must either run its own cascade or hand the work to a follow-up workflow. Until it does, every session that follows a publisher pays this tax. **S352:** the sitemap strand is closed structurally (graph node `sitemap <- news/`, 4 publishers fixed); the general class stays open, see the [SIL] row.
 
-
-
 - [ ] **[S349→S351][OBS/P1] Enable the edge uptime sampler — BLOCKED ON A CRON SLOT, and now precisely.** S351 cleared the S350 hold (the KV namespace created on the first attempt: `production-UPTIME_SAMPLES` = `adfe5ed60c90426ea1286321360138e3`) and deployed the Worker with the binding LIVE in production. The cron was then REFUSED: Cloudflare error 10072 — Workers Free caps the account at 5 cron triggers and all five belong to other projects (seamline `*/5`, studio-ops-cron `*/30`, veilos hourly, velaxis-proxy ×2). No cron = no invoker = `scheduled()` never runs, so the flag is back to `"0"` and the cron is commented out; left declared it fails EVERY future Worker deploy at the trigger step, because wrangler does not roll back the successful part. **Remaining work is two lines** once a founder picks (a) free a slot by retiring one of the five — a live change to a different project, not this repo's call — or (b) Workers Paid, which is billing and founder-reserved under CANON-019.
 - [ ] **[S349][OBS/P2] Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewriting them.** They are published as `unresolvedLegacyChecks` because a challenge and a real edge outage leave an identical footprint once the shape is gone, so they cannot now be told apart. Once the edge sampler has produced a full 31-day window, the retained history ages them out naturally and the public number becomes fully classifier-current. Do NOT re-score them to improve the figure.
 - [x] **[S349][PERF/P2] Hidden-tab polling.** SHIPPED S350: favicon-pulse and vault-pulse skip poll/rotation while `document.hidden`; all three refresh on return. desk-presence already skipped its network call (premise half-false).
@@ -468,57 +463,13 @@ Completed single-line rows are preserved verbatim in [TASK_BOARD_ARCHIVE.md](arc
 - [x] **[S349][COST/P1] Uptime sampler enabling release — DONE S351.** Superseded by the OBS/P1 row above. The namespace exists, the binding and cron are declared, the flag is `"1"`, and `drain-uptime-kv.mjs` now resolves the namespace id from `cloudflare/wrangler.toml` instead of an env var nothing set — without that it would have printed "the sampler has not been enabled yet" and exited 0 while draining nothing, reporting success for the very step meant to verify the release. **Still not claimed:** no sample has been read back yet; the first `scheduled()` invocation has to run before anything has observed our edge.
 - [ ] **[NEXT][SIL][OBS/P1] Close field-vitals freshness only with real evidence.** Surface observed-through/stale-days, obtain a genuinely fresh post-S262 RUM cohort, and bind cohort verdicts to a release SHA so a fresh generated clock can never imply fresh field evidence.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 - [ ] **[S345→S347][ENG/P0] Member-newsletter deployment and explicit arming decision remain separate.** S347 hardened the existing operator (8/8 focused tests); no deploy, secret update or send occurred. Management/function inspection is agent-capable; prior-session sandbox refusals are historical, not fresh human-only proof. Preserve D-S341.4 and the separate arming/first-send decision; verify the exact unauthenticated 401 guard before any approved send.
 
 - [ ] **[S344][DESK/P1] ESCALATION: The Desk's cadence lever is still the founder's pick -- but the S344 symptom sentence has EXPIRED.** **Re-probed S345:** `build-news-freshness --check --require-daily` now reports `daily - latest 2026-09-07 - age 0d`, and 2 editions published on 2026-09-07. The S344 text ('nothing has published since 2026-09-04', 'degraded to `periodic`') was true when written and is false now; it is corrected here rather than carried, because a blocker sentence is a claim with an expiry. **What is NOT resolved, and is not claimed to be:** the queue-width constraint that caused the 3-day gap is UNMEASURED locally -- the radar cache is CI-only and absent from a local tree, so this session could not confirm whether the queue widened or the day was simply lucky. 2 editions against a 4-slot/day promise is a partial recovery, not a met promise. The founder's pick (widen radar yield, shorten novelty, or reduce slots) stands, and the cadence gate's reds remain HONEST (D-S344.5).
 
-
-
 - [ ] **[S344→S347][SEC/P0] Scoped website credential owner reconciliation.** Fresh S347 preflight still reports credential-project mismatch while management/SQL/function inspection is available. Ark 01K22H17HM5F6D2952E9B84165 requests the studio-ops owner fix without exposing credentials. Owner-pending, not a claim that credentials are absent or that only the founder can act; provider truth reads remain unproven.
 
-
-
 - [ ] **[S344][INFRA/P1] Re-evaluate the data plane for the shared box once `STUDIO_PG_ADMIN_URL` is vaulted.** CANON-038 makes self-hosted Postgres first choice and cloud-managed the justified exception; D-S344.2 records the justification. The shared cluster's admin DSN is **ABSENT**, which CANON-038 itself names as its remaining founder-aware step, so there is currently nothing to migrate to. When it exists: this is an **escalation, not a task** — it moves live member accounts and the sign-in path onto a single box, `AGENTS.md` requires escalation before changing auth flows, and the cost saving is ~zero because the Supabase free tier is already cost-neutral (CANON-029). The static site is deliberately excluded: a free global CDN is not beaten by one box.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 - [x] **[S343][VOICE/P1] The homepage hero is publishing CI jargon to strangers.** S347: Conduit public eligibility, operational-copy rejection and grammatical public action sentences implemented; 19/19 focused tests. Generated/served after-state verification pending.
 
@@ -893,7 +844,6 @@ Both selected local outcomes are accepted. Whole-project and release checks rema
 
 - [x] [S405] receipt-only-browser-isolation L2: deterministic CLI negative tests2/2 and normal28-frame capture independently reviewed. Complete release acceptance remains in docs/RELEASE_S405.json.
 
-
 <!-- S406-og-freshness -->
 ### S406 coverage freshness release prerequisite
 
@@ -901,10 +851,8 @@ S406 observed release prerequisite: both canonical full and refresh-live-data pr
 
 Source attempt2 remains failed evidence:167passing of168executed/547planned. No timestamp-only repair, gate relaxation or skipped acceptance. Native OG recomputation and both profile entries fix the omitted producer. No UI, identity, pricing, lifecycle, trust-policy or dependency change. Rollback: bounded revert of the two profile entries. Local implementation velocity2; SIL939/1000unchanged, no product/conversion/field-performance or token-cost gain claimed.
 
-
 <!-- S406-cache-follow-through -->
 The final delivery check found week-long caching on mutable portal assets. The existing shell builder now fingerprints five member/investor resources, resolves registered member assets relative to each page, preserves defer order and leaves unrelated/external URLs intact. Focused shell tests15/15, real persistent-browser warm-cache proof, current portal20/message46 interactions, native mobile215/215, and392 freshly captured/reviewed all-theme desktop/mobile views passed. Earlier full548 source acceptance at d161f7 is preserved as pre-cache-fix evidence; this source still requires fresh complete verification, staging, hosted checks and production/readback. No authentication, membership, pricing, financial document or outbound-message change was made. Release state remains docs/RELEASE_S406.json.
-
 
 <!-- S411-partial-recovery-boundary-2026-11-08 -->
 ## S411 partial recovery boundary — release remains pending
@@ -918,7 +866,6 @@ Native invocation 01a1b213-67c9-7af0-9148-611b5d9cbc66, created 1793988988, stil
 - [ ] Fresh invocation: actual full startup, fresh audit, selected implementation and closeout; release/account work carries pending.
 - [ ] Preserve unaccepted visual diagnostics and select a repair only from actual paired evidence.
 - [ ] Complete isolated member registration/return/recovery and approved-investor private-update acceptance before production promotion.
-
 
 <!-- S412-verified-code-checkpoint -->
 ## S412 — verified code, release pending

@@ -10,6 +10,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { closedSessionFromSil } from './lib/session-identity.mjs';
+import { resolveStartupSessions } from './lib/startup-session-identity.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -39,14 +41,16 @@ const handoffCompleted = parseInt(
 );
 const sources = {
   status: typeof status.currentSession === 'number' ? status.currentSession : null,
-  sil: maxSessionInText(readText('context/SELF_IMPROVEMENT_LOOP.md')),
+  sil: closedSessionFromSil(readText('context/SELF_IMPROVEMENT_LOOP.md')),
   handoff: Number.isFinite(handoffCompleted) ? handoffCompleted : null,
   taskBoard: maxSessionInText(readText('context/TASK_BOARD.md')),
   currentState: maxSessionInText(readText('context/CURRENT_STATE.md')),
   workLog: maxSessionInText(readText('logs/WORK_LOG.md')),
 };
 
-const completed = Math.max(...Object.values(sources).filter(Number.isFinite));
+// Arbitrary context mentions include interrupted and future sessions. The SIL
+// ledger owns completion; an active lock owns the current arc separately.
+const completed = sources.sil;
 if (!Number.isFinite(completed)) {
   console.error('check-startup-session-coherence: no completed-session evidence found');
   process.exit(1);
@@ -54,8 +58,13 @@ if (!Number.isFinite(completed)) {
 
 const brief = readText('docs/STARTUP_BRIEF.md');
 const rendered = parseInt(brief.match(/║\s+Session\s+(\d+)\b/)?.[1] ?? '', 10);
-const generatedAt = parseInt(brief.match(/generated-at: .*?\(Session\s+(\d+)\s+closeout\)/)?.[1] ?? '', 10);
-const expected = completed + 1;
+const generatedAt = parseInt(brief.match(/generated-at: .*?\(last closed Session\s+(\d+)\b/)?.[1]
+  ?? brief.match(/generated-at: .*?\(Session\s+(\d+)\s+closeout\)/)?.[1] ?? '', 10);
+const expected = resolveStartupSessions({
+  silSession: completed,
+  statusSession: status.currentSession,
+  lockText: readText('context/.session-lock'),
+}).currentSession;
 
 const failures = [];
 if (rendered !== expected) failures.push(`brief header Session ${rendered || '?'} != expected Session ${expected}`);

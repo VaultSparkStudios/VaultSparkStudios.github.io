@@ -178,6 +178,7 @@ export const ACRONYMS = new Set([
   'CUDA', 'ROCM', 'MLPERF', 'NASA', 'DARPA', 'MIT', 'IEEE', 'ACM', 'UNCTAD',
   'TRELLIS', // 3D generation product name; NVIDIA's published house style.
   'WIRED', // Publisher house style, not a shouted adjective.
+  'KEXAONE', // K-EXAONE model brand; punctuation is stripped by the caps rule.
 ]);
 
 /** Brands and identifiers that legitimately begin a sentence in lowercase. */
@@ -748,6 +749,10 @@ function selfTest() {
       () => clean('Anthropic, OpenAI, Nvidia, DeepSeek, Cloudflare, Supabase, Gemini, Claude Opus and Moonshot all shipped.')],
     ['Hugging Face and hyphenated products pass',
       () => clean('Hugging Face mirrored the weights, and GPT-5 class models followed.')],
+    ['the official hyphenated K-EXAONE model brand passes',
+      () => clean('LG opened K-EXAONE-2.5 API access.')],
+    ['a near-name does not inherit the model-brand exception',
+      () => fires('all-caps-run', 'LG opened K-EXAONEX-2.5 API access.')],
     ['dense jargon passes',
       () => clean('Inference throughput, latency, parameters, quantization and embeddings all improved on the benchmark.')],
     ['acronyms in normal prose pass',

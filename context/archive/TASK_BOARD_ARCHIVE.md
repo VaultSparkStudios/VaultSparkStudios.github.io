@@ -1526,3 +1526,28 @@ Wave 4 canonical closeout and publication: authoritative state in docs/RELEASE_S
 - [x] **[S343][PERF/P2] The homepage shipped ~6 KB per visit to run two guaranteed no-ops.** **DONE S343.** `home-personalized.js` and `pathways-router.js` were loaded on `/` by the idle loader; both early-return on `/`, and `#home-personalized-welcome` exists in zero HTML files. Also fixed `vs_visit_count`, which had two writers with incompatible meanings (per-path here, per-session in `returning-visitor-digest.js`) while every trust/cadence threshold on the site reads it — the session-scoped writer now owns it outright.
 
 - [x] **[S343][SEC/P0] The gateway's Supabase service-role key is scoped to a DIFFERENT project.** Duplicate consolidated into the S344 scoped-credential owner task. S347 fresh preflight still observes credential-project mismatch; Ark 01K22H17HM5F6D2952E9B84165 requests the owner fix. This is owner-pending, not missing-credential or human-only evidence.
+
+
+<!-- rotated 2026-11-10 · sessions < 411 · 3 block(s) -->
+
+## S410 current local runtime acceptance
+
+Native full build/postbuild passed. The actual215-case mobile audit passed at2026-11-04T05:21:19.019Z; owned preview closed. Visual406 is current:392 original primary frames retained,14 fresh full-Desk after frames and14 historical before frames directly inspected. Source/candidate/PNG hashes passed native validation. See docs/S410_mobile-acceptance.json and docs/RELEASE_S410.json. Complete source549, current staging, exact hosted/account checks and authorized publication/production/readback remain pending; these local results do not prove real private-role access.
+
+<!-- S410-closeout-writeback -->
+
+## S410 selected implementation verified locally
+
+All three selected L2 repairs pass local acceptance and independent review: deterministic reaction fixture, guarded bounded Windows fixture cleanup, and current-source/release truth in the startup brief. Browser17/17 and native evidence-kernel cases pass; actual brief reads128/549 failed partial source and S409 release pending. Full source is not yet accepted.
+
+Wave1 fresh startup/audit complete. Wave2 three scoped implementations locally verified. Wave3 combined source/current staging/hosted/account verification pending. Wave4 authorized main publication/production/readback/full closeout pending. Source: docs/AUDIT_2026-11-04.json; acceptance: docs/S410_implementation.json. Native timing checker still flags inherited dirty files; selected targets were clean at the recorded gate and all three premises replay against its start-head blobs. No native timing pass is claimed.
+
+<!-- S410-arc-current -->
+
+## Session 410 — fresh arc in progress
+
+Session Intent: complete the fresh S410 startup, audit, three selected L2 verification repairs, and authorized combined main publication/deployment once applicable acceptance passes. Native goal01a1a424-fcbc-7f91-9461-d697bb287c76, created1793755268, is bound to S410; recovery checkpoint e6535f0b76 is separate.
+
+Wave1 startup/audit complete: docs/AUDIT_2026-11-04.json; three premises and candidate admission pass. Wave2 implementation in progress. Wave3 source/staging/hosted/account acceptance and Wave4 authorized release/closeout pending. Prior S409 failed source and positive-account dependency remain explicit. No production/main completion claim.
+
+<!-- S409-partial-recovery-2026-11-04 -->
