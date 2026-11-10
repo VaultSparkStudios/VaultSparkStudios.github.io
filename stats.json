@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-08T16:32:33.669Z",
+  "generatedAt": "2026-11-10T01:10:46.224Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -55,7 +55,7 @@
       "value": 3,
       "unitOrDenominator": "projects marked SPARKED",
       "period": "current snapshot",
-      "computedAt": "2026-11-08T00:00:00.000Z",
+      "computedAt": "2026-11-10T00:00:00.000Z",
       "source": "/api/public-status.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/public-status.json",
@@ -64,7 +64,7 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-11-08T00:00:00.000Z",
+      "observedThrough": "2026-11-10T00:00:00.000Z",
       "freshnessState": "fresh",
       "category": "portfolio",
       "format": "integer",
@@ -74,10 +74,10 @@
     {
       "id": "human-page-loads-30d",
       "label": "Human page loads",
-      "value": 2180,
+      "value": 2140,
       "unitOrDenominator": "bot-excluded browser page loads",
       "period": "30 complete UTC days",
-      "computedAt": "2026-11-08T06:45:26.790Z",
+      "computedAt": "2026-11-09T06:51:37.095Z",
       "source": "/api/ecosystem-analytics.json",
       "sourceType": "cloudflare-web-analytics",
       "sourceDataset": "rumPageloadEventsAdaptiveGroups",
@@ -85,16 +85,16 @@
       "botPolicy": "excluded",
       "measurement": {
         "kind": "estimate",
-        "sampleInterval": 14,
+        "sampleInterval": 10.833333333333334,
         "confidenceLevel": 0.95,
         "confidence": {
-          "estimate": 2180,
-          "lower": 924,
-          "upper": 3477,
-          "sampleSize": 215
+          "estimate": 2140,
+          "lower": 922,
+          "upper": 3400,
+          "sampleSize": 213
         }
       },
-      "observedThrough": "2026-11-08",
+      "observedThrough": "2026-11-09",
       "freshnessState": "fresh",
       "category": "audience",
       "format": "integer",
@@ -102,8 +102,8 @@
       "available": true,
       "window": {
         "days": 30,
-        "start": "2026-10-09",
-        "endExclusive": "2026-11-08",
+        "start": "2026-10-10",
+        "endExclusive": "2026-11-09",
         "timezone": "UTC",
         "completeDaysOnly": true
       },
@@ -112,10 +112,10 @@
     {
       "id": "news-stories",
       "label": "Desk stories",
-      "value": 197,
+      "value": 202,
       "unitOrDenominator": "published editorial stories",
       "period": "all published editions",
-      "computedAt": "2026-11-07T00:00:00.000Z",
+      "computedAt": "2026-11-09T00:00:00.000Z",
       "source": "/api/news-desk-stats.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/news-desk-stats.json",
@@ -124,11 +124,11 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-11-07T00:00:00.000Z",
+      "observedThrough": "2026-11-09T00:00:00.000Z",
       "freshnessState": "fresh",
       "category": "editorial",
       "format": "integer",
-      "interpretation": "623 sourced facts across 197 stories; prediction accuracy remains withheld until the sample earns it."
+      "interpretation": "637 sourced facts across 202 stories; prediction accuracy remains withheld until the sample earns it."
     },
     {
       "id": "forge-projects",
@@ -136,7 +136,7 @@
       "value": 17,
       "unitOrDenominator": "projects marked FORGE",
       "period": "current snapshot",
-      "computedAt": "2026-11-08T00:00:00.000Z",
+      "computedAt": "2026-11-10T00:00:00.000Z",
       "source": "/api/public-status.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/public-status.json",
@@ -145,7 +145,7 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-11-08T00:00:00.000Z",
+      "observedThrough": "2026-11-10T00:00:00.000Z",
       "freshnessState": "fresh",
       "category": "portfolio",
       "format": "integer",
@@ -154,10 +154,10 @@
     {
       "id": "sourced-facts",
       "label": "Sourced Desk facts",
-      "value": 623,
+      "value": 637,
       "unitOrDenominator": "source-linked factual claims",
       "period": "all published editions",
-      "computedAt": "2026-11-07T00:00:00.000Z",
+      "computedAt": "2026-11-09T00:00:00.000Z",
       "source": "/api/news-desk-stats.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/news-desk-stats.json",
@@ -166,19 +166,19 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-11-07T00:00:00.000Z",
+      "observedThrough": "2026-11-09T00:00:00.000Z",
       "freshnessState": "fresh",
       "category": "editorial",
       "format": "integer",
-      "interpretation": "Drawn from 54 named source domains; opinions are not counted as facts."
+      "interpretation": "Drawn from 55 named source domains; opinions are not counted as facts."
     },
     {
       "id": "proof-freshness",
       "label": "Proof freshness",
-      "value": 78,
+      "value": 67,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-11-08T16:32:33.669Z",
+      "computedAt": "2026-11-10T01:10:46.224Z",
       "source": "/api/status-proof.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/status-proof.json",
@@ -187,11 +187,11 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-11-08T16:32:33.669Z",
+      "observedThrough": "2026-11-10T01:10:46.224Z",
       "freshnessState": "fresh",
       "category": "trust",
       "format": "percent",
-      "interpretation": "14 of 18 proof feeds are within their declared freshness windows; 4 are stale, not silently treated as green."
+      "interpretation": "12 of 18 proof feeds are within their declared freshness windows; 6 are stale, not silently treated as green."
     },
     {
       "id": "performance-samples-7d",
@@ -199,7 +199,7 @@
       "value": 0,
       "unitOrDenominator": "accepted anonymous route-performance observations",
       "period": "7 complete UTC days",
-      "computedAt": "2026-11-08T11:20:25.072Z",
+      "computedAt": "2026-11-09T06:51:37.128Z",
       "source": "/api/analytics-summary.json",
       "sourceType": "vaultspark-rum",
       "sourceDataset": "data/rum-history.ndjson",
@@ -208,14 +208,14 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-11-08",
+      "observedThrough": "2026-11-09",
       "freshnessState": "fresh",
       "category": "performance",
       "format": "integer",
       "privacySafe": true,
       "window": {
-        "start": "2026-11-01",
-        "endExclusive": "2026-11-08",
+        "start": "2026-11-02",
+        "endExclusive": "2026-11-09",
         "days": 7,
         "timezone": "UTC"
       },
@@ -225,7 +225,7 @@
   "breakdowns": {
     "portfolioStatus": {
       "source": "/api/public-status.json",
-      "computedAt": "2026-11-08T00:00:00.000Z",
+      "computedAt": "2026-11-10T00:00:00.000Z",
       "values": {
         "sparked": 3,
         "forge": 17,
@@ -234,30 +234,26 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-11-08T16:32:33.669Z",
+      "computedAt": "2026-11-10T01:10:46.224Z",
       "values": {
-        "fresh": 14,
-        "stale": 4,
+        "fresh": 12,
+        "stale": 6,
         "total": 18
       }
     },
     "deskRecord": {
       "source": "/api/news-desk-stats.json",
-      "computedAt": "2026-11-07T00:00:00.000Z",
+      "computedAt": "2026-11-09T00:00:00.000Z",
       "values": {
-        "stories": 197,
-        "facts": 623,
-        "sources": 54,
+        "stories": 202,
+        "facts": 637,
+        "sources": 55,
         "predictionsGraded": 0
       }
     }
   },
   "history": {
     "performanceSamplesDaily": [
-      {
-        "day": "2026-10-09",
-        "samples": 36
-      },
       {
         "day": "2026-10-10",
         "samples": 11
@@ -304,16 +300,32 @@
       },
       {
         "day": "2026-10-21",
-        "samples": 22
+        "samples": 25
+      },
+      {
+        "day": "2026-10-22",
+        "samples": 33
+      },
+      {
+        "day": "2026-10-23",
+        "samples": 20
+      },
+      {
+        "day": "2026-10-24",
+        "samples": 15
+      },
+      {
+        "day": "2026-10-25",
+        "samples": 2
       }
     ],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-11-08T11:20:25.072Z",
+    "computedAt": "2026-11-09T06:51:37.128Z",
     "warning": "Performance samples are not an audience trend."
   },
   "reconciliation": {
     "source": "/api/ecosystem-analytics.json",
-    "computedAt": "2026-11-08T06:45:26.790Z",
+    "computedAt": "2026-11-09T06:51:37.095Z",
     "dimensions": [
       {
         "id": "human-page-loads",
