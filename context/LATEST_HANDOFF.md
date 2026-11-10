@@ -1,3 +1,8 @@
+<!-- S412-recovery-boundary-for-new-native-goal -->
+## S412 partial recovery; new invocation requires a fresh arc
+
+The new native goal `01a1c30a-d8b0-75c3-80a7-d1edf0a5bf16` (created `1794273636`) returned `start-new-arc`. Recovery observations and all unfinished acceptance are preserved in `docs/S412_RECOVERY_BOUNDARY.md`. No production, full closeout or new score is claimed. Proceed through a new monotonic startup and fresh audit, carrying the release requirements forward. Automatic continuation must resume the newly bound session.
+
 <!-- S412-full-local-source-verified -->
 ## S412 QA checkpoint — local proof verified, release incomplete
 
