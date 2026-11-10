@@ -8,6 +8,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import sharp from 'sharp';
 import { imageHash, inspectDeskEmailArt, verifyDeskEmailArt, deskArtGenerationCommands, validDeskDate } from '../scripts/lib/desk-email-art.mjs';
 import { prepareDeskEmail, parsePreparationArgs } from '../scripts/prepare-desk-email.mjs';
 import { main as digest, SITE, BREVO_API } from '../scripts/build-desk-dispatch-digest.mjs';
@@ -15,7 +16,8 @@ import { explicitArtScope, scopedPendingImages, existingArtPreparation, pendingI
 import { EDITORIAL_PANEL_BUDGETS, SATIRE_CARTOON_BUDGETS } from '../scripts/lib/news-memes.mjs';
 
 const DATE='2026-11-09', now=new Date(DATE+'T23:30:00Z');
-const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jhX0AAAAASUVORK5CYII=','base64');
+// Encode valid PNG bytes locally; decoder CRC strictness differs across platforms.
+const png=await sharp(Buffer.from([255,255,255,255]),{raw:{width:1,height:1,channels:4}}).png().toBuffer();
 function fixture({count=1,cartoon=false}={}) {
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'desk-email-art-'));
  const write=(file,bytes)=>{const target=path.join(root,file);fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,bytes);};
@@ -227,7 +229,7 @@ test('real ingest planner excludes malformed unrelated staged PNG before decodin
   f.write('staging/'+selected+'/art.png',png);
   f.write('staging/'+other+'/art.png',Buffer.from('malformed unrelated staged PNG'));
   const reviewed=parseReviewed(selected+'@'+imageHash(png));
-  await assert.rejects(planIngest({root:f.root,from,reviewed}),/unsupported image|corrupt|invalid/i);
+  await assert.rejects(planIngest({root:f.root,from,reviewed}),/unsupported image|corrupt|invalid|(?:vipspng:\s*)?libpng read error/i);
   const scope=explicitArtScope({story:DATE+'/story-0',kind:'banner'});
   const {parseArgs}=await import('../scripts/ingest-news-art.mjs');
   const only=parseArgs(ingestScopeArgs(scope)).only;
