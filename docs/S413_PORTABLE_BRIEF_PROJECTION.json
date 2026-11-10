@@ -4,7 +4,7 @@
   "scope": "public-safe projection of actual generated raw artifact; private copied native validator proof only",
   "rawArtifactSha256": "fd2188caa202ce42b1c783e2d02561423e8ae016494e64a4b4fc286b5f5bfb69",
   "rawReceiptSha256": "496ce56b8dde4bcf9eb2273ad8adee8cb002937030c9b6df719c051809e82d84",
-  "proposedSha256": "c51675b68d18ee473372152a49d576494f294e913b1de6f4fd18f9e41ab2bc3b",
+  "proposedSha256": "0720cffdae701582ed995f1b940b267f9d7bfcb9be9c55471c80131d9ec023cb",
   "preservedMarkerLines": [
     "<!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->",
     "<!-- generated-at: 2026-11-10 (last closed Session 411; active/next Session 412) -->",
@@ -37,9 +37,9 @@
     {
       "kind": "retain-selected-existing-rows",
       "header": "╔══ SCORE ═══════════════════════════════════════════════════════╗",
-      "reason": "Retain actual historical score row only; remove internal category/activity/velocity telemetry",
+      "reason": "Retain actual historical score and required actual active/closeout age row; omit category/velocity telemetry",
       "preimageSha256": "e774698b30d98c5ccb5b9417c3f556447782f3ea0f777df551f15f5420ab9233",
-      "outputSha256": "7c4200bdcc221e31a7f809bef8cb580f9e984b1270576c28b5d2870eebdc05fb"
+      "outputSha256": "b60546077e7fbc1c03d8a36283ba0850262cd10829f4600d24fe5ee696231d89"
     },
     {
       "kind": "omit-box",
@@ -98,7 +98,7 @@
       "name": "format",
       "nativeExit": 0,
       "errorCode": null,
-      "stdoutSha256": "1577b7f1ebd2ca8460e97c9009470a835ac7dd1359308048f7b6c79de90a36a3",
+      "stdoutSha256": "799ff7a2500a11026f8214087f267440af3e10f8d6d4cc2cc14a7ce5c9db76b2",
       "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
@@ -124,8 +124,37 @@
   "published": false,
   "finalCandidateCi": false,
   "nativeGoalContinues": 413,
-  "previousProjectionSha256": "0916dc35730abc0fc2c4eed6ed93e9464d28c02fb87e5f66296a53ff99deb8c5",
-  "previousProjectionReceiptSha256": "9dd95e4d1d843994c1a7d30535b4be51fd078c31d7a7169ac344bc171a04bcda",
+  "previousProjectionSha256": "c51675b68d18ee473372152a49d576494f294e913b1de6f4fd18f9e41ab2bc3b",
+  "previousProjectionReceiptSha256": "7c81acede8e121170bfbe7ce07add2cbde047df4a7370ca1c7ff1cfc0d941de5",
   "publicReceiptFile": "docs/S413_PORTABLE_BRIEF_PROJECTION.json",
-  "revisionReason": "Add explicit raw hash, byte-difference disclosure, public receipt reference and active S413 continuation"
+  "revisionReason": "Restore exact actual raw active/closeout age row required by broader startup smoke contract; no checker/source change",
+  "fullSmokeAcceptance": false,
+  "exactNextCandidateCiRequired": true,
+  "activeAgeContract": {
+    "scope": "unmodified extracted original smoke predicate against real private files; not complete smoke execution",
+    "sourceCommit": "f59e0aa83b97beec1230e95d74f34afc4301857b",
+    "sourceFile": "scripts/smoke-startup-scripts.mjs",
+    "sourceSha256": "20e45602e2802c539ed8b726e44d844eb6dc9653d9107731c9ef2bbd1a3f95bc",
+    "predicateSha256": "5f78454a333fcbbf99f3b1b33874402b660fcbbd484cebd831fe3a142d4e5db3",
+    "exactRestoredRow": "║    Last active: 0d  ·  Last closeout: 4d  ·  (active = newest…   ║",
+    "negativePriorProjection": {
+      "failures": 1,
+      "results": [
+        {
+          "status": "FAIL",
+          "module": "startup-active-age",
+          "reason": "SCORE line missing active/closeout ages"
+        }
+      ]
+    },
+    "positiveCorrectedProjection": {
+      "failures": 0,
+      "results": [
+        {
+          "status": "OK",
+          "module": "startup-active-age · active 0d / closeout 4d"
+        }
+      ]
+    }
+  }
 }
