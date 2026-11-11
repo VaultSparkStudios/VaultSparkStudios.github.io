@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-10-26T00:00:00.000Z",
+  "generatedAt": "2026-10-27T00:00:00.000Z",
   "windowDays": 7,
   "minSamples": 50,
   "evidenceState": "stale",
@@ -8,196 +8,106 @@
   "status": "stale",
   "ok": null,
   "coverage": {
-    "totalRows": 405,
+    "totalRows": 407,
     "observedRoutes": 35,
     "sufficientRoutes": 1,
-    "latestDay": "2026-10-26",
+    "latestDay": "2026-10-27",
     "latestAgeDays": 15,
     "freshnessMaxDays": 7,
     "currentFresh": false
   },
   "comparison": {
     "basis": "last-known-observation",
-    "latestStart": "2026-10-20",
-    "latestEndExclusive": "2026-10-27",
-    "previousStart": "2026-10-13"
+    "latestStart": "2026-10-21",
+    "latestEndExclusive": "2026-10-28",
+    "previousStart": "2026-10-14"
   },
   "routes": {
     "/games/": {
-      "currentSamples": 15,
-      "previousSamples": 14,
+      "currentSamples": 10,
+      "previousSamples": 16,
       "sufficient": false,
       "current": {
-        "lcpP75": 958,
-        "clsP75": 0.04275,
+        "lcpP75": 892,
+        "clsP75": 0.0089,
         "inpP75": 56
       },
       "previous": {
         "lcpP75": 634,
         "clsP75": 0.0513,
-        "inpP75": 20
+        "inpP75": 52
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
       "status": "insufficient"
     },
     "/games/franchise-architect/": {
-      "currentSamples": 18,
-      "previousSamples": 17,
+      "currentSamples": 16,
+      "previousSamples": 20,
       "sufficient": false,
       "current": {
-        "lcpP75": 733,
-        "clsP75": 0.0017,
+        "lcpP75": 628,
+        "clsP75": 0.0008,
         "inpP75": 0
       },
       "previous": {
         "lcpP75": 980,
-        "clsP75": 0.00245,
-        "inpP75": 28
+        "clsP75": 0.0033,
+        "inpP75": 52
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
       "status": "insufficient"
     },
     "/games/gridiron-gm/": {
-      "currentSamples": 59,
-      "previousSamples": 63,
+      "currentSamples": 55,
+      "previousSamples": 68,
       "sufficient": true,
       "current": {
-        "lcpP75": 960,
-        "clsP75": 0.0116,
+        "lcpP75": 1248,
+        "clsP75": 0.0123,
         "inpP75": 80
       },
       "previous": {
-        "lcpP75": 1772,
+        "lcpP75": 1636,
         "clsP75": 0.0096,
         "inpP75": 0
       },
-      "lcpDeltaPct": -45.8,
-      "clsDelta": 0.002,
+      "lcpDeltaPct": -23.7,
+      "clsDelta": 0.0027,
       "status": "ok"
     },
     "/games/solara/": {
-      "currentSamples": 11,
+      "currentSamples": 14,
       "previousSamples": 18,
       "sufficient": false,
       "current": {
-        "lcpP75": 992,
-        "clsP75": 0.0059,
+        "lcpP75": 836,
+        "clsP75": 0.0062,
         "inpP75": 0
       },
       "previous": {
-        "lcpP75": 1864,
-        "clsP75": 0.00675,
+        "lcpP75": 1862,
+        "clsP75": 0.00605,
         "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 940,
-        "clsP75": 0.0059,
-        "inpP75": 72
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/personas/echo/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 0,
-        "clsP75": 0.0032,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/personas/mica/": {
-      "currentSamples": 3,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 636,
-        "clsP75": 0.0059,
-        "inpP75": 96
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/personas/vera/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 860,
-        "clsP75": 0.0032,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/projects/seamline/": {
-      "currentSamples": 2,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 1048,
-        "clsP75": 0.0017,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
       "status": "insufficient"
     },
     "/": {
-      "currentSamples": 13,
-      "previousSamples": 24,
+      "currentSamples": 18,
+      "previousSamples": 16,
       "sufficient": false,
       "current": {
-        "lcpP75": 472,
-        "clsP75": 0,
-        "inpP75": 40
+        "lcpP75": 617.5,
+        "clsP75": 0.00205,
+        "inpP75": 20
       },
       "previous": {
-        "lcpP75": 1516,
+        "lcpP75": 1756,
         "clsP75": 0.0041,
-        "inpP75": 0
+        "inpP75": 20
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -258,12 +168,12 @@
       "status": "insufficient"
     },
     "/games/vaultfront/": {
-      "currentSamples": 10,
+      "currentSamples": 11,
       "previousSamples": 1,
       "sufficient": false,
       "current": {
-        "lcpP75": 917.5,
-        "clsP75": 0.00365,
+        "lcpP75": 952,
+        "clsP75": 0.0073,
         "inpP75": 0
       },
       "previous": {
@@ -331,7 +241,7 @@
     },
     "/studio/": {
       "currentSamples": 1,
-      "previousSamples": 4,
+      "previousSamples": 3,
       "sufficient": false,
       "current": {
         "lcpP75": 194,
@@ -339,9 +249,9 @@
         "inpP75": 72
       },
       "previous": {
-        "lcpP75": 295,
-        "clsP75": 0,
-        "inpP75": 0
+        "lcpP75": 1221.5,
+        "clsP75": 0.02735,
+        "inpP75": 20
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -384,12 +294,12 @@
       "status": "insufficient"
     },
     "/journal/dispatches/": {
-      "currentSamples": 1,
+      "currentSamples": 2,
       "previousSamples": 1,
       "sufficient": false,
       "current": {
-        "lcpP75": 712,
-        "clsP75": 0,
+        "lcpP75": 1376,
+        "clsP75": 0.0017,
         "inpP75": 0
       },
       "previous": {
@@ -402,11 +312,11 @@
       "status": "insufficient"
     },
     "/roadmap/": {
-      "currentSamples": 1,
+      "currentSamples": 2,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 632,
+        "lcpP75": 1248,
         "clsP75": 0.0017,
         "inpP75": 0
       },
@@ -419,25 +329,43 @@
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/games/project-unknown/": {
-      "currentSamples": 0,
-      "previousSamples": 1,
+    "/leaderboards/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
       "sufficient": false,
       "current": {
+        "lcpP75": 804,
+        "clsP75": 0.0017,
+        "inpP75": 0
+      },
+      "previous": {
         "lcpP75": null,
         "clsP75": null,
         "inpP75": null
-      },
-      "previous": {
-        "lcpP75": 788,
-        "clsP75": 0.0011,
-        "inpP75": 0
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/news/2026-09-17/anthropic-merges-claude-chat-cowork-and-more-into-a/": {
+    "/studio-pulse/": {
+      "currentSamples": 1,
+      "previousSamples": 2,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 470,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 343,
+        "clsP75": 0,
+        "inpP75": 56
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/news/2026-10-06/anthropic-subscriptions-offer-5x-more-value-than-openai/": {
       "currentSamples": 0,
       "previousSamples": 4,
       "sufficient": false,
@@ -447,25 +375,7 @@
         "inpP75": null
       },
       "previous": {
-        "lcpP75": 1950,
-        "clsP75": 0.0017499999999999998,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/2026-10-06/anthropic-subscriptions-offer-5x-more-value-than-openai/": {
-      "currentSamples": 0,
-      "previousSamples": 6,
-      "sufficient": false,
-      "current": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "previous": {
-        "lcpP75": 935,
+        "lcpP75": 662,
         "clsP75": 0,
         "inpP75": 0
       },
@@ -503,6 +413,24 @@
       "previous": {
         "lcpP75": 350,
         "clsP75": 0.0059,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/news/2026-09-17/anthropic-merges-claude-chat-cowork-and-more-into-a/": {
+      "currentSamples": 0,
+      "previousSamples": 2,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 1000,
+        "clsP75": 0.0017,
         "inpP75": 0
       },
       "lcpDeltaPct": null,
@@ -617,24 +545,6 @@
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/studio-pulse/": {
-      "currentSamples": 0,
-      "previousSamples": 2,
-      "sufficient": false,
-      "current": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "previous": {
-        "lcpP75": 343,
-        "clsP75": 0,
-        "inpP75": 56
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
     "/projects/obelisk/": {
       "currentSamples": 0,
       "previousSamples": 2,
@@ -647,6 +557,96 @@
       "previous": {
         "lcpP75": 1016,
         "clsP75": 0,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/news/": {
+      "currentSamples": 0,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 940,
+        "clsP75": 0.0059,
+        "inpP75": 72
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/news/personas/echo/": {
+      "currentSamples": 0,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 0,
+        "clsP75": 0.0032,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/news/personas/mica/": {
+      "currentSamples": 0,
+      "previousSamples": 3,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 636,
+        "clsP75": 0.0059,
+        "inpP75": 96
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/news/personas/vera/": {
+      "currentSamples": 0,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 860,
+        "clsP75": 0.0032,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/projects/seamline/": {
+      "currentSamples": 0,
+      "previousSamples": 2,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 1048,
+        "clsP75": 0.0017,
         "inpP75": 0
       },
       "lcpDeltaPct": null,

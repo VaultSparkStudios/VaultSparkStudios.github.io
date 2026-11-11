@@ -1,19 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-11-11T18:52:55.416Z
-Receipt: `52b3b6e12ffa2ae1f33fd700` · coverage 3/552 from step 1
+Generated: 2026-11-11T20:06:00.310Z
+Receipt: `f55424562d178335ac21f945` · coverage 424/553 from step 130
 
-Latest: **2/3** passed · failed 1 · total 574.3s
-Concentration: **79.0%** in step 3 · ratchet BREACHED (>30% and ≥45s)
+Latest: **424/424** passed · failed 0 · total 661.5s
+Concentration: **11.9%** in step 170 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 3 | 453.7s | 1 | `node --test --test-concurrency=1 tests/og-template-fit.unit.spec.mjs tests/contact-share-draft.unit.spec.mjs tests/member-registration-completion.unit.spec.mjs tests/open-member-enrollment.unit.spec.mjs tests/investor-access.unit.spec.mjs tests/member-access-experience.unit.spec.mjs tests/audience-auth-recovery.unit.spec.mjs tests/session-lock-rotation.unit.spec.mjs` |
-| 1 | 72.2s | 0 | `node --test tests/ledger-rotation.unit.spec.mjs tests/staging-archive.unit.spec.mjs tests/offline-recovery.unit.spec.mjs tests/offline-navigation.unit.spec.mjs tests/deploy-parity.unit.spec.mjs tests/news-article-css.unit.spec.mjs tests/news-kicker-clearance.unit.spec.mjs tests/page-sigil-scroll.unit.spec.mjs tests/served-parity.unit.spec.mjs` |
-| 2 | 48.4s | 0 | `node --test tests/served-binary-parity.unit.spec.mjs tests/operational-admission.unit.spec.mjs tests/moderation-admission.unit.spec.mjs tests/public-rest-canary.unit.spec.mjs tests/metadata-backfill.unit.spec.mjs tests/heartbeat-snapshot.unit.spec.mjs tests/rollback-archive.unit.spec.mjs tests/diagnostic-help.unit.spec.mjs tests/writeback-history.unit.spec.mjs tests/git-capture-capacity.unit.spec.mjs` |
+| 170 | 78.7s | 0 | `node scripts/check-proof-surface.mjs` |
+| 146 | 68.7s | 0 | `node scripts/csp-audit.mjs` |
+| 551 | 40.4s | 0 | `node --test tests/oracle-stream.unit.spec.mjs` |
+| 522 | 30.6s | 0 | `node scripts/ingest-news-art.mjs --self-test` |
+| 552 | 17.5s | 0 | `node --test tests/desk-email-art.unit.spec.mjs` |
+| 268 | 17.4s | 0 | `node scripts/preflight-content-lane.mjs --warn-only` |
+| 163 | 14.7s | 0 | `node scripts/build-geo-vitals.mjs --check` |
+| 330 | 14.5s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
+| 549 | 12.7s | 0 | `node scripts/verify-browser-collection.mjs` |
+| 501 | 11.9s | 0 | `node scripts/build-desk-dispatch-digest.mjs --self-test` |
 
 ## Failures
 
-- Step 3: `node --test --test-concurrency=1 tests/og-template-fit.unit.spec.mjs tests/contact-share-draft.unit.spec.mjs tests/member-registration-completion.unit.spec.mjs tests/open-member-enrollment.unit.spec.mjs tests/investor-access.unit.spec.mjs tests/member-access-experience.unit.spec.mjs tests/audience-auth-recovery.unit.spec.mjs tests/session-lock-rotation.unit.spec.mjs` exited 1
+- None.

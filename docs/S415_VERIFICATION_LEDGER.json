@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "publicSafe": true,
+  "session": 415,
+  "state": "in-progress",
+  "updatedAt": "2026-11-11T20:25:04.685Z",
+  "audit": "docs/AUDIT_2026-11-11-S415.json",
+  "implementation": "docs/S415_IMPLEMENTATION_CHECKPOINT.json",
+  "candidate": {
+    "qaCommit": "0ab1ae5b70caae1b331c46d3d1dc6e6bc03d01fb",
+    "productionPromoted": false
+  },
+  "local": {
+    "fullAttempt": {
+      "receipt": "docs/S415_source-attempt1.json",
+      "nativeExit": 1,
+      "firstStep": 1,
+      "attempted": 24,
+      "passed": 23,
+      "failure": "startup-context-budget",
+      "repair": "One historical task-board block archived verbatim; budget check now passes."
+    },
+    "diagnosticAttempt": {
+      "receipt": "docs/S415_source-tail-attempt1.json",
+      "nativeExit": 1,
+      "firstStep": 25,
+      "failureStep": 129,
+      "repair": "Existing workflow contract now requires the local candidate default; manual override and preview/cleanup contracts retained."
+    },
+    "diagnosticTail": {
+      "receipt": "docs/S415_source-tail130-passed.json",
+      "nativeExit": 0,
+      "firstStep": 130,
+      "passed": 424,
+      "planned": 553,
+      "coverageComplete": false
+    },
+    "focused": {
+      "captureSourceAndArchive": 7,
+      "updatedWorkflowContract": 1,
+      "unitInventory": "76 declared = 76 executed = 76 tracked"
+    },
+    "completeCurrentSourceVerified": false
+  },
+  "hosted": {
+    "sourceCommit": "0ab1ae5b70caae1b331c46d3d1dc6e6bc03d01fb",
+    "capture": {
+      "runId": 43086129906,
+      "conclusion": "success",
+      "meaning": "Provisional candidate-origin generation, not accepted references."
+    },
+    "lighthouse": {
+      "runId": 43086150092,
+      "conclusion": "success"
+    },
+    "accessibility": {
+      "runId": 43086158754,
+      "conclusion": "success"
+    },
+    "e2e": {
+      "runId": 43086143380,
+      "conclusion": "failure",
+      "passed": 721,
+      "skipped": 56,
+      "visualFailures": 8,
+      "complianceFailure": "startup-context-budget at step24; repaired locally, new exact-SHA run required"
+    }
+  },
+  "visual": {
+    "newReferencesAdopted": 0,
+    "artifactAccepted": false,
+    "comparison": "nonpassing",
+    "trust": "Exact new image artifact remains unaccepted; no download or broader trust override."
+  },
+  "staging": {
+    "isolatedFixtureHealthObserved": true,
+    "privateGatewayControls": "Narrow reachability and denial observations only; full data/auth acceptance pending.",
+    "loopbackTransportAccepted": true,
+    "lastLoopbackAttempt": "Five direct and loopback controls matched; configuration and unrelated workload readback passed. Listener remains host-only; public data route remains absent.",
+    "matchedWorkerBrowserVariantAccepted": false,
+    "authenticatedJourneysAccepted": false,
+    "sourceSnapshot": {
+      "files": 4227,
+      "sourceFingerprint": "8abce2d62fd46ed3f8842354746df20f087b50a9f133211c49616e6e75099ac2",
+      "accepted": false
+    },
+    "privatePreparation": "Versioned source/configuration and Auth/RLS preparations are retained in ignored local evidence; not execution or exposure proof."
+  },
+  "timing": {
+    "nativeVerdict": "after-implementation",
+    "accepted": false,
+    "note": "Recovery public-intelligence reconciliation and admission brief inputs are retained in the timing record. Selected premises passed before new capture source edits; no rewritten gate/lock or full timing acceptance."
+  },
+  "completion": {
+    "fullCloseout": false,
+    "nativeGoalComplete": false,
+    "newScoreAwarded": false,
+    "productionReadback": false
+  },
+  "next": [
+    "Publish repaired integration and obtain complete current source plus exact candidate required checks.",
+    "Resolve the scoped image-artifact acceptance, review actual changed originals and pass unchanged native comparison.",
+    "Finish isolated transport/data/auth acceptance and matched staging configuration without production data.",
+    "Complete authorized normal main/production promotion/readback and canonical closeout before native completion."
+  ]
+}

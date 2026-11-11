@@ -1,3 +1,8 @@
+<!-- S415-current-verification -->
+## S415 current verification
+
+Candidate capture/import hardening is published on QA; production remains unchanged. Current evidence is tracked in docs/S415_VERIFICATION_LEDGER.json. Candidate-origin Linux generation, Lighthouse and accessibility pass at the named QA commit; E2E retains eight Games visual failures and the old startup-budget failure. The budget and workflow-default contract are repaired locally. Diagnostic source steps130–553 passed424/424; this is not a complete current553-step proof. No new reference, score, authenticated acceptance or completed release is claimed.
+
 <!-- S414-recovery-boundary -->
 ## S414 recovery boundary
 

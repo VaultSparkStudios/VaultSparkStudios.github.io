@@ -670,3 +670,8 @@ This is a QA checkpoint, not a full closeout or production release. Reference-im
 ## 2026-11-11 — S414 recovery checkpoint
 
 S414 release verification was interrupted. Committed Games hero changes and intermediate staging/source receipts remain preserved; current full source check failed at step 3 (fixture navigation timeout), hosted E2E has ten visual failures, and doctor blockingFailing is 1 for production currency. No full closeout, new score or production acceptance is claimed. See docs/S414_RECOVERY_BOUNDARY.md. Initial 15 dirty cache files and user config parse; no debris deleted. QA remote equals recovered HEAD; main divergence is retained for safe integration. Capture run42961446030 targeted production; no additional reference adopted. Native new arc remains required.
+
+
+## 2026-11-11 — S415 verification checkpoint (arc ongoing)
+
+Fresh startup/audit and source admission completed. Candidate capture/archive hardening passed focused tests and corrected independent review; integrated current main and published QA0ab1ae5b70. Lighthouse, accessibility and provisional candidate-origin Linux generation pass at that SHA; E2E has721passes/56skips/eight Games failures plus source-budget rejection. Archived one historical task-board block verbatim and updated its workflow-default contract test. Diagnostic130–553 passed424/424, not full coverage. Staging prerequisites remain partial; the attempted private transport repair rolled back and no public data route was exposed. See docs/S415_VERIFICATION_LEDGER.json. Existing score939 remains historical; full closeout, production promotion and native completion remain pending.

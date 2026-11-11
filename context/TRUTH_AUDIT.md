@@ -2023,3 +2023,8 @@ A staging snapshot was uploaded, then correctly rejected by parity after the sou
 ## S414 recovery — current evidence is nonpassing
 
 S414 release verification was interrupted. Committed Games hero changes and intermediate staging/source receipts remain preserved; current full source check failed at step 3 (fixture navigation timeout), hosted E2E has ten visual failures, and doctor blockingFailing is 1 for production currency. No full closeout, new score or production acceptance is claimed. See docs/S414_RECOVERY_BOUNDARY.md. Historical 552-step receipts are not current proof. Fresh run attempted3/552 steps and exited1. Exact HEAD hosted E2E42964550489 failed10 visual cells with719passes/56skips; Lighthouse/accessibility are absent at HEAD. Capture42961446030 used production. No deployment or score is inferred.
+
+
+## S415 — partial evidence stays partial
+
+Authoritative current boundary: docs/S415_VERIFICATION_LEDGER.json. Successful generation does not accept baselines; successful Lighthouse/accessibility do not clear executed E2E failures. Diagnostic424/424 fromstep130 is not553/553 source acceptance. All failed native attempts are preserved separately. Staging preparation, fixture health and verified rollback are not deployed authenticated acceptance. No new score, completed closeout or production shipment is inferred.

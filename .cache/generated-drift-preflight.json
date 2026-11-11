@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.1",
-  "generatedAt": "2026-11-11T01:19:41.975Z",
-  "ok": false,
+  "generatedAt": "2026-11-11T19:42:10.582Z",
+  "ok": true,
   "sampled": 6,
   "universe": 99,
   "subjects": [
@@ -16,8 +16,8 @@
   "checks": [
     {
       "id": "public-intelligence",
-      "ok": false,
-      "status": 1,
+      "ok": true,
+      "status": 0,
       "fix": "node scripts/generate-public-intelligence.mjs",
       "healed": false
     },
@@ -57,12 +57,6 @@
       "healed": false
     }
   ],
-  "stale": [
-    {
-      "id": "public-intelligence",
-      "fix": "node scripts/generate-public-intelligence.mjs",
-      "stderr": "Public intelligence drift detected:\n- api\\public-intelligence.json\n- context\\contracts\\hub.json"
-    }
-  ],
-  "recommendation": "run npm run build, then rerun npm run build:check"
+  "stale": [],
+  "recommendation": "6 of 99 --check-gated generated artifact(s) sampled — NOT whole-tree freshness; run npm run build:check for the full set"
 }
