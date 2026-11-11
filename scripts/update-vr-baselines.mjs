@@ -22,12 +22,13 @@
 import { spawnSync } from './lib/safe-spawn.mjs';
 import {
   mkdirSync, existsSync, readdirSync, statSync,
-  copyFileSync, unlinkSync, rmSync,
+  copyFileSync, unlinkSync, rmSync, readFileSync,
 } from 'node:fs';
 import { join, resolve, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import { randomBytes } from 'node:crypto';
+import { baselineRunIssues, captureReceiptIssues } from './lib/visual-capture-source.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -43,27 +44,28 @@ function gh(...args) {
   return r.stdout.trim();
 }
 
-function findLatestBaselineRun(runId) {
+function readRun(runId) {
+  const run = JSON.parse(gh('api', `repos/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/${runId}`));
+  return { ...run, headSha: run.head_sha };
+}
+
+function findLatestBaselineRun(runId, expectedSha) {
   if (runId) return runId;
   console.log(`Looking for latest "${ARTIFACT_NAME}" artifact...`);
   const out = gh('run', 'list', '--workflow=visual-regression.yml', '--limit=10',
     '--json', 'databaseId,status,conclusion,createdAt,displayTitle');
   const runs = JSON.parse(out);
   for (const run of runs) {
-    if (run.status !== 'completed') {
+    if (run.status !== 'completed' || run.conclusion !== 'success') {
       if (run.status === 'in_progress') {
         console.log(`  run ${run.databaseId} still in_progress — wait for it to finish`);
       }
       continue;
     }
-    // Probe for the artifact by attempting a dry-run list
-    const artOut = spawnSync('gh', ['run', 'download', String(run.databaseId),
-      '--name', ARTIFACT_NAME, '--dir', join(tmpdir(), 'vr-probe-' + run.databaseId)], {
-      cwd: ROOT, encoding: 'utf8', windowsHide: true,
-    });
-    // Clean up the probe dir
-    try { rmSync(join(tmpdir(), 'vr-probe-' + run.databaseId), { recursive: true, force: true }); } catch { /* ok */ }
-    if (artOut.status === 0) {
+    if (baselineRunIssues(readRun(run.databaseId), expectedSha).length) continue;
+    // Discovery is metadata only. Never download an archive merely to find it.
+    const artifacts = JSON.parse(gh('api', `repos/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/${run.databaseId}/artifacts`));
+    if (artifacts.artifacts?.some(a => a.name === ARTIFACT_NAME && !a.expired)) {
       console.log(`  Found: run ${run.databaseId} — "${run.displayTitle}" (${run.conclusion})`);
       return run.databaseId;
     }
@@ -99,7 +101,14 @@ function findPngs(dir) {
   return files;
 }
 
-function stageBaselines(srcDir) {
+function stageBaselines(srcDir, expectedSha) {
+  // GitHub's artifact uploader preserves a common-root path for multiple inputs.
+  // Neither a successful run nor matching filenames proves what origin it used.
+  const receiptPath = join(srcDir, '.cache', 'visual-capture-source.json');
+  let receipt;
+  try { receipt = JSON.parse(readFileSync(receiptPath, 'utf8')); } catch { /* rejected below */ }
+  const issues = captureReceiptIssues(receipt, expectedSha);
+  if (issues.length) { console.error(issues.join('\n')); process.exit(1); }
   mkdirSync(SNAPSHOTS_DIR, { recursive: true });
   const pngs = findPngs(srcDir);
   if (pngs.length === 0) {
@@ -132,7 +141,13 @@ Then run this script (with or without the run ID), commit the result.`);
 }
 
 const providedId = args[0];
-const runId = findLatestBaselineRun(providedId);
+if (args.length > 1 || (providedId && !/^[1-9]\d*$/.test(providedId))) {
+  console.error('Expected one numeric run ID or no arguments.');
+  process.exit(2);
+}
+const expectedSha = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: ROOT, encoding: 'utf8', windowsHide: true });
+const currentSha = expectedSha.status === 0 ? expectedSha.stdout.trim() : '';
+const runId = findLatestBaselineRun(providedId, currentSha);
 if (!runId) {
   console.error(`No completed run with "${ARTIFACT_NAME}" artifact found.`);
   console.error('Trigger one first:');
@@ -140,11 +155,27 @@ if (!runId) {
   process.exit(1);
 }
 
+const run = readRun(runId);
+const issues = baselineRunIssues(run, currentSha);
+if (issues.length) { console.error(issues.join('\n')); process.exit(1); }
+const artifacts = JSON.parse(gh('api', `repos/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/${runId}/artifacts`));
+const matches = artifacts.artifacts?.filter(a => a.name === ARTIFACT_NAME && !a.expired) || [];
+if (matches.length !== 1 || !Number.isSafeInteger(matches[0].id) || !/^sha256:[a-f0-9]{64}$/.test(matches[0].digest || '')) {
+  console.error('Expected one unexpired capture artifact with an exact identity and SHA-256 digest.'); process.exit(1);
+}
+const artifact = matches[0];
+// CANON-023 applies before download, including first-party CI archives. A BLOCK
+// remains a stop; exact founder-approved exceptions are handled separately.
+const trust = spawnSync(process.execPath, [resolve(ROOT, '..', 'vaultspark-studio-ops', 'scripts', 'package-trust.mjs'), '--download-url',
+  `https://api.github.com/repos/VaultSparkStudios/VaultSparkStudios.github.io/actions/artifacts/${artifact.id}/zip`],
+  { cwd: ROOT, encoding: 'utf8', windowsHide: true });
+if (trust.status !== 0) { console.error(`Artifact trust is nonpassing for artifact ${artifact.id} (${artifact.digest}); no archive downloaded or baseline changed.`); process.exit(1); }
 const tmpDir = downloadArtifact(runId);
-const staged = stageBaselines(tmpDir);
+const staged = stageBaselines(tmpDir, expectedSha.stdout.trim());
 
 console.log(`\n✓ Staged ${staged} baseline(s) → tests/__snapshots__/visual-regression.spec.js-snapshots/`);
-console.log('Now commit:');
+console.log('Provisional files only: directly review changed originals and run unchanged native comparison before accepting or committing.');
+console.log('After review and successful comparison:');
 console.log('  git add tests/__snapshots__/');
 console.log('  git status tests/__snapshots__/');
 console.log('  git commit -m "test(vr): capture Linux baselines from CI (S223)"');

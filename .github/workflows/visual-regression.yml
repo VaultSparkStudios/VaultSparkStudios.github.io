@@ -19,7 +19,6 @@ name: Visual Regression (mobile)
 # NOT portable. Use the `update_baselines` mode to capture Linux baselines:
 #
 #   gh workflow run "Visual Regression (mobile)" \
-#     -f base_url=https://vaultsparkstudios.com \
 #     -f update_baselines=true
 #
 # Download the resulting `visual-regression-baselines` artifact and commit the
@@ -45,9 +44,9 @@ on:
   workflow_dispatch:
     inputs:
       base_url:
-        description: 'Base URL to snapshot against (defaults to production)'
+        description: 'Comparison origin; baseline generation always requires the checked-out candidate preview'
         required: false
-        default: 'https://vaultsparkstudios.com'
+        default: 'http://127.0.0.1:4173'
       update_baselines:
         description: >-
           Set to true to capture new Linux baselines (--update-snapshots) and
@@ -67,6 +66,12 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+      - name: Admit candidate capture source
+        env:
+          CAPTURE_ORIGIN: ${{ github.event.inputs.base_url || 'http://127.0.0.1:4173' }}
+          CAPTURE_UPDATE: ${{ github.event.inputs.update_baselines || 'false' }}
+          CAPTURE_SHA: ${{ github.sha }}
+        run: node scripts/admit-visual-capture.mjs
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -97,7 +102,7 @@ jobs:
       - name: Run visual-regression snapshots
         env:
           BASE_URL: http://127.0.0.1:4173
-          VR_BASE_URL: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.base_url || '' }}
+          VR_BASE_URL: ${{ github.event.inputs.base_url || 'http://127.0.0.1:4173' }}
           VS_SCENE_DIAGNOSTICS: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.scene_diagnostics == 'true' && 'true' || '' }}
         run: >-
           npx playwright test tests/visual-regression.spec.js --project=chromium --reporter=line
@@ -112,7 +117,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: visual-regression-baselines
-          path: tests/__snapshots__/
+          include-hidden-files: true
+          path: |
+            tests/__snapshots__/
+            .cache/visual-capture-source.json
           retention-days: 30
       - name: Upload diff report on failure
         if: failure()
