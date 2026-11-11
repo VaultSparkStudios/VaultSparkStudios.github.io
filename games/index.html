@@ -115,7 +115,8 @@
       letter-spacing: -0.045em;
       margin: 0.75rem 0 1rem;
     }
-    .page-hero .eyebrow { box-sizing: border-box; height: 2.3125rem; }
+    /* Single-line pill snaps to 37px; a wrapped pill (320px phones) grows. */
+    .page-hero .eyebrow { box-sizing: border-box; min-height: 2.3125rem; }
     .page-hero p {
       color: var(--muted);
       /* S414: whole-pixel type metrics (17px / 28px). The previous 1.08rem /
