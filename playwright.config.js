@@ -1,45 +1,8 @@
-const fs = require('fs');
-const path = require('path');
 const { defineConfig } = require('@playwright/test');
 
-loadLocalPlaywrightEnv();
-
-function loadLocalPlaywrightEnv() {
-  const envFiles = [
-    '.env.playwright.local.private',
-    '.env.playwright.local',
-  ];
-
-  for (const relativePath of envFiles) {
-    loadEnvFile(path.join(__dirname, relativePath));
-  }
-}
-
-function loadEnvFile(envPath) {
-  if (!fs.existsSync(envPath)) return;
-
-  const lines = fs.readFileSync(envPath, 'utf8').split(/\r?\n/);
-  for (const rawLine of lines) {
-    const line = rawLine.trim();
-    if (!line || line.startsWith('#')) continue;
-
-    const eqIndex = line.indexOf('=');
-    if (eqIndex === -1) continue;
-
-    const key = line.slice(0, eqIndex).trim();
-    if (!key || process.env[key]) continue;
-
-    let value = line.slice(eqIndex + 1).trim();
-    if (
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'"))
-    ) {
-      value = value.slice(1, -1);
-    }
-
-    process.env[key] = value;
-  }
-}
+// Credentials belong to the secrets gateway. CI and gateway-backed runners
+// supply their explicit environment; configuration never reads local dotenv
+// files. Public browser checks remain runnable without account credentials.
 
 module.exports = defineConfig({
   testDir: './tests',

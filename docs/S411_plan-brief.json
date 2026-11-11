@@ -1,0 +1,20 @@
+{
+  "kind": "plan",
+  "session": 411,
+  "date": "2026-11-04",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Align lock identity with the carryover boundary",
+  "items": [
+    {
+      "id": 1,
+      "slug": "consistent-session-carryover",
+      "title": "Rotate session identity together with its timestamp and starting commit",
+      "axis": "speed-organization-efficiency",
+      "leftScore": 8,
+      "rightScore": 4,
+      "insight": "A rotated lock can retain the preceding session number while replacing its start time and commit. Keep these fields under one carryover decision so the next operator can locate the current release evidence.",
+      "evidence": "scripts/write-session-lock.mjs; independent read-only audit; isolated CLI regression required."
+    }
+  ]
+}

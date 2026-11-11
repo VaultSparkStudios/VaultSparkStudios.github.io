@@ -600,6 +600,10 @@ test('portal gate redirect is a 302 with no-store (never cacheable)', () => {
 test('portal gate redirect tolerates an empty search string', () => {
   const res = portalGateRedirect('https://vaultsparkstudios.com', '/investor-portal/');
   assert.equal(res.status, 302);
+  const target = new URL(res.headers.get('Location'));
+  assert.equal(target.pathname, '/investor-portal/login/');
+  assert.equal(target.searchParams.get('next'), '/investor-portal/');
+  assert.equal(res.headers.get('Cache-Control'), 'no-store');
   assert.ok(res.headers.get('Location').includes(encodeURIComponent('/investor-portal/')));
 });
 

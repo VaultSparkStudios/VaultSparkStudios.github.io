@@ -1477,3 +1477,77 @@ Wave 3 complete: full source checks, staging and authorized full production rele
 Wave 4 canonical closeout and publication: authoritative state in docs/RELEASE_S403.json, waves[3].
 
 <!-- S402-closeout-writeback -->
+
+
+<!-- S410 2026-11-04: completed single-line rows from mixed Now block; all open tasks retained -->
+
+- [x] **[S351][QA/P2] Unit-suite divergence gate — SHIPPED S352.** `check-unit-suite-parity.mjs` requires declared = executed = tracked and runs in build:check before `node --test`; 9/9 self-test, and a live mutation fails by name.
+
+- [x] **[S348][PERF/P1] Defer Changelog reaction hydration below the fold.** **DONE S348.** Near-viewport observation, bounded four-island idle fallback, layout containment and unavailable-count semantics shipped; focused mutation coverage plus 14/14 inspected theme/device captures bind the deep-scroll reaction state.
+
+- [x] **[S348][PERF/P2] Make local performance sampling repeatable.** **DONE S348.** The harness warms once, defaults to three measured samples, preserves raw runs, reports full distributions and binds host-noise evidence. The measured Changelog run abstained as volatile (LCP p75 1.636s; CLS median 0.0021); it explicitly makes no field Core Web Vitals claim.
+
+- [x] **[S348][VERIFY/P1] Make mobile evidence atomic across flaky routes.** **DONE S348.** Process-level retries can no longer restart the single-writer ledger; bounded navigation recovery remains. Clean proof: 215/215 findings, zero failed captures, current candidate/source-bound receipt.
+
+- [x] **[S348][BUILD/P1] Make generated provenance byte-deterministic.** **DONE S348.** Forge RSS dates now derive from the newest source commit, feedback provenance inherits its source receipt clock, and both builders' `--check` modes compare exact output bytes. Two consecutive rebuilds produced identical hashes; Forge focused coverage is 9/9.
+
+- [x] **[S348][BUILD/P1] Close evidence-graph coverage instead of carrying a permanent blind spot.** **DONE S348.** Every one of 67 `--check`-gated generators is now source-reviewed and modeled (80 graph nodes total after the critique-packet innovation; unmodeled 33 -> 0). The projection, acyclicity/build-order gate, coverage self-test 12/12, reachability self-test 15/15, and all 80 live check/output contracts pass.
+
+- [x] **[S348][CI/P1] Close scheduled-publisher cascades exposed by the complete graph.** **DONE S348.** The centralized refresh order now rebuilds all newly visible dependents; both live-data publishers stage every fan-out, including agent discovery, project shards, catalog pages and ledgers. All 29 workflows pass the cascade gate and its widened mutation suite is 21/21.
+
+- [x] **[S345][DEPLOY/P0] Full production deploy, both lanes, founder-authorised.** **DONE S345.** Staging refreshed first per CANON-007 by the operator overlay (403 overlays, 26 safe removals, identity untouched, exact-byte verified), then promoted through the SCOPED path -- `check-promotion-scope` reported `promotable=true - scoped-disjoint` against BOTH active hold reasons (`real-provider-e2e-pending`, `supabase-control-plane-partial`), and the identity hold was never cleared. Content lane: `pages-deploy` run `34153075898` green; **production serves HEAD `998243a3f76643c70ece998f7f75c748aa0d1bf2` exactly**, not a baseline stamp. Worker lane second (it deadlocks on `deploy-currency-live` otherwise): run `34153477094` passed the canonical release ceremony, deployed, and cleared the post-deploy liveness gate with no rollback. Verified live: strict CSP with the sha allowlist, HSTS preload, TT report-only, and `/ /news/ /status/ /membership/ /evidence/` all 200. `deploy-currency` now reads `production current - 0 commit(s) behind`. Precondition the content lane needs and CI cannot produce: `build-worker-route-provenance --probe` from a residential vantage, matched 7/7.
+
+- [x] **[S345][BUILD/P1] `check-evidence-graph-coverage.mjs` executed its own ratchet when imported.** **DONE S345.** `else run()` at module scope meant any consumer that imported `checkedGenerators`/`coverage` would run the gate and hit its `process.exit`. Found by needing the import for the sweep above, not by a gate -- nothing imported it before. Fixed with the repo's established `isDirect` guard; both direct invocation and `--self-test` (7/7) unchanged, and the import is now silent.
+
+- [x] **[S345→S348][BUILD/P3] Evidence-graph coverage debt is closed.** **DONE S348.** Source inspection expanded the graph to all 67 `--check`-gated generators (79 nodes including fan-out writers), lowered the ratchet from 33 to 0, and taught reachability to prove wildcard outputs against tracked files rather than treating globs as literal paths.
+
+- [x] **[S344][UX/P0] The homepage returning-visitor strip had never rendered, and two theme defects were hiding behind that.** **DONE S344.** Found by doing the CANON-053 pixel check on the surface fixed above — it would not render. `returning-visitor-digest.js` loads first (`ambient-loader.js`, both `idle`) and stamps `vs_last_visit_ts` to `now` before `returning-signal-strip.js` reads the same key, so no entry was ever newer than "last visit". Proved with a control blocking only the digest: strip renders, baseline preserved. Same class as the S343 `vs_visit_count` fix, same two files, neighbouring key. Fixed with a one-writer handoff key `vs_prev_visit_ts` (absent = bail, self-heals next visit). Underneath it: `--vs-text` is defined nowhere so every theme used a near-white fallback (invisible on light), and brand gold measured 1.31:1 on cream. Now `--text` plus a light-only `#8a6a00` (4.72:1). **7/7 themes clear WCAG AA on all four elements, measured from painted pixels** after two computed-style readings were wrong. See D-S344.6.
+
+- [x] **[S344][CI/P0] A skipped step read as a successful step, four guards deep.** **DONE S344.** `news-publish.yml` chained on `if: steps.<X>.outputs.status == '0'`; a SKIPPED step writes no output and GitHub coerces `''` and `'0'` to the same number, so the guard passed for a step that never ran. In run `34063581495` the art renderer, Desk rebuild, editorial gates and public-feed cascade all executed on a slot that drafted nothing. Fixed with a non-numeric `ok=yes/no` sentinel across all 7 guards, plus `check-workflow-step-guards.mjs` (10/10 self-test, in `build:check`, 29 workflows clean) run against the pre-fix file as a negative control -- it caught all 7. See D-S344.3.
+
+- [x] **[S344][CI/P0] `generate-news-art.mjs` crashed with a raw ENOENT stack on the normal dropped slot.** **DONE S344.** Unguarded `readdirSync('.cache/news-drafts')`. Shipped in the SAME change as the guard fix and never alone: this crash was one of only two things preventing an unattended commit of a non-edition. Exit code deliberately unchanged (still non-zero) so promotion stays gated.
+
+- [x] **[S344][UX/P0] The homepage published CI jargon to returning visitors, and the filter meant to stop it was dead code.** **DONE S344.** `MOVE_VERB[commit.move] || MOVE_VERB[commit.type]` meant `chore: null` was never reached, because chore maps to move `Tended` -> truthy `Refined`. 13 of 24 live sentences were chore commits. Fixed the precedence, added structural `visitorFacing` classification (producer + reader shipped together; absent field = not publishable), stripped `(attempt N)`, and pinned the exact leaked sentence. Feed 24 -> 8, every survivor visitor-visible. Closes [VOICE/P1] from S343. See D-S344.4.
+
+- [x] **[S344][SEC/P0] The Supabase credential mismatch is named at the probe, and the gateway fix is shipped.** **DONE S344.** Root cause is structural, not a bad intake: `loadEnv()` merges every `secrets/*.env` into ONE flat namespace, the studio runs TWO shared Supabase projects, and both want `SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY` — so whichever intakes last silently takes the slot. It flipped on 2026-08-17. Fixed here: `probe-supabase-control-plane.mjs` was *diagnosing* `credential-project-mismatch` and then reporting the generic `supabase-rest-probe-failed`, which sends the reader to the provider when the fix is one line in the gateway; the blocker is now named, and the probe also decodes the service-role JWT's own `ref` so a right-URL/wrong-key slot is caught. 16/16 with the historical bug pinned. Gateway half shipped to studio-ops as Ark `01K1S867GM47A2B15C3C840B38` (project-scoped names + surface `lastProbeStatus`). See D-S344.1.
+
+- [x] **[S344->S349][OBS/P1] `check-secrets` reports READY for a credential it knows is failing.** **FIXED S349.** `resolveCapability` held `lastProbeStatus` and never read it. It now returns `lastProbeStatus`/`lastProbeAt`/`probeFailing` alongside presence, and the CLI renders a distinct `⚠ FAILING` row ("present but last probe: auth-error (2026-08-13)") instead of collapsing it into READY. `ok` deliberately keeps meaning presence, so no existing caller changes behaviour. Exit codes are unchanged on purpose: a failing probe is NOT "credential absent", and returning 1 would have relabelled it as the founder blocker CANON-019 forbids. Surfaced a second unknown failure in the process -- `openai.api` -> `unreachable` -- so the honest ready count is 44/72, not 46/72.
+
+- [x] **[S343][AUTH/P0] Nobody could join this website — one undefined function was failing every registration.** **DONE S343, live in production.** `vault-member/portal-auth.js` called `VS.kitSubscribe(...)`, defined nowhere in the codebase, inside the registration try-block and BEFORE `showDashboard()`. The subscribe checkbox ships `checked`, so every new member on the default path hit a TypeError, was told *"Could not complete registration. Please try again."* — and was stranded while their account had in fact been created; the retry then collided with `register_open`'s username-uniqueness guard. This is the explanation for zero users. Opt-in now fires AFTER `showDashboard()`, guarded on `window.VaultKit`, un-awaited, rejection swallowed. Verified in the SERVED bundle at `57e69bfcd`: the only surviving `kitSubscribe` is the comment explaining its removal.
+
+- [x] **[S343][AUTH/P0] A taken Vault Handle was reading as a successful registration.** **DONE S343.** `register_open` reports a rejection as DATA, not as `rpcErr`; the client checked only `rpcErr`, so a taken handle dropped the member into a dashboard their handle was never bound to. Now inspects `rpcData` on both the array and object shapes.
+
+- [x] **[S343][UX/P1] `/login` served browsers a raw JSON blob when the IdP was down.** **DONE S343.** `cloudflare/obelisk-auth.js` content-negotiates: browsers get a branded retry page, machines keep the `identity_provider_unavailable` JSON contract byte-for-byte. 57/57 worker tests.
+
+- [x] **[S343][OBS/P1] The funnel had no bot separation, while the site advertised that it did.** **DONE S343.** `/stats/ecosystem/` has claimed "bots separated from people" for months; the funnel beacon applied no such filter, leaving all 371 hero impressions of unknown provenance. `looksLikeBot()` returns a BOOLEAN — the UA is read and discarded, never stored, because a retained UA is a fingerprint.
+
+- [x] **[S343][LEGAL/P1] Subscriptions were sellable with no cancel path.** **DONE S343.** `supabase/functions/customer-portal-session` had ZERO callers and the Settings button was guarded by `typeof`, so it failed SILENTLY while the copy promises "Cancel anytime" — a consumer-law exposure, not just a bug. `VS.openCustomerPortal()` defined in `portal-core.js`, handling the `No subscription found` 404. Also: `?checkout=success` is now read (mirroring the working `?gift=success` path); `create-checkout` had been redirecting with it to nothing.
+
+- [x] **[S343][PERF/P2] The homepage shipped ~6 KB per visit to run two guaranteed no-ops.** **DONE S343.** `home-personalized.js` and `pathways-router.js` were loaded on `/` by the idle loader; both early-return on `/`, and `#home-personalized-welcome` exists in zero HTML files. Also fixed `vs_visit_count`, which had two writers with incompatible meanings (per-path here, per-session in `returning-visitor-digest.js`) while every trust/cadence threshold on the site reads it — the session-scoped writer now owns it outright.
+
+- [x] **[S343][SEC/P0] The gateway's Supabase service-role key is scoped to a DIFFERENT project.** Duplicate consolidated into the S344 scoped-credential owner task. S347 fresh preflight still observes credential-project mismatch; Ark 01K22H17HM5F6D2952E9B84165 requests the owner fix. This is owner-pending, not missing-credential or human-only evidence.
+
+
+<!-- rotated 2026-11-10 · sessions < 411 · 3 block(s) -->
+
+## S410 current local runtime acceptance
+
+Native full build/postbuild passed. The actual215-case mobile audit passed at2026-11-04T05:21:19.019Z; owned preview closed. Visual406 is current:392 original primary frames retained,14 fresh full-Desk after frames and14 historical before frames directly inspected. Source/candidate/PNG hashes passed native validation. See docs/S410_mobile-acceptance.json and docs/RELEASE_S410.json. Complete source549, current staging, exact hosted/account checks and authorized publication/production/readback remain pending; these local results do not prove real private-role access.
+
+<!-- S410-closeout-writeback -->
+
+## S410 selected implementation verified locally
+
+All three selected L2 repairs pass local acceptance and independent review: deterministic reaction fixture, guarded bounded Windows fixture cleanup, and current-source/release truth in the startup brief. Browser17/17 and native evidence-kernel cases pass; actual brief reads128/549 failed partial source and S409 release pending. Full source is not yet accepted.
+
+Wave1 fresh startup/audit complete. Wave2 three scoped implementations locally verified. Wave3 combined source/current staging/hosted/account verification pending. Wave4 authorized main publication/production/readback/full closeout pending. Source: docs/AUDIT_2026-11-04.json; acceptance: docs/S410_implementation.json. Native timing checker still flags inherited dirty files; selected targets were clean at the recorded gate and all three premises replay against its start-head blobs. No native timing pass is claimed.
+
+<!-- S410-arc-current -->
+
+## Session 410 — fresh arc in progress
+
+Session Intent: complete the fresh S410 startup, audit, three selected L2 verification repairs, and authorized combined main publication/deployment once applicable acceptance passes. Native goal01a1a424-fcbc-7f91-9461-d697bb287c76, created1793755268, is bound to S410; recovery checkpoint e6535f0b76 is separate.
+
+Wave1 startup/audit complete: docs/AUDIT_2026-11-04.json; three premises and candidate admission pass. Wave2 implementation in progress. Wave3 source/staging/hosted/account acceptance and Wave4 authorized release/closeout pending. Prior S409 failed source and positive-account dependency remain explicit. No production/main completion claim.
+
+<!-- S409-partial-recovery-2026-11-04 -->

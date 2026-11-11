@@ -8,12 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 8 totals): 939 · 939 · 939 · 939 · 939 · 939 · 939 · 939 ▄▄▄▄▄▄▄▄ (→)
-Avgs — 3: 939.0 | 5: 939.0 | 10: 939.0
-  └ S408: Dev95 | Align94 | Momentum92 | Engage96 | Process88 | Coherence94 | Security97 | Ecosystem91 | Capital95 | Automation97
-Velocity trend:→ |Protocol velocity:↑ |Debt:→
-Last session: 2026-11-02 | Session 408 | Total: 939/1000 | Velocity: 1
-  └ Release evidence: docs/RELEASE_S408.json; local implementation alone is not production acceptance.
+Sparkline (last8):939 ·939 ·939 ·939 ·939 ·939 ·939 ·939 ▄▄▄▄▄▄▄▄ (→)
+Avgs — 3:939.0 |5:939.0 |10:939.0
+  └ S411: Dev95 |Align94 |Momentum92 |Engage96 |Process88 |Coherence94 |Security97 |Ecosystem91 |Capital95 |Automation97
+Last session:2026-11-06 |Session 411 |Total:939/1000 |Velocity:0 |Protocol velocity:2
+  └ Release evidence: docs/RELEASE_S411.json; verified local recovery is not production acceptance.
 <!-- rolling-status-end -->
 
 > Older entries through S401 live verbatim in `context/archive/SIL_S1-S401.md` (exact committed pre-rotation snapshot). Recent complete entries follow.
@@ -2216,3 +2215,116 @@ Five locally accepted outcomes: product1, protocol4. Shared Git captures now ret
 #### S408 verified release addendum
 
 Five S408 outcomes are verified: safe build-check help, merge-closeout observation, complete privacy inventory, readable archive sharing/live previews, and bounded complete Git capture. Candidate 0105e4646789 passed two complete548-step native runs, mobile215/215,84 inspected before/after page-component images across seven themes, staging11/11 and exact hosted workflows3/3. Normal full Pages production run41572219005 is verified by provider identity and three build stamps. Complete Pages-origin readback checked3824: 3814 identical,10 configured redirects,0 differences/unread. Live OG Workere4b3070a-1090-49aa-b99d-d7ef44f6c192 passed16exact GET/8HEAD reads. All five publishers are restored; uptime stayed active. SIL939/1000 (product1/protocol4). The later full-run process-status flake was corrected by asserting both native/wrapped ENOBUFS capture errors, retaining explicit caps and full byte controls; independent review approved. Failed attempts remain recorded. Product velocity1, protocol velocity4 and SIL939/1000 remain unchanged. The two existing future SIL commitments stay unselected on TASK_BOARD.
+
+
+<!-- S409-writeback -->
+## Session 409 — 2026-11-03 — shared messages and reliable reactions
+
+Two selected L2 public journeys are locally verified: shared Contact drafts retain editable text; page reactions admit one in-page submission and preserve pending retries without stale-store overwrite. Focused browser tests: Contact4/4 and feedback15/15, no skips. Independent reviews passed. Full source, staging, hosted checks, production, readback and main publication remain separately tracked in docs/RELEASE_S409.json; local acceptance is not deployment proof.
+
+Dev Health:95 | Creative Alignment:94 | Momentum:92 | Engagement:96 | Process Quality:88 | Cross-Repo Coherence:94 | Security Posture:97 | Ecosystem Integration:91 | Capital Efficiency:95 | Automation Coverage:97
+Total:939/1000. Product velocity:2; protocol velocity:0. No score increase for unmeasured conversion, retention or field performance.
+
+Brainstorm: reproduce transient offline recovery before changing retries; review arbitrary shared URL handling separately. Both are future unselected SIL tasks. CDR unchanged.
+
+
+<!-- S409-account-scope-addendum -->
+### S409 account scope addendum — acceptance in progress
+
+Founder direction expands the original two local repairs to three account outcomes. SIL remains939/1000 across the existing ten categories; no additional shipped velocity or measured user gain is claimed before release.
+
+Lesson: account-page fixtures that block the identity provider cannot validate its destructive mount behavior, snapshotted destination or loaded layout. Pair local states with actual public provider rendering and affected authenticated journeys. Preserve the initial two unselected follow-up commitments; do not add unrelated work.
+
+
+<!-- S409-partial-recovery-2026-11-04 -->
+### S409 recovery addendum — partial handoff
+
+Source attempt failed at129 with128/549 passing steps; current mobile215 and reviewed visual406 pass locally. Final release remains pending. Existing SIL939/1000, ten categories, product velocity2 and protocol velocity0 are unchanged. No additional scored session or shipped velocity is recorded. Preserve the existing two unselected SIL commitments. Lesson: end recovery at a truthful dependency boundary; never count recovery as a fresh arc or rebind failed/frozen receipts after bookkeeping.
+
+
+<!-- S410-closeout-writeback -->
+## Session 410 — 2026-11-04 — deterministic verification and truthful startup
+
+Three selected verification repairs are locally accepted: deterministic early-reaction ordering, bounded guarded Windows fixture cleanup, and startup source/release evidence. Browser17/17,31 evidence-kernel cases and independent review pass. Combined release acceptance remains pending; historical source548/mobile215/visual406 do not prove the merged candidate.
+
+Dev Health:95 | Creative Alignment:94 | Momentum:92 | Engagement:96 | Process Quality:88 | Cross-Repo Coherence:94 | Security Posture:97 | Ecosystem Integration:91 | Capital Efficiency:95 | Automation Coverage:97
+Total:939/1000. Product velocity:0; protocol velocity:3. No score increase or measured conversion/performance claim. Final release remains pending in docs/RELEASE_S410.json.
+
+Brainstorm: inspect another timer-driven browser fixture only after reproduction; design owner-scoped inherited-WIP timing evidence without weakening the existing strict checker. Both are future unselected TASK_BOARD commitments. Broad timing checker remains nonpassing over inherited dirty paths; selected source targets were clean at the recorded gate and premises replay against the baseline. CDR unchanged; no new founder creative direction.
+
+
+<!-- S410-premise-composition-clarification -->
+S410 timing-record clarification: the230 dirty paths at the gate comprised226 inherited paths plus4 newly written audit/plan admission records. None of the four selected implementation source files was dirty. Preserve the native nonpassing timing verdict and baseline replay; no score, velocity or historical test result changes.
+
+## Session 410 addendum — recovery checkpoint (2026-11-04)
+
+Recovered the four post-closeout verification corrections through195a385f6a and integrated current published observations through21d0be269b. Generated conflict projections use the newer published versions; dependent regeneration and final candidate acceptance remain pending. Native doctor14/17 passes with3 warnings and no blocking doctor failures; staged secret scan reports0 findings. These checks do not establish release acceptance. Visual conformance explicitly fails after integration because225 changed UI files postdate the receipt. Positive affected account journeys, current complete source, staging/hosted acceptance, main publication and production/readback remain incomplete. Preserve the existing SIL score and velocity; no new score or product completion is claimed.
+
+
+### S411 — recovery progress — 2026-11-06
+
+S411 recovery preserves the session-boundary repair, drawer visibility fix and explicit discussion initialization. Focused recovery regressions passed19/19 with no skips. Canonical integration and release acceptance remain in progress; historical source549/mobile215/visual742 evidence does not prove the integrated candidate. See docs/S411_recovery-2026-11-06.json and docs/S411_recovery-focused-tests.json.
+
+Dev Health:95 | Creative Alignment:94 | Momentum:92 | Engagement:96 | Process Quality:88 | Cross-Repo Coherence:94 | Security Posture:97 | Ecosystem Integration:91 | Capital Efficiency:95 | Automation Coverage:97
+Total:939/1000, carried forward without a new measured product score. No release velocity is claimed. Two future unselected SIL ideas are on TASK_BOARD. Full closeout pending; CDR unchanged because no new human creative direction was given.
+
+
+<!-- S411-local-recovery-closeout -->
+## Session 411 — 2026-11-06 — verified local recovery; release pending
+
+S411 local recovery is verified: complete native source549/549 from step1, canonical runtime build26/26, mobile215/215 with zeroP0/P1, and532 reviewed public captures (372 direct current inspections;160 exact prior-pixel carries). The current artifact root is 9393bf84460da06a72b1b81df2af5ed1ea4bdb2aab60b67a8a4dea09dfb3023d. Earlier failed attempts and historical742 captures remain preserved; older Windows70 comparisons are historical. See docs/RELEASE_S411.json.
+
+Dev Health:95 | Creative Alignment:94 | Momentum:92 | Engagement:96 | Process Quality:88 | Cross-Repo Coherence:94 | Security Posture:97 | Ecosystem Integration:91 | Capital Efficiency:95 | Automation Coverage:97
+Total:939/1000. Product/release velocity:0; protocol velocity:2 (lock continuity and copy-gate accuracy). Website lens: local runtime/mobile and theme readability are verified; field Core Web Vitals, conversion and retention improvements remain unmeasured. Content/copy quality passed without changing article prose; visual polish is limited to declared reviewed scopes. Scores remain carried forward, with no increase for unmeasured outcomes.
+
+Process limitation: inherited-WIP timing remains nonpassing; do not relabel it as a native timing pass. Brainstorm commitments remain the two already-boarded, unselected SIL items: reproduce history-scale limits before changing quotas; inspect missing discussion intent only after reproduction. The observed capture-copy collision is a fresh-audit candidate, not an extra recovery implementation. CDR unchanged: the founder supplied operational verification availability, not new creative direction. Full release and this new native invocation remain pending.
+
+
+<!-- S411-release-recovery-progress-2026-11-08 -->
+## S411 release recovery — 2026-11-08, acceptance in progress
+
+Founder renewed push and deployment authorization. QA source dfb3a4f2345f1928c227c61d39a966b4155f97c3 is remotely verified; no main promotion or production deployment is claimed. Current runtime root fc3ad58b984f3b4171269555d903096d726547358de0f0cd2d7b3792a9243551 was built with candidate identity a5c44a6a03b14ff4bedea24269dc2e3a064b2bd3; source commit and artifact build identity are distinct.
+
+The current static staging deployment passed public artifact readback and all20 reachability checks:12 private-path denials and8 public successes. Verified receipt f58a466345c546f964153690 covers4090 regular files; chronology depth213. Archive packaging uses the positive public served-surface inventory. This proves static staging, not isolated backend or authenticated behavior.
+
+Current local UI acceptance:43 header/contrast checks,112 directly reviewed header/picker originals across all7 themes, and70 native Windows snapshots all directly reviewed with0 concrete findings. The70 reviewed Windows originals were accepted;67 differ from prior baselines. Linux run42476258466 passed42 geometry checks and68 snapshots, with2 member-portal test-contract failures before capture; no complete70-frame acceptance was inferred. The portal absence assertion is corrected; exact-QA Linux run42477531084 is pending. The full549-step source attempt stopped at170 because prior visual/mobile receipts no longer matched the changed header. Earlier549/532/215 proofs remain historical, not current-candidate acceptance.
+
+Remaining release work: fresh mobile/desktop audit, current full-source proof, reviewed complete Linux baselines, all3 exact-candidate required workflows, isolated staging account configuration and real affected member/approved-investor journeys, authorized main/production/readback, then full recovery closeout. The founder can perform both native journeys when isolation is verified. Required staging provisioning/artifact prerequisites remain unresolved; generic deployment authorization does not silently change artifact trust policy. No sign-in invitation is issued while staging uses production data defaults.
+
+The native invocation01a1b213-67c9-7af0-9148-611b5d9cbc66 created1793988988 still requires its full new startup/audit/implementation/closeout after S411 recovery. No new session has been bound, no lock cleared and no native completion claimed. SIL939 remains the prior score; this progress checkpoint awards no new score or release credit.
+
+Progress reflection only: verify actual platform geometry before baseline acceptance, retain failed observations, and keep current proof scopes explicit. No new SIL score, selected outcome or full closeout is claimed.
+
+
+<!-- S411-current-verified-checkpoint-2026-11-08 -->
+## S411 QA checkpoint — release acceptance pending
+
+Recorded 2026-11-08T13:20:56.311Z. The complete native source run passed549/549 from step1, exit0, source fingerprint 57f82337699976d08f358e56; see docs/S411_current-source-verified-1108.json. Frozen runtime root 87fd6f57753cd81ec6d1e842c937889ee3ed9ffc0b4596ae611f8925e149d499 has build identity a5c44a6a03b14ff4bedea24269dc2e3a064b2bd3; a source publication commit is a separate identity. Static staging receipt e87922e1b168c9d19f7a3a08 verifies4090 regular files and chronology depth214; public manifest/receipt readback plus all20 reachability checks passed. Anonymous staging browser checks passed6/6 with0held/skipped/failed/flaky. Two non-core status feeds were regenerated after deployment; the critical artifact root stayed unchanged.
+
+Current local header proof is112 newly captured and directly reviewed originals across7themes, zero scoped findings; source/candidate stayed stable. Native mobile215/215 passed,0P0/P1,133P2 diagnostics retained, automated-only. Reviewed reference baselines comprise70Windows and70Linux originals; Linux preserves an inherited P2 decorative capsule edge issue. The parser-only determined quoted-question repair passes96self-tests, the actual corpus and14independent boundary probes; UI and article bytes were unchanged. Failed runs and old532/112/215 receipts retain their actual historical scope.
+
+QA publication and all3 exact-commit required workflows follow this checkpoint; no main promotion or production deployment is claimed. Isolated staging provisioning/artifact prerequisites and affected positive member/approved-investor journeys remain pending. The founder is available for both native journeys once isolation is verified. Existing push/deployment authorization persists. No new permission for the same promotion is needed.
+
+Native goal01a1b213-67c9-7af0-9148-611b5d9cbc66, created1793988988, still requires its full fresh startup/audit/implementation/closeout after S411 recovery. No new session has been bound, lock cleared, score awarded or goal completion claimed. Current939/1000 is the prior score.
+
+
+<!-- S411-partial-recovery-boundary-2026-11-08 -->
+## S411 partial recovery boundary — release remains pending
+
+Recorded 2026-11-08T15:35:56.285Z. This is an honest partial recovery checkpoint at the existing isolated-account dependency, not a successful release or full closeout. Local verification receipts retain their actual timestamps, source fingerprints and scopes; this note does not rebind them. The failed closeout autopilot, executed CI failures, flaky observations and unresolved visual cause remain preserved. Diagnostic observations: comparison: 42494681623, completed, failure; provisional-generation: 42494683475, completed, success. Generation output remains provisional and is not accepted baseline evidence.
+
+Follow context/DECISIONS.md:1215 and1251 and SESSION_PROTOCOL §3.0: checkpoint the recovered S411 record, then run this native invocation's genuine full startup and fresh audit; carry pending visual repair, exact candidate checks, isolated member/approved-investor journeys and authorized production acceptance into that arc. Successful production promotion is not a prerequisite for fresh startup. Existing push/deployment authorization persists; isolation and affected authenticated acceptance remain required before promotion.
+
+Native invocation 01a1b213-67c9-7af0-9148-611b5d9cbc66, created 1793988988, still requires its own full start/audit/implementation/closeout. Inspect native identity and run the binding helper before triage; start-new-arc requires a new monotonic startup lock before --apply. Do not use --restart for an unbound invocation. This record neither changes the lock nor binds/completes the goal. Prior939/1000 and its categories remain historical and unchanged; no new score, release velocity or full-closeout credit is awarded.
+
+Reflection only: keep partial recovery and fresh-arc identity separate; no new brainstorm implementation or score is selected by this boundary. CDR unchanged because this operational checkpoint supplies no new creative direction.
+
+
+<!-- S412-verified-code-checkpoint -->
+## S412 — verified code; release acceptance pending
+
+Recorded 2026-11-08T16:21:51.638Z. The fresh S412 audit and implementation are bound to the current native invocation. Capture provenance repairs passed20 focused tests and independent round-two review; the neutral Oracle catalog context passed8 offline actual-payload checks and independent review. Test wiring includes both regular unit and549-step build-check commands. Details and limitations: docs/S412_implementation-verification.json. These are local code results; full current source, refreshed visual evidence and release acceptance are not inferred.
+
+The exact image-artifact decision and three Linux reference reviews/comparisons remain pending. Isolated account staging still needs actual registered target/intake and artifact trust; no member or approved-investor journey is claimed. Existing push/deployment authorization persists. Main, production, full closeout and native completion remain pending. Prior939 is historical; no new score or release credit is awarded.
+
+Work-in-progress learning note only: actual writer probes caught stale-pixel rebinding and independent review caught shared-pointer concurrency. Retain the prior assessment; score and full session closeout await the remaining scope.

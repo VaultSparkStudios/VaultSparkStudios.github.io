@@ -54,6 +54,11 @@ on:
           upload them as an artifact for committing. Use after intentional UI changes.
         required: false
         default: 'false'
+      scene_diagnostics:
+        description: 'Log bounded read-only scene/native-matcher diagnostics (loopback origin only; generation stays provisional)'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   snapshot:
@@ -80,6 +85,10 @@ jobs:
           LOCAL_PREVIEW_PORT: '4173'
       - name: Wait for candidate preview
         run: timeout 30 bash -c 'until curl --fail --silent --output /dev/null http://127.0.0.1:4173/; do sleep 0.5; done'
+      - name: Verify desktop header fit in every theme
+        env:
+          BASE_URL: http://127.0.0.1:4173
+        run: npx playwright test tests/navigation.spec.js --grep "Desktop header keeps every control" --project=chromium --reporter=line
       # Pin to chromium: the spec emulates device viewports/UA/scale, but the
       # rendering ENGINE must be a single reproducible one or baselines are
       # meaningless (webkit vs chromium differ pixel-for-pixel, and firefox
@@ -89,9 +98,10 @@ jobs:
         env:
           BASE_URL: http://127.0.0.1:4173
           VR_BASE_URL: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.base_url || '' }}
+          VS_SCENE_DIAGNOSTICS: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.scene_diagnostics == 'true' && 'true' || '' }}
         run: >-
           npx playwright test tests/visual-regression.spec.js --project=chromium --reporter=line
-          ${{ github.event.inputs.update_baselines == 'true' && '--update-snapshots' || '' }}
+          ${{ github.event.inputs.update_baselines == 'true' && '--update-snapshots=all' || '' }}
       - name: Stop candidate preview
         if: always()
         run: |

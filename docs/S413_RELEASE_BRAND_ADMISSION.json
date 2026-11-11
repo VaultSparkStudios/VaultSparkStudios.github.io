@@ -1,0 +1,79 @@
+{
+  "observedAt": "2026-11-10T03:28:55.095Z",
+  "source": "scripts/check-news-copy-quality.mjs",
+  "sourceSha256": "ac354f34f6f91bc5a7925e89088bb696a3bb1d21e660e3db092b9d3cb6737a1b",
+  "matchesHead": true,
+  "strict": {
+    "nativeExit": 0,
+    "output": {
+      "audit": "AUDIT_2026-11-09-S413-release-brand.json",
+      "selectionMode": "explicit",
+      "selectionReason": "--audit docs/AUDIT_2026-11-09-S413-release-brand.json",
+      "session": null,
+      "doctorProvenance": null,
+      "total": 2,
+      "verified": 2,
+      "contradicted": 0,
+      "resolvedContradicted": 0,
+      "openContradicted": 0,
+      "shippedAbsencePersists": [],
+      "unverified": 0,
+      "volatile": 0,
+      "volatilePremises": [],
+      "unverifiableRate": 0,
+      "unverifiable": false,
+      "trustworthy": true,
+      "contradictions": [],
+      "openContradictions": [],
+      "directoryTargets": [],
+      "claimScopeMismatches": [],
+      "unresolvedCause": null,
+      "results": [
+        {
+          "itemId": 6,
+          "slug": "release-news-brand-falsepositive",
+          "status": "verified",
+          "claim": "The existing gate has a curated house-style vocabulary but lacks the normalized proper-brand token.",
+          "actual": false,
+          "expected": false,
+          "reason": "evidence supports the claim (false eq false)"
+        },
+        {
+          "itemId": 6,
+          "slug": "release-news-brand-falsepositive",
+          "status": "verified",
+          "claim": "The current published source contains the exact model-name counterexample.",
+          "actual": true,
+          "expected": true,
+          "reason": "evidence supports the claim (true eq true)"
+        }
+      ]
+    }
+  },
+  "rehearsal": {
+    "nativeExit": 0,
+    "output": {
+      "ok": true,
+      "errors": []
+    }
+  },
+  "admission": {
+    "nativeExit": 0,
+    "output": {
+      "ok": true,
+      "errors": []
+    }
+  },
+  "preparationFailures": 1,
+  "publicNormalization": {
+    "observedAt": "2026-11-10T05:55:49.930Z",
+    "fields": [
+      "/strict/output/selectionReason"
+    ],
+    "change": "Forward public projection replaces absolute local selector spelling with its repo-relative artifact only; original native exits, premise results, timestamps and source preimages retained. No admission or verifier rerun.",
+    "originalRawArtifactSha256": "9be8928931d4196ee1fd7ff22c74dfe71d087c169385a9915a84902f0ae919ca",
+    "rawEvidencePreservedInIgnoredWorkspace": true,
+    "currentNormalizedFileIsNotTheRawArtifact": true,
+    "originalRawAdmissionSha256": "9be8928931d4196ee1fd7ff22c74dfe71d087c169385a9915a84902f0ae919ca"
+  }
+}

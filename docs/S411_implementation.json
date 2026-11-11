@@ -1,0 +1,43 @@
+{
+  "session": 411,
+  "at": "2026-11-04T20:50:13.165Z",
+  "state": "selected-outcome-locally-verified",
+  "outcome": "consistent-session-carryover",
+  "baseline": {
+    "nativeExit": 1,
+    "actual": "410",
+    "expected": "411",
+    "assertion": "forced rotation must not reuse S410"
+  },
+  "acceptance": {
+    "nativeExit": 0,
+    "tests": 1,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 27108.8507,
+    "scope": [
+      "ordinary fresh repeat ID/time/head",
+      "forced rotation",
+      "13-hour stale rotation",
+      "invalid timestamp rotation",
+      "committed history above lagging closed surfaces",
+      "explicit valid declaration",
+      "invalid declaration preserves bytes"
+    ],
+    "realLockMutated": false
+  },
+  "independentReview": {
+    "reviewer": "audit_review",
+    "verdict": "approve",
+    "requiredFindings": 0
+  },
+  "nativePremiseTiming": {
+    "state": "nonpassing-inherited-dirty-paths",
+    "implementationPathsDirtyAtGate": 6,
+    "selectedWriterCleanAtGate": true,
+    "startHeadReplay": true,
+    "startHead": "6bc3175f5bec2ac1f1385fca50843003ccd57699",
+    "note": "Native checker reports inherited startup/propagation implementation paths. Preserve nonpassing result; no timing pass claimed."
+  },
+  "fullRelease": "pending"
+}

@@ -33,7 +33,10 @@
     ].join(';');
 
     var style = document.createElement('style');
-    style.textContent = '@keyframes vs-cta-in{from{transform:translateY(100%)}to{transform:translateY(0)}}';
+    // Both navigation variants expose the same expanded state. Keep the
+    // delayed bar out of the mobile navigation, including late insertion.
+    style.textContent = '@keyframes vs-cta-in{from{transform:translateY(100%)}to{transform:translateY(0)}}' +
+      '@media(max-width:1024px){body:has(#hamburger[aria-expanded="true"]) #vs-cta-bar{display:none!important}}';
     document.head.appendChild(style);
 
     bar.innerHTML =

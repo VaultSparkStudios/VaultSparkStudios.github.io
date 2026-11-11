@@ -1,0 +1,111 @@
+{
+  "session": 410,
+  "observedAt": "2026-11-04T08:35:12.412Z",
+  "candidateCommit": "42ffd505d07d4f7b9152d28f2da41f66225d708c",
+  "branch": "qa/s410-release-42ffd505d0",
+  "canonicalWorkflowVerdict": {
+    "ok": true,
+    "lane": "hosted-exact-sha",
+    "checks": [
+      {
+        "workflow": ".github/workflows/e2e.yml",
+        "state": "passed",
+        "runId": 41796559602
+      },
+      {
+        "workflow": ".github/workflows/lighthouse.yml",
+        "state": "passed",
+        "runId": 41796562670
+      },
+      {
+        "workflow": ".github/workflows/accessibility.yml",
+        "state": "passed",
+        "runId": 41796565617
+      }
+    ],
+    "findings": [],
+    "sourceCommit": "42ffd505d07d4f7b9152d28f2da41f66225d708c",
+    "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+    "checkedAt": "2026-11-04T08:17:15.251Z",
+    "independentProof": {
+      "ok": false,
+      "expectedSha": "42ffd505d07d4f7b9152d28f2da41f66225d708c"
+    }
+  },
+  "runs": [
+    {
+      "workflow": "e2e.yml",
+      "id": 41796559602,
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/41796559602",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "compliance",
+          "conclusion": "success"
+        },
+        {
+          "name": "e2e",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "workflow": "lighthouse.yml",
+      "id": 41796562670,
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/41796562670",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "lighthouse",
+          "conclusion": "success"
+        },
+        {
+          "name": "lighthouse-staging",
+          "conclusion": "skipped"
+        }
+      ]
+    },
+    {
+      "workflow": "accessibility.yml",
+      "id": 41796565617,
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/41796565617",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "playwright-axe",
+          "conclusion": "success"
+        },
+        {
+          "name": "axe-cli",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "executedE2E": {
+    "nativeExit": 1,
+    "passed": 625,
+    "failed": 34,
+    "skipped": 56,
+    "source": "Completed GitHub E2E job log; Run E2E tests step",
+    "logSha256": "5177290c7fce58101b5239a046cb09a6238a32fca5d90eb8da5dd50391a7f64d",
+    "failureGroups": {
+      "deskArtwork": 1,
+      "staleNavigation": 1,
+      "staleInvestorGateway": 1,
+      "visualSnapshots": 31
+    }
+  },
+  "acceptance": "nonpassing: workflow success was produced despite executed public failures; do not treat the workflow-level checker as full application acceptance",
+  "otherCoverage": {
+    "accessibility": {
+      "passed": 20,
+      "authenticatedSkipped": 3
+    },
+    "lighthouse": "Local-preview job passed; staging-only job skipped on QA dispatch"
+  },
+  "repairs": "Necessary release acceptance repairs, not another arc or selected-audit cycle."
+}

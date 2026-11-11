@@ -1,0 +1,32 @@
+{
+  "kind": "plan",
+  "session": 409,
+  "date": "2026-11-03",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Restore shared Contact drafts and reliable page reactions",
+  "items": [
+    {
+      "id": 1,
+      "slug": "share-contact-draft",
+      "title": "Carry shared content into the Contact draft",
+      "axis": "ui-ux-feedback",
+      "leftScore": 8,
+      "rightScore": 4,
+      "insight": "The share receiver generates subject/body query parameters, but Contact only reads topic and discards both draft fields. Apply a bounded plain-text draft to empty subject/message fields; preserve restored drafts and topic semantics. Reuse existing form and submission safeguards.",
+      "evidence": "A real share-to-contact click preserves Unicode title, text and URL as editable plain text; existing topic, blank and restored-form paths remain correct."
+    },
+    {
+      "id": 2,
+      "slug": "page-rating-single-flight",
+      "title": "Count one page rating during its cooldown",
+      "axis": "gamification-immersion",
+      "leftScore": 7,
+      "rightScore": 4,
+      "insight": "The reaction click handler neither checks the cooldown nor guards pending requests. Rapid real clicks produce duplicate inserts; replay saves a stale whole-store snapshot. Guard reaction admission synchronously, keep pending payload until acknowledged, and merge replay acknowledgements against current entries without overwriting newer ratings.",
+      "evidence": "Rapid clicks and reopening cannot post twice; denied storage still has an in-memory guard; failed requests retry once on revisit; replay completion preserves a newer rating and other page entries."
+    }
+  ],
+  "blockers": [],
+  "followUps": []
+}

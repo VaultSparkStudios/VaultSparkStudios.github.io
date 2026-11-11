@@ -1,6 +1,8 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { closedSessionFromSil } from './session-identity.mjs';
+import { resolveStartupSessions } from './startup-session-identity.mjs';
 
 function readJson(file) {
   try { return JSON.parse(fs.readFileSync(file, 'utf8')); } catch { return null; }
@@ -18,12 +20,15 @@ export function buildBriefSemanticFingerprint(root = process.cwd()) {
   if (!status) return null;
   const handoff = readText(path.join(root, 'context', 'LATEST_HANDOFF.md'));
   const testCache = readJson(path.join(root, '.cache', 'test-count.json'));
-  const closedSessions = [status.currentSession, status.lastSession, status.silLastSession]
-    .map(numberOrNull).filter(Number.isFinite);
-  const lastClosedSession = closedSessions.length ? Math.max(...closedSessions) : 0;
+  const sessions = resolveStartupSessions({
+    silSession: closedSessionFromSil(readText(path.join(root, 'context', 'SELF_IMPROVEMENT_LOOP.md'))),
+    statusSession: numberOrNull(status.currentSession),
+    lockText: readText(path.join(root, 'context', '.session-lock')),
+  });
   const handoffSession = numberOrNull(handoff.match(/(?:Impact Summary|Where We Left Off) \(Session (\d+)\)/i)?.[1]);
   const source = {
-    nextSession: lastClosedSession + 1,
+    nextSession: sessions.currentSession,
+    lastClosedSession: sessions.lastClosedSession,
     silSession: numberOrNull(status.silLastSession),
     silScore: numberOrNull(status.silScore),
     handoffSession,

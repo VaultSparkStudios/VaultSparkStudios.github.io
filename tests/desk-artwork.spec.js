@@ -1,9 +1,15 @@
 const {test,expect}=require('@playwright/test');
 const ROUTE='/news/2026-10-06/anthropic-subscriptions-offer-5x-more-value-than-openai/';
-test('artwork precedes prose; separate image threads load on request and do not move desktop prose',async({page})=>{
+test('artwork precedes prose; separate image threads load on request and do not move desktop prose',async({page},testInfo)=>{
+ const diagnostics={scripts:[],imageGets:[],pageErrors:[]};
+ const errorNames=new Set(['Error','TypeError','ReferenceError','SyntaxError','RangeError','URIError','EvalError','AggregateError','DOMException','SecurityError','NetworkError','AbortError','TimeoutError']);
+ page.on('pageerror',error=>{if(diagnostics.pageErrors.length<10)diagnostics.pageErrors.push({name:errorNames.has(error.name)?error.name:'OtherError'});});
+ page.on('request',request=>{const path=new URL(request.url()).pathname;if(/^\/assets\/desk-comments(?:\.shell-[a-f0-9]{8,64})?\.js$/.test(path)&&diagnostics.scripts.length<12)diagnostics.scripts.push({event:'request',path});});
+ page.on('response',response=>{const path=new URL(response.url()).pathname;if(/^\/assets\/desk-comments(?:\.shell-[a-f0-9]{8,64})?\.js$/.test(path)&&diagnostics.scripts.length<12)diagnostics.scripts.push({event:'response',path,status:response.status()});});
  const requests=[],posts=[];
- await page.route('**/v/desk-comments?*',async r=>{const slug=new URL(r.request().url()).searchParams.get('slug');requests.push(slug);await r.fulfill({json:{ok:true,slug,count:0,comments:[]}})});
+ await page.route('**/v/desk-comments?*',async r=>{const slug=new URL(r.request().url()).searchParams.get('slug');requests.push(slug);await r.fulfill({json:{ok:true,slug,count:0,comments:[]}});if(diagnostics.imageGets.length<12)diagnostics.imageGets.push({image:slug?.includes('/art-')===true,status:200});});
  await page.route('**/v/desk-comments',async r=>{posts.push(r.request().postDataJSON());await r.fulfill({status:202,json:{ok:true,status:'held',message:'Your comment is waiting for review.'}})});
+ try{
  await page.setViewportSize({width:1366,height:900});
  await page.goto(ROUTE);
  const stage=page.locator('.desk-art-stage').first(),story=page.locator('#story');
@@ -33,6 +39,14 @@ test('artwork precedes prose; separate image threads load on request and do not 
  await expect(community.getByRole('status').filter({hasText:'waiting for review'})).toBeVisible();
  expect(await page.evaluate(()=>window.challengeThread)).toBe(await community.getAttribute('data-slug'));
  await expect(cartoon.locator('textarea')).toBeHidden();
+ }catch(error){
+  try{
+   diagnostics.state=await page.evaluate(()=>{const section=document.querySelector('[data-comment-target="editorial-illustration-1"]'),composer=section?.querySelector('textarea');return {sectionExists:!!section,detailsOpen:section?.closest('details')?.open??null,ready:section?.getAttribute('data-desk-comments-ready')==='true',composerExists:!!composer,composerHidden:composer?composer.hidden||!!composer.closest('[hidden]')||getComputedStyle(composer).display==='none'||getComputedStyle(composer).visibility==='hidden':null,afterPaint:window.VSAfterPaint?{started:window.VSAfterPaint.started===true,done:window.VSAfterPaint.done===true}:null};});
+   console.error('Desk artwork failure state: '+JSON.stringify(diagnostics));
+   await testInfo.attach('desk-artwork-failure-state',{body:JSON.stringify(diagnostics,null,2),contentType:'application/json'});
+  }catch{ /* Diagnostics must never replace the original assertion failure. */ }
+  throw error;
+ }
 });
 test('mobile artwork fits; the cartoon sits directly below the illustration with its own reactions',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto(ROUTE);
@@ -63,3 +77,42 @@ test('expanded story overview leads artwork and illustration labels stay fully v
   expect(await labels.evaluateAll(ns=>ns.every(n=>n.scrollWidth<=n.clientWidth+1&&getComputedStyle(n).textOverflow!=='ellipsis'))).toBe(true);
  }
 });
+
+for (const mode of ['already-open-before-module', 'open-after-initialization']) {
+ test(`image comments honor explicit open intent (${mode})`,async({page})=>{
+  await page.setViewportSize({width:1366,height:900});
+  const gets=[];let release,requested;
+  const gate=new Promise(r=>release=r),held=new Promise(r=>requested=r);
+  await page.route(/\/assets\/desk-comments(?:\.shell-[a-f0-9]+)?\.js$/,async route=>{
+   requested();await gate;await route.continue();
+  });
+  await page.route('**/v/desk-comments?*',async route=>{
+   const slug=new URL(route.request().url()).searchParams.get('slug');gets.push(slug);
+   await route.fulfill({json:{ok:true,slug,count:0,comments:[]}});
+  });
+  // No POST is issued by these tests. Unexpected writes fail rather than reaching a backend.
+  await page.route('**/v/desk-comments',route=>route.abort());
+  try{
+   await page.goto(ROUTE);await held;
+   const image=page.locator('[data-comment-target="editorial-illustration-1"]');
+   const cartoon=page.locator('[data-comment-target="satire-cartoon"]');
+   const slug=await image.getAttribute('data-slug'),other=await cartoon.getAttribute('data-slug');
+   expect(slug).not.toBe(other);expect(gets).not.toContain(slug);expect(gets).not.toContain(other);
+   if(mode==='already-open-before-module')await page.getByText('Comment on the illustration',{exact:true}).click();
+   release();await page.waitForFunction(()=>window.VSAfterPaint?.done===true);
+   if(mode==='open-after-initialization')await page.getByText('Comment on the illustration',{exact:true}).click();
+   await expect(image.locator('textarea')).toBeVisible();
+   expect(gets.filter(s=>s===slug)).toHaveLength(1);expect(gets).not.toContain(other);
+   await page.getByText('Comment on the illustration',{exact:true}).click();
+   await expect(image.locator('textarea')).toBeHidden();
+   await page.getByText('Comment on the illustration',{exact:true}).click();
+   await expect(image.locator('textarea')).toBeVisible();
+   expect(gets.filter(s=>s===slug)).toHaveLength(1);expect(gets).not.toContain(other);
+   await page.getByText('Comment on the cartoon',{exact:true}).click();
+   await expect(cartoon.locator('textarea')).toBeVisible();
+   expect(gets.filter(s=>s===other)).toHaveLength(1);
+   expect(await cartoon.getAttribute('data-slug')).toBe(other);
+   expect(await image.getAttribute('data-slug')).toBe(slug);
+  }finally{release();}
+ });
+}

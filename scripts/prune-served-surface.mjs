@@ -160,6 +160,8 @@ function selfTest() {
     ['positive manifest excludes Supabase source', !isServed('supabase/functions/x.ts')],
     ['positive manifest excludes package metadata', !isServed('package.json')],
     ['positive manifest excludes News source masters', !isServed('data/news-desk/art/story.png')],
+    ['positive manifest excludes compiled operator metrics', !isServed('portfolio/compiled/FORECAST_LEDGER.json')],
+    ['positive manifest excludes operator ledgers', !isServed('portfolio/ops/review-loop-receipts.ndjson')],
     ['positive manifest keeps hash-bound visual proof', isServed('docs/visual-proof/index.html')],
 
     // Reachability — the property that makes pruning safe.

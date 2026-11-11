@@ -143,6 +143,11 @@ test.describe('explicit staging release evidence', () => {
     await expect(signIn).toBeVisible({ timeout: 10000 });
     await expect(signIn).toHaveAttribute('href', /\/login\?intent=signin/);
 
+    // Firefox traces show the new-visit consent banner intercepting clicks on
+    // this mobile account card. Resolve that choice through the real UI before
+    // exercising the tabs.
+    await page.getByRole('button', { name: 'Decline analytics cookies' }).click();
+    await expect(page.getByRole('region', { name: 'Cookie consent' })).toBeHidden();
     await page.locator('#tab-register').click();
     await expect(page.locator('#obelisk-create-account')).toBeVisible();
     await page.locator('#tab-login').click();

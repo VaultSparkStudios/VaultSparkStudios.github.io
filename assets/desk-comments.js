@@ -625,6 +625,19 @@
       });
     }, { rootMargin: '800px 0px' });
     Array.prototype.forEach.call(sections, function (section) { observer.observe(section); });
+    // An explicitly opened image discussion may remain outside its aside's
+    // scrollport. Opening is sufficient intent; intersection is not required.
+    Array.prototype.forEach.call(sections, function (section) {
+      var details = section.closest('.desk-art-discussion');
+      if (!details) return;
+      function mountOpened() {
+        if (!details.open) return;
+        observer.unobserve(section);
+        mount(section);
+      }
+      details.addEventListener('toggle', mountOpened);
+      mountOpened();
+    });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

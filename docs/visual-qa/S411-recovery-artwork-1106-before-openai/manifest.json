@@ -1,0 +1,3554 @@
+{
+  "phase": "before",
+  "replay": {
+    "kind": "new local before-implementation replay",
+    "notHistoricalCapture": true,
+    "baselineImplementationCommit": "fdecb518a3",
+    "oldFeatureSha256": "9b5baeb1abae2f8e678b547d8ed182858dda28d2167728d2bdf2f8d882dd3943",
+    "oldSigilSha256": "7a82a7807fa3275323298c0b90ed4f6de80526ac61bce9eb69305253441e06c1",
+    "currentFeatureSha256": "fd516198979c67d62f7be1dce248ca056fefbfffeeae63d7d0548d2782e43a84",
+    "frozenCurrentData": true,
+    "transport": "Only old feature runtime bytes and matching SRI are substituted in the local read-only server; current working tree is not changed.",
+    "candidateAuthority": false,
+    "limitations": "Does not establish a released or historical combined candidate. Expected source mismatch and obstruction failures remain nonpassing."
+  },
+  "startedAt": "2026-11-06T19:11:26.406Z",
+  "finishedAt": "2026-11-06T19:12:51.841Z",
+  "recipe": {
+    "path": ".cache/S411-recovery-artwork-before-replay.mjs",
+    "sha256": "cbbbc6a28d56d5974306260b62b8877dadac307c34f509235873156717e623c1"
+  },
+  "candidate": {
+    "root": "2781db6c9d572a0f5ef9deea759b016b29af31ec7c9d448f95a9eca9787f9e6a",
+    "manifestSha256": "2eb8366d1dc356ae7c58cd97e2668ab88a131a93b1f7f40d00f60aa6ae9144fe"
+  },
+  "source": [
+    {
+      "path": "api/news-desk-engagement.json",
+      "sha256": "323952fe8dec85432e2cd26123fd3922d6aaafc158a351a83c22f2fba490f4aa",
+      "currentSha256": "323952fe8dec85432e2cd26123fd3922d6aaafc158a351a83c22f2fba490f4aa"
+    },
+    {
+      "path": "api/public-intelligence.json",
+      "sha256": "51d7ec7f91310103b2652753f334123144665cda3e03db5e2df6480c95842d13",
+      "currentSha256": "180902e75bf1bc9e57e566cb74d90db3a5e5ef4dd44667d97d67aec3361f84ef"
+    },
+    {
+      "path": "assets/after-paint.shell-0392b76d45.js",
+      "sha256": "0392b76d45156aabf6b5f15bf1d9f33671942dcbb90772bd16e5b19660e9177d",
+      "currentSha256": "0392b76d45156aabf6b5f15bf1d9f33671942dcbb90772bd16e5b19660e9177d"
+    },
+    {
+      "path": "assets/ambient-core.shell-a3a5da83ce.js",
+      "sha256": "a3a5da83cec061e0bd4c9012d994b9b5b40c8744809b70c9efe0fd4fbcbef1bf",
+      "currentSha256": "a3a5da83cec061e0bd4c9012d994b9b5b40c8744809b70c9efe0fd4fbcbef1bf"
+    },
+    {
+      "path": "assets/ambient-feature.shell-fd51619897.js",
+      "sha256": "9b5baeb1abae2f8e678b547d8ed182858dda28d2167728d2bdf2f8d882dd3943",
+      "currentSha256": "fd516198979c67d62f7be1dce248ca056fefbfffeeae63d7d0548d2782e43a84"
+    },
+    {
+      "path": "assets/constellation-tracker.shell-bc8a879068.js",
+      "sha256": "bc8a8790684af9adc1a0600c7060be088eefc82d8720ea38b8d1f7fe3426a25a",
+      "currentSha256": "bc8a8790684af9adc1a0600c7060be088eefc82d8720ea38b8d1f7fe3426a25a"
+    },
+    {
+      "path": "assets/csrf-token.js",
+      "sha256": "56fb3b57967bbea61b51c56d2f06d17661f1c929875f7833683eef809d4f804e",
+      "currentSha256": "56fb3b57967bbea61b51c56d2f06d17661f1c929875f7833683eef809d4f804e"
+    },
+    {
+      "path": "assets/desk-comments.css",
+      "sha256": "0a10c29f3d7fe0c22d226804f54ef4eb68b9ba513341f4e79201941443e67955",
+      "currentSha256": "0a10c29f3d7fe0c22d226804f54ef4eb68b9ba513341f4e79201941443e67955"
+    },
+    {
+      "path": "assets/desk-comments.shell-86897ab3de.js",
+      "sha256": "86897ab3dee3347ed05fdd394ac9bbd52fc0ac7738060175991f3682c4cb5f26",
+      "currentSha256": "86897ab3dee3347ed05fdd394ac9bbd52fc0ac7738060175991f3682c4cb5f26"
+    },
+    {
+      "path": "assets/desk-personas/dot.webp",
+      "sha256": "d408da4482103519834983e8320d6ce9ca7a00e054b1b4040c13396b31d875f6",
+      "currentSha256": "d408da4482103519834983e8320d6ce9ca7a00e054b1b4040c13396b31d875f6"
+    },
+    {
+      "path": "assets/desk-personas/juno.webp",
+      "sha256": "3d6ba572a8e5848fff0f69f982c42d90a1418019bd5bc1bfc5fc11b9cfb87b68",
+      "currentSha256": "3d6ba572a8e5848fff0f69f982c42d90a1418019bd5bc1bfc5fc11b9cfb87b68"
+    },
+    {
+      "path": "assets/desk-presence.shell-b33c76422e.js",
+      "sha256": "b33c76422eb4766b100aa9a890932464027ca5977850ba74f9cd582b3e20b083",
+      "currentSha256": "b33c76422eb4766b100aa9a890932464027ca5977850ba74f9cd582b3e20b083"
+    },
+    {
+      "path": "assets/desk-reactions.shell-523b04a01e.js",
+      "sha256": "523b04a01ef4eb7a24704b6218e032aba5ae1b9e69d9fc85f5249e6d05544391",
+      "currentSha256": "523b04a01ef4eb7a24704b6218e032aba5ae1b9e69d9fc85f5249e6d05544391"
+    },
+    {
+      "path": "assets/footer-dispatch.js",
+      "sha256": "e8ffd0409ee6b9f165ce96e28ea9a96a63ba049addf78292e38ebdca11ae12ba",
+      "currentSha256": "e8ffd0409ee6b9f165ce96e28ea9a96a63ba049addf78292e38ebdca11ae12ba"
+    },
+    {
+      "path": "assets/inp-telemetry.js",
+      "sha256": "c2f337e4a36bc9e71dc0ace2d39b8d34c7b495e872a94513d7b4e258c4e32c3a",
+      "currentSha256": "c2f337e4a36bc9e71dc0ace2d39b8d34c7b495e872a94513d7b4e258c4e32c3a"
+    },
+    {
+      "path": "assets/journey-conductor.shell-9fb978eca9.js",
+      "sha256": "9fb978eca9c886d26e1a65246c7223fd4e6f3a65b85d576b7773a7723cbc27df",
+      "currentSha256": "9fb978eca9c886d26e1a65246c7223fd4e6f3a65b85d576b7773a7723cbc27df"
+    },
+    {
+      "path": "assets/nav-sheet.shell-c0fddc0c73.js",
+      "sha256": "c0fddc0c73ad96c3945fa955fcf355d8516e8942f6fa1a3e9cc66439b8bd5d8d",
+      "currentSha256": "c0fddc0c73ad96c3945fa955fcf355d8516e8942f6fa1a3e9cc66439b8bd5d8d"
+    },
+    {
+      "path": "assets/nav-toggle.shell-8c1f2155b5.js",
+      "sha256": "8c1f2155b5e015c3721f835094309df25531d33715f40de812709ae5fe0324a1",
+      "currentSha256": "8c1f2155b5e015c3721f835094309df25531d33715f40de812709ae5fe0324a1"
+    },
+    {
+      "path": "assets/news-article.shell-04db2fa975.css",
+      "sha256": "04db2fa975a013fc5dfceec28f3d9708977810cd61cbec538b00c582b9794f93",
+      "currentSha256": "04db2fa975a013fc5dfceec28f3d9708977810cd61cbec538b00c582b9794f93"
+    },
+    {
+      "path": "assets/og/news/2026-11-04--openai-says-chatgpt-is-catching-up-to-google-in--meme--640.avif",
+      "sha256": "76c25010d58de287d1984be64b254a0de9d213cbcaa3875a21f194e146fac41c",
+      "currentSha256": "76c25010d58de287d1984be64b254a0de9d213cbcaa3875a21f194e146fac41c"
+    },
+    {
+      "path": "assets/og/news/2026-11-04--openai-says-chatgpt-is-catching-up-to-google-in--meme.avif",
+      "sha256": "25b0f62e802765619f8e765c0151dd4af5beb53edc396fb54b123a58c418524e",
+      "currentSha256": "25b0f62e802765619f8e765c0151dd4af5beb53edc396fb54b123a58c418524e"
+    },
+    {
+      "path": "assets/og/news/2026-11-04--openai-says-chatgpt-is-catching-up-to-google-in--satire--640.avif",
+      "sha256": "97ca737ef40bcca0845d318e3829e64974db027d07823a4e52c63ba78de548fb",
+      "currentSha256": "97ca737ef40bcca0845d318e3829e64974db027d07823a4e52c63ba78de548fb"
+    },
+    {
+      "path": "assets/og/news/2026-11-04--openai-says-chatgpt-is-catching-up-to-google-in--satire.avif",
+      "sha256": "3c1d9d1c34e87f6a24294e5a21af0f29e85cfbfab8160b01b328fe3c9e3d9dc4",
+      "currentSha256": "3c1d9d1c34e87f6a24294e5a21af0f29e85cfbfab8160b01b328fe3c9e3d9dc4"
+    },
+    {
+      "path": "assets/rank-orb.js",
+      "sha256": "c0c45e915670f436c8f2915bcb4814aba5f3703d538445677940b1853ab87c0e",
+      "currentSha256": "c0c45e915670f436c8f2915bcb4814aba5f3703d538445677940b1853ab87c0e"
+    },
+    {
+      "path": "assets/social-icons.svg",
+      "sha256": "3cbab8f769261b3a1488d7f96d5109040dcc284578b8b7a0cfe142c742a9da01",
+      "currentSha256": "3cbab8f769261b3a1488d7f96d5109040dcc284578b8b7a0cfe142c742a9da01"
+    },
+    {
+      "path": "assets/style.shell-6711c704a7.css",
+      "sha256": "6711c704a75996a5232e95d4c24a4639f8cf63a04e381bad354cd7b2ab32b463",
+      "currentSha256": "6711c704a75996a5232e95d4c24a4639f8cf63a04e381bad354cd7b2ab32b463"
+    },
+    {
+      "path": "assets/theme-identity.js",
+      "sha256": "ebc401a6738c8be11a486dd354965a6923f1a4f0c64b82c4985462cf577dcdd1",
+      "currentSha256": "ebc401a6738c8be11a486dd354965a6923f1a4f0c64b82c4985462cf577dcdd1"
+    },
+    {
+      "path": "assets/theme-toggle.shell-8221605898.js",
+      "sha256": "82216058981b04d3905e22dee5a77cb62cc14086be2c9c6f8caa6591f9ea73fb",
+      "currentSha256": "82216058981b04d3905e22dee5a77cb62cc14086be2c9c6f8caa6591f9ea73fb"
+    },
+    {
+      "path": "assets/turnstile.shell-3fab54aa82.js",
+      "sha256": "3fab54aa822ee175357c89b099b37d57723ae21f61b299749eea06f54c21047a",
+      "currentSha256": "3fab54aa822ee175357c89b099b37d57723ae21f61b299749eea06f54c21047a"
+    },
+    {
+      "path": "assets/vault-genome-strip.js",
+      "sha256": "43cdc30b472445fe06291f88b696b0496ebdc6d622d473a25b6c2515e37c1719",
+      "currentSha256": "43cdc30b472445fe06291f88b696b0496ebdc6d622d473a25b6c2515e37c1719"
+    },
+    {
+      "path": "assets/vault-rank-bar.js",
+      "sha256": "ebf33da5144cf498e8741dc6ce290c0d2442d7c0e8da6515ac62d47c04490c6b",
+      "currentSha256": "ebf33da5144cf498e8741dc6ce290c0d2442d7c0e8da6515ac62d47c04490c6b"
+    },
+    {
+      "path": "assets/vaultspark-icon-nav.webp",
+      "sha256": "26fd1ce114f0974cd8f69855aeddd59143aa9df1f53a4023e26432f05cafc35a",
+      "currentSha256": "26fd1ce114f0974cd8f69855aeddd59143aa9df1f53a4023e26432f05cafc35a"
+    },
+    {
+      "path": "news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/index.html",
+      "sha256": "148f509f9f2f292808c1be9073495464d5a80b6b063fd710de8e5a7dcd2e9b53",
+      "currentSha256": "148f509f9f2f292808c1be9073495464d5a80b6b063fd710de8e5a7dcd2e9b53"
+    }
+  ],
+  "sourceStable": false,
+  "candidateStable": true,
+  "cells": [
+    {
+      "theme": "dark",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:11:26.900Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:11:30.806Z"
+    },
+    {
+      "theme": "dark",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:11:30.852Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:11:36.736Z"
+    },
+    {
+      "theme": "dark",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:11:36.754Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "finishedAt": "2026-11-06T19:11:38.820Z"
+    },
+    {
+      "theme": "dark",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:11:38.839Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:11:41.218Z"
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:11:41.249Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:11:47.106Z"
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:11:47.219Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:11:50.806Z"
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:11:50.828Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "finishedAt": "2026-11-06T19:11:52.366Z"
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:11:52.379Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "finishedAt": "2026-11-06T19:11:54.187Z"
+    },
+    {
+      "theme": "ambient",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:11:54.221Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:11:57.790Z"
+    },
+    {
+      "theme": "ambient",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:11:57.826Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:12:01.174Z"
+    },
+    {
+      "theme": "ambient",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:01.207Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "finishedAt": "2026-11-06T19:12:03.325Z"
+    },
+    {
+      "theme": "ambient",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:03.356Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:12:05.649Z"
+    },
+    {
+      "theme": "warm",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:05.688Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:12:09.438Z"
+    },
+    {
+      "theme": "warm",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:09.453Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:12:12.249Z"
+    },
+    {
+      "theme": "warm",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:12.264Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "finishedAt": "2026-11-06T19:12:14.053Z"
+    },
+    {
+      "theme": "warm",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:14.070Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "finishedAt": "2026-11-06T19:12:16.160Z"
+    },
+    {
+      "theme": "cool",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:16.188Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:12:20.305Z"
+    },
+    {
+      "theme": "cool",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:20.323Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:12:25.038Z"
+    },
+    {
+      "theme": "cool",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:25.124Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "finishedAt": "2026-11-06T19:12:27.569Z"
+    },
+    {
+      "theme": "cool",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:27.587Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "finishedAt": "2026-11-06T19:12:29.432Z"
+    },
+    {
+      "theme": "lava",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:29.472Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:12:32.991Z"
+    },
+    {
+      "theme": "lava",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:33.072Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:12:36.699Z"
+    },
+    {
+      "theme": "lava",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:36.724Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "finishedAt": "2026-11-06T19:12:38.566Z"
+    },
+    {
+      "theme": "lava",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:38.577Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "finishedAt": "2026-11-06T19:12:40.553Z"
+    },
+    {
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:40.571Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:12:43.875Z"
+    },
+    {
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:43.908Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:12:46.916Z"
+    },
+    {
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:46.936Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "finishedAt": "2026-11-06T19:12:48.401Z"
+    },
+    {
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:48.414Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "completed": true,
+      "finishedAt": "2026-11-06T19:12:51.137Z"
+    }
+  ],
+  "captures": [
+    {
+      "file": "dark-desktop-editorial-illustration-1-0.png",
+      "sha256": "514ff3a28e161b43a59f8ea2501bee1976f84d9f194a24ecf8802c1f7e0580da",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:29.458Z",
+      "theme": "dark",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 0,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "dark-desktop-editorial-illustration-1-1.png",
+      "sha256": "79a1ae971770733e5f48a7d646a64525e2bef3116f0b2b9588be8e25536a4467",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:29.828Z",
+      "theme": "dark",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 1,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 430,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "dark-desktop-editorial-illustration-1-2.png",
+      "sha256": "ea57697b570534c2a306099059d58fed963c840cefebaded5b68cf7b6e068bac",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:30.375Z",
+      "theme": "dark",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 2,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 717,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "dark-desktop-editorial-illustration-1-artwork-viewport.png",
+      "sha256": "e2fd860f817abd8c845c125e5742203df680b51b5fda0973fde73c7489c5e499",
+      "width": 1366,
+      "height": 900,
+      "capturedAt": "2026-11-06T19:11:30.806Z",
+      "theme": "dark",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "dark-desktop-satire-cartoon-0.png",
+      "sha256": "03ee4afd319d4f95eac07ddb830e883568684383f213721207dcd91bfb892fd9",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:35.552Z",
+      "theme": "dark",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 0,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "dark-desktop-satire-cartoon-1.png",
+      "sha256": "db84b7881f88af70ba38fda0853ca825f135b20b8be6bd243ba6176eb3d7457d",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:35.979Z",
+      "theme": "dark",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 1,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 430,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "dark-desktop-satire-cartoon-2.png",
+      "sha256": "4ed645bf5c9a15855ba832947cf6dc8f5430a5e562ac245fed0aeee61628438b",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:36.251Z",
+      "theme": "dark",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 2,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 717,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "dark-desktop-satire-cartoon-artwork-viewport.png",
+      "sha256": "312ca79ab08e88d33bf521c767a91af062b2eabb1f6cd82b3f9fc532c4d58f19",
+      "width": 1366,
+      "height": 900,
+      "capturedAt": "2026-11-06T19:11:36.736Z",
+      "theme": "dark",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "dark-mobile-editorial-illustration-1-obstacle-viewport.png",
+      "sha256": "fe4a17dfbfcae0689f4c34e482b6221efc8c89de6c22a7da7b46c2f32e190d0c",
+      "width": 390,
+      "height": 844,
+      "capturedAt": "2026-11-06T19:11:38.820Z",
+      "theme": "dark",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "tile": "obstacle-viewport",
+      "captureKind": "actual before-replay viewport at detected obstruction",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "dark-mobile-satire-cartoon-0.png",
+      "sha256": "32a627b7e86ed8afa1ae40ec79a8222a9baafad35effd4319e70a1694533bfba",
+      "width": 358,
+      "height": 504,
+      "capturedAt": "2026-11-06T19:11:40.517Z",
+      "theme": "dark",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": 0,
+      "clip": {
+        "x": 16,
+        "y": 160,
+        "width": 358,
+        "height": 504
+      },
+      "geometry": {
+        "x": 16,
+        "y": 159.6875,
+        "width": 358,
+        "height": 1142.234375,
+        "scrollTop": 0,
+        "scrollHeight": 1140,
+        "clientHeight": 1140,
+        "documentScrollY": 2154
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "dark-mobile-satire-cartoon-1.png",
+      "sha256": "ef160d40dc39246c6559a67c1c9dc1e7894dabdc503e2864ddff7fb9d662cb54",
+      "width": 358,
+      "height": 504,
+      "capturedAt": "2026-11-06T19:11:40.685Z",
+      "theme": "dark",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": 1,
+      "clip": {
+        "x": 16,
+        "y": 160,
+        "width": 358,
+        "height": 504
+      },
+      "geometry": {
+        "x": 16,
+        "y": -344.3125,
+        "width": 358,
+        "height": 1142.234375,
+        "scrollTop": 0,
+        "scrollHeight": 1140,
+        "clientHeight": 1140,
+        "documentScrollY": 2658
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "dark-mobile-satire-cartoon-2.png",
+      "sha256": "16ceeb72c206111ee5cf62773b1bd87b62612fc267e7dac109b366c476592b95",
+      "width": 358,
+      "height": 135,
+      "capturedAt": "2026-11-06T19:11:40.968Z",
+      "theme": "dark",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": 2,
+      "clip": {
+        "x": 16,
+        "y": 160,
+        "width": 358,
+        "height": 135
+      },
+      "geometry": {
+        "x": 16,
+        "y": -848.3125,
+        "width": 358,
+        "height": 1142.234375,
+        "scrollTop": 0,
+        "scrollHeight": 1140,
+        "clientHeight": 1140,
+        "documentScrollY": 3162
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "dark-mobile-satire-cartoon-artwork-viewport.png",
+      "sha256": "a22b58b367f987fcaa38c0675d93e3c8c4730cbc4901ad99d3ee0b488ba17ace",
+      "width": 390,
+      "height": 844,
+      "capturedAt": "2026-11-06T19:11:41.218Z",
+      "theme": "dark",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "light-desktop-editorial-illustration-1-0.png",
+      "sha256": "464b41493ed91dbdc12a82d09344ed775dd5e76aa6664b72e0f4091dd948ae99",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:45.861Z",
+      "theme": "light",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 0,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "light-desktop-editorial-illustration-1-1.png",
+      "sha256": "93b37fca5eb5aba1a94361b2f512eefa141667ff4f35a3bd51b7bd63e78b73e6",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:46.270Z",
+      "theme": "light",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 1,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 430,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "light-desktop-editorial-illustration-1-2.png",
+      "sha256": "d81dd496b9c2fdf202cc25ff9dd32539bf444b5656d7bfb494bc5c6c7617ad25",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:46.504Z",
+      "theme": "light",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 2,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 717,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "light-desktop-editorial-illustration-1-artwork-viewport.png",
+      "sha256": "e2241c24fb644dca648a11e34a1b57a39641f324967ae2f92309db7a2ac50f9c",
+      "width": 1366,
+      "height": 900,
+      "capturedAt": "2026-11-06T19:11:47.106Z",
+      "theme": "light",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "light-desktop-satire-cartoon-0.png",
+      "sha256": "bdf0a523f7b6407cff539c3983bfdbf5926d5147d8fba8f51f04980d643794e5",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:49.587Z",
+      "theme": "light",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 0,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "light-desktop-satire-cartoon-1.png",
+      "sha256": "a7abde5fe908d00fc2b32cc256612741a9b1443ebb127e9a141837a42317855a",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:49.756Z",
+      "theme": "light",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 1,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 430,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "light-desktop-satire-cartoon-2.png",
+      "sha256": "69b85a478404d669b0353bf7931eec98e36cd0e352dc673b0c6b0595213b4fa0",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:50.021Z",
+      "theme": "light",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 2,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 717,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "light-desktop-satire-cartoon-artwork-viewport.png",
+      "sha256": "127f309f982181b7188ca8692bdd74ec83072088db6edda43c31062cdc903917",
+      "width": 1366,
+      "height": 900,
+      "capturedAt": "2026-11-06T19:11:50.806Z",
+      "theme": "light",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "light-mobile-editorial-illustration-1-obstacle-viewport.png",
+      "sha256": "6793b2c07227c6de7827512efec5e9a82ad7f5f4b30ba4ac149f5a599d396133",
+      "width": 390,
+      "height": 844,
+      "capturedAt": "2026-11-06T19:11:52.365Z",
+      "theme": "light",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "tile": "obstacle-viewport",
+      "captureKind": "actual before-replay viewport at detected obstruction",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "light-mobile-satire-cartoon-obstacle-viewport.png",
+      "sha256": "84a66a69f2ec65e99704288eb28069114a406893d2fd6d16a7d4c06b820b83ba",
+      "width": 390,
+      "height": 844,
+      "capturedAt": "2026-11-06T19:11:54.186Z",
+      "theme": "light",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": "obstacle-viewport",
+      "captureKind": "actual before-replay viewport at detected obstruction",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "ambient-desktop-editorial-illustration-1-0.png",
+      "sha256": "e988d26a4a41e04849a0ada60d0d0a763f64406d183343e3b5669e8f7cc6ad3a",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:56.153Z",
+      "theme": "ambient",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 0,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "ambient-desktop-editorial-illustration-1-1.png",
+      "sha256": "993297be10aeed4550e832c2406ac9cca550e8bc223fee832cb169090b964b2e",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:56.779Z",
+      "theme": "ambient",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 1,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 430,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "ambient-desktop-editorial-illustration-1-2.png",
+      "sha256": "41b00eda503236b6e295f25d14ae1ff2cd71ad329c2d016d2cca6f7053e7afd9",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:57.042Z",
+      "theme": "ambient",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 2,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 717,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "ambient-desktop-editorial-illustration-1-artwork-viewport.png",
+      "sha256": "f840ce57add5f0ca1316abe1e7931c5940bb574f9294a2aea4c35a0d91bce00a",
+      "width": 1366,
+      "height": 900,
+      "capturedAt": "2026-11-06T19:11:57.790Z",
+      "theme": "ambient",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "ambient-desktop-satire-cartoon-0.png",
+      "sha256": "86bc8f99e3275297343d93bc530487993baf851347d6f97107251ca74aa14f7c",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:11:59.819Z",
+      "theme": "ambient",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 0,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "ambient-desktop-satire-cartoon-1.png",
+      "sha256": "ad6d07fc9e9e3a794f361089036a6f773f68670698024c546c5f7d56188c2a9b",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:00.089Z",
+      "theme": "ambient",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 1,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 430,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "ambient-desktop-satire-cartoon-2.png",
+      "sha256": "0dc7619d44bc1fb4d250423d2a25b22f192ea765d3097d54f463eeab078736a7",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:00.485Z",
+      "theme": "ambient",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 2,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 717,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "ambient-desktop-satire-cartoon-artwork-viewport.png",
+      "sha256": "6d5408d63476a5e45f6eddbe2f8b0c0924dffd386802b952e81b8882175fba76",
+      "width": 1366,
+      "height": 900,
+      "capturedAt": "2026-11-06T19:12:01.174Z",
+      "theme": "ambient",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "ambient-mobile-editorial-illustration-1-obstacle-viewport.png",
+      "sha256": "78b19f48b8472a1661a744702510a16a501ce66f073f3fc22a006d633c967623",
+      "width": 390,
+      "height": 844,
+      "capturedAt": "2026-11-06T19:12:03.325Z",
+      "theme": "ambient",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "tile": "obstacle-viewport",
+      "captureKind": "actual before-replay viewport at detected obstruction",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "ambient-mobile-satire-cartoon-0.png",
+      "sha256": "246262a58364b2ebd0c122afe6ebe32eb844cb114546fb196b2c4b0280249dfb",
+      "width": 358,
+      "height": 504,
+      "capturedAt": "2026-11-06T19:12:04.879Z",
+      "theme": "ambient",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": 0,
+      "clip": {
+        "x": 16,
+        "y": 160,
+        "width": 358,
+        "height": 504
+      },
+      "geometry": {
+        "x": 16,
+        "y": 159.6875,
+        "width": 358,
+        "height": 1142.234375,
+        "scrollTop": 0,
+        "scrollHeight": 1140,
+        "clientHeight": 1140,
+        "documentScrollY": 2154
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "ambient-mobile-satire-cartoon-1.png",
+      "sha256": "1e3e07ed12cae76cb899eb36a9945e474b46c2ba148bb13fbd3f3900b9ea27ef",
+      "width": 358,
+      "height": 504,
+      "capturedAt": "2026-11-06T19:12:05.117Z",
+      "theme": "ambient",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": 1,
+      "clip": {
+        "x": 16,
+        "y": 160,
+        "width": 358,
+        "height": 504
+      },
+      "geometry": {
+        "x": 16,
+        "y": -344.3125,
+        "width": 358,
+        "height": 1142.234375,
+        "scrollTop": 0,
+        "scrollHeight": 1140,
+        "clientHeight": 1140,
+        "documentScrollY": 2658
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "ambient-mobile-satire-cartoon-2.png",
+      "sha256": "394b971a189fa861e1d35ddad75540fc189ae3092573a2b829b1a68c19c8d4ca",
+      "width": 358,
+      "height": 135,
+      "capturedAt": "2026-11-06T19:12:05.403Z",
+      "theme": "ambient",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": 2,
+      "clip": {
+        "x": 16,
+        "y": 160,
+        "width": 358,
+        "height": 135
+      },
+      "geometry": {
+        "x": 16,
+        "y": -848.3125,
+        "width": 358,
+        "height": 1142.234375,
+        "scrollTop": 0,
+        "scrollHeight": 1140,
+        "clientHeight": 1140,
+        "documentScrollY": 3162
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "ambient-mobile-satire-cartoon-artwork-viewport.png",
+      "sha256": "2b87c415401721955035e9714c16e2176bf59ff0d55a583fffb78daee2b78cf1",
+      "width": 390,
+      "height": 844,
+      "capturedAt": "2026-11-06T19:12:05.649Z",
+      "theme": "ambient",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "warm-desktop-editorial-illustration-1-0.png",
+      "sha256": "1f7c1361ecf740d87a24d57873e5c3ff3d74194740154ffdb731c208c65ad333",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:07.968Z",
+      "theme": "warm",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 0,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "warm-desktop-editorial-illustration-1-1.png",
+      "sha256": "ebdd310e8de674f6c1b1f088d8b2257e678691bd4df814a83b64d120775f7d63",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:08.368Z",
+      "theme": "warm",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 1,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 430,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "warm-desktop-editorial-illustration-1-2.png",
+      "sha256": "199f3162d6e0668a1156ce2b3aaf0819fe8aaea36ef352361b562af5c2d63e87",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:08.806Z",
+      "theme": "warm",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 2,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 717,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "warm-desktop-editorial-illustration-1-artwork-viewport.png",
+      "sha256": "a26c2c4cb5868520494a0395c97a7acf4e047b3571ef46158423992914be2eee",
+      "width": 1366,
+      "height": 900,
+      "capturedAt": "2026-11-06T19:12:09.438Z",
+      "theme": "warm",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "warm-desktop-satire-cartoon-0.png",
+      "sha256": "59ea10c336e913339b9e9d7080b06359fd30b521e8c42c80396ea8d820f4e959",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:11.084Z",
+      "theme": "warm",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 0,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "warm-desktop-satire-cartoon-1.png",
+      "sha256": "b7169eca9fcf03f6e7d7f9032f0399ce422cdd3e3c356b65dc2f0f5a359f2459",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:11.409Z",
+      "theme": "warm",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 1,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 430,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "warm-desktop-satire-cartoon-2.png",
+      "sha256": "e5cfe3a4827cfbb1f1649627b0a319166278c09b37783af40403c8bee2a721c5",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:11.584Z",
+      "theme": "warm",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 2,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 717,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "warm-desktop-satire-cartoon-artwork-viewport.png",
+      "sha256": "acb6fccc1a933b5af03f4f69a3898e1a003aa1f70589bfa29a0e2483788cf239",
+      "width": 1366,
+      "height": 900,
+      "capturedAt": "2026-11-06T19:12:12.241Z",
+      "theme": "warm",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "warm-mobile-editorial-illustration-1-obstacle-viewport.png",
+      "sha256": "8db9f8ad3d2f89c6a4b09a27c1e88317ee302e2529158f3ac97968e76a5a98ad",
+      "width": 390,
+      "height": 844,
+      "capturedAt": "2026-11-06T19:12:14.053Z",
+      "theme": "warm",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "tile": "obstacle-viewport",
+      "captureKind": "actual before-replay viewport at detected obstruction",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "warm-mobile-satire-cartoon-obstacle-viewport.png",
+      "sha256": "7ef94dce4c86a375b61c7f58edf739cebb9b86a1160105604c6dab4ba26861db",
+      "width": 390,
+      "height": 844,
+      "capturedAt": "2026-11-06T19:12:16.160Z",
+      "theme": "warm",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": "obstacle-viewport",
+      "captureKind": "actual before-replay viewport at detected obstruction",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "cool-desktop-editorial-illustration-1-0.png",
+      "sha256": "227321502b7c97b5001e751eb753696a04f7605bb625ff794a3666226d85a45b",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:18.647Z",
+      "theme": "cool",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 0,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "cool-desktop-editorial-illustration-1-1.png",
+      "sha256": "d7266cf3aed6cee7064f41196f0d32c043354a209478b56c943da5811ea27a2c",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:19.061Z",
+      "theme": "cool",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 1,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 430,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "cool-desktop-editorial-illustration-1-2.png",
+      "sha256": "bee1f70a24815eae3be474c100d9e8249c28145afa998f411f83b0fe5846ccfe",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:19.562Z",
+      "theme": "cool",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 2,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 717,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "cool-desktop-editorial-illustration-1-artwork-viewport.png",
+      "sha256": "a74b0d7766c6c298e43c0f969f09ab6c90e6bf8cb28929c23aafc726168093a3",
+      "width": 1366,
+      "height": 900,
+      "capturedAt": "2026-11-06T19:12:20.305Z",
+      "theme": "cool",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "cool-desktop-satire-cartoon-0.png",
+      "sha256": "9a026e1ff9438f1a35e9df14794841626271e44ac9b636c8dadfed6469b6e652",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:22.652Z",
+      "theme": "cool",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 0,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "cool-desktop-satire-cartoon-1.png",
+      "sha256": "4faa846ecda4cde224fdd497307d515e66156f7c1a9b6b7c7da6bf52702bd7b0",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:23.696Z",
+      "theme": "cool",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 1,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 430,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "cool-desktop-satire-cartoon-2.png",
+      "sha256": "00edf499aa83e73bb34b70c8c1c00237566df03c893ff922ea9feea0d340b93d",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:24.350Z",
+      "theme": "cool",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 2,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 717,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "cool-desktop-satire-cartoon-artwork-viewport.png",
+      "sha256": "8a5735e3cbf8206975c2253a1fe1bec18a6d6de4d65b12317985930e473abc6b",
+      "width": 1366,
+      "height": 900,
+      "capturedAt": "2026-11-06T19:12:25.038Z",
+      "theme": "cool",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "cool-mobile-editorial-illustration-1-obstacle-viewport.png",
+      "sha256": "769bc6beebe9a51fc07fec936ae0a3e8e929787fc069a691c6b150528c71b103",
+      "width": 390,
+      "height": 844,
+      "capturedAt": "2026-11-06T19:12:27.569Z",
+      "theme": "cool",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "tile": "obstacle-viewport",
+      "captureKind": "actual before-replay viewport at detected obstruction",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "cool-mobile-satire-cartoon-obstacle-viewport.png",
+      "sha256": "8b53cea0c6a1548cdebfb0bbe330b35f341f74ee745836b193fc09b4fe52c38d",
+      "width": 390,
+      "height": 844,
+      "capturedAt": "2026-11-06T19:12:29.431Z",
+      "theme": "cool",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": "obstacle-viewport",
+      "captureKind": "actual before-replay viewport at detected obstruction",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "lava-desktop-editorial-illustration-1-0.png",
+      "sha256": "004b0be1e2c0bf992a23ba71d5dd9be6f690bee72921370602ce75f8a59a2f71",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:31.617Z",
+      "theme": "lava",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 0,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "lava-desktop-editorial-illustration-1-1.png",
+      "sha256": "dd75db79e6e5e134d9dbf1a275dd384fd01abb37cebeaef0ec9fabca67f3e279",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:31.949Z",
+      "theme": "lava",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 1,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 430,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "lava-desktop-editorial-illustration-1-2.png",
+      "sha256": "29edd5d9634ecb420b1a486d784cb3c3cc6855a7371e4c222781e6486a6d5eca",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:32.449Z",
+      "theme": "lava",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 2,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 717,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "lava-desktop-editorial-illustration-1-artwork-viewport.png",
+      "sha256": "fc4580e348fd6637603da98623fba0bf373b88e1e2c173e4205b5065462f917c",
+      "width": 1366,
+      "height": 900,
+      "capturedAt": "2026-11-06T19:12:32.991Z",
+      "theme": "lava",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "lava-desktop-satire-cartoon-0.png",
+      "sha256": "7ea21825143b1a66ab1caf85625b4d8ba0aa48d56e23498924d1bff42d891932",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:35.306Z",
+      "theme": "lava",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 0,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "lava-desktop-satire-cartoon-1.png",
+      "sha256": "e81599f141acf13693817074eb29aee35b090a5da4fea6f557f6804734977f6e",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:35.654Z",
+      "theme": "lava",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 1,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 430,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "lava-desktop-satire-cartoon-2.png",
+      "sha256": "dccbc9f1e4af7c084f1074eb684c285bcb0af27f2039359ff5d967f5afd02e6c",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:36.130Z",
+      "theme": "lava",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 2,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 717,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "lava-desktop-satire-cartoon-artwork-viewport.png",
+      "sha256": "273eb7b917c60df2f47bfea22da37c68dddc66d2f66139c36167229fe23c057e",
+      "width": 1366,
+      "height": 900,
+      "capturedAt": "2026-11-06T19:12:36.699Z",
+      "theme": "lava",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "lava-mobile-editorial-illustration-1-0.png",
+      "sha256": "82e2bce8ad6fbea52d484dd27ae3679a253cbe2d34f6b1df0e4eba4b45ecb4d3",
+      "width": 358,
+      "height": 504,
+      "capturedAt": "2026-11-06T19:12:38.368Z",
+      "theme": "lava",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "tile": 0,
+      "clip": {
+        "x": 16,
+        "y": 160,
+        "width": 358,
+        "height": 504
+      },
+      "geometry": {
+        "x": 16,
+        "y": 160.203125,
+        "width": 358,
+        "height": 1142.234375,
+        "scrollTop": 0,
+        "scrollHeight": 1140,
+        "clientHeight": 1140,
+        "documentScrollY": 1147
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "lava-mobile-editorial-illustration-1-obstacle-viewport.png",
+      "sha256": "e3c75072bcb12cbbcb8f111aa149156a364c496cd78f4b84ea73af6a0d5a4dd3",
+      "width": 390,
+      "height": 844,
+      "capturedAt": "2026-11-06T19:12:38.565Z",
+      "theme": "lava",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "tile": "obstacle-viewport",
+      "captureKind": "actual before-replay viewport at detected obstruction",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "lava-mobile-satire-cartoon-obstacle-viewport.png",
+      "sha256": "e8d20fbba9ab65ccfa6367f51d2967e13857981eac4ba7f94f1f350f6df51b83",
+      "width": 390,
+      "height": 844,
+      "capturedAt": "2026-11-06T19:12:40.552Z",
+      "theme": "lava",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": "obstacle-viewport",
+      "captureKind": "actual before-replay viewport at detected obstruction",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "high-contrast-desktop-editorial-illustration-1-0.png",
+      "sha256": "796ec67f2ea6ab1cd554e8ccf5a28d666c0874df989a43a5a992cda0d4861467",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:42.496Z",
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 0,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "high-contrast-desktop-editorial-illustration-1-1.png",
+      "sha256": "eab77a104a8952e72c2f5d34be22be34ba5dfcea02c9fb97a8fd4613796e85f4",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:42.994Z",
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 1,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 430,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "high-contrast-desktop-editorial-illustration-1-2.png",
+      "sha256": "ee68ade1a9a46257adc5549bf75d08138ce9ed12559e9c3669c3f73c0b48c8db",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:43.289Z",
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": 2,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.28125,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 717,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 707
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "high-contrast-desktop-editorial-illustration-1-artwork-viewport.png",
+      "sha256": "8ac266e9ec1691cca3c62d19f2d2f0e42ab01bbc924a9af11552b14b3bdb619a",
+      "width": 1366,
+      "height": 900,
+      "capturedAt": "2026-11-06T19:12:43.875Z",
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "editorial-illustration-1",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "high-contrast-desktop-satire-cartoon-0.png",
+      "sha256": "04acfd0eb1b3b74237af4303ed74cafd334c40c86d8afe2ddc9d54c31c7d1a12",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:45.830Z",
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 0,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "high-contrast-desktop-satire-cartoon-1.png",
+      "sha256": "7a0fd5b45a11e93463278b299c19aa98607e11a0e3f448032de1d7b4275a855d",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:46.117Z",
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 1,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 430,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "high-contrast-desktop-satire-cartoon-2.png",
+      "sha256": "781077d8250ff198312a3ad7ae8e30625fc1f15196045a9c9d7d4b393929abbd",
+      "width": 300,
+      "height": 448,
+      "capturedAt": "2026-11-06T19:12:46.357Z",
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": 2,
+      "clip": {
+        "x": 973,
+        "y": 160,
+        "width": 300,
+        "height": 448
+      },
+      "geometry": {
+        "x": 973,
+        "y": 160.375,
+        "width": 300,
+        "height": 448,
+        "scrollTop": 717,
+        "scrollHeight": 1163,
+        "clientHeight": 446,
+        "documentScrollY": 1314
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "high-contrast-desktop-satire-cartoon-artwork-viewport.png",
+      "sha256": "ed7cc7fc04be35da3436e38b476dab4f558bddf7d261ab893e6b56516903ec6d",
+      "width": 1366,
+      "height": 900,
+      "capturedAt": "2026-11-06T19:12:46.909Z",
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "target": "satire-cartoon",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "high-contrast-mobile-editorial-illustration-1-obstacle-viewport.png",
+      "sha256": "bc0e7cc3ca20dc10889e545f7d1e90b49379995cf9a2b118fbae19cc21938c16",
+      "width": 390,
+      "height": 844,
+      "capturedAt": "2026-11-06T19:12:48.400Z",
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "tile": "obstacle-viewport",
+      "captureKind": "actual before-replay viewport at detected obstruction",
+      "inspection": "automated-only"
+    },
+    {
+      "file": "high-contrast-mobile-satire-cartoon-0.png",
+      "sha256": "2df8bab293b8e17ae888a4b96bae41119ebfce63abf9edee3da5498985a98090",
+      "width": 358,
+      "height": 504,
+      "capturedAt": "2026-11-06T19:12:49.836Z",
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": 0,
+      "clip": {
+        "x": 16,
+        "y": 160,
+        "width": 358,
+        "height": 504
+      },
+      "geometry": {
+        "x": 16,
+        "y": 159.6875,
+        "width": 358,
+        "height": 1142.234375,
+        "scrollTop": 0,
+        "scrollHeight": 1140,
+        "clientHeight": 1140,
+        "documentScrollY": 2154
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "high-contrast-mobile-satire-cartoon-1.png",
+      "sha256": "b921f82b3ff71f856a0774eecf9e71be4312b73ce7cda2351adb5fad3d473161",
+      "width": 358,
+      "height": 504,
+      "capturedAt": "2026-11-06T19:12:50.213Z",
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": 1,
+      "clip": {
+        "x": 16,
+        "y": 160,
+        "width": 358,
+        "height": 504
+      },
+      "geometry": {
+        "x": 16,
+        "y": -344.3125,
+        "width": 358,
+        "height": 1142.234375,
+        "scrollTop": 0,
+        "scrollHeight": 1140,
+        "clientHeight": 1140,
+        "documentScrollY": 2658
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "high-contrast-mobile-satire-cartoon-2.png",
+      "sha256": "a455122aba29fa1a2922d77dad1542a3ebad12b830e6fa01fa407aa30b2f8eb0",
+      "width": 358,
+      "height": 135,
+      "capturedAt": "2026-11-06T19:12:50.776Z",
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": 2,
+      "clip": {
+        "x": 16,
+        "y": 160,
+        "width": 358,
+        "height": 135
+      },
+      "geometry": {
+        "x": 16,
+        "y": -848.3125,
+        "width": 358,
+        "height": 1142.234375,
+        "scrollTop": 0,
+        "scrollHeight": 1140,
+        "clientHeight": 1140,
+        "documentScrollY": 3162
+      },
+      "inspection": "automated-only"
+    },
+    {
+      "file": "high-contrast-mobile-satire-cartoon-artwork-viewport.png",
+      "sha256": "cb45edf8b3c7e23691cf6194e4de8a22399553f8f462edafce5a6faf13fae8ea",
+      "width": 390,
+      "height": 844,
+      "capturedAt": "2026-11-06T19:12:51.137Z",
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "tile": "artwork-viewport",
+      "captureKind": "full actual browser viewport at image figure",
+      "inspection": "automated-only"
+    }
+  ],
+  "failures": [
+    {
+      "theme": "dark",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:11:36.754Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "error": {
+        "name": "Error",
+        "message": "fixed UI overlaps [{\"tag\":\"A\",\"id\":\"\",\"className\":\"\",\"x\":336,\"y\":284,\"width\":44,\"height\":44}]"
+      }
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:11:50.828Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "error": {
+        "name": "Error",
+        "message": "fixed UI overlaps [{\"tag\":\"A\",\"id\":\"\",\"className\":\"\",\"x\":336,\"y\":284,\"width\":44,\"height\":44}]"
+      }
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:11:52.379Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "error": {
+        "name": "Error",
+        "message": "fixed UI overlaps [{\"tag\":\"A\",\"id\":\"\",\"className\":\"\",\"x\":336,\"y\":284,\"width\":44,\"height\":44}]"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:01.207Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "error": {
+        "name": "Error",
+        "message": "fixed UI overlaps [{\"tag\":\"A\",\"id\":\"\",\"className\":\"\",\"x\":336,\"y\":284,\"width\":44,\"height\":44}]"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:12.264Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "error": {
+        "name": "Error",
+        "message": "fixed UI overlaps [{\"tag\":\"A\",\"id\":\"\",\"className\":\"\",\"x\":336,\"y\":127,\"width\":44,\"height\":44}]"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:14.070Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "error": {
+        "name": "Error",
+        "message": "fixed UI overlaps [{\"tag\":\"A\",\"id\":\"\",\"className\":\"\",\"x\":336,\"y\":284,\"width\":44,\"height\":44}]"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:25.124Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "error": {
+        "name": "Error",
+        "message": "fixed UI overlaps [{\"tag\":\"A\",\"id\":\"\",\"className\":\"\",\"x\":336,\"y\":284,\"width\":44,\"height\":44}]"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:27.587Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "cool",
+        "root": "cool",
+        "body": "cool"
+      },
+      "error": {
+        "name": "Error",
+        "message": "fixed UI overlaps [{\"tag\":\"A\",\"id\":\"\",\"className\":\"\",\"x\":336,\"y\":284,\"width\":44,\"height\":44}]"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:36.724Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "error": {
+        "name": "Error",
+        "message": "fixed UI overlaps [{\"tag\":\"A\",\"id\":\"\",\"className\":\"\",\"x\":336,\"y\":127,\"width\":44,\"height\":44}]"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "satire-cartoon",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:38.577Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      },
+      "gets": [
+        "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1"
+      ],
+      "observedTheme": {
+        "stored": "lava",
+        "root": "lava",
+        "body": "lava"
+      },
+      "error": {
+        "name": "Error",
+        "message": "fixed UI overlaps [{\"tag\":\"A\",\"id\":\"\",\"className\":\"\",\"x\":336,\"y\":284,\"width\":44,\"height\":44}]"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "target": "editorial-illustration-1",
+      "route": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/",
+      "startedAt": "2026-11-06T19:12:46.936Z",
+      "state": {
+        "open": true,
+        "ready": "true",
+        "textarea": true,
+        "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      },
+      "gets": [
+        "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007"
+      ],
+      "observedTheme": {
+        "stored": "high-contrast",
+        "root": "high-contrast",
+        "body": "high-contrast"
+      },
+      "error": {
+        "name": "Error",
+        "message": "fixed UI overlaps [{\"tag\":\"A\",\"id\":\"\",\"className\":\"\",\"x\":336,\"y\":284,\"width\":44,\"height\":44}]"
+      }
+    }
+  ],
+  "requests": [
+    {
+      "cell": 0,
+      "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007",
+      "mocked": true
+    },
+    {
+      "cell": 1,
+      "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1",
+      "mocked": true
+    },
+    {
+      "cell": 2,
+      "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007",
+      "mocked": true
+    },
+    {
+      "cell": 3,
+      "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1",
+      "mocked": true
+    },
+    {
+      "cell": 4,
+      "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007",
+      "mocked": true
+    },
+    {
+      "cell": 5,
+      "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1",
+      "mocked": true
+    },
+    {
+      "cell": 6,
+      "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007",
+      "mocked": true
+    },
+    {
+      "cell": 7,
+      "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1",
+      "mocked": true
+    },
+    {
+      "cell": 8,
+      "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007",
+      "mocked": true
+    },
+    {
+      "cell": 9,
+      "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1",
+      "mocked": true
+    },
+    {
+      "cell": 10,
+      "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007",
+      "mocked": true
+    },
+    {
+      "cell": 11,
+      "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1",
+      "mocked": true
+    },
+    {
+      "cell": 12,
+      "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007",
+      "mocked": true
+    },
+    {
+      "cell": 13,
+      "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1",
+      "mocked": true
+    },
+    {
+      "cell": 14,
+      "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007",
+      "mocked": true
+    },
+    {
+      "cell": 15,
+      "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1",
+      "mocked": true
+    },
+    {
+      "cell": 16,
+      "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007",
+      "mocked": true
+    },
+    {
+      "cell": 17,
+      "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1",
+      "mocked": true
+    },
+    {
+      "cell": 18,
+      "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007",
+      "mocked": true
+    },
+    {
+      "cell": 19,
+      "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1",
+      "mocked": true
+    },
+    {
+      "cell": 20,
+      "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007",
+      "mocked": true
+    },
+    {
+      "cell": 21,
+      "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1",
+      "mocked": true
+    },
+    {
+      "cell": 22,
+      "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007",
+      "mocked": true
+    },
+    {
+      "cell": 23,
+      "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1",
+      "mocked": true
+    },
+    {
+      "cell": 24,
+      "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007",
+      "mocked": true
+    },
+    {
+      "cell": 25,
+      "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1",
+      "mocked": true
+    },
+    {
+      "cell": 26,
+      "slug": "2026-11-04/art-57b1c39198ff5188ef031ebaad28d007",
+      "mocked": true
+    },
+    {
+      "cell": 27,
+      "slug": "2026-11-04/art-523b695966ba5ae721c58f11f041f4a1",
+      "mocked": true
+    }
+  ],
+  "browserClosed": true,
+  "serverClosed": true,
+  "inspection": "automated-only; all original PNGs require actual image review",
+  "limits": [
+    "Local empty public-thread mocks only; no posting/provider/auth proof",
+    "Before missing composer must remain diagnostic; camera does not force IO or UI visibility",
+    "28 cells may require multiple normal nested/page-scroll tiles"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-08T10:44:19.299Z",
+  "scope": "Outcome4 staging packaging acceptance; no production promotion or account journey proof.",
+  "checks": [
+    {
+      "command": "node scripts/deploy-staging.mjs --self-test",
+      "nativeExit": 0
+    },
+    {
+      "command": "node scripts/prune-served-surface.mjs --self-test",
+      "nativeExit": 0
+    },
+    {
+      "command": "node scripts/prune-served-surface.mjs --check",
+      "nativeExit": 0
+    }
+  ],
+  "source": [
+    {
+      "file": "scripts/deploy-staging.mjs",
+      "sha256": "6f8a678aea1bfef8139c12ec2c4aa291f23cc37ec13799f69718fe12b91e69f8"
+    },
+    {
+      "file": "scripts/prune-served-surface.mjs",
+      "sha256": "5b167a41f7e0a122381f4153d3f150a74a657384fafd2c301ddde260d6d6b8c1"
+    },
+    {
+      "file": "config/served-surface.json",
+      "sha256": "d924223151a7bfafde884caca9a0834134d8db50b75d602fe1cc0d97ed9911a8"
+    }
+  ],
+  "staging": {
+    "artifactRoot": "b4a11b5afd095f9fbb763ca55646b05956e8b039348ebdd585b7f69dc92042b0",
+    "receiptId": "cc8229b69380fea5f0bd9300",
+    "regularFileCount": 4090,
+    "privateHeadChecks": 12,
+    "publicHeadChecks": 8,
+    "allHeadChecksPassed": true,
+    "publicArtifactReceiptsMatch": true
+  },
+  "pass": true
+}

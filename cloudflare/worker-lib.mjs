@@ -425,11 +425,15 @@ export async function verifyObeliskSession({ token, env = {}, fetchImpl = fetch 
 // serve one visitor's gate response to another. Response.redirect() returns
 // immutable headers, so the response is built manually with no-store.
 export function portalGateRedirect(origin, pathname, search = '') {
-  const back = encodeURIComponent(pathname + search);
+  const original = pathname + search;
+  const safe = typeof original === 'string' && original.startsWith('/') && !original.startsWith('//')
+    && !/[\r\n\\]/.test(original) && original.length <= 1024 ? original : '/';
+  const back = encodeURIComponent(safe);
+  const investor = pathname === '/investor-portal' || pathname.startsWith('/investor-portal/');
   return new Response(null, {
     status: 302,
     headers: {
-      Location: `${origin}/login?intent=signin&return=${back}`,
+      Location: investor ? `${origin}/investor-portal/login/?next=${back}` : `${origin}/login?intent=signin&return=${back}`,
       'Cache-Control': 'no-store',
       Vary: 'Cookie',
     },

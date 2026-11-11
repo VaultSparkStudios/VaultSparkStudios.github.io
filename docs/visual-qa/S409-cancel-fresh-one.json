@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "inspectionSchemaVersion": 2,
+  "capturedAt": "2026-11-03T09:06:07.064Z",
+  "source": {
+    "algorithm": "sha256",
+    "sha256": "6870aeb1732efe8669fd83f7d596e1b292a0f41d7f53c1a07e8448ae3b502c20",
+    "files": [
+      "assets/account-entry.js",
+      "assets/investor-auth.js",
+      "assets/investor-experience.js",
+      "assets/investor-theme.css",
+      "assets/investor-ui.js",
+      "assets/member-access.css",
+      "assets/obelisk-seal-entry.js",
+      "assets/shell-manifest.json",
+      "cloudflare/obelisk-auth.js",
+      "investor-portal/login/index.html",
+      "vault-member/index.html",
+      "vault-member/portal-auth.js",
+      "vault-member/portal-settings.js",
+      "vault-member/portal.css"
+    ],
+    "entries": [
+      {
+        "path": "assets/account-entry.js",
+        "sha256": "c3ddf1fcd0d466a63f7b19b1903525f043c2b6f114bb58542691aa2f708f0924"
+      },
+      {
+        "path": "assets/investor-auth.js",
+        "sha256": "19fe6f9313aa003f420a6315cc64ff7a4cf9760db61f8bdfea7d6718928dadfc"
+      },
+      {
+        "path": "assets/investor-experience.js",
+        "sha256": "a2811f37892866630e1ffaa059a1a915fc43c0c165ddd32821baf64e2c1dcf4b"
+      },
+      {
+        "path": "assets/investor-theme.css",
+        "sha256": "6f7d17b5cb5f3f5ebe87ba9c785ea7fa9533a333509282686c542bf7107abe13"
+      },
+      {
+        "path": "assets/investor-ui.js",
+        "sha256": "bd0d41782d0a062df56d37547759cdc01e54e4da31fb8c32b8ac157f6559ac5d"
+      },
+      {
+        "path": "assets/member-access.css",
+        "sha256": "855ca196b547c78d34acea32eab84f885852c8132b49c96947d541ae55446ac3"
+      },
+      {
+        "path": "assets/obelisk-seal-entry.js",
+        "sha256": "281c25ac7564c47ad1d2c3a909c2e608b7b3a272195249b166499499a402a171"
+      },
+      {
+        "path": "assets/shell-manifest.json",
+        "sha256": "cb977df57bf90b6841b101c10641df6dc2a10b1bad775b14075a2fa616738b45"
+      },
+      {
+        "path": "cloudflare/obelisk-auth.js",
+        "sha256": "dc806de939ab5125d995693c8d5f82bf5380d8b36fba21f00754abd9821b4ac8"
+      },
+      {
+        "path": "investor-portal/login/index.html",
+        "sha256": "660b44f3c7949213d33da64c8c9f3f55f41cb2daba8f1917bae21be70d0a81c8"
+      },
+      {
+        "path": "vault-member/index.html",
+        "sha256": "a3b2b7508c6f949cea8a2b161737a582dc49fc1750dca80056674a3e44be9357"
+      },
+      {
+        "path": "vault-member/portal-auth.js",
+        "sha256": "c4606e6160566bc52c151501d35f8fafc9489b4f8a3039bce9729a02daf94a08"
+      },
+      {
+        "path": "vault-member/portal-settings.js",
+        "sha256": "da00f91e01db815809e19b212a4cadefc2e9614fa1174259ea11cd6bc04eb4eb"
+      },
+      {
+        "path": "vault-member/portal.css",
+        "sha256": "22bd3d1b0505a3548c3887324c48b2ed7238eebb98b4e779f9ce60609b1aab5e"
+      }
+    ]
+  },
+  "historicalSource": null,
+  "backendSource": {
+    "file": "cloudflare/obelisk-auth.js",
+    "sha256": "dc806de939ab5125d995693c8d5f82bf5380d8b36fba21f00754abd9821b4ac8",
+    "scope": "Current fixed Worker source; deployment attestation and real staging HTTP observations recorded separately",
+    "gitCommit": "caebbc4c72"
+  },
+  "serverObservations": [
+    {
+      "id": "member-cancel-after",
+      "audience": "member",
+      "initialFrontendPath": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend#register",
+      "actualFrontendSignupHref": "/login?intent=signup&return=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register",
+      "loginStatus": 302,
+      "callbackStatus": 302,
+      "cancelError": "access_denied",
+      "callbackPathOnly": "/auth/callback",
+      "cookieAndStateKeptOnlyInMemory": true,
+      "startedAt": "2026-11-03T09:06:03.615Z",
+      "observedAt": "2026-11-03T09:06:04.493Z",
+      "actualLocation": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend&auth_error=provider_denied&auth_intent=signup#register",
+      "workerDeploymentRootAttestation": "aee4bf30-af7d-412d-b493-edb76de57bac",
+      "note": "One actual matched-state/cookie staging cancellation roundtrip, rendered in one fresh anonymous member dark desktop context. No credential submission, token exchange or authenticated callback. This supplemental current observation replaces only its corresponding primary frame."
+    }
+  ],
+  "publicResponses": [
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T09:06:03.538Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/seal.js",
+      "status": 200,
+      "sha256": "4138e1182955bc9701224ddd7d54ac940c0bc12ab340a64e8d9963d10671c05a",
+      "observedAt": "2026-11-03T09:06:04.959Z"
+    },
+    {
+      "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+      "status": 200,
+      "sha256": "52ad4f1e8de0ff116692c3e1c7070aff8850784881b837da1c879e6da9a4747e",
+      "observedAt": "2026-11-03T09:06:06.057Z"
+    }
+  ],
+  "matrix": {
+    "routes": [
+      "/vault-member/"
+    ],
+    "themes": [
+      "dark"
+    ],
+    "viewports": [
+      "desktop"
+    ],
+    "states": [
+      "cancel-context-after"
+    ],
+    "expectedCaptures": 1,
+    "completedCaptures": 1
+  },
+  "generatedBy": "S409 actual matched-cookie/state staging cancellation response composed with actual candidate entrance rendering; no credentials, private data or authenticated access proof. Raw state/cookie values never persisted.",
+  "captures": [
+    {
+      "file": "S409-raf-m-dark-desktop.png",
+      "sha256": "9976bed978cb03f00fa6ae8acafa2083a2378d24edeed73676371098ed7322a7",
+      "bytes": 1274558,
+      "page": "/vault-member/",
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 1000
+      },
+      "state": "cancel-context-after",
+      "states": [
+        "actual-cancel-signup-landing",
+        "user-selects-sign-in-tab"
+      ],
+      "capturedAt": "2026-11-03T09:06:06.993Z",
+      "serverObservationId": "member-cancel-after",
+      "landing": {
+        "actualLocation": "/vault-member/?return=%2Fvault-member%2Fpassport%2F&ref=VaultFriend&auth_error=provider_denied&auth_intent=signup#register",
+        "ref": "VaultFriend",
+        "return": "/vault-member/passport/",
+        "next": null,
+        "referralBannerVisible": true,
+        "referralBannerText": "✦ You were invited by VaultFriend — create your free account below to join the Vault!",
+        "retryHrefs": {
+          "obelisk-create-account": "/login?intent=signup&return=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23register",
+          "obelisk-sign-in": "/login?intent=signin&return=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23login"
+        },
+        "visibleErrors": [
+          "Obelisk sign-in was cancelled."
+        ],
+        "activeMemberPanel": "panel-register"
+      },
+      "provider": {
+        "state": "MATCH",
+        "url": "https://obeliskgate.com/embed/v1/seal?rp=vaultsparkstudios-website&mode=login&theme=dark&size=md",
+        "box": {
+          "x": 816.0625,
+          "y": 600.296875,
+          "width": 420,
+          "height": 248
+        },
+        "loginUrl": "/login?intent=signin&return=%2Fvault-member%2F%3Freturn%3D%252Fvault-member%252Fpassport%252F%26ref%3DVaultFriend%23login"
+      },
+      "errors": [],
+      "fixture": "Current local frontend fulfilled at registered staging origin, anonymous data fixture; actual staging GET cancel response and actual public seal. New browser context per render; no residual identity or storage.",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex investor lane",
+        "reviewedAt": "2026-11-03T09:10:28.007Z",
+        "originalImageInspected": "S409-raf-m-dark-desktop.png",
+        "findings": [
+          "Actual signup cancellation landing retains visible VaultFriend referral banner and readable cancellation notice. Actual Sign-in-tab state retains readable live public Obelisk MATCH card. No clipping, overlap or unreadable controls in the inspected component."
+        ],
+        "blockingDefectsOpen": 0
+      }
+    }
+  ],
+  "failures": [],
+  "inspection": {
+    "renderedPixelsReviewed": true,
+    "reviewer": "Codex investor lane",
+    "reviewedAt": "2026-11-03T09:10:28.007Z",
+    "coverage": {
+      "totalCaptures": 1,
+      "manuallyReviewed": 1,
+      "automatedOnly": 0,
+      "complete": true
+    },
+    "blockingDefectsOpen": 0,
+    "findings": [
+      "Actual signup cancellation landing retains visible VaultFriend referral banner and readable cancellation notice. Actual Sign-in-tab state retains readable live public Obelisk MATCH card. No clipping, overlap or unreadable controls in the inspected component."
+    ],
+    "limitation": "One actual current member dark desktop observation only; other377 primary frames retain their own original capture times. Registered staging-origin candidate frontend and anonymous data fixture, actual staging GET cancellation and public provider GET assets; no authenticated access or private data proof. Sticky site header hidden for component capture."
+  }
+}

@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 1,
+  "session": 411,
+  "state": "in-progress",
+  "updatedAt": "2026-11-06T22:36:01.882Z",
+  "authorization": "Existing direct main commit/push and full staging-to-production deployment authorization persists.",
+  "audit": "docs/AUDIT_2026-11-04-S411.json",
+  "implementation": "docs/S411_implementation.json",
+  "scope": {
+    "invocation": "Recovery of prior S411. Current native invocation01a1b213-67c9-7af0-9148-611b5d9cbc66 created1793988988 still requires its own fresh startup/audit/implementation/closeout after recovery.",
+    "selectedOutcome": "Recover the session-boundary implementation and preserve drawer/discussion fixes; locally verify scrolled-sigil clearance and the copy-gate quoted-question repair. Full release remains pending.",
+    "combinedCandidate": "Includes inherited account, navigation and interface changes requiring complete release verification."
+  },
+  "candidate": {
+    "buildIdentity": "fdecb518a3cc72b9b1dd201d428f3200917885bd",
+    "artifactRoot": "7e43682899e85fac6a1eab13a6277bb359685584c989793fcfff92c990ab8285",
+    "leafCount": 79,
+    "publicationState": "Actual closeout-metadata runtime refresh passed scoped local visual/mobile checks; final autopilot source verification, exact hosted/staging/authenticated/production acceptance remain pending.",
+    "identityNote": "Current manifest observation, not exact hosted/staging/production acceptance."
+  },
+  "completedLocalEvidence": {
+    "postbuild": {
+      "state": "passed-after-sigil-repair",
+      "nativeExit": 0,
+      "stepsPassed": 26,
+      "invocationId": "626c88d5-9254-4243-8401-311240a35ff2",
+      "completedAt": "2026-11-06T19:21:22.032Z",
+      "log": ".cache/logs/S411-recovery-canonical-build.log",
+      "scope": "Canonical26-step build at its recorded19:21 timestamp, before subsequent closeout metadata generation. Not a current hosted or post-metadata build claim."
+    },
+    "mobile": {
+      "state": "passed-after-closeout-metadata-refresh",
+      "nativeExit": 0,
+      "cells": 215,
+      "blockingFindings": 0,
+      "receipt": "docs/mobile-audit/receipt.json",
+      "summary": "docs/S411_mobile-closeout-current.json",
+      "scope": "Actual local refreshed-source mobile contract only."
+    },
+    "manualVisualReview": {
+      "state": "reviewed-current-declared-public-delta",
+      "captures": 532,
+      "directCurrentInspections": 290,
+      "exactPriorPixelCarries": 242,
+      "evidence": "docs/visual-qa/LATEST.json",
+      "receiptSha256": "ae5b45b657bdd92e6d8e5377c102faf642bb78a3d054341e4dc730584a5b58de",
+      "sourceSha256": "75bc6f9aa7d4a238f0c47798b59786b9588332a64d3cf2bb4e5b4ad8d5d6d9a3",
+      "actualLatestCaptureAt": "2026-11-06T22:18:14.244Z",
+      "limitation": "Real new-member/profile and approved-investor journeys, live comment submission, complete private/provider current-pixel coverage, hosted checks, staging and production remain separate pending acceptance."
+    },
+    "copyGate": {
+      "state": "locally-verified",
+      "selfTests": 83,
+      "realCorpusNativeExit": 0,
+      "evidence": "docs/S411_copy-boundary-recovery-evidence.json"
+    },
+    "source": {
+      "state": "passed",
+      "nativeExit": 0,
+      "completedSteps": 549,
+      "plannedSteps": 549,
+      "firstStep": 1,
+      "coverageComplete": true,
+      "receiptId": "530a10d5d5ed80a02b9db5ee",
+      "sourceFingerprint": "71664bd0c9808d2462cebf6a",
+      "evidence": "docs/S411_recovery-full-source-verified.json",
+      "scope": "Complete native549 run at its recorded fingerprint before closeout metadata refresh. Final autopilot rerun remains required."
+    }
+  },
+  "fullSourceVerification": {
+    "plannedSteps": 549,
+    "currentAttempt": {
+      "state": "passed",
+      "nativeExit": 0,
+      "completedSteps": 549,
+      "plannedSteps": 549,
+      "firstStep": 1,
+      "coverageComplete": true,
+      "receiptId": "530a10d5d5ed80a02b9db5ee",
+      "sourceFingerprint": "71664bd0c9808d2462cebf6a",
+      "evidence": "docs/S411_recovery-full-source-verified.json"
+    },
+    "historicalAttempts": "docs/S411_release-ledger-before-recovery-reconciliation.json",
+    "recoveryAttempts": [
+      "docs/S411_recovery-source-attempt1.json",
+      "docs/S411_recovery-source-remainder-attempt1.json",
+      "docs/S411_recovery-source-remainder-attempt2.json",
+      "docs/S411_recovery-source-remainder-attempt3.json"
+    ],
+    "limitation": "Complete native source run at recorded fingerprint precedes closeout metadata refresh. Final autopilot source run, hosted checks, isolated staging/accounts and production need separate acceptance."
+  },
+  "staging": {
+    "historicalVerifiedArtifactRoot": "0fb8416931fc238badeb3def8f03a8fd6eb4875113aecfa1613eee83d7f43387",
+    "evidence": "docs/S411_staging-v2-readback.json",
+    "currentCandidateVerified": false,
+    "limitation": "Historical staging deployment predates the current local artifact root.",
+    "qa53": {
+      "artifactRoot": "6c8bd23a262bbf1505291623d78a8d96318727d328acb6ab51e16b6f56027cee",
+      "receiptId": "93237226394d04f936118cb8",
+      "files": 18597,
+      "deployNativeExit": 0,
+      "readback": "docs/S411_staging-qa53-readback.json",
+      "browserCasesPassed": 6,
+      "limitation": "Precedes the development followup repairs. Anonymous boundary checks do not prove authenticated application journeys."
+    }
+  },
+  "remainingAcceptance": [
+    {
+      "requirement": "Exact QA commit hosted checks",
+      "state": "pending",
+      "workflows": [
+        "e2e.yml",
+        "lighthouse.yml",
+        "accessibility.yml"
+      ]
+    },
+    {
+      "requirement": "Current candidate staging deployment and readback",
+      "state": "pending"
+    },
+    {
+      "requirement": "Real new-member registration/profile journey",
+      "state": "pending"
+    },
+    {
+      "requirement": "Approved-investor private-data read",
+      "state": "pending"
+    },
+    {
+      "requirement": "Production promotion and live verification",
+      "state": "pending"
+    },
+    {
+      "requirement": "Full closeout",
+      "state": "pending"
+    }
+  ],
+  "rollout": {
+    "qaCommitVerified": false,
+    "mainPublicationVerified": false,
+    "productionPromotionVerified": false,
+    "productionAccessPolicyChanged": false
+  },
+  "publicEvidenceNotes": [
+    "Public technical evidence preserves failed attempts and platform/source limits.",
+    "Anonymous routing or admission evidence does not prove positive authenticated member or investor access.",
+    "Existing deployment authorization does not satisfy release acceptance requirements."
+  ],
+  "developmentFollowup": {
+    "state": "historical-development-followup-before-current-recovery",
+    "artifactRoot": "f7f1ce1f5190a2194a28ff4569171b6f28ba578945a2fce842219d3ddc069b8b",
+    "leafCount": 79,
+    "repairs": [
+      "Hide the delayed sticky membership bar while mobile navigation is open; retain close/restore/dismiss behavior.",
+      "Mount an explicitly opened illustration discussion without requiring scroll intersection."
+    ],
+    "verification": {
+      "artworkBrowserCases": 5,
+      "ctaBrowserCases": 2,
+      "commentsUnitCases": 26,
+      "primaryManuallyReviewedCaptures": 742,
+      "historicalPrimaryCapturesPreserved": 644,
+      "newBeforeOriginals": 147,
+      "newAfterOriginals": 147,
+      "visualReceipt": "docs/visual-qa/S411-LATEST-before-recovery-1106.json",
+      "literalAliasOnlyHtmlFiles": 187,
+      "visualReceiptSha256": "9ef96752fd5659175e1cae0a81acde614f36e1fae75982c25f29aa05ea8e51dd"
+    },
+    "limitation": "Historical development followup only. Its742-capture receipt is the preserved archive; current recovery532 is recorded separately."
+  },
+  "hostedCheckpoint": {
+    "sha": "53a6b5ed717ba5d6982e1670ba5c1f7c17c38bde",
+    "accessibility": "passed",
+    "lighthouse": "passed",
+    "complianceIncluding549SourceSteps": "passed",
+    "fullE2E": {
+      "state": "failed",
+      "passed": 620,
+      "skipped": 56,
+      "failed": 62,
+      "screenshotComparisons": 61,
+      "otherFailure": "Illustration discussion did not initialize; locally repaired, hosted rerun pending."
+    },
+    "currentRepairCommitVerified": false
+  },
+  "candidateHistory": [
+    {
+      "buildIdentity": "20e78e238601aadf005f4a8b648192f44451bc62",
+      "artifactRoot": "f7f1ce1f5190a2194a28ff4569171b6f28ba578945a2fce842219d3ddc069b8b",
+      "publicationState": "Local development repair candidate; canonical integration/build and current hosted/staging/production acceptance pending.",
+      "identityNote": "Build identity and historical capture provenance do not independently prove an exact hosted commit was verified.",
+      "leafCount": 79
+    }
+  ],
+  "recovery20261106": {
+    "state": "integration-and-release-recovery-in-progress",
+    "evidence": "docs/S411_recovery-2026-11-06.json",
+    "focusedRecovery": "docs/S411_recovery-focused-tests.json",
+    "sigilRepair": "docs/S411_sigil-recovery-evidence.json",
+    "integration": {
+      "localHead": "fdecb518a3",
+      "publishedHeadAtFetch": "101afd7355",
+      "publishedOnly": 137,
+      "localOnly": 17,
+      "merge": "conflicts resolved; merge checkpoint not committed yet; generated outputs being reconciled"
+    },
+    "currentCanonicalBuild": {
+      "state": "passed-after-sigil-repair",
+      "nativeExit": 0,
+      "stepsPassed": 26,
+      "invocationId": "626c88d5-9254-4243-8401-311240a35ff2",
+      "completedAt": "2026-11-06T19:21:22.032Z",
+      "log": ".cache/logs/S411-recovery-canonical-build.log"
+    },
+    "mobile": {
+      "state": "passed-after-sigil-repair",
+      "nativeExit": 0,
+      "cells": 215,
+      "blockingFindings": 0,
+      "receipt": "docs/mobile-audit/receipt.json",
+      "scope": "Local current-source mobile runtime contract; automated evidence."
+    },
+    "visual": {
+      "state": "current-declared-public-delta-reviewed",
+      "captures": 532,
+      "directCurrent": 372,
+      "identicalPriorPixels": 160,
+      "receipt": "docs/visual-qa/LATEST.json",
+      "receiptSha256": "7e10190b098af34fc23ecf66f3a525d2d214c2d185b15ac2a794978677b8e24c",
+      "nativeReviewCheckExit": 0,
+      "visualQaCheckExit": 0,
+      "receiptOrderingExit": 0,
+      "retentionExit": 0,
+      "independentReview": "final_art_diff_review: zero findings on composition/provenance/source/candidate binding",
+      "historicalArchive": "docs/visual-qa/S411-LATEST-before-recovery-1106.json",
+      "limits": "Scoped entry/component/artwork/discussion pixels only; older private/provider images retain original limits. All failed original/replayed before evidence retained. No hosted/backend/authenticated/production acceptance inferred."
+    },
+    "accountVerification": {
+      "founderResponse": "Founder confirms native sign-in can cover both member and existing approved-investor journeys once isolated current staging is ready; no credentials requested.",
+      "isolatedDataTarget": "Requested from owner; functional target and sanctioned procedure remain unverified.",
+      "coordination": "Current functional staging request01K6P86PIP867ACE3471F97190 supersedes the earlier request; receipt is transport only.",
+      "existingBranchInventory": "Read-only management GET200 returned zero existing branches. Account project inventory contains only the known production and wrong-project legacy tenants; neither establishes an isolated staging target."
+    },
+    "newNativeArc": {
+      "required": true,
+      "state": "fresh startup/audit/implementation/closeout still required after recovery; initial binding returned start-new-arc, no session rebound yet"
+    },
+    "completionClaimed": false,
+    "fullSource": {
+      "state": "complete-current-source-passed",
+      "nativeExit": 0,
+      "receiptId": "530a10d5d5ed80a02b9db5ee",
+      "sourceFingerprint": "71664bd0c9808d2462cebf6a",
+      "planned": 549,
+      "passed": 549,
+      "firstStep": 1,
+      "coverageComplete": true,
+      "evidence": "docs/S411_recovery-full-source-verified.json"
+    },
+    "copyGateRepair": "docs/S411_copy-boundary-recovery-evidence.json"
+  },
+  "historicalEvidence": {
+    "record": "docs/S411_release-ledger-before-recovery-reconciliation.json",
+    "scope": "Original local evidence, source attempts, Windows comparisons and dated release checkpoints remain historical. They are not current-candidate acceptance."
+  }
+}

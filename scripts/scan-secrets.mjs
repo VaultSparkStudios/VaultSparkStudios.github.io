@@ -147,6 +147,14 @@ function isKnownPublicToken(line, matched, pat, relPath) {
       && line.includes(matched)
       && /^S\d{3,}R-\d+-[a-z0-9-]+$/i.test(matched)) return true;
 
+  // Portable S411 visual companions retain reviewed snapshot filenames. Only
+  // these standalone name/file fields explain the low-confidence token slice;
+  // other fields, paths, mixed lines and stronger credential patterns still scan.
+  if (pat.type === 'cf-maybe'
+      && /^docs\/visual-qa\/S411-companions\/[a-z0-9-]+\.json$/.test(relPath.replace(/\\/g, '/'))
+      && /^\s*"(?:name|file)":\s*"(?:(?:tests\/__snapshots__\/|\.cache\/S411\/quarantine\/artifact-13310414512\/extracted\/)visual-regression\.spec\.js-snapshots\/)?(?:journal-desktop-1280-dark|oracle-desktop-1280-light)-chromium-(?:linux|win32)\.png",?\s*$/.test(line)
+      && line.includes(matched)) return true;
+
   if ((pat.type === 'aws-maybe' || pat.type === 'cf-maybe') &&
       (line.includes('sha256-') || line.includes('sha384-') || line.includes('sha512-') || line.includes('"integrity"'))) {
     return true;
@@ -375,6 +383,11 @@ if (args.includes('--self-test')) {
   const candidate = slug.match(heuristic.regex)?.[0];
   const sessionShot = '"S371R-0-community-ambient-desktop-before.png",';
   const sessionCandidate = sessionShot.match(heuristic.regex)?.[0];
+  const companion = 'docs/visual-qa/S411-companions/windows-final-baseline-image-review.json';
+  const snapshot = 'journal-desktop-1280-dark-chromium-win32.png';
+  const snapshotLine = `"name": "${snapshot}",`;
+  const snapshotCandidate = snapshotLine.match(heuristic.regex)?.[0];
+  const fakeGithub = 'ghp_' + 'Ab3Cd4Ef5Gh6Ij7Kl8Mn9Op0Qr1St2Uv3Wx4';
   const tests = [
     ['dated capture filename is recognized', Boolean(candidate) && isKnownPublicToken(slug, candidate, heuristic, rel)],
     ['other paths are still scanned', !isKnownPublicToken(slug, candidate, heuristic, 'api/other.json')],
@@ -384,6 +397,18 @@ if (args.includes('--self-test')) {
     ['session filename in other paths is still scanned', !isKnownPublicToken(sessionShot, sessionCandidate, heuristic, 'api/other.json')],
     ['mixed session lines are still scanned', !isKnownPublicToken(`${sessionShot} "token":"${'x'.repeat(48)}"`, sessionCandidate, heuristic, rel)],
     ['high-confidence session matches are still scanned', !isKnownPublicToken(sessionShot, sessionCandidate, { type: 'github' }, rel)],
+    ['companion snapshot basename is clean', Boolean(snapshotCandidate) && scanContent(companion, snapshotLine).length === 0],
+    ['companion committed snapshot path is clean', scanContent(companion, `"file": "tests/__snapshots__/visual-regression.spec.js-snapshots/${snapshot}",`).length === 0],
+    ['companion quarantined Linux snapshot path is clean', scanContent(companion, '"file": ".cache/S411/quarantine/artifact-13310414512/extracted/visual-regression.spec.js-snapshots/oracle-desktop-1280-light-chromium-linux.png",').length === 0],
+    ['companion snapshot in another directory still scans', scanContent('docs/other.json', snapshotLine).some((f) => f.type === 'cf-maybe')],
+    ['companion token field still scans', scanContent(companion, `"token": "${snapshot}",`).some((f) => f.type === 'cf-maybe')],
+    ['companion mixed field line still scans', scanContent(companion, `${snapshotLine} "token": "${fakeGithub}"`).some((f) => f.type === 'github')],
+    ['companion mixed line does not suppress filename heuristic', !isKnownPublicToken(`${snapshotLine} "other": 1`, snapshotCandidate, heuristic, companion)],
+    ['companion unreviewed path prefix still scans', scanContent(companion, `"file": "other/${snapshot}",`).some((f) => f.type === 'cf-maybe')],
+    ['companion other artifact prefix still scans', scanContent(companion, `"file": ".cache/S411/quarantine/artifact-999/extracted/visual-regression.spec.js-snapshots/${snapshot}",`).some((f) => f.type === 'cf-maybe')],
+    ['companion changed snapshot grammar still scans', scanContent(companion, snapshotLine.replace('1280', '1440')).some((f) => f.type === 'cf-maybe')],
+    ['companion high-confidence pattern is not allowlisted', !isKnownPublicToken(snapshotLine, snapshotCandidate, { type: 'github' }, companion)],
+    ['companion actual high-confidence token still scans', scanContent(companion, `"file": "${fakeGithub}"`).some((f) => f.type === 'github')],
   ];
   for (const [name, ok] of tests) process.stdout.write(`${ok ? '✓' : '✗'} ${name}\n`);
   process.exit(tests.every(([, ok]) => ok) ? 0 : 1);

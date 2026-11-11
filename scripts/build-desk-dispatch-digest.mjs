@@ -41,6 +41,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { personaById, heatBreakdown, editionById, EDITIONS } from './lib/news-desk.mjs';
 import { getSecret, redact } from './lib/secrets.mjs';
+import { imageHash, inspectDeskEmailArt, verifyDeskEmailArt } from './lib/desk-email-art.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const SITE = 'https://vaultsparkstudios.com';
@@ -580,22 +581,40 @@ export async function main(argv = process.argv.slice(2), deps = {}) {
   let net = null;
   const notes = [];
   if (opts.mode !== 'dry-run') {
-    const key = deps.key ?? getSecret('BREVO_API_KEY', 'brevo');
-    if (!key) throw new Error('BREVO_API_KEY is not available (gateway capability `brevo`, or the BREVO_API_KEY repository secret in CI)');
-    net = { key, fetchImpl: deps.fetchImpl || fetch, backoffMs: deps.backoffMs ?? 1500 };
-    const probe = await probeDay(day, issue.date, net.fetchImpl);
+    const fetchImpl = deps.fetchImpl || fetch;
+    const probe = await probeDay(day, issue.date, fetchImpl);
     const missing = new Set(probe.filter((p) => p.page === 'missing').map((p) => p.slug));
-    const noArt = new Set(probe.filter((p) => p.art === 'missing').map((p) => p.slug));
     const unverified = probe.filter((p) => p.page === 'unverified').map((p) => p.slug);
     if (missing.size) notes.push(`- dropped (page not live on production yet): ${[...missing].join(', ')}`);
-    if (noArt.size) notes.push(`- art omitted (image not live): ${[...noArt].join(', ')}`);
     if (unverified.length) notes.push(`- liveness unverified (kept): ${unverified.join(', ')}`);
-    issue = buildDigest({ ...day, stories: day.stories.filter((s) => !missing.has(s.slug)) }, { date, noArt });
+    const effectiveDay = { ...day, stories: day.stories.filter((s) => !missing.has(s.slug)) };
+    issue = buildDigest(effectiveDay, { date });
     if (issue.skip) {
       console.log(`::warning title=Desk Dispatch not sent::None of ${date}'s stories is live on production yet. Nothing was sent.`);
       report([...heading, `**Nothing sent — none of today's ${day.stories.length} stories is live on production yet.**`, ...notes], { outcome: 'not-live' }, sink);
       return { outcome: 'not-live' };
     }
+    const selected = selectStories(effectiveDay);
+    const art = inspectDeskEmailArt({ root: deps.root || ROOT, day: effectiveDay, stories: selected });
+    const liveArt = await verifyDeskEmailArt(art, { fetchImpl });
+    // Preparation receipts are informational: always re-measure the current
+    // selected issue and its served bytes at the actual side-effect boundary.
+    const current = inspectDeskEmailArt({ root: deps.root || ROOT, day: effectiveDay, stories: selected });
+    if (!art.ready || !liveArt.ready || current.snapshot !== art.snapshot) {
+      fs.mkdirSync(outDir, { recursive: true });
+      const preview = path.join(outDir, `${date}.held-art.html`);
+      fs.writeFileSync(preview, renderHtml(issue));
+      fs.writeFileSync(preview.replace(/\.html$/, '.txt'), renderText(issue));
+      const reasons = art.rows.filter(row => !row.ready).map(row => `${row.id}/${row.kind}: ${row.reasons.join('; ')}`);
+      report([...heading, '**HELD — article images are not send-ready. Nothing was sent.**', ...reasons,
+        ...liveArt.failures.map(row => typeof row === 'string' ? row : `${row.file}: ${row.reason}`),
+        `Prepare images: node scripts/prepare-desk-email.mjs --date ${date}`], { outcome: 'held-art' }, sink);
+      console.log('::warning title=Desk Dispatch images pending::Reviewed local and exact served article images are required. Nothing was sent.');
+      return { outcome: 'held-art', art, liveArt, htmlPath: preview };
+    }
+    const key = deps.key ?? getSecret('BREVO_API_KEY', 'brevo');
+    if (!key) throw new Error('BREVO_API_KEY is not available (gateway capability `brevo`, or the BREVO_API_KEY repository secret in CI)');
+    net = { key, fetchImpl, backoffMs: deps.backoffMs ?? 1500 };
   }
 
   const html = renderHtml(issue, { testNote: opts.mode === 'test' });
@@ -707,11 +726,19 @@ async function selfTest() {
 
   // 7. Gate + network behaviour, with a scripted Brevo.
   // Brevo calls are recorded in fn.calls; production liveness HEADs in fn.site.
+  let artFixtureRoot = null;
   const mkFetch = (routes, site = () => 200) => {
     const calls = [];
     const siteCalls = [];
     const fn = async (url, init) => {
-      if (url.startsWith(SITE)) { siteCalls.push(url); const status = site(url); return { status, ok: status < 300, text: async () => '' }; }
+      if (url.startsWith(SITE)) {
+        siteCalls.push(url);const status = site(url);
+        if (init.method === 'GET' && new URL(url).pathname.startsWith('/assets/og/news/')) {
+          const file = path.join(artFixtureRoot, new URL(url).pathname.slice(1));
+          return new Response(fs.existsSync(file) ? fs.readFileSync(file) : null, { status, headers: { 'content-type': 'image/png' } });
+        }
+        return { status, ok: status < 300, text: async () => '' };
+      }
       calls.push({ url: url.replace(BREVO_API, ''), method: init.method, body: init.body ? JSON.parse(init.body) : null });
       const route = routes(url.replace(BREVO_API, ''), init.method);
       return { status: route.status, ok: route.status < 300, text: async () => (route.body ? JSON.stringify(route.body) : '') };
@@ -728,6 +755,24 @@ async function selfTest() {
     typeof committedConfig.autoSend === 'boolean' && (!committedConfig.autoSend || sendGate(committedConfig).ok));
 
   const tmp = fs.mkdtempSync(path.join((await import('node:os')).tmpdir(), 'desk-dispatch-'));
+  artFixtureRoot = tmp;
+  const { DESK_ART_PRODUCERS, articleArtOutputs, beginArticleArtRender, sealArticleArtRender } = await import('./lib/desk-art-provenance.mjs');
+  for (const file of DESK_ART_PRODUCERS) {
+    const output = path.join(tmp, file);fs.mkdirSync(path.dirname(output), { recursive: true });
+    fs.copyFileSync(path.join(ROOT, file), output);
+  }
+  for (const story of many.stories) {
+    const id = `${date}--${story.slug}`, source = `data/news-desk/art/${id}.png`, bytes = Buffer.from(`reviewed source fixture ${id}`);
+    story.visual = { ...story.visual, artSource: source, generatedArt: true,
+      pixelInspection: { kind: 'source-raster', reviewed: true, reviewer: 'offline self-test fixture', sha256: imageHash(bytes), entropy: 6 } };
+    fs.mkdirSync(path.dirname(path.join(tmp, source)), { recursive: true });fs.writeFileSync(path.join(tmp, source), bytes);
+    const buffers = {};
+    for (const relative of articleArtOutputs(date, story.slug, 'banner')) {
+      const file = path.join(tmp, relative);buffers[relative] = Buffer.from('offline mock encoded derivative ' + relative);
+      fs.mkdirSync(path.dirname(file), { recursive: true });fs.writeFileSync(file, buffers[relative]);
+    }
+    sealArticleArtRender(tmp, beginArticleArtRender(tmp, many, story, 'banner'), many, story, buffers);
+  }
   const dayPath = path.join(tmp, `${date}.json`);
   fs.writeFileSync(dayPath, JSON.stringify(many));
   const emptyPath = path.join(tmp, 'empty.json');
@@ -735,7 +780,7 @@ async function selfTest() {
   const now = new Date('2026-10-02T23:30:00Z');
   const quiet = () => {};
   const origLog = console.log;
-  const run = async (argv, deps) => { console.log = quiet; try { return await main(argv, { now, backoffMs: 0, key: 'test-key', outDir: tmp, ...deps }); } finally { console.log = origLog; } };
+  const run = async (argv, deps) => { console.log = quiet; try { return await main(argv, { now, backoffMs: 0, key: 'test-key', outDir: tmp, root: tmp, ...deps }); } finally { console.log = origLog; } };
 
   let f = mkFetch(() => ({ status: 500 }));
   let r = await run(['--send', '--date', date, '--day-file', emptyPath], { fetchImpl: f, config: { autoSend: true, approvedTestIssue: date } });
@@ -791,17 +836,20 @@ async function selfTest() {
     && !JSON.stringify(tc.body).includes('listIds') && !tc.body.htmlContent.includes(UNSUBSCRIBE_PLACEHOLDER));
 
   // 8. Production liveness: never link a page that is not live yet.
-  f = mkFetch(() => ({ status: 201, body: { messageId: '<m@brevo>' } }), (u) => (u.includes('/news/2026-10-02/s5/') || u.includes('--s0.png') ? 404 : 200));
+  f = mkFetch(() => ({ status: 201, body: { messageId: '<m@brevo>' } }), (u) => (u.includes('/news/2026-10-02/s5/') ? 404 : 200));
   r = await run(['--test-to', 'founder@example.com', '--date', date, '--day-file', dayPath], { fetchImpl: f });
   const sentHtml = f.calls[0]?.body?.htmlContent || '';
   t('404 story page is dropped from the issue', r.outcome === 'test-sent' && !sentHtml.includes('/news/2026-10-02/s5/') && sentHtml.includes('/news/2026-10-02/s1/'));
-  t('404 lead art is omitted, not shown broken', /\/news\/2026-10-02\/s0\//.test(sentHtml.split('Lead story')[1]?.slice(0, 600) || '') && !sentHtml.includes('<img'));
+  t('remaining issue retains its verified lead image', sentHtml.includes('<img') && sentHtml.includes('--s0.png'));
+  f = mkFetch(() => ({ status: 201, body: { messageId: '<m@brevo>' } }), (u) => u.includes('--s5.png') ? 404 : 200);
+  r = await run(['--test-to', 'founder@example.com', '--date', date, '--day-file', dayPath], { fetchImpl: f });
+  t('missing lead art holds the issue instead of omitting the image and sending', r.outcome === 'held-art' && f.calls.length === 0);
   f = mkFetch(() => ({ status: 201, body: { id: 1 } }), () => 404);
   r = await run(['--send', '--date', date, '--day-file', dayPath], { fetchImpl: f, config: { autoSend: true, approvedTestIssue: date } });
   t('nothing live → not-live, zero Brevo calls', r.outcome === 'not-live' && f.calls.length === 0);
   f = mkFetch(() => ({ status: 201, body: { messageId: '<m>' } }), () => 403);
   r = await run(['--test-to', 'founder@example.com', '--date', date, '--day-file', dayPath], { fetchImpl: f });
-  t('bot-challenge (403) is unverified, not missing: issue still sends', r.outcome === 'test-sent' && (f.calls[0]?.body?.htmlContent || '').includes('/news/2026-10-02/s5/'));
+  t('unverified image bytes on a bot challenge hold the issue without mail calls', r.outcome === 'held-art' && f.calls.length === 0);
 
   let bad = false;
   try { parseArgs(['--test-to', 'not-an-email']); } catch { bad = true; }

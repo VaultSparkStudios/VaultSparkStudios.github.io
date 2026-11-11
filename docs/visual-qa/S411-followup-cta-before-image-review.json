@@ -1,0 +1,802 @@
+{
+  "schemaVersion": 1,
+  "phase": "before",
+  "kind": "cta",
+  "originalManifestSha256": "2884b76e9d6bf85d2a9e625d6b8e1ec56bc86e2bf82a965f1b98953fcf081af9",
+  "originalReviewSha256": "da9129b8ff255cd13a3baf29af9a1f1e0b6cc6d04805a086e39fb9dce252f296",
+  "reviewedAt": "2026-11-05T11:39:45.476Z",
+  "actuallyViewedCount": 63,
+  "reviewEvidenceOwner": "original acquisition reviewer",
+  "findings": [],
+  "observations": [],
+  "nonpassingDrawerFrames": 14,
+  "limitations": [
+    "Static captured state only; no real account/authentication or hosted release acceptance."
+  ],
+  "captures": [
+    {
+      "file": "S411-followup-cta-before-dark-existing-bar-visible.png",
+      "sha256": "dbe21f7d6201d597721123ee4a912b2afc6e7611665529f33fb32a8a9aa2c008",
+      "capturedAt": "2026-11-05T11:34:19.503Z",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "actualState": "existing/bar-visible",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "CTA visible after actual elapsed deadline; desktop navigation remains unobstructed. "
+    },
+    {
+      "file": "S411-followup-cta-before-dark-late-deadline-elapsed-nav-open-bottom.png",
+      "sha256": "31d359aafbe016de783a2b0d0fd12141933270832745489f3c1cced422aac120",
+      "capturedAt": "2026-11-05T11:34:19.619Z",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "actualState": "late/deadline-elapsed-nav-open-bottom",
+      "actuallyViewed": true,
+      "findings": [
+        "Sticky bar at y718.58..844 covers Create Account button label/lower portion and GitHub link in fully bottom-scrolled drawer. Membership button remains visible above the bar in these bottom-scrolled frames."
+      ],
+      "assessment": "Nonpassing drawer footer obstruction."
+    },
+    {
+      "file": "S411-followup-cta-before-dark-desktop-bar-visible.png",
+      "sha256": "edfe1ba4a93e19e2afc3e9d5372fb29b8a32222784b309a7878640ac6066a156",
+      "capturedAt": "2026-11-05T11:34:20.066Z",
+      "width": 1366,
+      "height": 1000,
+      "theme": "dark",
+      "actualState": "desktop/bar-visible",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "CTA visible after actual elapsed deadline; desktop navigation remains unobstructed. "
+    },
+    {
+      "file": "S411-followup-cta-before-dark-late-closed-restored.png",
+      "sha256": "007dc92cacf3e5366c37f15d96ad1d3e7e5be03e50448bb57df4537660e1cf5d",
+      "capturedAt": "2026-11-05T11:34:20.576Z",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "actualState": "late/closed-restored",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Drawer closed and eligible CTA remains visible."
+    },
+    {
+      "file": "S411-followup-cta-before-dark-desktop-dismissed.png",
+      "sha256": "e5699c18f69b9bf5732b8d4d67612360c62d69cd8eaeda769f33fdee80826859",
+      "capturedAt": "2026-11-05T11:34:20.946Z",
+      "width": 1366,
+      "height": 1000,
+      "theme": "dark",
+      "actualState": "desktop/dismissed",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Actual X dismissal removed bar."
+    },
+    {
+      "file": "S411-followup-cta-before-dark-existing-nav-open-bottom.png",
+      "sha256": "31d359aafbe016de783a2b0d0fd12141933270832745489f3c1cced422aac120",
+      "capturedAt": "2026-11-05T11:34:20.999Z",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "actualState": "existing/nav-open-bottom",
+      "actuallyViewed": true,
+      "findings": [
+        "Sticky bar at y718.58..844 covers Create Account button label/lower portion and GitHub link in fully bottom-scrolled drawer. Membership button remains visible above the bar in these bottom-scrolled frames."
+      ],
+      "assessment": "Nonpassing drawer footer obstruction."
+    },
+    {
+      "file": "S411-followup-cta-before-dark-existing-closed-restored.png",
+      "sha256": "ca07a5f04a19ce6b08473427ac64ff48ca836e8f97cbaabaff4256c3c0fb414e",
+      "capturedAt": "2026-11-05T11:34:21.553Z",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "actualState": "existing/closed-restored",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Drawer closed and eligible CTA remains visible."
+    },
+    {
+      "file": "S411-followup-cta-before-dark-existing-dismissed.png",
+      "sha256": "39cf17123fe6b8d82584783b76e1ada3cd96dc8614897451716b942f5e925f84",
+      "capturedAt": "2026-11-05T11:34:22.114Z",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "actualState": "existing/dismissed",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Actual X dismissal removed bar."
+    },
+    {
+      "file": "S411-followup-cta-before-dark-existing-nav-open-after-dismiss.png",
+      "sha256": "2097df12b8e0813e7a72ad867a2cc5085a4a98668b8538bcf3eae9ef6e735891",
+      "capturedAt": "2026-11-05T11:34:22.957Z",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "actualState": "existing/nav-open-after-dismiss",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "All drawer footer actions visible and readable after actual dismissal; no bar reappears on this reopen."
+    },
+    {
+      "file": "S411-followup-cta-before-light-existing-bar-visible.png",
+      "sha256": "6bc9f6625d679681b7ba8e78b59603ebd273c325d7321c5efc3157d7aadb15ea",
+      "capturedAt": "2026-11-05T11:34:28.746Z",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "actualState": "existing/bar-visible",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "CTA visible after actual elapsed deadline; desktop navigation remains unobstructed. "
+    },
+    {
+      "file": "S411-followup-cta-before-light-late-deadline-elapsed-nav-open-bottom.png",
+      "sha256": "3723d2c2e5896b1e60b658a3cc85073b9884c05263270a5a4b3bce623f98bd33",
+      "capturedAt": "2026-11-05T11:34:28.871Z",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "actualState": "late/deadline-elapsed-nav-open-bottom",
+      "actuallyViewed": true,
+      "findings": [
+        "Sticky bar at y718.58..844 covers Create Account button label/lower portion and GitHub link in fully bottom-scrolled drawer. Membership button remains visible above the bar in these bottom-scrolled frames."
+      ],
+      "assessment": "Nonpassing drawer footer obstruction."
+    },
+    {
+      "file": "S411-followup-cta-before-light-desktop-bar-visible.png",
+      "sha256": "7bd52bdcd339926ab473ee61edf99c662eaa5a1925ad7f9e17544e88b78ea76e",
+      "capturedAt": "2026-11-05T11:34:29.470Z",
+      "width": 1366,
+      "height": 1000,
+      "theme": "light",
+      "actualState": "desktop/bar-visible",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "CTA visible after actual elapsed deadline; desktop navigation remains unobstructed. "
+    },
+    {
+      "file": "S411-followup-cta-before-light-late-closed-restored.png",
+      "sha256": "011b84b3a6b02af8dff6fff10dda6df65fd7873671122d2c2457e999b1626bef",
+      "capturedAt": "2026-11-05T11:34:29.597Z",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "actualState": "late/closed-restored",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Drawer closed and eligible CTA remains visible."
+    },
+    {
+      "file": "S411-followup-cta-before-light-desktop-dismissed.png",
+      "sha256": "19fb4be0678988ba294551c2dd0fc3f2a229f329423304df4dd87a35bd14e6f8",
+      "capturedAt": "2026-11-05T11:34:30.486Z",
+      "width": 1366,
+      "height": 1000,
+      "theme": "light",
+      "actualState": "desktop/dismissed",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Actual X dismissal removed bar."
+    },
+    {
+      "file": "S411-followup-cta-before-light-existing-nav-open-bottom.png",
+      "sha256": "3723d2c2e5896b1e60b658a3cc85073b9884c05263270a5a4b3bce623f98bd33",
+      "capturedAt": "2026-11-05T11:34:30.540Z",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "actualState": "existing/nav-open-bottom",
+      "actuallyViewed": true,
+      "findings": [
+        "Sticky bar at y718.58..844 covers Create Account button label/lower portion and GitHub link in fully bottom-scrolled drawer. Membership button remains visible above the bar in these bottom-scrolled frames."
+      ],
+      "assessment": "Nonpassing drawer footer obstruction."
+    },
+    {
+      "file": "S411-followup-cta-before-light-existing-closed-restored.png",
+      "sha256": "39569da64b739add76be29661d4eb8447552269ab0fd8ae076bb1bce24f46b57",
+      "capturedAt": "2026-11-05T11:34:31.075Z",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "actualState": "existing/closed-restored",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Drawer closed and eligible CTA remains visible."
+    },
+    {
+      "file": "S411-followup-cta-before-light-existing-dismissed.png",
+      "sha256": "0b01594c336a721a66d18eeba90170e6a6f296f1687d239845858b169b72ccd6",
+      "capturedAt": "2026-11-05T11:34:31.644Z",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "actualState": "existing/dismissed",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Actual X dismissal removed bar."
+    },
+    {
+      "file": "S411-followup-cta-before-light-existing-nav-open-after-dismiss.png",
+      "sha256": "e026da23d1e37b889da1b67668f00c207694943f64a2f3ae9a1e5547ecca36cb",
+      "capturedAt": "2026-11-05T11:34:32.500Z",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "actualState": "existing/nav-open-after-dismiss",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "All drawer footer actions visible and readable after actual dismissal; no bar reappears on this reopen."
+    },
+    {
+      "file": "S411-followup-cta-before-ambient-existing-bar-visible.png",
+      "sha256": "7655648b011053e2357ce1c3478475f84cd8e391770929ba759ca042f1e9156c",
+      "capturedAt": "2026-11-05T11:34:37.973Z",
+      "width": 390,
+      "height": 844,
+      "theme": "ambient",
+      "actualState": "existing/bar-visible",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "CTA visible after actual elapsed deadline; desktop navigation remains unobstructed. "
+    },
+    {
+      "file": "S411-followup-cta-before-ambient-late-deadline-elapsed-nav-open-bottom.png",
+      "sha256": "dc375c085bcbefa0175cda18fb982d3e38166d6c56418d589fc3ff1629ecdf90",
+      "capturedAt": "2026-11-05T11:34:38.059Z",
+      "width": 390,
+      "height": 844,
+      "theme": "ambient",
+      "actualState": "late/deadline-elapsed-nav-open-bottom",
+      "actuallyViewed": true,
+      "findings": [
+        "Sticky bar at y718.58..844 covers Create Account button label/lower portion and GitHub link in fully bottom-scrolled drawer. Membership button remains visible above the bar in these bottom-scrolled frames."
+      ],
+      "assessment": "Nonpassing drawer footer obstruction."
+    },
+    {
+      "file": "S411-followup-cta-before-ambient-desktop-bar-visible.png",
+      "sha256": "210b3c6665d5b1f6139f14dbfe2f99f6ad1ff814f5ed70b17f3246f256e55354",
+      "capturedAt": "2026-11-05T11:34:38.607Z",
+      "width": 1366,
+      "height": 1000,
+      "theme": "ambient",
+      "actualState": "desktop/bar-visible",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "CTA visible after actual elapsed deadline; desktop navigation remains unobstructed. "
+    },
+    {
+      "file": "S411-followup-cta-before-ambient-late-closed-restored.png",
+      "sha256": "034369e634a498be7629afce4fb2518f59e8a24b650906ec01037bfb54f01be0",
+      "capturedAt": "2026-11-05T11:34:38.753Z",
+      "width": 390,
+      "height": 844,
+      "theme": "ambient",
+      "actualState": "late/closed-restored",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Drawer closed and eligible CTA remains visible."
+    },
+    {
+      "file": "S411-followup-cta-before-ambient-desktop-dismissed.png",
+      "sha256": "e271b568fae995e00f1742c5ca599b7979aeb36cf39844e80af6498438acfda5",
+      "capturedAt": "2026-11-05T11:34:39.539Z",
+      "width": 1366,
+      "height": 1000,
+      "theme": "ambient",
+      "actualState": "desktop/dismissed",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Actual X dismissal removed bar."
+    },
+    {
+      "file": "S411-followup-cta-before-ambient-existing-nav-open-bottom.png",
+      "sha256": "dc375c085bcbefa0175cda18fb982d3e38166d6c56418d589fc3ff1629ecdf90",
+      "capturedAt": "2026-11-05T11:34:39.580Z",
+      "width": 390,
+      "height": 844,
+      "theme": "ambient",
+      "actualState": "existing/nav-open-bottom",
+      "actuallyViewed": true,
+      "findings": [
+        "Sticky bar at y718.58..844 covers Create Account button label/lower portion and GitHub link in fully bottom-scrolled drawer. Membership button remains visible above the bar in these bottom-scrolled frames."
+      ],
+      "assessment": "Nonpassing drawer footer obstruction."
+    },
+    {
+      "file": "S411-followup-cta-before-ambient-existing-closed-restored.png",
+      "sha256": "dc2e347be45dbfadf3b83d3a8249edbc7dee289778310dc1b5034e495a718db0",
+      "capturedAt": "2026-11-05T11:34:40.129Z",
+      "width": 390,
+      "height": 844,
+      "theme": "ambient",
+      "actualState": "existing/closed-restored",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Drawer closed and eligible CTA remains visible."
+    },
+    {
+      "file": "S411-followup-cta-before-ambient-existing-dismissed.png",
+      "sha256": "dbcdf20414f4aa82605e546fdfc63777d5a5959c9b5c32e83656f5273a13bf43",
+      "capturedAt": "2026-11-05T11:34:40.689Z",
+      "width": 390,
+      "height": 844,
+      "theme": "ambient",
+      "actualState": "existing/dismissed",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Actual X dismissal removed bar."
+    },
+    {
+      "file": "S411-followup-cta-before-ambient-existing-nav-open-after-dismiss.png",
+      "sha256": "4e80ddcd8ad3ae48e83112e32dc4f912180f061bc0eeef52eaa0cf365fac3edf",
+      "capturedAt": "2026-11-05T11:34:41.534Z",
+      "width": 390,
+      "height": 844,
+      "theme": "ambient",
+      "actualState": "existing/nav-open-after-dismiss",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "All drawer footer actions visible and readable after actual dismissal; no bar reappears on this reopen."
+    },
+    {
+      "file": "S411-followup-cta-before-warm-existing-bar-visible.png",
+      "sha256": "8eff5f181059b9db0c60f2fc19d2a54b94efc2044155d2d5ce4364a647222b11",
+      "capturedAt": "2026-11-05T11:34:47.230Z",
+      "width": 390,
+      "height": 844,
+      "theme": "warm",
+      "actualState": "existing/bar-visible",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "CTA visible after actual elapsed deadline; desktop navigation remains unobstructed. "
+    },
+    {
+      "file": "S411-followup-cta-before-warm-late-deadline-elapsed-nav-open-bottom.png",
+      "sha256": "951fb5f8c4d6ce77c6f81e57237898ff845071ee8281901519f11dd3bc1a47be",
+      "capturedAt": "2026-11-05T11:34:47.269Z",
+      "width": 390,
+      "height": 844,
+      "theme": "warm",
+      "actualState": "late/deadline-elapsed-nav-open-bottom",
+      "actuallyViewed": true,
+      "findings": [
+        "Sticky bar at y718.58..844 covers Create Account button label/lower portion and GitHub link in fully bottom-scrolled drawer. Membership button remains visible above the bar in these bottom-scrolled frames."
+      ],
+      "assessment": "Nonpassing drawer footer obstruction."
+    },
+    {
+      "file": "S411-followup-cta-before-warm-desktop-bar-visible.png",
+      "sha256": "59597cf06d358181bd448bf8291fa43bd8ff4c6f11d59a919817c258d571b59b",
+      "capturedAt": "2026-11-05T11:34:47.691Z",
+      "width": 1366,
+      "height": 1000,
+      "theme": "warm",
+      "actualState": "desktop/bar-visible",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "CTA visible after actual elapsed deadline; desktop navigation remains unobstructed. "
+    },
+    {
+      "file": "S411-followup-cta-before-warm-late-closed-restored.png",
+      "sha256": "9a4feb9b42335912df86ec8e0cc733f33bdef21ccf51cc2f753e10be7daa9a31",
+      "capturedAt": "2026-11-05T11:34:48.174Z",
+      "width": 390,
+      "height": 844,
+      "theme": "warm",
+      "actualState": "late/closed-restored",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Drawer closed and eligible CTA remains visible."
+    },
+    {
+      "file": "S411-followup-cta-before-warm-desktop-dismissed.png",
+      "sha256": "efd731118fb7710503dea5cf818f7166af0681b5d65fec7a3461315d9af4a000",
+      "capturedAt": "2026-11-05T11:34:48.619Z",
+      "width": 1366,
+      "height": 1000,
+      "theme": "warm",
+      "actualState": "desktop/dismissed",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Actual X dismissal removed bar."
+    },
+    {
+      "file": "S411-followup-cta-before-warm-existing-nav-open-bottom.png",
+      "sha256": "951fb5f8c4d6ce77c6f81e57237898ff845071ee8281901519f11dd3bc1a47be",
+      "capturedAt": "2026-11-05T11:34:48.673Z",
+      "width": 390,
+      "height": 844,
+      "theme": "warm",
+      "actualState": "existing/nav-open-bottom",
+      "actuallyViewed": true,
+      "findings": [
+        "Sticky bar at y718.58..844 covers Create Account button label/lower portion and GitHub link in fully bottom-scrolled drawer. Membership button remains visible above the bar in these bottom-scrolled frames."
+      ],
+      "assessment": "Nonpassing drawer footer obstruction."
+    },
+    {
+      "file": "S411-followup-cta-before-warm-existing-closed-restored.png",
+      "sha256": "6dc6afa794a1b95d49e2b37cd34cb27b1002fa57d8c2bb7a7bde871e5dc65633",
+      "capturedAt": "2026-11-05T11:34:49.217Z",
+      "width": 390,
+      "height": 844,
+      "theme": "warm",
+      "actualState": "existing/closed-restored",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Drawer closed and eligible CTA remains visible."
+    },
+    {
+      "file": "S411-followup-cta-before-warm-existing-dismissed.png",
+      "sha256": "e29c212fd962241e868a69cca90650ed5e490a8948bddb84055fc13d58c23ca4",
+      "capturedAt": "2026-11-05T11:34:49.782Z",
+      "width": 390,
+      "height": 844,
+      "theme": "warm",
+      "actualState": "existing/dismissed",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Actual X dismissal removed bar."
+    },
+    {
+      "file": "S411-followup-cta-before-warm-existing-nav-open-after-dismiss.png",
+      "sha256": "f8031c178d06b1976f901910d90a2f8e10ebc7c443c866db5b3ff56fe7fb06a1",
+      "capturedAt": "2026-11-05T11:34:50.656Z",
+      "width": 390,
+      "height": 844,
+      "theme": "warm",
+      "actualState": "existing/nav-open-after-dismiss",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "All drawer footer actions visible and readable after actual dismissal; no bar reappears on this reopen."
+    },
+    {
+      "file": "S411-followup-cta-before-cool-late-deadline-elapsed-nav-open-bottom.png",
+      "sha256": "8eaedb1fdb129f409e982ed385a6df46c8f901d016466f0cbb9a18b64ff47b04",
+      "capturedAt": "2026-11-05T11:34:56.327Z",
+      "width": 390,
+      "height": 844,
+      "theme": "cool",
+      "actualState": "late/deadline-elapsed-nav-open-bottom",
+      "actuallyViewed": true,
+      "findings": [
+        "Sticky bar at y718.58..844 covers Create Account button label/lower portion and GitHub link in fully bottom-scrolled drawer. Membership button remains visible above the bar in these bottom-scrolled frames."
+      ],
+      "assessment": "Nonpassing drawer footer obstruction."
+    },
+    {
+      "file": "S411-followup-cta-before-cool-desktop-bar-visible.png",
+      "sha256": "05ccec810f6880910ff5297fb090260de169caa44bf94774f6fd2910bd47deee",
+      "capturedAt": "2026-11-05T11:34:56.905Z",
+      "width": 1366,
+      "height": 1000,
+      "theme": "cool",
+      "actualState": "desktop/bar-visible",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "CTA visible after actual elapsed deadline; desktop navigation remains unobstructed. "
+    },
+    {
+      "file": "S411-followup-cta-before-cool-late-closed-restored.png",
+      "sha256": "8af5253d7afd878394725a5c7727a02ed125763b5b190c2c6fe61edec6b66269",
+      "capturedAt": "2026-11-05T11:34:57.153Z",
+      "width": 390,
+      "height": 844,
+      "theme": "cool",
+      "actualState": "late/closed-restored",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Drawer closed and eligible CTA remains visible."
+    },
+    {
+      "file": "S411-followup-cta-before-cool-existing-bar-visible.png",
+      "sha256": "fcb4cd0ea1641cc5e0af477d38b9f2e7a2808857155e6cfe462488d89edfacc7",
+      "capturedAt": "2026-11-05T11:34:57.156Z",
+      "width": 390,
+      "height": 844,
+      "theme": "cool",
+      "actualState": "existing/bar-visible",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "CTA visible after actual elapsed deadline; desktop navigation remains unobstructed. "
+    },
+    {
+      "file": "S411-followup-cta-before-cool-desktop-dismissed.png",
+      "sha256": "2bb243ec6db9b3f0758fb684bd5c3f78ad0daf4d9283cf1cb2b224e0fb87ec76",
+      "capturedAt": "2026-11-05T11:34:58.007Z",
+      "width": 1366,
+      "height": 1000,
+      "theme": "cool",
+      "actualState": "desktop/dismissed",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Actual X dismissal removed bar."
+    },
+    {
+      "file": "S411-followup-cta-before-cool-existing-nav-open-bottom.png",
+      "sha256": "8eaedb1fdb129f409e982ed385a6df46c8f901d016466f0cbb9a18b64ff47b04",
+      "capturedAt": "2026-11-05T11:34:58.086Z",
+      "width": 390,
+      "height": 844,
+      "theme": "cool",
+      "actualState": "existing/nav-open-bottom",
+      "actuallyViewed": true,
+      "findings": [
+        "Sticky bar at y718.58..844 covers Create Account button label/lower portion and GitHub link in fully bottom-scrolled drawer. Membership button remains visible above the bar in these bottom-scrolled frames."
+      ],
+      "assessment": "Nonpassing drawer footer obstruction."
+    },
+    {
+      "file": "S411-followup-cta-before-cool-existing-closed-restored.png",
+      "sha256": "942990bbe8090b50626edb714fa86671682ddbb3b20170f1bc5dc163eaf1c30d",
+      "capturedAt": "2026-11-05T11:34:58.639Z",
+      "width": 390,
+      "height": 844,
+      "theme": "cool",
+      "actualState": "existing/closed-restored",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Drawer closed and eligible CTA remains visible."
+    },
+    {
+      "file": "S411-followup-cta-before-cool-existing-dismissed.png",
+      "sha256": "cc2986ff8e422de46e107dbc90936a75176fe59b2c9e711b93ea444c093644ee",
+      "capturedAt": "2026-11-05T11:34:59.218Z",
+      "width": 390,
+      "height": 844,
+      "theme": "cool",
+      "actualState": "existing/dismissed",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Actual X dismissal removed bar."
+    },
+    {
+      "file": "S411-followup-cta-before-cool-existing-nav-open-after-dismiss.png",
+      "sha256": "67daf6ff82c584e7657a1c943a8bed78bc22e08e9cc644d4abc9f0e682f8e33b",
+      "capturedAt": "2026-11-05T11:35:00.188Z",
+      "width": 390,
+      "height": 844,
+      "theme": "cool",
+      "actualState": "existing/nav-open-after-dismiss",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "All drawer footer actions visible and readable after actual dismissal; no bar reappears on this reopen."
+    },
+    {
+      "file": "S411-followup-cta-before-lava-existing-bar-visible.png",
+      "sha256": "fba801c285825ac20a9387fb5a480c3b2c24bc6109d4b41c5e74255df82fbb59",
+      "capturedAt": "2026-11-05T11:35:05.963Z",
+      "width": 390,
+      "height": 844,
+      "theme": "lava",
+      "actualState": "existing/bar-visible",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "CTA visible after actual elapsed deadline; desktop navigation remains unobstructed. "
+    },
+    {
+      "file": "S411-followup-cta-before-lava-late-deadline-elapsed-nav-open-bottom.png",
+      "sha256": "ff0a5f5936ca3b70043afc8d823376e5c45985de8ea59b7b33de371e6ebdbdf7",
+      "capturedAt": "2026-11-05T11:35:06.015Z",
+      "width": 390,
+      "height": 844,
+      "theme": "lava",
+      "actualState": "late/deadline-elapsed-nav-open-bottom",
+      "actuallyViewed": true,
+      "findings": [
+        "Sticky bar at y718.58..844 covers Create Account button label/lower portion and GitHub link in fully bottom-scrolled drawer. Membership button remains visible above the bar in these bottom-scrolled frames."
+      ],
+      "assessment": "Nonpassing drawer footer obstruction."
+    },
+    {
+      "file": "S411-followup-cta-before-lava-desktop-bar-visible.png",
+      "sha256": "54b36229603327c6568c06372cef7ede92cae4c95bb6f120731377072c1794d4",
+      "capturedAt": "2026-11-05T11:35:06.508Z",
+      "width": 1366,
+      "height": 1000,
+      "theme": "lava",
+      "actualState": "desktop/bar-visible",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "CTA visible after actual elapsed deadline; desktop navigation remains unobstructed. "
+    },
+    {
+      "file": "S411-followup-cta-before-lava-late-closed-restored.png",
+      "sha256": "fc9380494ce9e041f06d7d860d38cc6a820dd6f02d3c5c34496a6a8f8fd9f3df",
+      "capturedAt": "2026-11-05T11:35:06.620Z",
+      "width": 390,
+      "height": 844,
+      "theme": "lava",
+      "actualState": "late/closed-restored",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Drawer closed and eligible CTA remains visible."
+    },
+    {
+      "file": "S411-followup-cta-before-lava-desktop-dismissed.png",
+      "sha256": "6ad329db0208f8f6b08224cf87b43a7e1a73b5e719c4931b7164ab105155ab11",
+      "capturedAt": "2026-11-05T11:35:07.468Z",
+      "width": 1366,
+      "height": 1000,
+      "theme": "lava",
+      "actualState": "desktop/dismissed",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Actual X dismissal removed bar."
+    },
+    {
+      "file": "S411-followup-cta-before-lava-existing-nav-open-bottom.png",
+      "sha256": "ff0a5f5936ca3b70043afc8d823376e5c45985de8ea59b7b33de371e6ebdbdf7",
+      "capturedAt": "2026-11-05T11:35:07.529Z",
+      "width": 390,
+      "height": 844,
+      "theme": "lava",
+      "actualState": "existing/nav-open-bottom",
+      "actuallyViewed": true,
+      "findings": [
+        "Sticky bar at y718.58..844 covers Create Account button label/lower portion and GitHub link in fully bottom-scrolled drawer. Membership button remains visible above the bar in these bottom-scrolled frames."
+      ],
+      "assessment": "Nonpassing drawer footer obstruction."
+    },
+    {
+      "file": "S411-followup-cta-before-lava-existing-closed-restored.png",
+      "sha256": "8f649e28a028bdef6cf91c92d1d800f60760c23af537144ab764d74998a1e7cd",
+      "capturedAt": "2026-11-05T11:35:08.085Z",
+      "width": 390,
+      "height": 844,
+      "theme": "lava",
+      "actualState": "existing/closed-restored",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Drawer closed and eligible CTA remains visible."
+    },
+    {
+      "file": "S411-followup-cta-before-lava-existing-dismissed.png",
+      "sha256": "aaa25885847645c4f186902ac0411bd1883710857c3cbcee930559058bde219d",
+      "capturedAt": "2026-11-05T11:35:08.656Z",
+      "width": 390,
+      "height": 844,
+      "theme": "lava",
+      "actualState": "existing/dismissed",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Actual X dismissal removed bar."
+    },
+    {
+      "file": "S411-followup-cta-before-lava-existing-nav-open-after-dismiss.png",
+      "sha256": "370ecabd514269f2f6e04e8590e5183c2663fcb89f9149e2a0449e92651501c4",
+      "capturedAt": "2026-11-05T11:35:09.527Z",
+      "width": 390,
+      "height": 844,
+      "theme": "lava",
+      "actualState": "existing/nav-open-after-dismiss",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "All drawer footer actions visible and readable after actual dismissal; no bar reappears on this reopen."
+    },
+    {
+      "file": "S411-followup-cta-before-high-contrast-existing-bar-visible.png",
+      "sha256": "ebca34dfcccc5ef77ea8ede0a51813593c4ca8b723c555c2843e6c0559a9d668",
+      "capturedAt": "2026-11-05T11:35:15.416Z",
+      "width": 390,
+      "height": 844,
+      "theme": "high-contrast",
+      "actualState": "existing/bar-visible",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "CTA visible after actual elapsed deadline; desktop navigation remains unobstructed. "
+    },
+    {
+      "file": "S411-followup-cta-before-high-contrast-late-deadline-elapsed-nav-open-bottom.png",
+      "sha256": "151ec437ae068d5d6828cfd02c49eeb7e9762786e2942a3d7190762358370341",
+      "capturedAt": "2026-11-05T11:35:15.681Z",
+      "width": 390,
+      "height": 844,
+      "theme": "high-contrast",
+      "actualState": "late/deadline-elapsed-nav-open-bottom",
+      "actuallyViewed": true,
+      "findings": [
+        "Sticky bar at y718.58..844 covers Create Account button label/lower portion and GitHub link in fully bottom-scrolled drawer. Membership button remains visible above the bar in these bottom-scrolled frames."
+      ],
+      "assessment": "Nonpassing drawer footer obstruction."
+    },
+    {
+      "file": "S411-followup-cta-before-high-contrast-desktop-bar-visible.png",
+      "sha256": "6705c2e90cd066cb7ec17feeee20f504922fe206c5817540729fe870d1f82a73",
+      "capturedAt": "2026-11-05T11:35:15.683Z",
+      "width": 1366,
+      "height": 1000,
+      "theme": "high-contrast",
+      "actualState": "desktop/bar-visible",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "CTA visible after actual elapsed deadline; desktop navigation remains unobstructed. "
+    },
+    {
+      "file": "S411-followup-cta-before-high-contrast-late-closed-restored.png",
+      "sha256": "7a37a12f3f43f207f14394eeca6d0e8055df6f3d768fbd1d1af6a115334e5425",
+      "capturedAt": "2026-11-05T11:35:16.179Z",
+      "width": 390,
+      "height": 844,
+      "theme": "high-contrast",
+      "actualState": "late/closed-restored",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Drawer closed and eligible CTA remains visible."
+    },
+    {
+      "file": "S411-followup-cta-before-high-contrast-existing-nav-open-bottom.png",
+      "sha256": "151ec437ae068d5d6828cfd02c49eeb7e9762786e2942a3d7190762358370341",
+      "capturedAt": "2026-11-05T11:35:16.742Z",
+      "width": 390,
+      "height": 844,
+      "theme": "high-contrast",
+      "actualState": "existing/nav-open-bottom",
+      "actuallyViewed": true,
+      "findings": [
+        "Sticky bar at y718.58..844 covers Create Account button label/lower portion and GitHub link in fully bottom-scrolled drawer. Membership button remains visible above the bar in these bottom-scrolled frames."
+      ],
+      "assessment": "Nonpassing drawer footer obstruction."
+    },
+    {
+      "file": "S411-followup-cta-before-high-contrast-desktop-dismissed.png",
+      "sha256": "7dca598027362d7cb8fa3e2095063f55a92480826d17dac8b17792e1db44a17f",
+      "capturedAt": "2026-11-05T11:35:16.754Z",
+      "width": 1366,
+      "height": 1000,
+      "theme": "high-contrast",
+      "actualState": "desktop/dismissed",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Actual X dismissal removed bar."
+    },
+    {
+      "file": "S411-followup-cta-before-high-contrast-existing-closed-restored.png",
+      "sha256": "1bf9069c95c5fd4003dde4229713949f9a351769e9623fd8d7349917f7abe99f",
+      "capturedAt": "2026-11-05T11:35:17.317Z",
+      "width": 390,
+      "height": 844,
+      "theme": "high-contrast",
+      "actualState": "existing/closed-restored",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Drawer closed and eligible CTA remains visible."
+    },
+    {
+      "file": "S411-followup-cta-before-high-contrast-existing-dismissed.png",
+      "sha256": "5eade56e60c13f030bdaece99dddb1592252911f4300acffeb2ca99aa820f4ad",
+      "capturedAt": "2026-11-05T11:35:17.890Z",
+      "width": 390,
+      "height": 844,
+      "theme": "high-contrast",
+      "actualState": "existing/dismissed",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "Actual X dismissal removed bar."
+    },
+    {
+      "file": "S411-followup-cta-before-high-contrast-existing-nav-open-after-dismiss.png",
+      "sha256": "253d1647a7051ce64773e8d008adf339657eda0256c39e81b70e23eedfd1d50b",
+      "capturedAt": "2026-11-05T11:35:18.798Z",
+      "width": 390,
+      "height": 844,
+      "theme": "high-contrast",
+      "actualState": "existing/nav-open-after-dismiss",
+      "actuallyViewed": true,
+      "findings": [],
+      "assessment": "All drawer footer actions visible and readable after actual dismissal; no bar reappears on this reopen."
+    }
+  ]
+}

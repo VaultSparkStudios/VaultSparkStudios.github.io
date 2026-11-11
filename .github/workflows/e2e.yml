@@ -167,10 +167,10 @@ jobs:
           path: test-results/
           retention-days: 14
 
-  # ── Full E2E suite (requires auth secrets — skips gracefully if absent) ────────
+  # ── Full E2E suite (public checks always gate; auth cases require credentials) ─
   e2e:
     runs-on: ubuntu-latest
-    # Only run when auth secrets are available (skips gracefully on forks/dependabot)
+    # Missing auth credentials skip only the explicitly guarded auth cases.
     if: ${{ vars.E2E_ENABLED != 'false' }}
     steps:
       - uses: actions/checkout@v4
@@ -204,9 +204,8 @@ jobs:
           BASE_URL: http://127.0.0.1:4173
           VAULT_TEST_EMAIL: ${{ secrets.VAULT_TEST_EMAIL }}
           VAULT_TEST_PASSWORD: ${{ secrets.VAULT_TEST_PASSWORD }}
-        # If auth secrets aren't configured, authenticated tests will skip via
-        # test.skip() guards in the spec files — non-auth tests still run.
-        continue-on-error: ${{ secrets.VAULT_TEST_EMAIL == '' }}
+        # Auth cases use explicit test.skip() guards without credentials.
+        # Every executed failure must fail this job, including public tests.
 
       - name: Stop local preview
         if: always()

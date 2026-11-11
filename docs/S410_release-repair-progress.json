@@ -1,0 +1,148 @@
+{
+  "session": 410,
+  "at": "2026-11-04T10:02:49.743Z",
+  "state": "focused-repairs-passed-capture-received-pixel-review-pending",
+  "trigger": "docs/S410_hosted-attempt1.json",
+  "scope": "Required release acceptance repairs; public runtime remains byte-identical to QA42ffd.",
+  "runtimeUnchanged": true,
+  "focused": {
+    "unit": {
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "nativeExit": 0,
+      "durationMs": 42207.8212
+    },
+    "navigationAndPages": {
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "nativeExit": 0
+    },
+    "deskArtwork": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "nativeExit": 0,
+      "unchangedSpec": true,
+      "scope": "Original actions/assertions pass; hosted issue not reproduced. Failure-only diagnostics now allowlisted and preserve the original failure.",
+      "durationMs": 7532.071999999999,
+      "sourceSha256": "4bd74fc59d09771ace81943954b1d71b42745492d0add19cd394463ed7110c14",
+      "negativePrivacy": {
+        "nativeExit": 1,
+        "forcedFailureExpected": true,
+        "originalErrorPreserved": true,
+        "boundedLogAndAttachmentVerified": true,
+        "syntheticUntrustedMessageAndNameExcluded": true
+      }
+    },
+    "visualReadiness": {
+      "nativeExit": 0,
+      "passed": 70,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "matrix": {
+        "surfaces": 7,
+        "viewports": 5,
+        "actualThemes": [
+          "dark",
+          "light"
+        ],
+        "cases": 70
+      },
+      "scene": "Real Shift engagement plus genuine reducedMotion:reduce; actual body theme and visible home heading/forge-letter assertions. Initial quiet-visit/normal-motion/LCP proof remains separate.",
+      "sourceSha256": "b79b108f09c04876dd202e88c70c0f3710ba63a06953e459f1392e2022ed6440",
+      "frameStability": {
+        "captures": 210,
+        "rawIdenticalCases": 60,
+        "zeroPerceptualDifferenceCases": 70,
+        "withinUnchangedPixelRatio015": 70,
+        "method": "Installed Playwright PNG comparator default threshold0.2, maxDiffPixelRatio0 and unchanged0.015",
+        "receipt": ".cache/S410/readiness-matrix-reduced/frame-summary.json"
+      },
+      "baselineAcceptance": false,
+      "LinuxCaptureAcceptance": false
+    }
+  },
+  "reviews": [
+    {
+      "reviewer": "s410_implementation_review",
+      "scope": "workflow/config/browser-collection",
+      "verdict": "APPROVE"
+    },
+    {
+      "reviewer": "arc_boundary_review",
+      "scope": "visual readiness and actual-theme assertion",
+      "verdict": "APPROVE"
+    },
+    {
+      "reviewer": "arc_boundary_review",
+      "scope": "Final engaged reduced-motion settled scene",
+      "verdict": "APPROVE"
+    },
+    {
+      "reviewer": "s410_implementation_review",
+      "scope": "Final diagnostic privacy schema",
+      "verdict": "APPROVE"
+    }
+  ],
+  "sources": [
+    {
+      "path": ".github/workflows/e2e.yml",
+      "sha256": "608746a496b0ad22d08a98a7f9449e38bc908cca7c294172de552cc470abf6f5"
+    },
+    {
+      "path": "playwright.config.js",
+      "sha256": "721388c62849ce6c6aa6156bfcfe0941116b5b3fe2ac3c46670cad6365882bd0"
+    },
+    {
+      "path": "tests/browser-collection.unit.spec.mjs",
+      "sha256": "5883cdfa39702c397832c9169816c4c427b193e67b84581ff341b6030a6a58ea"
+    },
+    {
+      "path": "tests/navigation.spec.js",
+      "sha256": "8af89771f8516c03c346c3ee4fe13d75e79638cb35adc955ea4e7096a339b83e"
+    },
+    {
+      "path": "tests/pages.spec.js",
+      "sha256": "9b1a592d335818968a906a67ea14a7a1d7aa578ed757e5a0887ca227470fb409"
+    },
+    {
+      "path": "tests/visual-regression.spec.js",
+      "sha256": "a3e8e0ebb2f805155732455aa985121732d8580d82ab01e0dd442f9ac8676d7d"
+    },
+    {
+      "path": "tests/desk-artwork.spec.js",
+      "sha256": "4bd74fc59d09771ace81943954b1d71b42745492d0add19cd394463ed7110c14"
+    }
+  ],
+  "pending": [
+    "Inspect failed and fresh genuine Linux screenshots before any baseline replacement",
+    "Run the full hardened E2E suite; no allowed-failure masking",
+    "Refresh full source acceptance for final repaired candidate",
+    "Actual member and approved-investor journeys; main/production/readback"
+  ],
+  "previousFocusedVersion": "docs/S410_release-repair-progress-cf0fe4f9f1.json",
+  "diagnosticExtension": {
+    "source": "tests/visual-regression.spec.js",
+    "sourceSha256": "a3e8e0ebb2f805155732455aa985121732d8580d82ab01e0dd442f9ac8676d7d",
+    "positiveMatrixSourceUnchanged": "b79b108f09c04876dd202e88c70c0f3710ba63a06953e459f1392e2022ed6440",
+    "passSemanticsUnchanged": true,
+    "negativeProbe": {
+      "nativeExit": 1,
+      "expectedFailure": true,
+      "originalErrorPreserved": true,
+      "untrustedMetadataExcluded": true
+    },
+    "review": {
+      "reviewer": "arc_boundary_review",
+      "verdict": "APPROVE"
+    },
+    "scope": "Failure observability only; positive70 proof remains bound to its original source hash. Final full-suite acceptance remains pending."
+  },
+  "linuxCapture": "docs/S410_visual-capture-attempt2.json"
+}

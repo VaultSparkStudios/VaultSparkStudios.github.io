@@ -1,0 +1,210 @@
+{
+  "session": 409,
+  "goal": "01a19f9d-9bfc-73f2-8ecb-d463492a6e27",
+  "state": "release-pending",
+  "audit": "docs/AUDIT_2026-11-03.json",
+  "authorization": "Founder explicitly authorizes normal direct main commit/push and full deployment.",
+  "acceptance": {
+    "implementation": {
+      "state": "passed",
+      "receipt": "docs/S409_implementation.json"
+    },
+    "source": {
+      "state": "failed",
+      "reason": "Complete run from step1 failed at129;128/549 passing steps. Not source acceptance.",
+      "priorAcceptance": {
+        "state": "passed",
+        "passed": 548,
+        "receipt": "docs/S409_source-acceptance.json",
+        "sourceFingerprint": "3f5691fbee145e1c598fff02",
+        "completedAt": "2026-11-03T09:17:00.618Z"
+      },
+      "latestAttempt": {
+        "receipt": "docs/S409_source-recovery-attempt4.json",
+        "startedAt": "2026-11-04T03:43:04.260Z",
+        "finishedAt": "2026-11-04T04:11:30.696Z",
+        "passed": 128,
+        "failed": 1,
+        "planned": 549,
+        "coverageComplete": false,
+        "sourceFingerprint": "bb6da64746e282e7e98942ce",
+        "nativeExitCode": 1
+      },
+      "bookkeeping": "Subsequent recovery writeback changes explicit context inputs; preserve this original frozen-snapshot fingerprint."
+    },
+    "staging": {
+      "state": "pending"
+    },
+    "exactRequiredHostedChecks": {
+      "state": "pending"
+    },
+    "production": {
+      "state": "pending"
+    },
+    "completeServedReadback": {
+      "state": "pending"
+    },
+    "remotePublication": {
+      "state": "pending"
+    },
+    "publisherRestoration": {
+      "state": "passed",
+      "receipt": "docs/S409_publisher-restoration.json",
+      "workflows": 5,
+      "uptimeActive": true
+    },
+    "expandedAccountExperience": {
+      "state": "locally-verified-release-pending",
+      "audit": "docs/AUDIT_2026-11-03-S409-access.json",
+      "receipt": "docs/S409_access-implementation.json"
+    },
+    "authenticatedJourneys": {
+      "state": "pending",
+      "scope": "Existing member, new open member/profile completion, approved investor/private data, ordinary-member application and access denial. Fixtures and public cards do not prove positive authentication.",
+      "observation": "docs/S409_provider-handoff-latest.json"
+    },
+    "localVisual": {
+      "state": "passed",
+      "captures": 406,
+      "manual": 406,
+      "receipt": "docs/visual-qa/LATEST.json",
+      "sourceSha256": "0da7f0ef4519d69d136eb828136bb92aeba945772755a9fdcb844d43feaa8afe",
+      "scope": "14 new Desk primary frames plus392 retained primary frame objects; actual before14 preserved separately",
+      "priorAcceptance": {
+        "state": "passed",
+        "captures": 392,
+        "manual": 392,
+        "receipt": "docs/visual-qa/LATEST.json",
+        "sourceSha256": "9738e5103096566895961ba87d43770f5a4356615693901f206346f326fd2173",
+        "scope": "28 fresh primary frames plus364 unchanged primary objects; before14 preserved separately; no claim of392 new screenshots",
+        "priorAcceptance": {
+          "state": "passed",
+          "captures": 378,
+          "manual": 378,
+          "receipt": "docs/visual-qa/LATEST.json",
+          "sourceSha256": "a8654a55364e905814580d1e72e725d3e978672ab0ce559c8fb7d36cc127c0b7"
+        }
+      }
+    },
+    "localMobile": {
+      "state": "passed",
+      "passed": 215,
+      "receipt": "docs/mobile-audit/receipt.json",
+      "nativeResult": ".cache/S409/desk-clock-mobile-result.json",
+      "completedAt": "2026-11-04T03:40:29.426Z",
+      "sourceSha256": "54cd84df1868f4ff8c4e2f550e25f008cd4318f653fa2611d006d8994cb8f5d3",
+      "scope": "Actual43page×5viewport matrix after both dated homepage corrections; automated local runtime only, no provider/authenticated-role acceptance",
+      "priorAcceptance": {
+        "state": "passed",
+        "passed": 215,
+        "receipt": "docs/mobile-audit/receipt.json",
+        "nativeResult": ".cache/S409/clock-mobile-result.json",
+        "completedAt": "2026-11-04T02:41:52.230Z",
+        "scope": "Actual43page×5viewport matrix after source245 counter change; automated local runtime evidence, no authenticated-provider claim",
+        "priorAcceptance": {
+          "state": "passed",
+          "passed": 215,
+          "receipt": "docs/mobile-audit/receipt.json",
+          "nativeResult": ".cache/S409-mobile-pathway-final-result.json",
+          "completedAt": "2026-11-03T08:26:10.888Z",
+          "scope": "Actual full43page by5viewport matrix after pathway bootstrap; separate visual manual receipt covers rendered pixels."
+        }
+      }
+    }
+  },
+  "waves": [
+    {
+      "name": "fresh startup and audit",
+      "state": "complete"
+    },
+    {
+      "name": "selected implementation",
+      "state": "in-progress"
+    },
+    {
+      "name": "release and closeout publication",
+      "state": "pending"
+    }
+  ],
+  "limitations": [
+    "Existing identity/provider and positive authenticated acceptance remain independently unresolved.",
+    "Historical optional visual failures are unclassified.",
+    "Field-vitals and user outcomes are unmeasured.",
+    "Local cooldown does not guarantee global exactly-once delivery."
+  ],
+  "scopeExtensions": [
+    "docs/AUDIT_2026-11-03-S409-access.json"
+  ],
+  "accountExperience": {
+    "at": "2026-11-03T05:27:36.623Z",
+    "state": "implemented-locally",
+    "enrollment": "Open members; investors remain approval-based",
+    "audit": "docs/AUDIT_2026-11-03-S409-access.json",
+    "actualProviderAcceptance": "pending-real-journeys-and-direct-signup-intent",
+    "authenticatedJourneys": "pending",
+    "buildNativeExit": 0,
+    "fullFinalSource": {
+      "state": "failed",
+      "receipt": "docs/S409_source-recovery-attempt4.json",
+      "passed": 128,
+      "planned": 549,
+      "coverageComplete": false
+    },
+    "finalMobile": "passed215-current-runtime",
+    "production": "pending",
+    "updatedAt": "2026-11-03T08:06:37.391Z",
+    "localVisual": "passed406 aggregate; original account components retained with exact scoped source continuity",
+    "memberOnboardingTests": 17,
+    "publicEntrypointTests": 11
+  },
+  "knownPending": {
+    "providerSignup": "Global signup reports open; direct signup still opens sign-in and real journeys remain unverified",
+    "realAuthentication": "Pending",
+    "staging": "Earlier e822 snapshot accepted; current static snapshot retry pending after failed packaging",
+    "completeSource": "Complete current549-command acceptance pending; partial diagnostic ranges and historical548 are not current acceptance",
+    "remoteMain": "Not pushed",
+    "production": "Not promoted"
+  },
+  "recovery": {
+    "at": "2026-11-04T02:23:40.146Z",
+    "forGoal": "01a1a424-fcbc-7f91-9461-d697bb287c76",
+    "ownGoal": "01a19f9d-9bfc-73f2-8ecb-d463492a6e27",
+    "state": "partial-handoff",
+    "newArcStillRequired": true,
+    "packaging": {
+      "firstAttempt": "failed-before-upload at900seconds",
+      "newBoundMs": 1800000,
+      "focusedArchiveTests": 10,
+      "deployerSelfTests": 18
+    },
+    "runner": {
+      "priorResourceFailures": "browser crashes/timeouts plus Sharp allocation failure",
+      "isolatedAffectedChecksPassed": 58,
+      "coverage": "all original17 files retained in10 parallel CLI +7 serial browser/image files;549 total commands"
+    },
+    "source": "Current mobile215 and visual406 accepted; one complete549-command run from1 remains required; all earlier ranges are diagnostic only",
+    "homepage": "Native244→245 counter and Daily/yesterday→Periodic/2days corrections; changed HTML is index.html only; current reviewed visual406; source/mobile final acceptance pending",
+    "authenticatedAcceptance": "still-unverified",
+    "production": "not-promoted",
+    "remoteMain": "not-pushed",
+    "currentMobile": {
+      "passed": 215,
+      "nativeExit": 0,
+      "completedAt": "2026-11-04T03:40:29.426Z",
+      "previewClosed": 1,
+      "previewRunning": 0,
+      "receipt": "docs/mobile-audit/receipt.json"
+    },
+    "externalRevalidation": {
+      "at": "2026-11-04T03:31:28.984Z",
+      "providerStart": "Signup still initially opens provider sign-in on both website origins",
+      "websiteAdmin": "MISSING",
+      "ark": "Read-only24h digest contains no Obelisk reply",
+      "authenticatedJourneys": "unverified"
+    },
+    "newGoal": "01a1a424-fcbc-7f91-9461-d697bb287c76",
+    "sourceAttempt": "docs/S409_source-recovery-attempt4.json",
+    "releaseComplete": false,
+    "reason": "Real authenticated-account acceptance remains unavailable; fresh arc proceeds under SESSION_PROTOCOL §3.0."
+  }
+}

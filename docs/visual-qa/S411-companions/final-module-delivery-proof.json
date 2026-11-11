@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-11-05T06:27:35.162Z",
+  "candidateRoot": "915ae0498b796e1a283467295635a0173634b5488fc70bb107a5111acc2595e9",
+  "manifest": {
+    "file": "assets/shell-manifest.json",
+    "sha256": "a08f66909e9b559ea75c4eab5f32272d55e0e38f025b338f3fb6804c43bbea3c"
+  },
+  "modules": [
+    {
+      "key": "ignisPlatform",
+      "source": "assets/ignis-platform.js",
+      "sourceSha256": "fb8d402bb6c4139ef9bc5b6f5539c5dda070b45ff29dc6d8d087449eb7b21031",
+      "path": "assets/ignis-platform.shell-fb8d402bb6.js",
+      "compiledSha256": "fb8d402bb6c4139ef9bc5b6f5539c5dda070b45ff29dc6d8d087449eb7b21031",
+      "exactSourceExceptDeclaredNestedUrl": null
+    },
+    {
+      "key": "membershipInterview",
+      "source": "assets/membership-interview.js",
+      "sourceSha256": "166b7790cfd38c622c54195e07e77f83f74a98570825b53ae109302964a40489",
+      "path": "assets/membership-interview.shell-166b7790cf.js",
+      "compiledSha256": "166b7790cfd38c622c54195e07e77f83f74a98570825b53ae109302964a40489",
+      "exactSourceExceptDeclaredNestedUrl": null
+    },
+    {
+      "key": "membershipIdleLoader",
+      "source": "assets/membership-idle-loader.js",
+      "sourceSha256": "038f28ab866f83d2470dd76f20e3bdb299a17ab8d822612e220c5ddfac8f3979",
+      "path": "assets/membership-idle-loader.shell-202362ca41.js",
+      "compiledSha256": "202362ca4156f8a555ee64b07a7a16635cbd83b308d5841e2d7bd7e85da70fc6",
+      "exactSourceExceptDeclaredNestedUrl": {
+        "from": "/assets/membership-interview.js",
+        "to": "/assets/membership-interview.shell-166b7790cf.js"
+      }
+    }
+  ],
+  "htmlDelivery": [
+    {
+      "file": "ignis/index.html",
+      "htmlSha256": "16d51c66e213f8950c4e151e2a5d0e473712485d5f0f04395c015c239713a855",
+      "key": "ignisPlatform",
+      "url": "/assets/ignis-platform.shell-fb8d402bb6.js",
+      "occurrences": 1,
+      "actualTag": "<script src=\"/assets/ignis-platform.shell-fb8d402bb6.js\" defer>",
+      "integrityAttributePresent": false
+    },
+    {
+      "file": "membership/index.html",
+      "htmlSha256": "f9eb79881a76a7a35f4732c2ecac6c608b6f35803ba467e59b6a3dc562cf89ae",
+      "key": "membershipIdleLoader",
+      "url": "/assets/membership-idle-loader.shell-202362ca41.js",
+      "occurrences": 1,
+      "actualTag": "<script src=\"/assets/membership-idle-loader.shell-202362ca41.js\" defer>",
+      "integrityAttributePresent": false
+    }
+  ],
+  "scope": "Read-only byte and exact HTML URL proof; no invented new-module SRI. Actual current behavior/visible rendering and real served capture hashes are separately bound in durable6,Oracle14,CTA45 manifests.",
+  "limitations": [
+    "This static delivery chain proof does not claim a network/cache purge or production deployment.",
+    "Module behavior/color changes have their own current scoped native/visual proof; exact URL transport alone is insufficient."
+  ]
+}

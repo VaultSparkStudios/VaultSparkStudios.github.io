@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "session": 413,
+  "outcome": "Provide an explicit Desk article-image preparation command and prevent Desk marketing/subscriber dispatch until required reviewed article images are ready and their served bytes verify.",
+  "discovery": {
+    "scheduledPublisherUsesFallback": true,
+    "realArtWorkflowAlreadyExists": true,
+    "dispatchChecksOnlyLiveness": true,
+    "dispatchMayOmitMissingArtAndSend": true,
+    "explicitArtScopeDoesNotCurrentlyConstrainReviewBacklog": true,
+    "latestObservedDay": "2026-11-09",
+    "latestObservedStories": 2,
+    "latestObservedFallbackStories": 2,
+    "monthlyMemberNewsletterContainsDeskArticles": false
+  },
+  "sourceEvidence": [
+    {
+      "file": ".github/workflows/news-publish.yml",
+      "finding": "The scheduled art step calls generate-news-art.mjs before promoting the draft; that generator explicitly produces procedural fallback art when no reviewed source raster exists."
+    },
+    {
+      "file": "scripts/generate-news-art.mjs",
+      "finding": "Header and kind constants distinguish procedural-fallback from real source-raster; placeholders are permitted for website cadence, with generatedArt:false and reviewed:false."
+    },
+    {
+      "file": "scripts/generate-news-art-codex.mjs",
+      "finding": "Existing generator targets missing/fallback banners and pending satire, supports --dry-run/--story/--kind/--since/--limit. Preflight requires ChatGPT login, strips API billing environment keys and refuses custom billed providers."
+    },
+    {
+      "file": "scripts/desk-art-autopilot.mjs",
+      "finding": "Existing workflow generates, reviews, bounded re-rolls, ingests reviewed images, rebuilds, publishes to main, dispatches staging-first content release and verifies exact served derivative bytes. --dry-run still generates/reviews; it is not a network-free plan. Explicit --story/--kind currently constrain generation but pendingImages scans both kinds/all staged stories before review and ingest."
+    },
+    {
+      "file": "scripts/build-desk-dispatch-digest.mjs",
+      "finding": "selectStories selects the actual up-to-six issue stories. Email image URL is assets/og/news/<date>--<slug>.png. probeDay only HEAD-checks page and image availability; missing images are omitted and unknown liveness retained before sending. It does not inspect real-art review metadata or hashes."
+    },
+    {
+      "file": ".github/workflows/desk-dispatch-digest.yml",
+      "finding": "Daily 23:30 UTC subscriber send independently calls the digest's --send path; workflow also permits manual send. Both share the script, so readiness must be enforced in that script rather than just a schedule step."
+    },
+    {
+      "file": "config/desk-dispatch.json",
+      "finding": "Dispatch is armed (autoSend:true, approved test issue present); this plan preserves that existing decision and campaign idempotency."
+    },
+    {
+      "file": "scripts/lib/news-desk.mjs",
+      "finding": "validateStoryVisual validates banner source and review fields. validateSatireCartoon explicitly documents cartoons as optional; when present they require source-bound reviewed raster, voice, caption and disclosure fields. semanticVerified remains false absent separate approved vision evidence."
+    },
+    {
+      "file": "scripts/build-news-desk.mjs",
+      "finding": "assertArticleArtSources binds banner source SHA and derivative files. assertSatireCartoon returns when no cartoon is declared, and validates source/derivatives when declared. rasterizeCards uses articleArtPath plus headline overlay for the actual email/social PNG."
+    },
+    {
+      "file": "supabase/functions/send-member-newsletter/index.ts",
+      "finding": "No Desk/news/image URL references. The monthly member newsletter is a separate member-summary message; do not alter it or add Desk content."
+    },
+    {
+      "file": "../vaultspark-studio-ops/docs/INTERNAL_TOOLS.md",
+      "finding": "Registry lists the existing image router. Project-native generation/review/deployment already fits; no new dependency, provider or paid generator is justified."
+    }
+  ],
+  "requiredKinds": {
+    "banner": "Required for every actual selected email story, because the email displays its generated social card and links the banner-bearing article.",
+    "satire": "Required only when the selected article declares visual.satireCartoon, in accordance with the existing optional-cartoon article contract. Do not introduce a new date cutoff or require an undeclared cartoon to send.",
+    "generation": "Expose the existing optional --kind all|banner|satire choice. Default preparation satisfies required kinds; all is an explicit option for generating optional missing cartoons as well. Never regenerate an already accepted banner just because its optional cartoon is missing."
+  },
+  "premises": [
+    {
+      "claim": "The actual digest uses liveness-only image probes.",
+      "adapter": "file-content",
+      "target": "scripts/build-desk-dispatch-digest.mjs",
+      "pattern": "art: await liveStatus(`${SITE}/assets/og/news/${date}--${s.slug}.png`, fetchImpl)",
+      "operator": "eq",
+      "expected": true
+    },
+    {
+      "claim": "The actual digest omits missing image URLs instead of holding the send.",
+      "adapter": "file-content",
+      "target": "scripts/build-desk-dispatch-digest.mjs",
+      "pattern": "const noArt = new Set(probe.filter((p) => p.art === 'missing').map((p) => p.slug));",
+      "operator": "eq",
+      "expected": true
+    },
+    {
+      "claim": "The actual art review loop does not constrain pending items to explicit generation scope.",
+      "adapter": "file-content",
+      "target": "scripts/desk-art-autopilot.mjs",
+      "pattern": "const pending = pendingImages().filter((p) => !approved[p.kind].some((a) => a.startsWith(`${p.id}@`)));",
+      "operator": "eq",
+      "expected": true
+    }
+  ],
+  "recipe": [
+    "Add a builtins-only shared desk-email-art module. Accept explicit root/day/selected-story inputs, derive canonical article-bound source/derivative paths, require real reviewed banner metadata with matching source hash, reject procedural fallback, missing/unreviewed/unknown/drifted inputs, and validate declared satire using the existing optional-cartoon contract. Do not equate semanticVerified:false with rejection or claim semantic verification.",
+    "Represent local readiness separately from live-byte readiness. Hash current required email/social and linked-article image files; explicit live verification performs bounded GET requests to fixed first-party production URLs, requires successful image MIME and exact expected bytes, and holds on 404, wrong bytes, wrong MIME, timeout or other unknown result. A live HEAD or stale preparation receipt cannot satisfy it.",
+    "Add prepare-desk-email.mjs. Its default and --dry-run are network-free status/plan plus existing digest HTML/text preview; they must never load mail credentials, generate, publish or send. Explicit --generate composes existing scoped ChatGPT-plan generation/review/ingest/release, only for missing required story/kind targets. Explicit --verify-live performs readiness reads and reports pass/hold. No send option or mail-provider import exists in this preparation command.",
+    "Scope desk-art-autopilot pending-image review and approved ingest to the exact parsed --story and --kind set, as well as generation/re-rolls. Validate unknown IDs/kinds. Preserve default scheduled behavior without explicit scope. Staged unrelated images must not enter a preparation run's review, re-roll, ingest, publication proof or generated receipt.",
+    "Use the readiness module inside build-desk-dispatch-digest main before both test-recipient and subscriber-send side effects. Preserve early no-edition skip and existing armed/stale-issue checks. Once effective issue selection is known, hold the entire issue if any required image lacks reviewed local source or verified served bytes; do not silently omit the image or drop an art-unready selected story to pass. No Brevo listing, campaign creation/update/sendNow or test-send call may occur after a nonpassing art gate.",
+    "Keep --dry-run useful even when art is unready: render a preview and list exact missing story/kind reasons and next preparation command, explicitly not send-ready. Add a distinct held-art outcome to workflow summaries so a green held run never claims mail was sent. Preserve arming approval, one-address test authorization, unsubscribe/disclosure content, daily campaign naming/idempotency and no retries on ambiguous sendNow.",
+    "Expose package aliases and a short public-safe CLI guide explaining plan -> explicit generate/review/publish -> live verification -> existing separately authorized send. Existing art autopilot operates in its own origin/main worktree; preparation must distinguish that committed/published artifact from a possibly dirty caller checkout rather than silently pulling or rewriting the caller tree. The actual digest recomputes readiness from its current selected day and does not blindly trust a cached ready receipt."
+  ],
+  "targetSources": [
+    "scripts/lib/desk-email-art.mjs",
+    "scripts/prepare-desk-email.mjs",
+    "scripts/build-desk-dispatch-digest.mjs",
+    "scripts/desk-art-autopilot.mjs",
+    ".github/workflows/desk-dispatch-digest.yml",
+    "tests/desk-email-art.unit.spec.mjs",
+    "package.json",
+    "docs/DESK_EMAIL_ART.md"
+  ],
+  "acceptance": [
+    "A single network-free command for a date renders the existing email preview and reports ready/pending images with explicit reason codes and exact next commands; no model, provider, Git mutation, deployment, mail credential or send call occurs.",
+    "Explicit generation plans include only missing required images for actual selected stories; accepted imagery and unrelated staged backlog are preserved. Existing generation authentication, review, ingest, staging-first deployment and exact served-byte gates remain intact.",
+    "Both manual and scheduled actual digest send paths, including single-recipient test mode, make zero mail-provider calls when an image is missing, procedural, unreviewed, hash-drifted or not exactly verified live. Existing no-edition and arming behavior remains distinct.",
+    "A fully reviewed, hash-matching, live-matching fixture reaches the existing campaign/test-send branch exactly once, with original idempotency and ambiguous-send handling unchanged. A changed day selection or changed image invalidates prior readiness.",
+    "Declared satire is validated and required; an undeclared optional cartoon does not become a new email mandate. Current member-summary newsletter and website procedural-fallback cadence remain unchanged.",
+    "No real image-generation session, email, provider spend or deployment is needed for acceptance of the workflow code during this arc. Any actual image generation remains explicitly invoked outside the arc single-session constraint."
+  ],
+  "offlineTests": [
+    "Pure readiness positive/negative fixtures: reviewed real banner passes local checks; procedural fallback, missing source, missing derivative, wrong source hash, missing review/reviewer, malformed IDs and unsafe source paths fail closed.",
+    "Optional-cartoon contract: no declared cartoon does not block; declared cartoon missing source/derivative or mismatching review hash blocks; valid declared cartoon passes.",
+    "Dependency-injected first-party fetch: matching image bytes pass; 404/410/500/challenge/timeout/wrong MIME/wrong bytes/malformed response remain nonpassing, with bounded requests and no unrestricted outbound URL construction.",
+    "Invoke the actual digest main with temporary day/art fixtures and injected provider fetch. For every held-art case assert zero Brevo GET/POST/PUT calls. Test both --send and --test-to; preserve no-edition skip and unarmed hold without network. Valid-art fixture reaches original idempotent campaign path exactly once.",
+    "Preparation CLI default, --dry-run, --help and invalid arguments run under network/spawn/mail-credential mutation witnesses and prove no generation, Git write, deployment or mail send. Inject generation runner to inspect exact --story/--kind commands without spawning Codex.",
+    "Autopilot scope fixture: mixed staged banners/cartoons and multiple days; explicit one-story banner run cannot review, re-roll, approve or ingest another story/kind, while unscoped scheduled behavior stays the same.",
+    "Regression witnesses: replace real-art check with existence-only or allow unknown live bytes and observe held-art tests fail; remove explicit review scope and observe unrelated-backlog fixture fail."
+  ],
+  "founderCommands": {
+    "planPreview": "npm run desk:email:prepare -- --date 2026-11-09",
+    "generateRequired": "npm run desk:email:prepare -- --date 2026-11-09 --generate",
+    "generateOptionalCartoonsToo": "npm run desk:email:prepare -- --date 2026-11-09 --generate --kind all",
+    "verifyPublishedImages": "npm run desk:email:prepare -- --date 2026-11-09 --verify-live",
+    "send": "Use the existing separately authorized digest send/test command only after readiness; preparation itself never sends."
+  },
+  "limitations": [
+    "This is source discovery and an implementation recipe, not implemented or deployed behavior.",
+    "No provider calls, generation, email sends, downloads or source edits were performed during discovery.",
+    "The existing scheduled art fallback remains useful for website publishing; the new email-specific gate is stricter by founder request.",
+    "Do not label autoplay art generation as a no-side-effect dry-run; its existing --dry-run performs model generation and review.",
+    "No new API fallback, spending, custom provider, membership policy, identity flow or monthly newsletter content is selected."
+  ],
+  "observedAt": "2026-11-10T02:05:22.541Z",
+  "sourcePreimages": [
+    {
+      "file": "scripts/build-desk-dispatch-digest.mjs",
+      "sha256": "ba981be5641f9f9f117e60190f0363f9ffc6344a00fbddef2d9233b25c5221e5"
+    },
+    {
+      "file": "scripts/desk-art-autopilot.mjs",
+      "sha256": "b6412b799df897749358679f9473ed8a909d1250481b4c34704f6ec809f404ff"
+    },
+    {
+      "file": ".github/workflows/desk-dispatch-digest.yml",
+      "sha256": "a2f5386d956a730f1edf964f3f5dfaa87bd2ba33ec13be8d39e3f3e6ea4d0f75"
+    },
+    {
+      "file": "package.json",
+      "sha256": "8d2a65978d795369272a25cb228af842643b163e9d98dedd3ac59954045e6d78"
+    }
+  ]
+}

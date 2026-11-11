@@ -544,3 +544,124 @@ S408 final local implementation:5outcomes accepted (product1/protocol4). Shared 
 ### S408 final release acceptance — 2026-11-03T03:46:51.947Z
 
 Five S408 outcomes are verified: safe build-check help, merge-closeout observation, complete privacy inventory, readable archive sharing/live previews, and bounded complete Git capture. Candidate 0105e4646789 passed two complete548-step native runs, mobile215/215,84 inspected before/after page-component images across seven themes, staging11/11 and exact hosted workflows3/3. Normal full Pages production run41572219005 is verified by provider identity and three build stamps. Complete Pages-origin readback checked3824: 3814 identical,10 configured redirects,0 differences/unread. Live OG Workere4b3070a-1090-49aa-b99d-d7ef44f6c192 passed16exact GET/8HEAD reads. All five publishers are restored; uptime stayed active. SIL939/1000 (product1/protocol4). Apex authored bytes also match after separately verified CSP nonces and the pinned Cloudflare JSD addition;4tamper controls reject. Native impact cargo01K6FNT4RVDDB9E41E3F05D638 passed HMAC-policy verification (Ed25519 unsigned; no recipient-application claim). Existing identity/provider gaps, historical optional visual limitations and unmeasured field-vitals/user outcomes remain separate. Anonymous guards do not prove positive private-data authentication. No further product work is selected; CDR is unchanged. Final nonserved records follow normal main publication.
+
+
+<!-- S409-writeback -->
+## Session 409 — 2026-11-03
+
+Two selected L2 public journeys are locally verified: shared Contact drafts retain editable text; page reactions admit one in-page submission and preserve pending retries without stale-store overwrite. Focused browser tests: Contact4/4 and feedback15/15, no skips. Independent reviews passed. Full source, staging, hosted checks, production, readback and main publication remain separately tracked in docs/RELEASE_S409.json; local acceptance is not deployment proof.
+
+
+<!-- S409-account-expansion -->
+## Session 409 account experience expansion — in progress
+
+Expanded the selected work to separate member and premium investor experiences, with open member registration and retained investor approval. Rebuilt account entry, profile completion, investor application/workspace and trusted callback recovery. Actual browser checks caught and corrected denied-storage registration failure, destructive provider-card mounting, return-URL timing, theme propagation and new-identity profile bypass. Member/onboarding source checks17/17 and independent review pass; other focused regressions remain recorded in the implementation evidence. Final acceptance and production publication are pending; no completed release is claimed.
+
+
+<!-- S409-partial-recovery-2026-11-04 -->
+### S409 recovery addendum — 2026-11-04
+
+Preserved failed source attempt128/549 (failure129), current mobile215 and reviewed visual406. Fixed bounded archive packaging timeout and browser-batch resource contention; refreshed dated generated content with actual before/after review. Recorded a partial recovery handoff so the new invocation can run its own full arc. Authenticated-account acceptance and all final release/publication work remain pending. No production or main push occurred.
+
+
+<!-- S410-closeout-writeback -->
+## Session 410 — 2026-11-04 — deterministic verification and truthful startup
+
+Three selected verification repairs are locally accepted: deterministic early-reaction ordering, bounded guarded Windows fixture cleanup, and startup source/release evidence. Browser17/17,31 evidence-kernel cases and independent review pass. Combined release acceptance remains pending; historical source548/mobile215/visual406 do not prove the merged candidate.
+
+The new native goal01a1a424-fcbc-7f91-9461-d697bb287c76 owns fresh S410, begun2026-11-04T04:15:49.861Z. S409 partial recovery checkpoint e6535f0b76 is distinct. New audit: docs/AUDIT_2026-11-04.json; implementation: docs/S410_implementation.json; combined release: docs/RELEASE_S410.json. Current main integration c5799e9513 preserves upstream November3 Desk content; stash3997c53d82a07dec0441caaf1c5254aafcd83dec remains retained. Real member/investor journeys remain unverified, and existing authorization does not substitute for functional proof.
+
+Wave1 fresh startup/audit complete. Wave2 three selected L2 repairs locally verified. Wave3 combined-source/current staging/hosted/account acceptance and Wave4 main/production/readback/final closeout follow the live RELEASE_S410 ledger; they are not claimed complete by this writeback. Keep S410 lock/binding on continuation. No new audit or session on automatic continuation.
+
+Normal local commits23525b80e0 and c5799e9513 preserve selected work and upstream history. No S410 main push or production promotion is claimed. Actual release/account acceptance stays in the release ledger.
+
+
+<!-- S410-browser-lifecycle-correction -->
+S410 acceptance correction: full source attempt4 failed at129 after128 passes. The browser fixture hit its45second parent-only cancellation and cleanup EPERM; retrying removal alone was insufficient. The selected cleanup outcome now uses an explicit120second deadline, bounded owned process-tree termination, bounded close wait and combined primary/cleanup error reporting. Final focused17/17 passed; forced-timeout negative probe failed explicitly and removed its fixture, with no owned CLI/direct descendants remaining. Independent lifecycle review approved. Full source and release remain pending; no additional shipped item, score or velocity is claimed. Evidence: docs/S410_browser-lifecycle-acceptance.json.
+
+
+<!-- S410-staging-acceptance -->
+S410 current verification: full549 native0/source fingerprint6a8a78dd9aab8fcc72282f89; actual18006-file staging deployment and served206-entry receipt ledger verified; candidate parity green. Native ceremony11/11 passed in scoped mode. Explicit unscoped browser6/6 (held0,failed0,skipped0,flaky0) and attention15/15 passed. First explicit attempt had one Firefox navigation flake and remains recorded. Main publication, exact candidate hosted workflows, real positive member/investor journeys and full production/readback remain pending. Authoritative ledger: docs/RELEASE_S410.json.
+
+## S410 recovery addendum — 2026-11-04
+
+Preserved unpublished verification/account work and merged newer public observations. Recovery is partial: final release and authenticated acceptance remain pending. No production promotion occurred.
+
+
+## S411 recovery checkpoint — 2026-11-06
+
+S411 recovery preserves the session-boundary repair, drawer visibility fix and explicit discussion initialization. Focused recovery regressions passed19/19 with no skips. Canonical integration and release acceptance remain in progress; historical source549/mobile215/visual742 evidence does not prove the integrated candidate. See docs/S411_recovery-2026-11-06.json and docs/S411_recovery-focused-tests.json.
+
+Integrated newer published observations while preserving local fixes. Dedicated website data-admin capability is missing; management/SQL/function authority works. Previous24-hour provider-receipt observation found no callback/compatibility/logout. No release or fresh-arc completion claimed.
+
+
+<!-- S411-local-recovery-closeout -->
+## Session 411 — 2026-11-06 — local recovery checkpoint
+
+S411 local recovery is verified: complete native source549/549 from step1, canonical runtime build26/26, mobile215/215 with zeroP0/P1, and532 reviewed public captures (372 direct current inspections;160 exact prior-pixel carries). The current artifact root is 9393bf84460da06a72b1b81df2af5ed1ea4bdb2aab60b67a8a4dea09dfb3023d. Earlier failed attempts and historical742 captures remain preserved; older Windows70 comparisons are historical. See docs/RELEASE_S411.json.
+
+Three selected local outcomes are verified across the original audit and two recovery addenda: session-lock continuity, scrolled freshness-link clearance and accurate quoted-question copy boundaries. Drawer/discussion followups are preserved, not counted again. Independent reviews found one paragraph-boundary regression and one stale-ledger finding; both were corrected. No hook bypass, force push, new paid service or production policy change occurred. Exact current hosted checks, isolated staging/account journeys, main publication, production/readback and release finalization remain pending. The founder can perform both member and existing approved-investor journeys once staging is ready. Current native goal01a1b213-67c9-7af0-9148-611b5d9cbc66 created1793988988 still requires a full fresh startup/audit/implementation/closeout after this recovery; recovery is not its completion.
+
+
+<!-- S411-release-recovery-progress-2026-11-08 -->
+## S411 release recovery — 2026-11-08, acceptance in progress
+
+Founder renewed push and deployment authorization. QA source dfb3a4f2345f1928c227c61d39a966b4155f97c3 is remotely verified; no main promotion or production deployment is claimed. Current runtime root fc3ad58b984f3b4171269555d903096d726547358de0f0cd2d7b3792a9243551 was built with candidate identity a5c44a6a03b14ff4bedea24269dc2e3a064b2bd3; source commit and artifact build identity are distinct.
+
+The current static staging deployment passed public artifact readback and all20 reachability checks:12 private-path denials and8 public successes. Verified receipt f58a466345c546f964153690 covers4090 regular files; chronology depth213. Archive packaging uses the positive public served-surface inventory. This proves static staging, not isolated backend or authenticated behavior.
+
+Current local UI acceptance:43 header/contrast checks,112 directly reviewed header/picker originals across all7 themes, and70 native Windows snapshots all directly reviewed with0 concrete findings. The70 reviewed Windows originals were accepted;67 differ from prior baselines. Linux run42476258466 passed42 geometry checks and68 snapshots, with2 member-portal test-contract failures before capture; no complete70-frame acceptance was inferred. The portal absence assertion is corrected; exact-QA Linux run42477531084 is pending. The full549-step source attempt stopped at170 because prior visual/mobile receipts no longer matched the changed header. Earlier549/532/215 proofs remain historical, not current-candidate acceptance.
+
+Remaining release work: fresh mobile/desktop audit, current full-source proof, reviewed complete Linux baselines, all3 exact-candidate required workflows, isolated staging account configuration and real affected member/approved-investor journeys, authorized main/production/readback, then full recovery closeout. The founder can perform both native journeys when isolation is verified. Required staging provisioning/artifact prerequisites remain unresolved; generic deployment authorization does not silently change artifact trust policy. No sign-in invitation is issued while staging uses production data defaults.
+
+The native invocation01a1b213-67c9-7af0-9148-611b5d9cbc66 created1793988988 still requires its full new startup/audit/implementation/closeout after S411 recovery. No new session has been bound, no lock cleared and no native completion claimed. SIL939 remains the prior score; this progress checkpoint awards no new score or release credit.
+
+Progress checkpoint only. See current recovery block in LATEST_HANDOFF; all original failed and historical evidence remains preserved.
+
+
+<!-- S411-current-verified-checkpoint-2026-11-08 -->
+## S411 QA checkpoint — release acceptance pending
+
+Recorded 2026-11-08T13:20:56.311Z. The complete native source run passed549/549 from step1, exit0, source fingerprint 57f82337699976d08f358e56; see docs/S411_current-source-verified-1108.json. Frozen runtime root 87fd6f57753cd81ec6d1e842c937889ee3ed9ffc0b4596ae611f8925e149d499 has build identity a5c44a6a03b14ff4bedea24269dc2e3a064b2bd3; a source publication commit is a separate identity. Static staging receipt e87922e1b168c9d19f7a3a08 verifies4090 regular files and chronology depth214; public manifest/receipt readback plus all20 reachability checks passed. Anonymous staging browser checks passed6/6 with0held/skipped/failed/flaky. Two non-core status feeds were regenerated after deployment; the critical artifact root stayed unchanged.
+
+Current local header proof is112 newly captured and directly reviewed originals across7themes, zero scoped findings; source/candidate stayed stable. Native mobile215/215 passed,0P0/P1,133P2 diagnostics retained, automated-only. Reviewed reference baselines comprise70Windows and70Linux originals; Linux preserves an inherited P2 decorative capsule edge issue. The parser-only determined quoted-question repair passes96self-tests, the actual corpus and14independent boundary probes; UI and article bytes were unchanged. Failed runs and old532/112/215 receipts retain their actual historical scope.
+
+QA publication and all3 exact-commit required workflows follow this checkpoint; no main promotion or production deployment is claimed. Isolated staging provisioning/artifact prerequisites and affected positive member/approved-investor journeys remain pending. The founder is available for both native journeys once isolation is verified. Existing push/deployment authorization persists. No new permission for the same promotion is needed.
+
+Native goal01a1b213-67c9-7af0-9148-611b5d9cbc66, created1793988988, still requires its full fresh startup/audit/implementation/closeout after S411 recovery. No new session has been bound, lock cleared, score awarded or goal completion claimed. Current939/1000 is the prior score.
+
+
+<!-- S411-diagnostic-checkpoint-2026-11-08 -->
+## S411 diagnostic checkpoint — visual failures unresolved
+
+Recorded 2026-11-08T15:11:49.230Z. Local full source passed549/549 fromstep1 with exit0 and fingerprint 4b4ba001f08ef6e4cd867ca0; docs/S411_scene-diagnostics-source-1108.json. This checkpoint adds optional, default-off, loopback-only scene/native-screenshot diagnostics. Existing candidate selection, readiness, screenshot options and1.5% tolerance remain unchanged; all75 bound UI source bytes and runtime root 87fd6f57753cd81ec6d1e842c937889ee3ed9ffc0b4596ae611f8925e149d499 remain unchanged. No baseline or application change is claimed.
+
+At prior QA304b7af4a4, required E2E42485293279 failed:725passed,56guardedskips,1flaky,3visual failures. Compliance passed. Isolated visual control42488235027 also failed:65passed,2flaky,3failed; its42geometry checks passed. The isolation hypothesis was not adopted. Lighthouse42485293272 passed27local audits. Candidate accessibility passed20 with3authenticated skips; its supplementary production audit actually exited1 for6meta-refresh violations, with WAF involvement unconfirmed. These observations are preserved, not waived.
+
+Next: collect paired diagnostic comparison/provisional-generation evidence at one exact source before selecting a correction. Generated images stay provisional. Main, production, positive isolated member/investor journeys, recovery closeout and this native invocation's fresh full arc remain pending. Existing deployment authorization persists. S411 lock and prior939score remain; no native completion or new session binding. Raw admission receipts remain private; public selector normalization is explicit, and Git history was not rewritten.
+
+
+<!-- S411-partial-recovery-boundary-2026-11-08 -->
+## S411 partial recovery boundary — release remains pending
+
+Recorded 2026-11-08T15:35:56.285Z. This is an honest partial recovery checkpoint at the existing isolated-account dependency, not a successful release or full closeout. Local verification receipts retain their actual timestamps, source fingerprints and scopes; this note does not rebind them. The failed closeout autopilot, executed CI failures, flaky observations and unresolved visual cause remain preserved. Diagnostic observations: comparison: 42494681623, completed, failure; provisional-generation: 42494683475, completed, success. Generation output remains provisional and is not accepted baseline evidence.
+
+Follow context/DECISIONS.md:1215 and1251 and SESSION_PROTOCOL §3.0: checkpoint the recovered S411 record, then run this native invocation's genuine full startup and fresh audit; carry pending visual repair, exact candidate checks, isolated member/approved-investor journeys and authorized production acceptance into that arc. Successful production promotion is not a prerequisite for fresh startup. Existing push/deployment authorization persists; isolation and affected authenticated acceptance remain required before promotion.
+
+Native invocation 01a1b213-67c9-7af0-9148-611b5d9cbc66, created 1793988988, still requires its own full start/audit/implementation/closeout. Inspect native identity and run the binding helper before triage; start-new-arc requires a new monotonic startup lock before --apply. Do not use --restart for an unbound invocation. This record neither changes the lock nor binds/completes the goal. Prior939/1000 and its categories remain historical and unchanged; no new score, release velocity or full-closeout credit is awarded.
+
+
+<!-- S412-verified-code-checkpoint -->
+## S412 — verified code; release acceptance pending
+
+Recorded 2026-11-08T16:21:51.638Z. The fresh S412 audit and implementation are bound to the current native invocation. Capture provenance repairs passed20 focused tests and independent round-two review; the neutral Oracle catalog context passed8 offline actual-payload checks and independent review. Test wiring includes both regular unit and549-step build-check commands. Details and limitations: docs/S412_implementation-verification.json. These are local code results; full current source, refreshed visual evidence and release acceptance are not inferred.
+
+The exact image-artifact decision and three Linux reference reviews/comparisons remain pending. Isolated account staging still needs actual registered target/intake and artifact trust; no member or approved-investor journey is claimed. Existing push/deployment authorization persists. Main, production, full closeout and native completion remain pending. Prior939 is historical; no new score or release credit is awarded.
+
+
+<!-- S412-full-local-source-verified -->
+## S412 QA checkpoint — local proof verified, release incomplete
+
+Full local source passed549/549 from step1 with native exit0, fingerprint 9278188650a7456e212ea769, plan 42a65dc546d8a359e4d6f17f; docs/S412_current-source-verified.json. The earlier step24 failure and unchanged-budget repair remain recorded. All14 fresh homepage originals across7themes and desktop/mobile were directly reviewed; scoped checks and receipt ordering pass. Prior112-frame receipt bytes remain archived. Static staging4090-file deployment and public/critical code readback pass at core f90c160227935caaf359828091e3749a17487c80e975aeb89d4455f749ffe87c, receipt a14409ff96ae324a679755f3, chronology215.
+
+This is a QA checkpoint, not a full closeout or production release. Reference-image trust/review and real isolated member/approved-investor acceptance remain pending. Existing push/deployment authorization persists. Continue the bound S412 audit; never start a new arc merely on continuation. Prior939 remains historical. See Git history for the publication commit; no main/production promotion is claimed.

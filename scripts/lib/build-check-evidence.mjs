@@ -123,6 +123,36 @@ export function buildCheckEvidenceAgeHours(value, nowMs = Date.now()) {
   return Math.max(0, nowMs - Date.parse(value.generatedAt)) / 3.6e6;
 }
 
+/** One current-source reading for briefs; historical counters cannot turn it green. */
+export function buildCheckBriefSignal(evidence, { expectedPlanFingerprint, expectedSourceFingerprint, nowMs = Date.now(), maxAgeHours = 24 } = {}) {
+  try {
+    const valid = validateBuildCheckEvidence(evidence);
+    const summary = `${valid.passed}/${valid.plannedCommandCount} steps${valid.failed ? `; ${valid.failed} failed` : ''}${valid.coverageComplete ? '' : '; partial'}`;
+    if (!expectedPlanFingerprint || !expectedSourceFingerprint
+      || valid.planFingerprint !== expectedPlanFingerprint || valid.sourceFingerprint !== expectedSourceFingerprint) {
+      return { state: 'unknown', ok: false, detail: `Source UNVERIFIED: ${summary} (changed inputs)` };
+    }
+    if (buildCheckEvidenceAgeHours(valid, nowMs) > maxAgeHours) {
+      return { state: 'unknown', ok: false, detail: `STALE source receipt; latest ${summary}` };
+    }
+    if (valid.failed) return { state: 'red', ok: false, detail: `Source RED: ${summary}` };
+    if (!valid.coverageComplete) return { state: 'bounded', ok: false, detail: `Source PARTIAL: ${summary}` };
+    validateBuildCheckEvidence(valid, { requireComplete: true, expectedPlanFingerprint, expectedSourceFingerprint });
+    return { state: 'green', ok: true, detail: `Source ${summary} passing` };
+  } catch {
+    return { state: 'unknown', ok: false, detail: 'Source UNVERIFIED: missing or invalid receipt' };
+  }
+}
+
+/** Active release truth is distinct from the historical deployment status. */
+export function releaseBriefLabel(release) {
+  if (!release || !Number.isInteger(release.session)) return 'current release UNVERIFIED';
+  const production = release.acceptance?.production?.state;
+  const readback = release.acceptance?.completeServedReadback?.state;
+  return `S${release.session} ${['passed', 'verified'].includes(production) && ['passed', 'verified'].includes(readback)
+    ? 'production/readback verified' : 'release pending'}`;
+}
+
 export function applyBuildCheckEvidence(status, evidence) {
   const valid = validateBuildCheckEvidence(evidence, { requireComplete: true });
   // Receipt IDs bind volatile timing/timestamps and must not enter durable status:
@@ -170,8 +200,22 @@ export function runBuildCheckEvidenceSelfTest() {
   const green = fixture();
   const red = fixture({ failed: 1 });
   const partial = fixture({ firstStep: 2 });
+  const partialRed = fixture({ firstStep: 2, failed: 1 });
   const rejects = (candidate, options) => { try { validateBuildCheckEvidence(candidate, options); return false; } catch { return true; } };
+  const briefOptions = { expectedPlanFingerprint: green.planFingerprint, expectedSourceFingerprint: green.sourceFingerprint, nowMs: Date.parse(green.generatedAt) };
   return [
+    ['brief complete current green', buildCheckBriefSignal(green, briefOptions).ok],
+    ['brief complete red stays red', buildCheckBriefSignal(red, briefOptions).state === 'red'],
+    ['brief partial cannot be green', buildCheckBriefSignal(partial, briefOptions).state === 'bounded'],
+    ['brief partial failure remains nonpassing', buildCheckBriefSignal(partialRed, briefOptions).state === 'red'],
+    ['brief missing receipt cannot borrow green counters', buildCheckBriefSignal(null, briefOptions).state === 'unknown'],
+    ['brief tampered receipt cannot be green', !buildCheckBriefSignal({ ...green, passed: 9 }, briefOptions).ok],
+    ['brief stale source cannot be green', buildCheckBriefSignal(green, { ...briefOptions, expectedSourceFingerprint: '0'.repeat(24) }).state === 'unknown'],
+    ['brief stale plan cannot be green', buildCheckBriefSignal(green, { ...briefOptions, expectedPlanFingerprint: '0'.repeat(24) }).state === 'unknown'],
+    ['brief old receipt cannot be green', buildCheckBriefSignal(green, { ...briefOptions, nowMs: briefOptions.nowMs + 25 * 3.6e6 }).state === 'unknown'],
+    ['brief pending release is not historical deploy green', releaseBriefLabel({ session: 409, acceptance: { production: { state: 'pending' } } }) === 'S409 release pending'],
+    ['brief production alone does not prove readback', releaseBriefLabel({ session: 409, acceptance: { production: { state: 'passed' } } }) === 'S409 release pending'],
+    ['brief verified production and readback', releaseBriefLabel({ session: 409, acceptance: { production: { state: 'passed' }, completeServedReadback: { state: 'passed' } } }) === 'S409 production/readback verified'],
     ['complete green validates', validateBuildCheckEvidence(green, { requireComplete: true }) === green],
     ['complete red remains valid evidence', validateBuildCheckEvidence(red, { requireComplete: true }) === red],
     ['partial resume is rejected as complete', rejects(partial, { requireComplete: true })],

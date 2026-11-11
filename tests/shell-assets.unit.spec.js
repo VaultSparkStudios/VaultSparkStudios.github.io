@@ -78,6 +78,23 @@ test('new shell hashes bind integrity to candidate bytes before files exist', ()
   assert.throws(() => updateHtmlReferences(html, {...manifest, generatedFiles: []}, 'index.html'), /candidate bytes are missing/);
 });
 
+test('account entrance and recovery changes reach returning visitors with current cache keys', () => {
+  const manifest = JSON.parse(before);
+  manifest.generatedFiles = [{ outputRelPath: manifest.assets.ambientCore.path, content: fs.readFileSync(path.join(ROOT, manifest.assets.ambientCore.path)) }];
+  for (const key of ['memberAccessStyle','accountEntry','memberPortalSettings','memberPortalAuth','obeliskSealEntry','investorAuth','investorUi','contactPage']) {
+    const asset = manifest.assets[key];
+    assert.ok(asset, key + ' is registered');
+    assert.match(asset.path, /\.shell-[a-f0-9]{10}\.(?:css|js)$/);
+    assert.ok(swBefore.includes("'/" + asset.path + "'"), key + ' is in the new shell cache');
+    assert.ok(swBefore.includes("'/" + asset.source + "'"), key + ' mutable URL cannot retain old runtime behavior');
+    const attr = asset.path.endsWith('.css') ? 'href' : 'src';
+    const out = updateHtmlReferences(`<script ${attr}="/${asset.source}"></script>`, manifest, 'vault-member/index.html');
+    assert.ok(out.includes(`/${asset.path}`), key + ' reference resolves to the current cache key');
+  }
+  const member = updateHtmlReferences('<script src="portal-settings.js" defer></script>', manifest, 'vault-member/index.html');
+  assert.ok(member.includes('/' + manifest.assets.memberPortalSettings.path));
+});
+
 test('shell scan preserves cache snapshots and finds public nested pages', () => {
   const temporaryRoot = path.resolve(os.tmpdir());
   const fixture = fs.mkdtempSync(path.join(temporaryRoot, 'vs-shell-scan-'));

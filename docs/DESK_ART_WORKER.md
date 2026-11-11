@@ -20,9 +20,41 @@ Real art replaces the fallback later, in three local steps:
 | 2. Review | you look at every image | a list of accepted ids |
 | 3. Ingest | `scripts/ingest-news-art.mjs` | `data/news-desk/art/*.png`, the story's receipt, that story's `assets/og/news` derivatives |
 
-## Two images per story (D-S368.7)
+## Prepare images before a Desk email
 
-Every story carries exactly two images:
+Preview the selected issue and inspect its image readiness without network calls or generation:
+
+```sh
+npm run desk:email:prepare -- --date YYYY-MM-DD --dry-run
+```
+
+The report includes an HTML/text email preview and the scoped preparation plan. To prepare
+missing images, run the following **outside an active single-session arc**; the existing worker
+starts separate Codex runs for generation and review:
+
+```sh
+npm run desk:email:prepare -- --date YYYY-MM-DD --generate
+```
+
+This uses the existing ChatGPT-plan workflow for missing or unreviewed art. An already reviewed
+source with missing or stale derivative proof is rebuilt without redrawing or another model call.
+Preparation publishes through the existing staging-first art workflow, then checks live images.
+To check published bytes separately:
+
+```sh
+npm run desk:email:prepare -- --date YYYY-MM-DD --verify-live
+```
+
+**Preparation and generation never send email.** Actual Dispatch `--send` and `--test-to` paths
+recheck the selected issue's reviewed sources, source-bound derivative proof and exact live image
+bytes. Missing, fallback, unreviewed, stale or unverifiable art holds the whole issue; images are
+not omitted to allow a send. Existing sending authorization and campaign safeguards still apply.
+Satire cartoons remain optional unless declared by an article; required preparation does not add
+an undeclared cartoon.
+
+## Article image kinds (D-S368.7)
+
+Every story has a banner. Satire cartoons are optional unless declared by the article:
 
 | Image | What it is | Source master | On the page |
 |---|---|---|---|

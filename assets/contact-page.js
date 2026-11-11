@@ -128,19 +128,38 @@
 
     toastClose.addEventListener('click', dismissToast);
     document.getElementById('contact-form').addEventListener('submit', onSubmit);
+    applySharedDraft();
     applyTopicPreset();
   });
 
-  // /contact/?topic=invite — Vault enrolment is invite-led (D-S367.2), so the
-  // public "Request your Vault invite" path lands here with the request framed.
+  // The share-target landing passes a draft, never an instruction to submit.
+  // Assign values as plain text and preserve browser-restored/visitor edits.
+  function applySharedDraft() {
+    var params;
+    try { params = new URLSearchParams(window.location.search); } catch (_) { return; }
+    var fields = [
+      { id: 'contact-subject', key: 'subject', limit: 200 },
+      { id: 'contact-message', key: 'body', limit: 10000 }
+    ];
+    fields.forEach(function (field) {
+      var input = document.getElementById(field.id);
+      var value = params.get(field.key);
+      if (!input || input.value || !value) return;
+      // Bound query-supplied drafts without cutting a Unicode surrogate pair.
+      input.value = Array.from(value.trim()).slice(0, field.limit).join('');
+    });
+  }
+
+  // /contact/?topic=invite — legacy invitation links now offer account help.
+  // New member registration starts directly in the Vault Member portal.
   // /contact/?topic=collaborate — the /collaborate/ page (playtesters, artists,
   // audio collaborators) routes here with the request framed the same way.
   var TOPIC_PRESETS = {
     invite: {
-      subject: 'Vault invite request',
-      hiddenSubject: 'VaultSpark Studios — Vault invite request',
-      placeholder: 'Tell us a little about you — which games or tools brought you here, and your Discord handle if you have one.',
-      note: 'Vault enrolment is invite-led right now. Send a request and the studio will reply with an invite to your email.',
+      subject: 'Vault account help',
+      hiddenSubject: 'VaultSpark Studios — Vault account help',
+      placeholder: 'Tell us where you need help with your Vault Member account. Include the step you reached and any error message, but never passwords or verification codes.',
+      note: 'No invitation is needed to join. Create your free account at /vault-member/#register, or use this form if you need help getting started.',
       event: 'invite_request_view'
     },
     collaborate: {

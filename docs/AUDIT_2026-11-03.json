@@ -1,0 +1,397 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-11-03",
+  "generatedAt": "2026-11-03T04:19:13.527Z",
+  "session": 409,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S409 nine-axis supported-release audit; repair two reproduced public journeys and fully release.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "share-draft-assistant",
+          "premise": "Add an AI assistant to repair shared messages",
+          "evidence": "assets/share-receiver.js already provides the exact title, text and URL; deterministic field restoration is sufficient."
+        },
+        {
+          "slug": "member-return-expansion",
+          "premise": "Add another member-return module",
+          "evidence": "portal/index.html includes existing return information; no reproduced missing journey in this audit."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [
+        "member-account-experience",
+        "premium-investor-experience"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "replace-navigation",
+          "premise": "Replace Desk navigation",
+          "evidence": "scripts/propagate-nav.mjs has the intentional Desk label; no evidence for an information-architecture replacement."
+        },
+        {
+          "slug": "visual-baseline-refresh",
+          "premise": "Regenerate historical snapshots",
+          "evidence": "Historical optional failures remain unclassified; baseline replacement without current reproduction cannot establish an improvement."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "missing-visit-streak",
+          "premise": "Add absent revisit state",
+          "evidence": "assets/visit-streak.js tracks days and breaks; no measured retention defect supports redesign."
+        },
+        {
+          "slug": "change-rank-economy",
+          "premise": "Rebalance tiers during reaction repair",
+          "evidence": "SOUL.md requires consistent rank economy; no authorized tier change or measured imbalance."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "missing-agent-discovery",
+          "premise": "Add absent agent discovery",
+          "evidence": "This invocation confirmed agents.json, .well-known/llms.txt and api/citation.json exist."
+        },
+        {
+          "slug": "paid-navigation-inference",
+          "premise": "Use model calls for navigation decisions",
+          "evidence": "assets/spark-compass.js already exports source/freshness/action itineraries without model requests."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [
+        "audience-safe-auth-recovery"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "change-contact-verification",
+          "premise": "Replace the contact anti-abuse flow",
+          "evidence": "assets/contact-page.js already requires Turnstile and CSRF tokens. Draft restoration needs no policy change."
+        },
+        {
+          "slug": "identity-redesign",
+          "premise": "Replace current identity integration",
+          "evidence": "Existing CANON-045 STRONG gap is recorded; no authorization to alter auth/security policy."
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "build-help-repair-again",
+          "premise": "Build help starts verification",
+          "evidence": "Live scripts/run-build-check.mjs --help returns immediately with usage; S408 guard exists."
+        },
+        {
+          "slug": "git-buffer-repair-again",
+          "premise": "Git capture truncates the complete manifest",
+          "evidence": "scripts/lib/safe-spawn.mjs includes the bounded Git capture fix; no new overflow observed."
+        }
+      ]
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "paid-draft-inference",
+          "premise": "Use paid inference to classify contact drafts",
+          "evidence": "assets/share-receiver.js already supplies typed fields; no model is needed."
+        },
+        {
+          "slug": "feedback-summarizer",
+          "premise": "Summarize duplicate ratings with a model",
+          "evidence": "assets/rate-page.js can prevent duplicates before network submission without token cost."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "claim-field-vitals",
+          "premise": "Report lab scores as field outcomes",
+          "evidence": "Current handoff explicitly separates field-vitals/user outcomes as unmeasured; no new field dataset."
+        },
+        {
+          "slug": "recover-prior-arc",
+          "premise": "Prior S408 requires recovery",
+          "evidence": "Fresh local check-writeback-currency reports current S408; new native goal binding starts S409."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "refresh-visual-baselines",
+          "premise": "Overwrite historical failing snapshots",
+          "evidence": "Historical optional visual failures remain unclassified; no baseline replacement selected."
+        },
+        {
+          "slug": "benchmark-without-regression",
+          "premise": "Rebenchmark all build history",
+          "evidence": "No demonstrated new performance regression; run relevant acceptance rather than add maintenance scope."
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "share-contact-draft",
+      "title": "Carry shared content into the Contact draft",
+      "axis": "ui-ux-feedback",
+      "tier": "⚡",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 4,
+      "priority": 16,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "why": "The share receiver generates subject/body query parameters, but Contact only reads topic and discards both draft fields.",
+      "recipe": "Apply a bounded plain-text draft to empty subject/message fields; preserve restored drafts and topic semantics. Reuse existing form and submission safeguards.",
+      "acceptance": "A real share-to-contact click preserves Unicode title, text and URL as editable plain text; existing topic, blank and restored-form paths remain correct.",
+      "userOutcome": "Visitors can send shared information without reconstructing a lost message.",
+      "readinessArea": "supported-release reliability",
+      "stageRationale": "Repair reproduced existing journeys before adding new breadth.",
+      "premises": [
+        {
+          "claim": "The share receiver generates subject/body query parameters, but Contact only reads topic and discards both draft fields.",
+          "adapter": "file-content",
+          "target": "assets/contact-page.js",
+          "pattern": "get('topic')",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Fix the demonstrated happy path only."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Apply a bounded plain-text draft to empty subject/message fields; preserve restored drafts and topic semantics. Reuse existing form and submission safeguards."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "A broader feedback/contact redesign requires a separately demonstrated need."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-11-03T04:26:37.752Z",
+          "status": "shipped",
+          "depth": "L2",
+          "verification": "docs/S409_implementation.json",
+          "note": "Local implementation verified; deployment remains independently tracked."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "page-rating-single-flight",
+      "title": "Count one page rating during its cooldown",
+      "axis": "gamification-immersion",
+      "tier": "⚡",
+      "effortHours": 2,
+      "impact": 7,
+      "innovation": 4,
+      "priority": 14,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "why": "The reaction click handler neither checks the cooldown nor guards pending requests. Rapid real clicks produce duplicate inserts; replay saves a stale whole-store snapshot.",
+      "recipe": "Guard reaction admission synchronously, keep pending payload until acknowledged, and merge replay acknowledgements against current entries without overwriting newer ratings.",
+      "acceptance": "Rapid clicks and reopening cannot post twice; denied storage still has an in-memory guard; failed requests retry once on revisit; replay completion preserves a newer rating and other page entries.",
+      "userOutcome": "Visitors can give one reliable reaction without inflating the feedback used to improve the site.",
+      "readinessArea": "supported-release reliability",
+      "stageRationale": "Repair reproduced existing journeys before adding new breadth.",
+      "premises": [
+        {
+          "claim": "The reaction click handler neither checks the cooldown nor guards pending requests. Rapid real clicks produce duplicate inserts; replay saves a stale whole-store snapshot.",
+          "adapter": "file-content",
+          "target": "assets/rate-page.js",
+          "pattern": "if (!btn) return;",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Fix the demonstrated happy path only."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Guard reaction admission synchronously, keep pending payload until acknowledged, and merge replay acknowledgements against current entries without overwriting newer ratings."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "A broader feedback/contact redesign requires a separately demonstrated need."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-11-03T04:26:37.756Z",
+          "status": "shipped",
+          "depth": "L2",
+          "verification": "docs/S409_implementation.json",
+          "note": "Local implementation verified; deployment remains independently tracked."
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "count": 2,
+    "priority": 30,
+    "top3": [
+      "share-contact-draft",
+      "page-rating-single-flight"
+    ]
+  },
+  "executionLog": [],
+  "research": {
+    "internalFirst": "Reuse Contact, rate-page, browser-harness, existing visual/source-binding and release ceremony. No package install, paid inference, new identity policy or data fields."
+  },
+  "baseline": {
+    "head": "a74a3ac59d",
+    "doctorBlockingFailing": 0,
+    "context": "Native goal 01a19f9d-9bfc-73f2-8ecb-d463492a6e27; fresh S409; previous S408 closed."
+  },
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-11-03T04:19:14.882Z",
+    "head": "a74a3ac59d3bb227c651dc89666224c12a240029",
+    "sidecar": "docs/AUDIT_2026-11-03.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "80f6e67afad18d95e1ff1834bbc3910c0cce86a31767e7f51c123c70a7080683",
+    "implementationDirty": [
+      "docs/PLAN_BRIEF_409_2026-11-03.md",
+      "docs/S409_audit-brief.json",
+      "docs/S409_plan-brief.json"
+    ]
+  },
+  "freshSurvey": {
+    "at": "2026-11-03T04:32:15.101Z",
+    "method": "Read-only source survey plus isolated actual browser reproduction; all candidates from this invocation. No competitor or conversion claim invented.",
+    "axes": [
+      {
+        "axis": "feature depth",
+        "candidates": [
+          "share draft continuity selected",
+          "related-links expansion rejected"
+        ],
+        "evidence": "share-receiver creates subject/body while contact only reads topic; assets/related-content.js already owns destinations."
+      },
+      {
+        "axis": "innovative features",
+        "candidates": [
+          "browser-local share recovery receipt deferred",
+          "evidence-aware repair itinerary deferred",
+          "route-to-feedback progress receipt deferred"
+        ],
+        "evidence": "vs_share_in already stores payload; spark-compass already offers saved/completed state, public itinerary and evidence/freshness. No new demand evidence for added surfaces."
+      },
+      {
+        "axis": "UX",
+        "candidates": [
+          "editable Contact restoration selected",
+          "offline transient retry deferred until runtime reproduction"
+        ],
+        "evidence": "Real handoff discarded draft; error-pages.js probes once per online event, source-only possible transient case is not selected."
+      },
+      {
+        "axis": "feedback loop",
+        "candidates": [
+          "single-flight reaction selected",
+          "missing backend premise rejected"
+        ],
+        "evidence": "Three same-tick real clicks produced three inserts. Existing rate-page and micro-feedback POST schema rows."
+      },
+      {
+        "axis": "gamification and engagement",
+        "candidates": [
+          "missing revisit premise rejected",
+          "feedback progress receipt deferred"
+        ],
+        "evidence": "visit-streak tracks days/breaks; Spark already has saved/completed state; no measured retention gap."
+      },
+      {
+        "axis": "AI integration",
+        "candidates": [
+          "missing agent discovery rejected",
+          "model-based navigation inference rejected"
+        ],
+        "evidence": ".well-known/llms.txt, agents.json and api/citation.json present. Spark exports itinerary without model requests."
+      },
+      {
+        "axis": "security",
+        "candidates": [
+          "contact safeguard replacement rejected",
+          "shared URL scheme review deferred"
+        ],
+        "evidence": "Existing submit requires Turnstile/CSRF and same-origin credentials. share-receiver arbitrary URL href needs its own bounded input review; no auth-policy edits selected."
+      },
+      {
+        "axis": "speed and organization",
+        "candidates": [
+          "duplicate fetch premise rejected",
+          "generic cache layer deferred"
+        ],
+        "evidence": "public-intelligence coalesces memory/inflight/cross-tab requests; no benchmark justifies another cache."
+      },
+      {
+        "axis": "token and API reduction",
+        "candidates": [
+          "paid draft inference rejected",
+          "AI-summary cache deferred"
+        ],
+        "evidence": "Typed share payload needs no model; no measured model-call hotspot in sampled journeys."
+      }
+    ]
+  },
+  "scopeExtensions": [
+    "docs/AUDIT_2026-11-03-S409-access.json"
+  ]
+}

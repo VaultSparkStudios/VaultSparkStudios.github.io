@@ -1,0 +1,279 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-11-08",
+  "generatedAt": "2026-11-08T08:44:31.614Z",
+  "session": 411,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Bounded release-recovery addendum for two executed defects. Original audits/outcomes remain preserved. This does not satisfy the native goal fresh startup/audit requirement.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status",
+    "releaseTarget": null
+  },
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "account-surface-rewrite",
+          "premise": "Replace account surfaces rather than reconcile the measured schema contract",
+          "evidence": "Existing portal-auth profile and investor gates remain the intended flows. Source/live-bound guarded schema drafts are being reconciled privately; no replacement identity policy or reduced member functionality is selected."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [
+        "stable-header-visual-state"
+      ],
+      "rejectedOnVerify": []
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "rank-policy-change",
+          "premise": "Change ranks or reward/tier policy during release recovery",
+          "evidence": "SOUL and current rank projection retain the existing studio identity. The current failures concern packaging/header presentation; reward and tier changes are outside this bounded repair."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "new-agent-manifest",
+          "premise": "Build another agent discovery surface",
+          "evidence": "agents.json and .well-known/llms.txt already exist; containment probes verify agents.json200. Preserve those advertised surfaces through the canonical classifier."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [
+        "private-staging-packaging"
+      ],
+      "rejectedOnVerify": []
+    },
+    "speed-organization-efficiency": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "new-packaging-framework",
+          "premise": "Build a separate packaging framework",
+          "evidence": "scripts/lib/served-surface.mjs and prune-served-surface.mjs already provide production classification and reachability. Reuse them in the existing staging helper."
+        }
+      ]
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "new-runtime-model",
+          "premise": "Add runtime inference to repair these failures",
+          "evidence": "No model call is needed for deterministic packaging/layout. The authorized release does not require new paid inference or dependency installation."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "timestamp-greenwash",
+          "premise": "Stamp or turn stale CI green without provider evidence",
+          "evidence": "The canonical beacon was regenerated from real provider observations and retains unknown/allGreen:false. Exact failed CI and prior image/source receipts remain preserved."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "score-inflation",
+          "premise": "Increase SIL for source publication or drafts",
+          "evidence": "Current score939 remains unchanged. QA push, staged static deployment and guarded drafts do not prove production outcomes or account-journey completion."
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": 4,
+      "slug": "private-staging-packaging",
+      "title": "Package only the canonical public served surface",
+      "axis": "security",
+      "tier": "🔥",
+      "impact": 10,
+      "innovation": 3,
+      "effortHours": 1,
+      "priority": 18.927892607143725,
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-11-08T10:44:19.299Z",
+          "status": "shipped",
+          "note": "Staging packaging acceptance verified: native deploy/prune self-tests and advertised-route check passed; the real producer deployed4090 regular public files. Twelve private-path HEAD checks returned404 across edge+origin; eight public HEAD checks returned200; public manifest and deploy receipt match artifact rootb4a11b5afd095f9fbb763ca55646b05956e8b039348ebdd585b7f69dc92042b0. Evidence: docs/S411_packaging-acceptance-1108.json. This completes the selected staging packaging outcome; full release/account acceptance remains pending."
+        }
+      ],
+      "selectedDepth": "L2",
+      "why": "Operational state stays private while the website and advertised discovery remain available.",
+      "recipe": "Reuse lib/served-surface.mjs in full staging safeManifest; exclude compiled/operator portfolio data in the positive manifest; preserve public discovery and docs/visual-proof. Keep rollback directories private. Add native regressions that fail before the fix and verify denied operational paths after the next deployment.",
+      "userOutcome": "Operational state stays private while the website and advertised discovery remain available.",
+      "readinessArea": "supported-release correctness",
+      "stageRationale": "Fix an executed current-candidate release defect within existing deployment authorization.",
+      "acceptance": "Native packaging/pruning regressions fail before and pass after; real advertised routes survive; staged operational URLs deny access and public page/API/discovery return200; no private contents, auth policy, identity provider or membership tier changes.",
+      "premises": [
+        {
+          "claim": "Actual staged operator cache was reachable before containment.",
+          "adapter": "file-content",
+          "target": "docs/S411_qa-release-findings-1108.json",
+          "pattern": "\"operatorCacheReachableBefore\": true",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "The canonical classifier already exists for reuse.",
+          "adapter": "file-content",
+          "target": "scripts/lib/served-surface.mjs",
+          "pattern": "export function isServed(",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.1,
+          "recipe": "Contain the symptom only; insufficient as the recurring defect remains."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Reuse lib/served-surface.mjs in full staging safeManifest; exclude compiled/operator portfolio data in the positive manifest; preserve public discovery and docs/visual-proof. Keep rollback directories private. Add native regressions that fail before the fix and verify denied operational paths after the next deployment."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Rebuild the deployment/navigation architecture; outside this reproduced defect."
+        }
+      }
+    },
+    {
+      "id": 5,
+      "slug": "stable-header-visual-state",
+      "title": "Keep desktop navigation inside its container and snapshot neutral state",
+      "axis": "ui-ux-feedback",
+      "tier": "🔥",
+      "impact": 8,
+      "innovation": 3,
+      "effortHours": 1.5,
+      "priority": 13.279074135962693,
+      "status": "pending",
+      "executionLog": [],
+      "selectedDepth": "L2",
+      "why": "Every header control remains visible and clickable across supported desktop themes; visual comparisons describe the intended neutral entry state.",
+      "recipe": "Tighten desktop-only top-level nav/control spacing and mirror critical-shell producer. Preserve typography, controls and mobile layout. Set an explicit neutral pointer before visual snapshots; retain public genome hover behavior. Verify geometry, inspect real before/after images, capture/review Linux baselines without loosening tolerance.",
+      "userOutcome": "Every header control remains visible and clickable across supported desktop themes; visual comparisons describe the intended neutral entry state.",
+      "readinessArea": "supported-release correctness",
+      "stageRationale": "Fix an executed current-candidate release defect within existing deployment authorization.",
+      "acceptance": "Reproduce container overflow before repair; pass desktop1280/1366 all7themes and mobile390 parity; inspect actual images; Linux and Windows visual baselines reviewed before acceptance. No control removed and snapshot tolerance remains1.5%.",
+      "premises": [
+        {
+          "claim": "Current exact-source CI has61 snapshot failures.",
+          "adapter": "file-content",
+          "target": "docs/S411_qa-release-findings-1108.json",
+          "pattern": "\"visualSnapshotFailures\": 61",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Current desktop nav still uses the measured narrow reserve.",
+          "adapter": "file-content",
+          "target": "assets/style.css",
+          "pattern": "padding-inline: 0.35rem;",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Snapshot code does not yet set neutral pointer position.",
+          "adapter": "file-content",
+          "target": "tests/visual-regression.spec.js",
+          "pattern": "page.mouse.move",
+          "operator": "eq",
+          "expected": false
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.1,
+          "recipe": "Contain the symptom only; insufficient as the recurring defect remains."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Tighten desktop-only top-level nav/control spacing and mirror critical-shell producer. Preserve typography, controls and mobile layout. Set an explicit neutral pointer before visual snapshots; retain public genome hover behavior. Verify geometry, inspect real before/after images, capture/review Linux baselines without loosening tolerance."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Rebuild the deployment/navigation architecture; outside this reproduced defect."
+        }
+      }
+    }
+  ],
+  "totals": {
+    "count": 2,
+    "priority": 32.20696674310642,
+    "top3": [
+      "private-staging-packaging",
+      "stable-header-visual-state"
+    ]
+  },
+  "innovationReserve": [],
+  "notes": [
+    "No identity/tier/pricing policy or new deployment approval is introduced. Existing authorization persists.",
+    "Broad S411 inherited implementation timing remains historical/nonpassing; selected seven source files were clean at this admission. No false whole-session timing pass is claimed."
+  ],
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-11-08T08:45:43.997Z",
+    "head": "ff3af408d4acffdf9599fcd71af29a78bccf2331",
+    "sidecar": "docs/AUDIT_2026-11-08-S411.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 5,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "5cf1771f4a3b26ae6dc39796216fc979b6795b63ce2aaf64f6ee506249cbdfa9",
+    "implementationDirty": [
+      "api/ci-status.json",
+      "api/obelisk-redirect-readiness.json",
+      "api/staging-deploy-continuity.json",
+      "api/staging-deploy-receipt.json",
+      "api/staging-health.json",
+      "data/staging-deploy-history.ndjson",
+      "ignis/output/pillar-repair-plan.json",
+      "ignis/output/unified-score.json",
+      "portfolio/compiled/FORECAST_LEDGER.json",
+      "docs/S411_1108_audit-brief.json",
+      "docs/S411_1108_audit-brief.md",
+      "docs/S411_1108_plan-brief.json",
+      "docs/S411_1108_plan-brief.md",
+      "docs/S411_qa-release-findings-1108.json"
+    ]
+  }
+}

@@ -36,9 +36,11 @@ import { BLOCKED_STATUSES_CORE } from './lib/shared-policies.mjs';
 import { runBriefPreflight } from './lib/brief-preflight.mjs';
 import { writeProjectStatus } from './lib/write-project-status.mjs';
 import { buildBriefSemanticFingerprint, formatBriefSemanticFingerprint } from './lib/brief-semantic-fingerprint.mjs';
+import { resolveStartupSessions } from './lib/startup-session-identity.mjs';
 import { run as codexTrustedProjectRun } from './check-codex-trusted-project.mjs';
 import { readableDoctorScore } from './lib/doctor-score-coherence.mjs';
 import { isMeasured as isMeasuredCompliance } from './lib/compliance-measurement.mjs';
+import { buildCheckBriefSignal, fingerprintCommands, verificationSurfaceFingerprint, releaseBriefLabel } from './lib/build-check-evidence.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -509,10 +511,11 @@ function taskLabel(item, maxLen = 54) {
 
 // ── Derived values ─────────────────────────────────────────────────────────────
 const today          = new Date().toISOString().slice(0, 10);
-// Next session = (latest session in the SIL log) + 1. The SIL log is the source
-// of truth; PROJECT_STATUS.currentSession is only a fallback when the log can't
-// be parsed (it has lagged real state before — see S142 audit item 1).
-const currentSession = (silMaxSession ?? status.currentSession ?? 62) + 1;
+const { currentSession, lastClosedSession } = resolveStartupSessions({
+  silSession: silMaxSession,
+  statusSession: status.currentSession,
+  lockText: readText(path.join(root, 'context', '.session-lock')),
+});
 const ctxUpdated     = csmd.match(/^Last updated:\s*(\d{4}-\d{2}-\d{2})/m)?.[1] ?? null;
 const ctxAge         = ctxUpdated ? daysBetween(ctxUpdated, today) : '?';
 const scopeCap       = velocity > 0 ? Math.floor(velocity * 1.5) : null;
@@ -939,6 +942,39 @@ if (typeof status.testsPassing === 'number' && typeof status.testsTotal === 'num
   sigTests = '⚠';
   testsLabel = `${status.testsTotal ?? '?'}/? passing`;
 }
+// This project's native source runner writes a measured command receipt. The
+// older file-count cache/status must not conceal its failed or partial run.
+let sourceSignal = null;
+let currentReleaseLabel = null;
+let nativeSourceSelected = false;
+try {
+  const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+  const steps = pkg.scripts?.['build:check:steps'];
+  if (typeof steps === 'string' && steps.trim()) {
+    nativeSourceSelected = true;
+    let evidence = null;
+    try { evidence = JSON.parse(fs.readFileSync(path.join(root, 'api/build-check-diagnostics.json'), 'utf8')); } catch { /* unknown */ }
+    sourceSignal = buildCheckBriefSignal(evidence, {
+      expectedPlanFingerprint: fingerprintCommands(steps.split(/\s*&&\s*/).filter(Boolean)),
+      expectedSourceFingerprint: verificationSurfaceFingerprint(root),
+    });
+    sigTests = testSignalMark(sourceSignal);
+    testsLabel = sourceSignal.detail;
+    status.testingSurfaces = (status.testingSurfaces || []).map(surface => /build:check/.test(surface.command || '')
+      ? { ...surface, status: sourceSignal.ok ? 'green' : sourceSignal.state === 'red' ? 'red' : 'yellow', note: testsLabel } : surface);
+    let release = null;
+    try { release = JSON.parse(fs.readFileSync(path.join(root, `docs/RELEASE_S${status.currentSession}.json`), 'utf8')); } catch { /* unknown */ }
+    currentReleaseLabel = releaseBriefLabel(release);
+  }
+} catch {
+  // Once selected, an unreadable native contract must not fall back to old green.
+  if (nativeSourceSelected) {
+    sourceSignal = { state: 'unknown', ok: false, detail: 'Source UNVERIFIED: receipt resolution failed' };
+    sigTests = testSignalMark(sourceSignal);
+    testsLabel = sourceSignal.detail;
+    currentReleaseLabel = 'current release UNVERIFIED';
+  }
+}
 const sigVel    = sig(velocity, v => v >= 2, v => v === 1);
 // S311 [audit #7] — unknown is ⚠, never ✓. `sig()` cannot express a third state, so
 // the unrecognised case is decided before it is consulted.
@@ -1243,7 +1279,7 @@ if (silMaxSession == null) {
 } else if (!silTotal) {
   briefCoherent = false;
   staleReason = `SIL session S${silMaxSession} has no parseable Total — headline score is untrustworthy.`;
-} else if (statusLatest != null && statusLatest !== silMaxSession) {
+} else if (statusLatest != null && statusLatest < silMaxSession) {
   // PROJECT_STATUS.json lagged the SIL log (the historical failure mode). Self-heal it.
   try {
     const statusPath = path.join(root, 'context', 'PROJECT_STATUS.json');
@@ -1252,11 +1288,13 @@ if (silMaxSession == null) {
     // closeout SIL scorer — writing silScore here would desync it from the
     // category breakdown (tier1-sil-migration invariant: score == sum(categories)).
     live.currentSession = silMaxSession;
-    writeProjectStatus(ROOT, live, { touchLastUpdated: false });
+    writeProjectStatus(root, live, { touchLastUpdated: false });
     console.log(`  ↻ self-heal: PROJECT_STATUS.currentSession ${statusLatest} → ${silMaxSession} (synced from SIL log)`);
   } catch (e) {
     console.warn(`  ⚠ could not self-heal PROJECT_STATUS.json: ${e.message}`);
   }
+} else if (statusLatest != null && statusLatest > silMaxSession) {
+  console.warn(`  ⚠ PROJECT_STATUS session S${statusLatest} is ahead of last closed SIL S${silMaxSession}; preserved without inferring closeout.`);
 }
 const staleBanner = briefCoherent ? null : [
   top('⛔ STALE BRIEF — DO NOT TRUST'),
@@ -1270,14 +1308,14 @@ const pct = silTotal > 0 ? `${Math.round(silTotal / silMax * 100)}%` : '?%';
 
 const lines = [
   `<!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->`,
-  `<!-- generated-at: ${today} (Session ${currentSession - 1} closeout) -->`,
+  `<!-- generated-at: ${today} (last closed Session ${lastClosedSession}; active/next Session ${currentSession}) -->`,
   formatBriefSemanticFingerprint(buildBriefSemanticFingerprint(root)),
   `<!-- fast-boot-valid-until: next session if within 24h -->`,
   `<!-- brief-coherent: ${briefCoherent} -->`,
   ``,
   `# Startup Brief — ${status.name || 'Studio Ops'}`,
   ``,
-  `> **Fast-boot brief** — generated at Session ${currentSession - 1} closeout · ${today}.`,
+  `> **Fast-boot brief** — last closed Session ${lastClosedSession} · active/next Session ${currentSession} · generated ${today}.`,
   `> Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).`,
   ``,
   `---`,
@@ -1297,7 +1335,7 @@ const lines = [
   }),
   ``,
   renderLastCompleted(status.lastSessionSummary, {
-    expectedSession: currentSession - 1,
+    expectedSession: lastClosedSession,
     fallback: status.currentFocus || shippedLine || 'Latest session details unavailable.',
   }),
   ``,
@@ -1333,12 +1371,13 @@ const lines = [
   bot(),
   ``,
   // ── WHERE WE LEFT OFF ──────────────────────────────────────────────────────
-  top(`WHERE WE LEFT OFF  ·  Session ${currentSession - 1}`),
+  top(`WHERE WE LEFT OFF  ·  Session ${lastClosedSession}`),
   row(`Shipped:  ${shippedLine.slice(0, W - 10)}`),
   // S181 [audit #2] — was `${testsTotal} passing`, which labelled the TOTAL as
   // PASSING (179 "passing" while 10 failed) — a CANON-031 lying surface that
   // contradicted the SIGNALS block. Show passing/total, matching testsLabel.
-  row(`Tests:    ${typeof status.testsPassing === 'number' ? `${status.testsPassing}/${status.testsTotal ?? '?'}` : (status.testsTotal ?? '?')} passing  ·  Deploy: ${status.lastDeployStatus || 'N/A'}`),
+  row(`Tests:    ${sourceSignal ? testsLabel : `${typeof status.testsPassing === 'number' ? `${status.testsPassing}/${status.testsTotal ?? '?'}` : (status.testsTotal ?? '?')} passing`}`),
+  row(`Deploy:   ${currentReleaseLabel || status.lastDeployStatus || 'N/A'}`),
   bot(),
   ``,
   // ── CONTEXT METER (S119 founder directive — was buried, now first-class) ──
@@ -1541,7 +1580,7 @@ const lines = [
   ``,
   `---`,
   ``,
-  `*Generated by \`scripts/render-startup-brief.mjs v3.1\` · Session ${currentSession - 1} closeout · ${today}*`,
+  `*Generated by \`scripts/render-startup-brief.mjs v3.1\` · last closed Session ${lastClosedSession} · active/next Session ${currentSession} · ${today}*`,
   `*Run \`node scripts/ops.mjs doctor\` for live health check · \`node scripts/ops.mjs genius-list\` to refresh hit list*`,
 ];
 

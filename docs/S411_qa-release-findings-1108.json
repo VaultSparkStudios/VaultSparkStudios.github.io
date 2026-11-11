@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-08T08:44:31.608Z",
+  "scope": "S411 authorized release-recovery checks; no production promotion or fresh native arc completion.",
+  "qa": {
+    "sourceCommit": "ff3af408d4acffdf9599fcd71af29a78bccf2331",
+    "remoteVerified": true,
+    "e2eRun": 42460072685,
+    "lighthouseRun": 42460072740,
+    "accessibilityRun": 42460072247,
+    "lighthouse": "passed",
+    "accessibility": "passed",
+    "e2e": "failed",
+    "passed": 624,
+    "skipped": 56,
+    "visualSnapshotFailures": 61,
+    "otherExecutedE2EFailures": 0,
+    "complianceFailure": "Expired provider-observed CI beacon at step48 of549; canonical refreshed observation now passes its freshness contract.",
+    "artifactId": 13609691647,
+    "artifactSha256": "9b58c270c3b0ad735fdba4fa545709665f74c1ecb4efa31510f323bc782c3177"
+  },
+  "visual": {
+    "linuxHeaderClippingObserved": true,
+    "source": "Exact-source CI screenshot, neutral-pointer21-frame Windows diagnosis",
+    "beforeCameraSha256": "80415bb8363f19ab733b354e962b09c0ed0c96ca66ae9fb22d050e0feace4084",
+    "beforeCells": 21,
+    "scope": "Linux1280 clips right control; Windows longest theme has effectively no container reserve. Genome tooltip is public hover behavior, not a development overlay."
+  },
+  "packaging": {
+    "operatorCacheReachableBefore": true,
+    "operatorPathsDeniedAfterContainment": true,
+    "publicPagesRemainReachable": true,
+    "scope": "HEAD-only probes; no private contents retrieved. Full staging helper currently lacks canonical served-file classification."
+  },
+  "selectedSourceBefore": [
+    {
+      "file": "scripts/deploy-staging.mjs",
+      "sha256": "8302408a3d80b6984d81306e2658e2df993e06dd0c7db4ad4b678148f32a66e4"
+    },
+    {
+      "file": "config/served-surface.json",
+      "sha256": "b0f12e16f177ecf0599a0202afefce14b09ec3703aa11bfe67dcfa660b252be2"
+    },
+    {
+      "file": "scripts/prune-served-surface.mjs",
+      "sha256": "4eeb1f885f10d0b6edba216a4f8291f6212c0911814425db71f2f53237cebeeb"
+    },
+    {
+      "file": "assets/style.css",
+      "sha256": "11a5b45e48215bd70b653f979da82525fe52ecddae7a19132d00d7e81d01f6a5"
+    },
+    {
+      "file": "scripts/build-shell-assets.mjs",
+      "sha256": "a1cfd33a2067e8fb4fe9bf6f3d2796ffbcad3df3419ab6068bb3212891ab8551"
+    },
+    {
+      "file": "tests/navigation.spec.js",
+      "sha256": "8af89771f8516c03c346c3ee4fe13d75e79638cb35adc955ea4e7096a339b83e"
+    },
+    {
+      "file": "tests/visual-regression.spec.js",
+      "sha256": "a3e8e0ebb2f805155732455aa985121732d8580d82ab01e0dd442f9ac8676d7d"
+    }
+  ],
+  "nativeFreshArcComplete": false,
+  "productionPromoted": false
+}

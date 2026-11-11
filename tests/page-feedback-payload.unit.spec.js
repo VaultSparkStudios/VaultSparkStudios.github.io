@@ -49,6 +49,23 @@ function supabaseStub() {
   };
 }
 
+// Hold provider responses so tests can exercise real DOM clicks and storage
+// changes during the insert, without timing guesses or external requests.
+function deferredSupabaseStub() {
+  window.__inserts = [];
+  window.__responses = [];
+  window.VSSupabase = {
+    from(table) {
+      return {
+        insert(rows) {
+          window.__inserts.push({ table, rows: JSON.parse(JSON.stringify(rows)) });
+          return new Promise((resolve) => window.__responses.push(resolve));
+        },
+      };
+    },
+  };
+}
+
 const RATE = html({ body: '<main>content</main><script src="/assets/rate-page.js"></script>' });
 const MICRO = html({
   body: `<div data-micro-feedback-root data-feedback-context="membership"></div>
@@ -150,7 +167,150 @@ test('rate-page: a failed insert is kept and replayed verbatim on the next visit
     await waitFor(async () => (await inserts(f.page)).length === 1, { message: 'replay insert' });
     assert.deepEqual((await inserts(f.page))[0].rows, [pending]);
     await waitFor(async () => f.page.evaluate(() => !JSON.parse(localStorage.getItem('vs_rate_page_v1'))['/games'].pendingPayload), { message: 'pending cleared' });
+    await f.page.reload({ waitUntil: 'load' });
+    await settle(150);
+    assert.equal((await inserts(f.page)).length, 0, 'acknowledged payload is not replayed again');
   });
+});
+
+test('rate-page: rapid clicks admit one reaction and retain it until acknowledged', async () => {
+  await withFixture({ initScripts: [deferredSupabaseStub] }, async (f) => {
+    await f.goto('/games/');
+    await f.page.evaluate(() => {
+      const buttons = document.querySelectorAll('.vs-rate-page__btn');
+      buttons[0].click(); buttons[1].click(); buttons[2].click(); buttons[0].click();
+    });
+    assert.equal((await inserts(f.page)).length, 1, 'one insert admitted before provider resolves');
+    const entry = await f.page.evaluate(() => JSON.parse(localStorage.getItem('vs_rate_page_v1'))['/games']);
+    assert.deepEqual(entry.pendingPayload, (await inserts(f.page))[0].rows[0], 'persisted before acknowledgement');
+    assert.equal(entry.reaction, 'useful', 'first reaction wins');
+    await f.page.evaluate(() => window.__responses[0]({ error: null }));
+    await waitFor(async () => f.page.evaluate(() => !JSON.parse(localStorage.getItem('vs_rate_page_v1'))['/games'].pendingPayload));
+    await f.page.evaluate(() => {
+      document.querySelector('.vs-rate-page__expand').click();
+      document.querySelector('[data-reaction="ok"]').click();
+    });
+    assert.equal((await inserts(f.page)).length, 1, 'reopened widget still honors current-page admission');
+  });
+});
+
+test('rate-page: unavailable storage still admits only one in-page reaction', async () => {
+  for (const denied of ['read', 'write']) {
+    await withFixture({ initScripts: [deferredSupabaseStub, { fn: (mode) => {
+      if (mode === 'read') {
+        Object.defineProperty(window, 'localStorage', { get() { throw new DOMException('denied', 'SecurityError'); } });
+      } else {
+        const original = Storage.prototype.setItem;
+        Storage.prototype.setItem = function (key, value) {
+          if (key === 'vs_rate_page_v1') throw new DOMException('full', 'QuotaExceededError');
+          return original.call(this, key, value);
+        };
+      }
+    }, arg: denied }] }, async (f) => {
+      await f.goto('/games/');
+      await f.page.evaluate(() => {
+        const button = document.querySelector('.vs-rate-page__btn');
+        button.click(); button.click(); button.click();
+      });
+      assert.equal((await inserts(f.page)).length, 1, `${denied}: first click reaches provider without storage`);
+      await f.page.evaluate(() => window.__responses[0]({ error: { message: 'offline' } }));
+      await waitFor(async () => (await f.page.textContent('.vs-rate-page__label')) === 'thank you ·');
+      await f.page.evaluate(() => document.querySelector('[data-reaction="not_useful"]').click());
+      assert.equal((await inserts(f.page)).length, 1, `${denied}: a failed response does not reopen admission`);
+      assert.deepEqual(f.log.errors, [], 'storage failure does not crash the widget');
+    });
+  }
+});
+
+test('rate-page: a missing acknowledgement remains pending and malformed storage can recover', async () => {
+  await withFixture({ initScripts: [deferredSupabaseStub] }, async (f) => {
+    await f.goto('/games/');
+    await f.page.evaluate(() => localStorage.setItem('vs_rate_page_v1', '{broken'));
+    await f.page.evaluate(() => document.querySelector('.vs-rate-page__btn').click());
+    assert.equal((await inserts(f.page)).length, 1);
+    await f.page.evaluate(() => window.__responses[0](undefined));
+    await waitFor(async () => (await f.page.textContent('.vs-rate-page__label')) === 'thank you ·');
+    const pending = await f.page.evaluate(() => JSON.parse(localStorage.getItem('vs_rate_page_v1'))['/games'].pendingPayload);
+    assert.deepEqual(pending, (await inserts(f.page))[0].rows[0], 'unacknowledged payload remains durable');
+    await f.page.reload({ waitUntil: 'load' });
+    assert.deepEqual((await inserts(f.page))[0].rows[0], pending, 'next visit retries exact payload');
+    await f.page.evaluate(() => window.__responses[0]({ error: null }));
+    await waitFor(async () => f.page.evaluate(() => !JSON.parse(localStorage.getItem('vs_rate_page_v1'))['/games'].pendingPayload));
+  });
+});
+
+test('rate-page: an unresolved old reaction cannot be replaced by an expired-page click', async () => {
+  await withFixture({ initScripts: [deferredSupabaseStub, () => {
+    localStorage.setItem('vs_rate_page_v1', JSON.stringify({ '/games': {
+      at: Date.now() - 25 * 3600e3, reaction: 'ok',
+      pendingPayload: { path: '/games', reaction: 'ok', visit_depth_bucket: '1', ua_kind: 'desktop' },
+    } }));
+  }] }, async (f) => {
+    await f.goto('/games/');
+    assert.equal((await inserts(f.page)).length, 1, 'old pending payload is replaying');
+    await f.page.evaluate(() => document.querySelector('[data-reaction="useful"]').click());
+    assert.equal((await inserts(f.page)).length, 1, 'click cannot overwrite unresolved payload');
+    assert.equal(await f.page.evaluate(() => JSON.parse(localStorage.getItem('vs_rate_page_v1'))['/games'].pendingPayload.reaction), 'ok');
+    await f.page.evaluate(() => window.__responses[0]({ error: null }));
+    await waitFor(async () => f.page.evaluate(() => !JSON.parse(localStorage.getItem('vs_rate_page_v1'))['/games'].pendingPayload));
+    await f.page.evaluate(() => document.querySelector('[data-reaction="useful"]').click());
+    assert.equal((await inserts(f.page)).length, 2, 'expired cooldown permits new rating after acknowledgement');
+    assert.equal((await inserts(f.page))[1].rows[0].reaction, 'useful');
+  });
+});
+
+test('rate-page: replay acknowledgement preserves a concurrent page rating and unrelated records', async () => {
+  await withFixture({ initScripts: [deferredSupabaseStub, () => {
+    localStorage.setItem('vs_rate_page_v1', JSON.stringify({ '/news': {
+      at: Date.now() - 1000, reaction: 'ok',
+      pendingPayload: { path: '/news', reaction: 'ok', visit_depth_bucket: '1', ua_kind: 'desktop' },
+    } }));
+  }] }, async (f) => {
+    await f.goto('/games/');
+    await f.page.evaluate(() => document.querySelector('[data-reaction="useful"]').click());
+    assert.deepEqual((await inserts(f.page)).map((x) => x.rows[0].path), ['/news', '/games']);
+    await f.page.evaluate(() => {
+      const store = JSON.parse(localStorage.getItem('vs_rate_page_v1'));
+      store['/contact'] = { at: Date.now(), reaction: 'not_useful', note: 'other tab' };
+      localStorage.setItem('vs_rate_page_v1', JSON.stringify(store));
+      window.__responses[0]({ error: null });
+    });
+    await waitFor(async () => f.page.evaluate(() => !JSON.parse(localStorage.getItem('vs_rate_page_v1'))['/news'].pendingPayload));
+    let store = await f.page.evaluate(() => JSON.parse(localStorage.getItem('vs_rate_page_v1')));
+    assert.equal(store['/games'].pendingPayload.reaction, 'useful', 'new pending click survives replay');
+    assert.equal(store['/contact'].note, 'other tab', 'unrelated addition survives replay');
+    await f.page.evaluate(() => window.__responses[1]({ error: null }));
+    await waitFor(async () => f.page.evaluate(() => !JSON.parse(localStorage.getItem('vs_rate_page_v1'))['/games'].pendingPayload));
+    store = await f.page.evaluate(() => JSON.parse(localStorage.getItem('vs_rate_page_v1')));
+    assert.equal(store['/contact'].note, 'other tab', 'unrelated addition survives click acknowledgement');
+  });
+});
+
+test('rate-page: stale replay success or failure never overwrites a replacement record', async () => {
+  for (const failed of [false, true]) {
+    await withFixture({ initScripts: [deferredSupabaseStub, () => {
+      localStorage.setItem('vs_rate_page_v1', JSON.stringify({ '/games': {
+        at: Date.now() - 1000, reaction: 'ok',
+        pendingPayload: { path: '/games', reaction: 'ok', visit_depth_bucket: '1', ua_kind: 'desktop' },
+      } }));
+    }] }, async (f) => {
+      await f.goto('/games/');
+      const expected = await f.page.evaluate((fail) => {
+        const store = JSON.parse(localStorage.getItem('vs_rate_page_v1'));
+        store['/games'] = { at: Date.now(), reaction: 'not_useful', pendingPayload: {
+          path: '/games', reaction: 'not_useful', visit_depth_bucket: '2-4', ua_kind: 'desktop',
+        } };
+        store['/news'] = { at: Date.now(), reaction: 'useful' };
+        localStorage.setItem('vs_rate_page_v1', JSON.stringify(store));
+        window.__responses[0](fail ? { error: { message: 'failed' } } : { error: null });
+        return store;
+      }, failed);
+      await settle(100);
+      assert.deepEqual(await f.page.evaluate(() => JSON.parse(localStorage.getItem('vs_rate_page_v1'))), expected,
+        `${failed ? 'failed' : 'successful'} stale response leaves replacement and unrelated entry intact`);
+      assert.equal((await inserts(f.page)).length, 1, 'replacement is not blindly reposted during old replay');
+    });
+  }
 });
 
 test('rate-page: portals and operator surfaces never mount the widget', async () => {

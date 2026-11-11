@@ -1191,3 +1191,115 @@ Native source169 found the November archive share asset missing. Existing templa
 ### S408 complete Git capture and preview delivery
 The same >1MiB inventory failure recurred in resync-derived and also affects the full staging manifest. Fix the existing shared process boundary with a bounded16MiB Git default; retain explicit caps, non-Git defaults, all paths and existing window/environment guards. Actual inventory controls,18reconciler checks and independent review passed.
 The changed OG template also serves the public preview Worker. Bind preview cache identity to actual SVG bytes so deployment cannot retain the previous template; HEAD stores a GET representation and returns no body. The canonical website staging DNS is deliberately unproxied, so the preview component uses a persistent isolated staging Worker; its16GET/8HEAD readbacks passed. Production routing and website staging DNS/auth paths remain unchanged.
+
+
+<!-- S409-writeback -->
+## S409 — preserve incoming drafts and feedback intent
+
+Consume the existing share subject/body contract as bounded plain text in empty fields; keep submission verification and topic routing. First in-page reaction wins; persist pending payload before await, acknowledge only its matching current record, and preserve unrelated/newer records. No server idempotency claim, identity/trust-policy change, pricing change or lifecycle transition. Existing CANON-045 STRONG readiness gap stays explicit; routine promotion follows RELEASE_PROMOTION_PROTOCOL. CANON-055 reaches Contact and the shared rating widget through a fully verified candidate, not report-only updates.
+
+
+<!-- S409-account-direction -->
+## S409 — distinct audiences, one identity
+
+The founder explicitly selected open member signup while retaining investor approval. Vault Membership uses its own community branding; Investor Relations uses a separate premium workspace and application journey. Both delegate credentials and sessions to Obelisk. Pricing, membership benefits, investor roles and data permissions remain authoritative and unchanged. This supersedes the initial two-repair scope's statement that identity flows were unchanged.
+
+Creation, profile completion and investor approval are separate steps. Member callbacks traverse the member portal; a requested member destination resumes only after an existing or newly created member row is confirmed. Referrals use bounded query continuity and tolerate unavailable optional browser storage. Provider cards mount in dedicated empty elements only after their safe destinations are prepared, and follow the applied light/dark theme.
+
+Open enrollment is a release requirement, not a claim inferred from website copy: verify the website-specific provider policy, supported signup intent and real authenticated journeys before production promotion. No global provider enrollment policy or investor approval bypass is authorized.
+
+
+<!-- S409-partial-recovery-2026-11-04 -->
+### S409 recovery boundary — 2026-11-04
+
+Use SESSION_PROTOCOL §3.0 partial handoff at the genuine authenticated-account dependency; S409 production success is not a prerequisite for this new invocation’s fresh startup/audit. Preserve the old release ledger, failed source receipt and existing score. Later bookkeeping does not rebind frozen proof. Continue pending release work within the new arc; identity changes still require affected real journeys before promotion.
+
+
+<!-- S410-implementation-verified -->
+### S410 bounded verification repairs
+
+Keep actual runtime reaction behavior unchanged: the failure was a300ms fixture scheduling assumption. Use a held response and preserve replay/normal-click assertions. Retry only the guarded temporary fixture removal with bounded native Windows cleanup options. Current source truth comes from validated command evidence, not historical green counters; active release status stays separate. The broad timing checker flags inherited S409 WIP; preserve its failed verdict and baseline replay of all three unchanged selected source targets. Final closeout must reconcile active-session coherence; neither limitation is silently green.
+
+
+<!-- S410-local-runtime-acceptance -->
+### S410 release boundary and Canon posture
+
+CANON-045 STRONG gap remains explicit: real affected member/investor acceptance is unverified; retain the canonical provider, signed flow and approval/data gates. Existing deployment authorization is valid. Read-only GitHub API confirms legacy warm Pages publishes main; Cloudflare/Worker push interlocks hold their own production steps. Do not publish changed identity behavior to the warm origin or change the unresolved warm-origin architecture to bypass missing functional acceptance. The Obelisk owner request01K6IFCUOP330741545BEDEAE6 is shipped, not an applied fix or deployment signature.
+
+
+<!-- S410-premise-composition-clarification -->
+S410 timing-record clarification: the230 dirty paths at the gate comprised226 inherited paths plus4 newly written audit/plan admission records. None of the four selected implementation source files was dirty. Preserve the native nonpassing timing verdict and baseline replay; no score, velocity or historical test result changes.
+
+
+<!-- S410-browser-lifecycle-correction -->
+S410 acceptance correction: full source attempt4 failed at129 after128 passes. The browser fixture hit its45second parent-only cancellation and cleanup EPERM; retrying removal alone was insufficient. The selected cleanup outcome now uses an explicit120second deadline, bounded owned process-tree termination, bounded close wait and combined primary/cleanup error reporting. Final focused17/17 passed; forced-timeout negative probe failed explicitly and removed its fixture, with no owned CLI/direct descendants remaining. Independent lifecycle review approved. Full source and release remain pending; no additional shipped item, score or velocity is claimed. Evidence: docs/S410_browser-lifecycle-acceptance.json.
+
+
+## S411 — pin the verified release CLI
+
+The release keeps Wrangler4.90.0, the installed CLI used for the completed local checks, as an exact dependency instead of a caret range. Live registry review found the range would select a release published minutes earlier. The retained version has a verified npm registry signature, the expected Cloudflare source repository, established publisher continuity and no install lifecycle scripts. Other dependencies remain unchanged. This is a build-tool resolution constraint; it changes no public authentication, access policy or runtime UI. Hosted checks must verify the final QA commit after this manifest change.
+
+
+## S411 recovery — 2026-11-06
+
+Preserve local implementation and newer published content/telemetry separately, then regenerate derived surfaces using the canonical lifecycle. Keep historical source and visual results scoped to their original subjects. A provider denial or fixture pass does not prove positive real member/investor behavior. Production acceptance remains pending.
+
+
+<!-- S411-local-recovery-closeout -->
+## S411 recovery decisions — 2026-11-06
+
+Keep the freshness link at the entrance and remove its floating hit target during reading. Repair quoted-question sentence boundaries at the gate rather than rewriting grammatical published prose; reject continuations across paragraph boundaries. Preserve all failed/source and before-image evidence and distinguish direct inspection from exact-pixel carry. Flattened release claims now name the actual current source/root and archive prior snapshots explicitly. Keep production promotion separate from local checks; carry the real staging/account dependency into the fresh native arc without borrowing old completion evidence.
+
+
+S411 conformance scope: CANON-045 STRONG architecture/isolation acceptance remains pending; Obelisk is the existing identity authority and this local checkpoint changes no auth policy. CANON-055 STRONG surface follow-through remains release-pending until exact hosted, staging/account and production evidence is verified. Neither gap is waived or presented as current production acceptance.
+
+
+<!-- S411-release-recovery-progress-2026-11-08 -->
+## S411 release recovery — 2026-11-08, acceptance in progress
+
+Founder renewed push and deployment authorization. QA source dfb3a4f2345f1928c227c61d39a966b4155f97c3 is remotely verified; no main promotion or production deployment is claimed. Current runtime root fc3ad58b984f3b4171269555d903096d726547358de0f0cd2d7b3792a9243551 was built with candidate identity a5c44a6a03b14ff4bedea24269dc2e3a064b2bd3; source commit and artifact build identity are distinct.
+
+The current static staging deployment passed public artifact readback and all20 reachability checks:12 private-path denials and8 public successes. Verified receipt f58a466345c546f964153690 covers4090 regular files; chronology depth213. Archive packaging uses the positive public served-surface inventory. This proves static staging, not isolated backend or authenticated behavior.
+
+Current local UI acceptance:43 header/contrast checks,112 directly reviewed header/picker originals across all7 themes, and70 native Windows snapshots all directly reviewed with0 concrete findings. The70 reviewed Windows originals were accepted;67 differ from prior baselines. Linux run42476258466 passed42 geometry checks and68 snapshots, with2 member-portal test-contract failures before capture; no complete70-frame acceptance was inferred. The portal absence assertion is corrected; exact-QA Linux run42477531084 is pending. The full549-step source attempt stopped at170 because prior visual/mobile receipts no longer matched the changed header. Earlier549/532/215 proofs remain historical, not current-candidate acceptance.
+
+Remaining release work: fresh mobile/desktop audit, current full-source proof, reviewed complete Linux baselines, all3 exact-candidate required workflows, isolated staging account configuration and real affected member/approved-investor journeys, authorized main/production/readback, then full recovery closeout. The founder can perform both native journeys when isolation is verified. Required staging provisioning/artifact prerequisites remain unresolved; generic deployment authorization does not silently change artifact trust policy. No sign-in invitation is issued while staging uses production data defaults.
+
+The native invocation01a1b213-67c9-7af0-9148-611b5d9cbc66 created1793988988 still requires its full new startup/audit/implementation/closeout after S411 recovery. No new session has been bound, no lock cleared and no native completion claimed. SIL939 remains the prior score; this progress checkpoint awards no new score or release credit.
+
+Retain explicit portal absence and public-header visibility as separate controls. Accept only exact directly reviewed platform baselines; preserve failed capture runs.
+
+
+<!-- S411-partial-recovery-boundary-2026-11-08 -->
+## S411 partial recovery boundary — release remains pending
+
+Recorded 2026-11-08T15:35:56.285Z. This is an honest partial recovery checkpoint at the existing isolated-account dependency, not a successful release or full closeout. Local verification receipts retain their actual timestamps, source fingerprints and scopes; this note does not rebind them. The failed closeout autopilot, executed CI failures, flaky observations and unresolved visual cause remain preserved. Diagnostic observations: comparison: 42494681623, completed, failure; provisional-generation: 42494683475, completed, success. Generation output remains provisional and is not accepted baseline evidence.
+
+Follow context/DECISIONS.md:1215 and1251 and SESSION_PROTOCOL §3.0: checkpoint the recovered S411 record, then run this native invocation's genuine full startup and fresh audit; carry pending visual repair, exact candidate checks, isolated member/approved-investor journeys and authorized production acceptance into that arc. Successful production promotion is not a prerequisite for fresh startup. Existing push/deployment authorization persists; isolation and affected authenticated acceptance remain required before promotion.
+
+Native invocation 01a1b213-67c9-7af0-9148-611b5d9cbc66, created 1793988988, still requires its own full start/audit/implementation/closeout. Inspect native identity and run the binding helper before triage; start-new-arc requires a new monotonic startup lock before --apply. Do not use --restart for an unbound invocation. This record neither changes the lock nor binds/completes the goal. Prior939/1000 and its categories remain historical and unchanged; no new score, release velocity or full-closeout credit is awarded.
+
+
+<!-- S412-verified-code-checkpoint -->
+## S412 — verified code; release acceptance pending
+
+Recorded 2026-11-08T16:21:51.638Z. The fresh S412 audit and implementation are bound to the current native invocation. Capture provenance repairs passed20 focused tests and independent round-two review; the neutral Oracle catalog context passed8 offline actual-payload checks and independent review. Test wiring includes both regular unit and549-step build-check commands. Details and limitations: docs/S412_implementation-verification.json. These are local code results; full current source, refreshed visual evidence and release acceptance are not inferred.
+
+The exact image-artifact decision and three Linux reference reviews/comparisons remain pending. Isolated account staging still needs actual registered target/intake and artifact trust; no member or approved-investor journey is claimed. Existing push/deployment authorization persists. Main, production, full closeout and native completion remain pending. Prior939 is historical; no new score or release credit is awarded.
+
+Keep membership threshold reconciliation deferred: conflicting display consumers are recorded, but this selection changes no tier policy. Retain the CANON-045 STRONG isolation gap as a release hold; no owner-signature gate is invented. Oracle arrival code stays unchanged because six controlled actual-response cases did not reproduce a wrong arrival. Broader timing remains nonpassing for generated admission/startup artifacts; exact selected preimages and the new-scope caveat are preserved separately.
+<!-- S413-exact-artifact-exceptions -->
+## D-S413.1 — Exact artifact exceptions for release acceptance
+
+The founder approved the exact PNG-only exception for first-party CI artifact 13622863757 from run 42494683475, SHA-256 `f7dfdcc10cc2f119785c71c02dc683d5126bbf51bf707907faf840e6ad55a65e`. Verify the archive identity/digest before extracting only safe PNG entries. Only the three selected Linux references may change after direct review and unchanged native comparison; no other archive content is executable or approved.
+
+The founder approved a bounded isolated synthetic-data staging run, subject to its retained artifact, isolation, ownership and rollback conditions. No downloads, new spending or production-data use are included. This is neither a general artifact-trust override nor completed account acceptance. Exact operational conditions remain preserved in private evidence.
+
+## D-S413.2 — Prepare Desk article imagery before email delivery
+
+The founder requests a way to generate The Desk article images before marketing or subscriber emails are sent. Extend this arc with an existing-pipeline image-preparation workflow and verified send ordering. This request does not itself send emails, introduce unapproved provider spending or alter membership policy.
+
+## D-S413.3 — Scope isolated fixture policy closure to selected journeys
+
+The synthetic isolated fixture is limited to the selected member/investor journeys. Team-management parity is outside this fixture; the original selection and scope decision remain preserved in private evidence. Production schema, data and policy remain unchanged. Actual access/security acceptance is required before exposure; this scope decision does not establish it.
+

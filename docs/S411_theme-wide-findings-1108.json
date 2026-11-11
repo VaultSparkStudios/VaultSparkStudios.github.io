@@ -1,0 +1,15 @@
+{
+  "scope": "Adaptive outcome7 wide-header diagnosis; no new native arc or completed release claim.",
+  "sourceCommit": "a5c44a6a03b14ff4bedea24269dc2e3a064b2bd3",
+  "workflowRun": 42473768793,
+  "geometry": { "passed": 21, "failed": 7, "passingWidths": [1280, 1366, 1440], "failedWidth": 1920, "failedThemes": 7, "containerWidth": 1200, "rowExtent": 1261.359375, "snapshotCaptureSkipped": true },
+  "sourceCause": {
+    "file": "assets/command-palette-loader.js",
+    "method": "injectMobileTrigger",
+    "condition": "(min-width:1025px) and (max-width:1450px)",
+    "observed": "Canonical CSSOM probes confirm injected compact header styles at1440 and larger base styles at1920 while the header container stays1200px.",
+    "diagnosisSha256": "33d2b7c218229a2def0d595779fd879b7f4a8592ebb724aeee73608ca2ec9f65",
+    "prior1600BreakpointInferenceWithdrawn": true
+  },
+  "selectedRefinement": "Mirror the existing delivered1025–1450px rule in full/critical CSS without changing final narrow typography. From1451px use a1360px header-only container and restore the existing full brand variant; retain body container and every control. Test both1450/1451 boundaries."
+}

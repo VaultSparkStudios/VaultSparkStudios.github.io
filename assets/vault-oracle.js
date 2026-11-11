@@ -30,7 +30,7 @@
     ['/games/vaultfront', 'User is on the Vaultfront game page. Help them learn about the project and follow its progress in the Forge.'],
     ['/games/solara', 'User is on the Solara game page. Help them learn about the project and follow its forge progress.'],
     ['/games/the-exodus', 'User is on The Exodus game page. Help them explore the project.'],
-    ['/games', 'User is browsing the VaultSpark Studios games catalog. Active projects: Call of Doodie (satire FPS), Gridiron GM (football simulator), Vaultfront, Solara, MindFrame, The Exodus. Help them find a game that fits their interest.'],
+    ['/games', 'User is browsing the VaultSpark Studios games catalog or a game page. Use current page details and the live vault snapshot for project names, lifecycle status, and availability. Help them find or explore a game that fits their interest.'],
     ['/membership-value', 'User is reading about VaultSpark membership value. Help them understand what the Vault Score system, rank progression, and member-only perks deliver vs. free access.'],
     ['/membership', 'User is on the membership page. Help them understand Vault tiers, Vault Score, rank progression, and the value of joining — or point them to the sign-up flow.'],
     ['/ranks', 'User is exploring the VaultSpark rank system and Vault Score. Help them understand how points are earned, what ranks unlock, and how to climb faster.'],
@@ -129,6 +129,7 @@
     '.vs-oracle__msg--user{align-self:flex-end;background:rgba(126,201,255,0.12);border:1px solid rgba(126,201,255,0.22);max-width:86%;}',
     '.vs-oracle__msg--ignis{align-self:flex-start;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.22);max-width:92%;font-family:Georgia,serif;}',
     '.vs-oracle__msg--err{align-self:flex-start;background:rgba(255,80,80,0.08);border:1px solid rgba(255,80,80,0.25);font-size:0.85rem;color:#ffb4b4;}',
+    'body.light-mode .vs-oracle__msg--err{color:#8b1e2d;}',
     '.vs-oracle__chips{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.1rem;}',
     '.vs-oracle__chip{display:inline-flex;align-items:center;background:rgba(212,175,55,0.09);border:1px solid rgba(212,175,55,0.28);color:var(--gold,#d4af37);padding:0.32rem 0.65rem;border-radius:999px;font-size:0.75rem;font-family:Georgia,serif;letter-spacing:0.03em;text-decoration:none;transition:transform 120ms ease,background 120ms ease;}',
     '.vs-oracle__chip:hover{transform:translateY(-1px);background:rgba(212,175,55,0.16);}',
@@ -250,7 +251,7 @@
 
   // ── R1: SSE streaming variant ───────────────────────────────────────────
   // Server emits Anthropic-flavoured SSE; we parse content_block_delta text
-  // and feed each chunk to onDelta. After [DONE], a final vs-ignis-tail event
+  // and feed each chunk to onDelta. A final vs-ignis-tail service event
   // carries suggestions + meter. Returns { reply, suggestions, meter, access }
   // when the stream closes — same shape as ask() so the caller can swap in.
   function askStream(message, contextHint, history, session, onDelta) {
@@ -278,11 +279,21 @@
           throw err;
         });
       }
+      // Cached replies keep their JSON envelope even when stream was requested.
+      // Decode it once: retrying a valid cache hit would count another question.
+      var contentType = (res.headers.get('Content-Type') || '').split(';')[0].trim().toLowerCase();
+      if (contentType === 'application/json' || /\+json$/.test(contentType)) {
+        return res.json().then(function (body) {
+          if (!body || typeof body.reply !== 'string' || !body.reply.trim()) {
+            throw new Error('IGNIS returned an empty answer. Please try again.');
+          }
+          return body;
+        });
+      }
+      if (contentType !== 'text/event-stream') throw new Error('IGNIS returned an unreadable response.');
       var reader = res.body && res.body.getReader && res.body.getReader();
       if (!reader) {
-        // Fallback: shouldn't happen in modern browsers — but if streams are
-        // unavailable, downgrade to the non-streaming flow transparently.
-        return res.json().then(function (body) { return body; });
+        throw new Error('IGNIS stream is unavailable.');
       }
       var decoder = new TextDecoder();
       var buf = '';
@@ -293,23 +304,24 @@
         return reader.read().then(function (chunk) {
           if (chunk.done) return;
           buf += decoder.decode(chunk.value, { stream: true });
-          var events = buf.split(/\n\n/);
+          var events = buf.split(/\r?\n\r?\n/);
           buf = events.pop() || '';
           for (var i = 0; i < events.length; i++) {
             var ev = events[i];
             var eventType = null;
-            var dataLine = null;
-            var lines = ev.split('\n');
+            var dataLines = [];
+            var lines = ev.split(/\r?\n/);
             for (var k = 0; k < lines.length; k++) {
               if (lines[k].indexOf('event:') === 0) eventType = lines[k].slice(6).trim();
-              else if (lines[k].indexOf('data:') === 0) dataLine = lines[k].slice(5).trim();
+              else if (lines[k].indexOf('data:') === 0) dataLines.push(lines[k].slice(5).replace(/^ /, ''));
             }
+            var dataLine = dataLines.join('\n');
             if (!dataLine || dataLine === '[DONE]') continue;
             try {
               var obj = JSON.parse(dataLine);
-              if (eventType === 'vs-ignis-tail') {
+              if (eventType === 'vs-ignis-tail' && obj && Array.isArray(obj.suggestions)) {
                 tail = obj;
-              } else if (obj.type === 'content_block_delta' && obj.delta && obj.delta.text) {
+              } else if (obj && obj.type === 'content_block_delta' && obj.delta && typeof obj.delta.text === 'string') {
                 assembled += obj.delta.text;
                 if (typeof onDelta === 'function') onDelta(obj.delta.text, assembled);
               }
@@ -320,11 +332,15 @@
       }
 
       return pump().then(function () {
+        // EOF alone is not a successful answer. The service tail follows its
+        // accounting; missing it means this browser did not receive completion.
+        if (!assembled.trim() || !tail) throw new Error('IGNIS stream ended before the answer was complete.');
         return {
           reply: assembled,
           suggestions: tail && tail.suggestions ? tail.suggestions : [],
           meter: tail && tail.meter ? tail.meter : null,
           access: null, // streaming path doesn't echo access — caller keeps last known
+          streamed: true,
         };
       });
     });
@@ -558,6 +574,9 @@
       var canStream = typeof ReadableStream === 'function' && typeof TextDecoder === 'function';
 
       function onSuccess(body) {
+        if (!body || typeof body.reply !== 'string' || !body.reply.trim()) {
+          throw new Error('IGNIS returned an empty answer. Please try again.');
+        }
         var reply = body.reply || '(no reply)';
         pending.textContent = reply;
         hint.textContent = accessHint(body.access, 'IGNIS reads the live vault snapshot.');
@@ -585,8 +604,7 @@
             // First delta replaces the placeholder; subsequent appends grow it.
             pending.textContent = soFar;
             log.scrollTop = log.scrollHeight;
-          }).then(function (body) { body.streamed = true; return body; })
-            .catch(function (err) {
+          }).catch(function (err) {
               // Stream failure → quietly retry with non-streaming ask().
               if (window.console) console.warn('[IGNIS] stream failed, falling back', err && err.message);
               return ask(msg, ctx, history.slice(-6), session);

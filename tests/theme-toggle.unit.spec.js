@@ -76,6 +76,42 @@ const themeState = (page) => page.evaluate(() => ({
   stored: localStorage.getItem('vs_theme'),
 }));
 
+test('header picker keeps its actual reserved width and full accessible selection in every theme', async () => {
+  const labels = { dark: 'Dark', light: 'Light', ambient: 'Ambient', warm: 'Warm', cool: 'Cool', lava: 'Lava', 'high-contrast': 'High Contrast' };
+  await withFixture({}, async (f) => {
+    await f.page.addStyleTag({ content: fs.readFileSync(new URL('../assets/style.css', import.meta.url), 'utf8') });
+    await f.page.evaluate(() => document.fonts.ready);
+    for (const [value, label] of Object.entries(labels)) {
+      await f.page.evaluate(t => window.VSTheme.set(t), value);
+      const observed = await f.page.evaluate(() => {
+        const wrapper = document.querySelector('.theme-picker');
+        const button = document.querySelector('#theme-picker-btn');
+        const caption = button.querySelector('.theme-picker-label');
+        const arrow = button.querySelector('.theme-picker-arrow');
+        return {
+          wrapperWidth: wrapper.getBoundingClientRect().width,
+          buttonWidth: button.getBoundingClientRect().width,
+          buttonRight: button.getBoundingClientRect().right,
+          captionRight: caption.getBoundingClientRect().right,
+          arrowRight: arrow.getBoundingClientRect().right,
+          caption: caption.textContent, title: button.title,
+          ariaLabel: button.getAttribute('aria-label'),
+          active: [...document.querySelectorAll('.theme-tile[aria-pressed="true"]')].map(tile => tile.dataset.theme),
+          tileLabels: [...document.querySelectorAll('.theme-tile')].map(tile => tile.textContent),
+        };
+      });
+      assert.equal(observed.wrapperWidth, 92, `${value}: wrapper must replace the reserved slot exactly`);
+      assert.equal(observed.buttonWidth, 92, `${value}: button must fill the reserved slot`);
+      assert.ok(observed.captionRight <= observed.buttonRight && observed.arrowRight <= observed.buttonRight, `${value}: caption and arrow must fit the button`);
+      assert.equal(observed.caption, 'Theme');
+      assert.equal(observed.title, 'Theme: ' + label);
+      assert.equal(observed.ariaLabel, 'Select theme: ' + label);
+      assert.deepEqual(observed.active, [value]);
+      assert.deepEqual(observed.tileLabels, Object.values(labels));
+    }
+  });
+});
+
 test('a stored theme is applied to <html> and <body> before DOMContentLoaded handlers run', async () => {
   await withFixture({ theme: 'warm' }, async (f) => {
     assert.deepEqual(await f.page.evaluate(() => window.__atDCL), { html: 'warm', body: 'warm' });
@@ -108,7 +144,9 @@ test('picker: open/close ARIA, click persists across reload, only the chosen til
     const s = await themeState(f.page);
     assert.deepEqual([s.html, s.body, s.scheme, s.meta, s.stored], ['light', 'light', 'light', '#f6efe5', 'light']);
     assert.deepEqual(await f.page.$$eval('.theme-tile[aria-pressed="true"]', (ts) => ts.map((t) => t.dataset.theme)), ['light']);
-    assert.equal(await f.page.textContent('.theme-picker-label'), 'Light');
+    assert.equal(await f.page.textContent('.theme-picker-label'), 'Theme');
+    assert.equal(await btn.getAttribute('title'), 'Theme: Light');
+    assert.equal(await btn.getAttribute('aria-label'), 'Select theme: Light');
     assert.ok((await f.page.evaluate(() => window.__events)).includes('light'));
 
     await f.page.reload({ waitUntil: 'load' });

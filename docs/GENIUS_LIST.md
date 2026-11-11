@@ -1,16 +1,16 @@
-# Genius Hit List — Session 408
+# Genius Hit List — Session 411
 
-Generated: 2026-11-03
+Generated: 2026-11-11
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **83/100**
+- Overall opportunity pressure: **81/100**
 - Health: **yellow**
 - Current SIL: **939/1000**
 - CI health: **check gh run list**
-- Current focus: S408: reliable release verification and readable archive sharing.
+- Current focus: Local Desk image-before-email tooling and response repairs verified; release checks and isolated account acceptance in progress.
 
 ## Strategic Read
 
@@ -22,10 +22,12 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Classify old visual failures (future).
-Final score: **96**
-[S408][SIL] Classify old visual failures (future).
-Why it matters: Classify old visual failures (future). is open, local, and unblocked — can ship this session.
+#### 1. [SECURITY] Complete isolated access/security acceptance and affected member/inve…
+Final score: **99**
+Complete isolated access/security acceptance and affected member/investor journeys before data-route exposure.
+Why it matters: Complete isolated access/security acceptance and affected member/inves lowers operational risk and is entirely local — no external dependencies block it.
+
+First command: `node scripts/lint-repo.mjs`
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -34,120 +36,120 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Benchmark history only after failure (future).
-Final score: **93**
-[S408][SIL] Benchmark history only after failure (future).
-Why it matters: Benchmark history only after failure (future). is open, local, and unblocked — can ship this session.
+#### 3. [PRODUCT] Authorized main/production promotion, served readback and full closeout.
+Final score: **87**
+Authorized main/production promotion, served readback and full closeout.
+Why it matters: Authorized main/production promotion, served readback and full closeou is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Classify historical visual failures before updating baselines.
-Final score: **90**
-[S407][SIL] Classify historical visual failures before updating baselines.
-Why it matters: Classify historical visual failures before updating baselines. is open, local, and unblocked — can ship this session.
+#### 4. [VERIFY] Verify the final publication candidate after public-documentation pro…
+Final score: **86**
+Verify the final publication candidate after public-documentation projections and final source freeze; intermediate worktree proof does not cover those changes.
+Why it matters: Verify the final publication candidate after public-documentation proj is a 411-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check`
 
 ### NEXT
 
-#### 1. [PRODUCT] Isolate run-build-check --help side effects before selecting a repair.
-Final score: **87**
-[S407][SIL] Isolate run-build-check --help side effects before selecting a repair.
-Why it matters: Isolate run-build-check --help side effects before selecting a repair. is open, local, and unblocked — can ship this session.
-
-#### 2. [SECURITY] Measure help startup separately from probe execution before attemptin…
+#### 1. [PRODUCT] Finalize this local recovery closeout and QA checkpoint; release stay…
 Final score: **84**
-[S406][SIL] Measure help startup separately from probe execution before attempting runtime optimization. No performance or token saving is currently claimed.
-Why it matters: Measure help startup separately from probe execution before attempting lowers operational risk and is entirely local — no external dependencies block it.
+Finalize this local recovery closeout and QA checkpoint; release stays pending.
+Why it matters: Finalize this local recovery closeout and QA checkpoint; release stays is open, local, and unblocked — can ship this session.
 
-First command: `node scripts/lint-repo.mjs`
-
-#### 3. [VERIFY] Reproduce the34 optional E2E failures before changing implementation,…
+#### 2. [PRODUCT] Run this native invocation's fresh full arc after recovery; bind the …
 Final score: **81**
-[S406][FOLLOW-UP] Reproduce the34 optional E2E failures before changing implementation, baselines or CI policy; same failure names exist on the accepted baseline. Unselected; docs/S406_explicit-closeout-optional-e2e.json.
-Why it matters: Reproduce the34 optional E2E failures before changing implementation,  was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
+Run this native invocation's fresh full arc after recovery; bind the new session by native identity.
+Why it matters: Run this native invocation's fresh full arc after recovery; bind the n is open, local, and unblocked — can ship this session.
+
+#### 3. [VERIFY] Exact candidate native visual/required CI, current staging parity and…
+Final score: **80**
+Exact candidate native visual/required CI, current staging parity and rollback.
+Why it matters: Exact candidate native visual/required CI, current staging parity and  is a 411-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 4. [PRODUCT] Consider extending help-only process fixtures to another operator CLI…
-Final score: **81**
-[S406][SIL] Consider extending help-only process fixtures to another operator CLI only after reproducing its side effects.
-Why it matters: Consider extending help-only process fixtures to another operator CLI  is open, local, and unblocked — can ship this session.
+#### 4. [PRODUCT] Complete current hosted/staging and affected real member/investor acc…
+Final score: **78**
+Complete current hosted/staging and affected real member/investor acceptance, then authorized main/production/readback.
+Why it matters: Complete current hosted/staging and affected real member/investor acce is open, local, and unblocked — can ship this session.
 
-#### 5. [PRODUCT] Consider migration of scheduled text probes only after measuring cove…
+#### 5. [PRODUCT] Exact current hosted checks and current staging verification.
 Final score: **75**
-[SIL][S405] Consider migration of scheduled text probes only after measuring coverage and compatibility for each caller; future, unselected.
-Why it matters: Consider migration of scheduled text probes only after measuring cover is open, local, and unblocked — can ship this session.
+Exact current hosted checks and current staging verification.
+Why it matters: Exact current hosted checks and current staging verification. is open, local, and unblocked — can ship this session.
 
 ### LATER
 
-#### 1. [PRODUCT] Consider redirect-target body verification only if a real redirected …
+#### 1. [PRODUCT] Affected real new-member and approved-investor journeys.
 Final score: **72**
-[SIL][S405] Consider redirect-target body verification only if a real redirected destination failure is reproduced; future, unselected.
-Why it matters: Consider redirect-target body verification only if a real redirected d is open, local, and unblocked — can ship this session.
+Affected real new-member and approved-investor journeys.
+Why it matters: Affected real new-member and approved-investor journeys. is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Consider response-body streaming only if measured remote readback mem…
+#### 2. [PRODUCT] Authorized main publication, production promotion/readback and final …
 Final score: **69**
-[SIL][S404] Consider response-body streaming only if measured remote readback memory pressure justifies it; future, unselected.
-Why it matters: Consider response-body streaming only if measured remote readback memo is open, local, and unblocked — can ship this session.
+Authorized main publication, production promotion/readback and final closeout.
+Why it matters: Authorized main publication, production promotion/readback and final c is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Consider native positive-manifest text parity as a separately reviewe…
+#### 3. [PRODUCT] Reproduce session-history scale limits before changing capture quotas.
 Final score: **66**
-[SIL][S404] Consider native positive-manifest text parity as a separately reviewed default migration; preserve legacy default in this session. Future, unselected.
-Why it matters: Consider native positive-manifest text parity as a separately reviewed is open, local, and unblocked — can ship this session.
+[S411][SIL] Reproduce session-history scale limits before changing capture quotas.
+Why it matters: Reproduce session-history scale limits before changing capture quotas. is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
 #### 1. [SECURITY] Reuse the canonical Pages broker in deploy-currency provider observat…
-Final score: **100**
+Final score: **99**
 [SIL][S397] Reuse the canonical Pages broker in deploy-currency provider observations; the current Worker-token Pages probe returns403. Future selection only.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 2. [PRODUCT] vault-sdk member fetch fails on vault_rank; fixing changes consumer g…
-Final score: **93**
+#### 2. [PRODUCT] Review discussion intent coverage after a reproduced missing state.
+Final score: **96**
+[S411][SIL] Review discussion intent coverage after a reproduced missing state.
+Why it matters: Requires missing credential, provider dashboard data, or an external access path.
+
+#### 3. [PRODUCT] vault-sdk member fetch fails on vault_rank; fixing changes consumer g…
+Final score: **90**
 [S390][FOUNDER REVIEW] vault-sdk member fetch fails on vault_rank; fixing changes consumer gating.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 3. [AI] The doctor names rescore-ignis --stale as the IGNIS remedy, but the p…
-Final score: **91**
+#### 4. [AI] The doctor names rescore-ignis --stale as the IGNIS remedy, but the p…
+Final score: **88**
 [SIL][S362][OBS/P3] The doctor names rescore-ignis --stale as the IGNIS remedy, but the propagated copy reads portfolio/PROJECT_REGISTRY.json from this repo root and finds nothing, so the remedy is a structural no-op here (D-S362.6). Awaiting the studio-ops answer to Ark repo-question 01K2TR2MCB649E1AD036E22BAD; until then the stale score stands honestly reported.
 Why it matters: Owned by another repo or already moved through Ark cargo.
 
-#### 4. [PRODUCT] Surface the Supabase health API per-service verdict (db/rest/auth) on…
-Final score: **90**
+#### 5. [PRODUCT] Surface the Supabase health API per-service verdict (db/rest/auth) on…
+Final score: **87**
 [SIL][S360][OBS/P2] Surface the Supabase health API per-service verdict (db/rest/auth) on /status/ through a scheduled, credential-side probe that writes a public JSON. The browser probes can say "not responding" but not "the database is up and the gateway is not".
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 5. [PRODUCT] desk-model-servability dropped to 1/2 during this session: Qwen3.8-27…
-Final score: **84**
+#### 6. [PRODUCT] desk-model-servability dropped to 1/2 during this session: Qwen3.8-27…
+Final score: **81**
 [S362][OBS/P3] desk-model-servability dropped to 1/2 during this session: Qwen3.8-27B is unmeasured at the provider. Advisory and external; re-probe next session before treating it as a defect.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 6. [PRODUCT] Reconcile the four propagated checkers that encode studio-ops' own la…
-Final score: **81**
+#### 7. [PRODUCT] Reconcile the four propagated checkers that encode studio-ops' own la…
+Final score: **78**
 [SIL][S363][PROTOCOL/P2] Reconcile the four propagated checkers that encode studio-ops' own layout (D-S363.5, D-S363.7, D-S363.8, D-S363.9): check-windows-hide scan roots, the wipe guard's status-row format and archive naming, and arc-profile.mjs resolving PROJECT_REGISTRY to a path that exists only inside studio-ops. Each produced a false failure or a false inference that no local change could fix. Ark cargo 01K30UDB1264A040FE519B8D8B carries the upstream ask; this item tracks whether the next drain actually lands it.
 Why it matters: Owned by another repo or already moved through Ark cargo.
 
-#### 7. [PRODUCT] "Coming soon" / "TBD" copy on six live game pages. Founder copy decis…
-Final score: **78**
-[S356][PRODUCT/P2] "Coming soon" / "TBD" copy on six live game pages. Founder copy decision: call-of-doodie, franchise-architect, gridiron-gm (trailer + screenshots), vaultfront (backend), mindframe, project-unknown (platform, title).
-Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
-
-#### 8. [PRODUCT] Founder-owned items deferred. Passkey sign-in, signup walkthrough, pu…
+#### 8. [PRODUCT] "Coming soon" / "TBD" copy on six live game pages. Founder copy decis…
 Final score: **75**
-[S354][FOUNDER DIRECTIVE] Founder-owned items deferred. Passkey sign-in, signup walkthrough, public member data, newsletter arming, Desk cadence, warm-origin, Workers Paid and the small confirmations wait until the founder picks them up; agent-owned items continue.
+[S356][PRODUCT/P2] "Coming soon" / "TBD" copy on six live game pages. Founder copy decision: call-of-doodie, franchise-architect, gridiron-gm (trailer + screenshots), vaultfront (backend), mindframe, project-unknown (platform, title).
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
 ## Recommended Build Order
 
-1. Classify old visual failures (future).
+1. Complete isolated access/security acceptance and affected member/inve…
 2. Post-push CI confirmation
-3. Benchmark history only after failure (future).
-4. Classify historical visual failures before updating baselines.
-5. Isolate run-build-check --help side effects before selecting a repair.
-6. Measure help startup separately from probe execution before attemptin…
-7. Reproduce the34 optional E2E failures before changing implementation,…
-8. Consider extending help-only process fixtures to another operator CLI…
-9. Consider migration of scheduled text probes only after measuring cove…
-10. Consider redirect-target body verification only if a real redirected …
-11. Consider response-body streaming only if measured remote readback mem…
-12. Consider native positive-manifest text parity as a separately reviewe…
+3. Authorized main/production promotion, served readback and full closeout.
+4. Verify the final publication candidate after public-documentation pro…
+5. Finalize this local recovery closeout and QA checkpoint; release stay…
+6. Run this native invocation's fresh full arc after recovery; bind the …
+7. Exact candidate native visual/required CI, current staging parity and…
+8. Complete current hosted/staging and affected real member/investor acc…
+9. Exact current hosted checks and current staging verification.
+10. Affected real new-member and approved-investor journeys.
+11. Authorized main publication, production promotion/readback and final …
+12. Reproduce session-history scale limits before changing capture quotas.
 
 ## Best Immediate Move
 

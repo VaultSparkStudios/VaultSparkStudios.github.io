@@ -1,0 +1,489 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "independent audit_review agent",
+  "reviewedAt": "2026-11-04T21:22:04.902Z",
+  "scope": "Corrected before-home attempt 2 only; baseline Desk default region, all seven themes, desktop and mobile",
+  "manifest": ".cache/S411/news-qa/before-home/manifest.json",
+  "manifestSha256": "420a50635feb794b37f0092a02d659fb88679aa2046aa044fc9ec7fcba12b7bd",
+  "recipeSha256": "176ac1623ab84ae9f46952f2e27877d6300eb94fad0e1b46205c1527805cc987",
+  "planSha256": "c0948833fd5e6fe3caa0f8f0fbf9f0f37cdc9d3c2b7493b5e6a06e96803652c3",
+  "baselineCommit": "195a385f6a5c99238558b1883c31aa7bec6bd559",
+  "candidate": {
+    "manifest": "api/candidate-artifact-manifest.json",
+    "manifestSha256": "ff759dc8420de629564733a7967167bc65ee41bb94949e6b46bb2236d05ac7aa",
+    "candidateSha": "c5799e951308e9e0bd5a24d173aee3e432476080",
+    "root": "4e6c93cf66bccdae932e5dbf56f5ecb227f85726d4c6ae0a570451fe033d6549",
+    "snapshotCommit": "195a385f6a5c99238558b1883c31aa7bec6bd559"
+  },
+  "coverage": {
+    "actualOriginalImagesViewed": 14,
+    "expectedCells": 14,
+    "actualCells": 14,
+    "sha256Matches": true,
+    "pngDimensionsMatchClip": true,
+    "singleTileEqualsEntireRegion": true,
+    "themeObservationsMatch": true,
+    "noHorizontalOverflow": true,
+    "browserClosed": true,
+    "serverClosed": true
+  },
+  "findings": [],
+  "result": "No observed fixed-header or joinbar occlusion in any reviewed image; complete Desk component visible in all fourteen original frames.",
+  "limitations": [
+    "Before baseline default Desk region only; after comparison remains separate.",
+    "No numerical contrast measurement, form submission, authentication, hosted or production acceptance.",
+    "Manifest records missing api/auth/me/index.html; no authentication claim.",
+    "Prior interrupted before-attempt1 review remains partial diagnostic evidence; this review does not upgrade that attempt."
+  ],
+  "globalAcceptance": false,
+  "images": [
+    {
+      "file": ".cache/S411/news-qa/before-home/s411-before-home-desk-default-dark-desktop-0.png",
+      "sha256": "de392ca9f5770b250d7f26888c504198a746f27321245b23c98ac2993f4d3c18",
+      "pngWidth": 1440,
+      "pngHeight": 1172,
+      "theme": "dark",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "clip": {
+        "x": 0,
+        "y": 1298,
+        "width": 1440,
+        "height": 1172
+      },
+      "fullRegion": {
+        "x": 0,
+        "y": 1298,
+        "width": 1440,
+        "height": 1172
+      },
+      "inspection": {
+        "method": "functions.view_image original; each original PNG independently inspected",
+        "fixedHeaderOcclusion": false,
+        "joinbarOcclusion": false,
+        "fullDeskRegionVisible": true,
+        "observedLayoutDefects": [],
+        "readability": "Headings, cadence, story titles, summaries, links and dispatch form readable; editorial-art attribution is small on mobile as in baseline."
+      }
+    },
+    {
+      "file": ".cache/S411/news-qa/before-home/s411-before-home-desk-default-light-desktop-0.png",
+      "sha256": "cad924e04e6ad64033bc3f12860b039f287566d138646aa1550c422b70b7b82f",
+      "pngWidth": 1440,
+      "pngHeight": 1172,
+      "theme": "light",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "clip": {
+        "x": 0,
+        "y": 1298,
+        "width": 1440,
+        "height": 1172
+      },
+      "fullRegion": {
+        "x": 0,
+        "y": 1298,
+        "width": 1440,
+        "height": 1172
+      },
+      "inspection": {
+        "method": "functions.view_image original; each original PNG independently inspected",
+        "fixedHeaderOcclusion": false,
+        "joinbarOcclusion": false,
+        "fullDeskRegionVisible": true,
+        "observedLayoutDefects": [],
+        "readability": "Headings, cadence, story titles, summaries, links and dispatch form readable; editorial-art attribution is small on mobile as in baseline."
+      }
+    },
+    {
+      "file": ".cache/S411/news-qa/before-home/s411-before-home-desk-default-ambient-desktop-0.png",
+      "sha256": "dc29958161770650386d8d472f169b549b2f4f53a2e2f443ced1cafefa2f9381",
+      "pngWidth": 1440,
+      "pngHeight": 1172,
+      "theme": "ambient",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "clip": {
+        "x": 0,
+        "y": 1298,
+        "width": 1440,
+        "height": 1172
+      },
+      "fullRegion": {
+        "x": 0,
+        "y": 1298,
+        "width": 1440,
+        "height": 1172
+      },
+      "inspection": {
+        "method": "functions.view_image original; each original PNG independently inspected",
+        "fixedHeaderOcclusion": false,
+        "joinbarOcclusion": false,
+        "fullDeskRegionVisible": true,
+        "observedLayoutDefects": [],
+        "readability": "Headings, cadence, story titles, summaries, links and dispatch form readable; editorial-art attribution is small on mobile as in baseline."
+      }
+    },
+    {
+      "file": ".cache/S411/news-qa/before-home/s411-before-home-desk-default-warm-desktop-0.png",
+      "sha256": "a9a4621eaa7551016a59b517eaf99a360d0b53fa95dfe38c9dd29aadfb5f5d99",
+      "pngWidth": 1440,
+      "pngHeight": 1172,
+      "theme": "warm",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "clip": {
+        "x": 0,
+        "y": 1298,
+        "width": 1440,
+        "height": 1172
+      },
+      "fullRegion": {
+        "x": 0,
+        "y": 1298,
+        "width": 1440,
+        "height": 1172
+      },
+      "inspection": {
+        "method": "functions.view_image original; each original PNG independently inspected",
+        "fixedHeaderOcclusion": false,
+        "joinbarOcclusion": false,
+        "fullDeskRegionVisible": true,
+        "observedLayoutDefects": [],
+        "readability": "Headings, cadence, story titles, summaries, links and dispatch form readable; editorial-art attribution is small on mobile as in baseline."
+      }
+    },
+    {
+      "file": ".cache/S411/news-qa/before-home/s411-before-home-desk-default-cool-desktop-0.png",
+      "sha256": "11b9fc72d65d81707e0012f8dac1537a000f8593c539ac0df93884b952b74d28",
+      "pngWidth": 1440,
+      "pngHeight": 1172,
+      "theme": "cool",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "clip": {
+        "x": 0,
+        "y": 1298,
+        "width": 1440,
+        "height": 1172
+      },
+      "fullRegion": {
+        "x": 0,
+        "y": 1298,
+        "width": 1440,
+        "height": 1172
+      },
+      "inspection": {
+        "method": "functions.view_image original; each original PNG independently inspected",
+        "fixedHeaderOcclusion": false,
+        "joinbarOcclusion": false,
+        "fullDeskRegionVisible": true,
+        "observedLayoutDefects": [],
+        "readability": "Headings, cadence, story titles, summaries, links and dispatch form readable; editorial-art attribution is small on mobile as in baseline."
+      }
+    },
+    {
+      "file": ".cache/S411/news-qa/before-home/s411-before-home-desk-default-lava-desktop-0.png",
+      "sha256": "4717d4c348ca68b9759916c8fad2f3168dbb78b97224ed5ef6e9ba3621c65c10",
+      "pngWidth": 1440,
+      "pngHeight": 1172,
+      "theme": "lava",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "clip": {
+        "x": 0,
+        "y": 1298,
+        "width": 1440,
+        "height": 1172
+      },
+      "fullRegion": {
+        "x": 0,
+        "y": 1298,
+        "width": 1440,
+        "height": 1172
+      },
+      "inspection": {
+        "method": "functions.view_image original; each original PNG independently inspected",
+        "fixedHeaderOcclusion": false,
+        "joinbarOcclusion": false,
+        "fullDeskRegionVisible": true,
+        "observedLayoutDefects": [],
+        "readability": "Headings, cadence, story titles, summaries, links and dispatch form readable; editorial-art attribution is small on mobile as in baseline."
+      }
+    },
+    {
+      "file": ".cache/S411/news-qa/before-home/s411-before-home-desk-default-high-contrast-desktop-0.png",
+      "sha256": "f97e7d9be56d60941a5a8148ec0a049749759a69456606a9e4db684903a4c3a9",
+      "pngWidth": 1440,
+      "pngHeight": 1172,
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "clip": {
+        "x": 0,
+        "y": 1298,
+        "width": 1440,
+        "height": 1172
+      },
+      "fullRegion": {
+        "x": 0,
+        "y": 1298,
+        "width": 1440,
+        "height": 1172
+      },
+      "inspection": {
+        "method": "functions.view_image original; each original PNG independently inspected",
+        "fixedHeaderOcclusion": false,
+        "joinbarOcclusion": false,
+        "fullDeskRegionVisible": true,
+        "observedLayoutDefects": [],
+        "readability": "Headings, cadence, story titles, summaries, links and dispatch form readable; editorial-art attribution is small on mobile as in baseline."
+      }
+    },
+    {
+      "file": ".cache/S411/news-qa/before-home/s411-before-home-desk-default-dark-mobile-0.png",
+      "sha256": "ba4aabe72bd26267bc461d4ed562f8dcc6b69c10af84f9178af79f9f1f725109",
+      "pngWidth": 390,
+      "pngHeight": 2067,
+      "theme": "dark",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "clip": {
+        "x": 0,
+        "y": 2072,
+        "width": 390,
+        "height": 2067
+      },
+      "fullRegion": {
+        "x": 0,
+        "y": 2072,
+        "width": 390,
+        "height": 2067
+      },
+      "inspection": {
+        "method": "functions.view_image original; each original PNG independently inspected",
+        "fixedHeaderOcclusion": false,
+        "joinbarOcclusion": false,
+        "fullDeskRegionVisible": true,
+        "observedLayoutDefects": [],
+        "readability": "Headings, cadence, story titles, summaries, links and dispatch form readable; editorial-art attribution is small on mobile as in baseline."
+      }
+    },
+    {
+      "file": ".cache/S411/news-qa/before-home/s411-before-home-desk-default-light-mobile-0.png",
+      "sha256": "0e0f2b54cebeda599813eab65412ea4f17f858a47b34ba6adfe4ee37f79a4c1a",
+      "pngWidth": 390,
+      "pngHeight": 2067,
+      "theme": "light",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "clip": {
+        "x": 0,
+        "y": 2072,
+        "width": 390,
+        "height": 2067
+      },
+      "fullRegion": {
+        "x": 0,
+        "y": 2072,
+        "width": 390,
+        "height": 2067
+      },
+      "inspection": {
+        "method": "functions.view_image original; each original PNG independently inspected",
+        "fixedHeaderOcclusion": false,
+        "joinbarOcclusion": false,
+        "fullDeskRegionVisible": true,
+        "observedLayoutDefects": [],
+        "readability": "Headings, cadence, story titles, summaries, links and dispatch form readable; editorial-art attribution is small on mobile as in baseline."
+      }
+    },
+    {
+      "file": ".cache/S411/news-qa/before-home/s411-before-home-desk-default-ambient-mobile-0.png",
+      "sha256": "3ad38326848499fb8636fffce4b37f66c4a794d0b785758cabeebe50541a696c",
+      "pngWidth": 390,
+      "pngHeight": 2067,
+      "theme": "ambient",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "clip": {
+        "x": 0,
+        "y": 2072,
+        "width": 390,
+        "height": 2067
+      },
+      "fullRegion": {
+        "x": 0,
+        "y": 2072,
+        "width": 390,
+        "height": 2067
+      },
+      "inspection": {
+        "method": "functions.view_image original; each original PNG independently inspected",
+        "fixedHeaderOcclusion": false,
+        "joinbarOcclusion": false,
+        "fullDeskRegionVisible": true,
+        "observedLayoutDefects": [],
+        "readability": "Headings, cadence, story titles, summaries, links and dispatch form readable; editorial-art attribution is small on mobile as in baseline."
+      }
+    },
+    {
+      "file": ".cache/S411/news-qa/before-home/s411-before-home-desk-default-warm-mobile-0.png",
+      "sha256": "3db26e38df0a532203b9e225dbedd3689bde3f1ba9e76dae848dd57638940d5c",
+      "pngWidth": 390,
+      "pngHeight": 2067,
+      "theme": "warm",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "clip": {
+        "x": 0,
+        "y": 2072,
+        "width": 390,
+        "height": 2067
+      },
+      "fullRegion": {
+        "x": 0,
+        "y": 2072,
+        "width": 390,
+        "height": 2067
+      },
+      "inspection": {
+        "method": "functions.view_image original; each original PNG independently inspected",
+        "fixedHeaderOcclusion": false,
+        "joinbarOcclusion": false,
+        "fullDeskRegionVisible": true,
+        "observedLayoutDefects": [],
+        "readability": "Headings, cadence, story titles, summaries, links and dispatch form readable; editorial-art attribution is small on mobile as in baseline."
+      }
+    },
+    {
+      "file": ".cache/S411/news-qa/before-home/s411-before-home-desk-default-cool-mobile-0.png",
+      "sha256": "ff8a599afdf839044cf2ce8ff6e8d8ba511a0bbd58c101798cc0275eb56b8b2e",
+      "pngWidth": 390,
+      "pngHeight": 2067,
+      "theme": "cool",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "clip": {
+        "x": 0,
+        "y": 2072,
+        "width": 390,
+        "height": 2067
+      },
+      "fullRegion": {
+        "x": 0,
+        "y": 2072,
+        "width": 390,
+        "height": 2067
+      },
+      "inspection": {
+        "method": "functions.view_image original; each original PNG independently inspected",
+        "fixedHeaderOcclusion": false,
+        "joinbarOcclusion": false,
+        "fullDeskRegionVisible": true,
+        "observedLayoutDefects": [],
+        "readability": "Headings, cadence, story titles, summaries, links and dispatch form readable; editorial-art attribution is small on mobile as in baseline."
+      }
+    },
+    {
+      "file": ".cache/S411/news-qa/before-home/s411-before-home-desk-default-lava-mobile-0.png",
+      "sha256": "1f64daaf261854e5f210d663e59999685e759afdb46dc916e11168d10c2cff22",
+      "pngWidth": 390,
+      "pngHeight": 2067,
+      "theme": "lava",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "clip": {
+        "x": 0,
+        "y": 2072,
+        "width": 390,
+        "height": 2067
+      },
+      "fullRegion": {
+        "x": 0,
+        "y": 2072,
+        "width": 390,
+        "height": 2067
+      },
+      "inspection": {
+        "method": "functions.view_image original; each original PNG independently inspected",
+        "fixedHeaderOcclusion": false,
+        "joinbarOcclusion": false,
+        "fullDeskRegionVisible": true,
+        "observedLayoutDefects": [],
+        "readability": "Headings, cadence, story titles, summaries, links and dispatch form readable; editorial-art attribution is small on mobile as in baseline."
+      }
+    },
+    {
+      "file": ".cache/S411/news-qa/before-home/s411-before-home-desk-default-high-contrast-mobile-0.png",
+      "sha256": "2a559c095fbee6302319dbe75483f7439954ddc81d7f1e897a1a320cfda07c16",
+      "pngWidth": 390,
+      "pngHeight": 2067,
+      "theme": "high-contrast",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "clip": {
+        "x": 0,
+        "y": 2072,
+        "width": 390,
+        "height": 2067
+      },
+      "fullRegion": {
+        "x": 0,
+        "y": 2072,
+        "width": 390,
+        "height": 2067
+      },
+      "inspection": {
+        "method": "functions.view_image original; each original PNG independently inspected",
+        "fixedHeaderOcclusion": false,
+        "joinbarOcclusion": false,
+        "fullDeskRegionVisible": true,
+        "observedLayoutDefects": [],
+        "readability": "Headings, cadence, story titles, summaries, links and dispatch form readable; editorial-art attribution is small on mobile as in baseline."
+      }
+    }
+  ]
+}

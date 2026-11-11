@@ -6,7 +6,7 @@
 ;(function(window, document, console){
 'use strict';
 // page-sigil.js (S129 · audit #12)
-// Tiny 28px sigil with a 44×44 touch target at the top-right of every public page.
+// Tiny 28px sigil with a 44×44 touch target at the entrance to every public page.
 // last-update-age (green ≤14d, amber ≤60d, red >60d). Tooltip "Last refreshed Nd ago".
 // Reads /api/public-intelligence.json `pages[<path>].lastTouched`; falls back to a
 // page-level `<meta name="vs:last-touched">` tag; silently noop if neither exists.
@@ -121,11 +121,23 @@
     svg.appendChild(circle({ r: '2.4', fill: color }));
     wrap.appendChild(svg);
     document.body.appendChild(wrap);
-    place(wrap);
+    // Header clearance cannot protect a fixed target from content scrolling
+    // underneath it. Keep this optional metadata link at the page entrance;
+    // remove its hit target while reading and restore it on return to the top.
+    let reading = null;
+    const syncReading = () => {
+      const next = window.scrollY > 8;
+      if (next === reading) return;
+      reading = next;
+      wrap.style.display = reading ? 'none' : 'flex';
+      if (!reading) place(wrap);
+    };
+    syncReading();
+    window.addEventListener('scroll', syncReading, { passive: true });
     let timer = 0;
     const replace = () => {
       clearTimeout(timer);
-      timer = setTimeout(() => place(wrap), 120);
+      timer = setTimeout(() => { if (!reading) place(wrap); }, 120);
     };
     window.addEventListener('resize', replace, { passive: true });
     window.addEventListener('orientationchange', replace, { passive: true });

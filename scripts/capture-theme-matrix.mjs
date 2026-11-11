@@ -14,15 +14,14 @@
  *   into docs/visual-qa/LATEST.json for a focused changed-surface review. Pass
  *   --reviewed-files <comma-separated filenames> only after directly inspecting
  *   those rendered files; unlisted captures remain explicitly automated-only.
+ *   Originals and manifest are sealed under --out/runs/<unique-run-id>. To publish
+ *   later, use --receipt-only --out <reported-run-directory>; stale inputs refuse.
  */
-import crypto from 'node:crypto';
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import url from 'node:url';
-import { createRequire } from 'node:module';
-const require = createRequire(import.meta.url);
-const { candidateBinding, sourceBinding } = require('./lib/mobile-runtime-contract.cjs');
+import { beginVisualCapture, createVisualCaptureDirectory, writeVisualCapture, sealVisualCapture, validateVisualCapture, publishVisualCapture } from './lib/visual-capture-provenance.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -95,9 +94,41 @@ function serve() {
 
 const slug = (s) => s.replace(/\//g, '-').replace(/^-|-$/g, '') || 'home';
 
+function captureSourceFiles(routes) {
+  return [
+    'assets/turnstile.js', 'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js', 'assets/vault-genome-strip.js',
+    'assets/news-desk.css', 'assets/desk-presence.js', 'scripts/generate-news-pages.mjs',
+    ...fs.readdirSync(path.join(ROOT, 'assets', 'desk-personas'))
+      .filter((file) => file.endsWith('.webp'))
+      .map((file) => `assets/desk-personas/${file}`),
+    'scripts/build-news-desk.mjs', 'scripts/lib/news-desk.mjs', 'scripts/lib/news-memes.mjs',
+    'assets/cookie-consent.js', 'assets/pwa-install.js', 'assets/ambient-loader.js', 'assets/changelog-reactions.js',
+    'assets/exit-intent.js', 'assets/visit-depth.js', 'assets/returning-visitor-digest.js',
+    'assets/journey-conductor.js', 'vault-member/portal-auth.js',
+    'vault-member/portal-dashboard.js', 'vault-member/portal-init.js',
+    'scripts/check-attention-surface-contract.mjs', 'tests/attention-surfaces.spec.js',
+    'data/news-desk/days/2026-08-21.json', 'data/news-desk/days/2026-08-22.json', 'data/news-desk/days/2026-08-23.json',
+    'assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.png',
+    'assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.webp',
+    'assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.avif',
+    'assets/og/news/2026-08-23--from-atari-to-eve-online-building-on-15-years--meme.png',
+    'assets/og/news/2026-08-23--from-atari-to-eve-online-building-on-15-years--meme.webp',
+    'assets/og/news/2026-08-23--from-atari-to-eve-online-building-on-15-years--meme.avif',
+    ...fs.readdirSync(path.join(ROOT, 'assets', 'og', 'news'))
+      .filter((file) => /--meme--(?:640\.(?:avif|webp)|128\.avif)$/.test(file))
+      .map((file) => `assets/og/news/${file}`),
+    'vault-member/portal.css',
+    'scripts/build-deploy-currency.mjs', 'scripts/check-status-feed-field-contract.mjs',
+    'scripts/capture-theme-matrix.mjs', 'scripts/lib/visual-capture-provenance.mjs', 'scripts/check-visual-review-receipt.mjs',
+    ...routes.map((route) => route === '/' ? 'index.html' : `${route.slice(1)}index.html`),
+  ].filter((file) => fs.existsSync(path.join(ROOT, file)));
+}
+
 async function main() {
   const { chromium } = await import('@playwright/test');
-  fs.mkdirSync(OUT_DIR, { recursive: true });
+  const files = captureSourceFiles(ROUTES);
+  const provenance = beginVisualCapture(ROOT, files, 'scripts/capture-theme-matrix.mjs');
+  const runDir = createVisualCaptureDirectory(ROOT, OUT_DIR, provenance);
   const server = await serve();
   const browser = await chromium.launch();
   const manifest = [];
@@ -203,11 +234,13 @@ async function main() {
           }
           const stateSuffix = OPEN_NAV ? '--nav-open' : FOCUS_FOOTER ? '--footer' : FOCUS_CHANGELOG_REACTIONS ? '--changelog-reactions' : focusSelector ? '--changed-surface' : '';
           const file = `${slug(route)}--${theme}--${viewport.name}${stateSuffix}.png`;
-          if (FOCUS_FOOTER) await page.locator('footer.site-footer').screenshot({ animations: 'disabled', path: path.join(OUT_DIR, file) });
-          else if (FOCUS_CHANGELOG_REACTIONS) await page.locator('.cl-phase').nth(Math.max(0, Math.min(8, (await page.locator('.cl-phase').count()) - 1))).screenshot({ animations: 'disabled', path: path.join(OUT_DIR, file) });
-          else if (focusSelector) await page.locator(focusSelector).screenshot({ animations: 'disabled', path: path.join(OUT_DIR, file) });
-          else await page.screenshot({ animations: 'disabled', path: path.join(OUT_DIR, file) });
-          manifest.push({ route, theme, observedTheme, capturedAt: new Date().toISOString(), viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : FOCUS_FOOTER ? 'footer' : FOCUS_CHANGELOG_REACTIONS ? 'changelog-reactions' : focusSelector ? 'changed-surface' : 'page', file });
+          let pixels;
+          if (FOCUS_FOOTER) pixels = await page.locator('footer.site-footer').screenshot({ animations: 'disabled' });
+          else if (FOCUS_CHANGELOG_REACTIONS) pixels = await page.locator('.cl-phase').nth(Math.max(0, Math.min(8, (await page.locator('.cl-phase').count()) - 1))).screenshot({ animations: 'disabled' });
+          else if (focusSelector) pixels = await page.locator(focusSelector).screenshot({ animations: 'disabled' });
+          else pixels = await page.screenshot({ animations: 'disabled' });
+          const sha256 = writeVisualCapture(path.join(runDir, file), pixels);
+          manifest.push({ route, theme, observedTheme, capturedAt: new Date().toISOString(), viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : FOCUS_FOOTER ? 'footer' : FOCUS_CHANGELOG_REACTIONS ? 'changelog-reactions' : focusSelector ? 'changed-surface' : 'page', file, sha256 });
           console.log(`  ✓ ${file}`);
         } catch (error) {
           // S341: count it. A skipped capture used to shrink the receipt silently,
@@ -225,8 +258,7 @@ async function main() {
   }
   await browser.close();
   server.close();
-  fs.writeFileSync(path.join(OUT_DIR, 'manifest.json'), JSON.stringify({ capturedAt: new Date().toISOString(), shots: manifest }, null, 2));
-  console.log(`capture-theme-matrix: ${manifest.length} screenshot(s) → ${OUT_DIR}`);
+  console.log(`capture-theme-matrix: ${manifest.length} screenshot(s) → ${runDir}`);
   if (failures.length) {
     console.error(`capture-theme-matrix: ${failures.length} capture(s) FAILED — the receipt would be incomplete:`);
     for (const f of failures) console.error(`  - ${f}`);
@@ -234,7 +266,8 @@ async function main() {
     process.exitCode = 1;
     return;
   }
-  if (argv.includes('--receipt')) writeCanonReceipt(manifest);
+  const sealed = sealVisualCapture(ROOT, runDir, provenance, manifest, captureSourceFiles(ROUTES));
+  if (argv.includes('--receipt')) writeCanonReceipt(sealed, runDir);
 }
 
 /**
@@ -245,14 +278,13 @@ async function main() {
  * inspection receipt, and the aggregate can claim complete review only when
  * every hash-bound capture was named.
  */
-function writeCanonReceipt(manifest) {
-  const receiptDir = path.join(ROOT, 'docs', 'visual-qa');
-  fs.mkdirSync(receiptDir, { recursive: true });
+function writeCanonReceipt(manifest, captureDir = OUT_DIR) {
   const receiptName = arg('--receipt-name', 'LATEST.json');
   if (!/^[A-Za-z0-9._-]+\.json$/.test(receiptName)) throw new Error('--receipt-name must be a simple JSON filename');
   // A canonical receipt is always the complete requested Cartesian matrix.
   // Partial receipts cannot prove route × theme × viewport completion.
-  const wanted = manifest;
+  const wanted = manifest.shots;
+  if (!Array.isArray(wanted) || !wanted.length) throw new Error('capture manifest has no shots');
   for (const shot of wanted) {
     if (!shot.observedTheme) throw new Error(`Theme evidence missing for ${shot.file}; recapture before writing a receipt`);
     if (['stored', 'root', 'body'].some(key => shot.observedTheme[key] !== shot.theme)) {
@@ -266,17 +298,15 @@ function writeCanonReceipt(manifest) {
   if (unknownReviewedFiles.length) {
     throw new Error(`--reviewed-files includes uncaptured file(s): ${unknownReviewedFiles.join(', ')}`);
   }
-  const captures = wanted.map((shot) => {
-    const src = path.join(OUT_DIR, shot.file);
-    const dest = path.join(receiptDir, shot.file);
-    fs.copyFileSync(src, dest);
+  const images = validateVisualCapture(ROOT, captureDir, manifest, captureSourceFiles([...new Set(wanted.map(shot => shot.route))]));
+  const captures = wanted.map((shot, index) => {
     return {
       theme: shot.theme,
       observedTheme: shot.observedTheme,
       viewportName: shot.viewport,
       viewport: VIEWPORT_PRESETS.find((viewport) => viewport.name === shot.viewport),
-      file: shot.file,
-      sha256: crypto.createHash('sha256').update(fs.readFileSync(dest)).digest('hex'),
+      file: images[index].publishedFile,
+      sha256: shot.sha256,
       page: shot.route,
       state: shot.state,
       inspection: reviewedFiles.has(shot.file)
@@ -290,41 +320,16 @@ function writeCanonReceipt(manifest) {
   const themes = [...new Set(captures.map((capture) => capture.theme))];
   const viewports = [...new Set(captures.map((capture) => capture.viewportName))].map((name) => VIEWPORT_PRESETS.find((viewport) => viewport.name === name));
   const states = [...new Set(captures.map((capture) => capture.state))];
-  const sourceFiles = [
-    'assets/turnstile.js', 'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js', 'assets/vault-genome-strip.js',
-    'assets/news-desk.css', 'assets/desk-presence.js', 'scripts/generate-news-pages.mjs',
-    ...fs.readdirSync(path.join(ROOT, 'assets', 'desk-personas'))
-      .filter((file) => file.endsWith('.webp'))
-      .map((file) => `assets/desk-personas/${file}`),
-    'scripts/build-news-desk.mjs', 'scripts/lib/news-desk.mjs', 'scripts/lib/news-memes.mjs',
-    'assets/cookie-consent.js', 'assets/pwa-install.js', 'assets/ambient-loader.js', 'assets/changelog-reactions.js',
-    'assets/exit-intent.js', 'assets/visit-depth.js', 'assets/returning-visitor-digest.js',
-    'assets/journey-conductor.js', 'vault-member/portal-auth.js',
-    'vault-member/portal-dashboard.js', 'vault-member/portal-init.js',
-    'scripts/check-attention-surface-contract.mjs', 'tests/attention-surfaces.spec.js',
-    'data/news-desk/days/2026-08-21.json', 'data/news-desk/days/2026-08-22.json', 'data/news-desk/days/2026-08-23.json',
-    'assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.png',
-    'assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.webp',
-    'assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.avif',
-    'assets/og/news/2026-08-23--from-atari-to-eve-online-building-on-15-years--meme.png',
-    'assets/og/news/2026-08-23--from-atari-to-eve-online-building-on-15-years--meme.webp',
-    'assets/og/news/2026-08-23--from-atari-to-eve-online-building-on-15-years--meme.avif',
-    ...fs.readdirSync(path.join(ROOT, 'assets', 'og', 'news'))
-      .filter((file) => /--meme--(?:640\.(?:avif|webp)|128\.avif)$/.test(file))
-      .map((file) => `assets/og/news/${file}`),
-    'vault-member/portal.css',
-    'scripts/build-deploy-currency.mjs', 'scripts/check-status-feed-field-contract.mjs',
-    'scripts/capture-theme-matrix.mjs', 'scripts/check-visual-review-receipt.mjs',
-    ...routes.map((route) => route === '/' ? 'index.html' : `${route.slice(1)}index.html`),
-  ].filter((file) => fs.existsSync(path.join(ROOT, file)));
+
   const receipt = {
     schemaVersion: 1,
     inspectionSchemaVersion: 2,
-    capturedAt: new Date().toISOString(),
+    capturedAt: manifest.capturedAt,
+    captureProvenance: manifest.captureProvenance,
     generatedBy: 'scripts/capture-theme-matrix.mjs --receipt',
     themes: THEMES,
-    source: sourceBinding(ROOT, sourceFiles),
-    candidate: candidateBinding(ROOT),
+    source: manifest.captureProvenance.source,
+    candidate: manifest.captureProvenance.candidate,
     matrix: { routes, themes, viewports, states, expectedCaptures: routes.length * themes.length * viewports.length * states.length, completedCaptures: captures.length },
     inspection: {
       renderedPixelsReviewed: completeManualReview,
@@ -344,7 +349,7 @@ function writeCanonReceipt(manifest) {
     },
     captures,
   };
-  fs.writeFileSync(path.join(receiptDir, receiptName), JSON.stringify(receipt, null, 2) + '\n');
+  publishVisualCapture(ROOT, captureDir, manifest, receipt, receiptName, captureSourceFiles(routes));
   console.log(`capture-theme-matrix: CANON-053 receipt → docs/visual-qa/${receiptName} (${captures.length} hash-bound capture(s))`);
 }
 
@@ -352,7 +357,7 @@ if (argv.includes('--receipt-only')) {
   try {
     const prior = JSON.parse(fs.readFileSync(path.join(OUT_DIR, 'manifest.json'), 'utf8'));
     if (!Array.isArray(prior.shots) || !prior.shots.length) throw new Error('capture manifest has no shots');
-    writeCanonReceipt(prior.shots);
+    writeCanonReceipt(prior);
   } catch (error) {
     console.error(error);
     process.exit(1);

@@ -178,6 +178,7 @@ export const ACRONYMS = new Set([
   'CUDA', 'ROCM', 'MLPERF', 'NASA', 'DARPA', 'MIT', 'IEEE', 'ACM', 'UNCTAD',
   'TRELLIS', // 3D generation product name; NVIDIA's published house style.
   'WIRED', // Publisher house style, not a shouted adjective.
+  'KEXAONE', // K-EXAONE model brand; punctuation is stripped by the caps rule.
 ]);
 
 /** Brands and identifiers that legitimately begin a sentence in lowercase. */
@@ -258,6 +259,27 @@ export function sentences(text) {
     if (!'.!?'.includes(src[i])) continue;
     const next = src.slice(i + 1);
     if (!/^["'”’)\]]*\s/.test(next) && i !== src.length - 1) continue;
+    // A question/exclamation can belong to a quoted example inside a clause:
+    // from 'what did I spend?' to 'why am I spending this?' Do not turn its
+    // explicit lowercase connective into a new sentence. Require a matching
+    // opening quote; ordinary lowercase sentences after questions still fail.
+    if (src[i] !== '.') {
+      const continuation = next.match(/^(["'”’])[^\S\r\n\u2028\u2029]+(?:and|or|but|to|than|because|while|before|after)\b/);
+      if (continuation) {
+        const opening = ({ '”': '“', '’': '‘' })[continuation[1]] || continuation[1];
+        if (new RegExp('(?:^|[\\s([{])' + opening).test(src.slice(start, i))) continue;
+      }
+    }
+    // A question can modify a terminal noun: the 'where are we?' part.
+    // Bind the actual quote pair immediately after a determiner, rather than
+    // accepting any earlier opener. Keep this separate from clause connectives:
+    // "She asked 'Why?' part of ..." is still a lowercase sentence defect.
+    if (src[i] === '?' && /^["'”’][^\S\r\n\u2028\u2029]+part\.(?=\s|$)/.test(next)) {
+      const opening = ({ '”': '“', '’': '‘' })[next[0]] || next[0];
+      const modifier = new RegExp('\\b(?:the|a|an)[^\\S\\r\\n\\u2028\\u2029]+'
+        + opening + '[^"\'“”‘’\\r\\n\\u2028\\u2029]*$', 'i');
+      if (modifier.test(src.slice(start, i))) continue;
+    }
     if (src[i] === '.') {
       // An ellipsis is not a terminator. "It was just... there." is one
       // sentence; treating the last dot as an end made "there." read as a
@@ -628,6 +650,60 @@ function selfTest() {
     ['a markdown heading fires', () => fires('markdown-artifact', '## The stakes\nIt matters.')],
     ['a double space fires', () => fires('double-space', 'The model  shipped today.')],
     ['a lowercase sentence start fires', () => fires('sentence-starts-lowercase', 'The model shipped. it was late.')],
+    ['a quoted question can continue through to',
+      () => clean("They will move from 'what did I spend?' to 'why am I spending this?'")],
+    ['a quoted question can continue through and',
+      () => clean("You stop asking 'how much did I spend?' and start asking 'where can I redirect this?'")],
+    ['curly quoted questions can continue a clause',
+      () => clean('They move from “what did I spend?” to “why am I spending this?”')],
+    ['a quoted exclamation can continue a clause',
+      () => clean('He heard "Stop!" and left.')],
+    ['a genuine lowercase new sentence after a quotation still fires',
+      () => fires('sentence-starts-lowercase', "She asked 'Why?' it failed anyway.")],
+    ['an unquoted question does not gain a continuation exemption',
+      () => fires('sentence-starts-lowercase', 'Why? and nobody answered.')],
+    ['a capitalized sentence after a quoted question still splits',
+      () => sentences("She asked 'Why?' And nobody answered.").length === 2],
+    ['a later lowercase new sentence after a continued quotation still fires',
+      () => fires('sentence-starts-lowercase', "She asked 'Why?' and listened. it failed anyway.")],
+    ['a quoted question never joins a new lowercase paragraph',
+      () => fires('sentence-starts-lowercase', "She asked 'Why?'\n\nand nobody answered.")],
+    ['a quoted question never joins a Windows paragraph break',
+      () => fires('sentence-starts-lowercase', "She asked 'Why?'\r\n\r\nand nobody answered.")],
+    ['a quoted question never joins a Unicode paragraph separator',
+      () => fires('sentence-starts-lowercase', "She asked 'Why?'\u2029and nobody answered.")],
+    ['a determined quoted question modifies a terminal noun',
+      () => JSON.stringify(sentences("The agent handles the 'where are we?' part. You handle the rest."))
+          === JSON.stringify(["The agent handles the 'where are we?' part.", 'You handle the rest.'])
+        && !fires('sentence-starts-lowercase', "The agent handles the 'where are we?' part. You handle the rest.")],
+    ['a curly determined quoted question modifies a terminal noun',
+      () => JSON.stringify(sentences('We handle the “where are we?” part. You decide.'))
+          === JSON.stringify(['We handle the “where are we?” part.', 'You decide.'])
+        && !fires('sentence-starts-lowercase', 'We handle the “where are we?” part. You decide.')],
+    ['an independent determined quoted modifier passes',
+      () => JSON.stringify(sentences('We finished a "what happens next?" part. It reads well.'))
+          === JSON.stringify(['We finished a "what happens next?" part.', 'It reads well.'])
+        && !fires('sentence-starts-lowercase', 'We finished a "what happens next?" part. It reads well.')],
+    ['part of a new lowercase sentence remains rejected',
+      () => fires('sentence-starts-lowercase', "She asked 'Why?' part of the answer was missing.")],
+    ['a terminal part without an attributive determiner remains rejected',
+      () => fires('sentence-starts-lowercase', "She asked 'Why?' part. It ended.")],
+    ['a later lowercase sentence after the nominal modifier remains rejected',
+      () => fires('sentence-starts-lowercase', "We handle the 'where are we?' part. it failed.")],
+    ['a nominal modifier cannot cross a blank LF paragraph',
+      () => fires('sentence-starts-lowercase', "We handle the 'where are we?'\n\npart. It ended.")],
+    ['a nominal modifier cannot cross a blank CRLF paragraph',
+      () => fires('sentence-starts-lowercase', "We handle the 'where are we?'\r\n\r\npart. It ended.")],
+    ['a nominal modifier cannot cross a Unicode paragraph separator',
+      () => fires('sentence-starts-lowercase', "We handle the 'where are we?'\u2029part. It ended.")],
+    ['a nominal modifier cannot cross a Unicode line separator',
+      () => fires('sentence-starts-lowercase', "We handle the 'where are we?'\u2028part. It ended.")],
+    ['mismatched nominal quotation still exposes a lowercase sentence',
+      () => fires('sentence-starts-lowercase', 'We handle the “where are we?\' part. It ended.')],
+    ['an earlier unrelated quote does not match a nominal orphan closer',
+      () => fires('sentence-starts-lowercase', "We read the 'draft' and asked where are we?' part. It ended.")],
+    ['a nominal part-of continuation is not exempted even with a determiner',
+      () => fires('sentence-starts-lowercase', "We read the 'draft?' part of it was missing.")],
     // S363 — regression guards for the parenthetical-abbreviation split. The first
     // is the live 2026-09-20 corpus sentence that was wrongly reported; the second
     // and third pin that the fix did not blunt the rule it was narrowing.
@@ -673,6 +749,10 @@ function selfTest() {
       () => clean('Anthropic, OpenAI, Nvidia, DeepSeek, Cloudflare, Supabase, Gemini, Claude Opus and Moonshot all shipped.')],
     ['Hugging Face and hyphenated products pass',
       () => clean('Hugging Face mirrored the weights, and GPT-5 class models followed.')],
+    ['the official hyphenated K-EXAONE model brand passes',
+      () => clean('LG opened K-EXAONE-2.5 API access.')],
+    ['a near-name does not inherit the model-brand exception',
+      () => fires('all-caps-run', 'LG opened K-EXAONEX-2.5 API access.')],
     ['dense jargon passes',
       () => clean('Inference throughput, latency, parameters, quantization and embeddings all improved on the benchmark.')],
     ['acronyms in normal prose pass',

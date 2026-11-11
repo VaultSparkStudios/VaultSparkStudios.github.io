@@ -88,14 +88,18 @@
   }
 
   function refreshPicker(theme) {
-    // Update trigger button swatch + label
+    // Keep the trigger stable while exposing the full current theme name.
     var btn = document.getElementById('theme-picker-btn');
     if (btn) {
       var swatch = btn.querySelector('.theme-picker-swatch');
       var labelEl = btn.querySelector('.theme-picker-label');
       var entry = THEMES.find(function (t) { return t.value === theme; });
       if (swatch && entry) swatch.style.background = entry.color;
-      if (labelEl && entry) labelEl.textContent = entry.label;
+      if (labelEl && entry) labelEl.textContent = 'Theme';
+      if (entry) {
+        btn.title = 'Theme: ' + entry.label;
+        btn.setAttribute('aria-label', 'Select theme: ' + entry.label);
+      }
     }
     // Update tile active states
     document.querySelectorAll('.theme-tile').forEach(function (tile) {
@@ -338,7 +342,7 @@
     wrapper.id = 'theme-picker';
     wrapper.setAttribute('aria-label', 'Theme selector');
 
-    // Toggle button — swatch dot + current theme name + chevron
+    // Toggle button — swatch dot + Theme + chevron; full name stays accessible.
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.id = 'theme-picker-btn';
@@ -346,6 +350,7 @@
     btn.setAttribute('aria-haspopup', 'dialog');
     btn.setAttribute('aria-expanded', 'false');
     btn.setAttribute('aria-label', 'Select theme: ' + currentEntry.label);
+    btn.title = 'Theme: ' + currentEntry.label;
 
     var swatch = document.createElement('span');
     swatch.className = 'theme-picker-swatch';
@@ -354,7 +359,7 @@
 
     var labelEl = document.createElement('span');
     labelEl.className = 'theme-picker-label';
-    labelEl.textContent = currentEntry.label;
+    labelEl.textContent = 'Theme';
 
     var arrow = document.createElement('span');
     arrow.className = 'theme-picker-arrow';

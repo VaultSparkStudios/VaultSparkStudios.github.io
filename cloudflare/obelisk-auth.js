@@ -172,12 +172,75 @@ export function safeReturnPath(value, fallback = '/vault-member/') {
   }
 }
 
+function flowAudience(returnTo) {
+  const path = new URL(safeReturnPath(returnTo, '/sign-in/'), 'https://vaultsparkstudios.com').pathname;
+  if (path === '/investor-portal' || path.startsWith('/investor-portal/')) return 'investor';
+  if (path === '/vault-member' || path.startsWith('/vault-member/')) return 'member';
+  return null;
+}
+
+function recoveryContext(flow) {
+  const returnTo = safeReturnPath(flow?.returnTo, '/sign-in/');
+  return { returnTo, audience: flowAudience(returnTo), intent: flow?.intent === 'signup' ? 'signup' : 'signin' };
+}
+
 function errorReturnPath(flow, code, detail) {
-  const target = new URL(safeReturnPath(flow?.returnTo), 'https://vaultsparkstudios.com');
+  const context = recoveryContext(flow);
+  const entry = context.audience === 'investor' ? '/investor-portal/login/'
+    : context.audience === 'member' ? '/vault-member/' : '/sign-in/';
+  const original = new URL(context.returnTo, 'https://vaultsparkstudios.com');
+  // These two entry pages already carry a bounded, client-validated handoff.
+  // Keep their signed query context at that entry rather than wrapping the
+  // entire entry again in `next` (which the clients correctly reject as a loop).
+  // Never follow a nested URL here: this recognizes only exact local entry paths.
+  const memberEntry = context.audience === 'member'
+    && ['/vault-member', '/vault-member/'].includes(original.pathname)
+    && ['return', 'next', 'ref'].some(key => original.searchParams.has(key));
+  const investorEntry = context.audience === 'investor'
+    && ['/investor-portal/login', '/investor-portal/login/'].includes(original.pathname)
+    && original.searchParams.has('next');
+  const preserveEntry = memberEntry || investorEntry;
+  const target = new URL(preserveEntry ? original.pathname : entry, 'https://vaultsparkstudios.com');
+  if (preserveEntry) {
+    const key = memberEntry && original.searchParams.has('return') ? 'return' : 'next';
+    const handoff = safeReturnPath(original.searchParams.get(key), '');
+    if (handoff && flowAudience(handoff) === context.audience) target.searchParams.set(key, handoff);
+    if (memberEntry) {
+      const ref = original.searchParams.get('ref');
+      if (ref && /^[a-zA-Z0-9_]{1,32}$/.test(ref)) target.searchParams.set('ref', ref);
+    } else {
+      if (original.searchParams.get('identity') === 'created') target.searchParams.set('identity', 'created');
+      if (original.searchParams.get('application') === 'submitted') target.searchParams.set('application', 'submitted');
+    }
+  }
   target.searchParams.set('auth_error', code);
+  target.searchParams.delete('auth_detail');
+  if (context.audience) {
+    if (!preserveEntry) target.searchParams.set('next', context.returnTo);
+    target.searchParams.set('auth_intent', context.intent);
+    if (context.audience === 'member') target.hash = context.intent === 'signup' ? 'register' : 'login';
+  }
   // Bounded failure family only — never free text, never an identifier.
   if (detail && LINK_FAILURE_CODES.has(detail)) target.searchParams.set('auth_detail', detail);
   return `${target.pathname}${target.search}${target.hash}`;
+}
+
+// A signed browser context can recover an expired/missing KV record, but cannot
+// authorize a callback. Nonce and PKCE remain exclusively in the one-use KV flow.
+async function readFlowCookie(value, env) {
+  const plain = await verifySignedValue(value, env);
+  if (!plain) return null;
+  if (/^[A-Za-z0-9_-]{43}$/.test(plain)) return { state: plain, context: null }; // legacy in-flight cookie
+  try {
+    const data = JSON.parse(decoder.decode(base64UrlToBytes(plain)));
+    if (data.version !== 2 || !/^[A-Za-z0-9_-]{43}$/.test(data.state)
+      || !Number.isFinite(data.createdAt) || data.createdAt > Date.now() + 60000
+      || Date.now() - data.createdAt > FLOW_TTL_SECONDS * 2000) return null;
+    const context = recoveryContext(data);
+    if (data.returnTo !== context.returnTo || data.audience !== context.audience
+      || data.intent !== context.intent) return null;
+    return { state: data.state, context };
+  } catch (_) { return null; }
 }
 
 /**
@@ -603,7 +666,7 @@ async function startLogin(request, env, fetchImpl) {
   if (!env.RATE_LIMIT) return json({ ok: false, code: 'auth_store_missing' }, 503);
   if (!signingSecret(env)) return json({ ok: false, code: 'auth_signing_key_missing' }, 503);
   const url = new URL(request.url);
-  const returnTo = safeReturnPath(url.searchParams.get('return') || url.searchParams.get('next'));
+  const returnTo = safeReturnPath(url.searchParams.get('return') || url.searchParams.get('next'), '/sign-in/');
   const state = randomToken();
   const nonce = randomToken();
   const verifier = randomToken(48);
@@ -681,7 +744,9 @@ async function startLogin(request, env, fetchImpl) {
   authorize.searchParams.set('code_challenge_method', 'S256');
   authorize.searchParams.set('login_hint', intent);
   return redirect(authorize.toString(), {
-    'Set-Cookie': cookie(config.flowCookieName, await signedValue(state, env), { maxAge: FLOW_TTL_SECONDS }),
+    'Set-Cookie': cookie(config.flowCookieName, await signedValue(bytesToBase64Url(encoder.encode(JSON.stringify({
+      version: 2, state, createdAt: Date.now(), ...recoveryContext({ returnTo, intent }),
+    }))), env), { maxAge: FLOW_TTL_SECONDS }),
   });
 }
 
@@ -710,8 +775,11 @@ async function finishLogin(request, env, fetchImpl) {
   const url = new URL(request.url);
   const state = url.searchParams.get('state') || '';
   const signedFlow = parseCookies(request)[config.flowCookieName];
-  const cookieState = await verifySignedValue(signedFlow, env);
-  if (!state || state !== cookieState || !env.RATE_LIMIT) return redirect('/vault-member/?auth_error=state_invalid');
+  const browserFlow = await readFlowCookie(signedFlow, env);
+  const fail = (context, code, detail) => redirect(errorReturnPath(context, code, detail), {
+    'Set-Cookie': cookie(config.flowCookieName, '', { clear: true }),
+  });
+  if (!state || state !== browserFlow?.state || !env.RATE_LIMIT) return fail(null, 'state_invalid');
   // S321 — the CALLBACK leg of the same crash class S319 fixed in startLogin.
   // `.delete()` is a KV *write*, so the free-tier write-quota exhaustion that took
   // sign-in down in S319 rejects here exactly as it did there. Left unguarded, the
@@ -742,15 +810,19 @@ async function finishLogin(request, env, fetchImpl) {
     } catch (_) {
       // The key was already deleted above; a second delete is redundant, and as a
       // KV write it was itself an unguarded throw on the same quota condition.
-      return json({ ok: false, code: 'invalid_flow_state' }, 400, {
-        'Set-Cookie': cookie(config.flowCookieName, '', { clear: true }),
-      });
+      return fail(browserFlow.context, 'flow_expired');
     }
   }
-  if (!flow) return redirect('/vault-member/?auth_error=flow_expired');
-  if (url.searchParams.has('error')) return redirect(errorReturnPath(flow, 'provider_denied'));
+  if (!flow || typeof flow !== 'object' || !/^[A-Za-z0-9_-]{43}$/.test(flow.nonce)
+    || !/^[A-Za-z0-9_-]{64}$/.test(flow.verifier)) return fail(browserFlow.context, 'flow_expired');
+  // New cookies bind recovery and the final destination to the initiating
+  // journey. Callback query parameters never supply audience, intent or return.
+  if (browserFlow.context && JSON.stringify(recoveryContext(flow)) !== JSON.stringify(browserFlow.context)) {
+    return fail(browserFlow.context, 'state_invalid');
+  }
+  if (url.searchParams.has('error')) return fail(flow, 'provider_denied');
   const code = url.searchParams.get('code');
-  if (!code || code.length > 4096) return redirect(errorReturnPath(flow, 'code_missing'));
+  if (!code || code.length > 4096) return fail(flow, 'code_missing');
 
   let plane = 'exchange';
   try {

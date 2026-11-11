@@ -12,11 +12,11 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S408: reliable release verification and readable archive sharing.",
+  "currentFocus": "Local Desk image-before-email tooling and response repairs verified; release checks and isolated account acceptance in progress.",
   "publicNote": "See the membership page for current plans, benefits and account-access availability.",
-  "nextMilestone": "Classify historical optional visual failures before baseline changes; publisher-cascade follow-up remains unselected.",
+  "nextMilestone": "Complete isolated member/investor acceptance and exact candidate checks, then authorized staging-to-production promotion and readback.",
   "blockers": [
-    "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
+    "S409: provider signup is reachable/global-open, but direct signup intent and affected real member/investor acceptance remain unverified. Ark followup01K6GAAQG1C5DFD95B4FFD9507 delivered; owner response not observed.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
     "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
     "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
@@ -26,15 +26,15 @@
     "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action.",
     "Shared account KV write budget remains a risk from other writers. S387 isolates Trusted Types diagnostics; actual release and usage evidence is in docs/RELEASE_S387.json."
   ],
-  "lastUpdated": "2026-11-03",
-  "currentSession": 408,
+  "lastUpdated": "2026-11-11",
+  "currentSession": 411,
   "truthAuditStatus": "yellow",
-  "truthAuditLastRun": "2026-11-02",
+  "truthAuditLastRun": "2026-11-06",
   "silScore": 939,
   "silAvg3": 939,
-  "silVelocity": 1,
+  "silVelocity": 0,
   "silDebt": "stable",
-  "silLastSession": 408,
+  "silLastSession": 411,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -47,8 +47,8 @@
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
       "type": "staging",
-      "status": "green",
-      "note": "Verified full staging baseline plus exact generated-status reconciliations; docs/S406_explicit-closeout-staging.json and docs/S406_explicit-closeout-status-reconciliation.json. Production candidate identity is recorded separately."
+      "status": "yellow",
+      "note": "S411 static candidate fc3ad58b984f verified with4090-file receipt f58a466345c546f964153690 and20 reachability checks; isolated backend/authenticated acceptance remains pending."
     },
     {
       "url": "https://vaultsparkstudios.com/?nav=sheet",
@@ -80,14 +80,14 @@
     }
   ],
   "vaultStatus": "SPARKED",
-  "ignisScore": 45136,
-  "ignisScoreDelta": -192,
+  "ignisScore": 45126,
+  "ignisScoreDelta": 52,
   "ignisGrade": "FORGE",
-  "ignisLastComputed": "2026-10-29T18:27:53.835Z",
-  "entropyScore": 0.174,
-  "entropyLastComputed": "2026-10-29",
-  "sessionMode": "BUILDER",
-  "sessionModeAutoShiftedAt": "2026-10-21T22:44:27.311Z",
+  "ignisLastComputed": "2026-11-06",
+  "entropyScore": 0.175,
+  "entropyLastComputed": "2026-11-04",
+  "sessionMode": "founder",
+  "sessionModeAutoShiftedAt": "2026-11-11T00:21:30.193Z",
   "silRubricVersion": "3.0",
   "silMax": 1000,
   "silCategoriesV3": {
@@ -102,17 +102,17 @@
     "capitalEfficiency": 95,
     "automationCoverage": 97
   },
-  "silCategoriesUpdatedSession": 408,
+  "silCategoriesUpdatedSession": 411,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-11-03",
-    "passing": 15,
+    "date": "2026-11-08",
+    "passing": 14,
     "warning": 1,
-    "failing": 1,
-    "blockingFailing": 0,
+    "failing": 2,
+    "blockingFailing": 1,
     "advisoryFailing": 1,
     "total": 17,
-    "score": 88,
+    "score": 82,
     "checks": [
       {
         "id": "manifest",
@@ -172,7 +172,7 @@
       },
       {
         "id": "revenue",
-        "pass": false,
+        "pass": true,
         "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
@@ -214,8 +214,8 @@
       },
       {
         "id": "sched-staleness",
-        "pass": true,
-        "warn": true,
+        "pass": false,
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
@@ -228,10 +228,10 @@
       },
       {
         "id": "deploy-currency-live",
-        "pass": true,
-        "warn": true,
+        "pass": false,
+        "warn": false,
         "driftClass": "local-broken",
-        "blocking": false
+        "blocking": true
       }
     ]
   },
@@ -255,14 +255,17 @@
     "docs/visual-qa/SPARK_HELD_MEMBERSHIP.json"
   ],
   "truthGenome": "23/25",
-  "lastSessionSummary": "S408: safe build introspection and accurate merge-closeout recovery evidence.",
+  "lastSessionSummary": "S411 partial recovery preserves verified local work and all failed evidence; no production completion or new score is claimed.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
-    "session": 408,
-    "enumeratedAt": "2026-11-03T03:40:35.394Z",
-    "started": 56,
-    "closed": 56,
-    "running": 0
+    "session": 411,
+    "enumeratedAt": "2026-11-06T21:47:44.526Z",
+    "started": 1,
+    "closed": 1,
+    "running": 0,
+    "scope": "Retained persistent preview; finite native verification jobs completed separately.",
+    "port4173Listener": false,
+    "projectQualifiedNodeProcesses": 0
   },
   "closeoutFollowthrough": {
     "session": 395,
@@ -272,13 +275,13 @@
     "validation": "S395 served-text parity requires complete nonempty exactly-once coverage, committed redirect status/destination and strict CLI admission. Focused fixtures3/3, self-test19/19, existing regressions9/9 and independent review pass. The earlier actual npm full build/postbuild26/26 is retained as preintegration evidence. Fresh integrated36-node native-owner closure, declared news checks and two complete 545/545 runs plus current staging11/11 pass;84 manually inspected news captures across7themes at1440/390px and215 automated device probes retain their stated limits. Retired8442f8f4 failed hosted compliance atstep143 because WORK_LOG measured251KB against the250KB cap; native rotation moved0 for session-first headings, so older history was archived verbatim before corrected candidate16f6938f. Normal full production candidate c931cc736f70b524509378c1e35e1a69e8b3927d (run 39650067973) is verified by hosted checks, provider identity, both build stamps, complete served text,65 critical leaves on Pages/apex and exactly12 incoming news-image variants on both origins. This does not certify all binary assets. Original premise timing remains nonpassing; original baseline trace/context usage is unmeasured. Existing identity and field-vitals holds remain separate; no measured visitor or performance gain is claimed.",
     "releaseEvidence": "docs/RELEASE_S395.json"
   },
-  "lastSession": 408,
+  "lastSession": 411,
   "sessionState": {
     "version": 1,
-    "durableSession": 408,
-    "currentFocus": "S408: reliable release verification and readable archive sharing.",
-    "nextMilestone": "Classify historical optional visual failures before baseline changes; publisher-cascade follow-up remains unselected.",
-    "lastSessionSummary": "S408: safe build introspection and accurate merge-closeout recovery evidence."
+    "durableSession": 411,
+    "currentFocus": "Local Desk image-before-email tooling and response repairs verified; release checks and isolated account acceptance in progress.",
+    "nextMilestone": "Complete isolated member/investor acceptance and exact candidate checks, then authorized staging-to-production promotion and readback.",
+    "lastSessionSummary": "S411 partial recovery preserves verified local work and all failed evidence; no production completion or new score is claimed."
   },
   "s378RecordRecovery": {
     "date": "2026-10-14",
@@ -292,7 +295,7 @@
   "currentBuildState": "passed",
   "currentBuildNote": "S408: two complete native548-step runs; full Pages/OG production and complete3824-resource readback verified in docs/RELEASE_S408.json.",
   "lastDeploySession": 407,
-  "lastDeployStatus": "verified",
+  "lastDeployStatus": "pending — combined acceptance, including real account journeys",
   "silAvg5": 939,
   "lastReleaseAcceptance": {
     "session": 408,
@@ -303,7 +306,7 @@
     "ogWorkerVersion": "e4b3070a-1090-49aa-b99d-d7ef44f6c192",
     "verifiedAt": "2026-11-03T03:38:48.399Z"
   },
-  "truthAuditSummary": "Normal full S407 application and3714-resource readback verified; exact closing publication acceptance is authoritative in docs/RELEASE_S407.json. No all-optional-E2E or positive authenticated-data claim.",
+  "truthAuditSummary": "S409 local UI and callback regressions pass. Open provider enrollment, positive authenticated journeys and final release are separately pending; fixtures and anonymous walls do not prove private access.",
   "currentVerification": {
     "session": 408,
     "state": "accepted-full-production",
@@ -336,7 +339,7 @@
     "completedAt": "2026-11-03T03:46:51.947Z",
     "detail": "This invocation completed fresh startup/audit, five selected outcomes, native closeout, exact candidate checks, full Pages and OG deployment, complete served parity and publisher restoration. Native goal completion follows final record reachability."
   },
-  "velocity": 1,
+  "velocity": 0,
   "arcProgress": {
     "session": 408,
     "phase": "complete",
@@ -356,14 +359,14 @@
     "evidence": "docs/S403_full-source-acceptance.json"
   },
   "testsSession": 407,
-  "testsTotal": 548,
-  "testsPassing": 548,
+  "testsTotal": 549,
+  "testsPassing": 549,
   "testsFailed": 0,
-  "testsLastRun": "2026-11-03",
+  "testsLastRun": "2026-11-06",
   "testsLabel": "measured build:check steps",
   "testsEvidence": "api/build-check-diagnostics.json",
-  "testsPlanFingerprint": "7a88e464c35b4110bd6372bc",
-  "testsSourceFingerprint": "a84ce55dc4501e1191a1001b",
+  "testsPlanFingerprint": "2a897f15c691a81891ed531f",
+  "testsSourceFingerprint": "71664bd0c9808d2462cebf6a",
   "closeoutObservationAddendum": {
     "session": 400,
     "through": "35e5d5f181",
@@ -406,8 +409,8 @@
       "evidence": "docs/S407_copy-quality-acceptance.json"
     }
   },
-  "silProtocolVelocity": 1,
-  "protocolVelocity": 4,
+  "silProtocolVelocity": 2,
+  "protocolVelocity": 2,
   "silSparkline": [
     939,
     939,

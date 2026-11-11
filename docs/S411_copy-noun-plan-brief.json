@@ -1,0 +1,20 @@
+{
+  "kind": "plan",
+  "session": 411,
+  "date": "2026-11-08",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Keep grammatical quoted noun modifiers inside their sentence",
+  "items": [
+    {
+      "id": 8,
+      "slug": "quoted-question-determined-noun",
+      "title": "Recognize quoted questions used as determined noun modifiers",
+      "axis": "speed-organization-efficiency",
+      "leftScore": 5,
+      "rightScore": 2,
+      "insight": "Valid published prose passes the copy gate while genuine lowercase sentence defects remain rejected. Recognize only matching question quotations used immediately after a determiner and followed by part plus a full stop, with horizontal spacing. Retain true lowercase sentence, later-sentence, paragraph and mismatched-quote rejection. Add positive and negative native regressions before parser implementation, preserve existing tests and published prose.",
+      "evidence": "docs/S411_copy-noun-findings-1108.json; actual native corpus failure and independent fixture before implementation."
+    }
+  ]
+}

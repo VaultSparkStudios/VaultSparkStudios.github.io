@@ -1,0 +1,47 @@
+{
+  "session": 410,
+  "verifiedAt": "2026-11-04T06:53:31.198Z",
+  "scope": "Complete selected browser-fixture-cleanup outcome after repeated full-suite failure; no production or UI change.",
+  "failure": {
+    "receipt": "docs/S410_source-attempt4.json",
+    "step": 129,
+    "passed": 128,
+    "failed": 1,
+    "browserCaseDurationMs": 45386.6998,
+    "cause": "45second CLI parent-only cancellation preceded guarded cleanup EPERM; bounded rmSync retry alone was insufficient.",
+    "diagnosticLog": ".cache/logs/S410-source-attempt4.log"
+  },
+  "repair": {
+    "deadlineMs": 120000,
+    "windowsOwnedTreeTermination": true,
+    "terminationBoundMs": 10000,
+    "closeGraceMs": 10000,
+    "timeoutAlwaysFails": true,
+    "primaryAndCleanupErrorsPreserved": true,
+    "originAndMutationAssertionsRetained": true
+  },
+  "focused": {
+    "command": "node --test --test-concurrency=1 tests/after-paint.unit.spec.js tests/browser-collection.unit.spec.mjs",
+    "nativeExit": 0,
+    "passed": 17,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 119207.7477
+  },
+  "negativeProbe": {
+    "at": "2026-11-04T06:52:17.185Z",
+    "nativeExit": 1,
+    "forcedDeadlineMs": 3000,
+    "timeoutFailedExplicitly": true,
+    "fixtureRemoved": true,
+    "noCleanupOrTerminationError": true,
+    "log": ".cache/logs/S410-browser-timeout-probe.log",
+    "ownedCliAndDirectDescendantsRemaining": 0
+  },
+  "review": {
+    "agent": "s410_implementation_review",
+    "verdict": "APPROVE",
+    "scope": "Read-only final lifecycle diff"
+  },
+  "fullSource": "pending"
+}

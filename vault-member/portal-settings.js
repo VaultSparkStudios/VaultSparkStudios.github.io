@@ -465,8 +465,13 @@
       const authError = urlParams.get('auth_error');
       if (authError) {
         showAuth();
-        switchTab(authError === 'provider_denied' ? 'login' : 'register');
-        const errorNode = document.getElementById(authError === 'provider_denied' ? 'login-error' : 'reg-error');
+        let authIntent = urlParams.get('auth_intent');
+        if (authIntent !== 'signup' && authIntent !== 'signin') {
+          try { authIntent = sessionStorage.getItem('vs_member_auth_intent'); } catch (_) {}
+        }
+        const recoveryMode = authIntent === 'signup' ? 'register' : 'login';
+        switchTab(recoveryMode);
+        const errorNode = document.getElementById(recoveryMode === 'register' ? 'reg-error' : 'login-error');
         const messages = {
           provider_denied: 'Obelisk sign-in was cancelled.',
           flow_expired: 'That sign-in request expired. Please start again.',
@@ -493,7 +498,7 @@
       // Show referral banner when arriving via ?ref=username
       const refUsername = urlParams.get('ref');
       if (refUsername && /^[a-zA-Z0-9_]{1,32}$/.test(refUsername)) {
-        sessionStorage.setItem('vs_ref', refUsername);
+        try { sessionStorage.setItem('vs_ref', refUsername); } catch (_) {}
         const banner = document.getElementById('referral-banner');
         if (banner) {
           banner.innerHTML = '✦ You were invited by <strong>' + refUsername.replace(/[<>&"]/g, function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c];}) + '</strong> — create your free account below to join the Vault!';
@@ -503,7 +508,7 @@
 
       // Switch to the correct auth tab immediately (before the async session
       // check) so visiting /vault-member/#login never flashes Create Account first.
-      if (hash === '#login') switchTab('login');
+      if (!authError && hash === '#login') switchTab('login');
 
       // Handle nav Sign In / Join clicks when the user is already on this page
       // (same-page hash changes don't re-run init).
@@ -527,6 +532,7 @@
         const row = boot?.member || null;
 
         if (row) {
+          if (window.VSMemberEntry && window.VSMemberEntry.resumeAfterProfile()) return;
           // Cache prefetched events so loadPointEvents() can skip an extra round-trip
           if (Array.isArray(boot.events) && boot.events.length > 0) {
             window._prefetchedEvents = boot.events;
@@ -588,8 +594,10 @@
       }
 
       showAuth();
-      if (hash === '#register') switchTab('register');
-      else if (hash === '#login') switchTab('login');
+      if (!authError) {
+        if (hash === '#register') switchTab('register');
+        else if (hash === '#login') switchTab('login');
+      }
 
       // Show app name in subtitle if redirected from a gated tool
       const appName = VSGate.getNextAppName();

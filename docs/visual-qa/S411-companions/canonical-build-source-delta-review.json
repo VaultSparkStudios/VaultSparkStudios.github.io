@@ -1,0 +1,1096 @@
+{
+  "at": "2026-11-05T08:56:59.333Z",
+  "oldCandidate": {
+    "manifest": "api/candidate-artifact-manifest.json",
+    "manifestSha256": "b7857b266e4121b839ab8adf39dee93ed8896b78115d9de36c5f93919e9469bd",
+    "candidateSha": "20e78e238601aadf005f4a8b648192f44451bc62",
+    "root": "915ae0498b796e1a283467295635a0173634b5488fc70bb107a5111acc2595e9"
+  },
+  "currentCandidate": {
+    "schemaVersion": "1.1",
+    "generatedBy": "scripts/build-candidate-artifact-manifest.mjs",
+    "generatedAt": "2026-11-05",
+    "publicSafe": true,
+    "algorithm": {
+      "digest": "SHA-256",
+      "leafDomain": "vaultspark:candidate-artifact:leaf:v1",
+      "nodeDomain": "vaultspark:candidate-artifact:node:v1",
+      "ordering": "path-ascending",
+      "oddLeaf": "duplicate-last"
+    },
+    "reproducibility": {
+      "rootCoversCommitDerivedBytesOnly": true,
+      "observedPaths": [
+        "api/uptime.json",
+        "api/worker-route-provenance.json"
+      ],
+      "observedReason": "live measurements rewritten on a schedule by .github/workflows/uptime-probe.yml; a function of the world at probe time, not of the commit",
+      "volatileFields": {
+        "assets/shell-manifest.json": [
+          "generatedAt"
+        ],
+        "api/public-intelligence.json": [
+          "generatedAt"
+        ],
+        "api/build-sha.json": [
+          "builtAt"
+        ]
+      },
+      "volatileReason": "wall-clock stamps removed before hashing so identical source cannot produce different roots; all remaining bytes stay tamper-evident",
+      "observedFields": {
+        "api/public-intelligence.json": [
+          "ciHealth"
+        ]
+      },
+      "observedFieldsReason": "live CI observations are excluded from the source root; complete raw mixed-feed bytes remain hashed in observedRoot; hosted release checks remain separate"
+    },
+    "candidateSha": "20e78e238601aadf005f4a8b648192f44451bc62",
+    "root": "6c8bd23a262bbf1505291623d78a8d96318727d328acb6ab51e16b6f56027cee",
+    "leafCount": 79,
+    "totalBytes": 1670479,
+    "observedRoot": "382381735380bde2851027e3e912d6a470782e462fb603ad53e5a113a591fc6c",
+    "observedLeafCount": 3
+  },
+  "oldSourceSha256": "c483672c1945b9e5c61fbf099d23f6f5a97f7e678e70d2cbefb167e9cab2a54d",
+  "currentSourceSha256": "82f0af885e107f473ae4bd8aa8d1641f4925077fe0624abce7a7e9c2fdc7ee16",
+  "oldSourceCount": 286,
+  "unchangedCount": 275,
+  "changes": [
+    {
+      "path": "api/build-sha.json",
+      "oldBindingSha256": "d5741a2d51470bb60a074415a7018162bd099a499e60466e125874bde5ffd0de",
+      "currentBindingSha256": "613ec180e8a17ff9a46978043a6f00aa133ae455d1c0ec8d08b58dfd7356c0e8",
+      "recoveryAttempts": [
+        {
+          "source": "https://website.staging.vaultsparkstudios.com/api/build-sha.json",
+          "status": 200,
+          "sha256": "d5741a2d51470bb60a074415a7018162bd099a499e60466e125874bde5ffd0de",
+          "matchesOldBinding": true
+        }
+      ],
+      "exactOldSource": "https://website.staging.vaultsparkstudios.com/api/build-sha.json",
+      "exactOldBytesRecovered": true,
+      "jsonChanges": [
+        {
+          "path": "generatedAt",
+          "before": "2026-11-04",
+          "after": "2026-11-05",
+          "fieldEffect": "Oracle cache invalidator reads sha only. sha is unchanged; generatedAt/builtAt do not change that reader output. Raw visual source binding still changes, so document exact diff rather than claim byte identity."
+        },
+        {
+          "path": "builtAt",
+          "before": "2026-11-04T22:27:12.018Z",
+          "after": "2026-11-05T08:51:05.294Z",
+          "fieldEffect": "Oracle cache invalidator reads sha only. sha is unchanged; generatedAt/builtAt do not change that reader output. Raw visual source binding still changes, so document exact diff rather than claim byte identity."
+        }
+      ],
+      "changedFieldCount": 2,
+      "assessment": {
+        "classification": "Exact timestamp-only JSON delta; stored sha and all provenance fields unchanged.",
+        "consumers": [
+          "assets/ignis-answer-engine.js:130"
+        ],
+        "pixelImplication": "Oracle cache invalidator reads sha only. sha is unchanged; generatedAt/builtAt do not change that reader output. Raw visual source binding still changes, so document exact diff rather than claim byte identity.",
+        "coveredGroup": "oracle-aligned-arrival: no consumed-field change from this JSON."
+      }
+    },
+    {
+      "path": "api/ignis-conduit.json",
+      "oldBindingSha256": "17f804f6288ae13545fca2b998a256f4f6ecca9d5464477fc662f9dec01a75d1",
+      "currentBindingSha256": "41d1939b1c0c10f5ace1ce7b5e03011b7a5cda0585bd640e717c86bef8d3146c",
+      "recoveryAttempts": [
+        {
+          "source": ".cache/S411/pre-axis-source-recovered/api/ignis-conduit.json",
+          "sha256": "17f804f6288ae13545fca2b998a256f4f6ecca9d5464477fc662f9dec01a75d1",
+          "matchesOldBinding": true
+        }
+      ],
+      "exactOldSource": ".cache/S411/pre-axis-source-recovered/api/ignis-conduit.json",
+      "exactOldBytesRecovered": true,
+      "jsonChanges": [
+        {
+          "path": "generatedAt",
+          "before": "2026-11-04",
+          "after": "2026-11-05",
+          "fieldEffect": "Ticker selects pulses/entries and their item date/title/project, not top-level generatedAt. Those inputs remain exact; no affected ticker pixels inferred from this delta."
+        }
+      ],
+      "changedFieldCount": 1,
+      "assessment": {
+        "classification": "Exact generatedAt-only delta.",
+        "consumers": [
+          "assets/hero-ticker.js:8,31,60"
+        ],
+        "pixelImplication": "Ticker selects pulses/entries and their item date/title/project, not top-level generatedAt. Those inputs remain exact; no affected ticker pixels inferred from this delta."
+      }
+    },
+    {
+      "path": "api/ignis-platform-status.json",
+      "oldBindingSha256": "1e2747e786ffc6ca347acf5fe8895f36dbed765f6ca4bc39b15f30ef517aadd3",
+      "currentBindingSha256": "5e3c6e61337e0cf4a0609c4e7877913912860cb6ba6c020c16370d3a6e171bd5",
+      "recoveryAttempts": [
+        {
+          "source": "https://website.staging.vaultsparkstudios.com/api/ignis-platform-status.json",
+          "status": 200,
+          "sha256": "1e2747e786ffc6ca347acf5fe8895f36dbed765f6ca4bc39b15f30ef517aadd3",
+          "matchesOldBinding": true
+        }
+      ],
+      "exactOldSource": "https://website.staging.vaultsparkstudios.com/api/ignis-platform-status.json",
+      "exactOldBytesRecovered": true,
+      "jsonChanges": [
+        {
+          "path": "_builtAt",
+          "before": "2026-11-04T22:24:50.408Z",
+          "after": "2026-11-05T08:49:45.407Z",
+          "fieldEffect": "Hydration reads platform/status/metrics/voice/sparkline/capabilities, not _builtAt. Their values and module bytes remain exact."
+        }
+      ],
+      "changedFieldCount": 1,
+      "assessment": {
+        "classification": "Exact _builtAt-only delta.",
+        "consumers": [
+          "assets/ignis-platform.js:hydrate"
+        ],
+        "pixelImplication": "Hydration reads platform/status/metrics/voice/sparkline/capabilities, not _builtAt. Their values and module bytes remain exact."
+      }
+    },
+    {
+      "path": "api/oracle-insights.json",
+      "oldBindingSha256": "1ec6e4a2d6dd18b3cf2c3a6edcd70dab977b494111f6e94a93a77b987ab2845c",
+      "currentBindingSha256": "c11844a11e2fe810bed29c8ce0aabbb38c10c07667a1ec6d8a9b904809322fae",
+      "recoveryAttempts": [
+        {
+          "source": "https://website.staging.vaultsparkstudios.com/api/oracle-insights.json",
+          "status": 200,
+          "sha256": "1ec6e4a2d6dd18b3cf2c3a6edcd70dab977b494111f6e94a93a77b987ab2845c",
+          "matchesOldBinding": true
+        }
+      ],
+      "exactOldSource": "https://website.staging.vaultsparkstudios.com/api/oracle-insights.json",
+      "exactOldBytesRecovered": true,
+      "jsonChanges": [
+        {
+          "path": "generatedAt",
+          "before": "2026-11-04T22:27:10.240Z",
+          "after": "2026-11-05T08:51:03.606Z",
+          "fieldEffect": "Oracle answer/hint content does not read generatedAt, so aligned Oracle content remains unchanged by this field. Evidence freshness reads generatedAt and renders relative updated age, so Evidence freshness label changes at a shared observation time."
+        }
+      ],
+      "changedFieldCount": 1,
+      "assessment": {
+        "classification": "Exact generatedAt-only delta with a visible freshness consumer.",
+        "consumers": [
+          "assets/ignis-answer-engine.js:loadInsights/showHint",
+          "evidence/index.html:345-356"
+        ],
+        "pixelImplication": "Oracle answer/hint content does not read generatedAt, so aligned Oracle content remains unchanged by this field. Evidence freshness reads generatedAt and renders relative updated age, so Evidence freshness label changes at a shared observation time.",
+        "coveredGroup": "oracle-aligned-arrival: no consumed-field change; Evidence freshness has no644 group."
+      }
+    },
+    {
+      "path": "api/public-intelligence.json",
+      "oldBindingSha256": "c4ec820dd78fe358145d3abecfb4387f58a2d34e844e4a2b874f0663bd284c3c",
+      "currentBindingSha256": "7fc04f0cf6e0250bfeb611347c52853ea0ad23e4131219fcdf460eeddc9b340c",
+      "recoveryAttempts": [
+        {
+          "source": ".cache/S411/pre-canonical-build-json/api__public-intelligence.json",
+          "sha256": "606502d5b445cb4a3832df1eb3ee16685544745110324ceae8c35c317aac5ec3",
+          "matchesOldBinding": false
+        },
+        {
+          "source": ".cache/S411/public-summary-projection-preimage/api__public-intelligence.json",
+          "sha256": "c4ec820dd78fe358145d3abecfb4387f58a2d34e844e4a2b874f0663bd284c3c",
+          "matchesOldBinding": true
+        }
+      ],
+      "exactOldSource": ".cache/S411/public-summary-projection-preimage/api__public-intelligence.json",
+      "exactOldBytesRecovered": true,
+      "jsonChanges": [
+        {
+          "path": "generatedAt",
+          "before": "2026-11-04T22:25:50.162Z",
+          "after": "2026-11-05T08:50:20.987Z",
+          "fieldEffect": "Pulse heat value changes1760 to1720. Source-equivalent top8 bar calculations were compared: no rounded width percentage changes; only row0 displayed number changes. Pulse intelligence/footer freshness labels also read generatedAt and change. Vault Atlas7-day availability bucket remains up for both timestamps at review time. Showcase content fields remain exact."
+        },
+        {
+          "path": "activityHeatmap.0.heat",
+          "before": 1760,
+          "after": 1720,
+          "fieldEffect": "Pulse heat value changes1760 to1720. Source-equivalent top8 bar calculations were compared: no rounded width percentage changes; only row0 displayed number changes. Pulse intelligence/footer freshness labels also read generatedAt and change. Vault Atlas7-day availability bucket remains up for both timestamps at review time. Showcase content fields remain exact."
+        }
+      ],
+      "changedFieldCount": 2,
+      "assessment": {
+        "classification": "generatedAt plus real activityHeatmap[0].heat change.",
+        "consumers": [
+          "assets/studio-living.js:renderHeatmap",
+          "assets/studio-pulse-live.js:354,654",
+          "assets/vault-atlas.js:43",
+          "assets/showcase-spine.js"
+        ],
+        "pixelImplication": "Pulse heat value changes1760 to1720. Source-equivalent top8 bar calculations were compared: no rounded width percentage changes; only row0 displayed number changes. Pulse intelligence/footer freshness labels also read generatedAt and change. Vault Atlas7-day availability bucket remains up for both timestamps at review time. Showcase content fields remain exact.",
+        "coveredGroup": "No Pulse heatmap group in644; studio-living.js is absent from286 bound files."
+      }
+    },
+    {
+      "path": "api/rank-climbers.json",
+      "oldBindingSha256": "acea24458e69311157c0412b45f9a36afc58b0aadef2b53a644bb2394f8cb747",
+      "currentBindingSha256": "7e91d3a4788818901f37817679abf902460ae9ec0222f623a6999d0184224c93",
+      "recoveryAttempts": [
+        {
+          "source": ".cache/S411/pre-axis-source-recovered/api/rank-climbers.json",
+          "sha256": "acea24458e69311157c0412b45f9a36afc58b0aadef2b53a644bb2394f8cb747",
+          "matchesOldBinding": true
+        }
+      ],
+      "exactOldSource": ".cache/S411/pre-axis-source-recovered/api/rank-climbers.json",
+      "exactOldBytesRecovered": true,
+      "jsonChanges": [
+        {
+          "path": "generatedAt",
+          "before": "2026-11-04T22:24:56.018Z",
+          "after": "2026-11-05T08:49:48.955Z",
+          "fieldEffect": "Rank strip reads period and climbers, not generatedAt. Both remain exact."
+        }
+      ],
+      "changedFieldCount": 1,
+      "assessment": {
+        "classification": "Exact generatedAt-only delta.",
+        "consumers": [
+          "index.html:2170"
+        ],
+        "pixelImplication": "Rank strip reads period and climbers, not generatedAt. Both remain exact."
+      }
+    },
+    {
+      "path": "api/status-proof.json",
+      "oldBindingSha256": "a06d19555deb4038e9f52e33dbdacbfd4ed4a4d6f76f8ccc390bcb53c6cfc4c8",
+      "currentBindingSha256": "7bb706cdcb4df4bda956118183702be26810cde5f8ae466ca85c056a006c91d5",
+      "recoveryAttempts": [
+        {
+          "source": ".cache/S411/pre-canonical-build-json/api__status-proof.json",
+          "sha256": "a06d19555deb4038e9f52e33dbdacbfd4ed4a4d6f76f8ccc390bcb53c6cfc4c8",
+          "matchesOldBinding": true
+        }
+      ],
+      "exactOldSource": ".cache/S411/pre-canonical-build-json/api__status-proof.json",
+      "exactOldBytesRecovered": true,
+      "jsonChanges": [
+        {
+          "path": "generatedAt",
+          "before": "2026-11-05T08:24:31.184Z",
+          "after": "2026-11-05T08:52:11.864Z",
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "summary.worstStale.ageSeconds",
+          "before": 6159557,
+          "after": 6161217,
+          "fieldEffect": "Rounded displayed hours identical (1711)."
+        },
+        {
+          "path": "summary.seedRisk.1.ageHours",
+          "before": 374,
+          "after": 375,
+          "fieldEffect": "Only seed-risk count is displayed; unchanged."
+        },
+        {
+          "path": "proofs.uptime.freshnessSeconds",
+          "before": 42482,
+          "after": 44143,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.worker-route-provenance.freshnessSeconds",
+          "before": 1522698,
+          "after": 1524358,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.deploy-currency.freshnessSeconds",
+          "before": 42481,
+          "after": 44142,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.field-win.generatedAt",
+          "before": "2026-11-04T22:24:57.880Z",
+          "after": "2026-11-05T08:49:50.568Z",
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.field-win.freshnessSeconds",
+          "before": 35973,
+          "after": 141,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.field-win.data.generatedAt",
+          "before": "2026-11-04T22:24:57.880Z",
+          "after": "2026-11-05T08:49:50.568Z",
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.ai-discovery-health.generatedAt",
+          "before": "2026-11-04T22:27:24.814Z",
+          "after": "2026-11-05T08:51:17.152Z",
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.ai-discovery-health.freshnessSeconds",
+          "before": 35826,
+          "after": 55,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.ai-discovery-health.data.generatedAt",
+          "before": "2026-11-04T22:27:24.814Z",
+          "after": "2026-11-05T08:51:17.152Z",
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.ci-status.freshnessSeconds",
+          "before": 108904,
+          "after": 110564,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.newsroom-run.freshnessSeconds",
+          "before": 108904,
+          "after": 110564,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.promotion-receipt.freshnessSeconds",
+          "before": 193956,
+          "after": 195616,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.site-health.generatedAt",
+          "before": "2026-11-04T22:26:41.753Z",
+          "after": "2026-11-05T08:50:44.953Z",
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.site-health.freshnessSeconds",
+          "before": 35869,
+          "after": 87,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.site-health.data.generatedAt",
+          "before": "2026-11-04T22:26:41.753Z",
+          "after": "2026-11-05T08:50:44.953Z",
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.site-health.data.engagement.ageDays",
+          "before": 55,
+          "after": 56,
+          "fieldEffect": "Not consumed by reviewed visible status/proof renderers."
+        },
+        {
+          "path": "proofs.staging-health.freshnessSeconds",
+          "before": 32982,
+          "after": 34643,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.identity-migration-receipt.freshnessSeconds",
+          "before": 6159557,
+          "after": 6161217,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.supabase-control-plane.freshnessSeconds",
+          "before": 1347170,
+          "after": 1348831,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.geo-vitals.freshnessSeconds",
+          "before": 42480,
+          "after": 44140,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.funnel-summary.freshnessSeconds",
+          "before": 4868671,
+          "after": 4870332,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.attention-pressure.freshnessSeconds",
+          "before": 4868671,
+          "after": 4870332,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.canonical-destination-reachability.freshnessSeconds",
+          "before": 42910,
+          "after": 44571,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.public-status.generatedAt",
+          "before": "2026-11-04T00:00:00.000Z",
+          "after": "2026-11-05T00:00:00.000Z",
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.public-status.freshnessSeconds",
+          "before": 116671,
+          "after": 31932,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.public-status.data.generatedAt",
+          "before": "2026-11-04",
+          "after": "2026-11-05",
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.security-posture.generatedAt",
+          "before": "2026-11-04T00:00:00.000Z",
+          "after": "2026-11-05T00:00:00.000Z",
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.security-posture.freshnessSeconds",
+          "before": 116671,
+          "after": 31932,
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        },
+        {
+          "path": "proofs.security-posture.data.generatedAt",
+          "before": "2026-11-04",
+          "after": "2026-11-05",
+          "fieldEffect": "Generation/freshness metadata not displayed by reviewed consumers; visible freshness booleans unchanged."
+        }
+      ],
+      "changedFieldCount": 32,
+      "assessment": {
+        "classification": "32 exact changes: generation stamps, freshness ages, seed-risk age and engagement age.",
+        "consumers": [
+          "status/index.html:loadProofManifest/getProof",
+          "assets/showcase-spine.js:60",
+          "assets/proof-conversion-line.js",
+          "assets/proof-card.js"
+        ],
+        "pixelImplication": "No changed rendered input identified in these current consumers. Worst stale rounds to1711hours both before/after; fresh/present/stale/trust counts and seed-risk count remain exact. Individual freshnessSeconds and seedRisk.ageHours are not displayed by these readers. Changed site-health engagement.ageDays is not used by the status Field vitals tile. Freshness booleans/presence/confirmed wins/uptime data and visible tile statistics remain exact. This is source-derived continuity, not fresh pixel inspection."
+      }
+    },
+    {
+      "path": "api/vault-momentum.json",
+      "oldBindingSha256": "8df3934d413381cc1eba5cf5be6dd05ee7597ec4470022be1113ec02f68d40d9",
+      "currentBindingSha256": "50333743b3d300a105f5bd02d82360ffed2c74e0180adb1d0440845e91d9ce3f",
+      "recoveryAttempts": [
+        {
+          "source": "https://website.staging.vaultsparkstudios.com/api/vault-momentum.json",
+          "status": 200,
+          "sha256": "8df3934d413381cc1eba5cf5be6dd05ee7597ec4470022be1113ec02f68d40d9",
+          "matchesOldBinding": true
+        }
+      ],
+      "exactOldSource": "https://website.staging.vaultsparkstudios.com/api/vault-momentum.json",
+      "exactOldBytesRecovered": true,
+      "jsonChanges": [
+        {
+          "path": "generatedAt",
+          "before": "2026-11-04",
+          "after": "2026-11-05",
+          "fieldEffect": "Readers use score/label/signals and honestDark, not generatedAt; all rendered input values remain exact."
+        }
+      ],
+      "changedFieldCount": 1,
+      "assessment": {
+        "classification": "Exact generatedAt-only delta.",
+        "consumers": [
+          "assets/membership-social-proof.js:render",
+          "assets/studio-now.js"
+        ],
+        "pixelImplication": "Readers use score/label/signals and honestDark, not generatedAt; all rendered input values remain exact."
+      }
+    },
+    {
+      "path": "assets/shell-manifest.json",
+      "oldBindingSha256": "c2df50b38cfcb6bfa8e6df081b5839449dd6538aaa9f22f76b8c78e54a61dea9",
+      "currentBindingSha256": "742f7fa0da0349718eb7a144dce13d093a049491d563053b9600cb62dcef4cdc",
+      "recoveryAttempts": [
+        {
+          "source": ".cache/S411/pre-canonical-build-json/assets__shell-manifest.json",
+          "sha256": "c2df50b38cfcb6bfa8e6df081b5839449dd6538aaa9f22f76b8c78e54a61dea9",
+          "matchesOldBinding": true
+        }
+      ],
+      "exactOldSource": ".cache/S411/pre-canonical-build-json/assets__shell-manifest.json",
+      "exactOldBytesRecovered": true,
+      "jsonChanges": [
+        {
+          "path": "generatedAt",
+          "before": "2026-11-05T08:24:09.239Z",
+          "after": "2026-11-05T08:51:53.663Z",
+          "fieldEffect": "No direct browser reader found. All module/path/hash identities remain exact; build metadata has changed raw binding without changing CSS/JS bytes."
+        }
+      ],
+      "changedFieldCount": 1,
+      "assessment": {
+        "classification": "Exact generatedAt-only delta; version/cacheName/asset map unchanged.",
+        "consumers": [
+          "scripts/build-shell-assets.mjs",
+          "scripts/build-early-hints-headers.mjs",
+          "scripts/build-candidate-artifact-manifest.mjs"
+        ],
+        "pixelImplication": "No direct browser reader found. All module/path/hash identities remain exact; build metadata has changed raw binding without changing CSS/JS bytes."
+      }
+    },
+    {
+      "path": "index.html",
+      "oldBindingSha256": "0e715b5d1dcdc9d4fac84c82b3f0479ff356c3e740323f1c19fc2a03892ca4ba",
+      "currentBindingSha256": "04ceaa057e6409bb279acce9cd959f4e93912c0efeae6dc0f755354ed4bd3b47",
+      "recoveryAttempts": [
+        {
+          "source": ".cache/S411/pre-axis-source-recovered/index.html",
+          "sha256": "4243f9b9b033eda5f71832b99ccd61c4b8f956a3a8d7938ea191404dbd9fb77f",
+          "matchesOldBinding": false
+        },
+        {
+          "source": ".cache/S411/pre-canonical-build-source/index.html",
+          "sha256": "0e715b5d1dcdc9d4fac84c82b3f0479ff356c3e740323f1c19fc2a03892ca4ba",
+          "matchesOldBinding": true
+        }
+      ],
+      "exactOldSource": ".cache/S411/pre-canonical-build-source/index.html",
+      "exactOldBytesRecovered": true,
+      "rawChanges": {
+        "oldDaysSinceLaunch": "245",
+        "currentDaysSinceLaunch": "246",
+        "otherwiseExact": true
+      },
+      "assessment": {
+        "classification": "Only raw change is #days-since-launch245→246; replacing just its text restores exact old bytes.",
+        "consumers": [
+          "index.html:#days-since-launch"
+        ],
+        "pixelImplication": "Old644 group launch-age-ssr explicitly captures static launch counter, so its14 cells are affected and require current rendered review. Other home component groups can retain their scoped evidence with exact outside-region proof; do not label old launch-age screenshots current."
+      }
+    },
+    {
+      "path": "stats.json",
+      "oldBindingSha256": "7ff46c4390de8f0b6dfdba50a76af1b7b4fbc5ca3f6c7e082ae7d3c4f80835fd",
+      "currentBindingSha256": "1da58fcd460124d1056698834515d62cf58b4b2db56dc5a74701d3630bf4bafa",
+      "recoveryAttempts": [
+        {
+          "source": ".cache/S411/pre-canonical-build-json/stats.json",
+          "sha256": "7ff46c4390de8f0b6dfdba50a76af1b7b4fbc5ca3f6c7e082ae7d3c4f80835fd",
+          "matchesOldBinding": true
+        }
+      ],
+      "exactOldSource": ".cache/S411/pre-canonical-build-json/stats.json",
+      "exactOldBytesRecovered": true,
+      "jsonChanges": [
+        {
+          "path": "generatedAt",
+          "before": "2026-11-05T08:24:31.184Z",
+          "after": "2026-11-05T08:52:11.864Z",
+          "fieldEffect": "Formatted day unchanged or shadowed by observedThrough; no further visible card change."
+        },
+        {
+          "path": "metrics.1.computedAt",
+          "before": "2026-11-04T00:00:00.000Z",
+          "after": "2026-11-05T00:00:00.000Z",
+          "fieldEffect": "Formatted day unchanged or shadowed by observedThrough; no further visible card change."
+        },
+        {
+          "path": "metrics.1.observedThrough",
+          "before": "2026-11-04T00:00:00.000Z",
+          "after": "2026-11-05T00:00:00.000Z",
+          "fieldEffect": "Rendered date/provenance text changes."
+        },
+        {
+          "path": "metrics.4.computedAt",
+          "before": "2026-11-04T00:00:00.000Z",
+          "after": "2026-11-05T00:00:00.000Z",
+          "fieldEffect": "Formatted day unchanged or shadowed by observedThrough; no further visible card change."
+        },
+        {
+          "path": "metrics.4.observedThrough",
+          "before": "2026-11-04T00:00:00.000Z",
+          "after": "2026-11-05T00:00:00.000Z",
+          "fieldEffect": "Rendered date/provenance text changes."
+        },
+        {
+          "path": "metrics.6.computedAt",
+          "before": "2026-11-05T08:24:31.184Z",
+          "after": "2026-11-05T08:52:11.864Z",
+          "fieldEffect": "Formatted day unchanged or shadowed by observedThrough; no further visible card change."
+        },
+        {
+          "path": "metrics.6.observedThrough",
+          "before": "2026-11-05T08:24:31.184Z",
+          "after": "2026-11-05T08:52:11.864Z",
+          "fieldEffect": "Formatted day unchanged or shadowed by observedThrough; no further visible card change."
+        },
+        {
+          "path": "metrics.7.computedAt",
+          "before": "2026-11-04T22:26:41.196Z",
+          "after": "2026-11-05T08:50:44.315Z",
+          "fieldEffect": "Formatted day unchanged or shadowed by observedThrough; no further visible card change."
+        },
+        {
+          "path": "metrics.7.observedThrough",
+          "before": "2026-11-04",
+          "after": "2026-11-05",
+          "fieldEffect": "Rendered date/provenance text changes."
+        },
+        {
+          "path": "metrics.7.window.start",
+          "before": "2026-10-28",
+          "after": "2026-10-29",
+          "fieldEffect": "Rendered date/provenance text changes."
+        },
+        {
+          "path": "metrics.7.window.endExclusive",
+          "before": "2026-11-04",
+          "after": "2026-11-05",
+          "fieldEffect": "Rendered date/provenance text changes."
+        },
+        {
+          "path": "breakdowns.portfolioStatus.computedAt",
+          "before": "2026-11-04T00:00:00.000Z",
+          "after": "2026-11-05T00:00:00.000Z",
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "breakdowns.proofFreshness.computedAt",
+          "before": "2026-11-05T08:24:31.184Z",
+          "after": "2026-11-05T08:52:11.864Z",
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.0.day",
+          "before": "2026-10-05",
+          "after": "2026-10-06",
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.0.samples",
+          "before": 26,
+          "after": 27,
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.1.day",
+          "before": "2026-10-06",
+          "after": "2026-10-07",
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.1.samples",
+          "before": 27,
+          "after": 21,
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.2.day",
+          "before": "2026-10-07",
+          "after": "2026-10-08",
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.2.samples",
+          "before": 21,
+          "after": 59,
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.3.day",
+          "before": "2026-10-08",
+          "after": "2026-10-09",
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.3.samples",
+          "before": 59,
+          "after": 36,
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.4.day",
+          "before": "2026-10-09",
+          "after": "2026-10-10",
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.4.samples",
+          "before": 36,
+          "after": 11,
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.5.day",
+          "before": "2026-10-10",
+          "after": "2026-10-11",
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.5.samples",
+          "before": 11,
+          "after": 10,
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.6.day",
+          "before": "2026-10-11",
+          "after": "2026-10-12",
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.6.samples",
+          "before": 10,
+          "after": 35,
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.7.day",
+          "before": "2026-10-12",
+          "after": "2026-10-13",
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.7.samples",
+          "before": 35,
+          "after": 26,
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.8.day",
+          "before": "2026-10-13",
+          "after": "2026-10-14",
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.8.samples",
+          "before": 26,
+          "after": 1,
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.performanceSamplesDaily.9",
+          "before": {
+            "day": "2026-10-14",
+            "samples": 1
+          },
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        },
+        {
+          "path": "history.computedAt",
+          "before": "2026-11-04T22:26:41.196Z",
+          "after": "2026-11-05T08:50:44.315Z",
+          "fieldEffect": "No consumer in current stats-surface renderer."
+        }
+      ],
+      "changedFieldCount": 33,
+      "assessment": {
+        "classification": "33 exact changes: metric provenance dates/window, metadata stamps, rolling sample history.",
+        "consumers": [
+          "assets/stats-surface.js:54,63,87-95"
+        ],
+        "pixelImplication": "All metric numeric values and available/freshnessState remain exact. Homepage showcase sparked-projects observed-through date changesNov4→Nov5; deep Evidence also changes forge-projects and performance-samples-7d date, plus expanded performance measurement-window dates. proof-freshness generatedAt changes within same UTC day, so its formatted observed date is unchanged. Feed generatedAt is also same UTC day and formats identically. history/breakdowns fields are not read by stats-surface, so shifted sample history does not change current cards/charts.",
+        "coveredGroup": "No homepage Analytica or deep Evidence group in644; current proof for those changed data regions must not be inferred from other homepage component screenshots."
+      }
+    }
+  ],
+  "exactDerivedChecks": {
+    "statusSummaryOld": {
+      "fresh": 13,
+      "present": 18,
+      "stale": 5,
+      "trust": 72,
+      "oldestHours": 1711,
+      "seedRiskCount": 2
+    },
+    "statusSummaryCurrent": {
+      "fresh": 13,
+      "present": 18,
+      "stale": 5,
+      "trust": 72,
+      "oldestHours": 1711,
+      "seedRiskCount": 2
+    },
+    "statusSummaryDisplayEqual": true,
+    "metricValuesAndStatesEqual": true,
+    "statsGeneratedDayEqual": true,
+    "heatTop8RoundedWidthsEqual": true
+  },
+  "rawUiContinuity": {
+    "cacheDeclaredFiles": 781,
+    "cacheHashMismatches": [],
+    "currentRawChanges": [
+      "index.html"
+    ]
+  },
+  "captureScope": {
+    "groups": [
+      {
+        "id": "contact",
+        "page": "/contact/ :: shared-draft fields",
+        "cells": 14
+      },
+      {
+        "id": "rating",
+        "page": "/games/ :: page-rating states",
+        "cells": 14
+      },
+      {
+        "id": "member-login",
+        "page": "/vault-member/ :: login",
+        "cells": 14
+      },
+      {
+        "id": "member-register",
+        "page": "/vault-member/ :: register",
+        "cells": 14
+      },
+      {
+        "id": "member-oauth-complete",
+        "page": "/vault-member/ :: oauth-complete",
+        "cells": 14
+      },
+      {
+        "id": "enrollment-home",
+        "page": "/ :: enrollment component",
+        "cells": 14
+      },
+      {
+        "id": "enrollment-invite",
+        "page": "/invite/ :: enrollment component",
+        "cells": 14
+      },
+      {
+        "id": "enrollment-contact-topic",
+        "page": "/contact/?topic=invite :: enrollment component",
+        "cells": 14
+      },
+      {
+        "id": "door",
+        "page": "/ :: Vault door copy component",
+        "cells": 14
+      },
+      {
+        "id": "investor-login",
+        "page": "/investor-portal/login/ :: private workspace page",
+        "cells": 14
+      },
+      {
+        "id": "investor-apply",
+        "page": "/investor-portal/apply/ :: private workspace page",
+        "cells": 14
+      },
+      {
+        "id": "investor-overview",
+        "page": "/investor-portal/ :: private workspace page",
+        "cells": 14
+      },
+      {
+        "id": "investor-updates",
+        "page": "/investor-portal/updates/ :: private workspace page",
+        "cells": 14
+      },
+      {
+        "id": "investor-documents",
+        "page": "/investor-portal/documents/ :: private workspace page",
+        "cells": 14
+      },
+      {
+        "id": "investor-message",
+        "page": "/investor-portal/message/ :: private workspace page",
+        "cells": 14
+      },
+      {
+        "id": "investor-profile",
+        "page": "/investor-portal/profile/ :: private workspace page",
+        "cells": 14
+      },
+      {
+        "id": "investor-admin",
+        "page": "/investor-portal/admin/ :: private workspace page",
+        "cells": 14
+      },
+      {
+        "id": "investor-journey",
+        "page": "/investor-portal/ :: identity/application/navigation strip",
+        "cells": 14
+      },
+      {
+        "id": "entry-choose",
+        "page": "/sign-in/ :: choose",
+        "cells": 14
+      },
+      {
+        "id": "entry-recovery",
+        "page": "/sign-in/ :: recovery",
+        "cells": 14
+      },
+      {
+        "id": "public-seal-member",
+        "page": "/vault-member/ :: actual public Obelisk seal",
+        "cells": 14
+      },
+      {
+        "id": "public-seal-investor",
+        "page": "/investor-portal/login/ :: actual public Obelisk seal",
+        "cells": 14
+      },
+      {
+        "id": "footer",
+        "page": "/ :: canonical Portals footer component",
+        "cells": 14
+      },
+      {
+        "id": "pathway-account-components",
+        "page": "/pathways/players/ :: shared account navigation and footer",
+        "cells": 14
+      },
+      {
+        "id": "cancel-recovery-member",
+        "page": "/vault-member/ :: actual staging signup cancellation recovery",
+        "cells": 14
+      },
+      {
+        "id": "cancel-recovery-investor",
+        "page": "/investor-portal/login/ :: actual staging signup cancellation recovery",
+        "cells": 14
+      },
+      {
+        "id": "launch-age-ssr",
+        "page": "/ :: static launch-age counter",
+        "cells": 14
+      },
+      {
+        "id": "membership-initial",
+        "page": "/membership/ :: initial hero viewport",
+        "cells": 14
+      },
+      {
+        "id": "desk-published",
+        "page": "/ :: published Desk first tile",
+        "cells": 14
+      },
+      {
+        "id": "tombstones",
+        "page": "/vault/tombstones/ :: initial viewport",
+        "cells": 14
+      },
+      {
+        "id": "api-directory",
+        "page": "/api/ :: first original tile",
+        "cells": 14
+      },
+      {
+        "id": "news-index",
+        "page": "/news/ :: first original tile",
+        "cells": 14
+      },
+      {
+        "id": "news-archive-0",
+        "page": "/news/archive/2026-11/ :: first original tile",
+        "cells": 14
+      },
+      {
+        "id": "news-archive-1",
+        "page": "/news/archive/ :: first original tile",
+        "cells": 14
+      },
+      {
+        "id": "persona-dot",
+        "page": "/news/personas/dot/ :: profile first original tile",
+        "cells": 14
+      },
+      {
+        "id": "persona-juno",
+        "page": "/news/personas/juno/ :: profile first original tile",
+        "cells": 14
+      },
+      {
+        "id": "persona-mara",
+        "page": "/news/personas/mara/ :: profile first original tile",
+        "cells": 14
+      },
+      {
+        "id": "persona-rex",
+        "page": "/news/personas/rex/ :: profile first original tile",
+        "cells": 14
+      },
+      {
+        "id": "persona-vera",
+        "page": "/news/personas/vera/ :: profile first original tile",
+        "cells": 14
+      },
+      {
+        "id": "article-nov4-0",
+        "page": "/news/2026-11-04/google-faces-backlash-for-plan-that-would-turn-off/ :: default true viewport first tile",
+        "cells": 14
+      },
+      {
+        "id": "article-nov4-1",
+        "page": "/news/2026-11-04/google-says-students-in-schools-that-ban-ai-wont/ :: default true viewport first tile",
+        "cells": 14
+      },
+      {
+        "id": "article-nov4-2",
+        "page": "/news/2026-11-04/openai-says-chatgpt-is-catching-up-to-google-in/ :: default true viewport first tile",
+        "cells": 14
+      },
+      {
+        "id": "oracle-aligned-arrival",
+        "page": "/oracle/ :: native aligned arrival viewport",
+        "cells": 14
+      },
+      {
+        "id": "membership-idle-cta-default",
+        "page": "/membership/ :: idle interview CTA default viewport",
+        "cells": 14
+      },
+      {
+        "id": "membership-feedback-open-bottom",
+        "page": "/membership/ :: feedback open at bottom viewport",
+        "cells": 14
+      },
+      {
+        "id": "journal-aligned-arrival",
+        "page": "/journal/ :: native aligned story arrival viewport",
+        "cells": 14
+      }
+    ],
+    "directlyAffectedExistingGroup": {
+      "id": "launch-age-ssr",
+      "cells": 14,
+      "reason": "Actual counter text changed."
+    },
+    "remainingGroups": "630 existing primary cells have no identified changed consumed field within their declared scopes; preserve original capture times and attach explicit per-field/outside-region continuity. This classification is not a claim of new pixel inspection.",
+    "uncoveredChangedRenderedRegions": [
+      "Homepage Analytica sparked-projects observed-through date",
+      "Evidence freshness label for oracle-insights plus deep metric observed dates and expanded performance window provenance",
+      "Studio Pulse heat row0 displayed value plus public-intelligence relative freshness labels"
+    ],
+    "coverageLimit": "Those uncovered regions were not established by old644 matrix; do not extend its scope silently."
+  },
+  "minimalRefreshPlanning": {
+    "visual": "Refresh launch-age-ssr14cells. Plan bounded current screenshots of the actual changed home/Evidence/Pulse regions across applicable themes and desktop/mobile states, including expanded provenance if claiming that state. Reuse630 historical scoped cells only with exact independent continuity and unchanged PNG hashes; no blanket current-time rebind.",
+    "mobile215": "Mobile receipt raw-binds index.html and therefore cannot use metadata-only rebind after245→246. Existing rebind-mobile-receipt refuses changed source; rerun the existing215-cell audit against current owned preview to create supported current receipt.",
+    "windows70": "Existing no-update70 snapshot comparisons are viewport-only, not full-page and not the same as644 manual matrix. Repeat no-update70 at current sealed source for current evidence; a failure must be reviewed, not hidden by baseline update. Source delta does not itself justify changing expected screenshots.",
+    "ordering": "Finish generators first, then obtain applicable proof, bind to current manifest/source and run exact receipt/build checks. Full-source acceptance has not been executed by this review.",
+    "noNewCamerasExecuted": true
+  },
+  "constraints": {
+    "oldByteAcceptance": "Every recovered old byte hash exactly matches old644 source.entries. Nonmatching cache files were rejected. Static GETs used only anonymous public staging URLs, never backend APIs/private data.",
+    "oldCaptureProvenancePreserved": true,
+    "noTrackedChanges": true,
+    "noAccountOrProviderMutation": true,
+    "noTestsOrCamerasRun": true
+  },
+  "completedAt": "2026-11-05T09:00:36.993Z"
+}

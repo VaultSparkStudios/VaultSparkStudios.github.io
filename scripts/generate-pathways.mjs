@@ -150,6 +150,15 @@ const SAMPLE_STYLE = (sample.match(/href="(?:\.\.\/)*(assets\/style\.shell-[a-f0
 // build-shell-assets injects the nav-sheet loader per page — emit it so the
 // generated file is byte-identical with the reconciled one (S305).
 const NAV_SHEET_TAG = (sample.match(/<script src="\/assets\/nav-sheet\.shell-[a-f0-9]+\.js" defer><\/script>/) || [''])[0];
+// These controls are not in the ambient bundles. A visible hamburger and theme
+// chooser need the existing shell bootstraps on every generated pathway too.
+const ACCOUNT_NAV_BOOTSTRAP = ['themeToggle', 'navToggle'].map((key) => {
+  const asset = shellManifest.assets?.[key]?.path;
+  if (typeof asset !== 'string' || !/^assets\/[a-z-]+\.shell-[a-f0-9]+\.js$/.test(asset) || !existsSync(join(ROOT, asset))) {
+    throw new Error(`generate-pathways: missing current ${key} shell asset`);
+  }
+  return `<script src="/${asset}" defer></script>`;
+}).join('\n');
 
 function buildPage(p) {
   const depthPrefix = '../../';
@@ -167,14 +176,16 @@ function buildPage(p) {
       ${navBlock}
       <div class="nav-right">
         <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
-        <a class="nav-signin" href="/vault-member/#login">Sign In</a>
-        <a class="button button-sm" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
+        <a class="nav-signin" href="/sign-in/">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register" data-vs-join>Create Account</a>
         <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
-${deskWireBlock ? deskWireBlock + '\n' : ''}  </header><main id="main-content"><section class="container" style="padding:5rem 0"><span class="eyebrow">${escapeHtml(p.eyebrow)}</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.5rem)">${escapeHtml(p.headline)}</h1><p style="color:var(--muted);max-width:70ch">${escapeHtml(p.lede)}</p><p style="margin-top:1.5rem">${buildCtas(p.ctas)}</p>${buildRoute(p.steps)}</section></main>${footerForDepth(depthPrefix)}  ${ambientBlock}
+${deskWireBlock ? deskWireBlock + '\n' : ''}  </header><main id="main-content"><section class="container" style="padding:5rem 0"><span class="eyebrow">${escapeHtml(p.eyebrow)}</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.5rem)">${escapeHtml(p.headline)}</h1><p style="color:var(--muted);max-width:70ch">${escapeHtml(p.lede)}</p><p style="margin-top:1.5rem">${buildCtas(p.ctas)}</p>${buildRoute(p.steps)}</section></main>${footerForDepth(depthPrefix)}
+${ACCOUNT_NAV_BOOTSTRAP}
+${ambientBlock}
 ${NAV_SHEET_TAG ? `${NAV_SHEET_TAG}\n` : ''}</body></html>
 `;
 }

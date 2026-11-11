@@ -1,0 +1,30 @@
+{
+  "kind": "audit",
+  "session": 411,
+  "date": "2026-11-08",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Keep operational data private and all header controls reachable",
+  "items": [
+    {
+      "id": 4,
+      "slug": "private-staging-packaging",
+      "title": "Package only the canonical public served surface",
+      "axis": "security",
+      "leftScore": 10,
+      "rightScore": 3,
+      "insight": "Operational state stays private while the website and advertised discovery remain available. Reuse the public-file classifier in staging and preserve advertised routes.",
+      "evidence": "docs/S411_qa-release-findings-1108.json; current source and immutable before images."
+    },
+    {
+      "id": 5,
+      "slug": "stable-header-visual-state",
+      "title": "Keep desktop navigation inside its container and snapshot neutral state",
+      "axis": "ui-ux-feedback",
+      "leftScore": 8,
+      "rightScore": 3,
+      "insight": "Every header control remains visible and clickable across supported desktop themes; visual comparisons describe the intended neutral entry state. Compact desktop spacing and set a neutral snapshot pointer while preserving controls and tolerance.",
+      "evidence": "docs/S411_qa-release-findings-1108.json; current source and immutable before images."
+    }
+  ]
+}

@@ -21,6 +21,7 @@
  *                                                     # founder-requested re-roll, then publish
  *   node scripts/desk-art-autopilot.mjs --self-test
  */
+import { inspectDeskEmailArt } from './lib/desk-email-art.mjs';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -32,6 +33,7 @@ import { appendRoutineReceiptAtomic, buildRoutineReceipt, ROUTINE_RECEIPT_LEDGER
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const STAGE_HOME = path.join(ROOT, '.cache', 'desk-art-staging');
 const WT = path.join(STAGE_HOME, '_wt');
+export const ART_WORKTREE = WT;
 const LOCK = path.join(STAGE_HOME, 'autopilot.lock');
 const LOG = path.join(STAGE_HOME, 'autopilot.log');
 const REVIEWER = 'auto-review:codex (D-S368.10)';
@@ -92,6 +94,43 @@ export function classifyConflicts(paths) {
 }
 
 export function forbiddenChanges(paths) { return paths.filter((p) => FORBIDDEN.test(p)); }
+
+/** Explicit generation scope also owns review, re-roll and ingest scope. */
+export function explicitArtScope({ story = null, kind = null } = {}) {
+  if (kind !== null && !['all', 'banner', 'satire'].includes(kind)) throw new Error('Unknown art kind');
+  const stories = story === null ? [] : String(story).split(',').map(value => {
+    const match = /^(\d{4}-\d{2}-\d{2})(?:\/|--)([a-z0-9][a-z0-9-]*)$/.exec(value.trim());
+    if (!match || new Date(`${match[1]}T00:00:00Z`).toISOString().slice(0, 10) !== match[1]) throw new Error('Invalid scoped art story');
+    return `${match[1]}--${match[2]}`;
+  });
+  if (story !== null && !stories.length) throw new Error('Empty art scope');
+  return { stories: [...new Set(stories)], kind: kind === 'all' ? null : kind };
+}
+export function withinArtScope(item, scope) {
+  return (!scope.kind || scope.kind === item.kind) && (!scope.stories.length || scope.stories.includes(item.id));
+}
+export function scopedPendingImages(items, scope) { return items.filter(item => withinArtScope(item, scope)); }
+
+/** Source-preserving preparation cannot enter the generator/reviewer backlog. */
+export function existingArtPreparation(root, scope) {
+  if (!scope.stories.length || !scope.kind) throw new Error('--prepare-only requires explicit --story and banner/satire --kind');
+  const approved = { banner: [], satire: [] }, ids = [];
+  for (const id of scope.stories) {
+    const date = id.slice(0, 10), slug = id.slice(12);
+    const day = JSON.parse(fs.readFileSync(path.join(root, 'data/news-desk/days', date + '.json'), 'utf8'));
+    if (day.date !== date) throw new Error('Preparation issue date mismatch');
+    const story = day.stories.find(s => s.slug === slug);
+    if (!story) throw new Error('Preparation story not found');
+    const local = inspectDeskEmailArt({ root, day, stories: [story] });
+    const row = local.rows.find(r => r.kind === scope.kind);
+    const target = local.targets.find(t => t.kind === scope.kind);
+    if (!row || (target && target.action !== 'rebuild')) throw new Error('Preparation requires an existing hash-bound reviewed source');
+    const caricature = scope.kind === 'satire' && story.visual.satireCartoon.caricature === true;
+    approved[scope.kind].push(approvalEntry(id, row.sourceSha256, scope.kind, caricature));
+    ids.push(date + '/' + slug);
+  }
+  return { approved, args: ['scripts/build-news-desk.mjs', '--rebuild', scope.kind === 'satire' ? '--refresh-satire-only' : '--refresh-art-only', ids.join(',')] };
+}
 
 export function reviewArgs({ image, schemaFile, outFile, win32 = process.platform === 'win32' }) {
   // -i takes several values, so it goes first and the next flag ends its list.
@@ -224,15 +263,21 @@ function prepareWorktree() {
 const STAGING = () => path.join(WT, '.cache', 'desk-art-staging');
 const sha256 = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 
-function pendingImages() {
+export function ingestScopeArgs(scope) {
+  return scope.stories.length ? ['--story', scope.stories.join(',')] : [];
+}
+
+export function pendingImages(scope = explicitArtScope(), { runNode = node, staging = STAGING() } = {}) {
   const out = [];
-  for (const l of lines(node('scripts/ingest-news-art.mjs', '--from', STAGING(), '--dry-run').out)) {
-    const m = l.match(/✓ valid (\d{4}-\d{2}-\d{2}--[a-z0-9-]+) .*NOT YET REVIEWED/);
-    if (m) out.push({ id: m[1], kind: 'banner', file: path.join(STAGING(), m[1], 'art.png') });
-  }
-  for (const l of lines(node('scripts/ingest-news-art.mjs', '--kind', 'satire', '--from', STAGING(), '--dry-run').out)) {
-    const m = l.match(/✓ valid satire (\d{4}-\d{2}-\d{2}--[a-z0-9-]+) .*NOT YET REVIEWED/);
-    if (m) out.push({ id: m[1], kind: 'satire', file: path.join(STAGING(), m[1], 'satire.png') });
+  for (const kind of ['banner', 'satire']) {
+    if (scope.kind && scope.kind !== kind) continue;
+    const result = runNode('scripts/ingest-news-art.mjs', ...(kind === 'satire' ? ['--kind', 'satire'] : []), '--from', staging, '--dry-run', ...ingestScopeArgs(scope));
+    if (result.status !== 0) throw new Error(`Scoped ${kind} pending-art validation failed (exit ${result.status}); publication refused`);
+    const pattern = kind === 'satire' ? /✓ valid satire (\d{4}-\d{2}-\d{2}--[a-z0-9-]+) .*NOT YET REVIEWED/ : /✓ valid (\d{4}-\d{2}-\d{2}--[a-z0-9-]+) .*NOT YET REVIEWED/;
+    for (const line of lines(result.out)) {
+      const match = line.match(pattern);
+      if (match) out.push({ id: match[1], kind, file: path.join(staging, match[1], kind === 'satire' ? 'satire.png' : 'art.png') });
+    }
   }
   return out;
 }
@@ -416,19 +461,30 @@ async function main() {
   const startedAt = new Date().toISOString();
   if (!acquireLock()) { log('another autopilot run is active; exiting'); return 0; }
   try {
+    const scope = explicitArtScope({ story: flag('--story'), kind: flag('--kind') });
+    const prepareOnly = argv.includes('--prepare-only');
+    if (prepareOnly && (!scope.stories.length || !scope.kind)) throw new Error('--prepare-only requires explicit --story and banner/satire --kind');
     prepareWorktree();
+    let preparation = null;
+    const approved = { banner: [], satire: [] };
+    if (prepareOnly) {
+      preparation = existingArtPreparation(WT, scope);
+      Object.assign(approved, preparation.approved);
+      log('prepare-only: reusing reviewed sources; no model generation or review');
+    } else {
     REVIEW_DEPS = await import(pathToFileURL(path.join(WT, 'scripts', 'generate-news-art-codex.mjs')).href);
     const genArgs = ['scripts/generate-news-art-codex.mjs'];
     if (flag('--story')) genArgs.push('--story', flag('--story'));
     if (flag('--kind')) genArgs.push('--kind', flag('--kind'));
     if (argv.includes('--force')) genArgs.push('--force');
     log(`generate: ${genArgs.slice(1).join(' ') || '(all pending)'}`);
-    log(lines(node(...genArgs).out).filter((l) => /staged ·|preflight|refus|error/i.test(l)).join(' | ') || 'generate: nothing reported');
+    const generation = node(...genArgs);
+    log(lines(generation.out).filter((l) => /staged ·|preflight|refus|error/i.test(l)).join(' | ') || 'generate: nothing reported');
+    if (generation.status !== 0) throw new Error('Scoped art generation failed; review/publication refused');
 
-    const approved = { banner: [], satire: [] };
     const today = startedAt.slice(0, 10);
     for (let round = 0; round <= MAX_REROLLS; round += 1) {
-      const pending = pendingImages().filter((p) => !approved[p.kind].some((a) => a.startsWith(`${p.id}@`)));
+      const pending = scopedPendingImages(pendingImages(scope), scope).filter((p) => !approved[p.kind].some((a) => a.startsWith(`${p.id}@`)));
       if (!pending.length) break;
       const rerolls = [];
       for (const item of pending) {
@@ -447,13 +503,25 @@ async function main() {
       }
     }
 
+    }
     const total = approved.banner.length + approved.satire.length;
     log(`approved: ${approved.banner.length} banner, ${approved.satire.length} satire`);
     if (DRY || total === 0) { log(DRY ? 'dry run: nothing published' : 'nothing to publish'); return 0; }
 
-    for (const k of ['banner', 'satire']) {
+    if (prepareOnly) {
+      const r = node(...preparation.args);
+      if (r.status !== 0) throw new Error('Scoped source-preserving derivative rebuild failed');
+      // Verify producer-bound output against the unchanged reviewed sources.
+      const check = existingArtPreparation(WT, scope);
+      if (JSON.stringify(check.approved) !== JSON.stringify(approved)) throw new Error('Reviewed source changed during preparation');
+      for (const id of scope.stories) {
+        const day = JSON.parse(fs.readFileSync(path.join(WT, 'data/news-desk/days', id.slice(0, 10) + '.json'), 'utf8'));
+        const local = inspectDeskEmailArt({ root: WT, day, stories: day.stories.filter(s => s.slug === id.slice(12)) });
+        if (!local.rows.find(r => r.kind === scope.kind)?.ready) throw new Error('Rebuilt derivative provenance did not verify');
+      }
+    } else for (const k of ['banner', 'satire']) {
       if (!approved[k].length) continue;
-      const r = node('scripts/ingest-news-art.mjs', ...(k === 'satire' ? ['--kind', 'satire'] : []), '--from', STAGING(), '--reviewed', approved[k].join(','), '--reviewer', REVIEWER, '--allow-reformat');
+      const r = node('scripts/ingest-news-art.mjs', ...(k === 'satire' ? ['--kind', 'satire'] : []), '--from', STAGING(), ...ingestScopeArgs(scope), '--reviewed', approved[k].join(','), '--reviewer', REVIEWER, '--allow-reformat');
       log(`ingest ${k}: ${lines(r.out).slice(-2).join(' | ')}`);
       if (r.status !== 0) throw new Error(`ingest ${k} failed`);
     }
@@ -465,7 +533,7 @@ async function main() {
     if (bad.length) throw new Error(`refusing to publish: unexpected changes in ${bad.slice(0, 5).join(', ')}`);
     git('add', '-A');
     const msgFile = path.join(os.tmpdir(), `desk-art-autopilot-${process.pid}.txt`);
-    fs.writeFileSync(msgFile, `chore(routine-desk-art): auto-reviewed art for ${total} image(s)\n\nPrepared by desk-art-autopilot on the automated reviewer's approval (D-S368.10). Deployment is verified separately after release.\nBanners: ${approved.banner.join(', ') || 'none'}\nSatire: ${approved.satire.join(', ') || 'none'}\n`);
+    fs.writeFileSync(msgFile, `chore(routine-desk-art): ${prepareOnly ? "prepare reviewed source derivatives" : "auto-reviewed art"} for ${total} image(s)\n\n${prepareOnly ? "Reused existing hash-bound reviews; encoded fresh derivatives without model calls." : "Prepared on the automated reviewer's approval (D-S368.10)."} Deployment is verified separately after release.\nBanners: ${approved.banner.join(', ') || 'none'}\nSatire: ${approved.satire.join(', ') || 'none'}\n`);
     if (git('commit', '-q', '-F', msgFile).status !== 0) throw new Error('commit failed');
     recordArtCommitReceipt({ startedAt });
     if (!pushWithRetry(startedAt)) throw new Error('push failed after retries');

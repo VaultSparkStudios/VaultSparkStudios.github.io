@@ -1,0 +1,96 @@
+{
+  "session": 409,
+  "at": "2026-11-03T05:37:44.607Z",
+  "origin": "https://website.staging.vaultsparkstudios.com",
+  "workerVersion": "d7f05313-8ec1-4147-ae3d-bfe6fd85cdd5",
+  "state": "passed",
+  "scope": "Actual deployed staging Worker start/callback cancellation and missing-code recovery only. No positive authentication, provider login or private-data proof. Opaque values/cookies stay in memory.",
+  "observations": [
+    {
+      "audience": "member",
+      "intent": "signin",
+      "outcome": "cancel",
+      "status": 302,
+      "destination": "/vault-member/",
+      "error": "provider_denied",
+      "recoveredIntent": "signin",
+      "passed": true
+    },
+    {
+      "audience": "member",
+      "intent": "signin",
+      "outcome": "missing-code",
+      "status": 302,
+      "destination": "/vault-member/",
+      "error": "code_missing",
+      "recoveredIntent": "signin",
+      "passed": true
+    },
+    {
+      "audience": "member",
+      "intent": "signup",
+      "outcome": "cancel",
+      "status": 302,
+      "destination": "/vault-member/",
+      "error": "provider_denied",
+      "recoveredIntent": "signup",
+      "passed": true
+    },
+    {
+      "audience": "member",
+      "intent": "signup",
+      "outcome": "missing-code",
+      "status": 302,
+      "destination": "/vault-member/",
+      "error": "code_missing",
+      "recoveredIntent": "signup",
+      "passed": true
+    },
+    {
+      "audience": "investor",
+      "intent": "signin",
+      "outcome": "cancel",
+      "status": 302,
+      "destination": "/investor-portal/login/",
+      "error": "provider_denied",
+      "recoveredIntent": "signin",
+      "passed": true
+    },
+    {
+      "audience": "investor",
+      "intent": "signin",
+      "outcome": "missing-code",
+      "status": 302,
+      "destination": "/investor-portal/login/",
+      "error": "code_missing",
+      "recoveredIntent": "signin",
+      "passed": true
+    },
+    {
+      "audience": "investor",
+      "intent": "signup",
+      "outcome": "cancel",
+      "status": 302,
+      "destination": "/investor-portal/login/",
+      "error": "provider_denied",
+      "recoveredIntent": "signup",
+      "passed": true
+    },
+    {
+      "audience": "investor",
+      "intent": "signup",
+      "outcome": "missing-code",
+      "status": 302,
+      "destination": "/investor-portal/login/",
+      "error": "code_missing",
+      "recoveredIntent": "signup",
+      "passed": true
+    },
+    {
+      "outcome": "unsigned-unknown-context",
+      "status": 302,
+      "destination": "/sign-in/",
+      "passed": true
+    }
+  ]
+}

@@ -18,6 +18,9 @@
 
   var STORAGE_KEY = 'vs_rate_page_v1';
   var COOLDOWN_MS = 24 * 60 * 60 * 1000;
+  var memoryStore = {};
+  var storageAvailable = true;
+  var pendingFlights = Object.create(null);
   var REACTIONS = [
     { id: 'useful', label: '😍', aria: 'Useful' },
     { id: 'ok', label: '😐', aria: 'Just okay' },
@@ -27,15 +30,23 @@
   function pathKey() { return window.location.pathname.replace(/\/$/, '') || '/'; }
 
   function loadStore() {
+    if (!storageAvailable) return memoryStore;
+    var raw;
     try {
-      var raw = window.localStorage.getItem(STORAGE_KEY);
+      raw = window.localStorage.getItem(STORAGE_KEY);
+    } catch { storageAvailable = false; return memoryStore; }
+    try {
       var d = raw ? JSON.parse(raw) : {};
-      return (d && typeof d === 'object') ? d : {};
-    } catch { return {}; }
+      memoryStore = (d && typeof d === 'object' && !Array.isArray(d)) ? d : {};
+    } catch { memoryStore = {}; }
+    return memoryStore;
   }
 
   function saveStore(store) {
-    try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); } catch {}
+    memoryStore = store;
+    if (!storageAvailable) return;
+    try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); }
+    catch { storageAvailable = false; }
   }
 
   function recentlyRated(store) {
@@ -59,8 +70,27 @@
       var sb = window.VSSupabase;
       if (!sb || !sb.from) return false;
       var res = await sb.from('page_feedback').insert([payload]);
-      return !res || !res.error;
+      return !!res && !res.error;
     } catch { return false; }
+  }
+
+  function samePending(current, expected) {
+    return !!current && current.at === expected.at && current.reaction === expected.reaction &&
+      !!current.pendingPayload && JSON.stringify(current.pendingPayload) === JSON.stringify(expected.pendingPayload);
+  }
+
+  async function sendPending(key, entry) {
+    if (pendingFlights[key] || !samePending(loadStore()[key], entry)) return;
+    pendingFlights[key] = true;
+    try {
+      if (!await postToSupabase(entry.pendingPayload)) return;
+      // Another page/tab may have added or replaced records during this await.
+      // Acknowledge only this pending entry, against the latest store.
+      var current = loadStore();
+      if (!samePending(current[key], entry)) return;
+      delete current[key].pendingPayload;
+      saveStore(current);
+    } finally { delete pendingFlights[key]; }
   }
 
   function build() {
@@ -105,10 +135,17 @@
     var box = refs.box;
     var close = refs.close;
     var expand = refs.expand;
+    var admitted = false;
 
     box.addEventListener('click', async function (e) {
       var btn = e.target && e.target.closest && e.target.closest('.vs-rate-page__btn');
       if (!btn) return;
+      var key = pathKey();
+      var store = loadStore();
+      if (admitted || recentlyRated(store) || (store[key] && store[key].pendingPayload)) return;
+      // Admit synchronously, before any asynchronous insert or storage access
+      // can allow a second click through. This also works without localStorage.
+      admitted = true;
       var reaction = btn.dataset.reaction;
       box.querySelectorAll('.vs-rate-page__btn').forEach(function (b) { b.classList.remove('vs-rate-page__btn--active'); });
       btn.classList.add('vs-rate-page__btn--active');
@@ -119,15 +156,12 @@
         visit_depth_bucket: visitDepthBucket(),
         ua_kind: /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
       };
-      var store = loadStore();
-      store[pathKey()] = { at: Date.now(), reaction: reaction, replayed: false };
+      var entry = { at: Date.now(), reaction: reaction, replayed: false, pendingPayload: payload };
+      // Keep the payload until the provider acknowledges it, including a page
+      // navigation or close while its request is still in flight.
+      store[key] = entry;
       saveStore(store);
-
-      var sent = await postToSupabase(payload);
-      if (!sent) {
-        store[pathKey()].pendingPayload = payload;
-        saveStore(store);
-      }
+      await sendPending(key, entry);
 
       // Brief thank-you, then collapse.
       box.classList.add('vs-rate-page--thanks');
@@ -150,19 +184,13 @@
   }
 
   async function replayPending() {
-    var store = loadStore();
-    var entries = Object.entries(store);
+    var entries = Object.entries(loadStore());
     for (var i = 0; i < entries.length; i++) {
       var key = entries[i][0];
       var entry = entries[i][1];
       if (!entry || !entry.pendingPayload) continue;
-      var ok = await postToSupabase(entry.pendingPayload);
-      if (ok) {
-        delete entry.pendingPayload;
-        store[key] = entry;
-      }
+      await sendPending(key, entry);
     }
-    saveStore(store);
   }
 
   function shouldSkip() {

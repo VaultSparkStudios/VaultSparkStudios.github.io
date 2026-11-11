@@ -1,0 +1,287 @@
+{
+  "session": 410,
+  "goal": "01a1a424-fcbc-7f91-9461-d697bb287c76",
+  "state": "release-pending",
+  "audit": "docs/AUDIT_2026-11-04.json",
+  "authorization": "Founder explicitly authorizes normal direct main commit/push and full deployment; no force or gate bypass.",
+  "acceptance": {
+    "implementation": {
+      "state": "passed",
+      "items": 3,
+      "receipt": "docs/S410_implementation.json"
+    },
+    "source": {
+      "state": "pending",
+      "previousVerified": {
+        "state": "passed",
+        "nativeExit": 0,
+        "receipt": "docs/S410_source-acceptance.json",
+        "passed": 549,
+        "failed": 0,
+        "firstStep": 1,
+        "coverageComplete": true,
+        "sourceFingerprint": "6a8a78dd9aab8fcc72282f89",
+        "planFingerprint": "ebc0abfb1bddc9f7b788a1b0",
+        "completedAt": "2026-11-04T07:12:26.969Z",
+        "priorAttempts": [
+          "docs/S410_source-attempt1.json",
+          "docs/S410_source-attempt2.json",
+          "docs/S410_source-attempt3.json",
+          "docs/S410_source-attempt4.json"
+        ]
+      },
+      "reason": "Source is changing to repair actual hosted public failures; previous full549 proof remains bound to its original snapshot."
+    },
+    "localMobile": {
+      "state": "passed",
+      "passed": 215,
+      "receipt": "docs/mobile-audit/receipt.json",
+      "validation": "docs/S410_mobile-acceptance.json",
+      "nativeResult": ".cache/S410/merged-mobile-result.json",
+      "completedAt": "2026-11-04T05:21:19.019Z",
+      "sourceSha256": "58b6785e0f9360f791c543de19703cbaaa134a6ff39e978f212b55e4e20f11d7",
+      "candidate": {
+        "manifest": "api/candidate-artifact-manifest.json",
+        "manifestSha256": "ff759dc8420de629564733a7967167bc65ee41bb94949e6b46bb2236d05ac7aa",
+        "candidateSha": "c5799e951308e9e0bd5a24d173aee3e432476080",
+        "root": "4e6c93cf66bccdae932e5dbf56f5ecb227f85726d4c6ae0a570451fe033d6549"
+      },
+      "scope": "Actual native43-page×5-viewport audit, source/candidate/PNG hashes verified. Automated local layout/runtime evidence only; no provider or positive authenticated-role acceptance.",
+      "priorAcceptance": {
+        "state": "passed",
+        "passed": 215,
+        "receipt": "docs/mobile-audit/receipt.json",
+        "nativeResult": ".cache/S409/desk-clock-mobile-result.json",
+        "completedAt": "2026-11-04T03:40:29.426Z",
+        "sourceSha256": "54cd84df1868f4ff8c4e2f550e25f008cd4318f653fa2611d006d8994cb8f5d3",
+        "scope": "Actual43page×5viewport matrix after both dated homepage corrections; automated local runtime only, no provider/authenticated-role acceptance",
+        "priorAcceptance": {
+          "state": "passed",
+          "passed": 215,
+          "receipt": "docs/mobile-audit/receipt.json",
+          "nativeResult": ".cache/S409/clock-mobile-result.json",
+          "completedAt": "2026-11-04T02:41:52.230Z",
+          "scope": "Actual43page×5viewport matrix after source245 counter change; automated local runtime evidence, no authenticated-provider claim",
+          "priorAcceptance": {
+            "state": "passed",
+            "passed": 215,
+            "receipt": "docs/mobile-audit/receipt.json",
+            "nativeResult": ".cache/S409-mobile-pathway-final-result.json",
+            "completedAt": "2026-11-03T08:26:10.888Z",
+            "scope": "Actual full43page by5viewport matrix after pathway bootstrap; separate visual manual receipt covers rendered pixels."
+          }
+        }
+      }
+    },
+    "localVisual": {
+      "state": "passed",
+      "captures": 406,
+      "manual": 406,
+      "freshPrimaryFrames": 14,
+      "retainedPrimaryFrames": 392,
+      "historicalBeforeFrames": 14,
+      "receipt": "docs/visual-qa/LATEST.json",
+      "continuity": [
+        "docs/visual-qa/S410-desk-source-continuity.json",
+        "docs/visual-qa/S410-postbuild-source-continuity.json"
+      ],
+      "sourceSha256": "c888a65ea39b6f208f92db879aa448438c0c001728931048e13a03c05eb36f25",
+      "scope": "Actual14 before and14 after full-Desk pixels inspected across7themes desktop/mobile;392 unaffected primary frames retained with original times. Full build changes only non-rendered directory and manifest generation metadata in this source set. No authenticated acceptance.",
+      "candidate": {
+        "manifest": "api/candidate-artifact-manifest.json",
+        "manifestSha256": "ff759dc8420de629564733a7967167bc65ee41bb94949e6b46bb2236d05ac7aa",
+        "candidateSha": "c5799e951308e9e0bd5a24d173aee3e432476080",
+        "root": "4e6c93cf66bccdae932e5dbf56f5ecb227f85726d4c6ae0a570451fe033d6549"
+      }
+    },
+    "staging": {
+      "state": "passed",
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "deploy": "docs/S410_staging-deploy.json",
+      "servedReceiptAndLedgerVerified": true,
+      "ledgerDepth": 206,
+      "parity": "candidate-green; production-parity yellow",
+      "ceremony": {
+        "nativeExit": 0,
+        "receipt": "docs/S410_staging-ceremony.json",
+        "steps": 11,
+        "promotionMode": "scoped",
+        "scope": "Native critical-leaf promotion scope only; not full changed-identity acceptance."
+      },
+      "browser": {
+        "nativeExit": 0,
+        "receipt": "docs/S410_staging-browser-all.json",
+        "passed": 6,
+        "held": 0,
+        "failed": 0,
+        "flaky": 0,
+        "skipped": 0,
+        "priorRejectedAttempt": "docs/S410_staging-prove-all-attempt1.json"
+      },
+      "attention": {
+        "receipt": "docs/S410_staging-attention.json",
+        "passed": 15,
+        "failed": 0,
+        "skipped": 0,
+        "flaky": 0
+      },
+      "sourceFingerprint": "6a8a78dd9aab8fcc72282f89",
+      "positiveAuthenticatedJourneys": "unverified; anonymous browser boundary is not positive-role proof"
+    },
+    "exactRequiredHostedChecks": {
+      "state": "pending",
+      "previousNonpassing": {
+        "state": "failed",
+        "candidateCommit": "42ffd505d07d4f7b9152d28f2da41f66225d708c",
+        "workflowConclusions": "3 success",
+        "executedPublicE2E": "625 passed,34 failed,56 skipped; nonzero step was previously allowed",
+        "receipt": "docs/S410_hosted-attempt1.json"
+      },
+      "reason": "Fresh hardened source and reviewed baselines must be verified; no prior green workflow conclusion is borrowed."
+    },
+    "authenticatedJourneys": {
+      "state": "pending",
+      "scope": "Existing member, new open member/profile completion, approved investor/private data, ordinary-member application and access denial. Fixtures and public cards do not prove positive authentication.",
+      "observation": "docs/S409_provider-handoff-latest.json"
+    },
+    "remotePublication": {
+      "state": "pending"
+    },
+    "production": {
+      "state": "pending"
+    },
+    "completeServedReadback": {
+      "state": "pending"
+    },
+    "publisherRestoration": {
+      "state": "passed",
+      "receipt": "docs/S409_publisher-restoration.json",
+      "workflows": 5,
+      "uptimeActive": true
+    },
+    "build": {
+      "state": "passed",
+      "command": "npm run build",
+      "nativeExit": 0,
+      "postbuildSteps": 26,
+      "observedAt": "2026-11-04T05:08:13.459Z",
+      "sourceCommit": "c5799e951308e9e0bd5a24d173aee3e432476080"
+    }
+  },
+  "carry": {
+    "sourceSession": 409,
+    "ledger": "docs/RELEASE_S409.json",
+    "recoveryCheckpoint": "e6535f0b76",
+    "implementationCheckpoint": "23525b80e0",
+    "mergedUpstream": "c5799e9513",
+    "retainedStash": "3997c53d82a07dec0441caaf1c5254aafcd83dec",
+    "latestPublishedEdition": "2026-11-03"
+  },
+  "closeout": {
+    "state": "writeback-prepared-verification-pending",
+    "sil": 939,
+    "productVelocity": 0,
+    "protocolVelocity": 3,
+    "cdr": "reviewed; no new founder creative direction",
+    "intelligenceRefresh": {
+      "state": "completed-local",
+      "ignis": "docs/S410_ignis-refresh.json",
+      "stateVector": "context/STATE_VECTOR.json",
+      "genomeSession": 410,
+      "entropyCommand": "node scripts/compute-entropy.mjs --update"
+    },
+    "independentCloseoutReview": "pending",
+    "mainPush": "pending",
+    "nativeGoalComplete": false,
+    "preSourceWritebackReview": {
+      "state": "passed",
+      "reviewer": "s410_closeout_preflight",
+      "round": 2,
+      "findings": 0,
+      "priorRound": {
+        "findings": 3,
+        "fixed": 3
+      },
+      "scope": "Prepared writeback only; full source/release completion is not claimed."
+    },
+    "doctor": {
+      "nativeExit": 0,
+      "passed": 15,
+      "total": 17,
+      "warnings": 2,
+      "scope": "No blocking doctor failures; sibling locks/scheduled CI warnings remain distinct from required exact candidate checks."
+    }
+  },
+  "knownPending": [
+    "Exact candidate hosted workflows",
+    "Affected real member/investor journeys",
+    "Authorized normal main publication, production, full served readback and final closeout"
+  ],
+  "integrationSupport": {
+    "owner": "obelisk",
+    "request": "01K6IFCUOP330741545BEDEAE6",
+    "state": "shipped; no applied owner response observed",
+    "providerSource": "385e5719",
+    "finding": "Current authorization endpoint does not select signup from login_hint. Existing real-auth primitive alone does not establish enforced admission, verified mailbox, website public-member policy or approved-investor fixture.",
+    "affectedAcceptance": "unverified",
+    "authorization": "Functional evidence remains distinct from existing deployment permission."
+  },
+  "candidateSnapshot": {
+    "manifest": "api/candidate-artifact-manifest.json",
+    "manifestSha256": "ff759dc8420de629564733a7967167bc65ee41bb94949e6b46bb2236d05ac7aa",
+    "candidateSha": "c5799e951308e9e0bd5a24d173aee3e432476080",
+    "root": "4e6c93cf66bccdae932e5dbf56f5ecb227f85726d4c6ae0a570451fe033d6549",
+    "workingTreeSnapshot": true,
+    "note": "Source and staging proof bind actual working bytes; normal publication and exact hosted acceptance remain pending."
+  },
+  "currentReleaseRepair": {
+    "state": "in-progress",
+    "scope": [
+      "Fail executed E2E regardless of absent optional credentials",
+      "Remove configuration dotenv reads; public checks remain credential-free",
+      "Validate current member and investor gateway test contracts",
+      "Inspect visual diffs/readiness; never blind-rebaseline or raise tolerance",
+      "Diagnose hosted Desk artwork failure; local original3/3 and controlled timing passed, no speculative runtime fix"
+    ],
+    "artifactDownload": "Package-trust BLOCK; exact screenshot-artifact override requested and unanswered; no archive downloaded",
+    "visualCapture": {
+      "state": "capture-completed-with-one-retry",
+      "receipt": "docs/S410_visual-capture-attempt2.json",
+      "passed": 69,
+      "flaky": 1,
+      "failed": 0,
+      "downloaded": false,
+      "adopted": false
+    },
+    "focusedProof": "docs/S410_release-repair-progress.json",
+    "currentReadiness": {
+      "state": "passed",
+      "cases": 70,
+      "scene": "engaged and reduced motion",
+      "pixelComparisonToCommittedBaselines": "pending"
+    },
+    "visualCapturePrevious": {
+      "state": "failed",
+      "receipt": "docs/S410_visual-capture-attempt1.json",
+      "passed": 54,
+      "failed": 16,
+      "downloaded": false,
+      "adopted": false,
+      "diagnosis": "Actual ambient loader uses12second quiet-visit ceiling plus1200ms queue delay; currently proving explicit real-keyboard engaged scene while preserving5second readiness bound. No fakeDOM state or tolerance change."
+    },
+    "controlPlaneCredentialDiscovery": {
+      "state": "exact-project-existing-key-discovered-owner-intake-request-shipped",
+      "projectRef": "fjnpzjjyhnpmunfoycrp",
+      "projectStatus": "ACTIVE_HEALTHY",
+      "projectIdentityVerified": true,
+      "metadataRequests": [
+        200,
+        200
+      ],
+      "credentialValuesPersisted": false,
+      "ownerRequest": "01K6J03U6U190E2EAFA0447A1A",
+      "capabilityReady": false,
+      "scope": "Read-only management discovery; no positive member/investor acceptance."
+    }
+  }
+}

@@ -6,8 +6,8 @@ import { createHash } from 'node:crypto';
 import { createServer } from 'node:http';
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, extname, join, resolve } from 'node:path';
-import { chromium } from '@playwright/test';
 import sharp from 'sharp';
+import { acquireVisualPublicationLock } from './lib/visual-capture-provenance.mjs';
 
 const ROOT = resolve('.');
 const RAW = join(ROOT, '.cache', 'journey-visual');
@@ -86,20 +86,29 @@ async function contactSheet(theme, viewport, files) {
 }
 
 async function main() {
-  mkdirSync(RAW, { recursive: true }); mkdirSync(RECEIPT_DIR, { recursive: true });
-  const httpServer = await server(); const port = httpServer.address().port; const origin = `http://127.0.0.1:${port}`;
-  const browser = await chromium.launch({ headless: true }); const captures = [];
+  const release = acquireVisualPublicationLock(ROOT);
+  let httpServer, browser;
   try {
+  mkdirSync(RAW, { recursive: true }); mkdirSync(RECEIPT_DIR, { recursive: true });
+  httpServer = await server(); const port = httpServer.address().port; const origin = `http://127.0.0.1:${port}`;
+  const { chromium } = await import('@playwright/test');
+  browser = await chromium.launch({ headless: true }); const captures = [];
     for (const theme of THEMES) for (const viewport of VIEWPORTS) {
       const files = [];
       for (const state of STATES) { console.log(`→ ${theme} ${viewport.name} ${state}`); files.push(await capture(browser, origin, theme, viewport, state)); console.log(`✓ ${theme} ${viewport.name} ${state}`); }
       const sheet = await contactSheet(theme, viewport, files);
       captures.push({ theme, viewport: { width: viewport.width, height: viewport.height }, file: sheet.split(/[\\/]/).at(-1), sha256: sha256(sheet), page: '/games/ journey states: bridge · tour · feedback · constellation compass' });
     }
-  } finally { await browser.close(); await new Promise((done) => httpServer.close(done)); }
   const manifest = { schemaVersion: 1, capturedAt: new Date().toISOString(), generatedBy: 'scripts/capture-journey-visual-proof.mjs', themes: THEMES, inspection: { renderedPixelsReviewed: false, reviewer: 'pending image-capable review', findings: [], fixesApplied: [], blockingDefectsOpen: 1 }, matrix: { rawCaptures: THEMES.length * VIEWPORTS.length * STATES.length, states: STATES, contactSheets: captures.length }, captures };
   writeFileSync(join(RECEIPT_DIR, 'LATEST.json'), `${JSON.stringify(manifest, null, 2)}\n`);
   console.log(`journey visual proof: ${manifest.matrix.rawCaptures} raw captures · ${captures.length} hash-bound contact sheets · review pending`);
+  } finally {
+    try { if (browser) await browser.close(); }
+    finally {
+      try { if (httpServer) await new Promise((done) => httpServer.close(done)); }
+      finally { release(); }
+    }
+  }
 }
 
 main().catch((error) => { console.error(error); process.exit(1); });

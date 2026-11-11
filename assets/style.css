@@ -335,9 +335,11 @@ body.high-contrast-mode .hamburger span { background: var(--text); }
      were rendering an 81px picker into the 92px hole — a measured -11px
      `.nav-right` shift at 1366px on /news/ and nowhere else. */
   flex: 0 0 92px;
+  min-width: 0;
 }
 .theme-picker-btn {
   display: flex;
+  width: 100%;
   align-items: center;
   gap: 0.42rem;
   padding: 0.38rem 0.64rem;
@@ -352,7 +354,7 @@ body.high-contrast-mode .hamburger span { background: var(--text); }
   transition: border-color 0.18s, background 0.18s;
   white-space: nowrap;
   min-height: 44px;
-  min-width: 44px;
+  min-width: 92px;
   line-height: 1;
 }
 .theme-picker-btn:hover { border-color: var(--gold); }
@@ -813,6 +815,15 @@ p { margin: 0; }
 
 /* Mobile-only nav footer — hidden on desktop, visible inside open mobile menu */
 .mobile-nav-footer { display: none; }
+
+/* Anonymous rank controls follow the active palette, including light mode. */
+.site-header .vs-rank-orb-anon::before { border-color: var(--muted, #a8b4d0); }
+.site-header .vs-rank-orb-anon .vs-rank-orb-num { color: var(--muted, #a8b4d0); }
+.site-header .vs-rank-orb-tip {
+  background: var(--bg-soft, #0c0e18);
+  color: var(--text, #eef2ff);
+  border-color: var(--header-border);
+}
 
 .nav-right {
   display: flex;
@@ -1912,8 +1923,29 @@ body.light-mode .text-white { color: var(--text); }
    dropdown rows and the mobile navigation retain their existing geometry. */
 @media (min-width: 1025px) {
   .nav { gap: 0.6rem; }
+  .nav-center { gap: 0.1rem; }
+  .nav-right { gap: 0.35rem; }
   .nav-center > a,
-  .nav-center > .nav-item > a { padding-inline: 0.35rem; }
+  .nav-center > .nav-item > a { padding-inline: 0.2rem; }
+}
+@media (min-width: 1025px) {
+  .site-header .brand small, .site-header .brand .brand-suffix { display: none; }
+}
+/* Match the existing compact header before the palette loader arrives. */
+@media (min-width: 1025px) and (max-width: 1450px) {
+  .site-header .brand { gap: .45rem; }
+  .site-header .brand img { width: 36px; height: 36px; }
+  .site-header .brand > span { font-size: .9rem; }
+  .site-header .brand small { font-size: .6rem; letter-spacing: .04em; }
+  .site-header .nav { gap: .4rem; }
+  .site-header .nav-center a { font-size: .82rem; padding-inline: .25rem; }
+  .site-header .nav-right { gap: .35rem; }
+  .site-header .nav-signin { padding-inline: .35rem; }
+}
+@media (min-width: 1451px) {
+  .site-header .container { width: min(calc(100% - 2rem), 1360px); }
+  .site-header .brand small { display: block; }
+  .site-header .brand .brand-suffix { display: inline; }
 }
 
 @media (max-width: 1100px) {
@@ -5162,6 +5194,15 @@ body.light-mode .intel-suite a[aria-current="page"] small {
    drift on a host that lacks it, desynchronising the reservation. */
 .nav-right .vs-palette-loader-trigger {
   flex: 0 0 86px;
+}
+@media (max-width: 360px) {
+  .site-header .nav { gap: 0.2rem; }
+  .site-header .nav-right { gap: 0.2rem; }
+  .site-header .nav-right .vs-palette-loader-trigger {
+    flex-basis: 74px;
+    gap: 0.2rem;
+    padding-inline: 0.3rem;
+  }
 }
 @media (max-width: 640px) {
   .nav-right {

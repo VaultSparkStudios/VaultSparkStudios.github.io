@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-08T13:10:24.442Z",
+  "scope": "Bounded S411 outcome8 parser repair; full source suite, CI, release, whole-session timing and native arc completion are not claimed.",
+  "source": "scripts/check-news-copy-quality.mjs",
+  "sourceBeforeSha256": "2d24b22981d41a93d7b8b25a27e1df8c8f854214a4d6620fbb742a05ee882c30",
+  "sourceAfterSha256": "ac354f34f6f91bc5a7925e89088bb696a3bb1d21e660e3db092b9d3cb6737a1b",
+  "admission": {
+    "file": "docs/S411_copy-noun-admission-1108.json",
+    "sha256": "c77f17fa019ac4c20bfdd7f336bf29b993a6f822b29ed1e590e63930e76f4ab7",
+    "strictPremisesVerified": 3,
+    "strictNativeExit": 0,
+    "bundleNativeExit": 0,
+    "parserPreimageUnchangedAtAdmission": true,
+    "originalRawAdmissionSha256": "6e5353e02b714a58cfe9d7a8da4bdf7ba4d1babd5413611fa3110e4fd2b65860",
+    "currentFileRole": "Forward privacy-normalized view of the preserved raw pre-implementation admission; not a newly run admission."
+  },
+  "before": {
+    "corpusNativeExit": 1,
+    "existingSelfTestsNativeExit": 0,
+    "existingSelfTestsPassed": 83,
+    "regressionsNativeExit": 1,
+    "regressionsPassed": 93,
+    "regressionsTotal": 96,
+    "regressionsLogSha256": "8068bf3509c7e17702188e564420c8f2d4266187ab24480d2918c6104be0bf68",
+    "threePositiveRegressionsFailedBefore": true
+  },
+  "after": {
+    "selfTestsNativeExit": 0,
+    "selfTestsPassed": 96,
+    "selfTestsTotal": 96,
+    "corpusNativeExit": 0,
+    "corpusFindings": 0
+  },
+  "boundaries": "Matching quote pair immediately after the/a/an; no intervening quotes or line/paragraph breaks; quoted question followed by horizontal spacing and terminal part. Lowercase after part., ordinary part-of sentences, orphan/mismatched quotes and LF/CRLF/U+2028/U+2029 boundaries stay detected. Existing connective parser and all83 tests retained.",
+  "priorEvidence": [
+    {
+      "file": "docs/AUDIT_2026-11-06-S411.json",
+      "sha256": "733a57a963150f17d8b8a52a675c7daa22567dae7fb66e1f722a1e85c43c4d36"
+    },
+    {
+      "file": "docs/S411_copy-boundary-recovery-evidence.json",
+      "sha256": "3512af320beaa1f66f2dc33df19f66391165658eda70da604b415c864c1afe46"
+    },
+    {
+      "file": "docs/S411_theme-reserve-admission-1108.json",
+      "sha256": "9fd97e4b4a9a5e4024bc6556c3ecc61bf57e38a6c0193120555fc77983d68a9e"
+    }
+  ],
+  "priorEvidenceUnchanged": true,
+  "articleTextChanged": false,
+  "uiSourceChanged": false,
+  "renderedPixelReceiptChanged": false,
+  "rollback": "Revert the focused parser diff only; retain all failed evidence, prior admissions and pending release status.",
+  "independentReview": {
+    "reviewer": "recovery_closeout_review",
+    "verdict": "pass",
+    "observedAt": "2026-11-08T13:09:51.281Z",
+    "sourceSha256": "ac354f34f6f91bc5a7925e89088bb696a3bb1d21e660e3db092b9d3cb6737a1b",
+    "focusedExactArrayProbesPassed": 14,
+    "total": 14
+  },
+  "publicEvidenceNormalization": {
+    "observedAt": "2026-11-08T14:45:09.957Z",
+    "sourceCommit": "304b7af4a428977c45e5a226a2fe4bfeeb4737c2",
+    "field": "strict.output.selectionReason",
+    "change": "Forward public privacy correction of selector spelling only: absolute local project path replaced by repo-relative audit selector. Before verdicts, premise results, original admission timestamp and source preimages retained. No verifier rerun or history rewrite.",
+    "originalRawAdmissionSha256": "6e5353e02b714a58cfe9d7a8da4bdf7ba4d1babd5413611fa3110e4fd2b65860",
+    "rawGitBytesPreservedInIgnoredWorkspace": true,
+    "currentNormalizedFileIsNotTheRawBeforeArtifact": true
+  }
+}

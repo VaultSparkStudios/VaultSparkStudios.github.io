@@ -1,0 +1,79 @@
+{
+  "kind": "closeout",
+  "session": "S409",
+  "date": "2026-11-03",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Release preparation: five local outcomes; no production promotion claimed",
+  "silBefore": 939,
+  "silAfter": 939,
+  "silDelta": {
+    "previous": 939,
+    "current": 939
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "share-contact-draft",
+      "title": "Local: Carry shared content into the Contact draft",
+      "axis": "ui-ux-feedback",
+      "projectImpact": 7,
+      "ecosystemImpact": 3,
+      "insight": "Visitors can send shared information without reconstructing a lost message. A real share-to-contact click preserves Unicode title, text and URL as editable plain text; existing topic, blank and restored-form paths remain correct.",
+      "evidence": "docs/S409_implementation.json; full release docs/RELEASE_S409.json",
+      "leftScore": 7,
+      "rightScore": 3
+    },
+    {
+      "id": 2,
+      "slug": "page-rating-single-flight",
+      "title": "Local: Count one page rating during its cooldown",
+      "axis": "gamification-immersion",
+      "projectImpact": 7,
+      "ecosystemImpact": 3,
+      "insight": "Visitors can give one reliable reaction without inflating the feedback used to improve the site. Rapid clicks and reopening cannot post twice; denied storage still has an in-memory guard; failed requests retry once on revisit; replay completion preserves a newer rating and other page entries.",
+      "evidence": "docs/S409_implementation.json; full release docs/RELEASE_S409.json",
+      "leftScore": 7,
+      "rightScore": 3
+    },
+    {
+      "id": 3,
+      "slug": "member-account-experience",
+      "title": "Local: member entrance and profile continuity",
+      "axis": "ui-ux-feedback",
+      "insight": "The account entrance separates free membership from investor approval. Browser checks cover profile completion before safe destination resume; live provider acceptance remains pending.",
+      "evidence": "docs/S409_access-implementation.json; release pending docs/RELEASE_S409.json",
+      "leftScore": 7,
+      "rightScore": 3
+    },
+    {
+      "id": 4,
+      "slug": "premium-investor-experience",
+      "title": "Local: separate premium investor workspace",
+      "axis": "ui-ux-feedback",
+      "insight": "Investor Relations has a dedicated gateway, application and workspace. Identity creation stays separate from approval; private data in local UI captures is fixture data.",
+      "evidence": "docs/S409_access-implementation.json; release pending docs/RELEASE_S409.json",
+      "leftScore": 7,
+      "rightScore": 3
+    },
+    {
+      "id": 5,
+      "slug": "audience-safe-auth-recovery",
+      "title": "Local: trusted audience recovery",
+      "axis": "security",
+      "insight": "Signed browser context preserves the intended audience and sign-in mode. Nine deployed staging recovery cases pass; positive authenticated journeys remain pending.",
+      "evidence": "docs/S409_access-implementation.json; release pending docs/RELEASE_S409.json",
+      "leftScore": 7,
+      "rightScore": 3
+    }
+  ],
+  "blockers": [
+    "Supported provider signup intent, website enrollment and positive authenticated journeys remain unverified.",
+    "Final complete source/staging/hosted release, production readback and main publication remain pending."
+  ],
+  "followUps": [
+    "Locally implemented: Contact drafts, feedback admission, member onboarding, premium Investor Relations and trusted recovery. Evidence: docs/RELEASE_S409.json.",
+    "Mobile215/215 and336 reviewed visual captures pass; fixtures and public cards do not prove private authentication.",
+    "This is a preliminary evidence boundary. Resume bound S409; full closeout and goal completion are not asserted."
+  ]
+}

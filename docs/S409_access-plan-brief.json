@@ -1,0 +1,42 @@
+{
+  "kind": "plan",
+  "session": 409,
+  "date": "2026-11-03",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Distinct member and investor journeys from entrance to workspace",
+  "items": [
+    {
+      "id": 1,
+      "slug": "member-account-experience",
+      "title": "A distinct Vault Member sign-in and creation experience",
+      "axis": "ui-ux-feedback",
+      "leftScore": 9,
+      "rightScore": 6,
+      "insight": "The existing creation panel sends new members through a sign-in-first screen with dense technical instructions and no clear audience choice. Create a branded two-audience entry, redesign member sign-in/create/profile-completion states, preserve referral and return intent, and present invite requirements honestly. Keep Obelisk credentials and existing membership policy authoritative.",
+      "evidence": "Real browser sign-in/create/profile/recovery states are readable and navigable across all seven themes and desktop/mobile; current authenticated member and invited onboarding journeys return to the correct member context."
+    },
+    {
+      "id": 2,
+      "slug": "premium-investor-experience",
+      "title": "Restore the premium Investor Relations journey and workspace",
+      "axis": "ui-ux-feedback",
+      "leftScore": 9,
+      "rightScore": 6,
+      "insight": "The structurally separate investor portal has an application mislabeled Create account, hardcoded dashboard returns, and no consumed submission confirmation. Create a premium institutional investor entrance and consistent workspace shell across all subpages. Separate identity creation, investor access request and approval; consolidate the application into its existing route; preserve safe investor destinations and accurate browser submission confirmation. Do not change approval tiers, permissions or financial/private data.",
+      "evidence": "All investor routes and states receive real rendered review across themes and viewports. Existing approved investors retain exact deep links; signed-in ordinary members can request access without logout or investor data; application failure/retry/confirmation is accurate without inventing server status."
+    },
+    {
+      "id": 3,
+      "slug": "audience-safe-auth-recovery",
+      "title": "Preserve audience and initiating mode through secure identity recovery",
+      "axis": "security",
+      "leftScore": 9,
+      "rightScore": 6,
+      "insight": "Member failures change sign-in into registration, and invalid/expired callback failures default to membership even for investors. Preserve trusted initiating intent and audience in the existing signed flow. Use a neutral audience chooser when no trusted flow survives; preserve fail-closed state, nonce, PKCE and access gates. Verify provider-supported signup behavior before promising it; coordinate owner dependencies through Ark.",
+      "evidence": "Regression tests prove cancellation, provider errors, expiry, invalid state and hostile return targets remain fail closed with correct audience recovery. Affected real authorized member/investor/private-data journeys are required separately; anonymous denials and fixtures do not substitute."
+    }
+  ],
+  "blockers": [],
+  "followUps": []
+}
