@@ -1,13 +1,13 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-11-11T03:19:59.236Z",
+  "generatedAt": "2026-11-11T18:56:28.565Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 411,
+    "currentSession": 414,
     "lastUpdated": "2026-11-11",
     "currentFocus": "Local Desk image-before-email tooling and response repairs verified; release checks and isolated account acceptance in progress.",
     "nextMilestone": "Complete isolated member/investor acceptance and exact candidate checks, then authorized staging-to-production promotion and readback.",
@@ -145,7 +145,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 411,
+    "sessionsCompleted": 414,
     "liveProjects": 3,
     "projectsInForge": 17,
     "activeEdgeFunctions": 16,
@@ -839,29 +839,29 @@
       "projectId": "website",
       "name": "Studio platform",
       "type": "platform",
-      "heat": 1480
+      "heat": 1440
     }
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "CI gate status is unknown.",
-    "checkedAt": "2026-11-08T08:02:22.540Z",
+    "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
+    "checkedAt": "2026-11-11T04:00:36.941Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "unknown"
+        "status": "failure"
       },
       {
         "name": "Accessibility Audit",
-        "status": "unknown"
+        "status": "success"
       },
       {
         "name": "Lighthouse CI",
-        "status": "unknown"
+        "status": "in_progress"
       },
       {
         "name": "Deploy Cloudflare Worker",
-        "status": "unknown"
+        "status": "success"
       }
     ]
   }
