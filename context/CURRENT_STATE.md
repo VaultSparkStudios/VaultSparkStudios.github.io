@@ -1,3 +1,8 @@
+<!-- S413-member-access-release -->
+## S413 member access maintenance
+
+On November 10, 2026, isolated staging and production received the approved registration and member statistics guards. Open registration now reserves the normalized VaultSpark handle, and the private statistics function accepts only the signed-in member's own account. Isolated synthetic SQL checks covered ordinary registration, the reserved handle and own-member statistics. Independent production readback verified both installed definitions and their existing permissions. The broader website release and browser account journeys remain pending.
+
 <!-- S412-full-local-source-verified -->
 ## S412 QA checkpoint — local proof verified, release incomplete
 

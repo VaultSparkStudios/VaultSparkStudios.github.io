@@ -15,8 +15,25 @@
       ]
     },
     {
+      "path": "assets/ambient-feature.shell-fd51619897.js",
+      "sourceSha256": "fd516198979c67d62f7be1dce248ca056fefbfffeeae63d7d0548d2782e43a84",
+      "routes": []
+    },
+    {
       "path": "assets/contact-page.shell-da428b9351.js",
       "sourceSha256": "da428b9351f1d7b38dd137135ebba8aec3b50ab0ad87bb7af7a1b020e84f53e1",
+      "routes": []
+    },
+    {
+      "path": "assets/desk-comments.shell-86897ab3de.js",
+      "sourceSha256": "86897ab3dee3347ed05fdd394ac9bbd52fc0ac7738060175991f3682c4cb5f26",
+      "routes": [
+        "/v/desk-comments"
+      ]
+    },
+    {
+      "path": "assets/ignis-platform.shell-fb8d402bb6.js",
+      "sourceSha256": "fb8d402bb6c4139ef9bc5b6f5539c5dda070b45ff29dc6d8d087449eb7b21031",
       "routes": []
     },
     {
@@ -35,6 +52,16 @@
       "routes": []
     },
     {
+      "path": "assets/membership-idle-loader.shell-202362ca41.js",
+      "sourceSha256": "202362ca4156f8a555ee64b07a7a16635cbd83b308d5841e2d7bd7e85da70fc6",
+      "routes": []
+    },
+    {
+      "path": "assets/membership-interview.shell-166b7790cf.js",
+      "sourceSha256": "166b7790cfd38c622c54195e07e77f83f74a98570825b53ae109302964a40489",
+      "routes": []
+    },
+    {
       "path": "assets/obelisk-seal-entry.shell-281c25ac75.js",
       "sourceSha256": "281c25ac7564c47ad1d2c3a909c2e608b7b3a272195249b166499499a402a171",
       "routes": []
@@ -43,11 +70,19 @@
       "path": "assets/rate-page.shell-f047c9d940.js",
       "sourceSha256": "f047c9d940860bf1ada321eaeee8a998e714b2a85365ef438d78e849555e4e0a",
       "routes": []
+    },
+    {
+      "path": "assets/theme-toggle.shell-c2c9a3a78c.js",
+      "sourceSha256": "c2c9a3a78cf844976647bbd979d93ef94f69e63fdddda7b5f4d76a1ebd8678ac",
+      "routes": []
     }
   ],
   "requiredRoutes": [
+    "/v/desk-comments",
     "/v/rum"
   ],
-  "allowed": true,
-  "blockers": []
+  "allowed": false,
+  "blockers": [
+    "Worker route provenance is missing, future-dated, or older than 72 hours"
+  ]
 }

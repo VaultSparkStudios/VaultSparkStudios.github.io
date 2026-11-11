@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-10-13T00:00:00.000Z",
+  "generatedAt": "2026-10-26T00:00:00.000Z",
   "windowDays": 7,
   "minSamples": 50,
   "evidenceState": "stale",
@@ -8,339 +8,87 @@
   "status": "stale",
   "ok": null,
   "coverage": {
-    "totalRows": 371,
-    "observedRoutes": 38,
-    "sufficientRoutes": 0,
-    "latestDay": "2026-10-13",
-    "latestAgeDays": 22,
+    "totalRows": 405,
+    "observedRoutes": 35,
+    "sufficientRoutes": 1,
+    "latestDay": "2026-10-26",
+    "latestAgeDays": 15,
     "freshnessMaxDays": 7,
     "currentFresh": false
   },
   "comparison": {
     "basis": "last-known-observation",
-    "latestStart": "2026-10-07",
-    "latestEndExclusive": "2026-10-14",
-    "previousStart": "2026-09-30"
+    "latestStart": "2026-10-20",
+    "latestEndExclusive": "2026-10-27",
+    "previousStart": "2026-10-13"
   },
   "routes": {
-    "/": {
-      "currentSamples": 37,
-      "previousSamples": 11,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 716,
-        "clsP75": 0.0057,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 1300,
-        "clsP75": 0.0002,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
     "/games/": {
-      "currentSamples": 29,
-      "previousSamples": 9,
+      "currentSamples": 15,
+      "previousSamples": 14,
       "sufficient": false,
       "current": {
-        "lcpP75": 608,
-        "clsP75": 0.0552,
-        "inpP75": 0
+        "lcpP75": 958,
+        "clsP75": 0.04275,
+        "inpP75": 56
       },
       "previous": {
-        "lcpP75": 1092,
-        "clsP75": 0.01185,
-        "inpP75": 44
+        "lcpP75": 634,
+        "clsP75": 0.0513,
+        "inpP75": 20
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
       "status": "insufficient"
     },
     "/games/franchise-architect/": {
-      "currentSamples": 20,
-      "previousSamples": 4,
+      "currentSamples": 18,
+      "previousSamples": 17,
       "sufficient": false,
       "current": {
-        "lcpP75": 588,
+        "lcpP75": 733,
         "clsP75": 0.0017,
         "inpP75": 0
       },
       "previous": {
-        "lcpP75": 1000,
-        "clsP75": 0.0028,
-        "inpP75": 0
+        "lcpP75": 980,
+        "clsP75": 0.00245,
+        "inpP75": 28
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
       "status": "insufficient"
     },
     "/games/gridiron-gm/": {
-      "currentSamples": 33,
-      "previousSamples": 15,
-      "sufficient": false,
+      "currentSamples": 59,
+      "previousSamples": 63,
+      "sufficient": true,
       "current": {
-        "lcpP75": 1396,
-        "clsP75": 0.0054,
+        "lcpP75": 960,
+        "clsP75": 0.0116,
         "inpP75": 80
       },
       "previous": {
-        "lcpP75": 1800,
-        "clsP75": 0.0114,
+        "lcpP75": 1772,
+        "clsP75": 0.0096,
         "inpP75": 0
       },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
+      "lcpDeltaPct": -45.8,
+      "clsDelta": 0.002,
+      "status": "ok"
     },
     "/games/solara/": {
-      "currentSamples": 14,
-      "previousSamples": 4,
+      "currentSamples": 11,
+      "previousSamples": 18,
       "sufficient": false,
       "current": {
-        "lcpP75": 2314,
-        "clsP75": 0.009399999999999999,
+        "lcpP75": 992,
+        "clsP75": 0.0059,
         "inpP75": 0
       },
       "previous": {
-        "lcpP75": 1804,
-        "clsP75": 0.0151,
-        "inpP75": 64
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/subscribed/": {
-      "currentSamples": 2,
-      "previousSamples": 1,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 3000,
-        "clsP75": 0.0036,
-        "inpP75": 48
-      },
-      "previous": {
-        "lcpP75": 1476,
-        "clsP75": 0.0015,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/studio-pulse/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 372,
-        "clsP75": 0.0034,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/changelog/": {
-      "currentSamples": 3,
-      "previousSamples": 1,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 306,
-        "clsP75": 0.00575,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 332,
-        "clsP75": 0.0056,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/contact/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 2604,
-        "clsP75": 0.0141,
-        "inpP75": 288
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/faq/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 1398,
-        "clsP75": 0.0013,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/call-of-doodie/": {
-      "currentSamples": 2,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 1094,
-        "clsP75": 0.00585,
-        "inpP75": 88
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/mindframe/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 728,
-        "clsP75": 0.0053,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/vaultfront/": {
-      "currentSamples": 2,
-      "previousSamples": 1,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 434,
-        "clsP75": 0.0093,
-        "inpP75": 48
-      },
-      "previous": {
-        "lcpP75": 980,
-        "clsP75": 0,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/2026-10-06/anthropic-subscriptions-offer-5x-more-value-than-openai/": {
-      "currentSamples": 8,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 412,
-        "clsP75": 0,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/play/": {
-      "currentSamples": 3,
-      "previousSamples": 2,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 610,
-        "clsP75": 0.0056,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 788,
-        "clsP75": 0.0056,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/roadmap/": {
-      "currentSamples": 5,
-      "previousSamples": 1,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 308,
-        "clsP75": 0.0091,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 380,
-        "clsP75": 0.0088,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/api/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 204,
-        "clsP75": 0,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/community/": {
-      "currentSamples": 1,
-      "previousSamples": 1,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 860,
-        "clsP75": 0.0017,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 112,
-        "clsP75": 0,
+        "lcpP75": 1864,
+        "clsP75": 0.00675,
         "inpP75": 0
       },
       "lcpDeltaPct": null,
@@ -348,48 +96,30 @@
       "status": "insufficient"
     },
     "/news/": {
-      "currentSamples": 3,
-      "previousSamples": 5,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 384,
-        "clsP75": 0.0015,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 1108,
-        "clsP75": 0.0026,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/2026-09-01/anthropic-releases-claude-fable-5-1-and-claude-mythos/": {
-      "currentSamples": 2,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 2312,
-        "clsP75": 0.0018,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/2026-10-08/nous-research-confirms-it-hit-1-5b-valuation-launches/": {
       "currentSamples": 1,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 192,
-        "clsP75": 0.0041,
+        "lcpP75": 940,
+        "clsP75": 0.0059,
+        "inpP75": 72
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/news/personas/echo/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 0,
+        "clsP75": 0.0032,
         "inpP75": 0
       },
       "previous": {
@@ -401,13 +131,49 @@
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/studio/": {
+    "/news/personas/mica/": {
+      "currentSamples": 3,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 636,
+        "clsP75": 0.0059,
+        "inpP75": 96
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/news/personas/vera/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 860,
+        "clsP75": 0.0032,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/projects/seamline/": {
       "currentSamples": 2,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 626,
-        "clsP75": 0,
+        "lcpP75": 1048,
+        "clsP75": 0.0017,
         "inpP75": 0
       },
       "previous": {
@@ -419,12 +185,120 @@
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/": {
-      "currentSamples": 10,
+    "/": {
+      "currentSamples": 13,
+      "previousSamples": 24,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 472,
+        "clsP75": 0,
+        "inpP75": 40
+      },
+      "previous": {
+        "lcpP75": 1516,
+        "clsP75": 0.0041,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/collaborate/": {
+      "currentSamples": 1,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 590,
+        "lcpP75": 2208,
+        "clsP75": 0.0014,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/contact/": {
+      "currentSamples": 1,
+      "previousSamples": 2,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 265,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 776,
+        "clsP75": 0.013049999999999999,
+        "inpP75": 68
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/call-of-doodie/": {
+      "currentSamples": 5,
+      "previousSamples": 4,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 288,
+        "clsP75": 0.0031,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 1068,
+        "clsP75": 0.0027,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/vaultfront/": {
+      "currentSamples": 10,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 917.5,
+        "clsP75": 0.00365,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 166,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/news/2026-10-04/super-intelligence-legal-definition-60-day-deadline-what-to-watch/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 3200,
+        "clsP75": 0.0009,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/privacy/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 286,
         "clsP75": 0,
         "inpP75": 0
       },
@@ -442,61 +316,7 @@
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 1264,
-        "clsP75": 0.004,
-        "inpP75": 48
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/2026-09-22/nvidia-isaac-ros-5-0-advances-agentic-open-source/": {
-      "currentSamples": 2,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 2860,
-        "clsP75": 0.0018,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/2026-09-27/openai-agents-tried-to-bruteforce-a-un-website/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 2872,
-        "clsP75": 0.0002,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/2026-09-30/trump-ai-deal-rebrands-artificial-intelligence-as-superintelligence/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 1424,
+        "lcpP75": 242,
         "clsP75": 0,
         "inpP75": 0
       },
@@ -509,13 +329,31 @@
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/news/2026-10-11/anthropic-asks-users-to-stop-being-mean-to-claude-update-2026-10-11/": {
+    "/studio/": {
+      "currentSamples": 1,
+      "previousSamples": 4,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 194,
+        "clsP75": 0,
+        "inpP75": 72
+      },
+      "previous": {
+        "lcpP75": 295,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/universe/voidfall/": {
       "currentSamples": 1,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 804,
-        "clsP75": 0.0041,
+        "lcpP75": 251,
+        "clsP75": 0,
         "inpP75": 0
       },
       "previous": {
@@ -527,13 +365,13 @@
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/news/personas/juno/": {
+    "/games/the-exodus/": {
       "currentSamples": 1,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 408,
-        "clsP75": 0.0039,
+        "lcpP75": 1120,
+        "clsP75": 0.0012,
         "inpP75": 0
       },
       "previous": {
@@ -545,12 +383,30 @@
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/projects/the-living-protocol/": {
-      "currentSamples": 2,
+    "/journal/dispatches/": {
+      "currentSamples": 1,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 712,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 474,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/roadmap/": {
+      "currentSamples": 1,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 2636,
+        "lcpP75": 632,
         "clsP75": 0.0017,
         "inpP75": 0
       },
@@ -564,42 +420,6 @@
       "status": "insufficient"
     },
     "/games/project-unknown/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 788,
-        "clsP75": 0.0011,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/2026-09-17/anthropic-merges-claude-chat-cowork-and-more-into-a/": {
-      "currentSamples": 2,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 2900,
-        "clsP75": 0.0018,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/2026-10-04/trump-order-renames-ai-super-intelligence-what-changes-and-what-doesnt/": {
       "currentSamples": 0,
       "previousSamples": 1,
       "sufficient": false,
@@ -609,7 +429,43 @@
         "inpP75": null
       },
       "previous": {
-        "lcpP75": 103,
+        "lcpP75": 788,
+        "clsP75": 0.0011,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/news/2026-09-17/anthropic-merges-claude-chat-cowork-and-more-into-a/": {
+      "currentSamples": 0,
+      "previousSamples": 4,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 1950,
+        "clsP75": 0.0017499999999999998,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/news/2026-10-06/anthropic-subscriptions-offer-5x-more-value-than-openai/": {
+      "currentSamples": 0,
+      "previousSamples": 6,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 935,
         "clsP75": 0,
         "inpP75": 0
       },
@@ -617,7 +473,7 @@
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/ai-vs-si/": {
+    "/synthetic-intelligence/": {
       "currentSamples": 0,
       "previousSamples": 2,
       "sufficient": false,
@@ -627,17 +483,17 @@
         "inpP75": null
       },
       "previous": {
-        "lcpP75": 696,
-        "clsP75": 0.00275,
+        "lcpP75": 1705.5,
+        "clsP75": 0.00125,
         "inpP75": 0
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/games/vaultspark-forge/": {
+    "/community/": {
       "currentSamples": 0,
-      "previousSamples": 1,
+      "previousSamples": 35,
       "sufficient": false,
       "current": {
         "lcpP75": null,
@@ -645,33 +501,15 @@
         "inpP75": null
       },
       "previous": {
-        "lcpP75": 892,
-        "clsP75": 0.0057,
-        "inpP75": 56
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/2026-10-05/accept-bad-things-in-return-for-benefits-of-ai/": {
-      "currentSamples": 0,
-      "previousSamples": 1,
-      "sufficient": false,
-      "current": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "previous": {
-        "lcpP75": 432,
-        "clsP75": 0.0021,
+        "lcpP75": 350,
+        "clsP75": 0.0059,
         "inpP75": 0
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/leaderboards/": {
+    "/search/": {
       "currentSamples": 0,
       "previousSamples": 1,
       "sufficient": false,
@@ -681,7 +519,25 @@
         "inpP75": null
       },
       "previous": {
-        "lcpP75": 124,
+        "lcpP75": 1016,
+        "clsP75": 0.0023,
+        "inpP75": 48
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/stats/ecosystem/": {
+      "currentSamples": 0,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 732,
         "clsP75": 0,
         "inpP75": 0
       },
@@ -689,7 +545,25 @@
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/news/2026-10-05/openai-rogue-agent-activities-found-on-wikimedia-projects/": {
+    "/games/mindframe/": {
+      "currentSamples": 0,
+      "previousSamples": 2,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 1188,
+        "clsP75": 0.0056,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/membership/": {
       "currentSamples": 0,
       "previousSamples": 1,
       "sufficient": false,
@@ -699,8 +573,80 @@
         "inpP75": null
       },
       "previous": {
-        "lcpP75": 624,
-        "clsP75": 0.0021,
+        "lcpP75": 1120,
+        "clsP75": 0.0041,
+        "inpP75": 96
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/member/": {
+      "currentSamples": 0,
+      "previousSamples": 2,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 480,
+        "clsP75": 0.0017,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/news/2026-10-17/openai-discloses-four-more-rogue-incidents/": {
+      "currentSamples": 0,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 370,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/studio-pulse/": {
+      "currentSamples": 0,
+      "previousSamples": 2,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 343,
+        "clsP75": 0,
+        "inpP75": 56
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/projects/obelisk/": {
+      "currentSamples": 0,
+      "previousSamples": 2,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 1016,
+        "clsP75": 0,
         "inpP75": 0
       },
       "lcpDeltaPct": null,

@@ -11,7 +11,7 @@
 - [x] Intermediate pre-publication-projection source verification: uninterrupted 552/552 from step 1, native exit 0; docs/S413_SOURCE_CHECKPOINT.json.
 - [ ] Verify the final publication candidate after public-documentation projections and final source freeze; intermediate worktree proof does not cover those changes.
 - [ ] Complete isolated access/security acceptance and affected member/investor journeys before data-route exposure.
-- [ ] Obtain the required explicit security-flow decision before applying changes; verify installed access boundaries before data-route exposure.
+- [x] Apply the approved registration and own-member statistics guards. Isolated synthetic SQL smoke and independent production catalog readback passed.
 - [ ] Exact candidate native visual/required CI, current staging parity and rollback.
 - [ ] Authorized main/production promotion, served readback and full closeout.
 
