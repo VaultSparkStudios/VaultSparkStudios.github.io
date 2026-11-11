@@ -1,0 +1,327 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-11-11",
+  "generatedAt": "2026-11-11T18:59:52.216Z",
+  "session": 415,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S415 arc after explicitly partial S414 recovery. Stabilize candidate verification and complete the authorized release where actual gates permit. Historical unselected policy, spending, force-push and creative decisions retain their separate scope.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 1,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 1,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "features-depth-new-breadth",
+          "premise": "New breadth is the highest supported-release priority.",
+          "evidence": "Live source/doctor and exact-HEAD E2E show unresolved release failures; existing features remain intact. New breadth would not resolve the verified acceptance dependency."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [
+        "candidate-baseline-provenance"
+      ],
+      "rejectedOnVerify": []
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "gamification-immersion-new-breadth",
+          "premise": "New breadth is the highest supported-release priority.",
+          "evidence": "Live source/doctor and exact-HEAD E2E show unresolved release failures; existing features remain intact. New breadth would not resolve the verified acceptance dependency."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "ai-intelligence-new-breadth",
+          "premise": "New breadth is the highest supported-release priority.",
+          "evidence": "Live source/doctor and exact-HEAD E2E show unresolved release failures; existing features remain intact. New breadth would not resolve the verified acceptance dependency."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [
+        "affected-authenticated-promotion"
+      ],
+      "rejectedOnVerify": []
+    },
+    "speed-organization-efficiency": {
+      "surviving": [
+        "candidate-required-acceptance"
+      ],
+      "rejectedOnVerify": []
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "token-cost-new-breadth",
+          "premise": "New breadth is the highest supported-release priority.",
+          "evidence": "Live source/doctor and exact-HEAD E2E show unresolved release failures; existing features remain intact. New breadth would not resolve the verified acceptance dependency."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "observability-honesty-new-breadth",
+          "premise": "New breadth is the highest supported-release priority.",
+          "evidence": "Live source/doctor and exact-HEAD E2E show unresolved release failures; existing features remain intact. New breadth would not resolve the verified acceptance dependency."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "sil-debt-new-breadth",
+          "premise": "New breadth is the highest supported-release priority.",
+          "evidence": "Live source/doctor and exact-HEAD E2E show unresolved release failures; existing features remain intact. New breadth would not resolve the verified acceptance dependency."
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "candidate-baseline-provenance",
+      "title": "Prevent production captures from becoming candidate baselines",
+      "axis": "ui-ux-feedback",
+      "tier": "⚡",
+      "impact": 9,
+      "innovation": 5,
+      "effortHours": 2,
+      "priority": 22.5,
+      "status": "pending",
+      "executionLog": [],
+      "selectedDepth": "L2",
+      "why": "Recovered CI capture42961446030 logs production origin and failed26 checks; required candidate E2E42964550489 fails10 cells.",
+      "userOutcome": "Visitors see intentional, reviewed Games layout and CI tests the version actually being released.",
+      "readinessArea": "Accessibility and presentation",
+      "stageRationale": "SPARKED supported-release stabilization; fix demonstrated release failures before new breadth. No tier, pricing, trust-policy or lifecycle change.",
+      "recipe": "Default manual captures to the local candidate. Refuse external-origin baseline generation, emit source/origin capture provenance, and make baseline imports reject failed, wrong-SHA or unbound runs before download. Extend the existing workflow audit checker and focused CLI tests.",
+      "acceptance": "Actual workflow contract, negative admission tests and unchanged workflow checks pass. No PNG adoption without direct review and unchanged native comparison.",
+      "premises": [
+        {
+          "claim": "The live source contains the selected reproducible release boundary.",
+          "adapter": "file-content",
+          "target": ".github/workflows/visual-regression.yml",
+          "pattern": "default: 'https://vaultsparkstudios.com'",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Diagnose and preserve evidence only; below selected acceptance."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Default manual captures to the local candidate. Refuse external-origin baseline generation, emit source/origin capture provenance, and make baseline imports reject failed, wrong-SHA or unbound runs before download. Extend the existing workflow audit checker and focused CLI tests."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Broader redesign is unselected; complete the stated acceptance without expanding policy."
+        }
+      }
+    },
+    {
+      "id": 2,
+      "slug": "candidate-required-acceptance",
+      "title": "Complete current candidate visual and source acceptance",
+      "axis": "speed-organization-efficiency",
+      "tier": "⚡",
+      "impact": 9,
+      "innovation": 2,
+      "effortHours": 3,
+      "priority": 7.752178045321076,
+      "status": "pending",
+      "executionLog": [],
+      "selectedDepth": "L2",
+      "why": "Fresh native source attempt failed at step3; required exact-HEAD Lighthouse/accessibility are absent.",
+      "userOutcome": "Visitors receive a candidate whose public journeys and rendering have passed current checks.",
+      "readinessArea": "Recovery and operations",
+      "stageRationale": "SPARKED supported-release stabilization; fix demonstrated release failures before new breadth. No tier, pricing, trust-policy or lifecycle change.",
+      "recipe": "Reproduce the fixture-load timeout separately without weakening assertions. Integrate current main without history rewrite, regenerate owned outputs and run the complete 552-step source suite. Obtain exact candidate hosted E2E, Lighthouse and accessibility results; preserve failures.",
+      "acceptance": "Complete native source result and exact final SHA required workflows pass. One focused retry does not erase the failed full run.",
+      "premises": [
+        {
+          "claim": "The live source contains the selected reproducible release boundary.",
+          "adapter": "file-content",
+          "target": ".github/RELEASE_CHECKS.json",
+          "pattern": "e2e.yml",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1.5,
+          "recipe": "Diagnose and preserve evidence only; below selected acceptance."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Reproduce the fixture-load timeout separately without weakening assertions. Integrate current main without history rewrite, regenerate owned outputs and run the complete 552-step source suite. Obtain exact candidate hosted E2E, Lighthouse and accessibility results; preserve failures."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Broader redesign is unselected; complete the stated acceptance without expanding policy."
+        }
+      }
+    },
+    {
+      "id": 3,
+      "slug": "affected-authenticated-promotion",
+      "title": "Verify affected authentication before authorized promotion",
+      "axis": "security",
+      "tier": "⚡",
+      "impact": 10,
+      "innovation": 2,
+      "effortHours": 3,
+      "priority": 8.613531161467861,
+      "status": "pending",
+      "executionLog": [],
+      "selectedDepth": "L2",
+      "why": "Successful callback code validates signed browser context; affected deployed authenticated continuity remains unverified.",
+      "userOutcome": "Vault Members and approved investors retain their intended destination and protected access through the identity flow.",
+      "readinessArea": "Onboarding and identity",
+      "stageRationale": "SPARKED supported-release stabilization; fix demonstrated release failures before new breadth. No tier, pricing, trust-policy or lifecycle change.",
+      "recipe": "Reuse existing isolated staging and approved identities to verify changed signin/signup success and recovery boundaries, tampered context denial and data isolation. Verify staging root and rollback, then perform existing authorized main/production promotion and served readback.",
+      "acceptance": "Affected deployed member/investor journeys, exact required checks, staging/artifact parity, rollback and production served bytes verified. Local mocked auth and live denials alone do not pass.",
+      "premises": [
+        {
+          "claim": "The live source contains the selected reproducible release boundary.",
+          "adapter": "file-content",
+          "target": "cloudflare/obelisk-auth.js",
+          "pattern": "recoveryContext",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1.5,
+          "recipe": "Diagnose and preserve evidence only; below selected acceptance."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Reuse existing isolated staging and approved identities to verify changed signin/signup success and recovery boundaries, tampered context denial and data isolation. Verify staging root and rollback, then perform existing authorized main/production promotion and served readback."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Broader redesign is unselected; complete the stated acceptance without expanding policy."
+        }
+      }
+    }
+  ],
+  "totals": {
+    "count": 3,
+    "priority": 38.865709206788935,
+    "top3": [
+      "candidate-baseline-provenance",
+      "candidate-required-acceptance",
+      "affected-authenticated-promotion"
+    ]
+  },
+  "innovationReserve": [],
+  "skipped": [
+    {
+      "slug": "blind-css-retuning",
+      "reason": "Wrong-origin baseline source is proven; inspect provenance before attributing all failures to runtime geometry."
+    },
+    {
+      "slug": "oracle-arrival-rewrite",
+      "reason": "Prior controlled response checks did not establish a defect; preserve current code."
+    },
+    {
+      "slug": "legacy-force-push-and-policy-items",
+      "reason": "History purge, billing and membership policy decisions are not authorized by saturation wording."
+    }
+  ],
+  "candidateReview": {
+    "features": [
+      "new gallery",
+      "new conversion copy"
+    ],
+    "ux": [
+      "candidate capture provenance",
+      "baseline coverage"
+    ],
+    "gamification": [
+      "new ranks",
+      "new challenges"
+    ],
+    "ai": [
+      "Oracle rewrite",
+      "image worker expansion"
+    ],
+    "security": [
+      "affected auth acceptance",
+      "new auth policy"
+    ],
+    "speed": [
+      "current required checks",
+      "more build optimization"
+    ],
+    "tokenCost": [
+      "prompt compression",
+      "new inference provider"
+    ],
+    "observability": [
+      "baseline provenance receipt",
+      "current release ledger"
+    ],
+    "silDebt": [
+      "inherited queue expansion",
+      "recovery boundary"
+    ]
+  },
+  "recovery": "docs/S414_RECOVERY_BOUNDARY.md",
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-11-11T18:59:54.501Z",
+    "head": "3eabb2259eec4b44fa9c61ff8488cb25c6d88d4c",
+    "sidecar": "docs/AUDIT_2026-11-11-S415.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 3,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "eb099cdaf7d48421c987a8ea633d892e5d69900e0cf311c14d6adc6f822ffb77",
+    "implementationDirty": [
+      "docs/GENIUS_LIST.md",
+      "docs/S415_AUDIT_BRIEF.md",
+      "docs/S415_PLAN_BRIEF.md"
+    ]
+  }
+}
