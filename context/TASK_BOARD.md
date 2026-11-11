@@ -1,3 +1,13 @@
+<!-- S415-active-waves -->
+## S415 selected outcomes
+
+- [x] Fresh monotonic startup, native binding and nine-axis audit/plan admission.
+- [x] Candidate-only generation and exact artifact admission/extraction locally verified (7 tests; independent source review passed). Live import and baseline review remain separate.
+- [ ] Finish integrated candidate source/required hosted visual, Lighthouse and accessibility acceptance.
+- [ ] Affected deployed authentication, current isolated staging parity, authorized production promotion/readback and full closeout.
+
+Waves1–3 locally verified;4 release acceptance in progress;5 full closeout pending. Evidence: docs/S415_IMPLEMENTATION_CHECKPOINT.json.
+
 <!-- S414-recovery-boundary -->
 ## S414 recovered acceptance boundary
 

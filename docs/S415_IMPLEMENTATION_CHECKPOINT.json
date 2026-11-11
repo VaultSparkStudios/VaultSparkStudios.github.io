@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0",
+  "publicSafe": true,
+  "session": 415,
+  "observedAt": "2026-11-11T19:13:50.576Z",
+  "outcome": "Candidate visual capture and baseline admission hardening locally verified; release acceptance remains open.",
+  "files": [
+    {
+      "path": ".github/workflows/visual-regression.yml",
+      "sha256": "6424d9207a136fc7c3e54f754476aa3ec332bdc1d5d3b6027c073b3524ce68d0"
+    },
+    {
+      "path": "scripts/admit-visual-capture.mjs",
+      "sha256": "605ce2bad306c8b1c2d545b3b90fbc1e5b94b8ddf005ec42915066a12999e49a"
+    },
+    {
+      "path": "scripts/lib/visual-capture-source.mjs",
+      "sha256": "2b8ae544223a452f9f2441448304ea8b349cbc5ee1192c5867ab35c5a4eb85ce"
+    },
+    {
+      "path": "scripts/lib/visual-capture-archive.mjs",
+      "sha256": "71cc9f17e41bb5935c8ca46d97d613d355b60c7065eacce5cb04a2f1ccd54a96"
+    },
+    {
+      "path": "scripts/update-vr-baselines.mjs",
+      "sha256": "75b479dac286e8c71aea84c4801b7857901b51072aa46b06d67e0135b04a6edd"
+    },
+    {
+      "path": "tests/visual-capture-source.unit.spec.mjs",
+      "sha256": "4a2063608953036a5b34fb5ea2ffb0c784185ac9ceff5b4deab9dd9f28f2cfa0"
+    }
+  ],
+  "tests": {
+    "command": "node --test tests/visual-capture-source.unit.spec.mjs",
+    "passed": 7,
+    "failed": 0,
+    "scope": "Offline source admission, real CLI no-write/positive cases and actual ZIP digest/traversal/member validation; not live import or UI acceptance."
+  },
+  "review": {
+    "verdict": "pass",
+    "receipt": "portfolio/ops/review-loop-receipts.ndjson",
+    "note": "Initial findings corrected; exact artifact transfer verified in final source review. Reviewer ran no tests."
+  },
+  "limitations": [
+    "No new archive downloaded; package trust remains nonpassing for the observed artifact.",
+    "No baseline adopted or new visual acceptance claimed.",
+    "Fresh recovery full source failed step3; isolated retry passed1/1, not a replacement full proof.",
+    "Exact required CI, affected deployed authentication, current staging and production acceptance remain pending."
+  ],
+  "integration": {
+    "commit": "c31f5d3661",
+    "note": "Current main integrated by ordinary merge; 30 generated conflicts selected as rebuild inputs, no source conflict; derived graph regeneration follows."
+  }
+}

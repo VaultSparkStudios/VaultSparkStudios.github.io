@@ -121,20 +121,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Repair candidate baseline provenance and o  ║
-║        Repair candidate baseline provenance and obtain unchange  ║
-║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Integrate current main safely and complete  ║
+║   93  [PRODUCT]      Affected deployed authentication, current   ║
+║        Affected deployed authentication, current isolated stagi  ║
+║                                                                  ║
+║   90  [PRODUCT]      Repair candidate baseline provenance and o  ║
+║        Repair candidate baseline provenance and obtain unchange  ║
+║                                                                  ║
+║   86  [VERIFY]       Finish integrated candidate source/require  ║
+║        Finish integrated candidate source/required hosted visua  ║
+║                                                                  ║
+║   84  [PRODUCT]      Integrate current main safely and complete  ║
 ║        Integrate current main safely and complete exact candida  ║
-║                                                                  ║
-║   87  [SECURITY]     Complete isolated access/security acceptan  ║
-║        Complete isolated access/security acceptance and affecte  ║
-║                                                                  ║
-║   77  [VERIFY]       Verify affected authenticated journeys and  ║
-║        Verify affected authenticated journeys and current stagi  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

@@ -1,3 +1,16 @@
+<!-- S415-active-native-arc -->
+## S415 — fresh native arc, current checkpoint
+
+Session Intent: recover the interrupted release and complete this invocation’s full fresh startup/audit/implementation/closeout and authorized promotion with actual acceptance. Native goal `01a1cbea-9fe7-7451-b10e-92851aad5427`, created `1794422530`, is bound to S415 at `238f060770`; automatic continuation resumes this session. Do not start a new arc.
+
+Recovery was explicitly partial, not full closeout. Its checkpoint and S415 source are remotely published through `b02ac72e2e`. Startup/canon sync and fresh nine-axis audit/plan admission passed. Zero measured ABSOLUTE gaps; CANON-045 STRONG gap and affected deployed account acceptance remain open. Official-source radar is current; context usage is unmeasured.
+
+Candidate capture/import hardening passed seven focused tests and corrected independent review. Exact source hashes and limits: docs/S415_IMPLEMENTATION_CHECKPOINT.json. Generated captures remain provisional; no PNG was adopted. Generic archive trust BLOCK is preserved. Current main was integrated in `c31f5d3661`; 30 generated collisions had no source ambiguity and the owning dependency graph is being rebuilt before verification/publication. A named stash preserves tracked diagnostic residue: `S415 preserved diagnostic residue before main integration`; do not drop or blindly replay it.
+
+Continue with completion of the graph rebuild, exact-candidate QA publication and Linux capture/comparison, complete source run, all required exact-SHA workflows, affected real member/investor authentication and isolated staging parity, then authorized normal production promotion/readback and full canonical closeout. Prior S411 score939 remains historical. Do not mark this native goal complete until this invocation’s full acceptance is verified.
+
+Waves1 recovery checkpoint and2 fresh startup/audit complete;3 source hardening locally verified;4 integration/release acceptance in progress;5 closeout/production readback pending.
+
 <!-- S414-recovery-boundary -->
 ## Where We Left Off (Session 414 recovery checkpoint)
 
