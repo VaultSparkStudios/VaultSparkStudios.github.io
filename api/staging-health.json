@@ -1,23 +1,16 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-11T03:12:04.675Z",
-  "candidateReady": false,
-  "candidateFindings": [
-    "staging-build-sha-mismatch",
-    "staging-artifact-root-mismatch",
-    "staging-artifact-leaf-count-mismatch",
-    "/:localShellParity",
-    "/studio-pulse/:localShellParity",
-    "/membership/:localShellParity"
-  ],
-  "candidateBuildSha": "2728324c119a3825de464410e62ccfc0bcd964ec",
-  "stagingBuildSha": "a5c44a6a03b14ff4bedea24269dc2e3a064b2bd3",
+  "generatedAt": "2026-11-11T03:33:29.771Z",
+  "candidateReady": true,
+  "candidateFindings": [],
+  "candidateBuildSha": "ceba607f4d6eec139f4cb85f84a17ceaf48e3c4f",
+  "stagingBuildSha": "ceba607f4d6eec139f4cb85f84a17ceaf48e3c4f",
   "artifactManifest": {
-    "candidateRoot": "c324837e52c28657cffa5e2f5f6cd06326b14911cf3c3617d225b979780580f2",
-    "candidateLeafCount": 70,
-    "stagingRoot": "f90c160227935caaf359828091e3749a17487c80e975aeb89d4455f749ffe87c",
+    "candidateRoot": "32933775bfa005034a471134a53552b6e41e93dca4fbbf1540ce355faf7892bd",
+    "candidateLeafCount": 79,
+    "stagingRoot": "32933775bfa005034a471134a53552b6e41e93dca4fbbf1540ce355faf7892bd",
     "stagingLeafCount": 79,
-    "matched": false
+    "matched": true
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
   "publicSafe": true,
@@ -25,13 +18,32 @@
   "staging": "https://website.staging.vaultsparkstudios.com",
   "status": "yellow",
   "surfaceParity": {
-    "state": "uncomparable",
-    "productionRoutes": null,
-    "stagingRoutes": 343,
+    "state": "staging-ahead",
+    "productionRoutes": 331,
+    "stagingRoutes": 349,
     "missingOnStaging": [],
-    "missingOnStagingCount": null,
-    "aheadOnStaging": [],
-    "aheadOnStagingCount": null,
+    "missingOnStagingCount": 0,
+    "aheadOnStaging": [
+      "/news/2026-11-05/meta-acquires-ai-coding-startup-conductor/",
+      "/news/2026-11-05/openai-pledges-to-pay-for-data-center-power-after/",
+      "/news/2026-11-05/openai-president-greg-brockman-says-company-could-be-ipo/",
+      "/news/2026-11-06/anthropic-adds-bank-account-access-to-claude-so-users/",
+      "/news/2026-11-06/claude-can-now-analyze-your-spending-with-its-new/",
+      "/news/2026-11-06/perplexity-launches-ai-agents-for-work/",
+      "/news/2026-11-07/ai-begins-resisting-human-control-anthropic-researchers-identify-emerging/",
+      "/news/2026-11-07/anthropic-ipo-buyers-see-valuation-as-low-as-1/",
+      "/news/2026-11-07/gemini-omni-1-2-flash-fast-and-cost-effective/",
+      "/news/2026-11-07/openai-reportedly-raises-an-additional-11-billion-at-a/",
+      "/news/2026-11-08/macos-27-3-could-change-how-you-grant-ai/",
+      "/news/2026-11-08/openai-raises-11b-at-a-1-25t-valuation/",
+      "/news/2026-11-08/ramp-data-shows-ai-spending-stalling-just-as-anthropic/",
+      "/news/2026-11-09/anthropic-launches-new-claude-fable-and-mythos-5-2/",
+      "/news/2026-11-09/koreas-ai-ecosystem-advances-and-secures-agentic-ai-with/",
+      "/news/2026-11-10/nvidia-stock-falls-4-as-scrutiny-turns-to-jensen/",
+      "/news/personas/dot/page/7/",
+      "/news/personas/rex/page/15/"
+    ],
+    "aheadOnStagingCount": 18,
     "gating": true,
     "gatingSince": "S339",
     "remedy": "node scripts/deploy-staging-content.mjs --baseline <served-staging-build-sha>"
@@ -39,12 +51,31 @@
   "routes": [
     {
       "route": "/",
-      "prodStatus": 403,
+      "prodStatus": 200,
       "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": false,
+      "statusParity": true,
       "shellParity": false,
-      "prodShell": [],
+      "prodShell": [
+        "assets/after-paint.shell-0392b76d45.js",
+        "assets/ambient-core.shell-214cf44506.js",
+        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+        "assets/hero-ticker.shell-550971e267.js",
+        "assets/home-idle-loader.shell-7b976ad580.js",
+        "assets/nav-sheet.shell-c0fddc0c73.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/public-intelligence.shell-c86a6ecc39.js",
+        "assets/pwa-install.shell-30b48f0ae6.js",
+        "assets/pwa-nav.shell-5f63b6b75a.js",
+        "assets/schema-injector.shell-33115efcde.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/stats-surface.shell-b33242e1cc.js",
+        "assets/style.shell-dafcbbf695.css",
+        "assets/theme-toggle.shell-8221605898.js",
+        "assets/vault-door.shell-20bb2584bc.js"
+      ],
       "stagingShell": [
         "assets/after-paint.shell-0392b76d45.js",
         "assets/ambient-core.shell-a3a5da83ce.js",
@@ -65,12 +96,12 @@
         "assets/theme-toggle.shell-c2c9a3a78c.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
-      "headerParity": false,
+      "headerParity": true,
       "prodHeaders": {
-        "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
-        "hsts": "",
+        "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
+        "hsts": "max-age=31536000; includeSubDomains; preload",
         "xcto": "nosniff",
-        "referrer": "same-origin"
+        "referrer": "strict-origin-when-cross-origin"
       },
       "stagingHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -83,10 +114,7 @@
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
       "reasonCodes": [
-        "status-mismatch",
-        "prod-forbidden",
-        "shell-mismatch",
-        "header-mismatch"
+        "shell-mismatch"
       ]
     },
     {
