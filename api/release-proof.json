@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-11T03:33:29.771Z",
+  "generatedAt": "2026-11-11T03:37:20.514Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -13,7 +13,10 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "shell-mismatch"
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
     "candidateReady": true,
     "candidateFindings": [],
@@ -29,22 +32,22 @@
     },
     "productionParity": false,
     "deployReceipt": {
-      "receiptId": "773e166d2aa8b29c507c07b9",
+      "receiptId": "a14409ff96ae324a679755f3",
       "state": "verified",
-      "deployId": "20261111033231",
-      "manifestFileCount": 4177,
-      "remoteFileCount": 4177,
-      "rollbackPath": "/opt/studio/staging/website/.rollback/20261111033231",
-      "sourceFingerprint": "555ea2e88b28dbddc771f572",
-      "archiveSha256": "2965d4bc556d586c96de6689b37189ea85cdc09d7b223726198acd980c0d54ce",
+      "deployId": "20261108162840",
+      "manifestFileCount": 4090,
+      "remoteFileCount": 4090,
+      "rollbackPath": "/opt/studio/staging/website/.rollback/20261108162840",
+      "sourceFingerprint": "e35e9704c579e540fbf9dc0e",
+      "archiveSha256": "23efc0033b6d9d8104d1e1c2db0d7b7620be9a90c37d7042da130dc472532521",
       "remoteVerified": true,
-      "attested": true,
-      "reason": null
+      "attested": false,
+      "reason": "receipt facts do not match current staging evidence"
     },
     "deployHistory": {
-      "depth": 217,
-      "headReceiptId": "773e166d2aa8b29c507c07b9",
-      "previousReceiptId": "255d8256e246de326f60b84f",
+      "depth": 215,
+      "headReceiptId": "a14409ff96ae324a679755f3",
+      "previousReceiptId": "e87922e1b168c9d19f7a3a08",
       "bound": true,
       "reason": null
     }
@@ -65,22 +68,22 @@
   },
   "productionDeploy": {
     "state": "stale",
-    "commitsBehind": 520,
-    "ageHours": 191.6,
-    "observedAt": "2026-11-11T03:12:04.736Z",
+    "commitsBehind": 575,
+    "ageHours": 192.4,
+    "observedAt": "2026-11-11T03:37:20.514Z",
     "shellParity": {
-      "state": "superseded",
+      "state": "drift",
       "route": "/",
-      "observedAt": "2026-11-11T03:12:04.736Z",
-      "expectedFrom": "fdb7f729a7f8ab525b82c6bb04867a2665ef0517221a86dbbc9233edde97a584",
-      "supersededBy": "824f875690bd2cfbd5a70b5a177f34e75c58f51211b8c009955c9a3c06d38e02",
+      "observedAt": "2026-11-11T03:37:20.514Z",
+      "expectedFrom": "824f875690bd2cfbd5a70b5a177f34e75c58f51211b8c009955c9a3c06d38e02",
+      "supersededBy": null,
       "ageHours": 0,
       "stale": false,
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/after-paint.shell-0392b76d45.js",
-        "assets/ambient-core.shell-214cf44506.js",
-        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/ambient-core.shell-a3a5da83ce.js",
+        "assets/ambient-feature.shell-fd51619897.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/hero-ticker.shell-550971e267.js",
         "assets/home-idle-loader.shell-7b976ad580.js",
@@ -93,8 +96,8 @@
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
         "assets/stats-surface.shell-b33242e1cc.js",
-        "assets/style.shell-dafcbbf695.css",
-        "assets/theme-toggle.shell-8221605898.js",
+        "assets/style.shell-4c36e431cd.css",
+        "assets/theme-toggle.shell-c2c9a3a78c.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
       "actual": [
@@ -117,8 +120,18 @@
         "assets/theme-toggle.shell-8221605898.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
-      "missing": [],
-      "unexpected": [],
+      "missing": [
+        "assets/ambient-core.shell-a3a5da83ce.js",
+        "assets/ambient-feature.shell-fd51619897.js",
+        "assets/style.shell-4c36e431cd.css",
+        "assets/theme-toggle.shell-c2c9a3a78c.js"
+      ],
+      "unexpected": [
+        "assets/ambient-core.shell-214cf44506.js",
+        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/style.shell-dafcbbf695.css",
+        "assets/theme-toggle.shell-8221605898.js"
+      ],
       "challengedAt": null,
       "challengeError": null
     }
@@ -178,7 +191,7 @@
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
     "stagingArtifactManifestBound": true,
-    "stagingDeployAttested": true,
+    "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
@@ -191,6 +204,7 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
+    "stagingDeployAttested",
     "productionShellParityMatched",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
