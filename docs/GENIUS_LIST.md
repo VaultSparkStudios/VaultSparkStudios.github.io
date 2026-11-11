@@ -1,6 +1,6 @@
 # Genius Hit List — Session 411
 
-Generated: 2026-11-10
+Generated: 2026-11-11
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
@@ -97,44 +97,44 @@ Why it matters: Reproduce session-history scale limits before changing capture q
 ### DEFERRED / GATED
 
 #### 1. [SECURITY] Reuse the canonical Pages broker in deploy-currency provider observat…
-Final score: **96**
+Final score: **99**
 [SIL][S397] Reuse the canonical Pages broker in deploy-currency provider observations; the current Worker-token Pages probe returns403. Future selection only.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
 #### 2. [PRODUCT] Review discussion intent coverage after a reproduced missing state.
-Final score: **93**
+Final score: **96**
 [S411][SIL] Review discussion intent coverage after a reproduced missing state.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
 #### 3. [PRODUCT] vault-sdk member fetch fails on vault_rank; fixing changes consumer g…
-Final score: **87**
+Final score: **90**
 [S390][FOUNDER REVIEW] vault-sdk member fetch fails on vault_rank; fixing changes consumer gating.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 4. [VERIFY] Obtain the required explicit security-flow decision before applying c…
-Final score: **86**
-Obtain the required explicit security-flow decision before applying changes; verify installed access boundaries before data-route exposure.
-Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
-
-#### 5. [AI] The doctor names rescore-ignis --stale as the IGNIS remedy, but the p…
-Final score: **85**
+#### 4. [AI] The doctor names rescore-ignis --stale as the IGNIS remedy, but the p…
+Final score: **88**
 [SIL][S362][OBS/P3] The doctor names rescore-ignis --stale as the IGNIS remedy, but the propagated copy reads portfolio/PROJECT_REGISTRY.json from this repo root and finds nothing, so the remedy is a structural no-op here (D-S362.6). Awaiting the studio-ops answer to Ark repo-question 01K2TR2MCB649E1AD036E22BAD; until then the stale score stands honestly reported.
 Why it matters: Owned by another repo or already moved through Ark cargo.
 
-#### 6. [PRODUCT] Surface the Supabase health API per-service verdict (db/rest/auth) on…
-Final score: **84**
+#### 5. [PRODUCT] Surface the Supabase health API per-service verdict (db/rest/auth) on…
+Final score: **87**
 [SIL][S360][OBS/P2] Surface the Supabase health API per-service verdict (db/rest/auth) on /status/ through a scheduled, credential-side probe that writes a public JSON. The browser probes can say "not responding" but not "the database is up and the gateway is not".
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 7. [PRODUCT] desk-model-servability dropped to 1/2 during this session: Qwen3.8-27…
-Final score: **78**
+#### 6. [PRODUCT] desk-model-servability dropped to 1/2 during this session: Qwen3.8-27…
+Final score: **81**
 [S362][OBS/P3] desk-model-servability dropped to 1/2 during this session: Qwen3.8-27B is unmeasured at the provider. Advisory and external; re-probe next session before treating it as a defect.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 8. [PRODUCT] Reconcile the four propagated checkers that encode studio-ops' own la…
-Final score: **75**
+#### 7. [PRODUCT] Reconcile the four propagated checkers that encode studio-ops' own la…
+Final score: **78**
 [SIL][S363][PROTOCOL/P2] Reconcile the four propagated checkers that encode studio-ops' own layout (D-S363.5, D-S363.7, D-S363.8, D-S363.9): check-windows-hide scan roots, the wipe guard's status-row format and archive naming, and arc-profile.mjs resolving PROJECT_REGISTRY to a path that exists only inside studio-ops. Each produced a false failure or a false inference that no local change could fix. Ark cargo 01K30UDB1264A040FE519B8D8B carries the upstream ask; this item tracks whether the next drain actually lands it.
 Why it matters: Owned by another repo or already moved through Ark cargo.
+
+#### 8. [PRODUCT] "Coming soon" / "TBD" copy on six live game pages. Founder copy decis…
+Final score: **75**
+[S356][PRODUCT/P2] "Coming soon" / "TBD" copy on six live game pages. Founder copy decision: call-of-doodie, franchise-architect, gridiron-gm (trailer + screenshots), vaultfront (backend), mindframe, project-unknown (platform, title).
+Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
 ## Recommended Build Order
 

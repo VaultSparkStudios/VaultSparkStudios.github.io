@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-11-10 (last closed Session 411; active/next Session 413) -->
-<!-- semantic-freshness: hash=94cc2179ce55cacf next=413 silSession=411 silScore=939 handoff=- tests=- -->
+<!-- generated-at: 2026-11-11 (last closed Session 411; active/next Session 414) -->
+<!-- semantic-freshness: hash=d8c760ad992bf767 next=414 silSession=411 silScore=939 handoff=- tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — last closed Session 411 · active/next Session 413 · generated 2026-11-10.
+> **Fast-boot brief** — last closed Session 411 · active/next Session 414 · generated 2026-11-11.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,7 +15,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 413 · 2026-11-10 · BUILDER MODE                         ║
+║  Session 414 · 2026-11-11 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -32,7 +32,7 @@
 ║  Custom        → https://vaultsparkstudios.com/studio-pulse/ ✓   ║
 ║  Local dev     → npm run verify:local ⚠                          ║
 ║  Staging       → https://website.staging.vaultsparkstudios.c ✓   ║
-║  Unit tests    → npm run build:check ⛔                           ║
+║  Unit tests    → npm run build:check ⚠                           ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ PROJECT PROFILE ═════════════════════════════════════════════╗
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
 ║    SIL v3.0  ·  Avg3: 939  ·  Velocity 0→                        ║
-║    Last active: 0d  ·  Last closeout: 4d  ·  (active = newest…   ║
+║    Last active: 1d  ·  Last closeout: 5d  ·  (active = newest…   ║
 ║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -63,7 +63,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 411 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    Source RED: 15/552 steps; 1 failed; partial           ║
+║  Tests:    Source UNVERIFIED: 552/552 steps (changed inputs)     ║
 ║  Deploy:   S411 release pending                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -74,11 +74,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⛔  Tests         Source RED: 15/552 steps; 1 failed; partial    ║
+║  ⚠  Tests         Source UNVERIFIED: 552/552 steps (changed…     ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⛔  Context age   16d                                            ║
-║  ✓  IGNIS         45126 FORGE  ·  4d old                         ║
+║  ⛔  Context age   17d                                            ║
+║  ✓  IGNIS         45126 FORGE  ·  5d old                         ║
 ║  ⛔  Truth         yellow — S411 local recovery verified;…        ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
@@ -96,8 +96,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    79d · Authorize or decline immutable warm-origin migrati      ║
-║    79d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
+║    80d · Authorize or decline immutable warm-origin migrati      ║
+║    80d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -121,17 +121,17 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Complete remaining current-source checks,   ║
-║        Complete remaining current-source checks, then one compl  ║
+║   99  [SECURITY]     Complete isolated access/security acceptan  ║
+║        Complete isolated access/security acceptance and affecte  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Auth/selected schema/REST/gateway acceptan  ║
-║        Auth/selected schema/REST/gateway acceptance and real is  ║
-║                                                                  ║
 ║   87  [PRODUCT]      Authorized main/production promotion, serv  ║
 ║        Authorized main/production promotion, served readback an  ║
+║                                                                  ║
+║   86  [VERIFY]       Verify the final publication candidate aft  ║
+║        Verify the final publication candidate after public-docu  ║
 ║                                                                  ║
 ║   84  [PRODUCT]      Finalize this local recovery closeout and   ║
 ║        Finalize this local recovery closeout and QA checkpoint;  ║
@@ -142,5 +142,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · last closed Session 411 · active/next Session 413 · 2026-11-10*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · last closed Session 411 · active/next Session 414 · 2026-11-11*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

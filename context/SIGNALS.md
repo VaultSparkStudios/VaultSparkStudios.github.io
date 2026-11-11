@@ -1,9 +1,9 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⛔  Tests         Source RED: 15/552 steps; 1 failed; partial    ║
+║  ⚠  Tests         Source UNVERIFIED: 552/552 steps (changed…     ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⛔  Context age   16d                                            ║
-║  ✓  IGNIS         45126 FORGE  ·  4d old                         ║
+║  ⛔  Context age   17d                                            ║
+║  ✓  IGNIS         45126 FORGE  ·  5d old                         ║
 ║  ⛔  Truth         yellow — S411 local recovery verified;…        ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
