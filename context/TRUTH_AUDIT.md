@@ -2018,3 +2018,8 @@ The local ownership-guarded scorer completed on this website and proved fresh hi
 The redesigned member and investor surfaces are source changes, not a completed production release. Focused member/onboarding tests17/17 and independent review pass; provider cards have actual public rendering evidence, while private data in local UI captures is fixture data. Nine deployed staging Worker recovery checks pass. Live public starts still send both intents to the provider sign-in screen; this does not prove open enrollment or successful authentication.
 
 A staging snapshot was uploaded, then correctly rejected by parity after the source changed. It is not final staging acceptance. The complete final source gate, refreshed mobile matrix, exact staging/hosted candidate, affected authenticated journeys, production Worker/Pages readback and main publication remain separately tracked in docs/RELEASE_S409.json. No field-vitals, conversion, retention or global exactly-once feedback claim is made.
+
+
+## S414 recovery — current evidence is nonpassing
+
+S414 release verification was interrupted. Committed Games hero changes and intermediate staging/source receipts remain preserved; current full source check failed at step 3 (fixture navigation timeout), hosted E2E has ten visual failures, and doctor blockingFailing is 1 for production currency. No full closeout, new score or production acceptance is claimed. See docs/S414_RECOVERY_BOUNDARY.md. Historical 552-step receipts are not current proof. Fresh run attempted3/552 steps and exited1. Exact HEAD hosted E2E42964550489 failed10 visual cells with719passes/56skips; Lighthouse/accessibility are absent at HEAD. Capture42961446030 used production. No deployment or score is inferred.

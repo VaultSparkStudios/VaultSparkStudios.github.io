@@ -1,3 +1,14 @@
+<!-- S414-recovery-boundary -->
+## S414 recovered acceptance boundary
+
+- [x] Reconstruct committed intent, inspect full dirty diff, validate changed data/config files and run fresh source/doctor checks.
+- [ ] Repair candidate baseline provenance and obtain unchanged successful visual comparison.
+- [ ] Reproduce the initial fixture-navigation timeout; complete full source verification.
+- [ ] Integrate current main safely and complete exact candidate required checks.
+- [ ] Verify affected authenticated journeys and current staging parity before authorized production promotion/readback.
+
+Wave 1 recovery checkpoint complete; prior release and full closeout remain partial. New invocation requires its own full startup/audit/implementation/closeout.
+
 <!-- S413-active-waves -->
 
 ## S413 selected outcomes and acceptance

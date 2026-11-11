@@ -1,3 +1,14 @@
+<!-- S414-recovery-boundary -->
+## Where We Left Off (Session 414 recovery checkpoint)
+
+Session Intent: recover the interrupted supported-release effort, then run the new native invocation through a fresh full arc.
+
+S414 release verification was interrupted. Committed Games hero changes and intermediate staging/source receipts remain preserved; current full source check failed at step 3 (fixture navigation timeout), hosted E2E has ten visual failures, and doctor blockingFailing is 1 for production currency. No full closeout, new score or production acceptance is claimed. See docs/S414_RECOVERY_BOUNDARY.md.
+
+Owner: website implementation/release owner. Artifact: docs/S414_RECOVERY_BOUNDARY.md at recovered HEAD cbd3972e32. Dependencies: candidate visual comparison, complete current source/required CI, affected deployed account acceptance and staging parity. Acceptance: exact final candidate, authorized normal promotion and served readback.
+
+Native goal 01a1cbea-9fe7-7451-b10e-92851aad5427 (created 1794422530) returned start-new-arc; acquire a new monotonic startup lock and apply binding. This partial recovery does not satisfy that arc. Prior 939 score remains historical.
+
 <!-- S413-continuation-image-preparation -->
 ## S413 continuation — pre-projection source checked; release remains open
 

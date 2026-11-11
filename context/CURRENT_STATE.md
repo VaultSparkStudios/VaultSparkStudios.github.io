@@ -1,3 +1,8 @@
+<!-- S414-recovery-boundary -->
+## S414 recovery boundary
+
+S414 release verification was interrupted. Committed Games hero changes and intermediate staging/source receipts remain preserved; current full source check failed at step 3 (fixture navigation timeout), hosted E2E has ten visual failures, and doctor blockingFailing is 1 for production currency. No full closeout, new score or production acceptance is claimed. See docs/S414_RECOVERY_BOUNDARY.md.
+
 <!-- S413-member-access-release -->
 ## S413 member access maintenance
 

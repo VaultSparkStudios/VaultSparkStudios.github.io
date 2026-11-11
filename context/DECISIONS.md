@@ -1303,3 +1303,8 @@ The founder requests a way to generate The Desk article images before marketing 
 
 The synthetic isolated fixture is limited to the selected member/investor journeys. Team-management parity is outside this fixture; the original selection and scope decision remain preserved in private evidence. Production schema, data and policy remain unchanged. Actual access/security acceptance is required before exposure; this scope decision does not establish it.
 
+
+
+## S414 recovery — preserve nonpassing release evidence
+
+S414 release verification was interrupted. Committed Games hero changes and intermediate staging/source receipts remain preserved; current full source check failed at step 3 (fixture navigation timeout), hosted E2E has ten visual failures, and doctor blockingFailing is 1 for production currency. No full closeout, new score or production acceptance is claimed. See docs/S414_RECOVERY_BOUNDARY.md. The production-origin capture cannot establish local-candidate baseline acceptance. Preserve its run and prior references; repair capture provenance before adopting replacements. Recovery is a partial boundary under SESSION_PROTOCOL §3.0; it cannot waive production currency or affected successful authentication checks.
