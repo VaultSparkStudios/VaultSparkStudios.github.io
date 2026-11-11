@@ -3,11 +3,11 @@
   "publicSafe": true,
   "session": 415,
   "state": "in-progress",
-  "updatedAt": "2026-11-11T20:25:04.685Z",
+  "updatedAt": "2026-11-11T21:02:50.837Z",
   "audit": "docs/AUDIT_2026-11-11-S415.json",
   "implementation": "docs/S415_IMPLEMENTATION_CHECKPOINT.json",
   "candidate": {
-    "qaCommit": "0ab1ae5b70caae1b331c46d3d1dc6e6bc03d01fb",
+    "qaCommit": "15e547731511c6c71f5c6d69b12fd44e82be1f27",
     "productionPromoted": false
   },
   "local": {
@@ -40,9 +40,81 @@
       "updatedWorkflowContract": 1,
       "unitInventory": "76 declared = 76 executed = 76 tracked"
     },
-    "completeCurrentSourceVerified": false
+    "completeCurrentSourceVerified": false,
+    "complete553Attempt": {
+      "receipt": "docs/S415_source-full553-concentration.json",
+      "nativeExit": 1,
+      "firstStep": 1,
+      "planned": 553,
+      "passed": 553,
+      "failedSteps": 0,
+      "coverageComplete": true,
+      "overallPassing": false,
+      "reason": "Dominant browser command528s32.1percent exceeded unchanged30percent concentration ratchet.",
+      "repair": "Split into artifact rendering, member enrollment, and account access/recovery groups; all76unit files preserved. New555-step full run required."
+    }
   },
   "hosted": {
+    "sourceCommit": "15e547731511c6c71f5c6d69b12fd44e82be1f27",
+    "runs": [
+      {
+        "workflow": "e2e",
+        "runId": 43096957764
+      },
+      {
+        "workflow": "lighthouse",
+        "runId": 43096964405
+      },
+      {
+        "workflow": "accessibility",
+        "runId": 43096971973
+      }
+    ],
+    "conclusion": "startup_failure",
+    "jobsObserved": 0,
+    "reason": "unknown; no verified budget exception",
+    "rerun": "One bounded retry requested; API still reports run_attempt1 and startup_failure. No successful additional attempt or required-check acceptance inferred."
+  },
+  "visual": {
+    "newReferencesAdopted": 0,
+    "artifactAccepted": false,
+    "comparison": "nonpassing",
+    "trust": "Founder explicitly approved exact PNG/provenance artifact13886424243/digest; ZIP transport remains HTTP502 through CLI and ReadTimeout through connector. No archive imported or baseline changed."
+  },
+  "staging": {
+    "isolatedFixtureHealthObserved": true,
+    "privateGatewayControls": "Narrow reachability and denial observations only; full data/auth acceptance pending.",
+    "loopbackTransportAccepted": true,
+    "lastLoopbackAttempt": "Five direct and loopback controls matched; configuration and unrelated workload readback passed. Listener remains host-only; public data route remains absent.",
+    "matchedWorkerBrowserVariantAccepted": false,
+    "authenticatedJourneysAccepted": false,
+    "sourceSnapshot": {
+      "files": 4227,
+      "sourceFingerprint": "8abce2d62fd46ed3f8842354746df20f087b50a9f133211c49616e6e75099ac2",
+      "accepted": false
+    },
+    "privatePreparation": "Versioned source/configuration and Auth/RLS preparations are retained in ignored local evidence; not execution or exposure proof.",
+    "nativeSyntheticAuth": "A/B native session issuance, user/UID controls and exact refresh continuity passed in failed combinedV5/V6 attempts. Native cleanup verified runtime zero. This is not completed data/RLS or Obelisk browser acceptance.",
+    "dataHarness": "Read-only generic full-row ordering verified across all15tables after missing-id SQL errors. All app tables empty; corrected combined lifecycle remains pending."
+  },
+  "timing": {
+    "nativeVerdict": "after-implementation",
+    "accepted": false,
+    "note": "Recovery public-intelligence reconciliation and admission brief inputs are retained in the timing record. Selected premises passed before new capture source edits; no rewritten gate/lock or full timing acceptance."
+  },
+  "completion": {
+    "fullCloseout": false,
+    "nativeGoalComplete": false,
+    "newScoreAwarded": false,
+    "productionReadback": false
+  },
+  "next": [
+    "Publish repaired integration and obtain complete current source plus exact candidate required checks.",
+    "Resolve the scoped image-artifact acceptance, review actual changed originals and pass unchanged native comparison.",
+    "Finish isolated transport/data/auth acceptance and matched staging configuration without production data.",
+    "Complete authorized normal main/production promotion/readback and canonical closeout before native completion."
+  ],
+  "hostedPrevious": {
     "sourceCommit": "0ab1ae5b70caae1b331c46d3d1dc6e6bc03d01fb",
     "capture": {
       "runId": 43086129906,
@@ -65,42 +137,5 @@
       "visualFailures": 8,
       "complianceFailure": "startup-context-budget at step24; repaired locally, new exact-SHA run required"
     }
-  },
-  "visual": {
-    "newReferencesAdopted": 0,
-    "artifactAccepted": false,
-    "comparison": "nonpassing",
-    "trust": "Exact new image artifact remains unaccepted; no download or broader trust override."
-  },
-  "staging": {
-    "isolatedFixtureHealthObserved": true,
-    "privateGatewayControls": "Narrow reachability and denial observations only; full data/auth acceptance pending.",
-    "loopbackTransportAccepted": true,
-    "lastLoopbackAttempt": "Five direct and loopback controls matched; configuration and unrelated workload readback passed. Listener remains host-only; public data route remains absent.",
-    "matchedWorkerBrowserVariantAccepted": false,
-    "authenticatedJourneysAccepted": false,
-    "sourceSnapshot": {
-      "files": 4227,
-      "sourceFingerprint": "8abce2d62fd46ed3f8842354746df20f087b50a9f133211c49616e6e75099ac2",
-      "accepted": false
-    },
-    "privatePreparation": "Versioned source/configuration and Auth/RLS preparations are retained in ignored local evidence; not execution or exposure proof."
-  },
-  "timing": {
-    "nativeVerdict": "after-implementation",
-    "accepted": false,
-    "note": "Recovery public-intelligence reconciliation and admission brief inputs are retained in the timing record. Selected premises passed before new capture source edits; no rewritten gate/lock or full timing acceptance."
-  },
-  "completion": {
-    "fullCloseout": false,
-    "nativeGoalComplete": false,
-    "newScoreAwarded": false,
-    "productionReadback": false
-  },
-  "next": [
-    "Publish repaired integration and obtain complete current source plus exact candidate required checks.",
-    "Resolve the scoped image-artifact acceptance, review actual changed originals and pass unchanged native comparison.",
-    "Finish isolated transport/data/auth acceptance and matched staging configuration without production data.",
-    "Complete authorized normal main/production promotion/readback and canonical closeout before native completion."
-  ]
+  }
 }

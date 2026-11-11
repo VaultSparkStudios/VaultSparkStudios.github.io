@@ -319,3 +319,8 @@ The final delivery check found week-long caching on mutable portal assets. The e
 
 <!-- S410-staging-acceptance -->
 S410 current verification: full549 native0/source fingerprint6a8a78dd9aab8fcc72282f89; actual18006-file staging deployment and served206-entry receipt ledger verified; candidate parity green. Native ceremony11/11 passed in scoped mode. Explicit unscoped browser6/6 (held0,failed0,skipped0,flaky0) and attention15/15 passed. First explicit attempt had one Firefox navigation flake and remains recorded. Main publication, exact candidate hosted workflows, real positive member/investor journeys and full production/readback remain pending. Authoritative ledger: docs/RELEASE_S410.json.
+
+
+### S415 complete source attempt
+
+All553 checks passed fromstep1; overall native exit1 because the combined browser command exceeded the unchanged30% concentration limit. All76unit files are preserved in three coherent groups; complete555-step acceptance is pending. Required hosted checks at QA15e5477315 stopped at startup without jobs. Approved image archive transport still fails; no baseline or production change. See docs/S415_VERIFICATION_LEDGER.json.

@@ -675,3 +675,8 @@ S414 release verification was interrupted. Committed Games hero changes and inte
 ## 2026-11-11 — S415 verification checkpoint (arc ongoing)
 
 Fresh startup/audit and source admission completed. Candidate capture/archive hardening passed focused tests and corrected independent review; integrated current main and published QA0ab1ae5b70. Lighthouse, accessibility and provisional candidate-origin Linux generation pass at that SHA; E2E has721passes/56skips/eight Games failures plus source-budget rejection. Archived one historical task-board block verbatim and updated its workflow-default contract test. Diagnostic130–553 passed424/424, not full coverage. Staging prerequisites remain partial; the attempted private transport repair rolled back and no public data route was exposed. See docs/S415_VERIFICATION_LEDGER.json. Existing score939 remains historical; full closeout, production promotion and native completion remain pending.
+
+
+## 2026-11-11 — S415 complete source attempt, acceptance still open
+
+The full553-step source run executed every check successfully but exited1 on its32.1% browser-command concentration. Preserved exact receipt and split that command into three coherent groups with identical76-file unit coverage; unchanged runner self-tests pass. Required exact-QA workflows failed before jobs, cause unknown. Synthetic stage Auth issuance/refresh controls ran and native cleanup restored empty state; data harness read ordering required correction, with all15 app tables independently confirmed empty. No production promotion or new score.
