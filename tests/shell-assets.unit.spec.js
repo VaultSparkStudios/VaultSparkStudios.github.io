@@ -181,3 +181,82 @@ test('the leaderboard embed paints with its own palette, never host tokens', () 
   const widget = fs.readFileSync(path.join(ROOT, 'api', 'leaderboard', 'v1', 'widget.js'), 'utf8');
   assert.equal(/var\(--/.test(widget), false, 'widget CSS must not read host custom properties over its fixed #0a0a0a ground');
 });
+
+test('repeat shell builds preserve manifest bytes and mtime while changed inputs still regenerate', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'vss-shell-repeat-'));
+  const builder = path.join(ROOT, 'scripts/build-shell-assets.mjs');
+  try {
+    const manifest = JSON.parse(before);
+    for (const file of new Set(Object.values(manifest.assets).map(asset => asset.source))) {
+      const target = path.join(dir, file);
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.copyFileSync(path.join(ROOT, file), target);
+    }
+    for (const file of ['config/route-consolidation.json', 'scripts/build-ambient-bundle.mjs', 'sw.js']) {
+      fs.mkdirSync(path.dirname(path.join(dir, file)), { recursive: true });
+      fs.copyFileSync(path.join(ROOT, file), path.join(dir, file));
+    }
+    fs.writeFileSync(path.join(dir, 'index.html'), '<!doctype html><html><head><title>Shell repeat fixture</title></head><body><script src="/assets/supabase-client.js"></script></body></html>');
+    const build = (args = [], status = 0) => {
+      const result = spawnSync(process.execPath, [builder, ...args], { cwd: dir, encoding: 'utf8', timeout: 30000, windowsHide: true });
+      assert.equal(result.error, undefined);
+      assert.equal(result.status, status, result.stderr);
+    };
+    build();
+    const output = path.join(dir, 'assets/shell-manifest.json');
+    const initial = JSON.parse(fs.readFileSync(output, 'utf8'));
+    initial.generatedAt = '2000-01-01T00:00:00.000Z';
+    // Preserve existing formatting too; timestamps may legitimately predate a repeat.
+    fs.writeFileSync(output, JSON.stringify(initial, null, 4) + '\n');
+    fs.utimesSync(output, new Date('2000-01-01T00:00:00Z'), new Date('2000-01-01T00:00:00Z'));
+    const bytes = fs.readFileSync(output), mtime = fs.statSync(output, { bigint: true }).mtimeNs;
+    build();
+    assert.deepEqual(fs.readFileSync(output), bytes, 'unchanged payload preserves every existing manifest byte');
+    assert.equal(fs.statSync(output, { bigint: true }).mtimeNs, mtime, 'unchanged payload does not rewrite the file');
+    build(['--check']);
+    fs.appendFileSync(path.join(dir, 'assets/supabase-client.js'), '\n// changed shell input fixture\n');
+    build(['--check'], 1);
+    const changedAfter = Date.now();
+    build();
+    const regenerated = JSON.parse(fs.readFileSync(output, 'utf8'));
+    assert.notEqual(regenerated.version, initial.version);
+    assert.notEqual(regenerated.assets.supabaseClient.hash, initial.assets.supabaseClient.hash);
+    assert.notEqual(regenerated.assets.supabaseClient.path, initial.assets.supabaseClient.path);
+    assert.ok(Date.parse(regenerated.generatedAt) >= changedAfter, 'actual input change receives a fresh generation timestamp');
+    build(['--check']);
+    fs.utimesSync(output, new Date('2001-01-01T00:00:00Z'), new Date('2001-01-01T00:00:00Z'));
+    const changedBytes = fs.readFileSync(output), changedMtime = fs.statSync(output, { bigint: true }).mtimeNs;
+    build();
+    assert.deepEqual(fs.readFileSync(output), changedBytes);
+    assert.equal(fs.statSync(output, { bigint: true }).mtimeNs, changedMtime);
+    const corrupt = JSON.parse(changedBytes);
+    corrupt.assets.supabaseClient.hash = '0000000000';
+    fs.writeFileSync(output, JSON.stringify(corrupt));
+    build(['--check'], 1);
+    build();
+    assert.deepEqual(JSON.parse(fs.readFileSync(output, 'utf8')).assets, regenerated.assets, 'non-timestamp corruption is repaired');
+    build(['--check']);
+    for (const invalidStamp of [undefined, 'not-a-date', '2000-01-01']) {
+      const malformed = JSON.parse(fs.readFileSync(output, 'utf8'));
+      if (invalidStamp === undefined) delete malformed.generatedAt;
+      else malformed.generatedAt = invalidStamp;
+      fs.writeFileSync(output, JSON.stringify(malformed));
+      const repairAfter = Date.now();
+      build();
+      const repaired = JSON.parse(fs.readFileSync(output, 'utf8'));
+      assert.equal(new Date(repaired.generatedAt).toISOString(), repaired.generatedAt);
+      assert.ok(Date.parse(repaired.generatedAt) >= repairAfter, 'missing/invalid/noncanonical timestamp is repaired freshly');
+      build(['--check']);
+      fs.utimesSync(output, new Date('2002-01-01T00:00:00Z'), new Date('2002-01-01T00:00:00Z'));
+      const repairedBytes = fs.readFileSync(output), repairedMtime = fs.statSync(output, { bigint: true }).mtimeNs;
+      build();
+      assert.deepEqual(fs.readFileSync(output), repairedBytes, 'repaired manifest remains byte-stable');
+      assert.equal(fs.statSync(output, { bigint: true }).mtimeNs, repairedMtime);
+    }
+  } finally {
+    assert.equal(path.dirname(path.resolve(dir)), path.resolve(os.tmpdir()));
+    assert.ok(path.basename(dir).startsWith('vss-shell-repeat-'));
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});

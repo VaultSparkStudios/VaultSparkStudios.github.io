@@ -5,8 +5,8 @@ import os from 'node:os';
 import path from 'node:path';
 import vm from 'node:vm';
 import {spawnSync} from '../scripts/lib/safe-spawn.mjs';
-import {closedSessionFromSil} from '../scripts/lib/session-identity.mjs';
-import {resolveStartupSessions} from '../scripts/lib/startup-session-identity.mjs';
+import {closedSessionFromSil,committedSessionFromGit} from '../scripts/lib/session-identity.mjs';
+import {resolveStartupSessions,resolveStartupBriefIdentity} from '../scripts/lib/startup-session-identity.mjs';
 import {buildBriefSemanticFingerprint,formatBriefSemanticFingerprint} from '../scripts/lib/brief-semantic-fingerprint.mjs';
 
 test('unfinished sessions do not turn active identity into a completed session', () => {
@@ -86,7 +86,7 @@ test('actual coherence checker accepts skipped active identities and rejects fal
       .replace(/^#!.*\n/,'').replace(/^import .*;\r?\n/gm,'')
       .replace("const __dirname = path.dirname(fileURLToPath(import.meta.url));",'')
       .replace("const root = path.resolve(__dirname, '..');",'const root = fixtureRoot;');
-    const check=()=>{let exit=0;try{vm.runInNewContext(script,{fs,path,fixtureRoot:root,closedSessionFromSil,resolveStartupSessions,
+    const check=()=>{let exit=0;try{vm.runInNewContext(script,{fs,path,fixtureRoot:root,closedSessionFromSil,resolveStartupSessions,resolveStartupBriefIdentity,
       console:{log(){},error(){}},process:{exit:code=>{exit=code;throw new Error('fixture-exit');}}});}catch(error){if(error.message!=='fixture-exit')throw error;}return exit;};
     const writeBrief=(closed,current,legacy=false)=>fs.writeFileSync(path.join(root,'docs/STARTUP_BRIEF.md'),
       `<!-- generated-at: 2026-11-10 (${legacy?'Session '+closed+' closeout':'last closed Session '+closed+'; active/next Session '+current}) -->\n║  Session ${current} ·\n`);
@@ -100,4 +100,40 @@ test('actual coherence checker accepts skipped active identities and rejects fal
     fs.writeFileSync(path.join(root,'context/.session-lock'),'session_id: 413\n');
     writeBrief(413,414);assert.equal(check(),0);
   } finally {fs.rmSync(root,{recursive:true,force:true});}
+});
+
+
+test('isolated checkout validates published active brief while live ownership stays unknown',()=>{
+  const brief=(current=415,closed=411)=>'<!-- generated-at: 2026-11-11 (last closed Session '+closed+'; active/next Session '+current+') -->\n<!-- semantic-freshness: hash=0123456789abcdef next='+current+' silSession='+closed+' silScore=939 handoff=- tests=- -->\n║ Session '+current+' ·\n';
+  const base={silSession:411,statusSession:411,lockText:'',briefText:brief(),committedSession:415,committedBriefText:brief()};
+  assert.deepEqual(resolveStartupBriefIdentity(base),{expectedSession:415,lastClosedSession:411,liveSession:null,source:'committed-brief'});
+  for(const change of [{committedSession:null},{committedSession:414},{committedBriefText:brief(414)},{lockText:'session_id: garbage\n'},{briefText:brief().replace('next=415','next=414')}])
+    assert.equal(resolveStartupBriefIdentity({...base,...change}).expectedSession,412);
+  assert.equal(resolveStartupBriefIdentity({...base,lockText:'session_id: 416\n'}).expectedSession,416);
+  assert.equal(resolveStartupBriefIdentity({...base,committedBriefText:brief().replaceAll('\n','\r\n')}).source,'committed-brief');
+});
+
+test('actual coherence checker proves published identity without an ignored lock and still rejects drift',()=>{
+  const fixtureRoot=fs.mkdtempSync(path.join(os.tmpdir(),'published-startup-coherence-'));
+  try{
+    for(const dir of ['context','docs','logs'])fs.mkdirSync(path.join(fixtureRoot,dir));
+    fs.writeFileSync(path.join(fixtureRoot,'context/PROJECT_STATUS.json'),JSON.stringify({currentSession:411}));
+    fs.writeFileSync(path.join(fixtureRoot,'context/SELF_IMPROVEMENT_LOOP.md'),'## Session 411 — fixture\n');
+    fs.writeFileSync(path.join(fixtureRoot,'context/TASK_BOARD.md'),'Future Session 999 is not closed evidence.');
+    const brief='<!-- generated-at: 2026-11-11 (last closed Session 411; active/next Session 415) -->\n<!-- semantic-freshness: hash=0123456789abcdef next=415 silSession=411 silScore=939 handoff=- tests=- -->\n║ Session 415 ·\n';
+    const source=fs.readFileSync(new URL('../scripts/check-startup-session-coherence.mjs',import.meta.url),'utf8').replace(/^#!.*\n/,'').replace(/^import .*;\r?\n/gm,'').replace("const __dirname = path.dirname(fileURLToPath(import.meta.url));",'').replace("const root = path.resolve(__dirname, '..');",'const root = fixtureRoot;');
+    function check({working=brief,published=brief,gitOk=true,lock=null,subjects='S415 ship reviewed candidate\n'}={}){
+      fs.writeFileSync(path.join(fixtureRoot,'docs/STARTUP_BRIEF.md'),working);
+      const lockFile=path.join(fixtureRoot,'context/.session-lock');if(lock===null){if(fs.existsSync(lockFile))fs.unlinkSync(lockFile);}else fs.writeFileSync(lockFile,lock);
+      let exit=0;const messages=[],calls=[];
+      const git=(command,args)=>{calls.push({command,args});assert.equal(command,'git');if(args[0]==='log'){assert.deepEqual(Array.from(args),['log','-200','--format=%s']);return {status:gitOk?0:1,stdout:subjects};}assert.deepEqual(Array.from(args),['show','HEAD:docs/STARTUP_BRIEF.md']);return {status:gitOk?0:1,stdout:published};};
+      try{vm.runInNewContext(source,{fs,path,fixtureRoot,closedSessionFromSil,committedSessionFromGit,resolveStartupSessions,resolveStartupBriefIdentity,spawnSync:git,console:{log:m=>messages.push(m),error:m=>messages.push(m)},process:{exit:code=>{exit=code;throw Error('fixture-exit');}}});}catch(e){if(e.message!=='fixture-exit')throw e;}
+      return {exit,messages,calls};
+    }
+    let result=check();assert.equal(result.exit,0,result.messages.join('\n'));assert.match(result.messages.join('\n'),/source committed-brief; live unknown/);assert.equal(result.calls.length,2);
+    for(const options of [{working:brief+'uncommitted edit\n'},{gitOk:false},{subjects:'renew obligations to S415\n'},{working:brief.replace('last closed Session 411','last closed Session 415')}])assert.equal(check(options).exit,1);
+    result=check({lock:'session_id: 416\n'});assert.equal(result.exit,1);assert.equal(result.calls.length,0);
+    result=check({lock:''});assert.equal(result.exit,1);assert.equal(result.calls.length,0);
+    result=check({lock:'session_id: 415\n'});assert.equal(result.exit,0);assert.match(result.messages.join('\n'),/source active-lock; live S415/);assert.equal(result.calls.length,0);
+  }finally{fs.rmSync(fixtureRoot,{recursive:true,force:true});}
 });

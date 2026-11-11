@@ -6,12 +6,11 @@
  */
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { spawnSync } from './lib/safe-spawn.mjs';
 
 import { admitDeployment } from './lib/deploy-argv.mjs';
 const admitted = admitDeployment({"name":"deploy-worker","boolFlags":["--self-test","--confirm-production"],"valueFlags":["--env"],"usage":"node scripts/deploy-worker.mjs [--env staging|production] [--confirm-production] | --self-test"});
-const { envForSpawn, resolveCapability } = await import('./lib/secrets.mjs');
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const args = process.argv.slice(2);
@@ -70,48 +69,27 @@ if (target === 'production') {
   }
 }
 
-/**
- * Credential source: gateway first, CI environment second.
- *
- * S300: this script could NEVER deploy from CI. It resolved `cloudflare.deploy`
- * exclusively through the Studio secrets gateway, which lives in the
- * `vaultspark-studio-ops` sibling repo — absent on a GitHub runner. So every CI
- * deploy died with "cloudflare.deploy is unavailable (missing: capability
- * mapping)" while a perfectly valid CF_WORKER_API_TOKEN sat right there in the
- * step environment, untouched. That is one of three independent reasons the edge
- * Worker went a month without a deploy (the others: a self-referential promotion
- * deadlock, D-S300.9, and the resulting stale live build).
- *
- * The gateway remains the PREFERRED path and CANON-012 is unchanged for local
- * work — nothing about the local security model moves. CI simply has a different
- * legitimate vault: GitHub Actions Secrets, injected as env. Requiring a
- * gateway that cannot exist there is not a security control, it is a permanent
- * outage. Same sibling-fallback shape already used by the propagated-doc gate.
- *
- * Fails closed either way: no gateway AND no env token is still a hard exit.
- */
+// Local deploys use the canonical broker closure. A present-but-failing adapter
+// never falls back to raw environment credentials. GitHub Actions has its own
+// explicit secret injection when the sibling control plane is absent.
 const REQUIRED_ENV = ['CLOUDFLARE_API_TOKEN', 'CLOUDFLARE_ACCOUNT_ID'];
-const readiness = resolveCapability('cloudflare.deploy');
-
-let credentialSource = 'gateway';
-if (!readiness.ok) {
-  // Only the API token is genuinely required from the environment. The account
-  // is already pinned in cloudflare/wrangler.toml (`account_id = …`), and
-  // Wrangler reads it from there — demanding CLOUDFLARE_ACCOUNT_ID as well made
-  // the CI path fail on a value it never needed. Still required when the config
-  // does NOT pin one, so a misconfigured deploy cannot pick the wrong account.
+const brokerAdapter = resolve(ROOT, '../vaultspark-studio-ops/scripts/lib/cf-deploy.mjs');
+const useBroker = existsSync(brokerAdapter);
+if (!useBroker && process.env.GITHUB_ACTIONS !== 'true') {
+  console.error('deploy-worker: canonical Cloudflare broker adapter is unavailable; local deployment fails closed');
+  process.exit(1);
+}
+if (!useBroker) {
   const accountPinned = /^\s*account_id\s*=/m.test(
     existsSync(resolve(ROOT, 'cloudflare', 'wrangler.toml'))
       ? readFileSync(resolve(ROOT, 'cloudflare', 'wrangler.toml'), 'utf8')
       : '',
   );
   const needed = accountPinned ? ['CLOUDFLARE_API_TOKEN'] : REQUIRED_ENV;
-  const fromEnv = needed.filter((key) => !process.env[key]);
-  if (fromEnv.length) {
-    console.error(`deploy-worker: cloudflare.deploy is unavailable (gateway missing: ${readiness.missing.join(', ') || 'capability mapping'}; env missing: ${fromEnv.join(', ')}${accountPinned ? '' : '; no account_id pinned in wrangler.toml'})`);
+  if (needed.some(key => !process.env[key])) {
+    console.error('deploy-worker: required explicit GitHub Actions credentials are unavailable');
     process.exit(1);
   }
-  credentialSource = 'ci-environment';
 }
 
 const wrangler = resolve(ROOT, 'node_modules', 'wrangler', 'bin', 'wrangler.js');
@@ -120,20 +98,34 @@ if (!existsSync(wrangler)) {
   process.exit(1);
 }
 
-console.log(`deploy-worker: deploying ${target} · credentials from ${credentialSource === 'gateway' ? 'the Studio secrets gateway' : 'the CI environment (gateway unavailable)'}`);
+console.log(`deploy-worker: deploying ${target} - credentials from ${useBroker ? 'the Studio broker' : 'the GitHub Actions environment (canonical adapter absent)'}`);
 
-// Gateway path builds a scrubbed env containing ONLY the declared keys. The CI
-// path inherits the runner env, which already holds exactly those secrets and
-// nothing else this process put there. Neither branch prints a value.
-const spawnEnv = credentialSource === 'gateway'
-  ? envForSpawn('cloudflare.deploy', REQUIRED_ENV)
-  : { ...process.env };
-
-const result = spawnSync(
-  process.execPath,
-  [wrangler, 'deploy', '--config', 'cloudflare/wrangler.toml', '--env', target],
-  { cwd: ROOT, env: spawnEnv, stdio: 'inherit' },
-);
+function deployWithEnv(env) {
+  return spawnSync(
+    process.execPath,
+    [wrangler, 'deploy', '--config', 'cloudflare/wrangler.toml', '--env', target],
+    { cwd: ROOT, env, stdio: 'inherit' },
+  );
+}
+let result;
+if (useBroker) {
+  try {
+    const { withDeployEnv } = await import(pathToFileURL(brokerAdapter).href);
+    result = await withDeployEnv('website-worker-deploy-' + target, (env) => {
+      if (REQUIRED_ENV.some(key => typeof env[key] !== 'string' || !env[key])) {
+        throw new Error('required-broker-credentials-unavailable');
+      }
+      // Only this closure receives broker credentials; preserve subprocess
+      // runtime environment and overwrite inherited deployment keys explicitly.
+      return deployWithEnv({ ...process.env, ...env });
+    });
+  } catch {
+    console.error('deploy-worker: canonical Cloudflare broker refused or is unavailable; deployment stopped');
+    process.exit(1);
+  }
+} else {
+  result = deployWithEnv({ ...process.env });
+}
 
 if (result.error) {
   console.error(`deploy-worker: could not start Wrangler (${result.error.message})`);

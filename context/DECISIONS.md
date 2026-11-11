@@ -1319,3 +1319,7 @@ The native premise-timing checker remains nonpassing. Its exact offending paths 
 ## D-S415.2 — preserve concentration gate and expose browser-group timing
 
 The full source attempt passed553/553 but its browser batch took528s/32.1%, exceeding the existing30% concentration ratchet. Split the command into artifact rendering, member enrollment, and account access/recovery groups, preserving every test and the threshold. A fresh555-step run must pass; no partial timing or prior receipt is promoted to acceptance.
+
+## D-S415.3 — preserve unchanged shell manifest bytes
+
+Resync changed only the shell manifest generation timestamp and invalidated an otherwise complete byte-bound source receipt. Preserve the existing bytes and modification time only when the full payload is identical and its timestamp is valid canonical ISO. Changed assets, missing/invalid dates and corrupt payloads still regenerate. Keep source fingerprints and drift checks strict. Actual repeated-build and mutation fixtures pass; a fresh full suite follows this repair.

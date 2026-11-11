@@ -107,12 +107,133 @@
   "doctorScore": {
     "date": "2026-11-11",
     "passing": 12,
-    "warning": 3,
-    "failing": 2,
+    "warning": 2,
+    "failing": 3,
     "blockingFailing": 1,
-    "advisoryFailing": 1,
+    "advisoryFailing": 2,
     "total": 17,
-    "score": 71
+    "score": 71,
+    "checks": [
+      {
+        "id": "manifest",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "validate",
+        "pass": true,
+        "warn": true,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "canon",
+        "pass": true,
+        "warn": false,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "compliance-velocity",
+        "pass": true,
+        "warn": true,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "sanitize",
+        "pass": true,
+        "warn": false,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "launch",
+        "pass": true,
+        "warn": true,
+        "driftClass": "expected-external",
+        "blocking": false
+      },
+      {
+        "id": "feedback",
+        "pass": true,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "entropy",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "revenue",
+        "pass": false,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "sibling-locks",
+        "pass": false,
+        "warn": true,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "ignis",
+        "pass": true,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "genome",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "prompt-ver",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "propagated-doc",
+        "pass": true,
+        "warn": false,
+        "driftClass": "expected-external",
+        "blocking": false
+      },
+      {
+        "id": "sched-staleness",
+        "pass": false,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "desk-model-servability",
+        "pass": false,
+        "warn": true,
+        "driftClass": "expected-external",
+        "blocking": false
+      },
+      {
+        "id": "deploy-currency-live",
+        "pass": false,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": true
+      }
+    ]
   },
   "modelTier": "T3_opus",
   "modelTierDefault": "opus[1m]",

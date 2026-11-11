@@ -886,3 +886,5 @@ Native invocation 01a1b213-67c9-7af0-9148-611b5d9cbc66, created 1793988988, stil
 - [ ] S412 isolated member/investor acceptance and authorized release promotion.
 
 Waves1–3 verified;4reference/account/release prerequisites unresolved;5full closeout pending.
+
+- [x] S415 second-order: unchanged shell builds preserve exact manifest bytes/mtime; real input and metadata corruption still regenerate (17 focused checks). Full source and release acceptance remain separate.

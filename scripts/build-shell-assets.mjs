@@ -1,4 +1,5 @@
 import crypto from 'node:crypto';
+import { isDeepStrictEqual } from 'node:util';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -521,6 +522,21 @@ function buildManifest() {
   };
 }
 
+function writeManifestIfChanged(filePath, expected) {
+  if (fs.existsSync(filePath)) {
+    try {
+      const currentPayload = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+      const expectedPayload = JSON.parse(expected);
+      const stamp = currentPayload.generatedAt;
+      const validStamp = typeof stamp === 'string' && new Date(stamp).toISOString() === stamp;
+      delete currentPayload.generatedAt;
+      delete expectedPayload.generatedAt;
+      if (validStamp && isDeepStrictEqual(currentPayload, expectedPayload)) return false;
+    } catch { /* Malformed existing output must be regenerated. */ }
+  }
+  return writeIfChanged(filePath, expected);
+}
+
 function checkFileContent(filePath, expected) {
   if (!fs.existsSync(filePath)) return false;
   const current = fs.readFileSync(filePath, 'utf8');
@@ -618,7 +634,7 @@ function main() {
     cleanupOldFingerprintedFiles(generated.asset, generated.outputName);
   }
 
-  writeIfChanged(manifestPath, manifestOutput);
+  writeManifestIfChanged(manifestPath, manifestOutput);
   writeIfChanged(swPath, swNext);
 
   for (const htmlChange of htmlChanges) {

@@ -133,3 +133,86 @@ test('isolated compactor rejects old cache, stays deterministic, and invalidates
     assert.equal(JSON.parse(fs.readFileSync(path.join(dir,'.ops-cache/handoff-digest.json'))).mode,'deterministic-v1');
   }finally{fs.rmSync(dir,{recursive:true,force:true});}
 });
+
+test('Worker deployment keeps broker execution scoped and CI fallback explicit', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'vss-worker-broker-'));
+  const source = fs.readFileSync(path.join(root, 'scripts/deploy-worker.mjs'), 'utf8');
+  function runCase(name, { broker = true, brokerMode = 'ready', ci = false, token = false, account = false, pinned = true, args = [], failGate = false, status = 0, calls = 1, insideBroker = true } = {}) {
+    const home = path.join(dir, name), project = path.join(home, 'project'), scriptsDir = path.join(project, 'scripts');
+    fs.mkdirSync(path.join(scriptsDir, 'lib'), { recursive: true });
+    fs.writeFileSync(path.join(scriptsDir, 'deploy-worker.mjs'), source);
+    for (const file of ['deploy-argv.mjs', 'argv-guard.mjs']) fs.copyFileSync(path.join(root, 'scripts/lib', file), path.join(scriptsDir, 'lib', file));
+    fs.writeFileSync(path.join(scriptsDir, 'lib/secrets.mjs'), "throw Error('raw-secret-module-must-never-load');\n");
+    fs.writeFileSync(path.join(scriptsDir, 'lib/safe-spawn.mjs'), `import fs from 'node:fs';
+export function spawnSync(command,args,options){
+ const deploy=args.includes('deploy');
+ if(deploy&&process.env.FIXTURE_EXPECT_BROKER==='true'&&process.env.FIXTURE_BROKER_ACTIVE!=='true')throw Error('outside-broker-closure');
+ const row={kind:deploy?'deploy':'preflight',script:args[0].split(/[\\\\/]/).pop(),args:args.slice(1),brokerActive:process.env.FIXTURE_BROKER_ACTIVE==='true',tokenPresent:!!options.env.CLOUDFLARE_API_TOKEN,accountPresent:!!options.env.CLOUDFLARE_ACCOUNT_ID};
+ fs.appendFileSync(process.env.FIXTURE_RECORD,JSON.stringify(row)+'\\n');
+ return {status:process.env.FIXTURE_FAIL_GATE==='true'&&!deploy?7:0};
+}
+`);
+    fs.mkdirSync(path.join(project, 'cloudflare'));
+    fs.writeFileSync(path.join(project, 'cloudflare/wrangler.toml'), pinned ? 'account_id = "fixture-account"\n' : 'name = "fixture-worker"\n');
+    const wrangler = path.join(project, 'node_modules/wrangler/bin');
+    fs.mkdirSync(wrangler, { recursive: true });
+    fs.writeFileSync(path.join(wrangler, 'wrangler.js'), "throw Error('real-Wrangler-must-not-execute');\n");
+    if (broker) {
+      const adapter = path.join(home, 'vaultspark-studio-ops/scripts/lib');
+      fs.mkdirSync(adapter, { recursive: true });
+      fs.writeFileSync(path.join(adapter, 'cf-deploy.mjs'), `export async function withDeployEnv(action,fn){
+ if(!/^website-worker-deploy-(staging|production)$/.test(action))throw Error('unexpected-action');
+ if(process.env.FIXTURE_BROKER_MODE==='throw')throw Error('fixture-denial');
+ process.env.FIXTURE_BROKER_ACTIVE='true';
+ try{return await fn(process.env.FIXTURE_BROKER_MODE==='missing'?{}:{CLOUDFLARE_API_TOKEN:'fixture-broker-token',CLOUDFLARE_ACCOUNT_ID:'fixture-broker-account'});}
+ finally{delete process.env.FIXTURE_BROKER_ACTIVE;}
+}`);
+    }
+    const record = path.join(home, 'calls.jsonl');
+    const env = Object.fromEntries(['PATH', 'Path', 'SystemRoot', 'TEMP', 'TMP', 'COMSPEC', 'PATHEXT', 'USERPROFILE'].filter(key => process.env[key]).map(key => [key, process.env[key]]));
+    Object.assign(env, { FIXTURE_RECORD: record, FIXTURE_BROKER_MODE: brokerMode, FIXTURE_EXPECT_BROKER: String(insideBroker), FIXTURE_FAIL_GATE: String(failGate) });
+    if (ci) env.GITHUB_ACTIONS = 'true';
+    if (token) env.CLOUDFLARE_API_TOKEN = 'fixture-ci-token';
+    if (account) env.CLOUDFLARE_ACCOUNT_ID = 'fixture-ci-account';
+    const result = spawnSync(process.execPath, [path.join(scriptsDir, 'deploy-worker.mjs'), ...args], { cwd: project, env, encoding: 'utf8', timeout: 15000, windowsHide: true });
+    assert.equal(result.error, undefined, `${name}: fixture child starts`);
+    assert.equal(result.status, status, `${name}: ${result.stderr}`);
+    const observed = fs.existsSync(record) ? fs.readFileSync(record, 'utf8').trim().split('\n').filter(Boolean).map(JSON.parse) : [];
+    assert.equal(observed.length, calls, `${name}: exact subprocess count`);
+    if (status === 0 && calls) {
+      const deploy = observed.at(-1);
+      assert.equal(deploy.kind, 'deploy', name);
+      assert.equal(deploy.brokerActive, insideBroker, name);
+      assert.equal(deploy.tokenPresent, true, name);
+      assert.equal(deploy.accountPresent, insideBroker || account, name);
+      assert.deepEqual(deploy.args, ['deploy', '--config', 'cloudflare/wrangler.toml', '--env', args.includes('production') ? 'production' : 'staging'], name);
+    }
+    if (args.includes('production') && args.includes('--confirm-production')) {
+      assert.equal(observed[0].script, 'check-production-promotion-gate.mjs', name);
+      assert.deepEqual(observed[0].args, ['--require-allowed'], name);
+      if (!failGate) {
+        assert.equal(observed[1].script, 'run-release-ceremony.mjs', name);
+        assert.deepEqual(observed[1].args, ci ? ['--check', '--require-ready', '--require-fresh'] : ['--url=https://website.staging.vaultsparkstudios.com', '--require-ready'], name);
+      }
+    }
+    for (const literal of ['fixture-ci-token', 'fixture-broker-token']) assert.equal((result.stdout + result.stderr).includes(literal), false, `${name}: credentials stay out of output`);
+  }
+  try {
+    runCase('local-broker-closure');
+    runCase('local-missing-adapter-env-does-not-bypass', { broker: false, token: true, account: true, status: 1, calls: 0 });
+    runCase('local-broker-missing-values-fails-closed', { brokerMode: 'missing', token: true, account: true, status: 1, calls: 0 });
+    runCase('ci-explicit-token-pinned-account', { broker: false, ci: true, token: true, insideBroker: false });
+    runCase('ci-missing-token', { broker: false, ci: true, status: 1, calls: 0, insideBroker: false });
+    runCase('ci-unpinned-account-required', { broker: false, ci: true, token: true, pinned: false, status: 1, calls: 0, insideBroker: false });
+    runCase('ci-broker-denial-never-falls-back', { brokerMode: 'throw', ci: true, token: true, account: true, status: 1, calls: 0 });
+    runCase('production-confirmation-required', { args: ['--env', 'production'], status: 2, calls: 0 });
+    runCase('production-gates-before-broker', { args: ['--env', 'production', '--confirm-production'], calls: 3 });
+    runCase('ci-production-fresh-ceremony', { broker: false, ci: true, token: true, args: ['--env', 'production', '--confirm-production'], calls: 3, insideBroker: false });
+    runCase('production-gate-rejection-stops-deploy', { args: ['--env', 'production', '--confirm-production'], failGate: true, status: 7, calls: 1 });
+    runCase('unknown-argv-prevents-io', { args: ['--surprise'], status: 2, calls: 0 });
+  } finally {
+    assert.equal(path.dirname(path.resolve(dir)), path.resolve(os.tmpdir()));
+    assert.ok(path.basename(dir).startsWith('vss-worker-broker-'));
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});

@@ -10,8 +10,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { closedSessionFromSil } from './lib/session-identity.mjs';
-import { resolveStartupSessions } from './lib/startup-session-identity.mjs';
+import { closedSessionFromSil, committedSessionFromGit } from './lib/session-identity.mjs';
+import { resolveStartupSessions, resolveStartupBriefIdentity } from './lib/startup-session-identity.mjs';
+
+import { spawnSync } from './lib/safe-spawn.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -60,11 +62,20 @@ const brief = readText('docs/STARTUP_BRIEF.md');
 const rendered = parseInt(brief.match(/║\s+Session\s+(\d+)\b/)?.[1] ?? '', 10);
 const generatedAt = parseInt(brief.match(/generated-at: .*?\(last closed Session\s+(\d+)\b/)?.[1]
   ?? brief.match(/generated-at: .*?\(Session\s+(\d+)\s+closeout\)/)?.[1] ?? '', 10);
-const expected = resolveStartupSessions({
-  silSession: completed,
-  statusSession: status.currentSession,
-  lockText: readText('context/.session-lock'),
-}).currentSession;
+const lockText=readText('context/.session-lock');
+let committedSession=null,committedBriefText=null;
+// No live owner is inferred. Git proves ONLY the rendered committed snapshot.
+if(!fs.existsSync(path.join(root,'context/.session-lock'))&&!lockText.trim()&&Number.isFinite(rendered)&&rendered>completed+1){
+  const git=args=>spawnSync('git',args,{cwd:root,encoding:'utf8',windowsHide:true,timeout:10000,maxBuffer:1048576});
+  const log=git(['log','-200','--format=%s']);
+  const published=git(['show','HEAD:docs/STARTUP_BRIEF.md']);
+  if(!log.error&&log.status===0&&!published.error&&published.status===0){
+    committedSession=committedSessionFromGit(root,{floor:completed,text:log.stdout});
+    committedBriefText=published.stdout;
+  }
+}
+const identity=resolveStartupBriefIdentity({silSession:completed,statusSession:status.currentSession,lockText,briefText:brief,committedSession,committedBriefText});
+const expected=identity.expectedSession;
 
 const failures = [];
 if (rendered !== expected) failures.push(`brief header Session ${rendered || '?'} != expected Session ${expected}`);
@@ -80,4 +91,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`check-startup-session-coherence: ok (completed S${completed} -> brief S${rendered})`);
+console.log(`check-startup-session-coherence: ok (completed S${completed} -> brief S${rendered}; source ${identity.source}; live ${identity.liveSession===null?'unknown':'S'+identity.liveSession})`);
