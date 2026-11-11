@@ -110,14 +110,21 @@
       font-family: Georgia, "Times New Roman", serif;
       font-size: clamp(3.5rem, 8vw, 7rem);
       line-height: 0.96;
+      /* S414: whole-pixel line boxes so the lede below starts on a pixel. */
+      line-height: round(0.96em, 1px);
       letter-spacing: -0.045em;
       margin: 0.75rem 0 1rem;
     }
+    .page-hero .eyebrow { box-sizing: border-box; height: 2.3125rem; }
     .page-hero p {
       color: var(--muted);
-      font-size: 1.08rem;
+      /* S414: whole-pixel type metrics (17px / 28px). The previous 1.08rem /
+         1.65 produced 17.28px glyphs on 28.512px lines, whose baselines Linux
+         CI rasterized one pixel apart between runs; required visual
+         regression failed on this paragraph alone. */
+      font-size: 1.0625rem;
       max-width: 56ch;
-      line-height: 1.65;
+      line-height: 1.75rem;
     }
 
     /* ── Hero stat strip ── */
