@@ -4,6 +4,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from '../scripts/lib/safe-spawn.mjs';
+import { createHash } from 'node:crypto';
+import { extractCaptureArchive } from '../scripts/lib/visual-capture-archive.mjs';
 import { captureSource, baselineRunIssues, captureReceiptIssues, CANDIDATE_ORIGIN } from '../scripts/lib/visual-capture-source.mjs';
 const sha = 'a'.repeat(40);
 test('generation binds only the exact candidate origin and remains provisional', () => {
@@ -67,5 +69,28 @@ test('real capture CLI rejects external generation before writes and binds valid
     const before=fs.readFileSync(receipt);
     assert.equal(run([],{CAPTURE_SHA:'HEAD'}).status,1);
     assert.deepEqual(fs.readFileSync(receipt),before);
+  } finally { fs.rmSync(temp,{recursive:true,force:true,maxRetries:3,retryDelay:50}); }
+});
+test('exact archive bytes are verified before safe PNG/provenance-only extraction', () => {
+  const temp=fs.mkdtempSync(path.join(os.tmpdir(),'vs-capture-archive-'));
+  const python=process.platform==='win32'?'python':'python3';
+  const make=(name,extra='pass')=>{
+    const archive=path.join(temp,name+'.zip');
+    const code="import zipfile,sys; z=zipfile.ZipFile(sys.argv[1],'w'); z.writestr('.cache/visual-capture-source.json','{}'); z.writestr('tests/__snapshots__/visual-regression.spec.js-snapshots/games-dark-chromium-linux.png',bytes([137,80,78,71,13,10,26,10])); "+extra+"; z.close()";
+    const r=spawnSync(python,['-c',code,archive],{encoding:'utf8',windowsHide:true,timeout:15000});assert.equal(r.status,0,r.stderr);
+    const bytes=fs.readFileSync(archive);return{bytes,artifact:{size_in_bytes:bytes.length,digest:'sha256:'+createHash('sha256').update(bytes).digest('hex')}};
+  };
+  try {
+    const valid=make('valid');const target=path.join(temp,'valid-output');
+    extractCaptureArchive(valid.bytes,valid.artifact,target);
+    assert.equal(fs.readFileSync(path.join(target,'.cache/visual-capture-source.json'),'utf8'),'{}');
+    const wrong=path.join(temp,'wrong-digest');assert.throws(()=>extractCaptureArchive(valid.bytes,{...valid.artifact,digest:'sha256:'+'0'.repeat(64)},wrong),/SHA-256/);
+    assert.equal(fs.existsSync(wrong),false);
+    for(const [name,member] of [['escape','../escaped.png'],['unexpected','scripts/run.py'],['duplicate','.cache/visual-capture-source.json']]){
+      const a=make(name,`z.writestr('${member}','bad')`);const out=path.join(temp,name+'-output');
+      assert.throws(()=>extractCaptureArchive(a.bytes,a.artifact,out),/extraction refused/);
+      assert.equal(fs.existsSync(path.join(out,'.cache/visual-capture-source.json')),false,'all entries validated before extracting any');
+    }
+    assert.equal(fs.existsSync(path.join(temp,'escaped.png')),false);
   } finally { fs.rmSync(temp,{recursive:true,force:true,maxRetries:3,retryDelay:50}); }
 });

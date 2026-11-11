@@ -29,6 +29,7 @@ import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import { randomBytes } from 'node:crypto';
 import { baselineRunIssues, captureReceiptIssues } from './lib/visual-capture-source.mjs';
+import { extractCaptureArchive } from './lib/visual-capture-archive.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -73,18 +74,18 @@ function findLatestBaselineRun(runId, expectedSha) {
   return null;
 }
 
-function downloadArtifact(runId) {
+function downloadArtifact(artifact) {
   const tmpDir = join(tmpdir(), `vr-baselines-${randomBytes(4).toString('hex')}`);
   mkdirSync(tmpDir, { recursive: true });
-  console.log(`Downloading ${ARTIFACT_NAME} from run ${runId}...`);
-  const r = spawnSync('gh', ['run', 'download', String(runId),
-    '--name', ARTIFACT_NAME, '--dir', tmpDir], {
-    cwd: ROOT, encoding: 'utf8', windowsHide: true,
+  console.log(`Downloading admitted capture artifact ${artifact.id}...`);
+  const r = spawnSync('gh', ['api', `repos/VaultSparkStudios/VaultSparkStudios.github.io/actions/artifacts/${artifact.id}/zip`], {
+    cwd: ROOT, encoding: null, windowsHide: true, timeout: 120000, maxBuffer: 268435456,
   });
   if (r.status !== 0) {
-    console.error('Failed:', (r.stderr || r.stdout || '').trim());
+    console.error('Capture archive download failed.');
     process.exit(1);
   }
+  extractCaptureArchive(r.stdout, artifact, tmpDir);
   return tmpDir;
 }
 
@@ -170,7 +171,7 @@ const trust = spawnSync(process.execPath, [resolve(ROOT, '..', 'vaultspark-studi
   `https://api.github.com/repos/VaultSparkStudios/VaultSparkStudios.github.io/actions/artifacts/${artifact.id}/zip`],
   { cwd: ROOT, encoding: 'utf8', windowsHide: true });
 if (trust.status !== 0) { console.error(`Artifact trust is nonpassing for artifact ${artifact.id} (${artifact.digest}); no archive downloaded or baseline changed.`); process.exit(1); }
-const tmpDir = downloadArtifact(runId);
+const tmpDir = downloadArtifact(artifact);
 const staged = stageBaselines(tmpDir, expectedSha.stdout.trim());
 
 console.log(`\n✓ Staged ${staged} baseline(s) → tests/__snapshots__/visual-regression.spec.js-snapshots/`);
