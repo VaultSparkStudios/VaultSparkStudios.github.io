@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-11T03:21:34.330Z",
+  "generatedAt": "2026-11-11T03:37:20.514Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -18,24 +18,17 @@
       "shell-mismatch",
       "status-mismatch"
     ],
-    "candidateReady": false,
-    "candidateFindings": [
-      "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch",
-      "staging-artifact-leaf-count-mismatch",
-      "/:localShellParity",
-      "/studio-pulse/:localShellParity",
-      "/membership/:localShellParity"
-    ],
-    "candidateBuildSha": "2728324c119a3825de464410e62ccfc0bcd964ec",
-    "deployedBuildSha": "a5c44a6a03b14ff4bedea24269dc2e3a064b2bd3",
-    "candidateShaBound": false,
+    "candidateReady": true,
+    "candidateFindings": [],
+    "candidateBuildSha": "ceba607f4d6eec139f4cb85f84a17ceaf48e3c4f",
+    "deployedBuildSha": "ceba607f4d6eec139f4cb85f84a17ceaf48e3c4f",
+    "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "c324837e52c28657cffa5e2f5f6cd06326b14911cf3c3617d225b979780580f2",
-      "candidateLeafCount": 70,
-      "stagingRoot": "f90c160227935caaf359828091e3749a17487c80e975aeb89d4455f749ffe87c",
+      "candidateRoot": "32933775bfa005034a471134a53552b6e41e93dca4fbbf1540ce355faf7892bd",
+      "candidateLeafCount": 79,
+      "stagingRoot": "32933775bfa005034a471134a53552b6e41e93dca4fbbf1540ce355faf7892bd",
       "stagingLeafCount": 79,
-      "matched": false
+      "matched": true
     },
     "productionParity": false,
     "deployReceipt": {
@@ -75,22 +68,22 @@
   },
   "productionDeploy": {
     "state": "stale",
-    "commitsBehind": 520,
-    "ageHours": 191.6,
-    "observedAt": "2026-11-11T03:12:04.736Z",
+    "commitsBehind": 575,
+    "ageHours": 192.4,
+    "observedAt": "2026-11-11T03:37:20.514Z",
     "shellParity": {
-      "state": "superseded",
+      "state": "drift",
       "route": "/",
-      "observedAt": "2026-11-11T03:12:04.736Z",
-      "expectedFrom": "fdb7f729a7f8ab525b82c6bb04867a2665ef0517221a86dbbc9233edde97a584",
-      "supersededBy": "824f875690bd2cfbd5a70b5a177f34e75c58f51211b8c009955c9a3c06d38e02",
+      "observedAt": "2026-11-11T03:37:20.514Z",
+      "expectedFrom": "824f875690bd2cfbd5a70b5a177f34e75c58f51211b8c009955c9a3c06d38e02",
+      "supersededBy": null,
       "ageHours": 0,
       "stale": false,
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/after-paint.shell-0392b76d45.js",
-        "assets/ambient-core.shell-214cf44506.js",
-        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/ambient-core.shell-a3a5da83ce.js",
+        "assets/ambient-feature.shell-fd51619897.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/hero-ticker.shell-550971e267.js",
         "assets/home-idle-loader.shell-7b976ad580.js",
@@ -103,8 +96,8 @@
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
         "assets/stats-surface.shell-b33242e1cc.js",
-        "assets/style.shell-dafcbbf695.css",
-        "assets/theme-toggle.shell-8221605898.js",
+        "assets/style.shell-4c36e431cd.css",
+        "assets/theme-toggle.shell-c2c9a3a78c.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
       "actual": [
@@ -127,8 +120,18 @@
         "assets/theme-toggle.shell-8221605898.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
-      "missing": [],
-      "unexpected": [],
+      "missing": [
+        "assets/ambient-core.shell-a3a5da83ce.js",
+        "assets/ambient-feature.shell-fd51619897.js",
+        "assets/style.shell-4c36e431cd.css",
+        "assets/theme-toggle.shell-c2c9a3a78c.js"
+      ],
+      "unexpected": [
+        "assets/ambient-core.shell-214cf44506.js",
+        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/style.shell-dafcbbf695.css",
+        "assets/theme-toggle.shell-8221605898.js"
+      ],
       "challengedAt": null,
       "challengeError": null
     }
@@ -185,9 +188,9 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": false,
-    "stagingCandidateShaBound": false,
-    "stagingArtifactManifestBound": false,
+    "stagingCandidateReady": true,
+    "stagingCandidateShaBound": true,
+    "stagingArtifactManifestBound": true,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -201,9 +204,6 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
-    "stagingCandidateReady",
-    "stagingCandidateShaBound",
-    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "productionShellParityMatched",
     "identityMigrationVerified",
