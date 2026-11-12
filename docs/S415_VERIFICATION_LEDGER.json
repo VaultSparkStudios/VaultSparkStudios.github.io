@@ -3,13 +3,13 @@
   "publicSafe": true,
   "session": 415,
   "state": "in-progress",
-  "updatedAt": "2026-11-12T07:51:28.639Z",
+  "updatedAt": "2026-11-12T08:40:17.813Z",
   "audit": "docs/AUDIT_2026-11-11-S415.json",
   "implementation": "docs/S415_IMPLEMENTATION_CHECKPOINT.json",
   "candidate": {
-    "qaCommit": "192622787b352a2d1ddb2bef35ddd62fd1c9a866",
+    "qaCommit": "27c67e24ce9f57eed11a205e6fbcc277e85ce1a2",
     "productionPromoted": false,
-    "workingTree": "Controlled run at6df passed42headers but refused before all arms. Reporting and early runtime inspection are locally verified; no rendering inference or production promotion."
+    "workingTree": "Controlled27c A completed68passes+2flaky with targetfirst-pass; controlabsent stopped interventions. Scene isolation is locally verified, pending normal Linux comparison. No production promotion."
   },
   "local": {
     "fullAttempt": {
@@ -386,6 +386,12 @@
       "browserCollectionPassed": 6,
       "ordinaryWindowsGamesPassed": 10,
       "causalFixClaimed": false
+    },
+    "visualCaseIsolation": {
+      "receipt": "docs/S415_VISUAL_CASE_ISOLATION.json",
+      "focusedTests": 43,
+      "ordinaryWindowsGames": 10,
+      "nativeLinuxComparisonPending": true
     }
   },
   "hosted": {
@@ -487,11 +493,13 @@
     },
     "controlledGamesExperiment": {
       "receipt": "docs/S415_CONTROLLED_GAMES_EXPERIMENT.json",
-      "state": "native-setup-refusal-reporting-corrected-locally",
-      "runId": 43175388531,
-      "sourceCommit": "6df8f55366da90b61326d2cb86b88d09b809d251",
+      "runId": 43178454063,
+      "sourceCommit": "27c67e24ce9f57eed11a205e6fbcc277e85ce1a2",
+      "state": "ordinary-control-absent",
       "headersPassed": 42,
-      "armsExecuted": 0,
+      "visualsPassed": 68,
+      "visualsFlaky": 2,
+      "noopOrRangeArmsExecuted": false,
       "acceptanceEvidence": false
     }
   },

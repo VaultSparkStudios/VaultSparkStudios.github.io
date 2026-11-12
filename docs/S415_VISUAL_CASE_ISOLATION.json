@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "session": 415,
+  "publicSafe": true,
+  "recordedAt": "2026-11-12T08:40:17.813Z",
+  "state": "locally-verified-normal-linux-comparison-pending",
+  "basedOnCommit": "27c67e24ce9f57eed11a205e6fbcc277e85ce1a2",
+  "sourceFiles": [
+    {
+      "file": "tests/visual-regression.spec.js",
+      "sha256": "2414883ce9b98eba77fc3b810bbb6f2dcecbe7b9b058d94090f519bdad840daa"
+    },
+    {
+      "file": "tests/visual-capture-source.unit.spec.mjs",
+      "sha256": "4f3feae0cb374e45ddf3d3ae203c9d3222ecd34a955c1403762ac504fbe3808a"
+    }
+  ],
+  "behavior": "Each visual scene has a deterministic unique worker-scoped fixture key. Under the existing local browser fixture this separates worker/browser lifetimes. A Node-only claim rejects cross-scene worker reuse before navigation.",
+  "scope": {
+    "cases": 70,
+    "concurrencyChanged": false,
+    "retriesChanged": false,
+    "timeoutsChanged": false,
+    "deviceScaleFactorChanged": false,
+    "launchFlagsChanged": false,
+    "nativeAssertionChanged": false,
+    "referenceImagesChanged": false,
+    "pixelToleranceChanged": false,
+    "artificialDelay": false,
+    "manualPreMatcherBrowserRpcAdded": false
+  },
+  "localVerification": {
+    "focusedTests": 43,
+    "focusedNativeExit": 0,
+    "mechanismProof": {
+      "cases": 4,
+      "nativeExit": 0,
+      "keys": [
+        "a",
+        "a",
+        "b",
+        "b"
+      ],
+      "workerIndices": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "inheritedViewportVerified": true,
+      "siteNavigationIssued": false,
+      "playwright": "1.58.2"
+    },
+    "ordinaryWindowsGames": {
+      "passed": 10,
+      "nativeExit": 0,
+      "retries": 0,
+      "snapshotUpdates": false,
+      "diagnostics": false,
+      "elapsedSeconds": 54.4,
+      "playwright": "1.58.2"
+    }
+  },
+  "nativeComparison": {
+    "dispatched": false,
+    "acceptanceEvidence": false
+  },
+  "limitations": [
+    "This enforces scene isolation; it does not identify the Chromium glyph-raster cause.",
+    "Fresh worker/browser lifetimes also change startup and scheduling; local mechanism and Windows checks do not prove Linux comparison acceptance.",
+    "The earlier controlled A pass remains nonreproduction and is not acceptance for this implementation."
+  ],
+  "causalVendorClaim": false,
+  "baselineAccepted": false,
+  "productionAccepted": false
+}

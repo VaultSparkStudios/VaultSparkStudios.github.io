@@ -47,6 +47,15 @@ const VIEWPORTS = [
 // S160 #18: two-theme sweep — light/warm/cool/high-contrast bugs (like the S132
 // `body.dark-mode` specificity trap) only surface when the saved theme flips.
 const THEMES = ['dark', 'light'];
+
+// Separate scene workers/browser lifetimes; this does not identify a raster cause.
+const workerSceneClaim = { key: null };
+function claimVisualScene(claim, key) {
+  if (typeof key !== 'string' || !key || key.length > 256) throw Error('Invalid visual scene key.');
+  if (claim.key !== null && claim.key !== key) throw Error('Visual worker reused across different scenes.');
+  claim.key = key;
+}
+
 if (process.env.VS_GAMES_EXPERIMENT_ARM) admitGamesExperiment(process.env.VS_GAMES_EXPERIMENT_ARM, process.env.VS_FAILURE_SCENE_DIAGNOSTICS, process.env.VS_SCENE_DIAGNOSTICS, 'none', process.env.VR_BASE_URL || process.env.BASE_URL || 'https://vaultsparkstudios.com');
 if (process.env.VS_SCENE_DIAGNOSTICS === 'true' || process.env.VS_FAILURE_SCENE_DIAGNOSTICS === 'true') {
   // Full update mode is validated again using actual testInfo before navigation.
@@ -469,7 +478,12 @@ for (const vp of VIEWPORTS) {
       test.use({ ...emulationOnly(vp.config), reducedMotion: 'reduce' });
 
       for (const surface of SURFACES) {
-        test(`${surface.name} · ${vp.name} · ${theme}`, async ({ page, baseURL }, testInfo) => {
+        const sceneKey = JSON.stringify([surface.name, vp.name, theme]);
+        const scenario = test.extend({
+          visualCaseKey: [sceneKey, { scope: 'worker', option: true }],
+        });
+        scenario(`${surface.name} · ${vp.name} · ${theme}`, async ({ page, baseURL }, testInfo) => {
+        claimVisualScene(workerSceneClaim, sceneKey);
         const sceneDiagnostics = process.env.VS_SCENE_DIAGNOSTICS === 'true';
         const failureSceneDiagnostics = process.env.VS_FAILURE_SCENE_DIAGNOSTICS === 'true';
         const experimentArm = process.env.VS_GAMES_EXPERIMENT_ARM || '';

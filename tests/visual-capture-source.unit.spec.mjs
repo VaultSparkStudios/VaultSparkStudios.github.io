@@ -551,3 +551,29 @@ test('actual runtime resolver supports the published bundled registry namespace 
   assert.throws(()=>resolve(core,config,()=>({registry:{findExecutable:()=>{throw Error('unused legacy namespace');}}}),'core-bundle'),/installed-headless-registry-unavailable/);
   assert.throws(()=>resolve(core,config,load,'unknown-layout'),/installed-registry-layout-unverified/);
 });
+
+
+test('actual visual worker claim allows one scene and rejects cross-scene reuse before mutation', () => {
+  const claim = actualFailureProbeFunction('claimVisualScene'), state = {key:null};
+  const first = JSON.stringify(['games','pixel-5','dark']), other = JSON.stringify(['home','pixel-5','dark']);
+  claim(state,first);claim(state,first);assert.equal(state.key,first);
+  assert.throws(()=>claim(state,other),/reused across different scenes/);assert.equal(state.key,first);
+  for(const key of [undefined,null,0,{},[],false,'','x'.repeat(257)])assert.throws(()=>claim({key:null},key),/Invalid visual scene key/);
+});
+
+test('actual visual registration has70 unique literal worker keys with inherited parent context', () => {
+  const source=fs.readFileSync('tests/visual-regression.spec.js','utf8');
+  const names=constant=>Array.from(source.split('const '+constant+' = [')[1].split('\n];')[0].matchAll(/name: '([^']+)'/g),m=>m[1]);
+  const surfaces=names('SURFACES'),viewports=names('VIEWPORTS'),themes=Array.from(source.match(/const THEMES = \[([^\]]+)\];/)[1].matchAll(/'([^']+)'/g),m=>m[1]);
+  const expression=source.match(/const sceneKey = ([^;]+);/)[1];
+  const actualKey=new Function('surface','vp','theme','return '+expression+';'),keys=[];
+  for(const surface of surfaces)for(const viewport of viewports)for(const theme of themes)keys.push(actualKey({name:surface},{name:viewport},theme));
+  assert.equal(keys.length,70);assert.equal(new Set(keys).size,70);
+  assert.ok(keys.includes(JSON.stringify(['games','pixel-5','dark'])));
+  assert.match(source,/const workerSceneClaim = \{ key: null \};/);
+  assert.match(source,/const scenario = test\.extend\(\{\s+visualCaseKey: \[sceneKey, \{ scope: 'worker', option: true \}\],\s+\}\);/);
+  assert.match(source,/scenario\(`\$\{surface.name\} · \$\{vp.name\} · \$\{theme\}`, async/);
+  assert.match(source,/test\.use\(\{ \.\.\.emulationOnly\(vp.config\), reducedMotion: 'reduce' \}\);/);
+  const body=source.slice(source.indexOf('scenario(`${surface.name}'));
+  assert.ok(body.indexOf('claimVisualScene(workerSceneClaim, sceneKey);')<body.indexOf('await page.goto('));
+});

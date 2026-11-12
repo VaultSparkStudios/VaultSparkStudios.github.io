@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "session": 415,
   "publicSafe": true,
-  "recordedAt": "2026-11-12T07:51:28.639Z",
-  "state": "native-setup-refusal-reporting-corrected-locally",
+  "recordedAt": "2026-11-12T08:29:41.791Z",
+  "state": "ordinary-control-absent-no-intervention-arms",
   "basedOnCommit": "6df8f55366da90b61326d2cb86b88d09b809d251",
   "sourceFiles": [
     {
@@ -89,16 +89,125 @@
     }
   },
   "nativeExperiment": {
-    "sourceCommit": "6df8f55366da90b61326d2cb86b88d09b809d251",
-    "runId": 43175388531,
-    "jobId": 131038288152,
-    "conclusion": "failure",
+    "schemaVersion": 1,
+    "session": 415,
+    "recordedAt": "2026-11-12T08:29:41.791Z",
+    "sourceCommit": "27c67e24ce9f57eed11a205e6fbcc277e85ce1a2",
+    "runId": 43178454063,
+    "jobId": 131048300738,
+    "workflowConclusion": "failure",
+    "coordinatorExit": "intentional nonacceptance",
+    "disposition": "ordinary-control-absent",
     "headersPassed": 42,
-    "armsExecuted": 0,
-    "state": "coordinator-refused-before-arms",
-    "refusalCause": "unknown; previous generic error omitted its stage and code",
-    "renderingInferenceAvailable": false,
-    "acceptanceEvidence": false
+    "arms": [
+      {
+        "arm": "ordinary",
+        "nativeExitCode": 0,
+        "nativeSignal": null,
+        "spawnError": null,
+        "control": {
+          "kind": "absent",
+          "attempts": [
+            {
+              "retry": 0,
+              "nativeFailed": false,
+              "knownPrimary": false,
+              "sha256": null
+            }
+          ]
+        },
+        "matrix": {
+          "counts": {
+            "passed": 68,
+            "failed": 0,
+            "flaky": 2,
+            "skipped": 0,
+            "interrupted": 0
+          },
+          "total": 70,
+          "complete": true,
+          "reason": null
+        },
+        "armComplete": true,
+        "stdoutSha256": "2398aa305d2b91f45987a00c450bee89d229724ca9ca45f83be7fdff372c089b",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "runner": {
+      "sourceCommit": "27c67e24ce9f57eed11a205e6fbcc277e85ce1a2",
+      "checkout": {
+        "head": "27c67e24ce9f57eed11a205e6fbcc277e85ce1a2",
+        "trackedClean": true
+      },
+      "browserResolution": {
+        "registryName": "chromium-headless-shell",
+        "layout": "core-bundle",
+        "headless": true,
+        "channel": null,
+        "executablePathOverride": false,
+        "selection": "installed-registry-default-headless-no-channel",
+        "configSource": "playwright.config.js"
+      },
+      "pinsSha256": "7fbd12272215ab668ca20f56abdebbfd5597f0f5d3e86ae4ed871f676845a869",
+      "runner": {
+        "node": "v24.22.2",
+        "playwright": "1.65.0",
+        "platform": "linux",
+        "release": "7.0.0-1019-azure",
+        "arch": "x64",
+        "cpuModel": "AMD EPYC 9V74 80-Core Processor",
+        "cpuCount": 4,
+        "font": {
+          "filePathSha256": "87ee5d7396580ea2db82599d483e92f976b7b573c7ba717287781a42e6e24cd3",
+          "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+        },
+        "fontPackages": "fontconfig=2.17.1-3ubuntu1\nfonts-dejavu-core=2.37-8build1\nlibfreetype6=2.14.2+dfsg-1ubuntu0.2"
+      },
+      "runnerMetadataSha256": "cdc7e0123e2cf338bd1831eac4006bb002079e24ca53137a96a64bcca78fdb75",
+      "nativeAcceptance": false
+    },
+    "targetNativeVerdict": {
+      "identity": {
+        "surface": "games",
+        "viewport": "pixel-5",
+        "theme": "dark",
+        "retry": 0,
+        "updateSnapshots": "none",
+        "experimentArm": "ordinary"
+      },
+      "phase": "experiment-native-result",
+      "nativeFailed": false,
+      "nativeAcceptance": false,
+      "workerIndex": 2,
+      "parallelIndex": 0,
+      "matcherElapsedMs": 79
+    },
+    "laterFrameSha256": [
+      "61aaba184929bad310fbba64dcf2a087953302ba0d46b116f996b682ba91be49",
+      "61aaba184929bad310fbba64dcf2a087953302ba0d46b116f996b682ba91be49",
+      "61aaba184929bad310fbba64dcf2a087953302ba0d46b116f996b682ba91be49",
+      "61aaba184929bad310fbba64dcf2a087953302ba0d46b116f996b682ba91be49"
+    ],
+    "laterFramesAreNativePassingFrameProof": false,
+    "noopArmExecuted": false,
+    "rangeArmExecuted": false,
+    "flakyCaseIdentitiesObserved": false,
+    "comparisonToPriorFailedLaterState": {
+      "wholeGeometryEqual": true,
+      "firstVisibleParagraphEqual": true,
+      "platformFontMetadataEqual": true,
+      "priorCpu": "AMD EPYC 9V45 96-Core Processor",
+      "currentCpu": "AMD EPYC 9V74 80-Core Processor",
+      "priorFontFileHashObserved": false,
+      "causalInferenceAvailable": false
+    },
+    "log": {
+      "path": ".cache/S415/controlled-games-27c67-job131048300738.log",
+      "sha256": "854452f9d4c75d14b507dcf52a83043aab723a246fcde32383470065c99a0d59"
+    },
+    "acceptanceEvidence": false,
+    "baselineAccepted": false,
+    "causalFixClaimed": false
   },
   "limitations": [
     "Fixed arm order, worker scheduling, process restarts and caches remain confounders. One sequence can identify associations, not establish a causal fix.",
