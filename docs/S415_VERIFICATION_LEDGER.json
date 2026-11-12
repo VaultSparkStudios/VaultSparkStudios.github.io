@@ -3,13 +3,13 @@
   "publicSafe": true,
   "session": 415,
   "state": "in-progress",
-  "updatedAt": "2026-11-12T05:12:46.637Z",
+  "updatedAt": "2026-11-12T05:46:07.508Z",
   "audit": "docs/AUDIT_2026-11-11-S415.json",
   "implementation": "docs/S415_IMPLEMENTATION_CHECKPOINT.json",
   "candidate": {
-    "qaCommit": "0edb07ad896cb9497a8989d9ffff275d4ed42cf4",
+    "qaCommit": "e984766c8ad0363ec4c4398052848df4fc5ea3ed",
     "productionPromoted": false,
-    "workingTree": "Four reviewed Oracle anchor PNG references provisionally refreshed; native comparison and final exact-SHA required checks still pending."
+    "workingTree": "Main8c63d674b3 observations integrated and owner-verified locally; merge not yet committed. Four Oracle references retain correct positions, but unchanged Linux comparison is nonpassing on Games."
   },
   "local": {
     "fullAttempt": {
@@ -368,9 +368,18 @@
       "planFingerprint": "9b7bc81ac2d556edb67175ff",
       "receiptId": "fa3885aa915dfdf40693adee",
       "dominantShare": 0.1227,
-      "concentrationBreached": false
+      "concentrationBreached": false,
+      "sourceCommit": "0edb07ad896cb9497a8989d9ffff275d4ed42cf4"
     },
-    "fullSourceReason": "The complete555 proof remains valid for source0edb07ad; changing four test PNG inputs intentionally creates a new source fingerprint. No executable source changed. Final candidate CI must verify its complete source."
+    "fullSourceReason": "Complete555 proof belongs to0edb07ad. Four test PNG inputs and later generated main observations create a new source fingerprint; final exact-SHA required checks remain pending.",
+    "apiDirectoryFinalMainVisual": {
+      "captures": 14,
+      "themes": 7,
+      "currentInputsCaptured": true,
+      "manualInspectionReusedOnlyForIdenticalImageHashes": true,
+      "receipt": "docs/visual-qa/LATEST.json",
+      "scope": "Focused API publication panel. Newly captured settled-source pixels match the exact fourteen image hashes already visually inspected. Mobile fixed navigation occludes part of the first Desk card; the changed machine-readable Forge Ledger timestamp is invisible and its displayed UTC date remains unchanged. No hidden-content, whole-page, numeric accessibility, Linux baseline, authentication or production acceptance."
+    }
   },
   "hosted": {
     "sourceCommit": "95b0efcc0b9e43df2dc2b5ee9f333e385d6d5150",
@@ -395,7 +404,57 @@
         "conclusion": "success"
       }
     ],
-    "accepted": false
+    "accepted": false,
+    "nativeVisualComparison": {
+      "schemaVersion": 1,
+      "session": 415,
+      "publicSafe": true,
+      "state": "nonpassing-native-comparison",
+      "recordedAt": "2026-11-12T05:46:07.508Z",
+      "sourceCommit": "e984766c8ad0363ec4c4398052848df4fc5ea3ed",
+      "runId": 43160005773,
+      "jobId": 130988665108,
+      "workflow": ".github/workflows/visual-regression.yml",
+      "snapshotUpdates": false,
+      "sceneDiagnostics": false,
+      "pixelToleranceChanged": false,
+      "desktopHeaderPassed": 42,
+      "snapshots": {
+        "passed": 67,
+        "flaky": 2,
+        "failed": 1,
+        "total": 70,
+        "oraclePassed": 10,
+        "failure": {
+          "case": "games-pixel-5-dark",
+          "attempts": 2,
+          "differingPixelsEachAttempt": 4289
+        },
+        "flakyCases": [
+          "games-iphone-13-light",
+          "games-pixel-5-light"
+        ]
+      },
+      "failureArtifact": {
+        "id": 13918470399,
+        "archiveBytes": 5714222,
+        "archiveSha256": "ba053328f124d282c9fb6b5a0e887ecbb0d7a3a0b32bc711cf7411cbcac3b8c3",
+        "exactPngExceptionApproved": true,
+        "sizeAndDigestVerified": true,
+        "selectedSafePngs": 8,
+        "baselineCopies": 0
+      },
+      "observations": {
+        "failedDarkActualSha256": "fe14e5457a95b3d2d873fd9cc0aa6cc30757341fa496761ac0e4c63fd21332fe",
+        "bothDarkAttemptsIdentical": true,
+        "matchesEarlier95b0RetryImage": true,
+        "visibleDifference": "Games paragraph glyph region; wrapping, heading, header and consent-panel geometry preserved in reviewed images.",
+        "causeEstablished": false,
+        "notes": "Integer CSS metrics and loaded fonts do not prove identical glyph raster output. Earlier before-comparison diagnostics may affect sampling; a later forensic probe must preserve the original native failure and separate later-state observations."
+      },
+      "baselineAccepted": false,
+      "productionAccepted": false
+    }
   },
   "visual": {
     "newReferencesAdopted": 9,
@@ -405,7 +464,7 @@
     "artifactAccepted": false,
     "archiveVerified": true,
     "changedOriginalsReviewed": 53,
-    "comparison": "pending unchanged native Linux comparison",
+    "comparison": "Nonpassing:67passed,2flaky,1failed GamesPixel5dark; Oracle10passed.",
     "provenance": "docs/S415_VISUAL_CAPTURE_PROVENANCE.json",
     "trust": "Exact authorized PNG/provenance archive digest and size verified; safe extraction only. Capture remains honestly associated with its original source commit; not relabeled as current.",
     "windowsReferenceProvenance": "docs/S415_WINDOWS_GAMES_REFERENCE_PROVENANCE.json",
@@ -462,6 +521,15 @@
       "scope": "callback-context-negative-and-recovery-boundaries-only",
       "authenticatedAcceptance": false,
       "independentKvAbsenceMeasured": false
+    },
+    "schemaMetadataObservation": {
+      "observedAt": "2026-11-12T05:34:43.912Z",
+      "relations": 21,
+      "applicationRowsRead": false,
+      "authRowsRead": false,
+      "databaseWritesIssued": false,
+      "nativeAcceptance": false,
+      "scope": "Fixed column/type metadata only; future preservation projection still requires implementation and actual observation."
     }
   },
   "timing": {

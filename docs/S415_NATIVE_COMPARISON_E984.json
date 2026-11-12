@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "session": 415,
+  "publicSafe": true,
+  "state": "nonpassing-native-comparison",
+  "recordedAt": "2026-11-12T05:46:07.508Z",
+  "sourceCommit": "e984766c8ad0363ec4c4398052848df4fc5ea3ed",
+  "runId": 43160005773,
+  "jobId": 130988665108,
+  "workflow": ".github/workflows/visual-regression.yml",
+  "snapshotUpdates": false,
+  "sceneDiagnostics": false,
+  "pixelToleranceChanged": false,
+  "desktopHeaderPassed": 42,
+  "snapshots": {
+    "passed": 67,
+    "flaky": 2,
+    "failed": 1,
+    "total": 70,
+    "oraclePassed": 10,
+    "failure": {
+      "case": "games-pixel-5-dark",
+      "attempts": 2,
+      "differingPixelsEachAttempt": 4289
+    },
+    "flakyCases": [
+      "games-iphone-13-light",
+      "games-pixel-5-light"
+    ]
+  },
+  "failureArtifact": {
+    "id": 13918470399,
+    "archiveBytes": 5714222,
+    "archiveSha256": "ba053328f124d282c9fb6b5a0e887ecbb0d7a3a0b32bc711cf7411cbcac3b8c3",
+    "exactPngExceptionApproved": true,
+    "sizeAndDigestVerified": true,
+    "selectedSafePngs": 8,
+    "baselineCopies": 0
+  },
+  "observations": {
+    "failedDarkActualSha256": "fe14e5457a95b3d2d873fd9cc0aa6cc30757341fa496761ac0e4c63fd21332fe",
+    "bothDarkAttemptsIdentical": true,
+    "matchesEarlier95b0RetryImage": true,
+    "visibleDifference": "Games paragraph glyph region; wrapping, heading, header and consent-panel geometry preserved in reviewed images.",
+    "causeEstablished": false,
+    "notes": "Integer CSS metrics and loaded fonts do not prove identical glyph raster output. Earlier before-comparison diagnostics may affect sampling; a later forensic probe must preserve the original native failure and separate later-state observations."
+  },
+  "baselineAccepted": false,
+  "productionAccepted": false
+}

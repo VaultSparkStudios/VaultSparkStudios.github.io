@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "session": 415,
   "publicSafe": true,
-  "state": "four-reviewed-anchor-references-provisional-until-unchanged-native-comparison",
+  "state": "oracle-cases-passed-overall-comparison-nonpassing",
   "recordedAt": "2026-11-12T05:12:46.632Z",
   "capture": {
     "sourceCommit": "0edb07ad896cb9497a8989d9ffff275d4ed42cf4",
@@ -45,10 +45,17 @@
     }
   ],
   "nativeComparison": {
-    "state": "pending",
+    "state": "failure outside Oracle cases",
     "snapshotUpdatesAllowed": false,
     "diagnosticsAllowed": false,
-    "pixelToleranceChanged": false
+    "pixelToleranceChanged": false,
+    "sourceCommit": "e984766c8ad0363ec4c4398052848df4fc5ea3ed",
+    "runId": 43160005773,
+    "oraclePassed": 10,
+    "snapshotPassed": 67,
+    "snapshotFlaky": 2,
+    "snapshotFailed": 1,
+    "evidence": "docs/S415_NATIVE_COMPARISON_E984.json"
   },
   "baselineAccepted": false
 }
