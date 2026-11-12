@@ -3,13 +3,13 @@
   "publicSafe": true,
   "session": 415,
   "state": "in-progress",
-  "updatedAt": "2026-11-12T04:17:00.876Z",
+  "updatedAt": "2026-11-12T04:47:52.273Z",
   "audit": "docs/AUDIT_2026-11-11-S415.json",
   "implementation": "docs/S415_IMPLEMENTATION_CHECKPOINT.json",
   "candidate": {
     "qaCommit": "862dfa5d6a79f722bd55afca1b8cc756e1aa1d6f",
     "productionPromoted": false,
-    "workingTree": "New bounded Oracle arrival and semantic visual-scene batch is uncommitted; prior complete555 proof belongs to pushed862dfa snapshot. Focused and fresh complete validation pending."
+    "workingTree": "Oracle repair committed f7fafb7f2d; main observations merged2aad3c0bf3; current integrated source has fresh complete555 proof and reviewed API timestamp recapture. Final QA verification checkpoint not yet pushed."
   },
   "local": {
     "fullAttempt": {
@@ -44,7 +44,7 @@
       "workerProductionPreflight": 4,
       "clockAndSharedOutputRepair": 16
     },
-    "completeCurrentSourceVerified": false,
+    "completeCurrentSourceVerified": true,
     "complete553Attempt": {
       "receipt": "docs/S415_source-full553-concentration.json",
       "nativeExit": 1,
@@ -337,6 +337,38 @@
       "passedBeforeFailure": 130,
       "failure": "Isolated browser-origin fixture copied visual spec without its new local scene dependency; real spec failed collection.",
       "repair": "Copy the actual pure scene helper into the owned temporary fixture; preserve candidate/healthy-decoy assertions and No-tests-found rejection."
+    },
+    "secondMainIntegration": {
+      "commit": "2aad3c0bf36e09d24e9c52ade27299c9f3ae7f56",
+      "incomingMain": "6cd13edd8ab415e6fcfa28349208ee5191e82bfa",
+      "generatedConflicts": 24,
+      "ownersPassed": 58,
+      "authoredRepairPreserved": true,
+      "recentUptimeRowsPreserved": 6,
+      "destructiveGitActions": false
+    },
+    "apiDirectoryIntegrationVisual": {
+      "captures": 14,
+      "themes": 7,
+      "beforeAfterOriginalsReviewed": 28,
+      "finalCaptureImageHashesMatchActuallyViewedOriginals": true,
+      "receipt": "docs/visual-qa/LATEST.json",
+      "scope": "Focused subscriptions panel; only machine-readable feed datetime changed, displayed UTC date retained. Final settled-source recapture images must equal the exact original bytes already inspected; no review claimed for a different image. Mobile navigation occludes part of first Desk card. Pixel comparison is separate from whole-page, numeric accessibility, native Linux and auth acceptance."
+    },
+    "oracleSceneIntegratedComplete555": {
+      "receipt": "docs/S415_source-oracle-scene-integrated-full555-passed.json",
+      "nativeExit": 0,
+      "commandCount": 555,
+      "plannedCommandCount": 555,
+      "firstStep": 1,
+      "passed": 555,
+      "failed": 0,
+      "coverageComplete": true,
+      "sourceFingerprint": "7f03ac3bf3c2d60d2d1f6730",
+      "planFingerprint": "9b7bc81ac2d556edb67175ff",
+      "receiptId": "fa3885aa915dfdf40693adee",
+      "dominantShare": 0.1227,
+      "concentrationBreached": false
     }
   },
   "hosted": {
@@ -433,7 +465,7 @@
   },
   "next": [
     "Publish the verified QA candidate and obtain its exact required checks plus unchanged native Linux comparison.",
-    "Complete affected native Obelisk sign-in/sign-up success, intended member/investor destinations, protected access and applicable session/logout using an existing real actor.",
+    "Complete affected native Obelisk sign-in/sign-up success, intended member/investor destinations, protected access and applicable session/logout using the real account whose normal signup the founder will complete.",
     "Perform authorized normal main/production promotion and readback with doctor blockingFailing0.",
     "Finish canonical closeout before native goal completion."
   ],

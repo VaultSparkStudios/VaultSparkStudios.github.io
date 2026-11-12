@@ -32,7 +32,7 @@
 ║  Custom        → https://vaultsparkstudios.com/studio-pulse/ ✓   ║
 ║  Local dev     → npm run verify:local ⚠                          ║
 ║  Staging       → https://website.staging.vaultsparkstudios.c ✓   ║
-║  Unit tests    → npm run build:check ⚠                           ║
+║  Unit tests    → npm run build:check ✓                           ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ PROJECT PROFILE ═════════════════════════════════════════════╗
@@ -63,7 +63,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 411 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    Source UNVERIFIED: 130/555 steps; 1 failed;…          ║
+║  Tests:    Source 555/555 steps passing                          ║
 ║  Deploy:   S411 release pending                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -74,7 +74,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         Source UNVERIFIED: 130/555 steps; 1 failed;…   ║
+║  ✓  Tests         Source 555/555 steps passing                   ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   18d                                            ║
