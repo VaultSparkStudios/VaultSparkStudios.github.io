@@ -3,13 +3,13 @@
   "publicSafe": true,
   "session": 415,
   "state": "in-progress",
-  "updatedAt": "2026-11-12T07:25:28.404Z",
+  "updatedAt": "2026-11-12T07:51:28.639Z",
   "audit": "docs/AUDIT_2026-11-11-S415.json",
   "implementation": "docs/S415_IMPLEMENTATION_CHECKPOINT.json",
   "candidate": {
     "qaCommit": "192622787b352a2d1ddb2bef35ddd62fd1c9a866",
     "productionPromoted": false,
-    "workingTree": "Main8c63 integration and failure evidence published. Controlled experiment is locally verified and pending commit/native execution. No production promotion."
+    "workingTree": "Controlled run at6df passed42headers but refused before all arms. Reporting and early runtime inspection are locally verified; no rendering inference or production promotion."
   },
   "local": {
     "fullAttempt": {
@@ -487,7 +487,11 @@
     },
     "controlledGamesExperiment": {
       "receipt": "docs/S415_CONTROLLED_GAMES_EXPERIMENT.json",
-      "state": "locally-verified-native-experiment-pending",
+      "state": "native-setup-refusal-reporting-corrected-locally",
+      "runId": 43175388531,
+      "sourceCommit": "6df8f55366da90b61326d2cb86b88d09b809d251",
+      "headersPassed": 42,
+      "armsExecuted": 0,
       "acceptanceEvidence": false
     }
   },

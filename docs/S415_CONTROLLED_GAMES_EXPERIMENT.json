@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "session": 415,
   "publicSafe": true,
-  "recordedAt": "2026-11-12T07:25:28.404Z",
-  "state": "locally-verified-native-experiment-pending",
-  "basedOnCommit": "192622787b352a2d1ddb2bef35ddd62fd1c9a866",
+  "recordedAt": "2026-11-12T07:51:28.639Z",
+  "state": "native-setup-refusal-reporting-corrected-locally",
+  "basedOnCommit": "6df8f55366da90b61326d2cb86b88d09b809d251",
   "sourceFiles": [
     {
       "file": "tests/visual-regression.spec.js",
@@ -12,11 +12,11 @@
     },
     {
       "file": ".github/workflows/visual-regression.yml",
-      "sha256": "a4fb0959f21f5dbfafb4614332a30c39f6edbd4e01c0bc82ca4d4a65878526cf"
+      "sha256": "a227d604d3a55df6215026d1e7d5f11be33a554506539094d19967642cbd80de"
     },
     {
       "file": "tests/visual-capture-source.unit.spec.mjs",
-      "sha256": "2422b44c743ed95531e553d42db40f7c4e364c4b0a7c7f3cb5bfb34a2ec74b7b"
+      "sha256": "e1adbb2f33e3b97e7d002e528c7066a288d694d4f6979694ab7149abb9ccf948"
     },
     {
       "file": "tests/browser-collection.unit.spec.mjs",
@@ -24,7 +24,7 @@
     },
     {
       "file": "scripts/run-games-controlled-experiment.mjs",
-      "sha256": "17cf481ef2f3008381f1f5034037b88db83bb0d1d6c8051dc9fcb09ea29e3c3b"
+      "sha256": "ca960fa17b48d1793df616d2ed62440b5f8963ac34f3c07901ee89f52fe236e4"
     }
   ],
   "scope": {
@@ -54,7 +54,7 @@
     "coordinatorSyntaxNativeExit": 0,
     "inertPlanNativeExit": 0,
     "inertPlanExecuted": false,
-    "focusedTests": 39,
+    "focusedTests": 41,
     "focusedNativeExit": 0,
     "initialFocusedAttempt": {
       "passed": 38,
@@ -67,7 +67,8 @@
       "retries": 0,
       "diagnosticsEnabled": false,
       "snapshotUpdates": false,
-      "playwright": "1.58.2"
+      "playwright": "1.58.2",
+      "sourceCommit": "6df8f55366da90b61326d2cb86b88d09b809d251"
     },
     "installedHeadlessResolution": {
       "scope": "local registry resolution only; no browser launched",
@@ -75,10 +76,28 @@
       "playwright": "1.58.2",
       "registryName": "chromium-headless-shell",
       "executableExists": true
+    },
+    "previousFocusedTests": 39,
+    "actualEarlyWorkflowSnippet": {
+      "nativeExit": 0,
+      "playwright": "1.58.2",
+      "layout": "legacy",
+      "layoutFilesInspected": 4,
+      "layoutFilesPresent": 3,
+      "browserLaunched": false,
+      "scope": "Local installed metadata only; not Linux acceptance"
     }
   },
   "nativeExperiment": {
-    "dispatched": false,
+    "sourceCommit": "6df8f55366da90b61326d2cb86b88d09b809d251",
+    "runId": 43175388531,
+    "jobId": 131038288152,
+    "conclusion": "failure",
+    "headersPassed": 42,
+    "armsExecuted": 0,
+    "state": "coordinator-refused-before-arms",
+    "refusalCause": "unknown; previous generic error omitted its stage and code",
+    "renderingInferenceAvailable": false,
     "acceptanceEvidence": false
   },
   "limitations": [
@@ -88,5 +107,19 @@
   ],
   "causalFixClaimed": false,
   "baselineAccepted": false,
-  "productionAccepted": false
+  "productionAccepted": false,
+  "reportingCorrection": {
+    "unknownMessagesPathsAndStacksWithheld": true,
+    "reviewedStageReasonAndNativeCodeOnly": true,
+    "experimentalRuntimeInspectionBeforeBrowserInstall": true,
+    "ordinaryWorkflowBehaviorChanged": false,
+    "nativeAssertionOrPolicyChanged": false,
+    "installedLayouts": [
+      "legacy",
+      "core-bundle"
+    ],
+    "bundledRegistryNamespaceSupported": true,
+    "unsupportedRegistryShapeRefused": true,
+    "sourceSupportedExplanation": "Published Playwright1.65 bundles the core runtime; the previous coordinator required legacy individual registry/selection files. This is consistent with the refusal; its exact original reason remains unobserved."
+  }
 }

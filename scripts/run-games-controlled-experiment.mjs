@@ -10,6 +10,14 @@ const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const require=createRequire(import.meta.url),digest=b=>crypto.createHash('sha256').update(b).digest('hex');
 const KNOWN=new Set(['fe14e5457a95b3d2d873fd9cc0aa6cc30757341fa496761ac0e4c63fd21332fe','d7fe3e709a7f5cf5f4e1fc7e29c2e668c2a064c6ed6c9c4ec160517a428b62d1']);
 const need=(v,code)=>{if(!v)throw Error(code);};
+let admissionPhase='invocation';
+
+export function safeRefusal(error,phase) {
+  const reasons=new Set(['fixed-command-only','manual-linux-owning-workflow-only','unreviewed-node-override','existing-job-budget','fixed-candidate-origin','candidate-source-sha','default-headless-config-unverified','installed-headless-shell-unavailable','installed-registry-layout-unverified','installed-headless-registry-unavailable','candidate-checkout-or-tracked-drift','bounded-pinned-file','pinned-file-drift','exact-linux-baseline-set']);
+  const codes=new Set(['ENOENT','EACCES','MODULE_NOT_FOUND','ERR_PACKAGE_PATH_NOT_EXPORTED','ERR_REQUIRE_ASYNC_MODULE','ERR_REQUIRE_ESM']);
+  const phases=new Set(['invocation','runtime-resolution','checkout','source-runtime-pins','runner-metadata','output-creation']);
+  return {scope:'controlled-games-diagnostic-refusal',phase:phases.has(phase)?phase:'unknown',reason:reasons.has(error?.message)?error.message:'unrecognized-withheld',nativeCode:codes.has(error?.code)?error.code:null};
+}
 
 export function targetControl(rows) {
   const target=r=>r?.identity?.surface==='games'&&r.identity.viewport==='pixel-5'&&r.identity.theme==='dark'&&r.identity.experimentArm==='ordinary'&&r.identity.updateSnapshots==='none'&&[0,1].includes(r.identity.retry);
@@ -41,7 +49,7 @@ export function diagnosticRows(output) {
   return rows;
 }
 
-export function resolveHeadlessRuntime(coreRoot, config, loadRegistry) {
+export function resolveHeadlessRuntime(coreRoot, config, loadRegistry, layout='legacy') {
   const valid = use => use && use.channel === undefined && use.executablePath === undefined &&
     use.launchOptions?.channel === undefined && use.launchOptions?.executablePath === undefined &&
     (use.headless === undefined || use.headless === true) &&
@@ -49,11 +57,15 @@ export function resolveHeadlessRuntime(coreRoot, config, loadRegistry) {
   const projects = config?.projects?.filter(p => p.name === 'chromium');
   need(config?.use?.headless === true && valid(config.use) && projects?.length === 1 &&
     projects[0].use?.browserName === 'chromium' && valid(projects[0].use),'default-headless-config-unverified');
-  const registryModule = path.join(coreRoot,'lib/server/registry/index.js');
-  const entry = loadRegistry(registryModule).registry.findExecutable('chromium-headless-shell');
+  need(['legacy','core-bundle'].includes(layout),'installed-registry-layout-unverified');
+  const registryModule = path.join(coreRoot,layout==='core-bundle'?'lib/coreBundle.js':'lib/server/registry/index.js');
+  const loaded=loadRegistry(registryModule);
+  const registry=layout==='core-bundle'?loaded.registry?.registry:loaded.registry;
+  need(typeof registry?.findExecutable==='function','installed-headless-registry-unavailable');
+  const entry = registry.findExecutable('chromium-headless-shell');
   const executablePath = entry?.executablePath();
   need(typeof executablePath === 'string' && path.isAbsolute(executablePath),'installed-headless-shell-unavailable');
-  return {executablePath,resolutionBasis:{registryName:'chromium-headless-shell',headless:true,channel:null,executablePathOverride:false,
+  return {executablePath,resolutionBasis:{registryName:'chromium-headless-shell',layout,headless:true,channel:null,executablePathOverride:false,
     selection:'installed-registry-default-headless-no-channel',configSource:'playwright.config.js'}};
 }
 
@@ -87,7 +99,9 @@ function pins(cli,browser) {
   for(const pkg of ['@playwright/test','playwright','playwright-core'])runtimeFiles[pkg+'/package.json']=fileHash(require.resolve(pkg+'/package.json'),2097152);
   const core=path.dirname(require.resolve('playwright-core/package.json')),pw=path.dirname(require.resolve('playwright/package.json'));
   for(const [key,file] of [['serverPage',path.join(core,'lib/server/page.js')],['screenshotter',path.join(core,'lib/server/screenshotter.js')],['matcher',path.join(pw,'lib/matchers/toMatchSnapshot.js')]])runtimeFiles[key]=fs.existsSync(file)?fileHash(file,4194304):null;
-  for(const [key,rel] of [['browserTypeSelection','lib/server/browserType.js'],['chromiumSelection','lib/server/chromium/chromium.js'],['registrySelection','lib/server/registry/index.js']])runtimeFiles[key]=fileHash(path.join(core,rel),4194304);
+  if(fs.existsSync(path.join(core,'lib/coreBundle.js')))runtimeFiles.coreBundle=fileHash(path.join(core,'lib/coreBundle.js'),33554432);
+  else for(const [key,rel] of [['browserTypeSelection','lib/server/browserType.js'],['chromiumSelection','lib/server/chromium/chromium.js'],['registrySelection','lib/server/registry/index.js']])runtimeFiles[key]=fileHash(path.join(core,rel),4194304);
+  if(fs.existsSync(path.join(pw,'lib/matchers/expect.js')))runtimeFiles.matcherBundle=fileHash(path.join(pw,'lib/matchers/expect.js'),16777216);
   const base=path.join(ROOT,'tests/__snapshots__/visual-regression.spec.js-snapshots');
   const names=fs.readdirSync(base).filter(n=>/^(home|membership|vault-member|games|tombstones|journal|oracle)-(iphone-se|iphone-13|pixel-5|ipad-mini|desktop-1280)-(dark|light)-chromium-linux\.png$/.test(n)).sort();
   need(names.length===70,'exact-linux-baseline-set');const baselines=Object.fromEntries(names.map(n=>[n,fileHash(path.join(base,n),8388608)]));
@@ -133,9 +147,14 @@ async function execute() {
   const started=Number(process.env.VS_GAMES_EXPERIMENT_STARTED_AT);need(Number.isSafeInteger(started)&&started<=Date.now()&&Date.now()-started<1500000,'existing-job-budget');
   need(process.env.BASE_URL==='http://127.0.0.1:4173'&&(!process.env.VR_BASE_URL||process.env.VR_BASE_URL==='http://127.0.0.1:4173'),'fixed-candidate-origin');
   const sha=process.env.GITHUB_SHA;need(/^[a-f0-9]{40}$/.test(sha||''),'candidate-source-sha');
+  admissionPhase='runtime-resolution';
   const cli=require.resolve('@playwright/test/cli'),coreRoot=path.dirname(require.resolve('playwright-core/package.json'));
-  const selected=resolveHeadlessRuntime(coreRoot,require(path.join(ROOT,'playwright.config.js')),file=>require(file)),browser=selected.executablePath;
-  const checkout=checkoutWitness(sha),before=pins(cli,browser),metadata=runnerMetadata(),run=path.join(ROOT,'.cache/games-controlled-experiment',new Date().toISOString().replace(/[:.]/g,'-')+'-'+crypto.randomBytes(6).toString('hex'));
+  const layout=fs.existsSync(path.join(coreRoot,'lib/coreBundle.js'))?'core-bundle':'legacy';
+  const selected=resolveHeadlessRuntime(coreRoot,require(path.join(ROOT,'playwright.config.js')),file=>require(file),layout),browser=selected.executablePath;
+  admissionPhase='checkout';const checkout=checkoutWitness(sha);
+  admissionPhase='source-runtime-pins';const before=pins(cli,browser);
+  admissionPhase='runner-metadata';const metadata=runnerMetadata();
+  admissionPhase='output-creation';const run=path.join(ROOT,'.cache/games-controlled-experiment',new Date().toISOString().replace(/[:.]/g,'-')+'-'+crypto.randomBytes(6).toString('hex'));
   fs.mkdirSync(run,{recursive:true,mode:0o700});
   const receipt={scope:'controlled-games-experiment-only',nativeAcceptance:false,experimentalNonAcceptance:true,sourceCommit:sha,checkout,startedAt:new Date().toISOString(),pins:before,browserResolution:selected.resolutionBasis,runner:metadata,arms:[],disposition:'incomplete'};
   console.log('[games-controlled-runner] '+JSON.stringify({sourceCommit:sha,checkout,browserResolution:selected.resolutionBasis,pinsSha256:digest(JSON.stringify(before)),runner:metadata,runnerMetadataSha256:digest(JSON.stringify(metadata)),nativeAcceptance:false}));
@@ -172,5 +191,5 @@ async function execute() {
 
 if(process.argv[1]&&pathToFileURL(path.resolve(process.argv[1])).href===import.meta.url){
   if(process.argv.length===2)console.log(JSON.stringify({mode:'plan-only',arms:['ordinary','noop','range'],executed:false,nativeAcceptance:false}));
-  else execute().catch(()=>{console.error('controlled-games-experiment-refused');process.exitCode=1;});
+  else execute().catch(error=>{console.error('[games-controlled-refusal] '+JSON.stringify(safeRefusal(error,admissionPhase)));process.exitCode=1;});
 }

@@ -112,6 +112,24 @@ jobs:
       # needs a committed lockfile to hash) and `npm ci` both fail. Use `npm install`
       # — same pattern as accessibility.yml / cloudflare-worker-deploy.yml.
       - run: npm install --no-audit --no-fund
+      - name: Inspect controlled runtime admission
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.games_controlled_experiment == 'true'
+        run: |
+          node --input-type=module -e '
+          import fs from "node:fs";
+          import path from "node:path";
+          import {createRequire} from "node:module";
+          import {resolveHeadlessRuntime,safeRefusal} from "./scripts/run-games-controlled-experiment.mjs";
+          const require=createRequire(import.meta.url);
+          try {
+            const core=path.dirname(require.resolve("playwright-core/package.json"));
+            const files=["lib/coreBundle.js","lib/server/registry/index.js","lib/server/browserType.js","lib/server/chromium/chromium.js"];
+            console.log("[games-runtime-layout] "+JSON.stringify({playwright:require("@playwright/test/package.json").version,files:Object.fromEntries(files.map(p=>[p,fs.existsSync(path.join(core,p))]))}));
+            require.resolve("@playwright/test/cli");
+            const layout=fs.existsSync(path.join(core,"lib/coreBundle.js"))?"core-bundle":"legacy";
+            const selected=resolveHeadlessRuntime(core,require("./playwright.config.js"),p=>require(p),layout);
+            console.log("[games-runtime-admission] "+JSON.stringify({resolutionBasis:selected.resolutionBasis,browserLaunched:false}));
+          } catch(error) {console.error("[games-controlled-refusal] "+JSON.stringify(safeRefusal(error,"runtime-resolution")));process.exitCode=1;}'
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
       - name: Start candidate preview

@@ -529,3 +529,25 @@ test('actual line-summary parser distinguishes full70 from missing, truncated an
   const source=fs.readFileSync('scripts/run-games-controlled-experiment.mjs','utf8');
   assert.match(source,/record\.matrix\.complete/);assert.match(source,/native-process-or-matrix-incomplete/);
 });
+
+test('actual coordinator refusal exposes only reviewed codes and phases', () => {
+  const classify=actualCoordinatorFunction('safeRefusal');
+  assert.deepEqual(classify(Error('candidate-checkout-or-tracked-drift'),'checkout'),{
+    scope:'controlled-games-diagnostic-refusal',phase:'checkout',reason:'candidate-checkout-or-tracked-drift',nativeCode:null,
+  });
+  const unknown=classify({message:'private-secret-value',code:'private-native-value'},'private-path');
+  assert.deepEqual(unknown,{scope:'controlled-games-diagnostic-refusal',phase:'unknown',reason:'unrecognized-withheld',nativeCode:null});
+  assert.equal(classify({message:'private-path',code:'MODULE_NOT_FOUND'},'runtime-resolution').nativeCode,'MODULE_NOT_FOUND');
+});
+
+test('actual runtime resolver supports the published bundled registry namespace without falling back', () => {
+  const need=(v,code)=>{if(!v)throw Error(code);};
+  const resolve=actualCoordinatorFunction('resolveHeadlessRuntime',{need,path});
+  const core=path.resolve('/installed-core'),shell=path.resolve('/selected-shell');
+  const config={use:{headless:true},projects:[{name:'chromium',use:{browserName:'chromium'}}]};
+  const load=file=>{assert.equal(file,path.join(core,'lib/coreBundle.js'));return {registry:{registry:{findExecutable:name=>{assert.equal(name,'chromium-headless-shell');return {executablePath:()=>shell};}}}};};
+  const selected=resolve(core,config,load,'core-bundle');
+  assert.equal(selected.executablePath,shell);assert.equal(selected.resolutionBasis.layout,'core-bundle');
+  assert.throws(()=>resolve(core,config,()=>({registry:{findExecutable:()=>{throw Error('unused legacy namespace');}}}),'core-bundle'),/installed-headless-registry-unavailable/);
+  assert.throws(()=>resolve(core,config,load,'unknown-layout'),/installed-registry-layout-unverified/);
+});
