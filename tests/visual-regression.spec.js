@@ -47,6 +47,7 @@ const VIEWPORTS = [
 // S160 #18: two-theme sweep — light/warm/cool/high-contrast bugs (like the S132
 // `body.dark-mode` specificity trap) only surface when the saved theme flips.
 const THEMES = ['dark', 'light'];
+if (process.env.VS_GAMES_EXPERIMENT_ARM) admitGamesExperiment(process.env.VS_GAMES_EXPERIMENT_ARM, process.env.VS_FAILURE_SCENE_DIAGNOSTICS, process.env.VS_SCENE_DIAGNOSTICS, 'none', process.env.VR_BASE_URL || process.env.BASE_URL || 'https://vaultsparkstudios.com');
 if (process.env.VS_SCENE_DIAGNOSTICS === 'true' || process.env.VS_FAILURE_SCENE_DIAGNOSTICS === 'true') {
   // Full update mode is validated again using actual testInfo before navigation.
   admitSceneDiagnostics(process.env.VS_SCENE_DIAGNOSTICS, process.env.VS_FAILURE_SCENE_DIAGNOSTICS,
@@ -255,6 +256,30 @@ async function nativeWithFailureProbe(assertion, enabled, probe) {
   }
 }
 
+function admitGamesExperiment(arm, failure, before, update, origin) {
+  if (!['', 'ordinary', 'noop', 'range'].includes(arm)) throw Error('Unknown Games experiment arm.');
+  if (arm && (failure !== 'true' || before === 'true' || update !== 'none' || !diagnosticLoopback(origin)))
+    throw Error('Games experiment requires failure flag and loopback comparison only.');
+}
+
+async function nativeWithResultProbe(assertion, probe) {
+  let value, originalError, failed = false;
+  try { value = await assertion(); } catch (error) { failed = true; originalError = error; }
+  try { await probe(failed); } catch { /* Observation cannot change native outcome. */ }
+  if (failed) throw originalError;
+  return value;
+}
+
+async function gamesIntervention(page, arm) {
+  if (arm === 'noop' || arm === 'range') await page.evaluate(mode => {
+    if (mode === 'noop') return null;
+    const paragraph = document.querySelector('.page-hero p');
+    if (!paragraph) throw Error('Games experiment paragraph absent.');
+    const range = document.createRange(); range.selectNodeContents(paragraph); range.getClientRects();
+    return null;
+  }, arm);
+}
+
 function failurePngMetadata(bytes) {
   if (!(bytes instanceof Uint8Array) || bytes.length < 33 || bytes.length > 4194304) throw Error('PNG bound');
   const b = Buffer.from(bytes);
@@ -296,7 +321,7 @@ function ownedFailurePng(outputDir, candidate) {
   } finally { fs.closeSync(fd); }
 }
 
-async function captureFailureProbe(page, testInfo, identity, snapshotName, startedAt) {
+async function captureFailureProbe(page, testInfo, identity, snapshotName, startedAt, nativeFailed = true) {
   // Never extend test timeout. Leave teardown margin; observations may be absent.
   // Optional runner clock: if unavailable, withhold observations, not native failure.
   const validClock = Number.isFinite(startedAt) && startedAt <= Date.now() &&
@@ -308,7 +333,7 @@ async function captureFailureProbe(page, testInfo, identity, snapshotName, start
   const emit = (phase, data) => emitSceneDiagnostic(identity, phase, {
     evidence: 'later-state-not-failed-frame-proof', ...data });
   if (!diagnosticLoopback(page.url())) { emit('failure-probe-skipped', { reason: 'non-loopback-resolved-origin' }); return; }
-  for (const role of ['actual', 'expected', 'diff']) {
+  for (const role of (nativeFailed ? ['actual', 'expected', 'diff'] : [])) {
     if (remaining() < 100) break;
     try {
       const attachment = testInfo.attachments.slice(0, 128).find(a =>
@@ -447,10 +472,12 @@ for (const vp of VIEWPORTS) {
         test(`${surface.name} · ${vp.name} · ${theme}`, async ({ page, baseURL }, testInfo) => {
         const sceneDiagnostics = process.env.VS_SCENE_DIAGNOSTICS === 'true';
         const failureSceneDiagnostics = process.env.VS_FAILURE_SCENE_DIAGNOSTICS === 'true';
+        const experimentArm = process.env.VS_GAMES_EXPERIMENT_ARM || '';
         const probeForThisCase = failureSceneDiagnostics && failureProbeTarget(surface.name, vp.name, theme);
         const startedAt = probeForThisCase ? testInfo._startWallTime : null;
         const targetUrl = new URL(surface.path, process.env.VR_BASE_URL || baseURL).href;
         admitSceneDiagnostics(process.env.VS_SCENE_DIAGNOSTICS, process.env.VS_FAILURE_SCENE_DIAGNOSTICS, testInfo.config.updateSnapshots, targetUrl);
+        admitGamesExperiment(experimentArm, process.env.VS_FAILURE_SCENE_DIAGNOSTICS, process.env.VS_SCENE_DIAGNOSTICS, testInfo.config.updateSnapshots, targetUrl);
         if (sceneDiagnostics && !diagnosticLoopback(targetUrl)) {
           throw new Error('Scene diagnostics require a loopback candidate origin.');
         }
@@ -499,15 +526,30 @@ for (const vp of VIEWPORTS) {
           await expect(page.locator('#hero-heading .forge-letter').first()).toHaveCSS('opacity', '1');
         }
         const identity = { surface: surface.name, viewport: vp.name, theme, retry: testInfo.retry,
-          updateSnapshots: testInfo.config.updateSnapshots };
+          updateSnapshots: testInfo.config.updateSnapshots, ...(experimentArm ? { experimentArm } : {}) };
         if (sceneDiagnostics) await captureSceneDiagnostic(page, identity, 'before-native-matcher');
         const restoreNative = sceneDiagnostics ? observeNativeScreenshot(page, identity) : null;
         try {
         if (probeForThisCase) {
           const snapshotName = `${surface.name}-${vp.name}-${theme}.png`;
+          if (experimentArm) {
+            if (experimentArm !== 'ordinary') await gamesIntervention(page, experimentArm);
+            const matcherStarted = Date.now();
+            await nativeWithResultProbe(() => expect(page).toHaveScreenshot(snapshotName, {
+              fullPage: false, maxDiffPixelRatio: PIXEL_RATIO_TOLERANCE, animations: 'disabled',
+            }), async nativeFailed => {
+              const elapsed = Date.now() - matcherStarted;
+              emitSceneDiagnostic(identity, 'experiment-native-result', { nativeFailed, nativeAcceptance: false,
+                workerIndex: Number.isSafeInteger(testInfo.workerIndex) && testInfo.workerIndex >= 0 && testInfo.workerIndex <= 10000 ? testInfo.workerIndex : null,
+                parallelIndex: Number.isSafeInteger(testInfo.parallelIndex) && testInfo.parallelIndex >= 0 && testInfo.parallelIndex <= 10000 ? testInfo.parallelIndex : null,
+                matcherElapsedMs: Number.isSafeInteger(elapsed) && elapsed >= 0 && elapsed <= 3600000 ? elapsed : null });
+              await captureFailureProbe(page, testInfo, identity, snapshotName, startedAt, nativeFailed);
+            });
+          } else {
           await nativeWithFailureProbe(() => expect(page).toHaveScreenshot(snapshotName, {
             fullPage: false, maxDiffPixelRatio: PIXEL_RATIO_TOLERANCE, animations: 'disabled',
           }), true, () => captureFailureProbe(page, testInfo, identity, snapshotName, startedAt));
+          }
         } else {
         await expect(page).toHaveScreenshot(`${surface.name}-${vp.name}-${theme}.png`, {
           fullPage: false,

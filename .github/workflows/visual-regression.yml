@@ -65,25 +65,36 @@ on:
         type: boolean
         default: false
 
+      games_controlled_experiment:
+        description: 'Diagnostic only: full-matrix ordinary / no-op / Range; known persistent target control required'
+        required: false
+        type: boolean
+        default: false
+
 jobs:
   snapshot:
     name: Snapshot mobile surfaces
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
+      - name: Record controlled experiment budget
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.games_controlled_experiment == 'true'
+        run: node -e 'require("node:fs").appendFileSync(process.env.GITHUB_ENV,"VS_GAMES_EXPERIMENT_STARTED_AT="+Date.now()+"\n")'
       - uses: actions/checkout@v4
       - name: Admit diagnostic scope before browser setup
         env:
           DIAG_BEFORE: ${{ github.event.inputs.scene_diagnostics || 'false' }}
           DIAG_FAILURE: ${{ github.event.inputs.failure_scene_diagnostics || 'false' }}
           DIAG_UPDATE: ${{ github.event.inputs.update_baselines || 'false' }}
+          DIAG_EXPERIMENT: ${{ github.event.inputs.games_controlled_experiment || 'false' }}
           DIAG_ORIGIN: ${{ github.event.inputs.base_url || 'http://127.0.0.1:4173' }}
         run: |
           node --input-type=module -e '
-          const {DIAG_BEFORE:b,DIAG_FAILURE:f,DIAG_UPDATE:u,DIAG_ORIGIN:o}=process.env;
-          if (![b,f,u].every(v=>["true","false"].includes(v))) throw Error("Boolean diagnostic inputs required");
+          const {DIAG_BEFORE:b,DIAG_FAILURE:f,DIAG_UPDATE:u,DIAG_ORIGIN:o,DIAG_EXPERIMENT:e="false"}=process.env;
+          if (![b,f,u,e].every(v=>["true","false"].includes(v))) throw Error("Boolean diagnostic inputs required");
           if (b==="true" && f==="true") throw Error("Diagnostic flags are exclusive");
-          if (b==="true" || f==="true") {
+          if (e==="true" && (b==="true" || o!=="http://127.0.0.1:4173")) throw Error("Controlled experiment requires exact candidate without before diagnostics");
+          if (b==="true" || f==="true" || e==="true") {
             const x=new URL(o);
             if (u!=="false" || !["http:","https:"].includes(x.protocol) || !["localhost","127.0.0.1","[::1]"].includes(x.hostname) || x.username || x.password)
               throw Error("Diagnostics require loopback comparison without generation");
@@ -122,6 +133,7 @@ jobs:
       # was never installed here — a latent error once the suite stopped
       # crashing at collection). The S130 bug class is layout/CSS, engine-agnostic.
       - name: Run visual-regression snapshots
+        if: github.event.inputs.games_controlled_experiment != 'true'
         env:
           BASE_URL: http://127.0.0.1:4173
           VR_BASE_URL: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.base_url || '' }}
@@ -131,6 +143,11 @@ jobs:
           npx playwright test tests/visual-regression.spec.js --project=chromium --reporter=line
           ${{ github.event.inputs.update_baselines == 'true' && '--update-snapshots=all' || '' }}
           ${{ (github.event.inputs.scene_diagnostics == 'true' || github.event.inputs.failure_scene_diagnostics == 'true') && '--update-snapshots=none' || '' }}
+      - name: Run controlled Games experiment (nonacceptance)
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.games_controlled_experiment == 'true'
+        env:
+          BASE_URL: http://127.0.0.1:4173
+        run: node scripts/run-games-controlled-experiment.mjs --run-controlled-games
       - name: Stop candidate preview
         if: always()
         run: |
@@ -151,7 +168,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: visual-regression-diffs
+          include-hidden-files: true
           path: |
             test-results/
             playwright-report/
+            .cache/games-controlled-experiment/
           retention-days: 14

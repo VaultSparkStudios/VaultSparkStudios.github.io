@@ -3,13 +3,13 @@
   "publicSafe": true,
   "session": 415,
   "state": "in-progress",
-  "updatedAt": "2026-11-12T06:35:42.519Z",
+  "updatedAt": "2026-11-12T07:25:28.404Z",
   "audit": "docs/AUDIT_2026-11-11-S415.json",
   "implementation": "docs/S415_IMPLEMENTATION_CHECKPOINT.json",
   "candidate": {
-    "qaCommit": "e984766c8ad0363ec4c4398052848df4fc5ea3ed",
+    "qaCommit": "192622787b352a2d1ddb2bef35ddd62fd1c9a866",
     "productionPromoted": false,
-    "workingTree": "Main8c63d674b3 observations integrated and owner-verified locally; merge not yet committed. Four Oracle references retain correct positions, but unchanged Linux comparison is nonpassing on Games."
+    "workingTree": "Main8c63 integration and failure evidence published. Controlled experiment is locally verified and pending commit/native execution. No production promotion."
   },
   "local": {
     "fullAttempt": {
@@ -471,6 +471,23 @@
       "visualsPassed": 1,
       "probeRowsEmitted": 0,
       "meaning": "The isolated target passed before observation; this did not reproduce or clear the earlier full-matrix failure.",
+      "acceptanceEvidence": false
+    },
+    "latestForensicComparison": {
+      "receipt": "docs/S415_AFTER_FAILURE_PROBE.json",
+      "sourceCommit": "192622787b352a2d1ddb2bef35ddd62fd1c9a866",
+      "runId": 43169244223,
+      "conclusion": "failure",
+      "headersPassed": 42,
+      "visualsPassed": 67,
+      "visualsFailed": 2,
+      "visualsFlaky": 1,
+      "diagnosticsEnabled": true,
+      "acceptanceEvidence": false
+    },
+    "controlledGamesExperiment": {
+      "receipt": "docs/S415_CONTROLLED_GAMES_EXPERIMENT.json",
+      "state": "locally-verified-native-experiment-pending",
       "acceptanceEvidence": false
     }
   },

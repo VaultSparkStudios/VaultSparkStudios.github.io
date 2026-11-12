@@ -177,7 +177,7 @@ test('absent, hidden or invalid fragment geometry cannot produce passing scene f
 
 function actualFailureProbeFunction(name, context = {}) {
   const source = fs.readFileSync('tests/visual-regression.spec.js', 'utf8');
-  const start = source.indexOf((name.startsWith('native') || name.startsWith('capture') ? 'async ' : '') + 'function ' + name + '(');
+  const start = source.indexOf((name.startsWith('native') || name.startsWith('capture') || name.startsWith('games') ? 'async ' : '') + 'function ' + name + '(');
   assert.ok(start >= 0);
   const end = source.indexOf('\n}\n', start); assert.ok(end > start);
   return new Function(...Object.keys(context), 'return (' + source.slice(start, end + 2) + ');')(...Object.values(context));
@@ -422,4 +422,110 @@ test('actual pure failure target selects exactly one of the existing70 matrix ca
   assert.match(source,/const probeForThisCase = failureSceneDiagnostics && failureProbeTarget\(surface\.name, vp\.name, theme\);/);
   assert.match(source,/const startedAt = probeForThisCase \? testInfo\._startWallTime : null;/);
   assert.match(source,/if \(probeForThisCase\) \{[\s\S]*?await nativeWithFailureProbe\([\s\S]*?\} else \{\s+await expect\(page\)\.toHaveScreenshot/);
+});
+
+
+test('actual experiment admission rejects foreign arms, missing failure flag and generation', () => {
+  const admit = actualFailureProbeFunction('admitGamesExperiment',{diagnosticLoopback:u=>u==='http://127.0.0.1:4173'});
+  for(const arm of ['ordinary','noop','range']) admit(arm,'true','','none','http://127.0.0.1:4173');
+  admit('','','','all','https://example.test');
+  for(const args of [['foreign','true','','none','http://127.0.0.1:4173'],['range','','','none','http://127.0.0.1:4173'],['noop','true','true','none','http://127.0.0.1:4173'],['ordinary','true','','all','http://127.0.0.1:4173'],['range','true','','none','https://example.test']]) assert.throws(()=>admit(...args));
+});
+
+test('actual post-result helper observes passes/rejections once and preserves exact native error', async () => {
+  const run = actualFailureProbeFunction('nativeWithResultProbe'), events=[], native=Error('native');
+  assert.equal(await run(async()=>{events.push('pass');return 3;},async failed=>{events.push(failed);throw Error('observer');}),3);
+  assert.deepEqual(events,['pass',false]);events.length=0;
+  await assert.rejects(run(async()=>{events.push('reject');throw native;},async failed=>{events.push(failed);throw Error('observer');}),e=>e===native);
+  assert.deepEqual(events,['reject',true]);
+});
+
+function actualCoordinatorFunction(name, context={}) {
+  const source=fs.readFileSync('scripts/run-games-controlled-experiment.mjs','utf8');
+  const start=source.indexOf('export function '+name+'('),end=source.indexOf('\n}\n',start);
+  assert.ok(start>=0&&end>start);
+  return new Function(...Object.keys(context),'return ('+source.slice(start,end+2).replace(/^export /,'')+');')(...Object.values(context));
+}
+
+test('actual coordinator binds target rejection/role/known frame per retry, not job exit or expected frame', () => {
+  const known='fe14e5457a95b3d2d873fd9cc0aa6cc30757341fa496761ac0e4c63fd21332fe';
+  const control=actualCoordinatorFunction('targetControl',{KNOWN:new Set([known])});
+  const id=retry=>({surface:'games',viewport:'pixel-5',theme:'dark',experimentArm:'ordinary',updateSnapshots:'none',retry});
+  const verdict=(retry,nativeFailed)=>({identity:id(retry),phase:'experiment-native-result',nativeFailed,nativeAcceptance:false});
+  const frame=retry=>({identity:id(retry),phase:'native-attachment-actual',role:'actual',evidence:'primary-native-failed-frame',available:true,sha256:known,width:393,height:727,bytes:185026});
+  const rows=[verdict(0,true),frame(0),verdict(1,true),frame(1)];
+  assert.equal(control(rows).kind,'persistent');assert.equal(control([]).kind,'unknown');
+  assert.equal(control([verdict(0,false)]).kind,'absent');
+  assert.equal(control([verdict(0,true),frame(0),verdict(1,false)]).kind,'weak-flaky');
+  for(const change of [{role:'expected'},{phase:'after-failure-before-collector-1'},{evidence:'later-state-not-failed-frame-proof'},{sha256:'a'.repeat(64)},{identity:{...id(0),surface:'home'}}]) {
+    const bad=structuredClone(rows);bad[1]={...bad[1],...change};assert.notEqual(control(bad).kind,'persistent');
+  }
+  assert.notEqual(control([...rows,frame(0)]).kind,'persistent');
+});
+
+test('actual experiment PASS collector never reads any native failed-frame file', async () => {
+  let reads=0;
+  const actualRead=actualFailureProbeFunction('captureFailureProbe',{Date,path,
+    diagnosticLoopback:()=>true,emitSceneDiagnostic:()=>{},ownedFailurePng:()=>{reads++;throw Error('must not read');},
+    failurePngMetadata:()=>({}),captureSceneDiagnostic:async()=>{}});
+  await actualRead({url:()=> 'http://127.0.0.1',screenshot:async()=>Buffer.alloc(33)},
+    {timeout:30000,outputDir:'/owned',attachments:[]},{},'games-pixel-5-dark.png',Date.now(),false);
+  assert.equal(reads,0);
+});
+
+test('actual target intervention performs zero ordinary or exactly one no-op/Range RPC', async () => {
+  let calls=0,queries=0,ranges=0,selected=0,rects=0;const paragraph={};
+  const intervene=actualFailureProbeFunction('gamesIntervention',{document:{
+    querySelector:selector=>{queries++;assert.equal(selector,'.page-hero p');return paragraph;},
+    createRange:()=>{ranges++;return {selectNodeContents:p=>{assert.equal(p,paragraph);selected++;},getClientRects:()=>{rects++;return [];}};}
+  }});
+  const page={evaluate:async(fn,arg)=>{calls++;return fn(arg);}};
+  await intervene(page,'ordinary');assert.equal(calls,0);
+  await intervene(page,'noop');assert.equal(calls,1);assert.equal(queries,0);
+  await intervene(page,'range');assert.deepEqual([calls,queries,ranges,selected,rects],[2,1,1,1,1]);
+});
+
+test('actual coordinator parser bounds rows and workflow exposes only fixed manual coordinator', () => {
+  const parse=actualCoordinatorFunction('diagnosticRows',{Buffer,need:(v,code)=>{if(!v)throw Error(code);}});
+  assert.deepEqual(parse('unrelated output\n[vs-scene-diagnostic] {"phase":"example"}\n'),[{phase:'example'}]);
+  assert.throws(()=>parse('[vs-scene-diagnostic] not-json\n'));
+  assert.throws(()=>parse('[vs-scene-diagnostic] '+JSON.stringify({value:'x'.repeat(65537)})));
+  const workflow=fs.readFileSync('.github/workflows/visual-regression.yml','utf8');
+  assert.match(workflow,/games_controlled_experiment:[\s\S]*?type: boolean\s+default: false/);
+  assert.match(workflow,/if: github.event_name == 'workflow_dispatch' && github.event.inputs.games_controlled_experiment == 'true'/);
+  assert.match(workflow,/run: node scripts\/run-games-controlled-experiment\.mjs --run-controlled-games/);
+  assert.match(workflow,/name: visual-regression-diffs\s+include-hidden-files: true/);
+  assert.match(workflow,/\.cache\/games-controlled-experiment\//);
+  const source=fs.readFileSync('scripts/run-games-controlled-experiment.mjs','utf8');
+  assert.match(source,/process\.exitCode=1;/);assert.doesNotMatch(source,/--grep|--retries|--workers|--timeout|shell:\s*true/);
+});
+
+
+test('actual runtime resolver pins registry headless-shell under source-verified default config', () => {
+  const need=(v,code)=>{if(!v)throw Error(code);};
+  const resolve=actualCoordinatorFunction('resolveHeadlessRuntime',{need,path});
+  const core=path.resolve('/installed-core'),exe=path.resolve('/installed-headless-shell');
+  const config={use:{headless:true},projects:[{name:'chromium',use:{browserName:'chromium',launchOptions:{args:[]}}}]};
+  let registryLoads=0;
+  const load=absolute=>{registryLoads++;assert.equal(absolute,path.join(core,'lib/server/registry/index.js'));return {registry:{findExecutable:name=>{assert.equal(name,'chromium-headless-shell');return {executablePath:()=>exe};}}};};
+  const selected=resolve(core,config,load);assert.equal(selected.executablePath,exe);
+  assert.equal(selected.resolutionBasis.registryName,'chromium-headless-shell');assert.equal(selected.resolutionBasis.headless,true);
+  for(const mutate of [c=>{c.use.headless=false;},c=>{c.use.channel='chrome';},c=>{c.projects[0].use.channel='chrome';},c=>{c.projects[0].use.launchOptions.executablePath='/foreign';},c=>{c.projects[0].use.launchOptions.headless=false;}]) {
+    const changed=structuredClone(config);mutate(changed);assert.throws(()=>resolve(core,changed,load));
+  }
+  assert.equal(registryLoads,1);
+  const source=fs.readFileSync('scripts/run-games-controlled-experiment.mjs','utf8');
+  assert.doesNotMatch(source,/chromium\.executablePath\(/);
+  for(const file of ['lib/server/browserType.js','lib/server/chromium/chromium.js','lib/server/registry/index.js'])assert.ok(source.includes(file));
+});
+
+test('actual line-summary parser distinguishes full70 from missing, truncated and wrong totals', () => {
+  const parse=actualCoordinatorFunction('matrixSummary',{Buffer});
+  const actual=parse('\u001b[32m  2 failed\u001b[0m\n  1 flaky\n  67 passed (2.1m)\n');
+  assert.equal(actual.complete,true);assert.equal(actual.total,70);
+  assert.deepEqual(actual.counts,{passed:67,failed:2,flaky:1,skipped:0,interrupted:0});
+  assert.equal(parse('  70 passed (1.0m)\n').complete,true);
+  for(const bad of ['', '  2 failed\n', '  67 passed\n  2 failed\n', '  69 passed\n', '  69 passed\n  1 skipped\n', '  69 passed\n  1 interrupted\n', '  70 passed\n  70 passed\n'])assert.equal(parse(bad).complete,false);
+  const source=fs.readFileSync('scripts/run-games-controlled-experiment.mjs','utf8');
+  assert.match(source,/record\.matrix\.complete/);assert.match(source,/native-process-or-matrix-incomplete/);
 });

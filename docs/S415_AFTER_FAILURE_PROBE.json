@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "session": 415,
   "publicSafe": true,
-  "state": "isolated-nonreproduction-full-matrix-forensic-proposal-verified-locally",
-  "recordedAt": "2026-11-12T06:35:42.519Z",
+  "state": "full-matrix-native-failure-reproduced",
+  "recordedAt": "2026-11-12T06:48:54.637Z",
   "sourceFiles": [
     {
       "file": "tests/visual-regression.spec.js",
@@ -54,7 +54,34 @@
     "windowsGamesOrdinarySourceCommit": "8e5cc0670cf5fe4ce01ec84e98e0e5fa7c6eea59"
   },
   "nativeForensicJob": {
-    "state": "Full-matrix experiment not dispatched yet",
+    "sourceCommit": "192622787b352a2d1ddb2bef35ddd62fd1c9a866",
+    "runId": 43169244223,
+    "jobId": 131018251042,
+    "conclusion": "failure",
+    "headersPassed": 42,
+    "visuals": {
+      "passed": 67,
+      "failed": 2,
+      "flaky": 1,
+      "total": 70
+    },
+    "failed": [
+      "games / iphone-13 / light",
+      "games / pixel-5 / dark"
+    ],
+    "flaky": [
+      "membership / iphone-se / light"
+    ],
+    "updateBaselines": false,
+    "beforeSceneDiagnostics": false,
+    "failureSceneDiagnostics": true,
+    "primaryFailedPngSha256": [
+      "fe14e5457a95b3d2d873fd9cc0aa6cc30757341fa496761ac0e4c63fd21332fe",
+      "d7fe3e709a7f5cf5f4e1fc7e29c2e668c2a064c6ed6c9c4ec160517a428b62d1"
+    ],
+    "fourLaterFramesPerAttemptMatchOwnFailedPng": true,
+    "geometryObservationPhase": "after failure",
+    "meaning": "The target failed in the retained full matrix. All four later CSS-scale screenshots in each attempt retain that attempt primary failed PNG hash, including after geometry/font collection. Later observations are not retroactive failed-frame geometry proof.",
     "acceptanceEvidence": false
   },
   "causalFixClaimed": false,

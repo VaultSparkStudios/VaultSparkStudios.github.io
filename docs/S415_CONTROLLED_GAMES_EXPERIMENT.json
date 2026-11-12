@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "session": 415,
+  "publicSafe": true,
+  "recordedAt": "2026-11-12T07:25:28.404Z",
+  "state": "locally-verified-native-experiment-pending",
+  "basedOnCommit": "192622787b352a2d1ddb2bef35ddd62fd1c9a866",
+  "sourceFiles": [
+    {
+      "file": "tests/visual-regression.spec.js",
+      "sha256": "b733b865e7b2e0bc0a1d447438c42c4719bb399ef7c0c34afc13ee15c0d0e432"
+    },
+    {
+      "file": ".github/workflows/visual-regression.yml",
+      "sha256": "a4fb0959f21f5dbfafb4614332a30c39f6edbd4e01c0bc82ca4d4a65878526cf"
+    },
+    {
+      "file": "tests/visual-capture-source.unit.spec.mjs",
+      "sha256": "2422b44c743ed95531e553d42db40f7c4e364c4b0a7c7f3cb5bfb34a2ec74b7b"
+    },
+    {
+      "file": "tests/browser-collection.unit.spec.mjs",
+      "sha256": "c5e9244a43ea2db0ffa6f7c042916593818514b6bab3e7f0c4fc8d8bbbddd5fd"
+    },
+    {
+      "file": "scripts/run-games-controlled-experiment.mjs",
+      "sha256": "17cf481ef2f3008381f1f5034037b88db83bb0d1d6c8051dc9fcb09ea29e3c3b"
+    }
+  ],
+  "scope": {
+    "defaultEnabled": false,
+    "manualOnly": true,
+    "origin": "http://127.0.0.1:4173",
+    "arms": [
+      "ordinary",
+      "noop",
+      "range"
+    ],
+    "maximumArms": 3,
+    "headerPrecheckOnce": 42,
+    "visualMatrixPerArm": 70,
+    "positiveControl": "Both original target attempts reject with a known primary failed PNG; missing or weak/flaky control stops.",
+    "intervention": "Only Games / Pixel 5 / dark; ordinary has no added browser RPC, noop and Range have one. Observations follow the native result.",
+    "snapshotUpdates": false,
+    "pixelToleranceChanged": false,
+    "deviceScaleFactorChanged": false,
+    "retryPolicyChanged": false,
+    "testTimeoutChanged": false,
+    "workflowTimeoutMinutes": 25,
+    "originalErrorsPreserved": true,
+    "experimentalCoordinatorAlwaysNonpassing": true
+  },
+  "localVerification": {
+    "coordinatorSyntaxNativeExit": 0,
+    "inertPlanNativeExit": 0,
+    "inertPlanExecuted": false,
+    "focusedTests": 39,
+    "focusedNativeExit": 0,
+    "initialFocusedAttempt": {
+      "passed": 38,
+      "failed": 1,
+      "reason": "Existing workflow contract required env immediately after the step name. Updated it to require the exact diagnostic-exclusion guard and reject inverted or disabled guards."
+    },
+    "ordinaryWindowsGames": {
+      "passed": 10,
+      "nativeExit": 0,
+      "retries": 0,
+      "diagnosticsEnabled": false,
+      "snapshotUpdates": false,
+      "playwright": "1.58.2"
+    },
+    "installedHeadlessResolution": {
+      "scope": "local registry resolution only; no browser launched",
+      "nativeExit": 0,
+      "playwright": "1.58.2",
+      "registryName": "chromium-headless-shell",
+      "executableExists": true
+    }
+  },
+  "nativeExperiment": {
+    "dispatched": false,
+    "acceptanceEvidence": false
+  },
+  "limitations": [
+    "Fixed arm order, worker scheduling, process restarts and caches remain confounders. One sequence can identify associations, not establish a causal fix.",
+    "Passing post-result screenshots are later state, never proof of the native passing frame.",
+    "Critical file/runtime/baseline hashes plus clean exact checkout are not a complete served-asset manifest."
+  ],
+  "causalFixClaimed": false,
+  "baselineAccepted": false,
+  "productionAccepted": false
+}

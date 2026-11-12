@@ -242,7 +242,7 @@ test('visual PR workflow starts its candidate preview and retains an explicit ma
     assert.match(text, /\n  pull_request:/);
     assert.match(text, /- name: Start candidate preview\s+run: \|\s+node scripts\/local-preview-server\.mjs &\s+echo "PREVIEW_PID=\$!" >> \$GITHUB_ENV/);
     assert.match(text, /- name: Wait for candidate preview\s+run: .*http:\/\/127\.0\.0\.1:4173\//);
-    assert.match(text, /- name: Run visual-regression snapshots\s+env:\s+BASE_URL: http:\/\/127\.0\.0\.1:4173\s+VR_BASE_URL: \$\{\{ github\.event_name == 'workflow_dispatch' && github\.event\.inputs\.base_url \|\| '' \}\}/);
+    assert.match(text, /- name: Run visual-regression snapshots\s+if: github\.event\.inputs\.games_controlled_experiment != 'true'\s+env:\s+BASE_URL: http:\/\/127\.0\.0\.1:4173\s+VR_BASE_URL: \$\{\{ github\.event_name == 'workflow_dispatch' && github\.event\.inputs\.base_url \|\| '' \}\}/);
     assert.match(text, /- name: Stop candidate preview\s+if: always\(\)\s+run: \|\s+if \[ -n "\$\{PREVIEW_PID:-\}" \]; then kill "\$PREVIEW_PID" \|\| true; fi/);
     assert.match(text, /workflow_dispatch:\s+inputs:\s+base_url:[\s\S]*?default: 'http:\/\/127\.0\.0\.1:4173'/);
   };
@@ -250,6 +250,8 @@ test('visual PR workflow starts its candidate preview and retains an explicit ma
   assert.throws(() => verify(source.replace("default: 'http://127.0.0.1:4173'", "default: 'https://vaultsparkstudios.com'")), assert.AssertionError);
   assert.throws(() => verify(source.replace("github.event_name == 'workflow_dispatch' && github.event.inputs.base_url || ''", "github.event.inputs.base_url || 'https://vaultsparkstudios.com'")), assert.AssertionError);
   assert.throws(() => verify(source.replace('node scripts/local-preview-server.mjs &', 'echo preview omitted')), assert.AssertionError);
+  assert.throws(() => verify(source.replace("games_controlled_experiment != 'true'", "games_controlled_experiment == 'true'")), assert.AssertionError);
+  assert.throws(() => verify(source.replace("if: github.event.inputs.games_controlled_experiment != 'true'", 'if: false')), assert.AssertionError);
   assert.throws(() => verify(source.replace('if: always()', 'if: success()')), assert.AssertionError);
 });
 
