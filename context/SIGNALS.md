@@ -2,8 +2,8 @@
 ║  ✓  Tests         Source 555/555 steps passing                   ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⛔  Context age   17d                                            ║
-║  ✓  IGNIS         45126 FORGE  ·  5d old                         ║
+║  ⛔  Context age   18d                                            ║
+║  ✓  IGNIS         45126 FORGE  ·  6d old                         ║
 ║  ⛔  Truth         yellow — S411 local recovery verified;…        ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║

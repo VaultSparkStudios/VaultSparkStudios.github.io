@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-11-11T05:12:37.011Z",
+  "capturedAt": "2026-11-12T01:53:17.561Z",
   "captureProvenance": {
     "version": 1,
-    "runId": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1",
+    "runId": "2026-11-12T01-52-44-004Z-df01001ec44d3879",
     "producer": "scripts/capture-theme-matrix.mjs",
-    "startedAt": "2026-11-11T05:12:17.596Z",
+    "startedAt": "2026-11-12T01:52:44.004Z",
     "source": {
       "algorithm": "sha256",
-      "sha256": "0ac6d7df955b97b991766d74a1f42c8953f09fe1193f8ed197ab9e48a7cb6a2d",
+      "sha256": "e2e14c86ab0be3b2fc3b3adc4830629d462f3ba4d9ad01182560d4de0bb80d6e",
       "files": [
         "assets/ambient-loader.js",
         "assets/changelog-reactions.js",
@@ -653,7 +653,7 @@
         "data/news-desk/days/2026-08-21.json",
         "data/news-desk/days/2026-08-22.json",
         "data/news-desk/days/2026-08-23.json",
-        "games/index.html",
+        "index.html",
         "scripts/build-deploy-currency.mjs",
         "scripts/build-news-desk.mjs",
         "scripts/capture-theme-matrix.mjs",
@@ -3240,8 +3240,8 @@
           "sha256": "03da839472121835a27018b22ba8b20c6860b1f41745d07c88b13518558080a8"
         },
         {
-          "path": "games/index.html",
-          "sha256": "e61201888cfd99d3b1bfe54009a75e3e3e48d4ba089b9600ef1afbc3f28dc748"
+          "path": "index.html",
+          "sha256": "f73ba41c941236484b7f14fd2bb4255b5f3d13e1e977e1514cece79ade405d6f"
         },
         {
           "path": "scripts/build-deploy-currency.mjs",
@@ -3307,9 +3307,9 @@
     },
     "candidate": {
       "manifest": "api/candidate-artifact-manifest.json",
-      "manifestSha256": "79f16cb9eb090a7f27a7ad86600ccb0b2bf206a62ec977913dfdb887cd408e32",
+      "manifestSha256": "fa10a9f0a340e1e271132b9402db7da70ee3d23ba110b14e6a0a055aeeffc14d",
       "candidateSha": "ceba607f4d6eec139f4cb85f84a17ceaf48e3c4f",
-      "root": "faaeccca1ebe7aeeaed73236dd011efbb8e4574ddc9a0448829e9cf611a70fea"
+      "root": "9215eb962de67fbe43a84a367741531ee7b9be13d585d7610fa870f412ab9c95"
     }
   },
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
@@ -3324,7 +3324,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "0ac6d7df955b97b991766d74a1f42c8953f09fe1193f8ed197ab9e48a7cb6a2d",
+    "sha256": "e2e14c86ab0be3b2fc3b3adc4830629d462f3ba4d9ad01182560d4de0bb80d6e",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -3968,7 +3968,7 @@
       "data/news-desk/days/2026-08-21.json",
       "data/news-desk/days/2026-08-22.json",
       "data/news-desk/days/2026-08-23.json",
-      "games/index.html",
+      "index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
       "scripts/capture-theme-matrix.mjs",
@@ -6555,8 +6555,8 @@
         "sha256": "03da839472121835a27018b22ba8b20c6860b1f41745d07c88b13518558080a8"
       },
       {
-        "path": "games/index.html",
-        "sha256": "e61201888cfd99d3b1bfe54009a75e3e3e48d4ba089b9600ef1afbc3f28dc748"
+        "path": "index.html",
+        "sha256": "f73ba41c941236484b7f14fd2bb4255b5f3d13e1e977e1514cece79ade405d6f"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -6622,13 +6622,13 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "79f16cb9eb090a7f27a7ad86600ccb0b2bf206a62ec977913dfdb887cd408e32",
+    "manifestSha256": "fa10a9f0a340e1e271132b9402db7da70ee3d23ba110b14e6a0a055aeeffc14d",
     "candidateSha": "ceba607f4d6eec139f4cb85f84a17ceaf48e3c4f",
-    "root": "faaeccca1ebe7aeeaed73236dd011efbb8e4574ddc9a0448829e9cf611a70fea"
+    "root": "9215eb962de67fbe43a84a367741531ee7b9be13d585d7610fa870f412ab9c95"
   },
   "matrix": {
     "routes": [
-      "/games/"
+      "/"
     ],
     "themes": [
       "dark",
@@ -6665,11 +6665,19 @@
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Claude Code S414 (direct image review)",
-    "findings": [],
+    "reviewer": "Codex image review: root plus desktop/mobile reviewers",
+    "findings": [
+      "Focused changed-cadence text reviewed at original detail in every desktop/mobile theme: readable, truthful periodic/date/age2 status and no changed-line clipping or overlap.",
+      "Capture limitation: fixed navigation overlays part of the news cards away from the changed cadence line. Text behind it and whole-page visual cleanliness are not established.",
+      "Five actual previous mobile homepage screenshots and the previous visual receipt remain preserved privately; these current captures establish the after-state only."
+    ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
-    "limitation": null
+    "limitation": "Focused homepage cadence review only; no numerical contrast measurement, full-page, authenticated journey or native Linux baseline acceptance.",
+    "reviewReportSha256": [
+      "63dd146b76d129d28fc2c7641afa726612d86cffdc129ffe33b7d70c97b6e84f",
+      "59d9a19d09672510f5e736ec439470014d50d779f17f232e506457dec32f1295"
+    ]
   },
   "captures": [
     {
@@ -6685,13 +6693,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1--games--dark--desktop--changed-surface.png",
-      "sha256": "006b0606f5bd9acfb814439a3d81e032fc6cff6ef19ca85239bcb73672904a20",
-      "page": "/games/",
+      "file": "2026-11-12T01-52-44-004Z-df01001ec44d3879--home--dark--desktop--changed-surface.png",
+      "sha256": "70ebced64d09034dffc9524735458f271135f8bf29b8f937007805e401583039",
+      "page": "/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Code S414 (direct image review)"
+        "reviewer": "Codex image review: root plus desktop/mobile reviewers"
       }
     },
     {
@@ -6707,13 +6715,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1--games--light--desktop--changed-surface.png",
-      "sha256": "a59664c17791dbac618434b1857ba9f9830cf8f0e652e9c117995f3cd303b67d",
-      "page": "/games/",
+      "file": "2026-11-12T01-52-44-004Z-df01001ec44d3879--home--light--desktop--changed-surface.png",
+      "sha256": "49d363178b0092192bc44198a7cfacfa6652165625cc54174ea03f5a82122201",
+      "page": "/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Code S414 (direct image review)"
+        "reviewer": "Codex image review: root plus desktop/mobile reviewers"
       }
     },
     {
@@ -6729,13 +6737,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1--games--ambient--desktop--changed-surface.png",
-      "sha256": "1fa08d3682e1922636e401412d17d31319b4adb386ba05f99ae3fac7556065b8",
-      "page": "/games/",
+      "file": "2026-11-12T01-52-44-004Z-df01001ec44d3879--home--ambient--desktop--changed-surface.png",
+      "sha256": "39b21bf55a9cabadf78c9ae3b6002f6f53e967ad28f5b6988862c716ff043321",
+      "page": "/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Code S414 (direct image review)"
+        "reviewer": "Codex image review: root plus desktop/mobile reviewers"
       }
     },
     {
@@ -6751,13 +6759,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1--games--warm--desktop--changed-surface.png",
-      "sha256": "a3a1aebee23002fd891f19adf0ed3ed145e8235b87b9dc941438c48983394060",
-      "page": "/games/",
+      "file": "2026-11-12T01-52-44-004Z-df01001ec44d3879--home--warm--desktop--changed-surface.png",
+      "sha256": "32e8cce19b23473d27d211d45d1dd59ee7deff1ca4876d53b060023d562e03b9",
+      "page": "/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Code S414 (direct image review)"
+        "reviewer": "Codex image review: root plus desktop/mobile reviewers"
       }
     },
     {
@@ -6773,13 +6781,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1--games--cool--desktop--changed-surface.png",
-      "sha256": "0121ea4e6ba41f04483a55c429be75c98d6a51f87993faeec456e4ecd845c71e",
-      "page": "/games/",
+      "file": "2026-11-12T01-52-44-004Z-df01001ec44d3879--home--cool--desktop--changed-surface.png",
+      "sha256": "4aa6186f3a288d522aff2fb8e4499810fd5a5ce5657a7141aea441a4930764fb",
+      "page": "/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Code S414 (direct image review)"
+        "reviewer": "Codex image review: root plus desktop/mobile reviewers"
       }
     },
     {
@@ -6795,13 +6803,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1--games--lava--desktop--changed-surface.png",
-      "sha256": "fb701d0f5d91d53be24e419795c5bb3493ea16e08fbbf373695ea536f19efc51",
-      "page": "/games/",
+      "file": "2026-11-12T01-52-44-004Z-df01001ec44d3879--home--lava--desktop--changed-surface.png",
+      "sha256": "f8db5a202f29b9be4795f69b36ed742c5bb563798ce9c63ac170ab45cce22f14",
+      "page": "/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Code S414 (direct image review)"
+        "reviewer": "Codex image review: root plus desktop/mobile reviewers"
       }
     },
     {
@@ -6817,13 +6825,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1--games--high-contrast--desktop--changed-surface.png",
-      "sha256": "7a1c327f79ccb5c9d88fecbefae9710eab65ff6733ea918e96f72dd916402467",
-      "page": "/games/",
+      "file": "2026-11-12T01-52-44-004Z-df01001ec44d3879--home--high-contrast--desktop--changed-surface.png",
+      "sha256": "2a020e913b9d7a874ee8700a1a307dd3d189d0142bd431611f05c3cb4737e156",
+      "page": "/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Code S414 (direct image review)"
+        "reviewer": "Codex image review: root plus desktop/mobile reviewers"
       }
     },
     {
@@ -6839,13 +6847,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1--games--dark--mobile--changed-surface.png",
-      "sha256": "0e1347d3494dc49361bf46dac5b3e6da9235f03fea072abb6e8058ac214c4244",
-      "page": "/games/",
+      "file": "2026-11-12T01-52-44-004Z-df01001ec44d3879--home--dark--mobile--changed-surface.png",
+      "sha256": "a73c6082fc0f9535d74ffe5b8f9c8eaf9983b6c840f29ed69811fc029ca36654",
+      "page": "/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Code S414 (direct image review)"
+        "reviewer": "Codex image review: root plus desktop/mobile reviewers"
       }
     },
     {
@@ -6861,13 +6869,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1--games--light--mobile--changed-surface.png",
-      "sha256": "e045831dde643d09c46025187a69caf079164ef223a358c3081f276125be7795",
-      "page": "/games/",
+      "file": "2026-11-12T01-52-44-004Z-df01001ec44d3879--home--light--mobile--changed-surface.png",
+      "sha256": "ae9df92af122857504b659ca23a739a130b0c39b7de741cd9dc58a87174f4024",
+      "page": "/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Code S414 (direct image review)"
+        "reviewer": "Codex image review: root plus desktop/mobile reviewers"
       }
     },
     {
@@ -6883,13 +6891,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1--games--ambient--mobile--changed-surface.png",
-      "sha256": "fc57b22ff6aff059fd80be4294fd7795ec23109a302e6965f4ecb960268f2b49",
-      "page": "/games/",
+      "file": "2026-11-12T01-52-44-004Z-df01001ec44d3879--home--ambient--mobile--changed-surface.png",
+      "sha256": "82dc61053371fcaea4ae8d0931cab936ae059e006f6761a1ac0a807e347c4e03",
+      "page": "/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Code S414 (direct image review)"
+        "reviewer": "Codex image review: root plus desktop/mobile reviewers"
       }
     },
     {
@@ -6905,13 +6913,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1--games--warm--mobile--changed-surface.png",
-      "sha256": "6359d0b9d8e4a5eceb583ed5e6758652741205d5ea15bc8140ce69ab7528e784",
-      "page": "/games/",
+      "file": "2026-11-12T01-52-44-004Z-df01001ec44d3879--home--warm--mobile--changed-surface.png",
+      "sha256": "2ed51e329858092ee73f5b10be0a9491434f424c556c324a7f49b8915cfcc9a6",
+      "page": "/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Code S414 (direct image review)"
+        "reviewer": "Codex image review: root plus desktop/mobile reviewers"
       }
     },
     {
@@ -6927,13 +6935,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1--games--cool--mobile--changed-surface.png",
-      "sha256": "ceffbe1225c9010e035280cac3740a45c98195522f6044dc66fe72aa89430e16",
-      "page": "/games/",
+      "file": "2026-11-12T01-52-44-004Z-df01001ec44d3879--home--cool--mobile--changed-surface.png",
+      "sha256": "97f65f993a669888a7c007fc5cf7ce647232476d98f299bd7d6b0841fabe7235",
+      "page": "/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Code S414 (direct image review)"
+        "reviewer": "Codex image review: root plus desktop/mobile reviewers"
       }
     },
     {
@@ -6949,13 +6957,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1--games--lava--mobile--changed-surface.png",
-      "sha256": "63cb0c69f784523901fd05925cb90be14b27af83886edee91b697086e6e36e4b",
-      "page": "/games/",
+      "file": "2026-11-12T01-52-44-004Z-df01001ec44d3879--home--lava--mobile--changed-surface.png",
+      "sha256": "b78d45130464b22d5b85384a7c290c3621258679d3e5a2571f2222ecf04ba9b4",
+      "page": "/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Code S414 (direct image review)"
+        "reviewer": "Codex image review: root plus desktop/mobile reviewers"
       }
     },
     {
@@ -6971,13 +6979,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-11T05-12-17-596Z-dc8e476494ec26a1--games--high-contrast--mobile--changed-surface.png",
-      "sha256": "edc14bdb884938da85023846e22d039a05e92425bf5408fc94dda1b84104da92",
-      "page": "/games/",
+      "file": "2026-11-12T01-52-44-004Z-df01001ec44d3879--home--high-contrast--mobile--changed-surface.png",
+      "sha256": "3616908adec9fb477cbd94468db186264990a7e2d96b1a1e1febca05b6981f28",
+      "page": "/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Code S414 (direct image review)"
+        "reviewer": "Codex image review: root plus desktop/mobile reviewers"
       }
     }
   ]

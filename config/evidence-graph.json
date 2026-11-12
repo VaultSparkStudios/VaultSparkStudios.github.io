@@ -105,6 +105,9 @@
         ".well-known/llms.txt",
         "api/build-sha.json",
         "api/public-intelligence.json",
+        "api/spark-manifest.json",
+        "games/index.html",
+        "games/mindframe/index.html",
         "api/uptime.json",
         "api/worker-route-provenance.json",
         "assets/shell-manifest.json",
@@ -497,6 +500,7 @@
     },
     {
       "id": "news-desk-freshness",
+      "clockInput": "utc-day",
       "output": "api/news-desk-freshness.json",
       "sources": [
         "data/news-desk/days/*.json"

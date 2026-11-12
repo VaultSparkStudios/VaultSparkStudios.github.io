@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-intelligence-budget.mjs -->
-<!-- generated-at: 2026-11-11 -->
+<!-- generated-at: 2026-11-12 -->
 
 # Intelligence Budget Ledger
 

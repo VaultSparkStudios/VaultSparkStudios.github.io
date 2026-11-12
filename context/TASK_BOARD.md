@@ -4,6 +4,8 @@
 
 - [x] Fresh monotonic startup, native binding and nine-axis audit/plan admission.
 - [x] Candidate-only generation and exact artifact admission/extraction locally verified (7 tests; independent source review passed). Live import and baseline review remain separate.
+- [x] Recover stale Windows Games references left by S414: nine original-detail-reviewed cells; unchanged Windows matrix10/10 at the original tolerance, with retries and snapshot updates off. Linux acceptance remains open.
+- [x] Repair unmodeled UTC news freshness input; 16 focused tests pass across UTC and shared-output ordering repairs, with original step360 failure preserved.
 - [ ] Finish integrated candidate source/required hosted visual, Lighthouse and accessibility acceptance.
 - [ ] Affected deployed authentication, current isolated staging parity, authorized production promotion/readback and full closeout.
 

@@ -1323,3 +1323,11 @@ The full source attempt passed553/553 but its browser batch took528s/32.1%, exce
 ## D-S415.3 — preserve unchanged shell manifest bytes
 
 Resync changed only the shell manifest generation timestamp and invalidated an otherwise complete byte-bound source receipt. Preserve the existing bytes and modification time only when the full payload is identical and its timestamp is valid canonical ISO. Changed assets, missing/invalid dates and corrupt payloads still regenerate. Keep source fingerprints and drift checks strict. Actual repeated-build and mutation fixtures pass; a fresh full suite follows this repair.
+
+## D-S415.4 — model the actual UTC news freshness input
+
+A complete source attempt stopped at360 after359 checks passed: news freshness crossed the UTC date boundary without any source-file change. Declare utc-day only on the generator that directly reads the clock; launch age already uses its declared public-status date input. Resync now selects clock-owned outputs even with an empty Git diff and fails if its execution crosses a UTC day. Preserve the failed receipt and truthful periodic cadence (latest edition2026-11-10, age2days); do not fabricate a new daily edition or relax drift checks. All13 focused tests passed, including actual CLI empty-diff repair, unsupported clock-input rejection and rollover refusal. Fresh full verification remains required.
+
+## D-S415.5 — order consumers after every shared-output writer
+
+Clock-driven repair exposed an existing dependency-order defect: a single-value output map retained only the last homepage writer, allowing the manifest to precede another selected writer. Preserve all selected producers in the topological walk, retain graph cycle validation and selection boundaries, and declare the three missing actual manifest core inputs. Sixteen focused tests pass, including a real CLI regression with two disjoint-field writers; the unmodified algorithm fails that fixture with manifest drift. No tolerance, source fingerprint or check is relaxed.

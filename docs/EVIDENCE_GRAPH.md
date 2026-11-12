@@ -278,6 +278,7 @@ flowchart LR
   n_api_ship_receipts_json --> n_changelog_index_html
   n_api_site_health_json --> n_api_intelligence_budget_json
   n_api_site_health_json --> n_api_status_proof_json
+  n_api_spark_manifest_json --> n_api_candidate_artifact_manifest_json
   n_api_staging_deploy_receipt_json --> n_api_release_proof_json
   n_api_staging_deploy_receipt_json --> n_api_staging_deploy_continuity_json
   n_api_status_proof_json --> n_api_citation_json
@@ -368,6 +369,7 @@ flowchart LR
   n_feed_forge_ledger_json --> n_api_index_html
   n_feed_xml --> n_api_index_html
   n_games_ --> n_api_ai_discovery_health_json
+  n_games_ --> n_api_candidate_artifact_manifest_json
   n_games_ --> n_api_spark_manifest_json
   n_games_ --> n_data_ignis_search_index_json
   n_games_ --> n_projects_vorn__ai_index_html
@@ -431,7 +433,7 @@ flowchart LR
 | `attention-pressure` | `api/attention-pressure.json` | yes | — | `api/status-proof.json` |
 | `brand-assets` | `brand/assets.json` | — | — | — |
 | `cache-evidence-classification` | `config/cache-evidence-classification.json` | — | — | — |
-| `candidate-artifact-manifest` | `api/candidate-artifact-manifest.json` | yes | `.well-known/llms.txt`<br>`agents.json`<br>`api/public-intelligence.json`<br>`api/worker-route-provenance.json`<br>`assets/shell-manifest.json`<br>`index.html`<br>`membership/index.html` | `api/release-proof.json`<br>`api/staging-deploy-receipt.json` |
+| `candidate-artifact-manifest` | `api/candidate-artifact-manifest.json` | yes | `.well-known/llms.txt`<br>`agents.json`<br>`api/public-intelligence.json`<br>`api/spark-manifest.json`<br>`api/worker-route-provenance.json`<br>`assets/shell-manifest.json`<br>`index.html`<br>`membership/index.html` | `api/release-proof.json`<br>`api/staging-deploy-receipt.json` |
 | `canonical-destination-reachability` | `api/canonical-destination-reachability.json` | yes | `api/ecosystem-state.json` | `api/status-proof.json` |
 | `changelog-live` | `changelog/index.html` | yes | `api/public-intelligence.json` | — |
 | `changelog-narrative` | `api/changelog-narrative.json` | — | — | — |
@@ -495,7 +497,7 @@ flowchart LR
 | `site-health` | `api/site-health.json` | — | — | `api/intelligence-budget.json`<br>`api/status-proof.json` |
 | `sitemap` | `sitemap.xml` | yes | — | `sitemap-page/index.html` |
 | `sitemap-page` | `sitemap-page/index.html` | yes | `sitemap.xml` | — |
-| `spark-manifest` | `api/spark-manifest.json` | — | `api/intent-map.json`<br>`api/public-intelligence.json` | — |
+| `spark-manifest` | `api/spark-manifest.json` | — | `api/intent-map.json`<br>`api/public-intelligence.json` | `api/candidate-artifact-manifest.json` |
 | `staging-deploy-continuity` | `api/staging-deploy-continuity.json` | — | `api/staging-deploy-receipt.json` | — |
 | `staging-deploy-receipt` | `api/staging-deploy-receipt.json` | — | `api/candidate-artifact-manifest.json` | `api/release-proof.json`<br>`api/staging-deploy-continuity.json` |
 | `startup-brief` | `docs/STARTUP_BRIEF.md` | — | `api/deploy-currency.json` | — |
@@ -630,7 +632,7 @@ flowchart LR
 - `external:production-worker-routes` → `worker-route-provenance`
 - `external:studio-ops-ark-log` → `release-dependencies`
 - `feed.xml` → `api-index`
-- `games/` → `ai-canonical-pages`, `ai-discovery-health`, `ignis-search-index`, `spark-manifest`
+- `games/` → `ai-canonical-pages`, `ai-discovery-health`, `candidate-artifact-manifest`, `ignis-search-index`, `spark-manifest`
 - `ignis/` → `public-ecosystem`
 - `journal/` → `api-index`, `evidence-hub`, `pathways-pages`
 - `llms-full.txt` → `ignis-search-index`
@@ -729,16 +731,16 @@ flowchart LR
 75. `you-asked-shipped`
 76. `ai-discovery-health`
 77. `api-index`
-78. `candidate-artifact-manifest`
-79. `deploy-currency`
-80. `intelligence-budget`
-81. `oracle-answers`
-82. `intent-map`
-83. `staging-deploy-receipt`
-84. `startup-brief`
-85. `status-proof`
-86. `citation`
-87. `release-proof`
-88. `spark-manifest`
-89. `staging-deploy-continuity`
-90. `stats-surface`
+78. `deploy-currency`
+79. `intelligence-budget`
+80. `oracle-answers`
+81. `intent-map`
+82. `startup-brief`
+83. `status-proof`
+84. `citation`
+85. `spark-manifest`
+86. `stats-surface`
+87. `candidate-artifact-manifest`
+88. `staging-deploy-receipt`
+89. `release-proof`
+90. `staging-deploy-continuity`

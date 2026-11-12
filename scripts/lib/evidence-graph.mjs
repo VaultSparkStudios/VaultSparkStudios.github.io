@@ -38,6 +38,7 @@ export function validateEvidenceGraph(graph) {
       errors.push(`${node.id}: shared output ${node.output} — every node writing it must declare sharedOutput: true`);
     }
     if (!Array.isArray(node.sources) || !node.sources.length) errors.push(`${node.id}: sources missing`);
+    if (node.clockInput !== undefined && node.clockInput !== 'utc-day') errors.push(`${node.id}: clockInput must be utc-day when present`);
     if (!Array.isArray(node.check) || node.check.length < 2) errors.push(`${node.id}: check command missing`);
     if (node.builderArgs !== undefined && (!Array.isArray(node.builderArgs)
       || node.builderArgs.some((arg) => typeof arg !== 'string' || !arg.trim()))) {

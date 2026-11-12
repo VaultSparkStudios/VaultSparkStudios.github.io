@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-10-02",
-  "contractSha256": "9a74df784199d1484206b1ca5d26385e8f1075fa7fe632a21224e1c2624c8328",
+  "contractSha256": "7ef4a5544786f0ea92c0130b4336896954d9bc7c3e6dc7b3489f256432725bc3",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
@@ -88,19 +88,19 @@
     "you-asked-shipped",
     "ai-discovery-health",
     "api-index",
-    "candidate-artifact-manifest",
     "deploy-currency",
     "intelligence-budget",
     "oracle-answers",
     "intent-map",
-    "staging-deploy-receipt",
     "startup-brief",
     "status-proof",
     "citation",
-    "release-proof",
     "spark-manifest",
-    "staging-deploy-continuity",
-    "stats-surface"
+    "stats-surface",
+    "candidate-artifact-manifest",
+    "staging-deploy-receipt",
+    "release-proof",
+    "staging-deploy-continuity"
   ],
   "nodes": [
     {
@@ -327,6 +327,7 @@
         ".well-known/llms.txt",
         "agents.json",
         "api/public-intelligence.json",
+        "api/spark-manifest.json",
         "api/worker-route-provenance.json",
         "assets/shell-manifest.json",
         "index.html",
@@ -344,6 +345,8 @@
         "assets/proof-card.js",
         "assets/proof-conversion-line.js",
         "assets/security-posture.js",
+        "games/index.html",
+        "games/mindframe/index.html",
         "status/index.html",
         "studio-pulse/index.html"
       ]
@@ -1448,7 +1451,9 @@
         "api/intent-map.json",
         "api/public-intelligence.json"
       ],
-      "feeds": [],
+      "feeds": [
+        "api/candidate-artifact-manifest.json"
+      ],
       "externalSources": [
         "_redirects",
         "data/game-registry.json",

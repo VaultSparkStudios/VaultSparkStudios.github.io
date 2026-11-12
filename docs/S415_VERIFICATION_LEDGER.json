@@ -3,13 +3,13 @@
   "publicSafe": true,
   "session": 415,
   "state": "in-progress",
-  "updatedAt": "2026-11-11T23:37:37.648Z",
+  "updatedAt": "2026-11-12T02:30:36.837Z",
   "audit": "docs/AUDIT_2026-11-11-S415.json",
   "implementation": "docs/S415_IMPLEMENTATION_CHECKPOINT.json",
   "candidate": {
-    "qaCommit": "c1961a7a866a26dbfb99afea2f66a80072c66e27",
+    "qaCommit": "95b0efcc0b9e43df2dc2b5ee9f333e385d6d5150",
     "productionPromoted": false,
-    "workingTree": "Complete source-bound555/555 local suite passed; pending exact-SHA hosted required workflows and unchanged native Linux comparison."
+    "workingTree": "Windows reference and UTC/shared-output repairs verified by complete native555 run; uncommitted checkpoint content, hosted Linux acceptance still pending."
   },
   "local": {
     "fullAttempt": {
@@ -41,7 +41,8 @@
       "updatedWorkflowContract": 1,
       "unitInventory": "76 declared = 76 executed = 76 tracked",
       "startupCoherence": 10,
-      "workerProductionPreflight": 4
+      "workerProductionPreflight": 4,
+      "clockAndSharedOutputRepair": 16
     },
     "completeCurrentSourceVerified": true,
     "complete553Attempt": {
@@ -103,44 +104,157 @@
       "planFingerprint": "9b7bc81ac2d556edb67175ff",
       "receiptId": "2382c28afba4e2ff1d6dfe5e",
       "dominantShare": 0.1336
+    },
+    "pendingSourceChange": "Nine reviewed Windows Games references refreshed; new complete source suite remains pending.",
+    "windowsGamesComparison": {
+      "passed": 10,
+      "total": 10,
+      "nativeExit": 0,
+      "retries": 0,
+      "updateSnapshots": "none",
+      "provenance": "docs/S415_WINDOWS_GAMES_REFERENCE_PROVENANCE.json",
+      "linuxAcceptance": false
+    },
+    "windowsReferenceAttempt": {
+      "receipt": "docs/S415_source-windows-reference-attempt1.json",
+      "nativeExit": 1,
+      "failureStep": 172,
+      "reason": "UTC launch-age generation changed homepage252 to253 after the prior mobile receipt.",
+      "repair": "Actual215/215 full mobile refresh passed with zeroP0/P1; receipt ordering passed against current70928fe447ee candidate. Fresh complete source suite remains required."
+    },
+    "mobileAfterDateRollover": {
+      "nativeExit": 0,
+      "passed": 215,
+      "total": 215,
+      "blockingIssues": 0,
+      "receiptOrderingPassed": true,
+      "renderedPixelsReviewed": false
+    },
+    "windowsReferenceAttempt2": {
+      "receipt": "docs/S415_source-windows-reference-attempt2.json",
+      "nativeExit": 1,
+      "failureStep": 360,
+      "passedBeforeFailure": 359,
+      "failure": "UTC day rollover exposed unmodeled news freshness clock input",
+      "repair": "Declare only news-desk-freshness utc-day input; resync selects it on empty Git diff and fails if repair crosses UTC day. 13 focused tests passed."
+    },
+    "derivedRepair": {
+      "initialEmptyDiffNativeExit": 1,
+      "initialFailure": "Shared-output map lost homepage writer, invalidating candidate manifest after build",
+      "dirtyResyncNativeExit": 0,
+      "rebuilt": 50,
+      "topologicalRepair": "All selected producers precede consumers; three actual manifest inputs declared",
+      "freshFullSuiteRequired": true,
+      "finalNativeExit": 0,
+      "finalRebuilt": 50,
+      "manifestAndMobileOrderingPassed": true,
+      "postCaptureNativeExit": 0,
+      "postCaptureRebuilt": 51
+    },
+    "mobileClockHomeRefresh": {
+      "nativeExit": 0,
+      "passed": 215,
+      "total": 215,
+      "blockingIssues": 0,
+      "receiptOrderingPassed": true,
+      "candidateRootPrefix": "9215eb962de6",
+      "renderedPixelsReviewed": false
+    },
+    "focusedHomeCadenceVisualReview": {
+      "passed": true,
+      "captures": 14,
+      "themes": 7,
+      "desktopWidth": 1366,
+      "mobileWidth": 390,
+      "receipt": "docs/visual-qa/LATEST.json",
+      "scope": "Changed homepage cadence text only; fixed navigation capture overlay away from changed line recorded; no whole-page/auth/Linux acceptance."
+    },
+    "clockTopoAttempt1": {
+      "receipt": "docs/S415_source-clock-topo-attempt1.json",
+      "nativeExit": 1,
+      "passedBeforeFailure": 171,
+      "failureStep": 172,
+      "failure": "Published visual captures invalidated the retention projection after the earlier resync",
+      "repair": "Run existing visual-qa-retention dependency node via post-capture resync, then verify the complete proof-surface gate before a fresh full suite."
+    },
+    "proofSurfaceAfterCapture": {
+      "nativeExit": 0,
+      "commands": 109,
+      "blockingPassed": 92,
+      "blockingFailed": 0,
+      "advisoryFindings": 1,
+      "mobileReceiptOrderingPassed": true
+    },
+    "doctorCurrent": {
+      "nativeExit": 1,
+      "blockingFailing": 1,
+      "failures": [
+        {
+          "id": "deploy-currency-live",
+          "detail": "PRODUCTION STALE: 62 hand-authored content commit(s) undeployed, oldest 207h — past the 12h content ceiling. Dispatch the content lane (CANON-036)"
+        }
+      ]
+    },
+    "preFreezeIntegrity": {
+      "changedJsonAndLineJsonParsed": 57,
+      "claudeConfigValid": true,
+      "stagedTextFilesScanned": 62,
+      "secretFindings": 0
+    },
+    "clockTopoComplete555": {
+      "receipt": "docs/S415_source-clock-topo-full555-passed.json",
+      "nativeExit": 0,
+      "firstStep": 1,
+      "planned": 555,
+      "passed": 555,
+      "failed": 0,
+      "coverageComplete": true,
+      "sourceFingerprint": "e23361da9e4525068c41e2b8",
+      "planFingerprint": "9b7bc81ac2d556edb67175ff",
+      "receiptId": "be5d36f1e6bada7ce76c1255",
+      "dominantShare": 0.109
     }
   },
   "hosted": {
-    "sourceCommit": "c1961a7a866a26dbfb99afea2f66a80072c66e27",
+    "sourceCommit": "95b0efcc0b9e43df2dc2b5ee9f333e385d6d5150",
     "runs": [
       {
         "workflow": "e2e",
-        "runId": 43103980237,
+        "runId": 43121810288,
         "conclusion": "failure",
-        "passed": 720,
+        "passed": 726,
         "skipped": 56,
-        "visualFailures": 9,
-        "complianceFailure": "Ignored lock absent in isolated checkout: committed active brief415 compared to last-closed411 plus one. Narrow committed-snapshot fix now applied locally; no closed-session/lock fabrication."
+        "visualFailures": 3,
+        "compliance": "success"
       },
       {
         "workflow": "lighthouse",
-        "runId": 43103984009,
+        "runId": 43121813695,
         "conclusion": "success"
       },
       {
         "workflow": "accessibility",
-        "runId": 43103988316,
+        "runId": 43121817275,
         "conclusion": "success"
       }
     ],
     "accepted": false
   },
   "visual": {
-    "newReferencesAdopted": 0,
+    "newReferencesAdopted": 9,
     "provisionalLinuxReferences": 53,
     "unchangedLinuxReferences": 17,
-    "windowsReferencesChanged": 0,
+    "windowsReferencesChanged": 9,
     "artifactAccepted": false,
     "archiveVerified": true,
     "changedOriginalsReviewed": 53,
     "comparison": "pending unchanged native Linux comparison",
     "provenance": "docs/S415_VISUAL_CAPTURE_PROVENANCE.json",
-    "trust": "Exact authorized PNG/provenance archive digest and size verified; safe extraction only. Capture remains honestly associated with its original source commit; not relabeled as current."
+    "trust": "Exact authorized PNG/provenance archive digest and size verified; safe extraction only. Capture remains honestly associated with its original source commit; not relabeled as current.",
+    "windowsReferenceProvenance": "docs/S415_WINDOWS_GAMES_REFERENCE_PROVENANCE.json",
+    "windowsReferenceComparisonAccepted": true,
+    "windowsReferencesAdopted": 9,
+    "linuxReferencesAdopted": 0
   },
   "staging": {
     "isolatedFixtureHealthObserved": true,
@@ -170,6 +284,16 @@
       "publicAuthAcceptance": false,
       "queryBytePreservationProven": false,
       "serverSniAuthorizationPolicyProven": false
+    },
+    "callbackContextBoundaries": {
+      "passed": true,
+      "workerRequests": 16,
+      "metadataRequests": 4,
+      "flowCount": 6,
+      "receiptSha256": "20353ca9c7704ea807161a82765fedbe35c98ea11a5331930ed8cc411d5fc117",
+      "scope": "callback-context-negative-and-recovery-boundaries-only",
+      "authenticatedAcceptance": false,
+      "independentKvAbsenceMeasured": false
     }
   },
   "timing": {
@@ -185,7 +309,7 @@
   },
   "next": [
     "Publish the verified QA candidate and obtain its exact required checks plus unchanged native Linux comparison.",
-    "Complete the affected native Obelisk sign-in, bridge, recovery, refresh and logout journeys using an existing real actor.",
+    "Complete affected native Obelisk sign-in/sign-up success, intended member/investor destinations, protected access and applicable session/logout using an existing real actor.",
     "Perform authorized normal main/production promotion and readback with doctor blockingFailing0.",
     "Finish canonical closeout before native goal completion."
   ],
@@ -212,5 +336,30 @@
       "visualFailures": 8,
       "complianceFailure": "startup-context-budget at step24; repaired locally, new exact-SHA run required"
     }
+  },
+  "hostedPreviousCheckpoint": {
+    "sourceCommit": "c1961a7a866a26dbfb99afea2f66a80072c66e27",
+    "runs": [
+      {
+        "workflow": "e2e",
+        "runId": 43103980237,
+        "conclusion": "failure",
+        "passed": 720,
+        "skipped": 56,
+        "visualFailures": 9,
+        "complianceFailure": "Ignored lock absent in isolated checkout: committed active brief415 compared to last-closed411 plus one. Narrow committed-snapshot fix now applied locally; no closed-session/lock fabrication."
+      },
+      {
+        "workflow": "lighthouse",
+        "runId": 43103984009,
+        "conclusion": "success"
+      },
+      {
+        "workflow": "accessibility",
+        "runId": 43103988316,
+        "conclusion": "success"
+      }
+    ],
+    "accepted": false
   }
 }

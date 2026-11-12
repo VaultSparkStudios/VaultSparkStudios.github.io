@@ -106,7 +106,12 @@ export function changedFilesSince(ref) {
  * detector, since a cycle is already a hard error upstream.
  */
 export function topoOrder(nodes, graph) {
-  const byOutput = new Map(graph.nodes.map((n) => [n.output, n]));
+  // Every selected writer of a shared surface must precede its consumers.
+  const byOutput = new Map();
+  for (const node of graph.nodes) {
+    if (!byOutput.has(node.output)) byOutput.set(node.output, []);
+    byOutput.get(node.output).push(node);
+  }
   const selected = new Map(nodes.map((n) => [n.id, n]));
   const ordered = [];
   const done = new Set();
@@ -115,8 +120,9 @@ export function topoOrder(nodes, graph) {
     if (done.has(node.id) || visiting.has(node.id)) return;
     visiting.add(node.id);
     for (const source of node.sources) {
-      const upstream = byOutput.get(source);
-      if (upstream && selected.has(upstream.id)) visit(upstream);
+      for (const upstream of byOutput.get(source) || []) {
+        if (selected.has(upstream.id)) visit(upstream);
+      }
     }
     visiting.delete(node.id);
     done.add(node.id);
@@ -196,8 +202,15 @@ export function sweepUnmodeled(generators, { repair = false, root = ROOT, graph 
  * S340 incident exited via `0 derived artifact(s) affected`, so a sweep wired only
  * into the rebuild path would have missed it.
  */
-function finish(summary) {
+function finish(summary, clockDay = null) {
+  const assertClockDay = () => {
+    if (clockDay && new Date().toISOString().slice(0, 10) !== clockDay) {
+      console.error('resync-derived: UTC day changed during repair; rerun before claiming completion');
+      process.exit(1);
+    }
+  };
   if (process.argv.includes('--no-sweep')) {
+    assertClockDay();
     console.log(`${summary} · sweep SKIPPED (--no-sweep) — coverage of unmodeled generators unverified`);
     process.exit(0);
   }
@@ -212,6 +225,7 @@ function finish(summary) {
     console.error('  each by hand, then model it in config/evidence-graph.json.');
     process.exit(1);
   }
+  assertClockDay();
   console.log(`${summary} · sweep: ${unmodeled.length} unmodeled generator(s), declared checks passed`);
   console.log('  check evidence: ' + evidenceSummary(evidenceLevels(unmodeled)));
   process.exit(0);
@@ -245,10 +259,6 @@ function main() {
     changed = changedFilesSince(ref);
   }
 
-  if (!changed.length) {
-    finish('resync-derived: no changed files — nothing to resync');
-  }
-
   // A node whose source git does not track can never appear in `git diff`, so
   // closure over the changed set silently skips it — forever, not just once.
   // The original instance was a node reading context/.session-lock, which is
@@ -261,7 +271,12 @@ function main() {
   const inventory = trackedInventory(git);
   const untrackedSourced = untrackedSourceNodes(graph, inventory);
   console.log('resync-derived: tracked inventory ' + inventory.trackedFiles + ' files · ' + inventory.commands + ' Git command · ' + inventory.durationMs + 'ms');
-  const seeds = [...new Set([...changed, ...untrackedSourced.map((n) => n.output)])];
+  // A UTC-day input can change with no Git changes. Seed its output so the
+  // existing transitive closure and topological repair include its dependents.
+  const clockSourced = graph.nodes.filter((node) => node.clockInput === 'utc-day');
+  const clockDay = clockSourced.length ? new Date().toISOString().slice(0, 10) : null;
+  if (clockDay) console.log(`resync-derived: clock input utc-day=${clockDay} — ${clockSourced.map((node) => node.id).join(', ')}`);
+  const seeds = [...new Set([...changed, ...untrackedSourced.map((n) => n.output), ...clockSourced.map((n) => n.output)])];
   const dirty = topoOrder(affectedEvidenceNodes(graph, seeds), graph);
   if (untrackedSourced.length) {
     for (const n of untrackedSourced) console.log(`  ~ ${n.id} — always rebuilt (untracked source, invisible to git diff)`);
@@ -269,7 +284,7 @@ function main() {
   if (!dirty.length) {
     // The S340 exit. `0 affected` is true of the graph and says nothing about the
     // 38 generators outside it, so this path sweeps like every other.
-    finish(`resync-derived: ${changed.length} changed file(s), 0 derived artifact(s) affected`);
+    finish(`resync-derived: ${changed.length} changed file(s), 0 derived artifact(s) affected`, clockDay);
   }
 
   console.log(`resync-derived: ${changed.length} changed file(s) → ${dirty.length}/${graph.nodes.length} derived artifact(s) to rebuild`);
@@ -336,7 +351,7 @@ function main() {
     console.log(`resync-derived --verify: ${runnable.length}/${runnable.length} rebuilt artifact(s) pass their own --check`);
   }
 
-  finish(`resync-derived: ${runnable.length} artifact(s) rebuilt + staged${skipped.length ? ` · ${skipped.length} skipped (side-effecting)` : ''}`);
+  finish(`resync-derived: ${runnable.length} artifact(s) rebuilt + staged${skipped.length ? ` · ${skipped.length} skipped (side-effecting)` : ''}`, clockDay);
 }
 
 function selfTest() {
