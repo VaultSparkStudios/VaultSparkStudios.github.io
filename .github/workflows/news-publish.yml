@@ -49,7 +49,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # REQUIRED, not cosmetic. build-candidate-artifact-manifest.mjs resolves
           # its generatedAt with `git show -s --format=%cI <sha>`, which fails for
@@ -57,7 +57,7 @@ jobs:
           # that published a false `diverged` in S316.
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
 
