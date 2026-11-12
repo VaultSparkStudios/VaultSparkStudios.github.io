@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T04:10:12.331Z",
+  "generatedAt": "2026-11-11T04:29:40.950Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,15 +9,15 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 16,
-    "observed": 5,
-    "healthy": 5,
-    "unknown": 11,
+    "observed": 4,
+    "healthy": 4,
+    "unknown": 12,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "CI gates are still running.",
+  "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "unobserved",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-30T21:19:31.294Z",
     "currentBehindStreak": 0,
     "newestGradableAt": "2026-11-03T02:31:55.485Z",
-    "newestAgeHours": 193.6,
+    "newestAgeHours": 194,
     "maxAgeHours": 48,
     "stale": true,
     "strandedAlert": false
@@ -37,10 +37,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-11-11T04:02:25Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-11-11T04:19:32Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/42956598067",
       "headSha": "b411e038d33ccf5b48410a17f3ce384e4c0e9321",
       "event": "push"
@@ -57,10 +57,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-11-11T04:02:25Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-11-11T04:23:00Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/42956597868",
       "headSha": "b411e038d33ccf5b48410a17f3ce384e4c0e9321",
       "event": "push"
@@ -109,7 +109,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.6,
+      "ageHours": 4.92,
       "staleAfterHours": 48
     },
     {
@@ -169,15 +169,13 @@
     },
     {
       "name": "The Desk — Scheduled Publish",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-11-10T22:20:07Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 5.83,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -190,7 +188,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.3,
+      "ageHours": 3.63,
       "staleAfterHours": 48
     },
     {
@@ -207,14 +205,14 @@
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-11-11T00:45:34Z",
+      "lastUpdatedAt": "2026-11-11T04:28:27Z",
       "recentConclusions": [
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.41,
+      "ageHours": 0.02,
       "staleAfterHours": 48
     },
     {
@@ -231,7 +229,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-11-11T04:09:45Z",
+      "lastUpdatedAt": "2026-11-11T04:12:28Z",
       "recentConclusions": [
         "success",
         "success",
@@ -240,7 +238,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.01,
+      "ageHours": 0.29,
       "staleAfterHours": 48
     },
     {
