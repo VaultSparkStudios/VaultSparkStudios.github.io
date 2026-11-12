@@ -3,7 +3,7 @@
   "publicSafe": true,
   "session": 415,
   "state": "in-progress",
-  "updatedAt": "2026-11-12T06:06:46.277Z",
+  "updatedAt": "2026-11-12T06:35:42.519Z",
   "audit": "docs/AUDIT_2026-11-11-S415.json",
   "implementation": "docs/S415_IMPLEMENTATION_CHECKPOINT.json",
   "candidate": {
@@ -382,7 +382,7 @@
     },
     "afterFailureProbe": {
       "evidence": "docs/S415_AFTER_FAILURE_PROBE.json",
-      "admissionUnitPassed": 24,
+      "admissionUnitPassed": 25,
       "browserCollectionPassed": 6,
       "ordinaryWindowsGamesPassed": 10,
       "causalFixClaimed": false
@@ -461,6 +461,17 @@
       },
       "baselineAccepted": false,
       "productionAccepted": false
+    },
+    "isolatedFailureProbe": {
+      "sourceCommit": "8e5cc0670cf5fe4ce01ec84e98e0e5fa7c6eea59",
+      "runId": 43166161310,
+      "jobId": 131008418793,
+      "conclusion": "success",
+      "headersPassed": 42,
+      "visualsPassed": 1,
+      "probeRowsEmitted": 0,
+      "meaning": "The isolated target passed before observation; this did not reproduce or clear the earlier full-matrix failure.",
+      "acceptanceEvidence": false
     }
   },
   "visual": {
@@ -536,7 +547,21 @@
       "authRowsRead": false,
       "databaseWritesIssued": false,
       "nativeAcceptance": false,
-      "scope": "Fixed column/type metadata only; future preservation projection still requires implementation and actual observation."
+      "scope": "Column/type metadata only; separately executed projected-state observer recorded below. Neither observation proves native identity acceptance."
+    },
+    "projectedStateObserver": {
+      "observedAt": "2026-11-12T06:22:42.167Z",
+      "relations": 21,
+      "pureSafetyCasesPassed": 38,
+      "readOnly": true,
+      "rawRowsReturned": false,
+      "authCredentialColumnsSelected": false,
+      "databaseWritesIssued": false,
+      "schemaMetadataUnchanged": true,
+      "fixtureAndWorkloadsUnchanged": true,
+      "nativeAcceptance": false,
+      "preservationDuringStaticDeploymentVerified": false,
+      "requiresFreshBaselineAfterNativeJourneys": true
     }
   },
   "timing": {

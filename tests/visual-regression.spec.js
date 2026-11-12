@@ -241,6 +241,12 @@ function admitSceneDiagnostics(before, failure, update, origin) {
     throw new Error('Diagnostics require loopback comparison with snapshot updates disabled.');
 }
 
+function failureProbeTarget(surface, viewport, theme) {
+  return surface === 'games'
+    && viewport === 'pixel-5'
+    && theme === 'dark';
+}
+
 async function nativeWithFailureProbe(assertion, enabled, probe) {
   try { return await assertion(); }
   catch (originalError) {
@@ -441,7 +447,8 @@ for (const vp of VIEWPORTS) {
         test(`${surface.name} · ${vp.name} · ${theme}`, async ({ page, baseURL }, testInfo) => {
         const sceneDiagnostics = process.env.VS_SCENE_DIAGNOSTICS === 'true';
         const failureSceneDiagnostics = process.env.VS_FAILURE_SCENE_DIAGNOSTICS === 'true';
-        const startedAt = failureSceneDiagnostics ? testInfo._startWallTime : null;
+        const probeForThisCase = failureSceneDiagnostics && failureProbeTarget(surface.name, vp.name, theme);
+        const startedAt = probeForThisCase ? testInfo._startWallTime : null;
         const targetUrl = new URL(surface.path, process.env.VR_BASE_URL || baseURL).href;
         admitSceneDiagnostics(process.env.VS_SCENE_DIAGNOSTICS, process.env.VS_FAILURE_SCENE_DIAGNOSTICS, testInfo.config.updateSnapshots, targetUrl);
         if (sceneDiagnostics && !diagnosticLoopback(targetUrl)) {
@@ -496,7 +503,7 @@ for (const vp of VIEWPORTS) {
         if (sceneDiagnostics) await captureSceneDiagnostic(page, identity, 'before-native-matcher');
         const restoreNative = sceneDiagnostics ? observeNativeScreenshot(page, identity) : null;
         try {
-        if (failureSceneDiagnostics) {
+        if (probeForThisCase) {
           const snapshotName = `${surface.name}-${vp.name}-${theme}.png`;
           await nativeWithFailureProbe(() => expect(page).toHaveScreenshot(snapshotName, {
             fullPage: false, maxDiffPixelRatio: PIXEL_RATIO_TOLERANCE, animations: 'disabled',

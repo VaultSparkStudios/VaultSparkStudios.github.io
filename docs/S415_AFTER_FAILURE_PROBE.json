@@ -2,20 +2,20 @@
   "schemaVersion": 1,
   "session": 415,
   "publicSafe": true,
-  "state": "verified-local-diagnostic-awaiting-native-forensic-job",
-  "recordedAt": "2026-11-12T06:06:46.277Z",
+  "state": "isolated-nonreproduction-full-matrix-forensic-proposal-verified-locally",
+  "recordedAt": "2026-11-12T06:35:42.519Z",
   "sourceFiles": [
     {
       "file": "tests/visual-regression.spec.js",
-      "sha256": "1b5d9a4c47f66a98561824350e09b5a541cb14c073406d46de9dac676d6a0d67"
+      "sha256": "44f1480995ed9f5506c48666d5a542a44edb4fd44619f86d7e511fb0a212c9c2"
     },
     {
       "file": ".github/workflows/visual-regression.yml",
-      "sha256": "bbf6fc271ab7a9530f4dc44727169541e009b14147b15a54f139d8acc66d1aaf"
+      "sha256": "0da5b524abd1e9ee6e2d4fe928f79b55b0f325c076d758f8c9e5792b880c6db5"
     },
     {
       "file": "tests/visual-capture-source.unit.spec.mjs",
-      "sha256": "225273cddc0f448840fd565939351c6318d6692b0fa8c2faa7821df23de4c48f"
+      "sha256": "d92d6f168124e32c9fed5bb2c86935cd2e1ec38ec2f2a7c06a5ec90cc9f77a6d"
     }
   ],
   "scope": {
@@ -33,10 +33,13 @@
     "laterFrames": "Two CSS-scale screenshots before existing geometry/font observation and two after; only bounded image metadata is logged.",
     "observationsProveFailedFrame": false,
     "nativeActualAttachmentIsPrimaryFailedFrame": true,
-    "deadline": "At most5.5 seconds within the existing runner timeout; expired/unknown clock skips browser observations. In-flight protocol work is not claimed canceled."
+    "deadline": "At most5.5 seconds within the existing runner timeout; expired/unknown clock skips browser observations. In-flight protocol work is not claimed canceled.",
+    "fullVisualMatrixRetained": 70,
+    "onlyFailedTargetObserved": "games / pixel-5 / dark",
+    "otherCasesUseOrdinaryAssertion": true
   },
   "localVerification": {
-    "sourceAndAdmissionUnitTests": 24,
+    "sourceAndAdmissionUnitTests": 25,
     "sourceAndAdmissionNativeExit": 0,
     "browserCollectionTests": 6,
     "browserCollectionNativeExit": 0,
@@ -47,13 +50,25 @@
     "windowsGamesSnapshotUpdates": false,
     "windowsGamesDiagnostics": false,
     "unitInventory": 76,
-    "initialNewUnitFailure": "One added prose-only description assertion was over-specific; actual behavior assertions passed. Replaced with a header command contract and reran the24-unit file."
+    "initialNewUnitFailure": "One added prose-only description assertion was over-specific; actual behavior assertions passed. Replaced with a header command contract and reran the24-unit file.",
+    "windowsGamesOrdinarySourceCommit": "8e5cc0670cf5fe4ce01ec84e98e0e5fa7c6eea59"
   },
   "nativeForensicJob": {
-    "state": "not dispatched yet",
+    "state": "Full-matrix experiment not dispatched yet",
     "acceptanceEvidence": false
   },
   "causalFixClaimed": false,
   "baselineAccepted": false,
-  "productionAccepted": false
+  "productionAccepted": false,
+  "priorIsolatedExperiment": {
+    "sourceCommit": "8e5cc0670cf5fe4ce01ec84e98e0e5fa7c6eea59",
+    "runId": 43166161310,
+    "jobId": 131008418793,
+    "conclusion": "success",
+    "headersPassed": 42,
+    "visualsPassed": 1,
+    "probeRowsEmitted": 0,
+    "meaning": "The isolated target passed before observation; this did not reproduce or clear the earlier full-matrix failure.",
+    "acceptanceEvidence": false
+  }
 }

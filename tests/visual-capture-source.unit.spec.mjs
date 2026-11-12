@@ -219,13 +219,15 @@ test('actual failure collector takes paired samples before and after geometry, n
   assert.match(block, /primary-native-failed-frame/); assert.match(block, /later-state-not-failed-frame-proof/);
 });
 
-test('actual workflow has default-off exclusive failure-only fixed Games filter and no update generation', () => {
+test('actual workflow retains full matrix with default-off exclusive failure observation and no generation', () => {
   const workflow = fs.readFileSync('.github/workflows/visual-regression.yml','utf8');
   assert.match(workflow, /failure_scene_diagnostics:[\s\S]*?type: boolean\s+default: false/);
   assert.ok(workflow.indexOf('Admit diagnostic scope') < workflow.indexOf('npm install'));
   assert.match(workflow, /b==="true" && f==="true"/);
   assert.match(workflow, /u!=="false"/);
-  assert.match(workflow, /failure_scene_diagnostics == 'true' && '--grep "games\.\*pixel-5\.\*dark"' \|\| ''/);
+  const visualStep = workflow.split('- name: Run visual-regression snapshots')[1].split('- name: Stop candidate preview')[0];
+  assert.match(visualStep, /npx playwright test tests\/visual-regression\.spec\.js --project=chromium --reporter=line/);
+  assert.doesNotMatch(visualStep, /--grep(?:\s|=)/);
   assert.match(workflow, /--update-snapshots=none/);
   assert.match(workflow, /VS_FAILURE_SCENE_DIAGNOSTICS:/);
   assert.doesNotMatch(workflow, /--retries|--timeout|maxDiff/);
@@ -397,4 +399,27 @@ test('failure diagnostic workflow preserves existing desktop-header precondition
   const step = workflow.split('- name: Verify desktop header fit in every theme')[1].split('- name: Run visual-regression snapshots')[0];
   assert.doesNotMatch(step,/\bif:/);
   assert.match(step,/run: npx playwright test tests\/navigation\.spec\.js --grep "Desktop header keeps every control"/);
+});
+
+
+test('actual pure failure target selects exactly one of the existing70 matrix cases', () => {
+  const target = actualFailureProbeFunction('failureProbeTarget');
+  const source = fs.readFileSync('tests/visual-regression.spec.js','utf8');
+  const names = constant => Array.from(source.split('const '+constant+' = [')[1].split('\n];')[0].matchAll(/name: '([^']+)'/g),m=>m[1]);
+  const surfaces = names('SURFACES'), viewports = names('VIEWPORTS');
+  const themes = Array.from(source.match(/const THEMES = \[([^\]]+)\];/)[1].matchAll(/'([^']+)'/g),m=>m[1]);
+  assert.equal(surfaces.length,7);assert.equal(viewports.length,5);assert.equal(themes.length,2);
+  let combinations = 0; const selected = [];
+  for (const surface of surfaces) for (const viewport of viewports) for (const theme of themes) {
+    combinations++; if (target(surface,viewport,theme)) selected.push([surface,viewport,theme]);
+  }
+  assert.equal(combinations,70);assert.deepEqual(selected,[['games','pixel-5','dark']]);
+  for (const invalid of [undefined,null,0,1,true,false,{},[],new String('games'),Symbol('games')]) {
+    assert.equal(target(invalid,'pixel-5','dark'),false);
+    assert.equal(target('games',invalid,'dark'),false);
+    assert.equal(target('games','pixel-5',invalid),false);
+  }
+  assert.match(source,/const probeForThisCase = failureSceneDiagnostics && failureProbeTarget\(surface\.name, vp\.name, theme\);/);
+  assert.match(source,/const startedAt = probeForThisCase \? testInfo\._startWallTime : null;/);
+  assert.match(source,/if \(probeForThisCase\) \{[\s\S]*?await nativeWithFailureProbe\([\s\S]*?\} else \{\s+await expect\(page\)\.toHaveScreenshot/);
 });

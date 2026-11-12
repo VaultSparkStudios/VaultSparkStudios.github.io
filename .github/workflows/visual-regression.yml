@@ -60,7 +60,7 @@ on:
         default: false
 
       failure_scene_diagnostics:
-        description: 'Failure-only Games Pixel5 dark later-state probe; loopback comparison only, never baseline generation'
+        description: 'Retain full matrix; observe only failed Games / Pixel 5 / dark (loopback comparison; no baseline generation)'
         required: false
         type: boolean
         default: false
@@ -131,7 +131,6 @@ jobs:
           npx playwright test tests/visual-regression.spec.js --project=chromium --reporter=line
           ${{ github.event.inputs.update_baselines == 'true' && '--update-snapshots=all' || '' }}
           ${{ (github.event.inputs.scene_diagnostics == 'true' || github.event.inputs.failure_scene_diagnostics == 'true') && '--update-snapshots=none' || '' }}
-          ${{ github.event.inputs.failure_scene_diagnostics == 'true' && '--grep "games.*pixel-5.*dark"' || '' }}
       - name: Stop candidate preview
         if: always()
         run: |
