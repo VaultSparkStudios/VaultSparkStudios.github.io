@@ -27,7 +27,7 @@
     '#studio-living-window .heat-row{display:flex;align-items:center;gap:0.55rem;font-size:0.86rem;margin:0.35rem 0;}',
     '#studio-living-window .heat-name{flex:1 1 auto;color:var(--text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}',
     '#studio-living-window .heat-bar{flex:0 0 80px;height:6px;border-radius:3px;background:rgba(255,255,255,0.06);overflow:hidden;}',
-    '#studio-living-window .heat-bar__fill{height:100%;background:linear-gradient(90deg,#7ec9ff,#d4af37,#ff7a7a);transition:width 250ms ease;}',
+    '#studio-living-window .heat-bar__fill{display:block;height:100%;background:linear-gradient(90deg,#7ec9ff,#d4af37,#ff7a7a);transition:width 250ms ease;}',
     '#studio-living-window .heat-num{flex:0 0 auto;font-variant-numeric:tabular-nums;color:var(--text-muted,#889);font-size:0.78rem;min-width:38px;text-align:right;}',
     '#studio-living-window .heat-row--sealed .heat-name{font-style:italic;color:var(--text-muted,#889);}',
     '#studio-living-window .graph-svg{width:100%;height:340px;display:block;}',
@@ -187,7 +187,9 @@
 
   function showSection() {
     var section = document.getElementById(SECTION_ID);
-    if (section) section.style.display = '';
+    // The initial hidden state lives in generated page CSS, so clearing an
+    // inline declaration would leave the populated section hidden.
+    if (section) section.style.display = 'block';
   }
 
   async function load() {

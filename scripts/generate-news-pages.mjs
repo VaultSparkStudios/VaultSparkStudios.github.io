@@ -888,7 +888,7 @@ function deskStatsPanel() {
     </ul>
     <h3 class="desk-metric-heading">The readership record <span>30-day evidence window</span></h3>
     <ul class="desk-stat-grid desk-readership-grid">
-      ${statChip(recorded(audience.recordedArticleViews), 'recorded article views', `${audience.articlesWithPublishedViews || 0} articles above the five-load publication floor`)}
+      ${statChip(recorded(audience.recordedArticleViews), 'recorded article views', `${audience.articlesWithPublishedViews || 0} ${audience.articlesWithPublishedViews === 1 ? 'article' : 'articles'} above the five-load publication floor`)}
       ${statChip(recorded(audience.recordedHomepageViews), 'recorded Desk homepage views', 'browser loads; reloads count again')}
       ${statChip(audience.averageEngagedSeconds == null ? 'Collecting' : formatSeconds(audience.averageEngagedSeconds), 'average engaged reading', 'visible and focused time; not completion')}
       ${statChip(recorded(audience.completedReadingObservations), 'completed reading observations', 'thresholded browser summaries, not unique readers')}

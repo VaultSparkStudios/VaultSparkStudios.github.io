@@ -93,7 +93,7 @@ export const REFRESH_LIVE_DATA_ORDER = [
   { script: 'build-news-desk-engagement.mjs', timeout: 30000, why: 'projects committed engagement history without a network probe' },
   { script: 'build-news-desk-reactions.mjs', timeout: 30000, why: 'projects committed reaction history without a network probe' },
   { script: 'build-news-freshness.mjs', timeout: 30000, why: 'refreshes the Desk cadence contract' },
-  { script: 'generate-news-pages.mjs', timeout: 30000, why: 'renders current Desk feeds into public story pages' },
+  { script: 'generate-news-pages.mjs', args: ['--apply'], timeout: 30000, why: 'renders current Desk feeds into public story pages' },
   { script: 'build-news-visual-receipts.mjs', timeout: 30000, why: 'binds story pages and reviewed art to committed visual evidence' },
   { script: 'build-news-critique-packets.mjs', timeout: 30000, why: 'joins published facts, arguments, predictions, and visual receipts into per-story critique packets' },
   { script: 'build-security-posture.mjs', timeout: 30000, why: 'refreshes the public security evidence leaf' },

@@ -124,17 +124,17 @@
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Affected deployed authentication, current   ║
+║   93  [PRODUCT]      Affected deployed authentication, current   ║
 ║        Affected deployed authentication, current isolated stagi  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Repair candidate baseline provenance and o  ║
-║        Repair candidate baseline provenance and obtain unchange  ║
+║   87  [PRODUCT]      Integrate current main safely and complete  ║
+║        Integrate current main safely and complete exact candida  ║
 ║                                                                  ║
-║   86  [VERIFY]       Stabilize Oracle fragment arrival after la  ║
-║        Stabilize Oracle fragment arrival after late score wrapp  ║
+║   86  [VERIFY]       Finish merged candidate full source verifi  ║
+║        Finish merged candidate full source verification and exa  ║
 ║                                                                  ║
-║   83  [VERIFY]       Finish integrated candidate source/require  ║
-║        Finish integrated candidate source/required hosted visua  ║
+║   84  [SECURITY]     Complete isolated access/security acceptan  ║
+║        Complete isolated access/security acceptance and affecte  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
