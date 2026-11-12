@@ -124,6 +124,9 @@ test('actual nav and visual specs audit the candidate, with an explicit visual o
     const pw = require.resolve('@playwright/test');
     const cli = require.resolve('@playwright/test/cli');
     fs.mkdirSync(path.join(dir, 'tests'));
+    fs.mkdirSync(path.join(dir, 'scripts', 'lib'), { recursive: true });
+    fs.copyFileSync(new URL('../scripts/lib/visual-scene-contract.mjs', import.meta.url),
+      path.join(dir, 'scripts', 'lib', 'visual-scene-contract.mjs'));
     fs.writeFileSync(path.join(dir, 'playwright.config.cjs'), `
       const {defineConfig}=require(${JSON.stringify(pw)});
       module.exports=defineConfig({testDir:'./tests',timeout:10000,retries:0,workers:1,

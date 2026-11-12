@@ -32,7 +32,7 @@
 ║  Custom        → https://vaultsparkstudios.com/studio-pulse/ ✓   ║
 ║  Local dev     → npm run verify:local ⚠                          ║
 ║  Staging       → https://website.staging.vaultsparkstudios.c ✓   ║
-║  Unit tests    → npm run build:check ✓                           ║
+║  Unit tests    → npm run build:check ⚠                           ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ PROJECT PROFILE ═════════════════════════════════════════════╗
@@ -63,7 +63,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 411 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    Source 555/555 steps passing                          ║
+║  Tests:    Source UNVERIFIED: 130/555 steps; 1 failed;…          ║
 ║  Deploy:   S411 release pending                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -74,7 +74,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         Source 555/555 steps passing                   ║
+║  ⚠  Tests         Source UNVERIFIED: 130/555 steps; 1 failed;…   ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   18d                                            ║
@@ -124,17 +124,17 @@
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Affected deployed authentication, current   ║
+║   90  [PRODUCT]      Affected deployed authentication, current   ║
 ║        Affected deployed authentication, current isolated stagi  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Repair candidate baseline provenance and o  ║
+║   87  [PRODUCT]      Repair candidate baseline provenance and o  ║
 ║        Repair candidate baseline provenance and obtain unchange  ║
 ║                                                                  ║
-║   86  [VERIFY]       Finish integrated candidate source/require  ║
-║        Finish integrated candidate source/required hosted visua  ║
+║   86  [VERIFY]       Stabilize Oracle fragment arrival after la  ║
+║        Stabilize Oracle fragment arrival after late score wrapp  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Integrate current main safely and complete  ║
-║        Integrate current main safely and complete exact candida  ║
+║   83  [VERIFY]       Finish integrated candidate source/require  ║
+║        Finish integrated candidate source/required hosted visua  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

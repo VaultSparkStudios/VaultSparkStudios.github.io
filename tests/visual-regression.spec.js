@@ -17,6 +17,7 @@ import { test, expect, devices } from '@playwright/test';
 import { createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
 import os from 'node:os';
+import { VISUAL_SCENES, visualSceneState } from '../scripts/lib/visual-scene-contract.mjs';
 
 const PIXEL_RATIO_TOLERANCE = 0.015; // 1.5%
 
@@ -214,7 +215,7 @@ async function captureSceneDiagnostic(page, identity, phase) {
 }
 // scene-diagnostics:end
 
-async function waitForVisualReadiness(page) {
+async function waitForVisualReadiness(page, surface) {
   // Snapshot scene: genuinely engaged, reduced-motion, settled UI. This uses
   // the shipped accessible motion preference, preserving every component.
   // Initial quiet-visit paint
@@ -229,7 +230,7 @@ async function waitForVisualReadiness(page) {
   // its real engagement path without changing focus or activating a control.
   await page.keyboard.press('Shift');
   await expect.poll(async () => {
-    const sample = await page.evaluate((allowedPaths) => {
+    const sample = await page.evaluate(({ allowedPaths, scene }) => {
       const wire = document.querySelector('.site-header [data-desk-wire]');
       const wireState = wire?.getAttribute('data-desk-wire-state');
       // The ambient loader intentionally skips hidden mobile strips and portals.
@@ -251,11 +252,26 @@ async function waitForVisualReadiness(page) {
         const rect = element.getBoundingClientRect();
         return rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.top < innerHeight;
       });
+      const scroller = document.scrollingElement;
+      const target = scene?.anchorId ? document.getElementById(scene.anchorId) : null;
+      const targetRect = target?.getBoundingClientRect();
+      const targetStyle = target ? getComputedStyle(target) : null;
+      const sceneObservation = {
+        pathname: location.pathname, hash: location.hash, scrollX, scrollY,
+        maxScrollY: scroller ? Math.max(0, scroller.scrollHeight - scroller.clientHeight) : NaN,
+        target: target ? {
+          present: true, visible: targetRect.width > 0 && targetRect.height > 0 &&
+            targetStyle.display !== 'none' && targetStyle.visibility !== 'hidden',
+          documentTop: targetRect.top + scrollY,
+          scrollMarginTop: Number.parseFloat(targetStyle.scrollMarginTop),
+        } : null,
+      };
       return {
         ready,
+        sceneObservation,
         diagnostics: {
           path: allowedPaths.includes(location.pathname) ? location.pathname : 'other',
-          hash: ['', '#main-content'].includes(location.hash) ? location.hash : 'other',
+          hash: ['', '#oracle', '#stories'].includes(location.hash) ? location.hash : 'other',
           theme: ['dark', 'light'].includes(document.body.dataset.theme) ? document.body.dataset.theme : 'other',
           fonts: ['loaded', 'loading'].includes(document.fonts.status) ? document.fonts.status : 'unknown',
           missingStylesheetCount: Math.min(missingStylesheets.length, 9999),
@@ -263,15 +279,18 @@ async function waitForVisualReadiness(page) {
           rankExpected, anchorShellReady,
           afterPaint: window.VSAfterPaint ? { started: window.VSAfterPaint.started === true, done: window.VSAfterPaint.done === true } : null,
         },
-        fingerprint: JSON.stringify(visible.map(element => {
+        fingerprint: JSON.stringify([scrollX, scrollY, sceneObservation.target, visible.map(element => {
           const rect = element.getBoundingClientRect();
           const style = getComputedStyle(element);
-          return [element.tagName, element.id, Math.round(rect.x), Math.round(rect.y),
-            Math.round(rect.width), Math.round(rect.height), style.opacity, style.visibility,
+          return [element.tagName, element.id, rect.x, rect.y,
+            rect.width, rect.height, style.opacity, style.visibility,
             style.transform, element.childElementCount ? '' : element.textContent];
-        })),
+        })]),
       };
-    }, SURFACES.map(surface => surface.path));
+    }, { allowedPaths: Object.values(VISUAL_SCENES).map(scene => scene.pathname), scene: VISUAL_SCENES[surface.name] });
+    const sceneFlags = visualSceneState(surface.name, sample.sceneObservation);
+    sample.ready = sample.ready && sceneFlags.sceneReady;
+    sample.diagnostics.scene = sceneFlags;
     if (!sample.ready || sample.fingerprint !== previous) {
       previous = sample.fingerprint;
       stableSince = Date.now();
@@ -332,7 +351,7 @@ for (const vp of VIEWPORTS) {
             .vs-genome-strip, .vs-sigil-ring, .vs-tour-offer { opacity: 1 !important; }
           `,
         });
-        await waitForVisualReadiness(page);
+        await waitForVisualReadiness(page, surface);
         if (vp.name === 'desktop-1280') {
           const spark = page.locator('.site-header .vs-palette-loader-trigger');
           // Member portals deliberately omit public discovery controls.

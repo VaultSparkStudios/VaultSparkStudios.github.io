@@ -149,3 +149,70 @@ test('the old active-project claim remains rejected through an actual outgoing-p
 test('anonymous fixture retains the existing membership gate without an inference request', async () => {
   await outgoingContext({ signedIn: false });
 });
+
+test('bounded arrival owner repairs uncompensated above-target growth and stops on intent or timeout', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { runInNewContext } = await import('node:vm');
+  const source = readFileSync(new URL('../assets/ignis-platform.js', import.meta.url), 'utf8');
+  const start = source.indexOf('function initialOracleArrival() {');
+  const end = source.indexOf('  var oracleArrival = initialOracleArrival();', start);
+  assert(start >= 0);
+  assert(end > start);
+  const factory = source.slice(start, end);
+  function fixture(hash = '#oracle') {
+    const listeners = new Map(), frames = new Map(), observers = [];
+    let position = 94, scrollCalls = 0, nextFrame = 0, timer;
+    const above = { previousElementSibling: null };
+    const header = {};
+    const target = { parentElement: {}, previousElementSibling: above,
+      getBoundingClientRect: () => ({ top: position }),
+      scrollIntoView: () => { scrollCalls++; position = 94; } };
+    const location = { pathname: '/ignis/', hash };
+    const owner = runInNewContext(`(${factory})();`, {
+      location,
+      document: { getElementById: () => target, querySelector: () => header },
+      getComputedStyle: () => ({ scrollMarginTop: '94px' }),
+      window: {
+        addEventListener: (name, fn) => listeners.set(name, fn),
+        removeEventListener: (name, fn) => { if (listeners.get(name) === fn) listeners.delete(name); },
+      },
+      ResizeObserver: class {
+        constructor(callback) { this.callback = callback; this.observed = []; observers.push(this); }
+        observe(el) { this.observed.push(el); }
+        disconnect() { this.disconnected = true; }
+      },
+      requestAnimationFrame: callback => { frames.set(++nextFrame, callback); return nextFrame; },
+      cancelAnimationFrame: id => frames.delete(id),
+      setTimeout: (callback, ms) => { assert.equal(ms, 10000); timer = callback; return 1; },
+      clearTimeout: () => {},
+    }, { timeout: 1000 });
+    const flush = () => { const callbacks = [...frames.values()]; frames.clear(); callbacks.forEach(callback => callback()); };
+    return { owner, observers, above, header, listeners, flush,
+      position: value => { position = value; }, calls: () => scrollCalls,
+      timeout: () => timer?.() };
+  }
+  const f = fixture();
+  f.owner.settle(true); f.flush();
+  assert.equal(f.observers.length, 1);
+  assert.deepEqual(f.observers[0].observed, [f.header, f.above]);
+  assert.equal(f.calls(), 0);
+  f.position(127); // Same measured late33px growth, without browser compensation.
+  f.observers[0].callback(); f.flush();
+  assert.equal(f.calls(), 1);
+  f.owner.settle(true); f.observers[0].callback(); f.flush();
+  assert.equal(f.observers.length, 1);
+  assert.equal(f.calls(), 1); // No duplicate repair while aligned.
+  f.listeners.get('wheel')();
+  assert.equal(f.observers[0].disconnected, true);
+  f.position(160); f.observers[0].callback(); f.flush();
+  assert.equal(f.calls(), 1);
+  const expired = fixture();
+  expired.owner.settle(true); expired.flush(); expired.timeout();
+  assert.equal(expired.observers[0].disconnected, true);
+  expired.position(127); expired.observers[0].callback(); expired.flush();
+  assert.equal(expired.calls(), 0);
+  const noHash = fixture('');
+  noHash.owner.settle(true); noHash.flush();
+  assert.equal(noHash.observers.length, 0);
+  assert.equal(noHash.calls(), 0);
+});

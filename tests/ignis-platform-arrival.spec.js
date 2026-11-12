@@ -158,3 +158,106 @@ for (const viewport of viewports) {
     });
   });
 }
+
+// Delay only delivery of the real candidate's public response. This exercises
+// the independent live-score producer after platform hydration, with no fake
+// score, hidden component or hard-coded scroll destination.
+async function latePublicScoreContext(browser, baseURL, theme) {
+  const { context, release: releasePlatform } = await contextFor(browser, baseURL,
+    { width: 320, height: 568 }, false);
+  releasePlatform();
+  await context.addInitScript(theme => {
+    localStorage.setItem('vs_theme', theme);
+    window.__oracleScrollCalls = 0;
+    const native = Element.prototype.scrollIntoView;
+    Element.prototype.scrollIntoView = function (...args) {
+      if (this.id === 'oracle') window.__oracleScrollCalls++;
+      return native.apply(this, args);
+    };
+  }, theme);
+  let release;
+  const gate = new Promise(resolve => { release = resolve; });
+  await context.route('**/api/public-intelligence.json', async route => {
+    const response = await route.fetch();
+    expect(response.ok()).toBe(true);
+    await gate;
+    return route.fulfill({ response });
+  });
+  return { context, release };
+}
+
+for (const theme of ['dark', 'light']) {
+  test.describe(`Oracle late live-score arrival · iphone-se · ${theme}`, () => {
+    test('late actual score wrapping preserves fragment alignment without reacting to below-target growth', async ({ browser, baseURL }) => {
+      const { context, release } = await latePublicScoreContext(browser, baseURL, theme);
+      try {
+        const page = await context.newPage();
+        await openOracle(page);
+        await hydratedLayout(page);
+        await expectAligned(page);
+        const before = await page.locator('.ignis-score-row').evaluate(el => el.getBoundingClientRect().height);
+        release();
+        await expect(page.locator('#ignis-live-score')).toHaveText(/^[\d,]+$/);
+        await expect.poll(() => page.locator('.ignis-score-row').evaluate(el => el.getBoundingClientRect().height)).toBeGreaterThan(before + 1);
+        await expectAligned(page);
+        const calls = await page.evaluate(() => window.__oracleScrollCalls);
+        await page.locator('#ask-ignis').evaluate(el => {
+          const block = document.createElement('div');
+          block.style.height = '80px';
+          el.appendChild(block);
+        });
+        await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+        expect(await page.evaluate(() => window.__oracleScrollCalls)).toBe(calls);
+        await expectAligned(page);
+      } finally { release(); await context.close(); }
+    });
+
+    for (const intent of ['wheel', 'Tab']) {
+      test(`late score wrapping respects prior ${intent} intent`, async ({ browser, baseURL }) => {
+        const { context, release } = await latePublicScoreContext(browser, baseURL, theme);
+        try {
+          const page = await context.newPage();
+          await openOracle(page);
+          await hydratedLayout(page);
+          await expectAligned(page);
+          const initial = await arrivalState(page);
+          if (intent === 'wheel') {
+            await page.mouse.wheel(0, 240);
+            await expect.poll(async () => (await arrivalState(page)).scrollY).toBeGreaterThan(initial.scrollY + 50);
+          } else {
+            const controls = await page.locator('a[href],button,input,select,textarea,[tabindex="0"]').count();
+            for (let step = 0; step <= controls; step++) {
+              await page.keyboard.press('Tab');
+              if (Math.abs((await arrivalState(page)).scrollY - initial.scrollY) > 50) break;
+            }
+            expect(Math.abs((await arrivalState(page)).scrollY - initial.scrollY)).toBeGreaterThan(50);
+          }
+          const focused = await page.evaluateHandle(() => document.activeElement);
+          const calls = await page.evaluate(() => window.__oracleScrollCalls);
+          release();
+          await expect(page.locator('#ignis-live-score')).toHaveText(/^[\d,]+$/);
+          await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+          const after = await arrivalState(page);
+          expect(Math.abs(after.targetTop - after.margin)).toBeGreaterThan(50);
+          expect(await page.evaluate(() => window.__oracleScrollCalls)).toBe(calls);
+          expect(await page.evaluate(el => document.activeElement === el, focused)).toBe(true);
+          await focused.dispose();
+        } finally { release(); await context.close(); }
+      });
+    }
+
+    test('no-fragment arrival stays at the top during actual score hydration', async ({ browser, baseURL }) => {
+      const { context, release } = await latePublicScoreContext(browser, baseURL, theme);
+      try {
+        const page = await context.newPage();
+        await page.goto('/ignis/', { waitUntil: 'load' });
+        await page.keyboard.press('Shift');
+        await hydratedLayout(page);
+        release();
+        await expect(page.locator('#ignis-live-score')).toHaveText(/^[\d,]+$/);
+        expect(await page.evaluate(() => scrollY)).toBe(0);
+        expect(await page.evaluate(() => window.__oracleScrollCalls)).toBe(0);
+      } finally { release(); await context.close(); }
+    });
+  });
+}

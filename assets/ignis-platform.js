@@ -42,12 +42,14 @@
     var active = true;
     var frame = null;
     var timer = null;
+    var observer = null;
     var intentEvents = ['wheel', 'touchstart', 'touchmove', 'pointerdown', 'hashchange', 'popstate', 'pagehide'];
     var scrollingKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End', ' ', 'Tab'];
     function cleanup() {
       active = false;
       clearTimeout(timer);
       if (frame !== null) cancelAnimationFrame(frame);
+      if (observer) observer.disconnect();
       intentEvents.forEach(function (event) { window.removeEventListener(event, cleanup); });
       window.removeEventListener('keydown', onKey);
     }
@@ -57,10 +59,26 @@
     intentEvents.forEach(function (event) { window.addEventListener(event, cleanup, { passive: true }); });
     window.addEventListener('keydown', onKey);
     timer = setTimeout(cleanup, 10000);
-    return {
+    var arrival = {
       settle: function (hydrated) {
         if (!active) return;
         if (!hydrated || location.pathname + location.hash !== initialUrl) { cleanup(); return; }
+        // The platform panel is not the only asynchronous content above the
+        // fragment: the live score can wrap after public intelligence arrives.
+        // Keep the existing bounded arrival window, observing only earlier
+        // siblings and the header; changes below Oracle never request repair.
+        if (!observer && typeof ResizeObserver === 'function') {
+          var target = document.getElementById('oracle');
+          if (target && target.parentElement) {
+            observer = new ResizeObserver(function () { arrival.settle(true); });
+            var header = document.querySelector('.site-header');
+            if (header) observer.observe(header);
+            for (var sibling = target.previousElementSibling; sibling; sibling = sibling.previousElementSibling) {
+              observer.observe(sibling);
+            }
+          }
+        }
+        if (frame !== null) return;
         frame = requestAnimationFrame(function () {
           frame = null;
           if (!active) return;
@@ -71,10 +89,10 @@
               target.scrollIntoView({ block: 'start', behavior: 'instant' });
             }
           }
-          cleanup();
         });
       }
     };
+    return arrival;
   }
   var oracleArrival = initialOracleArrival();
 

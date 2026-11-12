@@ -7,6 +7,7 @@ import { spawnSync } from '../scripts/lib/safe-spawn.mjs';
 import { createHash } from 'node:crypto';
 import { extractCaptureArchive } from '../scripts/lib/visual-capture-archive.mjs';
 import { captureSource, baselineRunIssues, captureReceiptIssues, CANDIDATE_ORIGIN } from '../scripts/lib/visual-capture-source.mjs';
+import { VISUAL_SCENES, visualSceneState } from '../scripts/lib/visual-scene-contract.mjs';
 const sha = 'a'.repeat(40);
 test('generation binds only the exact candidate origin and remains provisional', () => {
   const receipt = captureSource({ update: 'true', sha });
@@ -93,4 +94,82 @@ test('exact archive bytes are verified before safe PNG/provenance-only extractio
     }
     assert.equal(fs.existsSync(path.join(temp,'escaped.png')),false);
   } finally { fs.rmSync(temp,{recursive:true,force:true,maxRetries:3,retryDelay:50}); }
+});
+
+// Scene semantics complement artifact provenance. A stable screenshot alone
+// cannot decide whether a redirected fragment or document top was intended.
+const topObservation = pathname => ({ pathname, hash: '', scrollX: 0, scrollY: 0, maxScrollY: 10000, target: null });
+const fragmentObservation = (surface, documentTop, scrollMarginTop, scrollY, maxScrollY = 30000) => ({
+  pathname: VISUAL_SCENES[surface].pathname, hash: VISUAL_SCENES[surface].hash,
+  scrollX: 0, scrollY, maxScrollY,
+  target: { present: true, visible: true, documentTop, scrollMarginTop },
+});
+
+test('ordinary visual surfaces require document top and their exact resolved route', () => {
+  for (const surface of ['home', 'membership', 'vault-member', 'games', 'tombstones']) {
+    const observed = topObservation(VISUAL_SCENES[surface].pathname);
+    assert.equal(visualSceneState(surface, observed).sceneReady, true, surface);
+    assert.equal(visualSceneState(surface, { ...observed, scrollY: 1 }).sceneReady, false);
+    assert.equal(visualSceneState(surface, { ...observed, scrollY: 33 }).sceneReady, false);
+    assert.equal(visualSceneState(surface, { ...observed, scrollX: 2 }).sceneReady, false);
+    assert.equal(visualSceneState(surface, { ...observed, pathname: '/foreign/' }).sceneReady, false);
+    assert.equal(visualSceneState(surface, { ...observed, hash: '#main-content' }).sceneReady, false);
+  }
+});
+
+test('legacy Oracle and Journal scenes match actual redirects and named targets', () => {
+  const redirects = fs.readFileSync('_redirects', 'utf8');
+  for (const [surface, alias, destination] of [['oracle','/oracle/','/ignis/#oracle'],['journal','/journal/','/changelog/#stories']]) {
+    const line = redirects.split(/\r?\n/).find(line => line.trim().split(/\s+/)[0] === alias);
+    assert.equal(line.trim().split(/\s+/)[1], destination);
+    const scene = VISUAL_SCENES[surface];
+    assert.equal(scene.kind, 'named-fragment');
+    assert.equal(scene.pathname + scene.hash, destination);
+    assert.equal(scene.anchorId, scene.hash.slice(1));
+    const observed = fragmentObservation(surface, 5000, 94, 4906);
+    assert.equal(visualSceneState(surface, observed).sceneReady, true);
+    assert.equal(visualSceneState(surface, { ...observed, pathname: alias }).sceneReady, false);
+    assert.equal(visualSceneState(surface, { ...observed, hash: '' }).sceneReady, false);
+    assert.equal(visualSceneState(surface, { ...observed, hash: '#foreign' }).sceneReady, false);
+  }
+});
+
+test('Oracle geometry rejects the accidental33px offset despite a stable viewport', () => {
+  // Retained Linux diagnostic: target documentTop5041.125, CSS margin94.
+  const aligned = fragmentObservation('oracle', 5041.125, 94, 4947);
+  assert.equal(visualSceneState('oracle', aligned).sceneReady, true);
+  const displaced = visualSceneState('oracle', { ...aligned, scrollY: 4914 });
+  assert.equal(displaced.pathMatches, true);
+  assert.equal(displaced.hashMatches, true);
+  assert.equal(displaced.targetPresent, true);
+  assert.equal(displaced.scrollMatches, false);
+  assert.equal(displaced.sceneReady, false);
+});
+
+test('fragment geometry follows current CSS margin and document height, with bounded rounding', () => {
+  for (const surface of ['oracle', 'journal']) {
+    for (const margin of [94, 131, 142.5]) {
+      const observed = fragmentObservation(surface, 4000.25, margin, 4000.25 - margin);
+      assert.equal(visualSceneState(surface, observed).sceneReady, true);
+      assert.equal(visualSceneState(surface, { ...observed, scrollY: observed.scrollY + 1 }).sceneReady, true);
+      assert.equal(visualSceneState(surface, { ...observed, scrollY: observed.scrollY + 1.2 }).sceneReady, false);
+    }
+    assert.equal(visualSceneState(surface, fragmentObservation(surface, 500, 94, 300, 300)).sceneReady, true);
+    assert.equal(visualSceneState(surface, fragmentObservation(surface, 50, 94, 0)).sceneReady, true);
+  }
+});
+
+test('absent, hidden or invalid fragment geometry cannot produce passing scene flags', () => {
+  const good = fragmentObservation('oracle', 5000, 94, 4906);
+  for (const patch of [{ target: null }, { target: { ...good.target, present: false } },
+    { target: { ...good.target, visible: false } }, { target: { ...good.target, documentTop: NaN } },
+    { target: { ...good.target, scrollMarginTop: NaN } }, { maxScrollY: -1 }, { scrollY: Infinity }]) {
+    assert.equal(visualSceneState('oracle', { ...good, ...patch }).sceneReady, false);
+  }
+  for (const [surface, observed] of [['unknown', good], ['oracle', null], ['oracle', {}]]) {
+    const flags = visualSceneState(surface, observed);
+    assert.equal(flags.sceneReady, false);
+    assert.ok(Object.values(flags).every(value => typeof value === 'boolean'));
+    assert.equal(Object.keys(flags).length, 7);
+  }
 });

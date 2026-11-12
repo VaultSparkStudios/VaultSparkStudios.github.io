@@ -30,73 +30,73 @@ Why it matters: The current implementation is only complete once the remote brow
 First command: `gh run list --limit 10`
 
 #### 2. [PRODUCT] Affected deployed authentication, current isolated staging parity, au…
-Final score: **93**
+Final score: **90**
 Affected deployed authentication, current isolated staging parity, authorized production promotion/readback and full closeout.
 Why it matters: Affected deployed authentication, current isolated staging parity, aut is open, local, and unblocked — can ship this session.
 
 #### 3. [PRODUCT] Repair candidate baseline provenance and obtain unchanged successful …
-Final score: **90**
+Final score: **87**
 Repair candidate baseline provenance and obtain unchanged successful visual comparison.
 Why it matters: Repair candidate baseline provenance and obtain unchanged successful v is open, local, and unblocked — can ship this session.
 
-#### 4. [VERIFY] Finish integrated candidate source/required hosted visual, Lighthouse…
+#### 4. [VERIFY] Stabilize Oracle fragment arrival after late score wrapping; verify d…
 Final score: **86**
+Stabilize Oracle fragment arrival after late score wrapping; verify declared scene alignment and fresh native visual admission.
+Why it matters: Stabilize Oracle fragment arrival after late score wrapping; verify de is a 411-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check`
+
+### NEXT
+
+#### 1. [VERIFY] Finish integrated candidate source/required hosted visual, Lighthouse…
+Final score: **83**
 Finish integrated candidate source/required hosted visual, Lighthouse and accessibility acceptance.
 Why it matters: Finish integrated candidate source/required hosted visual, Lighthouse  is a 411-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-### NEXT
-
-#### 1. [PRODUCT] Integrate current main safely and complete exact candidate required c…
-Final score: **84**
+#### 2. [PRODUCT] Integrate current main safely and complete exact candidate required c…
+Final score: **81**
 Integrate current main safely and complete exact candidate required checks.
 Why it matters: Integrate current main safely and complete exact candidate required ch is open, local, and unblocked — can ship this session.
 
-#### 2. [SECURITY] Complete isolated access/security acceptance and affected member/inve…
-Final score: **81**
+#### 3. [SECURITY] Complete isolated access/security acceptance and affected member/inve…
+Final score: **78**
 Complete isolated access/security acceptance and affected member/investor journeys before data-route exposure.
 Why it matters: Complete isolated access/security acceptance and affected member/inves lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
 
-#### 3. [VERIFY] Verify affected authenticated journeys and current staging parity bef…
-Final score: **71**
+#### 4. [VERIFY] Verify affected authenticated journeys and current staging parity bef…
+Final score: **68**
 Verify affected authenticated journeys and current staging parity before authorized production promotion/readback.
 Why it matters: Verify affected authenticated journeys and current staging parity befo is a 411-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check`
 
-#### 4. [PRODUCT] Authorized main/production promotion, served readback and full closeout.
-Final score: **69**
+#### 5. [PRODUCT] Authorized main/production promotion, served readback and full closeout.
+Final score: **66**
 Authorized main/production promotion, served readback and full closeout.
 Why it matters: Authorized main/production promotion, served readback and full closeou is open, local, and unblocked — can ship this session.
 
-#### 5. [VERIFY] Verify the final publication candidate after public-documentation pro…
-Final score: **68**
+### LATER
+
+#### 1. [VERIFY] Verify the final publication candidate after public-documentation pro…
+Final score: **65**
 Verify the final publication candidate after public-documentation projections and final source freeze; intermediate worktree proof does not cover those changes.
 Why it matters: Verify the final publication candidate after public-documentation proj is a 411-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check`
 
-### LATER
-
-#### 1. [PRODUCT] Finalize this local recovery closeout and QA checkpoint; release stay…
-Final score: **66**
+#### 2. [PRODUCT] Finalize this local recovery closeout and QA checkpoint; release stay…
+Final score: **63**
 Finalize this local recovery closeout and QA checkpoint; release stays pending.
 Why it matters: Finalize this local recovery closeout and QA checkpoint; release stays is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Run this native invocation's fresh full arc after recovery; bind the …
-Final score: **63**
+#### 3. [PRODUCT] Run this native invocation's fresh full arc after recovery; bind the …
+Final score: **60**
 Run this native invocation's fresh full arc after recovery; bind the new session by native identity.
 Why it matters: Run this native invocation's fresh full arc after recovery; bind the n is open, local, and unblocked — can ship this session.
-
-#### 3. [VERIFY] Exact candidate native visual/required CI, current staging parity and…
-Final score: **62**
-Exact candidate native visual/required CI, current staging parity and rollback.
-Why it matters: Exact candidate native visual/required CI, current staging parity and  is a 411-session-old carry-forward; verify or close it so it stops polluting the hit list.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 ### DEFERRED / GATED
 
@@ -145,15 +145,15 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 1. Post-push CI confirmation
 2. Affected deployed authentication, current isolated staging parity, au…
 3. Repair candidate baseline provenance and obtain unchanged successful …
-4. Finish integrated candidate source/required hosted visual, Lighthouse…
-5. Integrate current main safely and complete exact candidate required c…
-6. Complete isolated access/security acceptance and affected member/inve…
-7. Verify affected authenticated journeys and current staging parity bef…
-8. Authorized main/production promotion, served readback and full closeout.
-9. Verify the final publication candidate after public-documentation pro…
-10. Finalize this local recovery closeout and QA checkpoint; release stay…
-11. Run this native invocation's fresh full arc after recovery; bind the …
-12. Exact candidate native visual/required CI, current staging parity and…
+4. Stabilize Oracle fragment arrival after late score wrapping; verify d…
+5. Finish integrated candidate source/required hosted visual, Lighthouse…
+6. Integrate current main safely and complete exact candidate required c…
+7. Complete isolated access/security acceptance and affected member/inve…
+8. Verify affected authenticated journeys and current staging parity bef…
+9. Authorized main/production promotion, served readback and full closeout.
+10. Verify the final publication candidate after public-documentation pro…
+11. Finalize this local recovery closeout and QA checkpoint; release stay…
+12. Run this native invocation's fresh full arc after recovery; bind the …
 
 ## Best Immediate Move
 
