@@ -3,13 +3,13 @@
   "publicSafe": true,
   "session": 415,
   "state": "in-progress",
-  "updatedAt": "2026-11-12T08:40:17.813Z",
+  "updatedAt": "2026-11-12T09:05:11.002Z",
   "audit": "docs/AUDIT_2026-11-11-S415.json",
   "implementation": "docs/S415_IMPLEMENTATION_CHECKPOINT.json",
   "candidate": {
-    "qaCommit": "27c67e24ce9f57eed11a205e6fbcc277e85ce1a2",
+    "qaCommit": "36eb710e44675f89b9634989a348a13433ada556",
     "productionPromoted": false,
-    "workingTree": "Controlled27c A completed68passes+2flaky with targetfirst-pass; controlabsent stopped interventions. Scene isolation is locally verified, pending normal Linux comparison. No production promotion."
+    "workingTree": "Native normal comparison at36e passed42headers+70visuals first attempt, diagnostics/generationoff. Incomingmainbc43 measurements reviewed but not yet merged. Full current555/final candidate/staging/nativeauth/production remain pending."
   },
   "local": {
     "fullAttempt": {
@@ -391,7 +391,7 @@
       "receipt": "docs/S415_VISUAL_CASE_ISOLATION.json",
       "focusedTests": 43,
       "ordinaryWindowsGames": 10,
-      "nativeLinuxComparisonPending": true
+      "nativeLinuxComparisonPending": false
     }
   },
   "hosted": {
@@ -501,6 +501,24 @@
       "visualsFlaky": 2,
       "noopOrRangeArmsExecuted": false,
       "acceptanceEvidence": false
+    },
+    "isolatedNativeComparison": {
+      "receipt": "docs/S415_VISUAL_CASE_ISOLATION.json",
+      "sourceCommit": "36eb710e44675f89b9634989a348a13433ada556",
+      "runId": 43185231081,
+      "jobId": 131070636522,
+      "conclusion": "success",
+      "headersPassed": 42,
+      "visualsPassed": 70,
+      "failed": 0,
+      "flaky": 0,
+      "fullMatrixCompleted": true,
+      "diagnosticsEnabled": false,
+      "updateBaselinesInput": false,
+      "referenceWriteOrMissingMessagesObserved": false,
+      "logSha256": "85d2204a8e26e546d4723a2049d808ae1c07a5ddc7997c33c725409cd5704073",
+      "acceptanceEvidence": true,
+      "scope": "Reviewed reference set under per-scene isolated worker/browser lifetimes; native assertion, threshold, reference images, DPR, retries and timeouts unchanged."
     }
   },
   "visual": {

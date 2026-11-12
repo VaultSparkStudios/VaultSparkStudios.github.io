@@ -4,10 +4,10 @@
 
 - [x] Fresh monotonic startup, native binding and nine-axis audit/plan admission.
 - [x] Candidate-only generation and exact artifact admission/extraction locally verified (7 tests; independent source review passed). Live import and baseline review remain separate.
-- [x] Recover stale Windows Games references left by S414: nine original-detail-reviewed cells; unchanged Windows matrix10/10 at the original tolerance, with retries and snapshot updates off. Linux acceptance remains open.
+- [x] Recover stale Windows Games references left by S414: nine original-detail-reviewed cells; unchanged Windows matrix10/10 at the original tolerance, with retries and snapshot updates off. Linux reference acceptance verified at36eb710:70/70 first attempt; final merged candidate remains separate.
 - [x] Repair unmodeled UTC news freshness input; 16 focused tests pass across UTC and shared-output ordering repairs, with original step360 failure preserved.
-- [ ] Stabilize Oracle fragment arrival after late score wrapping; verify declared scene alignment and fresh native visual admission.
-- [ ] Finish integrated candidate source/required hosted visual, Lighthouse and accessibility acceptance.
+- [x] Stabilize Oracle fragment arrival after late score wrapping; scene alignment and normal Linux70/70 verified at36eb710 (run43185231081).
+- [ ] Finish merged candidate full source verification and exact required E2E, Lighthouse and accessibility checks.
 - [ ] Affected deployed authentication, current isolated staging parity, authorized production promotion/readback and full closeout.
 
 Waves1–3 locally verified;4 release acceptance in progress;5 full closeout pending. Evidence: docs/S415_IMPLEMENTATION_CHECKPOINT.json.
@@ -16,7 +16,7 @@ Waves1–3 locally verified;4 release acceptance in progress;5 full closeout pen
 ## S414 recovered acceptance boundary
 
 - [x] Reconstruct committed intent, inspect full dirty diff, validate changed data/config files and run fresh source/doctor checks.
-- [ ] Repair candidate baseline provenance and obtain unchanged successful visual comparison.
+- [x] Completed in S415 at36eb710: candidate provenance and reviewed references verified by unchanged native70-case comparison. S414 itself remains a partial recovery.
 - [ ] Reproduce the initial fixture-navigation timeout; complete full source verification.
 - [ ] Integrate current main safely and complete exact candidate required checks.
 - [ ] Verify affected authenticated journeys and current staging parity before authorized production promotion/readback.

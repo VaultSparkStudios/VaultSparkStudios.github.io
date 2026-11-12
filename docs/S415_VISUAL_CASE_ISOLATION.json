@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "session": 415,
   "publicSafe": true,
-  "recordedAt": "2026-11-12T08:40:17.813Z",
-  "state": "locally-verified-normal-linux-comparison-pending",
+  "recordedAt": "2026-11-12T09:05:11.002Z",
+  "state": "normal-linux-70-first-pass-verified",
   "basedOnCommit": "27c67e24ce9f57eed11a205e6fbcc277e85ce1a2",
   "sourceFiles": [
     {
@@ -62,8 +62,21 @@
     }
   },
   "nativeComparison": {
-    "dispatched": false,
-    "acceptanceEvidence": false
+    "sourceCommit": "36eb710e44675f89b9634989a348a13433ada556",
+    "runId": 43185231081,
+    "jobId": 131070636522,
+    "conclusion": "success",
+    "headersPassed": 42,
+    "visualsPassed": 70,
+    "failed": 0,
+    "flaky": 0,
+    "fullMatrixCompleted": true,
+    "diagnosticsEnabled": false,
+    "updateBaselinesInput": false,
+    "referenceWriteOrMissingMessagesObserved": false,
+    "logSha256": "85d2204a8e26e546d4723a2049d808ae1c07a5ddc7997c33c725409cd5704073",
+    "acceptanceEvidence": true,
+    "scope": "Reviewed reference set under per-scene isolated worker/browser lifetimes; native assertion, threshold, reference images, DPR, retries and timeouts unchanged."
   },
   "limitations": [
     "This enforces scene isolation; it does not identify the Chromium glyph-raster cause.",
@@ -71,6 +84,6 @@
     "The earlier controlled A pass remains nonreproduction and is not acceptance for this implementation."
   ],
   "causalVendorClaim": false,
-  "baselineAccepted": false,
+  "baselineAccepted": true,
   "productionAccepted": false
 }

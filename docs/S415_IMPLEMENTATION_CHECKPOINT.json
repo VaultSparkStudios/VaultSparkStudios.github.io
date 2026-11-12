@@ -1,13 +1,14 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "publicSafe": true,
   "session": 415,
-  "observedAt": "2026-11-11T20:25:04.685Z",
-  "outcome": "Candidate visual capture and baseline admission hardening locally verified; release acceptance remains open.",
+  "observedAt": "2026-11-12T09:21:10.864Z",
+  "outcome": "G1 candidate provenance and reviewed reference acceptance verified at36eb710; G2 merged release and G3 staging/account/production acceptance remain open.",
+  "verifiedCommit": "36eb710e44675f89b9634989a348a13433ada556",
   "files": [
     {
       "path": ".github/workflows/visual-regression.yml",
-      "sha256": "2641c78bda6edc2d3f1376e397e99f1cbb17076b6a8cdd2e9f3f5f6f0a649e57"
+      "sha256": "a227d604d3a55df6215026d1e7d5f11be33a554506539094d19967642cbd80de"
     },
     {
       "path": "scripts/admit-visual-capture.mjs",
@@ -26,30 +27,57 @@
       "sha256": "75b479dac286e8c71aea84c4801b7857901b51072aa46b06d67e0135b04a6edd"
     },
     {
+      "path": "tests/visual-regression.spec.js",
+      "sha256": "2414883ce9b98eba77fc3b810bbb6f2dcecbe7b9b058d94090f519bdad840daa"
+    },
+    {
       "path": "tests/visual-capture-source.unit.spec.mjs",
-      "sha256": "4a2063608953036a5b34fb5ea2ffb0c784185ac9ceff5b4deab9dd9f28f2cfa0"
+      "sha256": "4f3feae0cb374e45ddf3d3ae203c9d3222ecd34a955c1403762ac504fbe3808a"
     }
   ],
   "tests": {
-    "command": "node --test tests/visual-capture-source.unit.spec.mjs",
-    "passed": 7,
-    "failed": 0,
-    "scope": "Offline source admission, real CLI no-write/positive cases and actual ZIP digest/traversal/member validation; not live import or UI acceptance."
+    "focused": {
+      "passed": 43,
+      "nativeExit": 0
+    },
+    "ordinaryWindowsGames": {
+      "passed": 10,
+      "nativeExit": 0,
+      "retries": 0,
+      "snapshotUpdates": false
+    },
+    "ordinaryLinux": {
+      "sourceCommit": "36eb710e44675f89b9634989a348a13433ada556",
+      "runId": 43185231081,
+      "jobId": 131070636522,
+      "conclusion": "success",
+      "headersPassed": 42,
+      "visualsPassed": 70,
+      "failed": 0,
+      "flaky": 0,
+      "fullMatrixCompleted": true,
+      "diagnosticsEnabled": false,
+      "updateBaselinesInput": false,
+      "referenceWriteOrMissingMessagesObserved": false,
+      "logSha256": "85d2204a8e26e546d4723a2049d808ae1c07a5ddc7997c33c725409cd5704073",
+      "acceptanceEvidence": true,
+      "scope": "Reviewed reference set under per-scene isolated worker/browser lifetimes; native assertion, threshold, reference images, DPR, retries and timeouts unchanged."
+    }
   },
   "review": {
-    "verdict": "pass",
-    "receipt": "portfolio/ops/review-loop-receipts.ndjson",
-    "note": "Initial findings corrected; exact artifact transfer verified in final source review. Reviewer ran no tests."
+    "receipt": "docs/S415_VISUAL_CASE_ISOLATION.json",
+    "archiveExceptions": "Exact founder-approved PNG/provenance archives only; reviewed reference set accepted by normal native comparison."
+  },
+  "historicalFullSource": {
+    "receipt": "docs/S415_source-oracle-scene-integrated-full555-passed.json",
+    "commit": "0edb07ad896cb9497a8989d9ffff275d4ed42cf4",
+    "passed": 555,
+    "currentSourceAcceptance": false
   },
   "limitations": [
-    "No new archive downloaded; package trust remains nonpassing for the observed artifact.",
-    "No baseline adopted or new visual acceptance claimed.",
-    "Fresh complete source acceptance remains open; separate partial runs and repairs are recorded in docs/S415_VERIFICATION_LEDGER.json.",
-    "Exact required CI, affected deployed authentication, current staging and production acceptance remain pending."
-  ],
-  "integration": {
-    "commit": "c31f5d3661",
-    "note": "Current main integrated by ordinary merge; 30 generated conflicts selected as rebuild inputs, no source conflict; derived graph regeneration follows.",
-    "currentWorkflowContract": "Existing browser-collection contract now requires candidate-local default, retains manual external comparison override and preview/cleanup checks; focused test1/1 passed."
-  }
+    "The verified36eb710 comparison does not cover incoming main integration.",
+    "Fresh merged full source run and exact required E2E/Lighthouse/accessibility remain pending.",
+    "Current isolated staging, affected real account journeys, production promotion/readback and full closeout remain pending.",
+    "Worker isolation is enforced; the underlying vendor raster cause is unproved."
+  ]
 }
