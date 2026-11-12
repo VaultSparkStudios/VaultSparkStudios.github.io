@@ -3,13 +3,13 @@
   "publicSafe": true,
   "session": 415,
   "state": "in-progress",
-  "updatedAt": "2026-11-12T04:47:52.273Z",
+  "updatedAt": "2026-11-12T05:12:46.637Z",
   "audit": "docs/AUDIT_2026-11-11-S415.json",
   "implementation": "docs/S415_IMPLEMENTATION_CHECKPOINT.json",
   "candidate": {
-    "qaCommit": "862dfa5d6a79f722bd55afca1b8cc756e1aa1d6f",
+    "qaCommit": "0edb07ad896cb9497a8989d9ffff275d4ed42cf4",
     "productionPromoted": false,
-    "workingTree": "Oracle repair committed f7fafb7f2d; main observations merged2aad3c0bf3; current integrated source has fresh complete555 proof and reviewed API timestamp recapture. Final QA verification checkpoint not yet pushed."
+    "workingTree": "Four reviewed Oracle anchor PNG references provisionally refreshed; native comparison and final exact-SHA required checks still pending."
   },
   "local": {
     "fullAttempt": {
@@ -44,7 +44,7 @@
       "workerProductionPreflight": 4,
       "clockAndSharedOutputRepair": 16
     },
-    "completeCurrentSourceVerified": true,
+    "completeCurrentSourceVerified": false,
     "complete553Attempt": {
       "receipt": "docs/S415_source-full553-concentration.json",
       "nativeExit": 1,
@@ -369,7 +369,8 @@
       "receiptId": "fa3885aa915dfdf40693adee",
       "dominantShare": 0.1227,
       "concentrationBreached": false
-    }
+    },
+    "fullSourceReason": "The complete555 proof remains valid for source0edb07ad; changing four test PNG inputs intentionally creates a new source fingerprint. No executable source changed. Final candidate CI must verify its complete source."
   },
   "hosted": {
     "sourceCommit": "95b0efcc0b9e43df2dc2b5ee9f333e385d6d5150",
@@ -410,7 +411,18 @@
     "windowsReferenceProvenance": "docs/S415_WINDOWS_GAMES_REFERENCE_PROVENANCE.json",
     "windowsReferenceComparisonAccepted": true,
     "windowsReferencesAdopted": 9,
-    "linuxReferencesAdopted": 0
+    "linuxReferencesAdopted": 0,
+    "oracleReferenceRefresh": "docs/S415_ORACLE_REFERENCE_REFRESH.json",
+    "latestCapture": {
+      "sourceCommit": "0edb07ad896cb9497a8989d9ffff275d4ed42cf4",
+      "runId": 43157537819,
+      "artifactId": 13916239880,
+      "generated": 70,
+      "desktopHeadersPassed": 42,
+      "reviewedChangedPairs": 42,
+      "provisionalReferenceCopies": 4,
+      "baselineAccepted": false
+    }
   },
   "staging": {
     "isolatedFixtureHealthObserved": true,
