@@ -173,3 +173,228 @@ test('absent, hidden or invalid fragment geometry cannot produce passing scene f
     assert.equal(Object.keys(flags).length, 7);
   }
 });
+
+
+function actualFailureProbeFunction(name, context = {}) {
+  const source = fs.readFileSync('tests/visual-regression.spec.js', 'utf8');
+  const start = source.indexOf((name.startsWith('native') || name.startsWith('capture') ? 'async ' : '') + 'function ' + name + '(');
+  assert.ok(start >= 0);
+  const end = source.indexOf('\n}\n', start); assert.ok(end > start);
+  return new Function(...Object.keys(context), 'return (' + source.slice(start, end + 2) + ');')(...Object.values(context));
+}
+
+test('failure probe actual callback preserves ordinary/pass/rejection timeline and original error', async () => {
+  const run = actualFailureProbeFunction('nativeWithFailureProbe'), error = new Error('native'), timeline = [];
+  const reject = async () => { timeline.push('native-reject'); throw error; };
+  const probe = async () => { timeline.push('probe'); throw Error('observer'); };
+  assert.equal(await run(async () => 7, true, probe), 7); assert.deepEqual(timeline, []);
+  await assert.rejects(run(reject, false, probe), e => e === error); assert.deepEqual(timeline, ['native-reject']);
+  timeline.length = 0;
+  await assert.rejects(run(reject, true, probe), e => e === error); assert.deepEqual(timeline, ['native-reject','probe']);
+});
+
+test('failure probe actual admission refuses flag overlap, generation and external origin', () => {
+  const loopback = url => { const u = new URL(url); return ['http:','https:'].includes(u.protocol) && ['localhost','127.0.0.1','[::1]'].includes(u.hostname) && !u.username && !u.password; };
+  const admit = actualFailureProbeFunction('admitSceneDiagnostics', { diagnosticLoopback: loopback });
+  admit('', '', 'all', 'https://example.test');
+  admit('false', 'true', 'none', 'http://127.0.0.1:4173/games/');
+  for (const args of [['true','true','none','http://127.0.0.1'],['false','true','all','http://127.0.0.1'],['true','false','missing','http://127.0.0.1'],['','true','none','https://example.test'],['yes','','none','http://127.0.0.1']]) assert.throws(() => admit(...args));
+});
+
+test('actual failure collector takes paired samples before and after geometry, no writes', async () => {
+  const events = [], meta = { sha256:'a'.repeat(64), bytes:33, width:1, height:1 };
+  const collect = actualFailureProbeFunction('captureFailureProbe', { Date,
+    diagnosticLoopback: () => true, emitSceneDiagnostic: (_i,p) => events.push(p),
+    path, ownedFailurePng: () => meta, failurePngMetadata: () => meta,
+    captureSceneDiagnostic: async () => events.push('geometry') });
+  await collect({ url: () => 'http://127.0.0.1', screenshot: async options => {
+    assert.equal(options.scale,'css'); assert.equal(options.fullPage,false);
+    assert.equal(options.animations,'disabled'); assert.equal(options.caret,'hide');
+    assert.ok(options.timeout > 0 && options.timeout <= 700); events.push('screenshot'); return Buffer.alloc(33);
+  } }, { timeout:30000, outputDir:'/owned', attachments:[] }, {}, 'games-pixel-5-dark.png', Date.now());
+  assert.deepEqual(events.filter(e => e === 'screenshot' || e === 'geometry'), ['screenshot','screenshot','geometry','screenshot','screenshot']);
+  const source = fs.readFileSync('tests/visual-regression.spec.js','utf8');
+  const block = source.split('// failure-probe:start')[1].split('// failure-probe:end')[0];
+  assert.doesNotMatch(block, /writeFile|snapshotPath|setTimeout\(.*(?:5000|10000)/);
+  assert.match(block, /primary-native-failed-frame/); assert.match(block, /later-state-not-failed-frame-proof/);
+});
+
+test('actual workflow has default-off exclusive failure-only fixed Games filter and no update generation', () => {
+  const workflow = fs.readFileSync('.github/workflows/visual-regression.yml','utf8');
+  assert.match(workflow, /failure_scene_diagnostics:[\s\S]*?type: boolean\s+default: false/);
+  assert.ok(workflow.indexOf('Admit diagnostic scope') < workflow.indexOf('npm install'));
+  assert.match(workflow, /b==="true" && f==="true"/);
+  assert.match(workflow, /u!=="false"/);
+  assert.match(workflow, /failure_scene_diagnostics == 'true' && '--grep "games\.\*pixel-5\.\*dark"' \|\| ''/);
+  assert.match(workflow, /--update-snapshots=none/);
+  assert.match(workflow, /VS_FAILURE_SCENE_DIAGNOSTICS:/);
+  assert.doesNotMatch(workflow, /--retries|--timeout|maxDiff/);
+});
+
+
+test('actual PNG metadata rejects corrupt or unbounded headers without decoding content', () => {
+  const png = actualFailureProbeFunction('failurePngMetadata', { Buffer,
+    diagnosticBinary: bytes => ({bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}) });
+  const valid = Buffer.alloc(33); Buffer.from([137,80,78,71,13,10,26,10]).copy(valid);
+  valid.writeUInt32BE(13,8); valid.write('IHDR',12); valid.writeUInt32BE(393,16); valid.writeUInt32BE(727,20);
+  assert.deepEqual(png(valid), {bytes:33,width:393,height:727,sha256:createHash('sha256').update(valid).digest('hex')});
+  for (const bytes of [Buffer.alloc(33),valid.subarray(0,24),Buffer.alloc(4194305)]) assert.throws(() => png(bytes));
+  const bad = Buffer.from(valid); bad.writeUInt32BE(0,16); assert.throws(() => png(bad));
+});
+
+test('missing runner clock retains safe native metadata but skips all browser observation', async () => {
+  const events = [];
+  const collect = actualFailureProbeFunction('captureFailureProbe', { Date, path,
+    diagnosticLoopback: () => true, emitSceneDiagnostic: (_i,p,d) => events.push({p,...d}),
+    ownedFailurePng: () => ({bytes:33,width:1,height:1,sha256:'a'.repeat(64)}),
+    captureSceneDiagnostic: async () => { throw Error('must not observe'); },
+    failurePngMetadata: () => { throw Error('must not capture'); } });
+  await collect({url: () => 'http://127.0.0.1', screenshot: async () => {throw Error('must not screenshot');}},
+    {timeout:30000,outputDir:'/owned',attachments:[]}, {}, 'games-pixel-5-dark.png', undefined);
+  assert.equal(events[0].p,'native-attachment-actual');
+  assert.equal(events[0].evidence,'primary-native-failed-frame');
+  assert.equal(events.at(-1).reason,'runner-clock-unavailable-or-invalid');
+  assert.equal(events.some(e => e.p.includes('before-collector') || e.p.includes('after-collector')),false);
+});
+
+test('actual workflow admission executable rejects external, overlapping and generation diagnostics', () => {
+  const workflow = fs.readFileSync('.github/workflows/visual-regression.yml','utf8');
+  const body = workflow.match(/node --input-type=module -e '([\s\S]*?)'\n/)[1];
+  const admit = env => new Function('process','URL',body)({env},URL);
+  const normal = {DIAG_BEFORE:'false',DIAG_FAILURE:'false',DIAG_UPDATE:'false',DIAG_ORIGIN:'http://127.0.0.1:4173'};
+  admit(normal); admit({...normal,DIAG_FAILURE:'true'});
+  for (const bad of [{DIAG_FAILURE:'true',DIAG_BEFORE:'true'}, {DIAG_FAILURE:'true',DIAG_UPDATE:'true'},
+    {DIAG_FAILURE:'true',DIAG_ORIGIN:'https://vaultsparkstudios.com'}, {DIAG_BEFORE:'true',DIAG_ORIGIN:'http://user:pass@127.0.0.1'},
+    {DIAG_FAILURE:'yes'}, {DIAG_BEFORE:'true',DIAG_UPDATE:'true'}]) assert.throws(() => admit({...normal,...bad}));
+});
+
+
+// These filesystem witnesses exercise the actual descriptor/path reader. PNGs
+// are header fixtures only: no decoder/pixel-validity claim is made.
+function withOwnedFailureOutput(run) {
+  const temp = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'vs-failure-owned-')));
+  const identity = fs.lstatSync(temp);
+  assert.equal(identity.isSymbolicLink(), false);
+  try { return run(temp); }
+  finally {
+    const resolved = path.resolve(temp), current = fs.lstatSync(resolved);
+    assert.equal(resolved, temp);
+    assert.equal(fs.realpathSync(resolved), temp);
+    assert.equal(current.isDirectory(), true); assert.equal(current.isSymbolicLink(), false);
+    assert.equal(current.dev, identity.dev); assert.equal(current.ino, identity.ino);
+    assert.equal(path.dirname(resolved), fs.realpathSync(os.tmpdir()));
+    assert.match(path.basename(resolved), /^vs-failure-owned-[A-Za-z0-9]+$/);
+    // The exact absolute directory created above is checked before recursive
+    // removal. Never enumerate and interpolate deletion into another shell.
+    fs.rmSync(resolved, {recursive:true,force:true,maxRetries:3,retryDelay:50});
+  }
+}
+
+function headerOnlyFailurePng() {
+  const bytes = Buffer.alloc(33); Buffer.from([137,80,78,71,13,10,26,10]).copy(bytes);
+  bytes.writeUInt32BE(13,8); bytes.write('IHDR',12); bytes.writeUInt32BE(393,16); bytes.writeUInt32BE(727,20);
+  return bytes;
+}
+
+function actualOwnedFailureReader(filesystem = fs) {
+  const png = actualFailureProbeFunction('failurePngMetadata', { Buffer,
+    diagnosticBinary: bytes => ({bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}) });
+  return actualFailureProbeFunction('ownedFailurePng', {fs:filesystem,path,Buffer,failurePngMetadata:png});
+}
+
+test('actual owned PNG reader handles valid/outside/hardlink/oversize and linked ancestors', t => {
+  withOwnedFailureOutput(temp => {
+    const output = path.join(temp,'output'); fs.mkdirSync(output);
+    const bytes = headerOnlyFailurePng(), valid = path.join(output,'valid.png'); fs.writeFileSync(valid,bytes);
+    const read = actualOwnedFailureReader();
+    assert.equal(read(output,valid).sha256,createHash('sha256').update(bytes).digest('hex'));
+    const outside = path.join(temp,'outside.png'); fs.writeFileSync(outside,bytes);
+    assert.throws(() => read(output,outside),/Owned output/);
+    const hard = path.join(output,'hard.png'); fs.linkSync(valid,hard);
+    assert.throws(() => read(output,hard),/Output file bound/); fs.unlinkSync(hard);
+    const huge = path.join(output,'huge.png'); fs.writeFileSync(huge,Buffer.alloc(4194305));
+    assert.throws(() => read(output,huge),/Output file bound/);
+    const target = path.join(temp,'target'); fs.mkdirSync(target); fs.writeFileSync(path.join(target,'valid.png'),bytes);
+    const linked = path.join(output,'linked-dir');
+    let linkAvailable = false;
+    try { fs.symlinkSync(target,linked,process.platform === 'win32' ? 'junction' : 'dir'); linkAvailable = true; }
+    catch (error) {
+      if (!['EPERM','EACCES','ENOSYS','ENOTSUP'].includes(error.code)) throw error;
+      t.diagnostic('Native directory-link creation unavailable; explicit simulated lstat symbolic-link branch follows.');
+    }
+    if (linkAvailable) {
+      assert.throws(() => read(output,path.join(linked,'valid.png')),/Linked output/);
+      t.diagnostic('Native directory symlink/junction branch verified.');
+    } else {
+      let simulatedBranch = false;
+      const fakeFs = new Proxy(fs,{get(target,key) {
+        if (key === 'lstatSync') return candidate => {
+          if (candidate === linked) { simulatedBranch = true; return {isSymbolicLink:()=>true}; }
+          return target.lstatSync(candidate);
+        };
+        return target[key];
+      }});
+      assert.throws(() => actualOwnedFailureReader(fakeFs)(output,path.join(linked,'valid.png')),/Linked output/);
+      assert.equal(simulatedBranch,true);
+    }
+  });
+});
+
+test('actual failure metadata uses owned legacy expected copy and never outside baseline attachment', async () => {
+  // The actual collector is awaited before cleanup; withOwnedFailureOutput is
+  // synchronous, so create/validate/cleanup explicitly for this async witness.
+  const temp = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(),'vs-failure-owned-'))), initial = fs.lstatSync(temp);
+  try {
+    const output = path.join(temp,'output'); fs.mkdirSync(output);
+    const name = 'games-pixel-5-dark.png', bytes = headerOnlyFailurePng(), expectedCopy = path.join(output,'games-pixel-5-dark-expected.png');
+    for (const role of ['actual','expected','diff']) fs.writeFileSync(path.join(output,'games-pixel-5-dark-'+role+'.png'),bytes);
+    const outside = path.join(temp,'baseline-sentinel.png'); fs.writeFileSync(outside,Buffer.from('NEVER READ THIS BASELINE'));
+    const reads = [], events = [], read = actualOwnedFailureReader();
+    const collect = actualFailureProbeFunction('captureFailureProbe',{ Date,path,
+      diagnosticLoopback:()=>true,emitSceneDiagnostic:(_i,p,d)=>events.push({p,...d}),
+      ownedFailurePng:(dir,candidate)=>{reads.push(candidate);return read(dir,candidate);},
+      failurePngMetadata:()=>({bytes:33,width:393,height:727,sha256:'b'.repeat(64)}),
+      captureSceneDiagnostic:async()=>{} });
+    await collect({url:()=> 'http://127.0.0.1',screenshot:async()=>bytes},
+      {timeout:30000,outputDir:output,attachments:[{name:'games-pixel-5-dark-expected.png',contentType:'image/png',path:outside}]}, {},name,Date.now());
+    assert.equal(reads.includes(outside),false); assert.ok(reads.includes(expectedCopy));
+    const observed = events.find(e=>e.p==='native-attachment-expected');
+    assert.equal(observed.available,true); assert.equal(observed.sha256,createHash('sha256').update(bytes).digest('hex'));
+  } finally {
+    const resolved = path.resolve(temp), current = fs.lstatSync(resolved);
+    assert.equal(resolved,temp); assert.equal(fs.realpathSync(resolved),temp);
+    assert.equal(current.isDirectory(),true);assert.equal(current.isSymbolicLink(),false);
+    assert.equal(current.dev,initial.dev);assert.equal(current.ino,initial.ino);
+    assert.equal(path.dirname(resolved),fs.realpathSync(os.tmpdir()));assert.match(path.basename(resolved),/^vs-failure-owned-[A-Za-z0-9]+$/);
+    fs.rmSync(resolved,{recursive:true,force:true,maxRetries:3,retryDelay:50});
+  }
+});
+
+test('actual failure probe stops every later screenshot/geometry phase after clock expiry', async () => {
+  let now = 1000, screenshots = 0, geometry = 0;
+  const collect = actualFailureProbeFunction('captureFailureProbe',{Date:{now:()=>now},path,
+    diagnosticLoopback:()=>true,emitSceneDiagnostic:()=>{},ownedFailurePng:()=>({}),failurePngMetadata:()=>({}),
+    captureSceneDiagnostic:async()=>{geometry++;} });
+  await collect({url:()=> 'http://127.0.0.1',screenshot:async()=>{screenshots++;now=7000;return Buffer.alloc(33);}},
+    {timeout:30000,outputDir:'/owned',attachments:[]},{},'games-pixel-5-dark.png',1000);
+  assert.equal(screenshots,1);assert.equal(geometry,0);
+});
+
+test('actual scene collector checks deadline after evaluate before any CDP dispatch', async () => {
+  let now = 1000, cdpDispatches = 0, emitted = 0;
+  const collect = actualFailureProbeFunction('captureSceneDiagnostic',{Date:{now:()=>now},
+    diagnosticLoopback:()=>true,emitSceneDiagnostic:()=>{emitted++;},
+    createRequire:()=>()=>({version:'offline-fake'}),process:{cwd:()=>'/offline',version:'offline-fake'},
+    os:{platform:()=> 'offline',arch:()=> 'offline',cpus:()=>[]} });
+  const page={url:()=> 'http://127.0.0.1',evaluate:async()=>{now=1200;return {};},
+    context:()=>({newCDPSession:async()=>{cdpDispatches++;throw Error('must not dispatch');},browser:()=>({version:()=> 'offline-fake'})})};
+  await collect(page,{},'offline-after-failure',1100);
+  assert.equal(cdpDispatches,0);assert.equal(emitted,1);
+});
+
+test('failure diagnostic workflow preserves existing desktop-header precondition', () => {
+  const workflow = fs.readFileSync('.github/workflows/visual-regression.yml','utf8');
+  const step = workflow.split('- name: Verify desktop header fit in every theme')[1].split('- name: Run visual-regression snapshots')[0];
+  assert.doesNotMatch(step,/\bif:/);
+  assert.match(step,/run: npx playwright test tests\/navigation\.spec\.js --grep "Desktop header keeps every control"/);
+});

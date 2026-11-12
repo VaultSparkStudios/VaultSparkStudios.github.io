@@ -17,6 +17,8 @@ import { test, expect, devices } from '@playwright/test';
 import { createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
 import os from 'node:os';
+import fs from 'node:fs';
+import path from 'node:path';
 import { VISUAL_SCENES, visualSceneState } from '../scripts/lib/visual-scene-contract.mjs';
 
 const PIXEL_RATIO_TOLERANCE = 0.015; // 1.5%
@@ -45,6 +47,11 @@ const VIEWPORTS = [
 // S160 #18: two-theme sweep — light/warm/cool/high-contrast bugs (like the S132
 // `body.dark-mode` specificity trap) only surface when the saved theme flips.
 const THEMES = ['dark', 'light'];
+if (process.env.VS_SCENE_DIAGNOSTICS === 'true' || process.env.VS_FAILURE_SCENE_DIAGNOSTICS === 'true') {
+  // Full update mode is validated again using actual testInfo before navigation.
+  admitSceneDiagnostics(process.env.VS_SCENE_DIAGNOSTICS, process.env.VS_FAILURE_SCENE_DIAGNOSTICS,
+    'none', process.env.VR_BASE_URL || process.env.BASE_URL || 'https://vaultsparkstudios.com');
+}
 
 // Playwright forbids setting `defaultBrowserType` (or `browserName`) inside a
 // describe group — it would force a new worker ("Cannot use({ defaultBrowserType })
@@ -141,14 +148,24 @@ function observeNativeScreenshot(page, identity) {
   };
 }
 
-async function captureSceneDiagnostic(page, identity, phase) {
+async function captureSceneDiagnostic(page, identity, phase, deadline = Infinity) {
+  // A deadline stops awaiting/scheduling additional observation commands; it
+  // cannot cancel an already-issued CDP/evaluate command. Context teardown owns it.
+  const bounded = async operation => {
+    if (deadline === Infinity) return operation();
+    const ms = deadline - Date.now(); if (ms <= 0) throw Error('Diagnostic budget');
+    let timer;
+    try { return await Promise.race([operation(), new Promise((_, reject) => {
+      timer = setTimeout(() => reject(Error('Diagnostic budget')), ms);
+    })]); } finally { clearTimeout(timer); }
+  };
   const started = Date.now();
   try {
     if (!diagnosticLoopback(page.url())) {
       emitSceneDiagnostic(identity, phase, { available: false, reason: 'non-loopback-resolved-origin' });
       return;
     }
-    const geometry = await page.evaluate(() => {
+    const geometry = await bounded(() => page.evaluate(() => {
       const rect = r => ({ x: r.x, y: r.y, width: r.width, height: r.height,
         top: r.top, right: r.right, bottom: r.bottom, left: r.left });
       const visible = el => { const r = el.getBoundingClientRect(), s = getComputedStyle(el);
@@ -186,25 +203,25 @@ async function captureSceneDiagnostic(page, identity, phase) {
           .filter(({ el }) => visible(el)).slice(0, 8).map(({ el, index }) => ({ index, ...sample(el) })),
         fontsStatus: document.fonts?.status || 'unavailable',
       };
-    });
+    }));
     const platformFonts = [];
     let cdp;
     try {
-      cdp = await page.context().newCDPSession(page);
-      await cdp.send('DOM.enable');
-      await cdp.send('CSS.enable');
-      const { root } = await cdp.send('DOM.getDocument', { depth: 0 });
+      cdp = await bounded(() => page.context().newCDPSession(page));
+      await bounded(() => cdp.send('DOM.enable'));
+      await bounded(() => cdp.send('CSS.enable'));
+      const { root } = await bounded(() => cdp.send('DOM.getDocument', { depth: 0 }));
       for (const selector of ['.page-hero p', '.mem-hero-sub', '.vs-spine-kin a', '.site-header .brand', 'h1', '.ignis-oracle__lede', '#oracle-heading']) {
-        const { nodeId } = await cdp.send('DOM.querySelector', { nodeId: root.nodeId, selector });
+        const { nodeId } = await bounded(() => cdp.send('DOM.querySelector', { nodeId: root.nodeId, selector }));
         if (!nodeId) { platformFonts.push({ selector, available: false }); continue; }
-        const { fonts } = await cdp.send('CSS.getPlatformFontsForNode', { nodeId });
+        const { fonts } = await bounded(() => cdp.send('CSS.getPlatformFontsForNode', { nodeId }));
         platformFonts.push({ selector, available: true, fonts: fonts.slice(0, 8).map(font => ({
           familyName: String(font.familyName).slice(0, 96), postScriptName: String(font.postScriptName).slice(0, 96),
           isCustomFont: font.isCustomFont, glyphCount: font.glyphCount,
         })) });
       }
     } catch { platformFonts.push({ available: false, reason: 'cdp-font-observation-unavailable' }); }
-    finally { if (cdp) await cdp.detach().catch(() => {}); }
+    finally { if (cdp) { if (deadline === Infinity) await cdp.detach().catch(() => {}); else void cdp.detach().catch(() => {}); } }
     let playwrightVersion = 'unavailable';
     try { playwrightVersion = createRequire(process.cwd() + '/package.json')('@playwright/test/package.json').version; } catch {}
     emitSceneDiagnostic(identity, phase, { elapsedMs: Date.now() - started, geometry, platformFonts,
@@ -214,6 +231,112 @@ async function captureSceneDiagnostic(page, identity, phase) {
   } catch { emitSceneDiagnostic(identity, phase, { available: false, reason: 'scene-observation-unavailable' }); }
 }
 // scene-diagnostics:end
+
+// failure-probe:start — all browser observations happen AFTER native rejection.
+function admitSceneDiagnostics(before, failure, update, origin) {
+  if (![before, failure].every(v => ['', 'false', 'true'].includes(v || '')))
+    throw new Error('Diagnostic flags must be boolean.');
+  if (before === 'true' && failure === 'true') throw new Error('Diagnostic flags are exclusive.');
+  if ((before === 'true' || failure === 'true') && (update !== 'none' || !diagnosticLoopback(origin)))
+    throw new Error('Diagnostics require loopback comparison with snapshot updates disabled.');
+}
+
+async function nativeWithFailureProbe(assertion, enabled, probe) {
+  try { return await assertion(); }
+  catch (originalError) {
+    if (enabled) { try { await probe(); } catch { /* Never replace native failure. */ } }
+    throw originalError;
+  }
+}
+
+function failurePngMetadata(bytes) {
+  if (!(bytes instanceof Uint8Array) || bytes.length < 33 || bytes.length > 4194304) throw Error('PNG bound');
+  const b = Buffer.from(bytes);
+  if (!b.subarray(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10])) ||
+      b.readUInt32BE(8) !== 13 || b.toString('ascii', 12, 16) !== 'IHDR') throw Error('PNG header');
+  const width = b.readUInt32BE(16), height = b.readUInt32BE(20);
+  if (!width || !height || width > 16384 || height > 16384) throw Error('PNG dimensions');
+  return { ...diagnosticBinary(b), width, height };
+}
+
+function ownedFailurePng(outputDir, candidate) {
+  const root = path.resolve(outputDir), full = path.resolve(candidate);
+  let ancestor = path.parse(root).root;
+  for (const part of root.slice(ancestor.length).split(path.sep)) {
+    ancestor = path.join(ancestor, part);
+    if (fs.lstatSync(ancestor).isSymbolicLink()) throw Error('Linked output root');
+  }
+  if (fs.realpathSync(root) !== root) throw Error('Output root alias');
+  const relative = path.relative(root, full);
+  if (!relative || relative.startsWith('..') || path.isAbsolute(relative)) throw Error('Owned output only');
+  let current = root;
+  for (const part of relative.split(path.sep)) {
+    current = path.join(current, part);
+    if (fs.lstatSync(current).isSymbolicLink()) throw Error('Linked output');
+  }
+  if (fs.realpathSync(full) !== full) throw Error('Output alias');
+  const before = fs.lstatSync(full);
+  if (!before.isFile() || before.nlink !== 1 || before.size > 4194304) throw Error('Output file bound');
+  const fd = fs.openSync(full, fs.constants.O_RDONLY | (fs.constants.O_NOFOLLOW || 0));
+  try {
+    const identity = v => [v.dev,v.ino,v.mode,v.nlink,v.size,v.mtimeMs,v.ctimeMs].join(':');
+    if (identity(before) !== identity(fs.fstatSync(fd))) throw Error('Output changed');
+    const buffer = Buffer.alloc(before.size + 1);
+    const length = fs.readSync(fd, buffer, 0, buffer.length, 0);
+    if (length !== before.size) throw Error('Output read bound');
+    const bytes = buffer.subarray(0, length);
+    if (identity(before) !== identity(fs.fstatSync(fd)) || identity(before) !== identity(fs.lstatSync(full))) throw Error('Output changed');
+    return failurePngMetadata(bytes);
+  } finally { fs.closeSync(fd); }
+}
+
+async function captureFailureProbe(page, testInfo, identity, snapshotName, startedAt) {
+  // Never extend test timeout. Leave teardown margin; observations may be absent.
+  // Optional runner clock: if unavailable, withhold observations, not native failure.
+  const validClock = Number.isFinite(startedAt) && startedAt <= Date.now() &&
+    Number.isFinite(testInfo.timeout) && testInfo.timeout > 0;
+  // Without the runner clock, permit bounded native-file metadata only. This
+  // fallback is NOT a fabricated test start and schedules no browser operation.
+  const deadline = validClock ? Math.min(Date.now() + 5500, startedAt + testInfo.timeout - 1000) : Date.now() + 250;
+  const remaining = () => deadline - Date.now();
+  const emit = (phase, data) => emitSceneDiagnostic(identity, phase, {
+    evidence: 'later-state-not-failed-frame-proof', ...data });
+  if (!diagnosticLoopback(page.url())) { emit('failure-probe-skipped', { reason: 'non-loopback-resolved-origin' }); return; }
+  for (const role of ['actual', 'expected', 'diff']) {
+    if (remaining() < 100) break;
+    try {
+      const attachment = testInfo.attachments.slice(0, 128).find(a =>
+        a.contentType === 'image/png' && a.name === snapshotName.replace(/\.png$/, '-' + role + '.png') && a.path);
+      // Native expected attachment can point at the baseline: NEVER read it.
+      // Read only its already-written fixed legacy copy in this test output.
+      const copy = path.join(testInfo.outputDir, snapshotName.replace(/\.png$/, '-' + role + '.png'));
+      let candidate = copy;
+      if (role !== 'expected' && attachment) candidate = attachment.path;
+      emit('native-attachment-' + role, { role, evidence: role === 'actual' ? 'primary-native-failed-frame' : 'native-matcher-artifact',
+        available: true, ...ownedFailurePng(testInfo.outputDir, candidate) });
+    } catch { emit('native-attachment-' + role, { role, available: false, reason: 'owned-native-copy-unavailable' }); }
+  }
+  if (!validClock) { emit('failure-probe-skipped', { reason: 'runner-clock-unavailable-or-invalid' }); return; }
+  if (remaining() < 100) { emit('failure-probe-skipped', { reason: 'test-budget-exhausted' }); return; }
+  const sample = async phase => {
+    if (remaining() < 100 || !diagnosticLoopback(page.url())) return;
+    try {
+      const bytes = await page.screenshot({ type: 'png', scale: 'css', fullPage: false,
+        animations: 'disabled', caret: 'hide', timeout: Math.min(700, remaining()) });
+      emit(phase, { available: true, ...failurePngMetadata(bytes) });
+    } catch { emit(phase, { available: false, reason: 'bounded-later-screenshot-unavailable' }); }
+  };
+  await sample('after-failure-before-collector-1');
+  await sample('after-failure-before-collector-2');
+  if (remaining() > 1500) {
+    try { await captureSceneDiagnostic(page, identity, 'after-failure-geometry', Math.min(deadline, Date.now() + 1500)); }
+    catch { emit('after-failure-geometry', { available: false, reason: 'bounded-collector-unavailable' }); }
+  }
+  await sample('after-failure-after-collector-1');
+  await sample('after-failure-after-collector-2');
+}
+// failure-probe:end
+
 
 async function waitForVisualReadiness(page, surface) {
   // Snapshot scene: genuinely engaged, reduced-motion, settled UI. This uses
@@ -317,7 +440,10 @@ for (const vp of VIEWPORTS) {
       for (const surface of SURFACES) {
         test(`${surface.name} · ${vp.name} · ${theme}`, async ({ page, baseURL }, testInfo) => {
         const sceneDiagnostics = process.env.VS_SCENE_DIAGNOSTICS === 'true';
+        const failureSceneDiagnostics = process.env.VS_FAILURE_SCENE_DIAGNOSTICS === 'true';
+        const startedAt = failureSceneDiagnostics ? testInfo._startWallTime : null;
         const targetUrl = new URL(surface.path, process.env.VR_BASE_URL || baseURL).href;
+        admitSceneDiagnostics(process.env.VS_SCENE_DIAGNOSTICS, process.env.VS_FAILURE_SCENE_DIAGNOSTICS, testInfo.config.updateSnapshots, targetUrl);
         if (sceneDiagnostics && !diagnosticLoopback(targetUrl)) {
           throw new Error('Scene diagnostics require a loopback candidate origin.');
         }
@@ -331,7 +457,7 @@ for (const vp of VIEWPORTS) {
         // Use the candidate selected by Playwright. Dedicated manual baseline
         // capture can still choose an explicit alternate VR_BASE_URL.
         await page.goto(targetUrl, { waitUntil: 'load', timeout: 30000 });
-        if (sceneDiagnostics && !diagnosticLoopback(page.url())) {
+        if ((sceneDiagnostics || failureSceneDiagnostics) && !diagnosticLoopback(page.url())) {
           throw new Error('Scene diagnostics require a loopback resolved origin.');
         }
         // The public genome strip can appear under Chromium's default (0,0)
@@ -370,11 +496,18 @@ for (const vp of VIEWPORTS) {
         if (sceneDiagnostics) await captureSceneDiagnostic(page, identity, 'before-native-matcher');
         const restoreNative = sceneDiagnostics ? observeNativeScreenshot(page, identity) : null;
         try {
+        if (failureSceneDiagnostics) {
+          const snapshotName = `${surface.name}-${vp.name}-${theme}.png`;
+          await nativeWithFailureProbe(() => expect(page).toHaveScreenshot(snapshotName, {
+            fullPage: false, maxDiffPixelRatio: PIXEL_RATIO_TOLERANCE, animations: 'disabled',
+          }), true, () => captureFailureProbe(page, testInfo, identity, snapshotName, startedAt));
+        } else {
         await expect(page).toHaveScreenshot(`${surface.name}-${vp.name}-${theme}.png`, {
           fullPage: false,
           maxDiffPixelRatio: PIXEL_RATIO_TOLERANCE,
           animations: 'disabled',
         });
+        }
         } finally {
           if (restoreNative) restoreNative();
           if (sceneDiagnostics) await captureSceneDiagnostic(page, identity, 'after-native-matcher');

@@ -54,7 +54,13 @@ on:
         required: false
         default: 'false'
       scene_diagnostics:
-        description: 'Log bounded read-only scene/native-matcher diagnostics (loopback origin only; generation stays provisional)'
+        description: 'Log bounded read-only scene/native-matcher diagnostics (loopback comparison only; snapshot generation refused)'
+        required: false
+        type: boolean
+        default: false
+
+      failure_scene_diagnostics:
+        description: 'Failure-only Games Pixel5 dark later-state probe; loopback comparison only, never baseline generation'
         required: false
         type: boolean
         default: false
@@ -66,6 +72,22 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+      - name: Admit diagnostic scope before browser setup
+        env:
+          DIAG_BEFORE: ${{ github.event.inputs.scene_diagnostics || 'false' }}
+          DIAG_FAILURE: ${{ github.event.inputs.failure_scene_diagnostics || 'false' }}
+          DIAG_UPDATE: ${{ github.event.inputs.update_baselines || 'false' }}
+          DIAG_ORIGIN: ${{ github.event.inputs.base_url || 'http://127.0.0.1:4173' }}
+        run: |
+          node --input-type=module -e '
+          const {DIAG_BEFORE:b,DIAG_FAILURE:f,DIAG_UPDATE:u,DIAG_ORIGIN:o}=process.env;
+          if (![b,f,u].every(v=>["true","false"].includes(v))) throw Error("Boolean diagnostic inputs required");
+          if (b==="true" && f==="true") throw Error("Diagnostic flags are exclusive");
+          if (b==="true" || f==="true") {
+            const x=new URL(o);
+            if (u!=="false" || !["http:","https:"].includes(x.protocol) || !["localhost","127.0.0.1","[::1]"].includes(x.hostname) || x.username || x.password)
+              throw Error("Diagnostics require loopback comparison without generation");
+          }'
       - name: Admit candidate capture source
         env:
           CAPTURE_ORIGIN: ${{ github.event.inputs.base_url || 'http://127.0.0.1:4173' }}
@@ -103,10 +125,13 @@ jobs:
         env:
           BASE_URL: http://127.0.0.1:4173
           VR_BASE_URL: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.base_url || '' }}
+          VS_FAILURE_SCENE_DIAGNOSTICS: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.failure_scene_diagnostics == 'true' && 'true' || '' }}
           VS_SCENE_DIAGNOSTICS: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.scene_diagnostics == 'true' && 'true' || '' }}
         run: >-
           npx playwright test tests/visual-regression.spec.js --project=chromium --reporter=line
           ${{ github.event.inputs.update_baselines == 'true' && '--update-snapshots=all' || '' }}
+          ${{ (github.event.inputs.scene_diagnostics == 'true' || github.event.inputs.failure_scene_diagnostics == 'true') && '--update-snapshots=none' || '' }}
+          ${{ github.event.inputs.failure_scene_diagnostics == 'true' && '--grep "games.*pixel-5.*dark"' || '' }}
       - name: Stop candidate preview
         if: always()
         run: |
