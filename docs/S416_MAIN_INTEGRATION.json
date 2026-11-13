@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "session": 416,
+  "publicSafe": true,
+  "recordedAt": "2026-11-13T08:41:45.022Z",
+  "state": "merged-source-visual-mobile-verified-required-ci-pending",
+  "checkpoint": "47736a048a",
+  "mergeCommit": "517a66b2ae",
+  "incomingMain": "674ee5e9cf",
+  "generatedConflictsResolved": 28,
+  "measuredHistoriesPreservedExactIncoming": 5,
+  "resync": {
+    "nativeExit": 0,
+    "ownersPassed": 53,
+    "ownersChecked": 53,
+    "sideEffectingDeploymentSkipped": 1
+  },
+  "visual": {
+    "receipt": "docs/S416_VISUAL_REVIEW.json",
+    "beforeOriginalsReviewed": 42,
+    "afterOriginalsReviewed": 42,
+    "themes": 7,
+    "viewports": [
+      1366,
+      390
+    ],
+    "canon053Passed": true,
+    "latestReceiptSha256": "f5c4edc5750fe2c734ef6d9c513832feb0326fa975d804b75c0e4e134736c0f2",
+    "scopedLimitation": "Focused changed targets only. Tall mobile API crops include the fixed header over part of the unrelated first Desk card; the changed Forge Ledger card remains unobstructed. No numeric WCAG AA, entire-panel-unobstructed, authentication, native Linux, staging-current-candidate or production acceptance claim.",
+    "finalHomeRecaptureReviewed": 28
+  },
+  "mobile": {
+    "receipt": "docs/mobile-audit/receipt.json",
+    "receiptSha256": "684aa878d723bc44e0117fdbb79e332bbbb9ef29b43889c9a3c1622665c5aa2e",
+    "generatedAt": "2026-11-13T07:50:47.131Z",
+    "origin": "http://127.0.0.1:4173",
+    "completedProbes": 215,
+    "routes": 43,
+    "viewports": 5,
+    "captures": 175,
+    "p0": 0,
+    "p1": 0,
+    "p2IssueTypes": 2,
+    "pixelReviewClaimed": false,
+    "sourceAndCandidateCheckPassed": true,
+    "orderingCheckPassed": true,
+    "priorArtifactsPreserved": true
+  },
+  "firstSourceAttempt": {
+    "firstStep": 1,
+    "planned": 555,
+    "failedStep": 172,
+    "nativeExit": 1,
+    "reason": "Mobile receipt bound the earlier homepage; full fresh mobile matrix now passed",
+    "failureEvidencePreserved": true
+  },
+  "fullCurrentSourceVerified": true,
+  "exactRequiredWorkflowsVerified": false,
+  "remotePushed": false,
+  "productionPromoted": false,
+  "limitations": [
+    "Positive affected authenticated journeys remain pending.",
+    "Required exact-SHA hosted checks, final current staging parity, production and closeout remain pending."
+  ],
+  "fullSource": {
+    "nativeExit": 0,
+    "firstStep": 1,
+    "planned": 555,
+    "passed": 555,
+    "failed": 0,
+    "sourceFingerprint": "a880a6d8562c614847730945",
+    "planFingerprint": "9b7bc81ac2d556edb67175ff",
+    "startedAt": "2026-11-13T08:24:40.988Z",
+    "finishedAt": "2026-11-13T08:31:30.634Z"
+  },
+  "secondSourceAttempt": {
+    "firstStep": 1,
+    "planned": 555,
+    "failedStep": 441,
+    "nativeExit": 1,
+    "reason": "Rank report exceeded48hour freshness; actual public rank collection and scoped derived resync completed before full third run",
+    "failureEvidencePreserved": true
+  },
+  "callbackBoundaryRegression": {
+    "requests": 16,
+    "ownedFlows": 6,
+    "cleanupsVerified": 6,
+    "providerVersionAndBindingsUnchanged": true,
+    "authenticatedAcceptance": false,
+    "fullReleaseAccepted": false
+  }
+}

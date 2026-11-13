@@ -1,8 +1,8 @@
-# Mobile Experience Audit — 2026-04-21
+# Mobile Experience Audit — 2026-11-13
 
 **Scope:** 5 viewports × 43 pages = 215 page-viewport probes.
 **Viewports:** 360 (iPhone SE), 390 (iPhone 14), 430 (Pro Max), 768 (iPad portrait), 1024 (iPad landscape).
-**Base URL:** `https://vaultsparkstudios.com`
+**Base URL:** `http://127.0.0.1:4173`
 
 Screenshots live in `docs/mobile-audit/`. Raw findings in `docs/mobile-audit/findings.jsonl`.
 
@@ -22,21 +22,21 @@ Screenshots live in `docs/mobile-audit/`. Raw findings in `docs/mobile-audit/fin
 
 <details><summary>Sample offenders</summary>
 
-- `home` @ iphone-se — 13 text block(s) under 13px
-  - `{"tag":"button","fs":12.8,"text":"⌕\nSearch"}`
-  - `{"tag":"a","fs":12.5,"text":"LATEST FROM THE FORGE\nRefined stop publishing a bo"}`
+- `home` @ iphone-se — 15 text block(s) under 13px
+  - `{"tag":"span","fs":10.4,"text":"AI & SUPER INTELLIGENCE (SI) STUDIO  · GAMES  ·  T"}`
+  - `{"tag":"a","fs":12.5,"text":"LATEST FROM THE FORGE\nA clearer studio, from the V"}`
   - `{"tag":"span","fs":10.4,"text":"LATEST FROM THE FORGE"}`
-  - `{"tag":"span","fs":12.5,"text":"Refined stop publishing a bot challenge as an outa"}`
-- `games-landing` @ iphone-se — 25 text block(s) under 13px
-  - `{"tag":"button","fs":12.8,"text":"⌕\nSearch"}`
+  - `{"tag":"span","fs":12.5,"text":"A clearer studio, from the Vault to the investor r"}`
+- `games-landing` @ iphone-se — 28 text block(s) under 13px
   - `{"tag":"span","fs":12,"text":"🔥 SPARKED"}`
   - `{"tag":"span","fs":12,"text":"⚒️ IN THE FORGE"}`
   - `{"tag":"span","fs":12,"text":"🔒 VAULTED"}`
-- `game-cod` @ iphone-se — 10 text block(s) under 13px
-  - `{"tag":"button","fs":12.8,"text":"⌕\nSearch"}`
+  - `{"tag":"span","fs":12,"text":"NO DOWNLOAD"}`
+- `game-cod` @ iphone-se — 8 text block(s) under 13px
   - `{"tag":"span","fs":11.2,"text":"⚒ IN THE FORGE"}`
   - `{"tag":"span","fs":10.4,"text":"RIGHT NOW"}`
-  - `{"tag":"span","fs":12.5,"text":"Touched today"}`
+  - `{"tag":"span","fs":12.5,"text":"VAULT RATING"}`
+  - `{"tag":"span","fs":12.8,"text":"First Climb quest: play two Vault games"}`
 
 </details>
 
@@ -48,12 +48,11 @@ Screenshots live in `docs/mobile-audit/`. Raw findings in `docs/mobile-audit/fin
 <details><summary>Sample offenders</summary>
 
 - `home` @ iphone-se — 1 image(s) without width/height attrs
-  - `{"src":"/assets/covers/doodie.png","w":326,"h":166}`
-- `press` @ iphone-se — 2 image(s) without width/height attrs
-  - `{"src":"../assets/vaultspark-cinematic-logo.webp","w":160,"h":160}`
-  - `{"src":"../assets/vaultspark-cinematic-logo.webp","w":160,"h":160}`
+  - `{"src":"/assets/covers/doodie.png","w":326,"h":201}`
 - `home` @ iphone-14 — 1 image(s) without width/height attrs
-  - `{"src":"/assets/covers/doodie.png","w":356,"h":181}`
+  - `{"src":"/assets/covers/doodie.png","w":356,"h":201}`
+- `press` @ iphone-14 — 1 image(s) without width/height attrs
+  - `{"src":"/assets/brand/logo-cinematic.webp","w":308,"h":308}`
 
 </details>
 
@@ -62,7 +61,7 @@ Screenshots live in `docs/mobile-audit/`. Raw findings in `docs/mobile-audit/fin
 | Page | URL | Worst | Issues (across all VPs) |
 |---|---|---|---|
 | `home` | / | P2 | 8 |
-| `press` | /press/ | P2 | 8 |
+| `press` | /press/ | P2 | 7 |
 | `games-landing` | /games/ | P2 | 3 |
 | `game-cod` | /games/call-of-doodie/ | P2 | 3 |
 | `game-gridiron` | /games/gridiron-gm/ | P2 | 3 |
@@ -80,9 +79,6 @@ Screenshots live in `docs/mobile-audit/`. Raw findings in `docs/mobile-audit/fin
 | `project-canon` | /projects/canon/ | P2 | 3 |
 | `project-ideaforge` | /projects/ideaforge/ | P2 | 3 |
 | `project-living` | /projects/the-living-protocol/ | P2 | 3 |
-| `project-signal` | /projects/signal-log/ | P2 | 3 |
-| `project-vmember` | /projects/vault-member/ | P2 | 3 |
-| `project-vpipe` | /projects/vault-pipeline/ | P2 | 3 |
 | `universe-landing` | /universe/ | P2 | 3 |
 | `universe-voidfall` | /universe/voidfall/ | P2 | 3 |
 | `universe-dreadspike` | /universe/dreadspike/ | P2 | 3 |
@@ -97,13 +93,16 @@ Screenshots live in `docs/mobile-audit/`. Raw findings in `docs/mobile-audit/fin
 | `journal` | /journal/ | P2 | 3 |
 | `journal-post` | /journal/vault-opened/ | P2 | 3 |
 | `contact` | /contact/ | P2 | 3 |
-| `faq` | /faq/ | P2 | 3 |
 | `roadmap` | /roadmap/ | P2 | 3 |
 | `changelog` | /changelog/ | P2 | 3 |
 | `status` | /status/ | P2 | 3 |
 | `notebook` | /notebook/ | P2 | 3 |
 | `community` | /community/ | P2 | 3 |
-| `pathway-players` | /pathways/players/ | P2 | 3 |
+| `project-signal` | /projects/signal-log/ | P2 | 2 |
+| `project-vmember` | /projects/vault-member/ | P2 | 2 |
+| `project-vpipe` | /projects/vault-pipeline/ | P2 | 2 |
+| `faq` | /faq/ | P2 | 2 |
+| `pathway-players` | /pathways/players/ | P2 | 2 |
 
 ## Recommended fix plan
 

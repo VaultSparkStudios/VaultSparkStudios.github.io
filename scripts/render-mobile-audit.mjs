@@ -5,6 +5,7 @@ import path from 'node:path';
 const root = process.cwd();
 const findingsPath = path.join(root, 'docs', 'mobile-audit', 'findings.jsonl');
 const outPath = path.join(root, 'docs', 'MOBILE_AUDIT_2026-04-21.md');
+const receiptPath = path.join(root, 'docs', 'mobile-audit', 'receipt.json');
 
 if (!fs.existsSync(findingsPath)) {
   console.error(`No findings file at ${findingsPath}. Run: npx playwright test tests/mobile-audit.spec.js`);
@@ -13,6 +14,10 @@ if (!fs.existsSync(findingsPath)) {
 
 const records = fs.readFileSync(findingsPath, 'utf8')
   .split('\n').filter(Boolean).map(l => JSON.parse(l));
+const auditTime = fs.existsSync(receiptPath)
+  ? JSON.parse(fs.readFileSync(receiptPath, 'utf8')).generatedAt : null;
+const auditDate = typeof auditTime === 'string' && Number.isFinite(Date.parse(auditTime))
+  ? auditTime.slice(0, 10) : 'date unrecorded';
 
 const SEV_RANK = { P0: 0, P1: 1, P2: 2 };
 
@@ -43,11 +48,11 @@ for (const rec of records) {
 
 // Build markdown
 const lines = [];
-lines.push('# Mobile Experience Audit — 2026-04-21');
+lines.push('# Mobile Experience Audit — ' + auditDate);
 lines.push('');
 lines.push('**Scope:** 5 viewports × ' + (new Set(records.map(r => r.page))).size + ' pages = ' + records.length + ' page-viewport probes.');
 lines.push('**Viewports:** 360 (iPhone SE), 390 (iPhone 14), 430 (Pro Max), 768 (iPad portrait), 1024 (iPad landscape).');
-lines.push('**Base URL:** `' + (process.env.BASE_URL || 'https://vaultsparkstudios.com') + '`');
+lines.push('**Base URL:** `' + (process.env.BASE_URL || 'unrecorded; supply the audited BASE_URL') + '`');
 lines.push('');
 lines.push('Screenshots live in `docs/mobile-audit/`. Raw findings in `docs/mobile-audit/findings.jsonl`.');
 lines.push('');

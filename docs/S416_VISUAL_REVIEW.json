@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "session": 416,
+  "publicSafe": true,
+  "recordedAt": "2026-11-13T08:40:27.576Z",
+  "scope": "Three changed public targets on home and API pages",
+  "before": {
+    "sourceCommit": "4ef9b08dca31d3e32a7abd25a311d15355b0fc6b",
+    "sealSha256": "5c095631c4ab9c81c05bfa6edb995fd0caa21d56199441cac10f8c1a755d63a2",
+    "manifestSha256": "c7f677ac429b939dad3cd20e71a62034d9e4fa6c33a59110c322b8fd636fba4c",
+    "reviewSha256": "de59e5ebc87a1eb0076ebfa35d4bfb44b4b0b099e78d7381c65d4c6f058b6ea7",
+    "originalsReviewed": 42,
+    "exactDeclaredEdgeTransformVerified": true,
+    "currentProviderReadClaimed": false
+  },
+  "after": {
+    "candidate": {
+      "manifest": "api/candidate-artifact-manifest.json",
+      "manifestSha256": "09ea30072df7429884991235180c3922bb46f8b08ecc20d6038a419953e77aaa",
+      "candidateSha": "ceba607f4d6eec139f4cb85f84a17ceaf48e3c4f",
+      "root": "689d97ffded685c731a7125ecf9f7e2bfcc419d559a204c5cecbcc5e6b8370fe"
+    },
+    "reviewSha256": "7dc0c6fbad80e949ac7e9b881ebec5f6756dca049424d24b18f49d5435fbdf29",
+    "originalsReviewed": 42,
+    "receipts": [
+      {
+        "id": "launch",
+        "file": "docs/visual-qa/S416-launch.json",
+        "sha256": "906c233ae9f8add2f8b02af955a154947fb59729446c84cdc5704a0325458944",
+        "images": 14
+      },
+      {
+        "id": "cadence",
+        "file": "docs/visual-qa/S416-cadence.json",
+        "sha256": "f5c4edc5750fe2c734ef6d9c513832feb0326fa975d804b75c0e4e134736c0f2",
+        "images": 14
+      },
+      {
+        "id": "api",
+        "file": "docs/visual-qa/S416-api.json",
+        "sha256": "be80e29587c6a5b860b127cac8d6e66346eb9dce0a9c95a924826da24db1e445",
+        "images": 14
+      }
+    ],
+    "latestReceiptSha256": "f5c4edc5750fe2c734ef6d9c513832feb0326fa975d804b75c0e4e134736c0f2"
+  },
+  "themes": 7,
+  "viewports": [
+    {
+      "name": "desktop",
+      "width": 1366,
+      "height": 900
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "changedTargetsReadable": true,
+  "blockingDefectsOpen": 0,
+  "limitation": "Focused changed targets only. Tall mobile API crops include the fixed header over part of the unrelated first Desk card; the changed Forge Ledger card remains unobstructed. No numeric WCAG AA, entire-panel-unobstructed, authentication, native Linux, staging-current-candidate or production acceptance claim.",
+  "nativeAcceptance": false,
+  "productionAcceptance": false
+}
