@@ -14,6 +14,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { writeJsonAtomic } from './lib/evidence-io.mjs';
+import { runtimeContextArgs, loadRuntimeContext, runtimeArtifactPath } from './lib/isolated-staging-evidence.mjs';
 import { CORE_PATHS } from './build-candidate-artifact-manifest.mjs';
 import {
   CONTINUITY_ARTIFACT_PATH,
@@ -23,9 +24,11 @@ import {
 } from './lib/staging-deploy-continuity.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const isolatedArgs=runtimeContextArgs(process.argv.slice(2));
+const isolatedContext=isolatedArgs ? await loadRuntimeContext(ROOT,isolatedArgs.file,isolatedArgs.hash) : null;
 const RECEIPT = path.join(ROOT, 'api', 'staging-deploy-receipt.json');
 const HISTORY = path.join(ROOT, 'data', 'staging-deploy-history.ndjson');
-const OUT = path.join(ROOT, CONTINUITY_ARTIFACT_PATH);
+const OUT = isolatedContext ? runtimeArtifactPath(ROOT,isolatedContext,'staging-deploy-continuity') : path.join(ROOT, CONTINUITY_ARTIFACT_PATH);
 
 function assertOutsideCandidateManifest() {
   if (CORE_PATHS.includes(CONTINUITY_ARTIFACT_PATH)) {
@@ -34,6 +37,7 @@ function assertOutsideCandidateManifest() {
 }
 
 function buildFromRepo() {
+  if (isolatedContext) return buildContinuitySummary(isolatedContext.historyText,isolatedContext.receipt);
   if (!fs.existsSync(RECEIPT) || !fs.existsSync(HISTORY)) {
     throw new Error('receipt or history unavailable; run `node scripts/deploy-staging.mjs`');
   }
@@ -69,6 +73,7 @@ function main() {
     console.log(`build-staging-deploy-continuity --check: ok (depth ${summary.ledger.depth} · head ${summary.ledger.head.receiptId})`);
     return;
   }
+  if (isolatedContext) fs.mkdirSync(path.dirname(OUT),{recursive:true});
   writeJsonAtomic(OUT, summary);
   console.log(`build-staging-deploy-continuity: depth ${summary.ledger.depth} · head ${summary.ledger.head.receiptId} · ${summary.bytes.sha256.slice(0, 12)}`);
 }

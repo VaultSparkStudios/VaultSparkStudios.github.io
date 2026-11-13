@@ -600,9 +600,15 @@
   }
 
   function run() {
+    // Header geometry should not wait behind the optional enhancement queue.
+    // Keep the same engagement delay and each module's existing eligibility.
+    const headerQueue = [];
     const idleQueue = [];
     modules.forEach(function (moduleDef) {
-      if (moduleDef.idle) idleQueue.push(moduleDef);
+      if (moduleDef.idle) {
+        if (moduleDef.src === '/assets/desk-wire.js' || moduleDef.src === '/assets/rank-orb.js') headerQueue.push(moduleDef);
+        else idleQueue.push(moduleDef);
+      }
       else maybeLoad(moduleDef);
     });
 
@@ -614,7 +620,10 @@
     function scheduleIdle() {
       if (scheduled) return;
       scheduled = true;
-      setTimeout(function () { runIdleQueue(idleQueue.slice()); }, 1200);
+      setTimeout(function () {
+        headerQueue.forEach(maybeLoad);
+        runIdleQueue(idleQueue.slice());
+      }, 1200);
     }
     ['pointerdown', 'keydown', 'scroll'].forEach(function (type) {
       window.addEventListener(type, scheduleIdle, { once: true, passive: type !== 'keydown' });

@@ -62,6 +62,14 @@ export function buildContinuitySummary(historyText, receipt) {
 
   const genesis = rows[0];
   const head = rows.at(-1);
+  if (valid.schemaVersion === '1.1') {
+    const summary = {schemaVersion:'1.1',mode:'isolated-variant',generatedBy:'scripts/build-staging-deploy-continuity.mjs',
+      generatedAt:head.generatedAt,publicSafe:true,transport:'github-deployment-metadata',
+      ledger:{depth:rows.length,genesis:{deployId:genesis.deployId,receiptId:genesis.receiptId},head,
+        lineageIntact:true,chronological:true,headMatchesReceipt:true},
+      bytes:{algorithm:'SHA-256',byteLength:Buffer.byteLength(canonical),sha256:sha256(canonical)}};
+    summary.summaryId=summaryIdFor(summary); return summary;
+  }
   const summary = {
     schemaVersion: CONTINUITY_SCHEMA_VERSION,
     generatedBy: 'scripts/build-staging-deploy-continuity.mjs',
@@ -102,6 +110,15 @@ export function buildContinuitySummary(historyText, receipt) {
 
 /** Strict structural + self-identity validation of a published summary. */
 export function validateContinuitySummary(summary) {
+  if (summary?.schemaVersion === '1.1') {
+    if (summary.mode !== 'isolated-variant' || summary.transport !== 'github-deployment-metadata' || summary.publicSafe !== true
+      || !HEX24.test(summary.summaryId || '') || summary.summaryId !== summaryIdFor(summary)
+      || !Number.isInteger(summary.ledger?.depth) || summary.ledger.depth <= 0
+      || !HEX64.test(summary.bytes?.sha256 || '') || summary.bytes.algorithm !== 'SHA-256'
+      || summary.ledger.head?.schemaVersion !== '1.1' || summary.ledger.lineageIntact !== true
+      || summary.ledger.chronological !== true || summary.ledger.headMatchesReceipt !== true) throw new Error('invalid variant continuity');
+    return summary;
+  }
   if (!summary || typeof summary !== 'object') throw new Error('continuity summary must be an object');
   if (summary.schemaVersion !== CONTINUITY_SCHEMA_VERSION) throw new Error('continuity summary has unexpected schemaVersion');
   if (summary.publicSafe !== true) throw new Error('continuity summary must be public-safe');

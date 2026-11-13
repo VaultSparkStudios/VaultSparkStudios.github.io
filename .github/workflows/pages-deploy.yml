@@ -16,6 +16,16 @@ on:
         required: true
         default: false
         type: boolean
+      installation_deployment_id:
+        description: "Exact isolated-staging installation metadata ID (optional paired reference)"
+        required: false
+        default: ""
+        type: string
+      installation_payload_sha256:
+        description: "SHA-256 of the paired installation metadata payload"
+        required: false
+        default: ""
+        type: string
       # S294 content-hotfix lane. The full interlock couples static content to
       # identity/Supabase readiness, so a broken public page could not be repaired
       # while unrelated migration work was pending. This lane rebuilds the tree
@@ -80,6 +90,9 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
     # Push/schedule runs are source-publication receipts only while held. Every
     # production-mutating step below consumes the same promotion-gate output.
     steps:
@@ -96,6 +109,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+
+      - name: Validate isolated staging inputs
+        id: isolated-inputs
+        run: node scripts/validate-isolated-staging-workflow-inputs.mjs --emit-github-output >> "$GITHUB_OUTPUT"
+        env:
+          PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
+          CONFIRM_CONTENT: ${{ inputs.confirm_content }}
+          CONFIRM_HOTFIX: ${{ inputs.confirm_hotfix }}
+          CONFIRM_DESK: ${{ inputs.confirm_desk }}
+          INSTALLATION_DEPLOYMENT_ID: ${{ inputs.installation_deployment_id }}
+          INSTALLATION_PAYLOAD_SHA256: ${{ inputs.installation_payload_sha256 }}
 
       - name: Evaluate production promotion gate
         id: promotion-gate
@@ -116,12 +140,34 @@ jobs:
           npm install --no-audit --no-fund
           npx playwright install --with-deps chromium firefox webkit
 
+      - name: Receive run-bound isolated staging observation
+        id: isolated-staging
+        if: steps.promotion-gate.outputs.allowed == 'true' && steps.isolated-inputs.outputs.configured == 'true'
+        run: node scripts/run-isolated-staging-rendezvous.mjs --emit-github-output >> "$GITHUB_OUTPUT"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
+          CONFIRM_CONTENT: ${{ inputs.confirm_content }}
+          CONFIRM_HOTFIX: ${{ inputs.confirm_hotfix }}
+          CONFIRM_DESK: ${{ inputs.confirm_desk }}
+          INSTALLATION_DEPLOYMENT_ID: ${{ inputs.installation_deployment_id }}
+          INSTALLATION_PAYLOAD_SHA256: ${{ inputs.installation_payload_sha256 }}
+
       - name: Run canonical release ceremony
         if: steps.promotion-gate.outputs.allowed == 'true'
-        run: >-
-          node scripts/run-release-ceremony.mjs
-          --url=https://website.staging.vaultsparkstudios.com
-          --ci --require-ready
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ISOLATED_CONTEXT: ${{ steps.isolated-staging.outputs.context_file }}
+          ISOLATED_CONTEXT_SHA256: ${{ steps.isolated-staging.outputs.context_sha256 }}
+        run: |
+          set -euo pipefail
+          ARGS=()
+          if [ -n "$ISOLATED_CONTEXT" ]; then
+            ARGS+=("--isolated-staging-context=$ISOLATED_CONTEXT" "--isolated-staging-context-sha256=$ISOLATED_CONTEXT_SHA256")
+            node scripts/check-staging-parity.mjs --require-green "${ARGS[@]}"
+            node scripts/build-release-proof.mjs "${ARGS[@]}"
+          fi
+          node scripts/run-release-ceremony.mjs --url=https://website.staging.vaultsparkstudios.com --ci --require-ready "${ARGS[@]}"
 
       - name: Upload release-ceremony evidence on failure
         # The ceremony deliberately discards subprocess stdout (validateReceipt
@@ -378,6 +424,14 @@ jobs:
             --output /tmp/pages-dist/api/content-deploy-receipt.json \
             --history-output /tmp/pages-dist/data/content-deploy-history.ndjson \
             --continuity-output /tmp/pages-dist/api/content-release-continuity.json
+
+      - name: Revalidate isolated staging immediately before promotion
+        if: steps.promotion-gate.outputs.allowed == 'true' && steps.isolated-staging.outputs.configured == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ISOLATED_CONTEXT: ${{ steps.isolated-staging.outputs.context_file }}
+          ISOLATED_CONTEXT_SHA256: ${{ steps.isolated-staging.outputs.context_sha256 }}
+        run: node scripts/check-staging-deploy-receipt.mjs --remote "--isolated-staging-context=$ISOLATED_CONTEXT" "--isolated-staging-context-sha256=$ISOLATED_CONTEXT_SHA256"
 
       - name: Deploy to Cloudflare Pages
         if: steps.promotion-gate.outputs.allowed == 'true' || steps.hotfix-gate.outputs.allowed == 'true' || steps.content-refs.outputs.allowed == 'true'

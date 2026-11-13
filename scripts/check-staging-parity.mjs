@@ -6,12 +6,16 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { PAGE_CSP, WORKER_CSP } from '../config/csp-policy.mjs';
 import { shellPaths } from './lib/shell-parity.mjs';
+import { runtimeContextArgs, loadRuntimeContext, runtimeArtifactPath, variantReadiness, evaluateVariantRoutes } from './lib/isolated-staging-evidence.mjs';
 
 const ROOT = process.cwd();
-const OUT = path.join(ROOT, 'api', 'staging-health.json');
+let OUT = path.join(ROOT, 'api', 'staging-health.json');
 const BUILD_SHA_PATH = path.join(ROOT, 'api', 'build-sha.json');
 const ARTIFACT_MANIFEST_PATH = path.join(ROOT, 'api', 'candidate-artifact-manifest.json');
 const args = process.argv.slice(2);
+const isolatedArgs=runtimeContextArgs(args);
+const isolatedContext=isolatedArgs ? await loadRuntimeContext(ROOT,isolatedArgs.file,isolatedArgs.hash) : null;
+if (isolatedContext) OUT=runtimeArtifactPath(ROOT,isolatedContext,'staging-health');
 const CHECK = args.includes('--check');
 const REQUIRE_GREEN = args.includes('--require-green');
 const SELF_TEST = args.includes('--self-test');
@@ -277,7 +281,20 @@ export function classifyStatus(routes, surfaceParity = null) {
   return 'green';
 }
 
-export function evaluateReleaseArtifact(parsed, now = Date.now(), maxAgeHours = 12, expectedShellByRoute = {}, expectedBuildSha = null, expectedManifest = undefined) {
+export function evaluateReleaseArtifact(parsed, now = Date.now(), maxAgeHours = 12, expectedShellByRoute = {}, expectedBuildSha = null, expectedManifest = undefined, variantContext = null) {
+  if (variantContext) {
+    const readiness=variantReadiness(variantContext,expectedManifest,expectedBuildSha,now);
+    const findings=evaluateVariantRoutes(variantContext,parsed?.routes);
+    if (parsed?.schemaVersion!=='1.1' || parsed?.mode!=='isolated-variant' || parsed?.publicSafe!==true
+      || parsed?.isolatedStaging?.observationSha256!==readiness.observationSha256
+      || parsed?.artifactManifest?.candidateRoot!==variantContext.receipt.productionSource.artifactRoot
+      || parsed?.artifactManifest?.stagingRoot!==variantContext.receipt.stageVariant.artifactRoot
+      || parsed?.artifactManifest?.stagingLeafCount!==variantContext.receipt.stageVariant.leafCount
+      || parsed?.surfaceParity?.state!=='matched'
+      || parsed?.generatedAt!==new Date(variantContext.observation.observedAtEpochMs).toISOString()) findings.push('variant-parity-association');
+    return {ok:findings.length===0,findings};
+  }
+  if (parsed?.mode!==undefined || parsed?.schemaVersion==='1.1') return {ok:false,findings:['variant-context-required']};
   const findings = [];
   if (!parsed?.publicSafe || !Array.isArray(parsed?.routes)) findings.push('artifact-shape-drift');
   const generated = Date.parse(parsed?.generatedAt || '');
@@ -382,7 +399,7 @@ if (SELF_TEST) {
   process.exit(failed ? 1 : 0);
 }
 
-if (CHECK || REQUIRE_GREEN) {
+if (CHECK || (REQUIRE_GREEN && !isolatedContext)) {
   if (!fs.existsSync(OUT)) {
     console.error('check-staging-parity --check: api/staging-health.json missing; run without --check');
     process.exit(1);
@@ -400,7 +417,7 @@ if (CHECK || REQUIRE_GREEN) {
       const local = route === '/' ? path.join(ROOT, 'index.html') : path.join(ROOT, route.slice(1), 'index.html');
       return [route, shellPaths(fs.readFileSync(local, 'utf8'))];
     }));
-    const release = evaluateReleaseArtifact(parsed, Date.now(), maxAgeHours, expectedShellByRoute, localBuildSha(), localArtifactManifest());
+    const release = evaluateReleaseArtifact(parsed, Date.now(), maxAgeHours, expectedShellByRoute, isolatedContext?.receipt.productionSource.commitSha || localBuildSha(), localArtifactManifest(),isolatedContext);
     if (!release.ok) {
       console.error(`check-staging-parity --require-green: BLOCKED (${release.findings.join(', ')})`);
       process.exit(1);
@@ -422,8 +439,8 @@ for (const route of ROUTES) {
 
 const surfaceParityRaw = compareSurfaces(await prodSitemapPromise, await stagingSitemapPromise);
 const status = classifyStatus(routes, surfaceParityRaw);
-const generatedAt = new Date().toISOString();
-const candidateBuildSha = localBuildSha();
+const generatedAt = isolatedContext ? new Date(isolatedContext.observation.observedAtEpochMs).toISOString() : new Date().toISOString();
+const candidateBuildSha = isolatedContext?.receipt.productionSource.commitSha || localBuildSha();
 const stagingBuildSha = await stagingBuildPromise;
 const stagingArtifactManifest = await stagingManifestPromise;
 const candidateArtifactManifest = localArtifactManifest();
@@ -439,9 +456,16 @@ const artifactManifest = {
   matched: Boolean(candidateArtifactManifest?.root && candidateArtifactManifest.root === stagingArtifactManifest?.root && candidateArtifactManifest.leafCount === stagingArtifactManifest?.leafCount),
 };
 const surfaceParity = surfaceParityRaw;
-const candidate = evaluateReleaseArtifact({ publicSafe: true, generatedAt, stagingBuildSha, artifactManifest, routes }, Date.now(), 12, expectedShellByRoute, candidateBuildSha, candidateArtifactManifest);
+const isolatedStaging=isolatedContext ? variantReadiness(isolatedContext,candidateArtifactManifest,candidateBuildSha) : null;
+const variantFindings=isolatedContext ? evaluateVariantRoutes(isolatedContext,routes) : [];
+if(isolatedContext && (stagingArtifactManifest?.root!==isolatedContext.receipt.stageVariant.artifactRoot
+  || stagingArtifactManifest?.leafCount!==isolatedContext.receipt.stageVariant.leafCount))variantFindings.push('variant-current-manifest-drift');
+if(isolatedContext && surfaceParityRaw.state!=='matched')variantFindings.push('variant-surface-parity');
+const candidate = isolatedContext ? {ok:variantFindings.length===0,findings:variantFindings}
+  : evaluateReleaseArtifact({ publicSafe: true, generatedAt, stagingBuildSha, artifactManifest, routes }, Date.now(), 12, expectedShellByRoute, candidateBuildSha, candidateArtifactManifest);
 const payload = {
   schemaVersion: '1.0',
+  ...(isolatedContext ? {schemaVersion:'1.1',mode:'isolated-variant',isolatedStaging} : {}),
   generatedAt,
   candidateReady: candidate.ok,
   candidateFindings: candidate.findings,
@@ -471,6 +495,7 @@ const payload = {
     : undefined,
   routes,
 };
+if (isolatedContext) fs.mkdirSync(path.dirname(OUT),{recursive:true});
 fs.writeFileSync(OUT, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
 console.log(`check-staging-parity: ${status} (${routes.length} sampled route(s)) · surface ${surfaceParity.state}${surfaceParity.missingOnStagingCount ? ` · ${surfaceParity.missingOnStagingCount} route(s) missing on staging` : ''}`);
 // --refresh tolerates an unreachable staging box (scheduled path); the default
@@ -478,4 +503,4 @@ console.log(`check-staging-parity: ${status} (${routes.length} sampled route(s))
 if (!REFRESH && status === 'staging-unreachable') {
   console.warn('check-staging-parity: staging unreachable — feed refreshed honestly (run with --refresh in scheduled jobs).');
 }
-process.exit(0);
+process.exit(isolatedContext && REQUIRE_GREEN && !candidate.ok ? 1 : 0);

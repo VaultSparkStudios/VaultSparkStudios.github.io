@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import https from 'node:https';
+import { runtimeContextArgs, loadRuntimeContext, assertAdmittedContext } from './lib/isolated-staging-evidence.mjs';
 import {
   runStagingDeployReceiptSelfTest,
   validateStagingDeployReceipt,
@@ -23,6 +24,15 @@ const HISTORY = path.join(ROOT, 'data', 'staging-deploy-history.ndjson');
 const CONTINUITY = path.join(ROOT, 'api', 'staging-deploy-continuity.json');
 const REMOTE_RECEIPT = 'https://website.staging.vaultsparkstudios.com/api/staging-deploy-receipt.json';
 const REMOTE_HISTORY = 'https://website.staging.vaultsparkstudios.com/data/staging-deploy-history.ndjson';
+const isolatedArgs = runtimeContextArgs(process.argv.slice(2));
+if (isolatedArgs) {
+  try {
+    const context = await loadRuntimeContext(ROOT,isolatedArgs.file,isolatedArgs.hash);
+    assertAdmittedContext(context);
+    console.log(`check-staging-deploy-receipt: isolated-variant verified · source ${context.receipt.productionSource.commitSha} · run-bound current observation`);
+    process.exit(0);
+  } catch { console.error('check-staging-deploy-receipt: isolated evidence refused'); process.exit(1); }
+}
 
 function readHttpsText(url, timeoutMs = 15_000) {
   return new Promise((resolve, reject) => {

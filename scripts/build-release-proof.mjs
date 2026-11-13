@@ -6,9 +6,13 @@ import { fileURLToPath } from 'node:url';
 import { createStagingDeployReceipt, validateStagingDeployReceipt } from './lib/staging-deploy-receipt.mjs';
 import { historyRowFor, parseStagingDeployHistory, validateStagingDeployHistory } from './lib/staging-deploy-history.mjs';
 import { writeReleaseDependencies } from './build-release-dependencies.mjs';
+import { runtimeContextArgs, loadRuntimeContext, runtimeArtifactPath, variantReadiness, evaluateVariantRoutes } from './lib/isolated-staging-evidence.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const OUT = path.join(ROOT, 'api', 'release-proof.json');
+let OUT = path.join(ROOT, 'api', 'release-proof.json');
+const isolatedArgs=runtimeContextArgs(process.argv.slice(2));
+const isolatedContext=isolatedArgs ? await loadRuntimeContext(ROOT,isolatedArgs.file,isolatedArgs.hash) : null;
+if (isolatedContext) OUT=runtimeArtifactPath(ROOT,isolatedContext,'release-proof');
 const CHECK = process.argv.includes('--check');
 const SELF_TEST = process.argv.includes('--self-test');
 
@@ -16,7 +20,7 @@ function readJson(relative) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relative), 'utf8'));
 }
 
-export function deriveReleaseProof({ staging, shell, build, workerWorkflow, workerRouteProvenance, deployCurrency, candidateManifest, stagingDeployReceipt, stagingDeployHistory, faviconValid, promotionReceipt, productionPromotion, identityMigration, supabaseControlPlane, releaseDependencies }) {
+export function deriveReleaseProof({ staging, shell, build, workerWorkflow, workerRouteProvenance, deployCurrency, candidateManifest, stagingDeployReceipt, stagingDeployHistory, faviconValid, promotionReceipt, productionPromotion, identityMigration, supabaseControlPlane, releaseDependencies, isolatedContext = null }) {
   const reasons = [...new Set((staging.routes || []).flatMap((route) => route.reasonCodes || []))].sort();
   const rollbackAutomatic = /Auto-rollback on failed liveness/.test(workerWorkflow)
     && /Verify rollback restored the site/.test(workerWorkflow)
@@ -33,9 +37,21 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
   let stagingDeployHistoryBound = false;
   let stagingDeployReceiptReason = null;
   let stagingDeployHistoryReason = null;
+  let isolatedReadiness=null;
+  if (isolatedContext) {
+    isolatedReadiness=variantReadiness(isolatedContext,candidateManifest,staging.candidateBuildSha);
+    if (staging.mode!=='isolated-variant' || staging.schemaVersion!=='1.1' || staging.publicSafe!==true
+      || staging.isolatedStaging?.observationSha256!==isolatedReadiness.observationSha256
+      || staging.generatedAt!==new Date(isolatedContext.observation.observedAtEpochMs).toISOString()
+      || staging.artifactManifest?.candidateRoot!==isolatedContext.receipt.productionSource.artifactRoot
+      || staging.artifactManifest?.stagingRoot!==isolatedContext.receipt.stageVariant.artifactRoot
+      || staging.artifactManifest?.stagingLeafCount!==isolatedContext.receipt.stageVariant.leafCount
+      || staging.surfaceParity?.state!=='matched'
+      || evaluateVariantRoutes(isolatedContext,staging.routes).length) throw new Error('isolated staging parity evidence mismatch');
+  } else if (staging.mode!==undefined || stagingDeployReceipt?.schemaVersion==='1.1') throw new Error('isolated staging context required');
   try {
     const deployReceipt = validateStagingDeployReceipt(stagingDeployReceipt, { requireVerifiedRemote: true });
-    stagingDeployAttested = deployReceipt.state === 'verified'
+    stagingDeployAttested = isolatedContext ? JSON.stringify(deployReceipt)===JSON.stringify(isolatedContext.receipt) : deployReceipt.state === 'verified'
       && deployReceipt.source.commitSha === staging.candidateBuildSha
       && deployReceipt.candidate.artifactRoot === candidateManifest?.root
       && deployReceipt.candidate.leafCount === candidateManifest?.leafCount
@@ -58,8 +74,10 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
     canonicalFavicon: faviconValid === true,
     stagingReachable,
     stagingCandidateReady: staging.candidateReady === true,
-    stagingCandidateShaBound,
-    stagingArtifactManifestBound,
+    ...(isolatedReadiness ? {
+      productionSourceBound:isolatedReadiness.productionSourceBound,transformationBound:isolatedReadiness.transformationBound,
+      installedVariantBound:isolatedReadiness.installedVariantBound,currentStageObserved:isolatedReadiness.currentStageObserved,
+    } : {stagingCandidateShaBound,stagingArtifactManifestBound}),
     stagingDeployAttested,
     stagingDeployHistoryBound,
     automaticWorkerRollback: rollbackAutomatic,
@@ -113,6 +131,7 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
 
   return {
     schemaVersion: '1.0',
+    ...(isolatedReadiness ? {schemaVersion:'1.1',mode:'isolated-variant',isolatedStaging:isolatedReadiness} : {}),
     generatedAt,
     generatedBy: 'scripts/build-release-proof.mjs',
     publicSafe: true,
@@ -130,7 +149,11 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
       candidateShaBound: stagingCandidateShaBound,
       artifactManifest: staging.artifactManifest ?? null,
       productionParity: staging.status === 'green',
-      deployReceipt: stagingDeployReceipt ? {
+      deployReceipt: isolatedReadiness ? {
+        receiptId:stagingDeployReceipt.receiptId,state:stagingDeployReceipt.state,mode:'isolated-variant',
+        attested:stagingDeployAttested,productionSource:stagingDeployReceipt.productionSource,
+        stageVariant:stagingDeployReceipt.stageVariant,rollback:stagingDeployReceipt.rollback,
+      } : stagingDeployReceipt ? {
         receiptId: stagingDeployReceipt.receiptId ?? null,
         state: stagingDeployReceipt.state ?? 'invalid',
         deployId: stagingDeployReceipt.deploy?.id ?? null,
@@ -309,23 +332,24 @@ function readJsonOptional(relative) {
 function readHistoryOptional(relative) {
   try { return parseStagingDeployHistory(fs.readFileSync(path.join(ROOT, relative), 'utf8')); } catch { return null; }
 }
-if (!CHECK) await writeReleaseDependencies();
+if (!CHECK && !isolatedContext) await writeReleaseDependencies();
 const proof = deriveReleaseProof({
-  staging: readJson('api/staging-health.json'),
+  staging: isolatedContext ? JSON.parse(fs.readFileSync(runtimeArtifactPath(ROOT,isolatedContext,'staging-health'),'utf8')) : readJson('api/staging-health.json'),
   shell: readJson('assets/shell-manifest.json'),
   build: readJson('api/build-sha.json'),
   workerWorkflow: fs.readFileSync(path.join(ROOT, '.github', 'workflows', 'cloudflare-worker-deploy.yml'), 'utf8'),
   workerRouteProvenance: readJson('api/worker-route-provenance.json'),
   deployCurrency: readJson('api/deploy-currency.json'),
   candidateManifest: readJson('api/candidate-artifact-manifest.json'),
-  stagingDeployReceipt: readJsonOptional('api/staging-deploy-receipt.json'),
-  stagingDeployHistory: readHistoryOptional('data/staging-deploy-history.ndjson'),
+  stagingDeployReceipt: isolatedContext?.receipt || readJsonOptional('api/staging-deploy-receipt.json'),
+  stagingDeployHistory: isolatedContext ? parseStagingDeployHistory(isolatedContext.historyText) : readHistoryOptional('data/staging-deploy-history.ndjson'),
   faviconValid,
   promotionReceipt: readJsonOptional('api/promotion-receipt.json'),
   productionPromotion: readJson('context/PRODUCTION_PROMOTION.json'),
   identityMigration: readJson('api/identity-migration-receipt.json'),
   supabaseControlPlane: readJson('api/supabase-control-plane.json'),
   releaseDependencies: readJsonOptional('api/release-dependencies.json'),
+  isolatedContext,
 });
 const content = JSON.stringify(proof, null, 2) + '\n';
 if (CHECK) {
@@ -336,6 +360,7 @@ if (CHECK) {
   }
   console.log(`build-release-proof --check: ${proof.releaseState} (${proof.blockers.length} blocker(s))`);
 } else {
+  if (isolatedContext) fs.mkdirSync(path.dirname(OUT),{recursive:true});
   fs.writeFileSync(OUT, content, 'utf8');
   console.log(`build-release-proof: ${proof.releaseState} (${proof.blockers.length} blocker(s))`);
 }

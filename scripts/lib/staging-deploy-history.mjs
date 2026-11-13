@@ -1,5 +1,6 @@
 import { receiptIdFor } from './build-check-evidence.mjs';
 import { validateStagingDeployReceipt } from './staging-deploy-receipt.mjs';
+import { exactKeys, isHash } from './isolated-staging-contract.mjs';
 
 function rowIdFor(row) {
   const { rowId: _ignored, ...content } = row;
@@ -8,6 +9,16 @@ function rowIdFor(row) {
 
 export function historyRowFor(receipt, previousReceiptId = null) {
   const valid = validateStagingDeployReceipt(receipt, { requireVerifiedRemote: true });
+  if (valid.schemaVersion === '1.1') {
+    const row = {schemaVersion:'1.1',mode:'isolated-variant',deployId:valid.deploy.id,generatedAt:valid.generatedAt,
+      receiptId:valid.receiptId,previousReceiptId,state:valid.state,sourceCommitSha:valid.productionSource.commitSha,
+      sourceFingerprint:valid.productionSource.fingerprint,candidateRoot:valid.productionSource.artifactRoot,
+      variantRoot:valid.stageVariant.artifactRoot,variantSealSha256:valid.stageVariant.sealSha256,
+      associationSha256:valid.lineage.associationSha256,archiveSha256:valid.stageVariant.archiveSha256,
+      fileCount:valid.stageVariant.fileCount,predecessorSealSha256:valid.predecessor.sealSha256,
+      rollbackModel:valid.rollback.model};
+    row.rowId=rowIdFor(row); return row;
+  }
   const row = {
     schemaVersion: '1.0',
     deployId: valid.deploy.id,
@@ -38,7 +49,15 @@ export function validateStagingDeployHistory(rows, { latestReceipt = null } = {}
   const deployIds = new Set();
   const receiptIds = new Set();
   rows.forEach((row, index) => {
-    if (!row || row.schemaVersion !== '1.0' || !/^\d{14}$/.test(row.deployId || '')) throw new Error(`history row ${index + 1} has invalid identity`);
+    if (!row || !['1.0','1.1'].includes(row.schemaVersion) || !/^\d{14}$/.test(row.deployId || '')) throw new Error(`history row ${index + 1} has invalid identity`);
+    if (row.schemaVersion === '1.1') {
+      exactKeys(row,['schemaVersion','mode','deployId','generatedAt','receiptId','previousReceiptId','state','sourceCommitSha',
+        'sourceFingerprint','candidateRoot','variantRoot','variantSealSha256','associationSha256','archiveSha256','fileCount',
+        'predecessorSealSha256','rollbackModel','rowId'],'variant-history-fields');
+      if (row.mode !== 'isolated-variant' || row.rollbackModel !== 'immutable-version-root'
+        || !['variantRoot','variantSealSha256','associationSha256','predecessorSealSha256'].every(k=>isHash(row[k]))
+        || row.variantRoot === row.candidateRoot) throw new Error('invalid variant history facts');
+    } else if (row.mode !== undefined || row.variantRoot !== undefined) throw new Error('legacy row contains variant facts');
     if (typeof row.generatedAt !== 'string' || Number.isNaN(Date.parse(row.generatedAt))) throw new Error(`history row ${index + 1} has invalid timestamp`);
     if (!/^[a-f0-9]{24}$/.test(row.receiptId || '') || !/^[a-f0-9]{24}$/.test(row.rowId || '')) throw new Error(`history row ${index + 1} has invalid receipt identity`);
     if (row.rowId !== rowIdFor(row)) throw new Error(`history row ${index + 1} content identity mismatch`);
@@ -54,13 +73,17 @@ export function validateStagingDeployHistory(rows, { latestReceipt = null } = {}
       || !/^[a-f0-9]{64}$/.test(row.candidateRoot || '')
       || !/^[a-f0-9]{64}$/.test(row.archiveSha256 || '')
       || !Number.isInteger(row.fileCount) || row.fileCount <= 0
-      || !String(row.rollbackPath || '').endsWith(`/.rollback/${row.deployId}`)) {
+      || (row.schemaVersion === '1.0' && !String(row.rollbackPath || '').endsWith(`/.rollback/${row.deployId}`))) {
       throw new Error(`history row ${index + 1} has invalid deploy facts`);
     }
   });
   if (latestReceipt) {
     const receipt = validateStagingDeployReceipt(latestReceipt, { requireVerifiedRemote: true });
     const head = rows.at(-1);
+    if (receipt.schemaVersion === '1.1') {
+      if (JSON.stringify(head) !== JSON.stringify(historyRowFor(receipt,rows.at(-2)?.receiptId ?? null))) throw new Error('variant history head mismatch');
+      return rows;
+    }
     if (!head || head.receiptId !== receipt.receiptId
       || head.deployId !== receipt.deploy.id
       || head.candidateRoot !== receipt.candidate.artifactRoot

@@ -133,7 +133,15 @@
         "data/staging-deploy-history.ndjson",
         "api/build-sha.json",
         "api/candidate-artifact-manifest.json",
-        "api/staging-health.json"
+        "api/staging-health.json",
+        "config/isolated-staging-admission.json",
+        "scripts/lib/isolated-staging-contract.mjs",
+        "scripts/lib/isolated-staging-evidence.mjs",
+        "scripts/lib/staging-deploy-receipt.mjs",
+        "scripts/lib/staging-deploy-history.mjs",
+        "scripts/lib/staging-deploy-continuity.mjs",
+        "scripts/isolated-staging-evidence.mjs",
+        "scripts/check-staging-deploy-receipt.mjs"
       ],
       "builder": "scripts/deploy-staging.mjs",
       "sideEffecting": true,
@@ -250,7 +258,18 @@
         "api/promotion-receipt.json",
         "context/PRODUCTION_PROMOTION.json",
         ".github/workflows/cloudflare-worker-deploy.yml",
-        "api/release-dependencies.json"
+        "api/release-dependencies.json",
+        "config/isolated-staging-admission.json",
+        "scripts/lib/isolated-staging-contract.mjs",
+        "scripts/lib/isolated-staging-evidence.mjs",
+        "scripts/lib/staging-deploy-receipt.mjs",
+        "scripts/lib/staging-deploy-history.mjs",
+        "scripts/lib/staging-deploy-continuity.mjs",
+        "scripts/check-staging-parity.mjs",
+        "scripts/run-release-ceremony.mjs",
+        "scripts/validate-isolated-staging-workflow-inputs.mjs",
+        "scripts/run-isolated-staging-rendezvous.mjs",
+        ".github/workflows/pages-deploy.yml"
       ],
       "builder": "scripts/build-release-proof.mjs",
       "check": [
@@ -526,7 +545,9 @@
         "api/news-desk-freshness.json"
       ],
       "builder": "scripts/generate-news-pages.mjs",
-      "builderArgs": ["--apply"],
+      "builderArgs": [
+        "--apply"
+      ],
       "check": [
         "node",
         "scripts/generate-news-pages.mjs",
@@ -1245,7 +1266,9 @@
         "cloudflare/wrangler.toml",
         "cloudflare/obelisk-auth.js",
         "supabase/migrations/**",
-        "supabase/functions/**"
+        "supabase/functions/**",
+        "scripts/verify-provider-journey.mjs",
+        "scripts/lib/website-supabase-probe-credential.mjs"
       ],
       "builder": "scripts/build-identity-migration-receipt.mjs",
       "check": [
@@ -1503,7 +1526,13 @@
       "output": "api/staging-deploy-continuity.json",
       "sources": [
         "api/staging-deploy-receipt.json",
-        "data/staging-deploy-history.ndjson"
+        "data/staging-deploy-history.ndjson",
+        "config/isolated-staging-admission.json",
+        "scripts/lib/isolated-staging-contract.mjs",
+        "scripts/lib/isolated-staging-evidence.mjs",
+        "scripts/lib/staging-deploy-receipt.mjs",
+        "scripts/lib/staging-deploy-history.mjs",
+        "scripts/lib/staging-deploy-continuity.mjs"
       ],
       "builder": "scripts/build-staging-deploy-continuity.mjs",
       "check": [

@@ -310,7 +310,10 @@ flowchart LR
   n_cloudflare_ --> n_api_worker_route_provenance_json
   n_config_ --> n_api_evidence_graph_json
   n_config_ --> n_api_release_dependencies_json
+  n_config_ --> n_api_release_proof_json
   n_config_ --> n_api_security_posture_json
+  n_config_ --> n_api_staging_deploy_continuity_json
+  n_config_ --> n_api_staging_deploy_receipt_json
   n_config_ --> n_assets_membership_access_js
   n_config_ --> n_assets_shell_manifest_json
   n_config_ --> n_docs_EVIDENCE_GRAPH_md
@@ -398,8 +401,11 @@ flowchart LR
   n_repo_structure_public_project_routes --> n_api_spark_manifest_json
   n_rights_ --> n_data_ignis_search_index_json
   n_scripts_ --> n_api_field_win_json
+  n_scripts_ --> n_api_identity_migration_receipt_json
   n_scripts_ --> n_api_rank_climbers_json
+  n_scripts_ --> n_api_release_proof_json
   n_scripts_ --> n_api_spark_manifest_json
+  n_scripts_ --> n_api_staging_deploy_continuity_json
   n_scripts_ --> n_api_staging_deploy_receipt_json
   n_scripts_ --> n_assets_ambient_core_bundle_js
   n_scripts_ --> n_assets_membership_access_js
@@ -622,7 +628,7 @@ flowchart LR
 - `api/` → `api-index`, `attention-pressure`, `candidate-artifact-manifest`, `cta-readiness`, `deploy-currency`, `identity-migration-receipt`, `intent-map`, `membership-access`, `nervous-system`, `news-critique-packets`, `newsroom-run`, `oracle-answers`, `oracle-query-clusters`, `promotion-receipt`, `release-proof`, `site-health`, `staging-deploy-receipt`, `stats-surface`, `status-proof`, `ux-decision-ledger`
 - `assets/` → `ambient-bundles`, `candidate-artifact-manifest`, `dispatch-desk-panel`, `favicon`, `home-desk-module`, `lqip-map`, `security-posture`, `shell-assets`
 - `cloudflare/` → `identity-migration-receipt`, `security-posture`, `worker-route-provenance`
-- `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `membership-access`, `release-dependencies`, `security-posture`, `shell-assets`
+- `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `membership-access`, `release-dependencies`, `release-proof`, `security-posture`, `shell-assets`, `staging-deploy-continuity`, `staging-deploy-receipt`
 - `context/` → `heartbeat`, `identity-migration-receipt`, `ignis-conduit`, `intelligence-budget`, `nervous-system`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
 - `data/` → `analytics-summary`, `changelog-narrative`, `evidence-hub`, `feedback-provenance`, `field-win-proof`, `flight-director`, `home-desk-module`, `ignis-search-index`, `inp-soak-verdicts`, `lqip-map`, `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-search`, `news-desk-stats`, `news-pages`, `news-visual-receipts`, `oracle-query-clusters`, `pathways-pages`, `promotion-receipt`, `proof-aware-projects`, `release-proof`, `ship-receipts`, `site-health`, `spark-manifest`, `staging-deploy-continuity`, `staging-deploy-receipt`, `stats-surface`, `surface-spine`, `tt-summary`, `ux-decision-ledger`, `worker-route-history`
 - `docs/` → `ignis-roi`, `ship-receipts`, `visual-qa-retention`
@@ -646,7 +652,7 @@ flowchart LR
 - `projects/` → `ai-canonical-pages`, `ai-discovery-health`
 - `repo-structure:public-project-routes` → `agents-json`, `llms-full-shards`, `spark-manifest`
 - `rights/` → `ignis-search-index`
-- `scripts/` → `ambient-bundles`, `ambient-ledger`, `cache-evidence-classification`, `dispatch-desk-panel`, `field-win-proof`, `membership-access`, `oracle-answers`, `rank-climbers`, `shell-assets`, `spark-manifest`, `staging-deploy-receipt`, `visual-qa-retention`
+- `scripts/` → `ambient-bundles`, `ambient-ledger`, `cache-evidence-classification`, `dispatch-desk-panel`, `field-win-proof`, `identity-migration-receipt`, `membership-access`, `oracle-answers`, `rank-climbers`, `release-proof`, `shell-assets`, `spark-manifest`, `staging-deploy-continuity`, `staging-deploy-receipt`, `visual-qa-retention`
 - `status/` → `candidate-artifact-manifest`
 - `studio-hub/` → `studio-timeline`
 - `studio-pulse/` → `candidate-artifact-manifest`

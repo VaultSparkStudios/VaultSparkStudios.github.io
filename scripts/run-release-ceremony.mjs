@@ -9,15 +9,19 @@
  */
 import { spawnSync } from './lib/safe-spawn.mjs';
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { resolveScope } from './check-promotion-scope.mjs';
+import { runtimeContextArgs, loadRuntimeContext, runtimeArtifactPath, CONTRACT_FILES, assertAdmittedContext } from './lib/isolated-staging-evidence.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const STUDIO_ROOT = resolve(ROOT, '..', 'vaultspark-studio-ops');
-const OUT = join(ROOT, 'api', 'release-ceremony.json');
+const isolatedArgs=runtimeContextArgs(process.argv.slice(2));
+const isolatedContext=isolatedArgs ? await loadRuntimeContext(ROOT,isolatedArgs.file,isolatedArgs.hash) : null;
+const isolatedCli=isolatedArgs ? [`--isolated-staging-context=${isolatedArgs.file}`,`--isolated-staging-context-sha256=${isolatedArgs.hash}`] : [];
+const OUT = isolatedContext ? runtimeArtifactPath(ROOT,isolatedContext,'release-ceremony') : join(ROOT, 'api', 'release-ceremony.json');
 const CANONICAL_STAGING = 'https://website.staging.vaultsparkstudios.com';
 
 const sha256 = (value) => createHash('sha256').update(value).digest('hex');
@@ -72,15 +76,15 @@ function currentDoctorStep({ live }) {
   let deployCurrency;
   try { deployCurrency = readJson('api/deploy-currency.json'); } catch {}
   let releaseProof;
-  try { releaseProof = readJson('api/release-proof.json'); } catch {}
+  try { releaseProof = isolatedContext ? JSON.parse(readFileSync(runtimeArtifactPath(ROOT,isolatedContext,'release-proof'),'utf8')) : readJson('api/release-proof.json'); } catch {}
   let browserReceipt;
   try { browserReceipt = readJson('api/staging-release-browser.json'); } catch {}
   let attentionReceipt;
   try { attentionReceipt = readJson('api/staging-attention-browser.json'); } catch {}
-  return evaluateDoctorStep(score, deployCurrency, { releaseProof, browserReceipt, attentionReceipt }, Date.now() - started);
+  return evaluateDoctorStep(score, deployCurrency, { releaseProof, browserReceipt, attentionReceipt }, Date.now() - started,isolatedContext);
 }
 
-function evaluateDoctorStep(score, deployCurrency, stagingEvidence = {}, durationMs = 0) {
+function evaluateDoctorStep(score, deployCurrency, stagingEvidence = {}, durationMs = 0, variantContext = null) {
   const blocking = Number(score?.blockingFailing ?? Number.POSITIVE_INFINITY);
   const blockingChecks = Array.isArray(score?.checks)
     ? score.checks.filter((check) => check?.blocking === true && check?.pass !== true)
@@ -88,10 +92,15 @@ function evaluateDoctorStep(score, deployCurrency, stagingEvidence = {}, duratio
   const staging = stagingEvidence.releaseProof?.staging;
   const browser = stagingEvidence.browserReceipt;
   const attention = stagingEvidence.attentionReceipt;
+  let variant=null;
+  try { variant=variantContext ? assertAdmittedContext(variantContext) : null; }
+  catch {return{id:'doctor',state:'rejected',exitCode:1,durationMs,reason:'isolated-observation-expired-or-invalid'};}
+  const identityBound=variant ? stagingEvidence.releaseProof?.mode==='isolated-variant'
+    && stagingEvidence.releaseProof?.isolatedStaging?.observationSha256===variant.transport.observationHash
+    && staging?.candidateBuildSha===variant.receipt.productionSource.commitSha
+    : staging?.candidateShaBound===true && staging?.candidateBuildSha===staging?.deployedBuildSha && staging?.artifactManifest?.matched===true;
   const verifiedStagingCandidate = staging?.candidateReady === true
-    && staging?.candidateShaBound === true
-    && staging?.candidateBuildSha === staging?.deployedBuildSha
-    && staging?.artifactManifest?.matched === true
+    && identityBound
     && staging?.deployReceipt?.state === 'verified'
     && staging?.deployReceipt?.attested === true
     && /^[a-f0-9]{24}$/.test(staging?.deployReceipt?.receiptId || '')
@@ -214,6 +223,9 @@ const EXPECTED_STEP_IDS = ['redirect-readiness-probe', 'redirect-readiness', 'st
 
 function validateReceipt(receipt) {
   const errors = [];
+  if (receipt?.stagingMode !== undefined && (receipt.stagingMode!=='isolated-variant'
+    || !/^[a-f0-9]{64}$/.test(receipt.installationPayloadSha256 || '')
+    || !/^[a-f0-9]{64}$/.test(receipt.observationPayloadSha256 || ''))) errors.push('invalid isolated ceremony association');
   if (!['passed', 'rejected'].includes(receipt?.state)) errors.push('unknown state');
   if (receipt?.publicSafe !== true) errors.push('publicSafe must be true');
   if (receipt?.stagingOrigin !== CANONICAL_STAGING) errors.push('canonical staging origin mismatch');
@@ -271,6 +283,9 @@ if (process.argv.includes('--check')) {
   try {
     const receipt = JSON.parse(readFileSync(OUT, 'utf8'));
     const errors = validateReceipt(receipt);
+    if(isolatedContext && (receipt.stagingMode!=='isolated-variant'
+      || receipt.installationPayloadSha256!==isolatedContext.transport.installationHash
+      || receipt.observationPayloadSha256!==isolatedContext.transport.observationHash)) errors.push('ceremony runtime evidence association changed');
     if (process.argv.includes('--require-fresh')) {
       const generatedAt = Date.parse(receipt.generatedAt);
       if (!Number.isFinite(generatedAt) || generatedAt > Date.now() + 60_000 || Date.now() - generatedAt > 15 * 60_000) {
@@ -290,6 +305,7 @@ if (process.argv.includes('--check')) {
         'scripts/run-attention-release-gate.mjs',
         'tests/attention-surfaces.spec.js',
         'scripts/check-production-promotion-gate.mjs',
+        ...(isolatedContext ? CONTRACT_FILES : []),
       ]);
       if (receipt.contractSha256 !== currentContractSha256) errors.push('receipt is not bound to the current release contract');
     }
@@ -313,7 +329,7 @@ const steps = [];
 steps.push(runScript('redirect-readiness-probe', 'scripts/check-obelisk-redirect-readiness.mjs'));
 steps.push(artifactStep('redirect-readiness', 'api/obelisk-redirect-readiness.json', (value) => value.state === 'passed' && value.ready === true,
   (value) => ({ verdict: value.state || 'unavailable', contractSha256: value.contractSha256 || null })));
-steps.push(runScript('staging-deploy-lineage', 'scripts/check-staging-deploy-receipt.mjs'));
+steps.push(runScript('staging-deploy-lineage', 'scripts/check-staging-deploy-receipt.mjs',isolatedCli));
 // S357 — lane-held asset drift, measured at the moment it matters. The content
 // lane HOLDS unhashed .js, so a plain client script cannot be updated by a
 // promotion; it changes only on a full deploy. That is how a fetch S356 deleted
@@ -363,9 +379,15 @@ steps.push(artifactStep('attention-browser-receipt', 'api/staging-attention-brow
 steps.push(runScript('promotion-contract', 'scripts/check-production-promotion-gate.mjs', ['--check']));
 steps.push(promotionReadyStep());
 steps.push(currentDoctorStep({ live: !process.argv.includes('--ci') }));
+if (isolatedContext) {
+  try { assertAdmittedContext(isolatedContext); }
+  catch { const step=steps.find(s=>s.id==='staging-deploy-lineage'); step.state='rejected';step.exitCode=1;step.reason='isolated-observation-expired'; }
+}
 
 const receipt = {
   schemaVersion: 1,
+  ...(isolatedContext ? {stagingMode:'isolated-variant',installationPayloadSha256:isolatedContext.transport.installationHash,
+    observationPayloadSha256:isolatedContext.transport.observationHash} : {}),
   generatedAt: new Date().toISOString(),
   generatedBy: 'scripts/run-release-ceremony.mjs',
   publicSafe: true,
@@ -380,6 +402,7 @@ const receipt = {
     'api/staging-attention-browser.json',
     'context/PRODUCTION_PROMOTION.json',
     'context/PROJECT_STATUS.json',
+    ...(isolatedArgs ? [isolatedArgs.file] : []),
   ]),
   contractSha256: evidenceHash([
     'scripts/run-release-ceremony.mjs',
@@ -395,10 +418,12 @@ const receipt = {
     'scripts/run-attention-release-gate.mjs',
     'tests/attention-surfaces.spec.js',
     'scripts/check-production-promotion-gate.mjs',
+    ...(isolatedContext ? CONTRACT_FILES : []),
   ]),
   chain: { previousReceiptSha256: priorSha256 },
   privacy: { stdoutRetained: false, stderrRetained: false, responseBodiesRetained: false },
 };
+if (isolatedContext) mkdirSync(dirname(OUT),{recursive:true});
 writeFileSync(OUT, `${JSON.stringify(receipt, null, 2)}\n`);
 console.log(`release ceremony: ${receipt.state} · ${steps.filter((step) => step.state === 'passed').length}/${steps.length}`);
 for (const step of steps.filter((step) => step.state !== 'passed')) console.log(`  - ${step.id}: ${step.reason || step.verdict || step.releaseState || 'rejected'}`);

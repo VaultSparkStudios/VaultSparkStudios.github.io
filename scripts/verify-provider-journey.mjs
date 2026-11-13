@@ -58,10 +58,11 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from './lib/safe-spawn.mjs';
 import { fileURLToPath } from 'node:url';
+import { selectWebsiteProbeCredential, WEBSITE_SUPABASE_URL } from './lib/website-supabase-probe-credential.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const EVIDENCE_PATH = path.join(ROOT, 'context', 'IDENTITY_MIGRATION_EVIDENCE.json');
-const SUPABASE_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+const SUPABASE_URL = WEBSITE_SUPABASE_URL;
 const SIGNIN_TIMEOUT_MS = 10 * 60 * 1000;
 // S342: the Worker stores journey receipts with `expirationTtl: 7 * 86400`, but
 // --watch discarded everything older than its own start time, so the terminal had
@@ -219,21 +220,19 @@ export function journeyPassed(journey) {
  * Live journey (--live)
  * ------------------------------------------------------------------ */
 
-async function serviceRoleKey() {
+export async function serviceRoleKey({ getSecret: secretReader, fetchImpl = globalThis.fetch } = {}) {
   try {
-    const { getSecret } = await import('./lib/secrets.mjs');
-    try {
-      const key = await getSecret('SUPABASE_SERVICE_ROLE_KEY', 'supabase.admin');
-      if (key) return key;
-    } catch { /* gateway has no service-role capability */ }
+    if (!secretReader) ({ getSecret: secretReader } = await import('./lib/secrets.mjs'));
+    const selected = await selectWebsiteProbeCredential({ getSecret: secretReader, fetchImpl });
+    if (selected.status === 'selected' && selected.supabaseUrl === SUPABASE_URL) return selected.serviceRole;
   } catch { /* gateway unavailable */ }
   return null;
 }
 
-async function expectedInvestorAllow(userId) {
-  const key = await serviceRoleKey();
+export async function expectedInvestorAllow(userId, { getSecret, fetchImpl = globalThis.fetch } = {}) {
+  const key = await serviceRoleKey({ getSecret, fetchImpl });
   if (!key) return { expectedAllow: null, source: 'service-role-unavailable' };
-  const res = await fetch(
+  const res = await fetchImpl(
     `${SUPABASE_URL}/rest/v1/investor_requests?select=id&user_id=eq.${encodeURIComponent(userId)}&status=eq.approved&limit=1`,
     { headers: { apikey: key, Authorization: `Bearer ${key}` } },
   );
@@ -592,6 +591,8 @@ const args = process.argv.slice(2);
 const flag = (name) => args.includes(name);
 const opt = (name, fallback) => args.find((a) => a.startsWith(`${name}=`))?.split('=').slice(1).join('=') || fallback;
 
+const direct = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (direct) {
 if (flag('--self-test')) {
   selfTest();
 } else if (flag('--watch')) {
@@ -630,4 +631,5 @@ if (flag('--self-test')) {
 } else {
   console.error('Usage: --self-test | --watch [--since=<hours>] | --live [--origin=https://…] [--channel=chrome|msedge|chromium] [--wait-minutes=N]');
   process.exitCode = 2;
+}
 }

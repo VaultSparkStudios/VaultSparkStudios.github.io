@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-11-13T11:29:14.990Z",
+  "capturedAt": "2026-11-13T20:26:24.474Z",
   "captureProvenance": {
     "version": 1,
-    "runId": "2026-11-13T11-28-58-724Z-c69e06a636587c7e",
+    "runId": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd",
     "producer": "scripts/capture-theme-matrix.mjs",
-    "startedAt": "2026-11-13T11:28:58.724Z",
+    "startedAt": "2026-11-13T20:25:56.825Z",
     "source": {
       "algorithm": "sha256",
-      "sha256": "9441d1ecddad3def6c823dad4602d24231a79f68e1fea3ae568ab87080d0b337",
+      "sha256": "78534661e854693847c6fed6777f0c4ecafd0cfd62f6888941a33689c89ba7d9",
       "files": [
         "api/index.html",
         "assets/ambient-loader.js",
@@ -673,11 +673,11 @@
       "entries": [
         {
           "path": "api/index.html",
-          "sha256": "159255a58758ba2bce4810df4aafb1564d0d2a5672d3e97578033726dc5b76ae"
+          "sha256": "413720312234dec09801c68904700d2a79ea42d3ff08c83c7af7ef81469d6508"
         },
         {
           "path": "assets/ambient-loader.js",
-          "sha256": "ff3f592fc5877a109d669253914d63d7c2e357e2a49640a64cc8304b50394b33"
+          "sha256": "795d7f03ba54e92223fa60c58131919d085b1c2df9a4f899d1f1c62bce637a99"
         },
         {
           "path": "assets/changelog-reactions.js",
@@ -3307,24 +3307,15 @@
     },
     "candidate": {
       "manifest": "api/candidate-artifact-manifest.json",
-      "manifestSha256": "f2e85f8e5db7c1fc3ee216688ae8cc1614eb3fdd09fe58022a9b062be2b7aea1",
+      "manifestSha256": "f45d96c50e3c8259fdca28746127cc10d63145063d0de35d8d777d769fd08165",
       "candidateSha": "ceba607f4d6eec139f4cb85f84a17ceaf48e3c4f",
-      "root": "f1f20203dc6bc865f560df4d792f8961e628d669d5122b9b801cbaabece1ad31"
+      "root": "fcfc4a9d37371b48254f0711793757ddbdb7d5143751783ac97e34f23362e824"
     }
   },
-  "generatedBy": "S416 main integration API timestamp refresh after original-image review",
-  "themes": [
-    "dark",
-    "light",
-    "ambient",
-    "warm",
-    "cool",
-    "lava",
-    "high-contrast"
-  ],
+  "generatedBy": "S416 exact current-source original-image review through publishVisualCapture",
   "source": {
     "algorithm": "sha256",
-    "sha256": "9441d1ecddad3def6c823dad4602d24231a79f68e1fea3ae568ab87080d0b337",
+    "sha256": "78534661e854693847c6fed6777f0c4ecafd0cfd62f6888941a33689c89ba7d9",
     "files": [
       "api/index.html",
       "assets/ambient-loader.js",
@@ -3988,11 +3979,11 @@
     "entries": [
       {
         "path": "api/index.html",
-        "sha256": "159255a58758ba2bce4810df4aafb1564d0d2a5672d3e97578033726dc5b76ae"
+        "sha256": "413720312234dec09801c68904700d2a79ea42d3ff08c83c7af7ef81469d6508"
       },
       {
         "path": "assets/ambient-loader.js",
-        "sha256": "ff3f592fc5877a109d669253914d63d7c2e357e2a49640a64cc8304b50394b33"
+        "sha256": "795d7f03ba54e92223fa60c58131919d085b1c2df9a4f899d1f1c62bce637a99"
       },
       {
         "path": "assets/changelog-reactions.js",
@@ -6622,10 +6613,19 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "f2e85f8e5db7c1fc3ee216688ae8cc1614eb3fdd09fe58022a9b062be2b7aea1",
+    "manifestSha256": "f45d96c50e3c8259fdca28746127cc10d63145063d0de35d8d777d769fd08165",
     "candidateSha": "ceba607f4d6eec139f4cb85f84a17ceaf48e3c4f",
-    "root": "f1f20203dc6bc865f560df4d792f8961e628d669d5122b9b801cbaabece1ad31"
+    "root": "fcfc4a9d37371b48254f0711793757ddbdb7d5143751783ac97e34f23362e824"
   },
+  "themes": [
+    "dark",
+    "light",
+    "ambient",
+    "warm",
+    "cool",
+    "lava",
+    "high-contrast"
+  ],
   "matrix": {
     "routes": [
       "/api/"
@@ -6665,13 +6665,15 @@
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "shared_transition_review image-capable reviewer",
+    "reviewer": "shared_transition_review",
     "findings": [
-      "Forge Ledger2026-11-13UTC date and feed links remain readable and unobstructed."
+      "Forge Ledger date, labels and feed links are readable in every theme; mobile wrapping is natural. A partial desktop floating control obscures no text."
     ],
-    "fixesApplied": [],
+    "fixesApplied": [
+      "Preserved the source-derived Forge Ledger latest-item date and feed links after integration."
+    ],
     "blockingDefectsOpen": 0,
-    "limitation": "Focused changed targets plus news first viewport. Seven tall mobile API crops include the fixed header over part of the unrelated first Desk card; the changed Forge Ledger card remains unobstructed. No numeric contrast, entire-panel-unobstructed, performance-score improvement, authenticated, current staging installation or production acceptance claim."
+    "limitation": "Supplied Forge Ledger card crops only; no whole-page, numeric contrast, timing, Linux raster, authenticated or deployment acceptance claim."
   },
   "captures": [
     {
@@ -6687,13 +6689,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-13T11-28-58-724Z-c69e06a636587c7e--api--dark--desktop--changed-surface.png",
-      "sha256": "22d7cc6113c46a6e506f6966b1f263601156e836c380673818de7f535e19c3f4",
+      "file": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd--api--dark--desktop--changed-surface.png",
+      "sha256": "37879442adacc58c84238c3c2bbd8ef7c1e0b1a56f4075f562e00b1c038e425b",
       "page": "/api/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "shared_transition_review image-capable reviewer"
+        "reviewer": "shared_transition_review"
       }
     },
     {
@@ -6709,13 +6711,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-13T11-28-58-724Z-c69e06a636587c7e--api--light--desktop--changed-surface.png",
-      "sha256": "c4071df0aafffa885d1ba98f3666937aa037857c5ffa6a29c85159fa087a3111",
+      "file": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd--api--light--desktop--changed-surface.png",
+      "sha256": "8dc59ae06d01f12777ccfd630e56eaaddd6eae246259fc81f8cc88cab603359c",
       "page": "/api/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "shared_transition_review image-capable reviewer"
+        "reviewer": "shared_transition_review"
       }
     },
     {
@@ -6731,13 +6733,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-13T11-28-58-724Z-c69e06a636587c7e--api--ambient--desktop--changed-surface.png",
-      "sha256": "c3ac63ebcebe859414ddc05abb00b7faea5f301dd00b160b9f4c51a7b97b862f",
+      "file": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd--api--ambient--desktop--changed-surface.png",
+      "sha256": "2dd04c4908b77cd69bb366ee0901f915d7c77a49d5d1ee1fef8aa6efe3f6c6d1",
       "page": "/api/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "shared_transition_review image-capable reviewer"
+        "reviewer": "shared_transition_review"
       }
     },
     {
@@ -6753,13 +6755,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-13T11-28-58-724Z-c69e06a636587c7e--api--warm--desktop--changed-surface.png",
-      "sha256": "5702295eabc1eacbfaefa6ca317677f137b373f410cae7aba5d9ae8cb9953243",
+      "file": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd--api--warm--desktop--changed-surface.png",
+      "sha256": "85691ec51116339b84c5c5b5e9adb91b9e2cb4c0b8942178077a008ee178adb8",
       "page": "/api/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "shared_transition_review image-capable reviewer"
+        "reviewer": "shared_transition_review"
       }
     },
     {
@@ -6775,13 +6777,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-13T11-28-58-724Z-c69e06a636587c7e--api--cool--desktop--changed-surface.png",
-      "sha256": "37f5138668e6d2d0f43cbb319b971bf212a737d3e2cdcec22200b676fa6699f0",
+      "file": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd--api--cool--desktop--changed-surface.png",
+      "sha256": "a3e46733e55b15b73a32b3dab4ea56bfe65ce227d57e8b85dfbb1dde4d8a6aa2",
       "page": "/api/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "shared_transition_review image-capable reviewer"
+        "reviewer": "shared_transition_review"
       }
     },
     {
@@ -6797,13 +6799,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-13T11-28-58-724Z-c69e06a636587c7e--api--lava--desktop--changed-surface.png",
-      "sha256": "e21ec9f243b4284e972f779ef971331b2fdf25b3b0047bab904348737a07ee5c",
+      "file": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd--api--lava--desktop--changed-surface.png",
+      "sha256": "4bf756eb260eec4603bcfad2133e4a9ed6462204ca16a65c981440eed6c30242",
       "page": "/api/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "shared_transition_review image-capable reviewer"
+        "reviewer": "shared_transition_review"
       }
     },
     {
@@ -6819,13 +6821,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-13T11-28-58-724Z-c69e06a636587c7e--api--high-contrast--desktop--changed-surface.png",
-      "sha256": "3466e52b3af922c25d7131b6ecca77db6512315ff5e8d6e2ec211c86fce716ff",
+      "file": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd--api--high-contrast--desktop--changed-surface.png",
+      "sha256": "922fbb426a702fa4e29d24398dd22679fa0c2a711bb34ba73e17ce5086e11a2d",
       "page": "/api/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "shared_transition_review image-capable reviewer"
+        "reviewer": "shared_transition_review"
       }
     },
     {
@@ -6841,13 +6843,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-13T11-28-58-724Z-c69e06a636587c7e--api--dark--mobile--changed-surface.png",
-      "sha256": "3eeb528bcdd91c2cbee2f30a144312f424dc6aa7f0e644b39f0780d992b75f1c",
+      "file": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd--api--dark--mobile--changed-surface.png",
+      "sha256": "cd70297f70c1c5abc8c896a07536ce677e55db563bca5ab92e38e0d20c4f788d",
       "page": "/api/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "shared_transition_review image-capable reviewer"
+        "reviewer": "shared_transition_review"
       }
     },
     {
@@ -6863,13 +6865,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-13T11-28-58-724Z-c69e06a636587c7e--api--light--mobile--changed-surface.png",
-      "sha256": "9063198f28ab3ecde8718bd25f77b393ba263bddb918fce4f4b10cb73a321f3b",
+      "file": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd--api--light--mobile--changed-surface.png",
+      "sha256": "ab8e9733fd7474a20fd6282c9863594db382c56e07ac95dd220c58212e80f39f",
       "page": "/api/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "shared_transition_review image-capable reviewer"
+        "reviewer": "shared_transition_review"
       }
     },
     {
@@ -6885,13 +6887,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-13T11-28-58-724Z-c69e06a636587c7e--api--ambient--mobile--changed-surface.png",
-      "sha256": "c83ee8fe028321bc19c812d19b8300066b36c0b5115e11a97120f20cfedd83de",
+      "file": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd--api--ambient--mobile--changed-surface.png",
+      "sha256": "7ef631cc0f5f0f513baf621d2ef8caff73e0b6e446079d0031fbbe13f881d077",
       "page": "/api/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "shared_transition_review image-capable reviewer"
+        "reviewer": "shared_transition_review"
       }
     },
     {
@@ -6907,13 +6909,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-13T11-28-58-724Z-c69e06a636587c7e--api--warm--mobile--changed-surface.png",
-      "sha256": "2b554b190ebb457e91ed7542d71cba59e276d484cd2ec42e2471d8633442ba0c",
+      "file": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd--api--warm--mobile--changed-surface.png",
+      "sha256": "2c18dbf19a940911c01c76fcf43a83d25720755dba0a7367de95c88f21a15e22",
       "page": "/api/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "shared_transition_review image-capable reviewer"
+        "reviewer": "shared_transition_review"
       }
     },
     {
@@ -6929,13 +6931,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-13T11-28-58-724Z-c69e06a636587c7e--api--cool--mobile--changed-surface.png",
-      "sha256": "db647a7e7c057c7bf8ea7223436738705facff17bef8bf4a7f0045384b3707c5",
+      "file": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd--api--cool--mobile--changed-surface.png",
+      "sha256": "0f69d72d7532f1092213103a8c26476fa99f00f67b7a41f2ce230b6d113100d2",
       "page": "/api/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "shared_transition_review image-capable reviewer"
+        "reviewer": "shared_transition_review"
       }
     },
     {
@@ -6951,13 +6953,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-13T11-28-58-724Z-c69e06a636587c7e--api--lava--mobile--changed-surface.png",
-      "sha256": "b5afe4eb6c868e3a7833ac6150624c38b4dfd0208b920f34b7ece7defa77be62",
+      "file": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd--api--lava--mobile--changed-surface.png",
+      "sha256": "4bdce3a06d6cd03f2a31a3a2e3b2a9ebc555dd26390304839789102548da217d",
       "page": "/api/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "shared_transition_review image-capable reviewer"
+        "reviewer": "shared_transition_review"
       }
     },
     {
@@ -6973,19 +6975,19 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-13T11-28-58-724Z-c69e06a636587c7e--api--high-contrast--mobile--changed-surface.png",
-      "sha256": "09453b18394a3ca5066b300ac4fb7eafc4804b1516fb59867557309c307faf7d",
+      "file": "2026-11-13T20-25-56-825Z-1d6b992abedae3bd--api--high-contrast--mobile--changed-surface.png",
+      "sha256": "44e487c1ac8da6d1a3e3fe0ba19308431dd02f841a6a8e6173b6afc0898f6315",
       "page": "/api/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "shared_transition_review image-capable reviewer"
+        "reviewer": "shared_transition_review"
       }
     }
   ],
   "reviewEvidence": {
-    "afterReviewSha256": "de9678ee032a1a4b2c512183bc8b8dface7ce4567f04a2543010c9f0d11cc0f2",
     "beforeReviewSha256": "de59e5ebc87a1eb0076ebfa35d4bfb44b4b0b099e78d7381c65d4c6f058b6ea7",
+    "afterReviewSha256": "4e3f080e0b53643eb6b85d6aaaed5f619c41c848fc1464ad2216847d0bee34b5",
     "beforeAfterReviewed": true,
     "scope": "api"
   }

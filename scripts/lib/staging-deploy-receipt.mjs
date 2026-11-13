@@ -1,4 +1,5 @@
 import { receiptIdFor } from './build-check-evidence.mjs';
+import { validateVariantReceipt } from './isolated-staging-contract.mjs';
 
 const SHA40 = /^[a-f0-9]{40}$/;
 const SHA64 = /^[a-f0-9]{64}$/;
@@ -54,6 +55,13 @@ export function createStagingDeployReceipt(input) {
 }
 
 export function validateStagingDeployReceipt(value, { requireVerifiedRemote = false } = {}) {
+  if (value?.schemaVersion === '1.1') {
+    validateVariantReceipt(value);
+    if (value.receiptId !== receiptIdFor(value)) throw new Error('receiptId does not match receipt content');
+    // Installation evidence is historical. A separate admitted run context is mandatory for current acceptance.
+    return value;
+  }
+  if (value?.mode !== undefined || value?.stageVariant !== undefined) throw new Error('legacy receipt cannot contain variant mode');
   if (!value || value.schemaVersion !== '1.0' || value.publicSafe !== true) throw new Error('schema 1.0 public-safe receipt required');
   if (!['verified', 'degraded'].includes(value.state)) throw new Error('state must be verified or degraded');
   if (typeof value.generatedAt !== 'string' || Number.isNaN(Date.parse(value.generatedAt))) throw new Error('generatedAt must be a valid timestamp');

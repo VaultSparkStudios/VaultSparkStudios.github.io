@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-10-02",
-  "contractSha256": "2511fba2cd0a351eeb19b423161384deb7763d92ff3e7870d83a2ae182a415e0",
+  "contractSha256": "9525d687ae2f073dbb6b1784f21eadbab2ba3ed9953815c0d9dac39c4aa1eb97",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
@@ -684,6 +684,8 @@
         "cloudflare/obelisk-auth.js",
         "cloudflare/wrangler.toml",
         "context/IDENTITY_MIGRATION_EVIDENCE.json",
+        "scripts/lib/website-supabase-probe-credential.mjs",
+        "scripts/verify-provider-journey.mjs",
         "supabase/functions/**",
         "supabase/migrations/**"
       ]
@@ -1308,10 +1310,21 @@
       "feeds": [],
       "externalSources": [
         ".github/workflows/cloudflare-worker-deploy.yml",
+        ".github/workflows/pages-deploy.yml",
         "api/staging-health.json",
         "api/supabase-control-plane.json",
+        "config/isolated-staging-admission.json",
         "context/PRODUCTION_PROMOTION.json",
-        "data/staging-deploy-history.ndjson"
+        "data/staging-deploy-history.ndjson",
+        "scripts/check-staging-parity.mjs",
+        "scripts/lib/isolated-staging-contract.mjs",
+        "scripts/lib/isolated-staging-evidence.mjs",
+        "scripts/lib/staging-deploy-continuity.mjs",
+        "scripts/lib/staging-deploy-history.mjs",
+        "scripts/lib/staging-deploy-receipt.mjs",
+        "scripts/run-isolated-staging-rendezvous.mjs",
+        "scripts/run-release-ceremony.mjs",
+        "scripts/validate-isolated-staging-workflow-inputs.mjs"
       ]
     },
     {
@@ -1480,7 +1493,13 @@
       ],
       "feeds": [],
       "externalSources": [
-        "data/staging-deploy-history.ndjson"
+        "config/isolated-staging-admission.json",
+        "data/staging-deploy-history.ndjson",
+        "scripts/lib/isolated-staging-contract.mjs",
+        "scripts/lib/isolated-staging-evidence.mjs",
+        "scripts/lib/staging-deploy-continuity.mjs",
+        "scripts/lib/staging-deploy-history.mjs",
+        "scripts/lib/staging-deploy-receipt.mjs"
       ]
     },
     {
@@ -1502,8 +1521,16 @@
       "externalSources": [
         "api/build-sha.json",
         "api/staging-health.json",
+        "config/isolated-staging-admission.json",
         "data/staging-deploy-history.ndjson",
-        "scripts/deploy-staging.mjs"
+        "scripts/check-staging-deploy-receipt.mjs",
+        "scripts/deploy-staging.mjs",
+        "scripts/isolated-staging-evidence.mjs",
+        "scripts/lib/isolated-staging-contract.mjs",
+        "scripts/lib/isolated-staging-evidence.mjs",
+        "scripts/lib/staging-deploy-continuity.mjs",
+        "scripts/lib/staging-deploy-history.mjs",
+        "scripts/lib/staging-deploy-receipt.mjs"
       ]
     },
     {
