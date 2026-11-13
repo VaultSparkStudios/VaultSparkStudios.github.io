@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-11-12 (last closed Session 411; active/next Session 415) -->
-<!-- semantic-freshness: hash=714c863861715195 next=415 silSession=411 silScore=939 handoff=- tests=- -->
+<!-- generated-at: 2026-11-13 (last closed Session 411; active/next Session 412) -->
+<!-- semantic-freshness: hash=12f74290af984853 next=412 silSession=411 silScore=939 handoff=- tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — last closed Session 411 · active/next Session 415 · generated 2026-11-12.
+> **Fast-boot brief** — last closed Session 411 · active/next Session 412 · generated 2026-11-13.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,7 +15,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 415 · 2026-11-12 · FOUNDER MODE                         ║
+║  Session 412 · 2026-11-13 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
 ║    SIL v3.0  ·  Avg3: 939  ·  Velocity 0→                        ║
-║    Last active: 1d  ·  Last closeout: 6d  ·  (active = newest…   ║
+║    Last active: 2d  ·  Last closeout: 7d  ·  (active = newest…   ║
 ║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -63,41 +63,41 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 411 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    Source UNVERIFIED: 555/555 steps (changed inputs)     ║
+║  Tests:    Source UNVERIFIED: 552/552 steps (changed inputs)     ║
 ║  Deploy:   S411 release pending                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no ledger measurement yet this session — a byte estimate…    ║
+║     no session lock — agent identity unavailable, so there is…   ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         Source UNVERIFIED: 555/555 steps (changed…     ║
+║  ⚠  Tests         Source UNVERIFIED: 552/552 steps (changed…     ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⛔  Context age   18d                                            ║
-║  ✓  IGNIS         45126 FORGE  ·  6d old                         ║
+║  ⛔  Context age   19d                                            ║
+║  ⚠  IGNIS         45126 FORGE  ·  7d old                         ║
 ║  ⛔  Truth         yellow — S411 local recovery verified;…        ║
-║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
+║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.175  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⚠  Revenue sig.  8d old (2026-11-04)                            ║
+║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        12/17 (71%)  ·  3 failing                      ║
-║  ✓  Codex trust   trusted project active                         ║
+║  ⛔  Doctor        12/17 (71%)  ·  2 failing                      ║
+║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    81d · Authorize or decline immutable warm-origin migrati      ║
-║    81d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
+║    82d · Authorize or decline immutable warm-origin migrati      ║
+║    82d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -121,20 +121,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
+║   99  [SECURITY]     Complete isolated access/security acceptan  ║
+║        Complete isolated access/security acceptance and affecte  ║
+║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Affected deployed authentication, current   ║
-║        Affected deployed authentication, current isolated stagi  ║
+║   87  [PRODUCT]      Authorized main/production promotion, serv  ║
+║        Authorized main/production promotion, served readback an  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Integrate current main safely and complete  ║
-║        Integrate current main safely and complete exact candida  ║
+║   86  [VERIFY]       Verify the final publication candidate aft  ║
+║        Verify the final publication candidate after public-docu  ║
 ║                                                                  ║
-║   86  [VERIFY]       Finish merged candidate full source verifi  ║
-║        Finish merged candidate full source verification and exa  ║
-║                                                                  ║
-║   84  [SECURITY]     Complete isolated access/security acceptan  ║
-║        Complete isolated access/security acceptance and affecte  ║
+║   84  [PRODUCT]      Finalize this local recovery closeout and   ║
+║        Finalize this local recovery closeout and QA checkpoint;  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -142,5 +142,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · last closed Session 411 · active/next Session 415 · 2026-11-12*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · last closed Session 411 · active/next Session 412 · 2026-11-13*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*
