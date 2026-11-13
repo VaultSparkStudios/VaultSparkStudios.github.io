@@ -1,0 +1,19 @@
+import {test,expect} from '@playwright/test';import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';
+import {beginVisualCapture,createVisualCaptureDirectory,writeVisualCapture,sealVisualCapture} from '../../../scripts/lib/visual-capture-provenance.mjs';
+import {VISUAL_SCENES,visualSceneState} from '../../../scripts/lib/visual-scene-contract.mjs';
+const root=process.cwd(),dir=path.dirname(fileURLToPath(import.meta.url));
+test('source-bound engaged Games and Journal seven-theme originals',async({browser})=>{
+ test.setTimeout(180000);const phase=process.env.HEADER_CAPTURE_PHASE;if(!['before','after'].includes(phase))throw Error('Exact phase required');
+ const sm=JSON.parse(fs.readFileSync('assets/shell-manifest.json')),files=[...new Set(['games/index.html','changelog/index.html','assets/ambient-loader.js','assets/ambient-core.bundle.js','assets/ambient-feature.bundle.js','assets/page-sigil.js','assets/desk-wire.js','assets/rank-orb.js','tests/visual-regression.spec.js','scripts/lib/visual-scene-contract.mjs','.cache/S416/header-priority/capture.spec.mjs',...Object.values(sm.assets).flatMap(a=>[a.source,a.path])])].filter(f=>fs.existsSync(f));
+ const provenance=beginVisualCapture(root,files,'.cache/S416/header-priority/capture.spec.mjs'),runDir=createVisualCaptureDirectory(root,path.join(dir,phase),provenance),shots=[];
+ const source=fs.readFileSync('tests/visual-regression.spec.js','utf8'),start=source.indexOf('async function waitForVisualReadiness('),end=source.indexOf('\n}\n',start);if(start<0||end<start)throw Error('Actual sampler absent');const settle=new Function('expect','VISUAL_SCENES','visualSceneState','return ('+source.slice(start,end+2)+');')(expect,VISUAL_SCENES,visualSceneState);
+ for(const viewport of [{name:'desktop',width:1366,height:900},{name:'mobile',width:393,height:727}])for(const theme of ['dark','light','ambient','warm','cool','lava','high-contrast'])for(const name of ['games','journal']){
+  const context=await browser.newContext({viewport:{width:viewport.width,height:viewport.height},deviceScaleFactor:1,reducedMotion:'reduce',serviceWorkers:'block'});let blocked=0;
+  await context.route('**/*',r=>{const u=new URL(r.request().url());if(['http:','https:'].includes(u.protocol)&&['127.0.0.1','localhost','[::1]'].includes(u.hostname))return r.continue();blocked++;return r.abort('blockedbyclient');});
+  await context.addInitScript(theme=>{try{localStorage.setItem('vs_theme',theme);}catch{}},theme);const page=await context.newPage();
+  try{const route=name==='games'?'/games/':'/changelog/#stories';await page.goto(process.env.HEADER_PREVIEW_ORIGIN+route,{waitUntil:'load',timeout:30000});await page.mouse.move(-100,-100);await expect(page.locator('body')).toHaveAttribute('data-theme',theme);await page.addStyleTag({content:'*,*::before,*::after{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important}.vs-genome-strip,.vs-sigil-ring,.vs-tour-offer{opacity:1!important}'});await settle(page,{name});
+   const file=`${name}--${theme}--${viewport.name}.png`,sha256=writeVisualCapture(path.join(runDir,file),await page.screenshot({animations:'disabled',scale:'css'}));const observedTheme=await page.evaluate(()=>({stored:localStorage.getItem('vs_theme'),root:document.documentElement.dataset.theme,body:document.body.dataset.theme}));shots.push({file,sha256,route,theme,observedTheme,viewport:viewport.name,viewportSize:viewport,state:name==='games'?'document-top-engaged':'stories-fragment-engaged',capturedAt:new Date().toISOString(),externalRequestsBlocked:blocked});console.log(file);
+  }finally{await context.close();}
+ }
+ sealVisualCapture(root,runDir,provenance,shots,files);fs.writeFileSync(path.join(dir,phase.toUpperCase()+'_LOCATION.json'),JSON.stringify({phase,runDir:path.relative(root,runDir).replaceAll('\\','/'),shots:shots.length},null,2)+'\n',{flag:'wx'});
+});

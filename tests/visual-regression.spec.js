@@ -19,7 +19,10 @@ import { createRequire } from 'node:module';
 import os from 'node:os';
 import fs from 'node:fs';
 import path from 'node:path';
-import { VISUAL_SCENES, visualSceneState } from '../scripts/lib/visual-scene-contract.mjs';
+let VISUAL_SCENES, visualSceneState;
+test.beforeAll(async () => {
+  ({ VISUAL_SCENES, visualSceneState } = await import('../scripts/lib/visual-scene-contract.mjs'));
+});
 
 const PIXEL_RATIO_TOLERANCE = 0.015; // 1.5%
 
