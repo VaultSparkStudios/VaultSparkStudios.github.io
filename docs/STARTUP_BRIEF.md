@@ -63,7 +63,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 411 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    Source UNVERIFIED: 552/552 steps (changed inputs)     ║
+║  Tests:    Source UNVERIFIED: 555/555 steps (changed inputs)     ║
 ║  Deploy:   S411 release pending                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -74,7 +74,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         Source UNVERIFIED: 552/552 steps (changed…     ║
+║  ⚠  Tests         Source UNVERIFIED: 555/555 steps (changed…     ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   19d                                            ║
@@ -90,7 +90,7 @@
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⛔  Doctor        12/17 (71%)  ·  2 failing                      ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
-║  ⚠  Canon adopt.  5/55 pending review                            ║
+║  ⚠  Canon adopt.  4/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -121,20 +121,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   99  [SECURITY]     Complete isolated access/security acceptan  ║
-║        Complete isolated access/security acceptance and affecte  ║
+║   96  [PRODUCT]      Complete affected successful sign-in/sign-  ║
+║        Complete affected successful sign-in/sign-up and real me  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Authorized main/production promotion, serv  ║
-║        Authorized main/production promotion, served readback an  ║
+║   93  [PRODUCT]      Integrate current main safely; pass full c  ║
+║        Integrate current main safely; pass full current source   ║
 ║                                                                  ║
-║   86  [VERIFY]       Verify the final publication candidate aft  ║
-║        Verify the final publication candidate after public-docu  ║
+║   93  [INTELLIGENCE]  Complete recovered S415 writeback, all S4  ║
+║        Complete recovered S415 writeback, all S416 closeout sur  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Finalize this local recovery closeout and   ║
-║        Finalize this local recovery closeout and QA checkpoint;  ║
+║   84  [PRODUCT]      Affected deployed authentication, current   ║
+║        Affected deployed authentication, current isolated stagi  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
