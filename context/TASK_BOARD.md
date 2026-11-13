@@ -1,3 +1,13 @@
+<!-- S416-active-waves -->
+## S416 selected outcomes
+
+- [x] Fresh bound startup, audit and implementation-plan admission.
+- [x] Install exact isolated staging Worker/static candidate; verify 22 private controls, 4,185 served files and separate 42-request HTTPS/TLS/data/policy preservation.
+- [ ] Complete affected successful sign-in/sign-up and real member/approved-investor positive application journeys.
+- [ ] Integrate current main safely; pass full current source and exact required workflows, applicable staging parity, authorized main/production promotion and readback.
+- [ ] Complete recovered S415 writeback, all S416 closeout surfaces and native completion audit.
+
+Waves 1–2 admitted; wave 3 staging delivery verified with authenticated acceptance still open; waves 4–5 pending. Evidence: docs/S416_VERIFICATION_LEDGER.json. Historical session scores and receipts retain their original scope.
 <!-- S415-active-waves -->
 
 ## S415 selected outcomes

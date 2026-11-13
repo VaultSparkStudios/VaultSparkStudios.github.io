@@ -134,6 +134,8 @@ export function isSelfRemediable(id, { healMap = HEAL_MAP, remedies = REMEDIES, 
 // warn/pass/skip — see run-doctor.mjs).
 export const DRIFT_META = {
   'cpx-memory-census': { driftClass: 'local-stale', blocking: false },
+  // S420: a recurring remedy without a runner is future decay, not present breakage — warn.
+  'recurring-remedy-runners': { driftClass: 'local-broken', blocking: false },
   // S400: a vulnerable PHP runtime is a hard fail; stale/partial receipts only warn.
   'php-exposure':      { driftClass: 'local-broken', blocking: true },
   manifest:              { driftClass: 'local-broken', blocking: true },

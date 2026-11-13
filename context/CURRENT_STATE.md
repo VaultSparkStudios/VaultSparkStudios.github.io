@@ -1,3 +1,9 @@
+<!-- S416-current-verification -->
+## S416 staging delivery verified; release acceptance in progress
+
+The bound S416 arc completed fresh startup and audit admission. The isolated staging Worker and exact 4,185-file static candidate are installed. A fresh source-bound Worker proof passed 22 private gateway cases; separate post-install observation passed 42 HTTP requests, TLS checks and data/configuration/policy preservation. Actual evidence and scope are recorded in docs/S416_VERIFICATION_LEDGER.json.
+
+Real member and approved-investor journeys, current main integration and exact final-candidate checks, production promotion/readback, recovered S415 writeback and full S416 closeout remain pending. No new SIL score, native acceptance or production completion is claimed. Original local-only installer refusals and prior successful proof bytes remain preserved.
 <!-- S415-current-verification -->
 ## S415 current verification
 

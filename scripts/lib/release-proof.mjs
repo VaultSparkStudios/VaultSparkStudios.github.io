@@ -14,6 +14,26 @@ export function signReleaseProof(receipt, key) {
   return crypto.createHmac('sha256', key).update(canonical(unsigned)).digest('hex');
 }
 
+export function runtimePolicyFindings(runtime) {
+  if (!runtime || typeof runtime !== 'object' || Array.isArray(runtime)) return ['runtime policy missing'];
+  const findings = [];
+  if (runtime.nodePath !== '/opt/vaultspark-maintenance/runtime/node' || runtime.bindTarget !== '/usr/bin/node') findings.push('runtime paths are not the reviewed dedicated binding');
+  if (!/^v\d+\.\d+\.\d+$/.test(runtime.nodeVersion || '')) findings.push('runtime version is malformed');
+  if (!/^[a-f0-9]{64}$/.test(runtime.nodeSha256 || '')) findings.push('runtime SHA-256 is malformed');
+  return findings;
+}
+
+export function verifyProofRuntime(observed, runtime) {
+  const findings = runtimePolicyFindings(runtime);
+  if (!observed || typeof observed !== 'object' || Array.isArray(observed)) findings.push('runtime execution evidence missing');
+  else {
+    if (observed.nodeVersion !== runtime?.nodeVersion) findings.push('executing Node version differs from runtime policy');
+    if (observed.nodeSha256 !== runtime?.nodeSha256) findings.push('executing Node hash differs from runtime policy');
+    if (observed.bindTarget !== runtime?.bindTarget || observed.boundTargetSha256 !== runtime?.nodeSha256) findings.push('namespace Node binding differs from runtime policy');
+  }
+  return { ok: findings.length === 0, findings };
+}
+
 export function verifyReleaseProof(receipt, { key, expectedSha, policy, now = Date.now() } = {}) {
   const findings = [];
   if (!receipt || typeof receipt !== 'object') return { ok: false, findings: ['receipt missing'] };
@@ -26,6 +46,7 @@ export function verifyReleaseProof(receipt, { key, expectedSha, policy, now = Da
   if (receipt.execution?.tempDirectory !== 'sha-bound-run-directory') findings.push('temporary writes are not confined to the SHA-bound run directory');
   if (receipt.execution?.noNewPrivileges !== true) findings.push('NoNewPrivileges is not proved');
   if (receipt.execution?.protectSystem !== 'strict') findings.push('ProtectSystem=strict is not proved');
+  if (policy?.runtime !== undefined) findings.push(...verifyProofRuntime(receipt.execution?.runtime, policy.runtime).findings);
   const assertions = Number(receipt.tests?.assertionsPassed || 0);
   if (assertions < Number(policy?.minimumAssertions || 0)) findings.push(`only ${assertions}/${policy?.minimumAssertions || 0} required assertions passed`);
   if (Number(receipt.tests?.filesPassed || 0) !== Number(policy?.tests?.length || 0)) findings.push('not every required proof file passed');
