@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "session": 415,
+  "publicSafe": true,
+  "recordedAt": "2026-11-12T10:28:25.015Z",
+  "requiredCandidate": {
+    "ok": true,
+    "lane": "hosted-exact-sha",
+    "checks": [
+      {
+        "workflow": ".github/workflows/e2e.yml",
+        "state": "passed",
+        "runId": 43196603966
+      },
+      {
+        "workflow": ".github/workflows/lighthouse.yml",
+        "state": "passed",
+        "runId": 43196609814
+      },
+      {
+        "workflow": ".github/workflows/accessibility.yml",
+        "state": "passed",
+        "runId": 43196615941
+      }
+    ],
+    "findings": [],
+    "sourceCommit": "4ef9b08dca31d3e32a7abd25a311d15355b0fc6b",
+    "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+    "checkedAt": "2026-11-12T10:23:56.051Z",
+    "independentProof": {
+      "ok": false,
+      "expectedSha": "4ef9b08dca31d3e32a7abd25a311d15355b0fc6b"
+    }
+  },
+  "normalVisual": {
+    "sourceCommit": "4ef9b08dca31d3e32a7abd25a311d15355b0fc6b",
+    "runId": 43196621823,
+    "jobId": 131109116833,
+    "workflowConclusion": "success",
+    "headersPassed": 42,
+    "visualsFirstAttemptPassed": 67,
+    "retryRecovered": 3,
+    "terminalFailed": 0,
+    "allFinalCasesPassed": 70,
+    "firstPassStable": false,
+    "diagnosticsEnabled": false,
+    "baselineUpdates": false,
+    "caseDetails": [
+      {
+        "surface": "membership",
+        "viewport": "iphone-13",
+        "theme": "dark",
+        "firstMismatchPixels": 7261
+      },
+      {
+        "surface": "membership",
+        "viewport": "pixel-5",
+        "theme": "dark",
+        "firstMismatchPixels": 7209
+      },
+      {
+        "surface": "games",
+        "viewport": "pixel-5",
+        "theme": "dark",
+        "firstMismatchPixels": 4289
+      }
+    ],
+    "logSha256": "2a99ca5d0619a469d5f06592fd4c5735a68f42bce9b09ada0db72f5e03eb0068",
+    "classification": "Stable first-attempt pixel mismatches recovered by configured native retries. No terminal visual failure or scene-readiness failure. Exact cause unproved; scene isolation does not guarantee universal first-pass stability.",
+    "referencesOrToleranceChanged": false
+  },
+  "productionPromoted": false,
+  "limitations": [
+    "Exact candidate required workflows and complete current source passed.",
+    "Three visual first-attempt mismatches remain documented; success is not represented as70first-pass.",
+    "Staging/account/production acceptance and full closeout remain pending."
+  ]
+}

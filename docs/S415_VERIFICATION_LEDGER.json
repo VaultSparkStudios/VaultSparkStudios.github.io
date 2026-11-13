@@ -3,13 +3,13 @@
   "publicSafe": true,
   "session": 415,
   "state": "in-progress",
-  "updatedAt": "2026-11-12T09:58:00.232Z",
+  "updatedAt": "2026-11-12T10:28:25.015Z",
   "audit": "docs/AUDIT_2026-11-11-S415.json",
   "implementation": "docs/S415_IMPLEMENTATION_CHECKPOINT.json",
   "candidate": {
     "qaCommit": "36eb710e44675f89b9634989a348a13433ada556",
     "productionPromoted": false,
-    "workingTree": "Reviewed main ed939 merged with four authored repair paths;58owners and98reviewed afterimages verified. Complete current source555/555 native0, receipt604847e38c4e4f2318b92eec. Required exact candidate CI, staging/account/production acceptance and closeout pending.",
+    "workingTree": "Verified candidate4ef9b08 is pushed to QA:complete555native0 and all3exactrequired workflows pass. Normal visual workflow success67first-pass+3retry-recovered; known pixel flakiness retained. Staging artifactV4 locally sealed/packaged; current deployed stage remainshistorical884 until guarded replacement. Real account journeys, production and closeout pending.",
     "qaCommitScope": "Historical normal Linux comparison source; current merged source is identified by the complete source fingerprint until its reviewed commit is created."
   },
   "local": {
@@ -550,6 +550,72 @@
       "logSha256": "85d2204a8e26e546d4723a2049d808ae1c07a5ddc7997c33c725409cd5704073",
       "acceptanceEvidence": true,
       "scope": "Reviewed reference set under per-scene isolated worker/browser lifetimes; native assertion, threshold, reference images, DPR, retries and timeouts unchanged."
+    },
+    "currentRequiredCandidate": {
+      "ok": true,
+      "lane": "hosted-exact-sha",
+      "checks": [
+        {
+          "workflow": ".github/workflows/e2e.yml",
+          "state": "passed",
+          "runId": 43196603966
+        },
+        {
+          "workflow": ".github/workflows/lighthouse.yml",
+          "state": "passed",
+          "runId": 43196609814
+        },
+        {
+          "workflow": ".github/workflows/accessibility.yml",
+          "state": "passed",
+          "runId": 43196615941
+        }
+      ],
+      "findings": [],
+      "sourceCommit": "4ef9b08dca31d3e32a7abd25a311d15355b0fc6b",
+      "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
+      "checkedAt": "2026-11-12T10:23:56.051Z",
+      "independentProof": {
+        "ok": false,
+        "expectedSha": "4ef9b08dca31d3e32a7abd25a311d15355b0fc6b"
+      }
+    },
+    "currentNormalVisual": {
+      "sourceCommit": "4ef9b08dca31d3e32a7abd25a311d15355b0fc6b",
+      "runId": 43196621823,
+      "jobId": 131109116833,
+      "workflowConclusion": "success",
+      "headersPassed": 42,
+      "visualsFirstAttemptPassed": 67,
+      "retryRecovered": 3,
+      "terminalFailed": 0,
+      "allFinalCasesPassed": 70,
+      "firstPassStable": false,
+      "diagnosticsEnabled": false,
+      "baselineUpdates": false,
+      "caseDetails": [
+        {
+          "surface": "membership",
+          "viewport": "iphone-13",
+          "theme": "dark",
+          "firstMismatchPixels": 7261
+        },
+        {
+          "surface": "membership",
+          "viewport": "pixel-5",
+          "theme": "dark",
+          "firstMismatchPixels": 7209
+        },
+        {
+          "surface": "games",
+          "viewport": "pixel-5",
+          "theme": "dark",
+          "firstMismatchPixels": 4289
+        }
+      ],
+      "logSha256": "2a99ca5d0619a469d5f06592fd4c5735a68f42bce9b09ada0db72f5e03eb0068",
+      "classification": "Stable first-attempt pixel mismatches recovered by configured native retries. No terminal visual failure or scene-readiness failure. Exact cause unproved; scene isolation does not guarantee universal first-pass stability.",
+      "referencesOrToleranceChanged": false
     }
   },
   "visual": {
