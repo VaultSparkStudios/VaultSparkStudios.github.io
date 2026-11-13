@@ -32,7 +32,7 @@ Screenshots live in `docs/mobile-audit/`. Raw findings in `docs/mobile-audit/fin
   - `{"tag":"span","fs":12,"text":"⚒️ IN THE FORGE"}`
   - `{"tag":"span","fs":12,"text":"🔒 VAULTED"}`
   - `{"tag":"span","fs":12,"text":"NO DOWNLOAD"}`
-- `game-cod` @ iphone-se — 8 text block(s) under 13px
+- `game-cod` @ iphone-se — 13 text block(s) under 13px
   - `{"tag":"span","fs":11.2,"text":"⚒ IN THE FORGE"}`
   - `{"tag":"span","fs":10.4,"text":"RIGHT NOW"}`
   - `{"tag":"span","fs":12.5,"text":"VAULT RATING"}`

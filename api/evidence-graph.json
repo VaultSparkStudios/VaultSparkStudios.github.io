@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-10-02",
-  "contractSha256": "37b40d19eb357f821cafe7454272493a4405910847c87bd42e6f4a6b02280e2c",
+  "contractSha256": "2511fba2cd0a351eeb19b423161384deb7763d92ff3e7870d83a2ae182a415e0",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
@@ -45,7 +45,6 @@
     "news-desk-reactions",
     "news-desk-search",
     "news-desk-stats",
-    "news-visual-receipts",
     "newsroom-run",
     "oracle-velocity-public",
     "promotion-receipt",
@@ -64,7 +63,6 @@
     "forge-feed",
     "home-desk-module",
     "ignis-conduit",
-    "news-critique-packets",
     "news-pages",
     "proof-aware-projects",
     "public-ecosystem",
@@ -77,6 +75,7 @@
     "early-hints-headers",
     "ignis-search-index",
     "llms-full-shards",
+    "news-visual-receipts",
     "pathways-pages",
     "public-status",
     "ship-receipts",
@@ -84,6 +83,7 @@
     "agents-json",
     "launch-age",
     "nervous-system",
+    "news-critique-packets",
     "oracle-query-clusters",
     "you-asked-shipped",
     "ai-discovery-health",
@@ -1044,7 +1044,9 @@
         "api/news-desk-reactions.json",
         "api/news-desk-stats.json"
       ],
-      "feeds": [],
+      "feeds": [
+        "api/news-visual-receipts.json"
+      ],
       "externalSources": [
         "data/news-desk/days/*.json",
         "data/news-desk/publish-times.json"
@@ -1056,7 +1058,10 @@
       "builder": "scripts/build-news-visual-receipts.mjs",
       "verify": "node scripts/build-news-visual-receipts.mjs --check",
       "publishCascade": true,
-      "dependsOn": [],
+      "dependsOn": [
+        "assets/shell-manifest.json",
+        "news/index.html"
+      ],
       "feeds": [
         "api/news-critique-packets.json"
       ],
@@ -1348,6 +1353,7 @@
       "feeds": [
         "_headers",
         "api/candidate-artifact-manifest.json",
+        "api/news-visual-receipts.json",
         "pathways/builders/index.html"
       ],
       "externalSources": [

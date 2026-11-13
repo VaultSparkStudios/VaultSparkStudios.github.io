@@ -119,6 +119,18 @@ test('all local non-side-effecting graph builders have valid repair invocations'
   }
 });
 
+test('article page and shell changes rebuild visual receipts before critique packets', () => {
+  const graph = loadEvidenceGraph(process.cwd());
+  assert.deepEqual(validateEvidenceGraph(graph), []);
+  for (const source of ['assets/page-sigil.js', 'api/news-desk-engagement.json']) {
+    const order = topoOrder(affectedEvidenceNodes(graph, [source]), graph).map(node => node.id);
+    for (const id of ['news-visual-receipts', 'news-critique-packets']) assert(order.includes(id), `${source} must reach ${id}`);
+    const writer = source === 'assets/page-sigil.js' ? 'shell-assets' : 'news-pages';
+    assert(order.indexOf(writer) < order.indexOf('news-visual-receipts'), 'receipts must hash the final rendered references');
+    assert(order.indexOf('news-visual-receipts') < order.indexOf('news-critique-packets'));
+  }
+});
+
 // Exercise the real CLI and planning modules with an empty Git diff. All child
 // builders and Git responses below are local fixture implementations.
 function clockRepairFixture(t) {

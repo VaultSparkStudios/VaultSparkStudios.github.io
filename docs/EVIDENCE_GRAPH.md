@@ -303,6 +303,7 @@ flowchart LR
   n_assets_ambient_core_bundle_js --> n_assets_shell_manifest_json
   n_assets_shell_manifest_json --> n__headers
   n_assets_shell_manifest_json --> n_api_candidate_artifact_manifest_json
+  n_assets_shell_manifest_json --> n_api_news_visual_receipts_json
   n_assets_shell_manifest_json --> n_pathways_builders_index_html
   n_cloudflare_ --> n_api_identity_migration_receipt_json
   n_cloudflare_ --> n_api_security_posture_json
@@ -385,6 +386,7 @@ flowchart LR
   n_news_ --> n__headers
   n_news_ --> n_api_news_visual_receipts_json
   n_news_ --> n_sitemap_xml
+  n_news_index_html --> n_api_news_visual_receipts_json
   n_oracle_ --> n_data_ignis_search_index_json
   n_package_json --> n_api_security_posture_json
   n_portfolio_ --> n_api_studio_timeline_json
@@ -476,8 +478,8 @@ flowchart LR
 | `news-desk-reactions` | `api/news-desk-reactions.json` | yes | — | `news/index.html` |
 | `news-desk-search` | `api/news-desk-search.json` | yes | — | — |
 | `news-desk-stats` | `api/news-desk-stats.json` | yes | — | `data/stats-surface.json`<br>`news/index.html` |
-| `news-pages` | `news/index.html` | yes | `api/news-desk-engagement.json`<br>`api/news-desk-freshness.json`<br>`api/news-desk-reactions.json`<br>`api/news-desk-stats.json` | — |
-| `news-visual-receipts` | `api/news-visual-receipts.json` | yes | — | `api/news-critique-packets.json` |
+| `news-pages` | `news/index.html` | yes | `api/news-desk-engagement.json`<br>`api/news-desk-freshness.json`<br>`api/news-desk-reactions.json`<br>`api/news-desk-stats.json` | `api/news-visual-receipts.json` |
+| `news-visual-receipts` | `api/news-visual-receipts.json` | yes | `assets/shell-manifest.json`<br>`news/index.html` | `api/news-critique-packets.json` |
 | `newsroom-run` | `api/newsroom-run.json` | yes | — | `api/status-proof.json` |
 | `oracle-answers` | `oracle/answers/index.json` | yes | `api/oracle-insights.json` | — |
 | `oracle-query-clusters` | `api/oracle-insights.json` | — | `api/public-intelligence.json`<br>`data/ignis-search-index.json` | `oracle/answers/index.json` |
@@ -492,7 +494,7 @@ flowchart LR
 | `release-dependencies` | `api/release-dependencies.json` | yes | — | `api/release-proof.json` |
 | `release-proof` | `api/release-proof.json` | yes | `api/candidate-artifact-manifest.json`<br>`api/deploy-currency.json`<br>`api/identity-migration-receipt.json`<br>`api/promotion-receipt.json`<br>`api/release-dependencies.json`<br>`api/staging-deploy-receipt.json`<br>`api/worker-route-provenance.json` | — |
 | `security-posture` | `api/security-posture.json` | yes | `api/worker-route-provenance.json` | `api/status-proof.json`<br>`data/ignis-search-index.json` |
-| `shell-assets` | `assets/shell-manifest.json` | — | `assets/ambient-core.bundle.js` | `_headers`<br>`api/candidate-artifact-manifest.json`<br>`pathways/builders/index.html` |
+| `shell-assets` | `assets/shell-manifest.json` | — | `assets/ambient-core.bundle.js` | `_headers`<br>`api/candidate-artifact-manifest.json`<br>`api/news-visual-receipts.json`<br>`pathways/builders/index.html` |
 | `ship-receipts` | `api/ship-receipts.json` | — | `api/feedback-provenance.json` | `api/intelligence-budget.json`<br>`changelog/index.html` |
 | `site-health` | `api/site-health.json` | — | — | `api/intelligence-budget.json`<br>`api/status-proof.json` |
 | `sitemap` | `sitemap.xml` | yes | — | `sitemap-page/index.html` |
@@ -688,45 +690,45 @@ flowchart LR
 32. `news-desk-reactions`
 33. `news-desk-search`
 34. `news-desk-stats`
-35. `news-visual-receipts`
-36. `newsroom-run`
-37. `oracle-velocity-public`
-38. `promotion-receipt`
-39. `public-intelligence`
-40. `rank-climbers`
-41. `release-dependencies`
-42. `site-health`
-43. `sitemap`
-44. `surface-spine`
-45. `tt-readiness`
-46. `tt-summary`
-47. `visual-qa-retention`
-48. `worker-route-provenance`
-49. `changelog-live`
-50. `feedback-provenance`
-51. `forge-feed`
-52. `home-desk-module`
-53. `ignis-conduit`
-54. `news-critique-packets`
-55. `news-pages`
-56. `proof-aware-projects`
-57. `public-ecosystem`
-58. `security-posture`
-59. `shell-assets`
-60. `sitemap-page`
-61. `studio-timeline`
-62. `worker-route-history`
-63. `canonical-destination-reachability`
-64. `early-hints-headers`
-65. `ignis-search-index`
-66. `llms-full-shards`
-67. `pathways-pages`
-68. `public-status`
-69. `ship-receipts`
-70. `ux-decision-ledger`
-71. `agents-json`
-72. `launch-age`
-73. `nervous-system`
+35. `newsroom-run`
+36. `oracle-velocity-public`
+37. `promotion-receipt`
+38. `public-intelligence`
+39. `rank-climbers`
+40. `release-dependencies`
+41. `site-health`
+42. `sitemap`
+43. `surface-spine`
+44. `tt-readiness`
+45. `tt-summary`
+46. `visual-qa-retention`
+47. `worker-route-provenance`
+48. `changelog-live`
+49. `feedback-provenance`
+50. `forge-feed`
+51. `home-desk-module`
+52. `ignis-conduit`
+53. `news-pages`
+54. `proof-aware-projects`
+55. `public-ecosystem`
+56. `security-posture`
+57. `shell-assets`
+58. `sitemap-page`
+59. `studio-timeline`
+60. `worker-route-history`
+61. `canonical-destination-reachability`
+62. `early-hints-headers`
+63. `ignis-search-index`
+64. `llms-full-shards`
+65. `news-visual-receipts`
+66. `pathways-pages`
+67. `public-status`
+68. `ship-receipts`
+69. `ux-decision-ledger`
+70. `agents-json`
+71. `launch-age`
+72. `nervous-system`
+73. `news-critique-packets`
 74. `oracle-query-clusters`
 75. `you-asked-shipped`
 76. `ai-discovery-health`

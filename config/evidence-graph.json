@@ -732,6 +732,8 @@
       "id": "news-visual-receipts",
       "output": "api/news-visual-receipts.json",
       "sources": [
+        "news/index.html",
+        "assets/shell-manifest.json",
         "data/news-desk/days/*.json",
         "data/news-desk/art/*.png",
         "news/**/*.html"
@@ -743,7 +745,7 @@
         "--check"
       ],
       "publishCascade": true,
-      "note": "Per-story source/page/art hashes, safe-zone contract, exact review state, and recent scene-diversity memory. --promote additionally blocks unreviewed or repeated latest art."
+      "note": "Per-story source/page/art hashes, safe-zone contract, exact review state, and recent scene-diversity memory. Explicit page-writer and shell-writer output edges order refreshes after all article reference changes; globs retain direct-file coverage. --promote additionally blocks unreviewed or repeated latest art."
     },
     {
       "id": "news-critique-packets",

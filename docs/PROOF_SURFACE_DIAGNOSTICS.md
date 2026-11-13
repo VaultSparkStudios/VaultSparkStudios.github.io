@@ -1,7 +1,7 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-11-13T08:29:21.445Z
-Receipt: `2b4c8521ba7da956f156b5f0` · coverage 109/109
+Generated: 2026-11-13T09:40:14.690Z
+Receipt: `85dd13a0295a414a69a02e72` · coverage 109/109
 
 Latest: **108/109** passed · blocking 92/92 · advisory findings 1/17 · total 20.3s
 
@@ -9,14 +9,14 @@ Latest: **108/109** passed · blocking 92/92 · advisory findings 1/17 · total 
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 88 | blocking | 1.6s | 0 | `node scripts/check-receipt-ordering.mjs` |
-| 37 | blocking | 1.6s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 78 | blocking | 1.5s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
-| 38 | blocking | 1.2s | 0 | `node scripts/generate-news-pages.mjs --check` |
-| 90 | blocking | 0.8s | 0 | `node scripts/check-visual-qa-retention.mjs --check` |
+| 78 | blocking | 1.6s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
+| 88 | blocking | 1.5s | 0 | `node scripts/check-receipt-ordering.mjs` |
+| 37 | blocking | 1.5s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 38 | blocking | 1.1s | 0 | `node scripts/generate-news-pages.mjs --check` |
 | 49 | blocking | 0.8s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 92 | blocking | 0.8s | 0 | `node scripts/generate-sitemap.mjs --check` |
-| 65 | blocking | 0.7s | 0 | `node scripts/check-content-coherence.mjs` |
+| 90 | blocking | 0.8s | 0 | `node scripts/check-visual-qa-retention.mjs --check` |
+| 65 | blocking | 0.8s | 0 | `node scripts/check-content-coherence.mjs` |
+| 92 | blocking | 0.7s | 0 | `node scripts/generate-sitemap.mjs --check` |
 | 46 | blocking | 0.6s | 0 | `node scripts/derive-game-nav.mjs --check` |
 | 22 | blocking | 0.5s | 0 | `node scripts/check-schema-coverage.mjs` |
 
