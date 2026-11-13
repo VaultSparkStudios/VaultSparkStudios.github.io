@@ -10,6 +10,28 @@ const document = html({
   body: '<header class="site-header"><button>Menu</button></header><main><button id="reaction">React to the illustration</button></main><script src="/assets/page-sigil.js"></script>',
 });
 
+test('placement does not force skipped article controls into layout', async () => {
+  const skipped = document.replace('<main>', '<main><section id="skipped" style="margin-top:10000px;content-visibility:auto;contain-intrinsic-size:500px"><button id="skipped-control">Later article action</button></section>');
+  const f = await openFixture(browser, { pages: { '/news/sigil/': skipped }, contextOptions: { viewport: { width: 390, height: 844 } } });
+  try {
+    await f.page.addInitScript(() => {
+      window.__skippedGeometryReads = 0;
+      const original = Element.prototype.getBoundingClientRect;
+      Element.prototype.getBoundingClientRect = function (...args) {
+        if (this.id === 'skipped-control' && !this.checkVisibility({ contentVisibilityAuto: true })) window.__skippedGeometryReads++;
+        return original.apply(this, args);
+      };
+    });
+    await f.goto('/news/sigil/');
+    const sigil = f.page.locator('[data-vs-page-sigil]');
+    await sigil.waitFor({ state: 'visible' });
+    assert.equal(await f.page.locator('#skipped-control').evaluate(el => el.checkVisibility({ contentVisibilityAuto: true })), false);
+    assert.equal(await f.page.evaluate(() => window.__skippedGeometryReads), 0);
+    assert.ok((await sigil.boundingBox()).y >= 78, 'visible header controls still determine clearance');
+    assert.deepEqual(f.log.errors, []);
+  } finally { await f.close(); }
+});
+
 test('freshness link stays available at the entrance and never intercepts scrolled controls', async () => {
   for (const width of [390, 1366]) {
     const f = await openFixture(browser, { pages: { '/news/sigil/': document }, contextOptions: { viewport: { width, height: 844 } } });

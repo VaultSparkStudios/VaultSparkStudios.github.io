@@ -1,17 +1,17 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-06T18:19:19.476Z",
+  "generatedAt": "2026-11-13T09:03:11.261Z",
   "generatedBy": "scripts/probe-supabase-control-plane.mjs",
   "publicSafe": true,
   "projectRef": "fjnpzjjyhnpmunfoycrp",
-  "overall": "partial",
+  "overall": "ready",
   "planes": {
     "dataRest": {
-      "status": "degraded",
+      "status": "ready",
       "authority": "row-data-admin",
       "liveProbe": {
-        "status": "credential-project-mismatch",
-        "httpStatus": null
+        "status": "ok",
+        "httpStatus": 200
       },
       "canRunSqlMigrations": false,
       "canDeployEdgeFunctions": false
@@ -55,9 +55,7 @@
       }
     }
   },
-  "blockers": [
-    "supabase-credential-project-mismatch"
-  ],
+  "blockers": [],
   "invariants": {
     "serviceRoleDoesNotImplyManagementApi": true,
     "serviceRoleDoesNotImplySqlMigration": true,

@@ -57,6 +57,9 @@
       let pushed = false;
       document.querySelectorAll(HEADER_CONTROL_SELECTOR + ',' + TOP_ZONE_INTERACTIVE).forEach((el) => {
         if (el === wrap || el.contains(wrap) || wrap.contains(el)) return;
+        // Measuring a skipped content-visibility subtree would lay out the
+        // article below the viewport just to reject it outside the top zone.
+        if (el.checkVisibility && !el.checkVisibility({ contentVisibilityAuto: true })) return;
         const r = el.getBoundingClientRect();
         if (r.width === 0 || r.height === 0 || r.top > HEADER_ZONE_PX) return;
         if (overlaps(me, r)) {

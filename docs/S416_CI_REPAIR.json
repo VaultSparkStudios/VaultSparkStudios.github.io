@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "session": 416,
+  "publicSafe": true,
+  "recordedAt": "2026-11-13T09:06:40.851Z",
+  "testedCommit": "afca471f5821edc121309caadacb12af194e29bd",
+  "requiredChecks": [
+    {
+      "workflow": ".github/workflows/e2e.yml",
+      "state": "passed",
+      "runId": 43395436958
+    },
+    {
+      "workflow": ".github/workflows/lighthouse.yml",
+      "state": "failed",
+      "runId": 43395440654
+    },
+    {
+      "workflow": ".github/workflows/accessibility.yml",
+      "state": "passed",
+      "runId": 43395444342
+    }
+  ],
+  "newsPerformance": {
+    "score": 0.88,
+    "requiredFloor": 0.9,
+    "observedFirstContentfulPaintMs": 174,
+    "simulatedLargestContentfulPaintMs": 3827,
+    "issue": "The sigil scanned geometry inside skipped article sections.",
+    "fix": "Skip content-visibility:auto sections before geometry reads; retain visible top-zone collision checks.",
+    "scoreImprovementVerified": false,
+    "beforeReviewSha256": "2e8eadd2797c9b54c92accbb044cb622db9334b9a3d56c2d58d6c0aa639421b7",
+    "beforeOriginalsReviewed": 14
+  },
+  "controlPlane": {
+    "credentialSelection": "Fixed-project selection with bounded existing-key management fallback; shared slots unchanged.",
+    "allFourAuthorityPlanesVerified": true,
+    "observedAt": "2026-11-13T09:03:11.261Z"
+  },
+  "focusedChecks": {
+    "sigilBrowserCases": 2,
+    "credentialSelectorCases": 25,
+    "existingControlPlaneSelfTests": 22,
+    "passed": true
+  },
+  "revisedFullSourceVerified": false,
+  "revisedRequiredCiVerified": false,
+  "nativeAuthenticatedAcceptance": false,
+  "productionPromoted": false
+}

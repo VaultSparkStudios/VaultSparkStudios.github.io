@@ -19,6 +19,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { getSecret } from './lib/secrets.mjs';
+import { selectWebsiteProbeCredential } from './lib/website-supabase-probe-credential.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'api', 'supabase-control-plane.json');
@@ -174,10 +175,10 @@ async function readOnlyFetch(url, options = {}) {
   }
 }
 
-function credentialInventory() {
-  const supabaseUrl = getSecret('SUPABASE_URL', 'supabase.admin');
-  const serviceRole = getSecret('SUPABASE_SERVICE_ROLE_KEY', 'supabase.admin');
-  const managementToken = getSecret('SUPABASE_ACCESS_TOKEN', 'supabase.management');
+async function credentialInventory() {
+  const selected = await selectWebsiteProbeCredential({ getSecret });
+  const { supabaseUrl, serviceRole } = selected;
+  const managementToken = getSecret('SUPABASE_ACCESS_TOKEN', 'supabase.management') || getSecret('SUPABASE_PAT', 'supabase.management');
   const databaseCredential = [
     'PG_CONNECTION_VAULTSPARKSTUDIOS_WEBSITE',
     'PG_CONNECTION_VAULTSPARKSTUDIOS_GITHUB_IO',
@@ -186,9 +187,9 @@ function credentialInventory() {
     'SUPABASE_DB_PASSWORD',
   ].some((key) => Boolean(getSecret(key, 'supabase.sql-migration')));
   return {
-    values: { supabaseUrl, serviceRole, managementToken },
+    values: { supabaseUrl, serviceRole, managementToken, selectionStatus: selected.status },
     public: {
-      dataRest: Boolean(supabaseUrl && serviceRole),
+      dataRest: selected.status !== 'not-run',
       managementToken: Boolean(managementToken),
       databaseCredential,
     },
@@ -196,24 +197,20 @@ function credentialInventory() {
 }
 
 async function probeLive(inventory) {
-  const { supabaseUrl, serviceRole, managementToken } = inventory.values;
+  const { serviceRole, managementToken, selectionStatus } = inventory.values;
   // This repository owns one declared Supabase project. A studio-global
   // SUPABASE_URL can legitimately point at a sibling project, but it must
   // never retarget this probe or a later deploy.
   const projectRef = DEFAULT_PROJECT_REF;
   const observations = {};
-  // A key whose own `ref` claim names a different project cannot authenticate here,
-  // whatever the URL says. An unparseable/non-JWT key yields null and is NOT treated as
-  // a mismatch — absence of evidence is not evidence of mismatch.
-  const keyRef = projectRefFromServiceRole(serviceRole);
-  const urlMatches = projectRefFromUrl(supabaseUrl) === projectRef;
-  const keyMatches = keyRef === null || keyRef === projectRef;
-  if (supabaseUrl && serviceRole && urlMatches && keyMatches) {
+  // Selection only admits the fixed own-project pair. New-style secrets still
+  // require this actual REST response; inventory alone never proves readiness.
+  if (selectionStatus === 'selected') {
     observations.dataRest = await readOnlyFetch(`https://${projectRef}.supabase.co/rest/v1/`, {
       headers: { apikey: serviceRole, Authorization: `Bearer ${serviceRole}`, Accept: 'application/json' },
     });
-  } else if (supabaseUrl && serviceRole) {
-    observations.dataRest = { status: 'credential-project-mismatch', httpStatus: null };
+  } else if (selectionStatus !== 'not-run') {
+    observations.dataRest = { status: selectionStatus, httpStatus: null };
   }
   if (managementToken) {
     const headers = { Authorization: `Bearer ${managementToken}`, Accept: 'application/json' };
@@ -352,7 +349,7 @@ const args = new Set(process.argv.slice(2));
 if (args.has('--self-test')) {
   selfTest();
 } else if (args.has('--probe')) {
-  const inventory = credentialInventory();
+  const inventory = await credentialInventory();
   const { projectRef, observations } = await probeLive(inventory);
   const source = sourceEvidence();
   const classified = classifyControlPlane({ inventory: inventory.public, observations, source });
