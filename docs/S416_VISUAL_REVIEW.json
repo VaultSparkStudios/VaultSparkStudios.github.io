@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "session": 416,
   "publicSafe": true,
-  "recordedAt": "2026-11-13T09:17:56.235Z",
+  "recordedAt": "2026-11-13T09:52:29.930Z",
   "scope": "Three changed public panels and the affected news first viewport",
   "before": {
     "originalsReviewed": 56,
@@ -22,7 +22,7 @@
   "after": {
     "candidate": {
       "manifest": "api/candidate-artifact-manifest.json",
-      "manifestSha256": "6b2458b00f1a8ec2b08e5421c5c322c822bfdbb3c18734a9ce1cd0933ed7ef89",
+      "manifestSha256": "f868098f858c151811bf6eee146d5c8d5cfa453e0261474057188b61d62f67b9",
       "candidateSha": "ceba607f4d6eec139f4cb85f84a17ceaf48e3c4f",
       "root": "f1f20203dc6bc865f560df4d792f8961e628d669d5122b9b801cbaabece1ad31"
     },
@@ -45,9 +45,9 @@
       {
         "id": "api",
         "file": "docs/visual-qa/S416-api.json",
-        "sha256": "7f91995fb03ca4e5d19235c1ec6e7a078ad2ac1274e578f6725a27b966c42291",
+        "sha256": "87f52aaf289bf3a8563572601c84f661df85c40910e39a683c9a26db5c5f31e0",
         "images": 14,
-        "reviewSha256": "8fe9e42dd78817b09d80e784c42c96073d1680d2d14ff84f8d40acb5cb36edd6"
+        "reviewSha256": "93aebfdb51ea8dc79d20572f6feb555913cc0ca560beac9fa5346158a36b5fa1"
       },
       {
         "id": "news",
@@ -57,7 +57,7 @@
         "reviewSha256": "107d611e9b86502cb7e4dcb32e65bc8bd60244db1f2b689e5b247ae991076a0a"
       }
     ],
-    "latestReceiptSha256": "7f91995fb03ca4e5d19235c1ec6e7a078ad2ac1274e578f6725a27b966c42291"
+    "latestReceiptSha256": "87f52aaf289bf3a8563572601c84f661df85c40910e39a683c9a26db5c5f31e0"
   },
   "themes": 7,
   "viewports": [
@@ -76,5 +76,10 @@
   "blockingDefectsOpen": 0,
   "limitation": "Focused changed targets plus news first viewport. Seven tall mobile API crops include the fixed header over part of the unrelated first Desk card; the changed Forge Ledger card remains unobstructed. No numeric contrast, entire-panel-unobstructed, performance-score improvement, authenticated, current staging installation or production acceptance claim.",
   "nativeAcceptance": false,
-  "productionAcceptance": false
+  "productionAcceptance": false,
+  "finalObservationRefresh": {
+    "imagesRecapturedAndReviewed": 14,
+    "reason": "Final uptime-only main integration rewrote identical index/API sources; actual new API captures follow those writes.",
+    "sourceFingerprintUnchanged": "ef13778496df34d288f80a2b"
+  }
 }
