@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13T11:43:47.249Z",
+  "generatedAt": "2026-11-13T11:54:21.015Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "CI gates are still running.",
+  "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "unobserved",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-30T21:19:31.294Z",
     "currentBehindStreak": 0,
     "newestGradableAt": "2026-11-03T02:31:55.485Z",
-    "newestAgeHours": 249.2,
+    "newestAgeHours": 249.4,
     "maxAgeHours": 48,
     "stale": true,
     "strandedAlert": false
@@ -37,10 +37,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-11-13T11:35:22Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-11-13T11:50:43Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/43418268998",
       "headSha": "24a4621f0dc7e27f25693804fb52162234c2b7d4",
       "event": "push"
@@ -60,7 +60,7 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-11-13T11:35:23Z",
+      "updatedAt": "2026-11-13T11:46:03Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/43418268859",
       "headSha": "24a4621f0dc7e27f25693804fb52162234c2b7d4",
       "event": "push"
@@ -87,7 +87,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 2.44,
+      "ageHours": 2.62,
       "staleAfterHours": 48
     },
     {
@@ -100,7 +100,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.97,
+      "ageHours": 5.15,
       "staleAfterHours": 48
     },
     {
@@ -135,7 +135,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.51,
+      "ageHours": 4.68,
       "staleAfterHours": 48
     },
     {
@@ -159,7 +159,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.23,
+      "ageHours": 5.41,
       "staleAfterHours": 48
     },
     {
@@ -183,7 +183,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 5.31,
+      "ageHours": 5.49,
       "staleAfterHours": 48
     },
     {
@@ -196,7 +196,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.94,
+      "ageHours": 5.11,
       "staleAfterHours": 48
     },
     {
@@ -221,7 +221,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.21,
+      "ageHours": 3.38,
       "staleAfterHours": 48
     },
     {
@@ -234,7 +234,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.13,
+      "ageHours": 5.3,
       "staleAfterHours": 48
     },
     {
@@ -249,7 +249,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.1,
+      "ageHours": 0.28,
       "staleAfterHours": 48
     },
     {
