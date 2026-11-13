@@ -411,10 +411,16 @@ async function waitForVisualReadiness(page, surface) {
         (!wireExpected || wireState === 'live' || wireState === 'latest') &&
         anchorShellReady &&
         (!window.VSAfterPaint || window.VSAfterPaint.done);
-      const visible = [...document.querySelectorAll('body *')].filter(element => {
+      const visible = [];
+      for (const element of document.querySelectorAll('body *')) {
+        // A readiness observation must not force skipped offscreen sections
+        // into layout before deciding whether they affect this viewport.
+        if (element.checkVisibility && !element.checkVisibility({ contentVisibilityAuto: true })) continue;
         const rect = element.getBoundingClientRect();
-        return rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.top < innerHeight;
-      });
+        if (rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.top < innerHeight) {
+          visible.push({ element, rect });
+        }
+      }
       const scroller = document.scrollingElement;
       const target = scene?.anchorId ? document.getElementById(scene.anchorId) : null;
       const targetRect = target?.getBoundingClientRect();
@@ -442,8 +448,7 @@ async function waitForVisualReadiness(page, surface) {
           rankExpected, anchorShellReady,
           afterPaint: window.VSAfterPaint ? { started: window.VSAfterPaint.started === true, done: window.VSAfterPaint.done === true } : null,
         },
-        fingerprint: JSON.stringify([scrollX, scrollY, sceneObservation.target, visible.map(element => {
-          const rect = element.getBoundingClientRect();
+        fingerprint: JSON.stringify([scrollX, scrollY, sceneObservation.target, visible.map(({ element, rect }) => {
           const style = getComputedStyle(element);
           return [element.tagName, element.id, rect.x, rect.y,
             rect.width, rect.height, style.opacity, style.visibility,

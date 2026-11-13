@@ -177,7 +177,7 @@ test('absent, hidden or invalid fragment geometry cannot produce passing scene f
 
 function actualFailureProbeFunction(name, context = {}) {
   const source = fs.readFileSync('tests/visual-regression.spec.js', 'utf8');
-  const start = source.indexOf((name.startsWith('native') || name.startsWith('capture') || name.startsWith('games') ? 'async ' : '') + 'function ' + name + '(');
+  const start = source.indexOf((name.startsWith('native') || name.startsWith('capture') || name.startsWith('games') || name === 'waitForVisualReadiness' ? 'async ' : '') + 'function ' + name + '(');
   assert.ok(start >= 0);
   const end = source.indexOf('\n}\n', start); assert.ok(end > start);
   return new Function(...Object.keys(context), 'return (' + source.slice(start, end + 2) + ');')(...Object.values(context));
@@ -576,4 +576,81 @@ test('actual visual registration has70 unique literal worker keys with inherited
   assert.match(source,/test\.use\(\{ \.\.\.emulationOnly\(vp.config\), reducedMotion: 'reduce' \}\);/);
   const body=source.slice(source.indexOf('scenario(`${surface.name}'));
   assert.ok(body.indexOf('claimVisualScene(workerSceneClaim, sceneKey);')<body.indexOf('await page.goto('));
+});
+
+async function actualReadinessGeometryWitness({ moving = false } = {}) {
+  const reads = { skipped: 0, visible: 0, fallback: 0, offscreen: 0, collapsed: 0 };
+  const visibility = [], samples = [], states = [], styles = [], keys = [];
+  let now = 0, sampleIndex = 0;
+  const element = (id, top, width = 80) => ({
+    id, tagName: 'P', childElementCount: 0, textContent: id,
+    checkVisibility(options) { visibility.push({ id, options }); return id !== 'skipped'; },
+    getBoundingClientRect() {
+      reads[id]++;
+      if (id === 'skipped') throw Error('Readiness forced a skipped subtree into layout');
+      const y = id === 'visible' && moving && sampleIndex > 1 ? top + 10 : top;
+      return { x: 0, y, width, height: 20, top: y, bottom: y + 20 };
+    },
+  });
+  const elements = [element('skipped', 10000), element('visible', 10), element('fallback', 50),
+    element('offscreen', 10000), element('collapsed', 20, 0)];
+  delete elements[2].checkVisibility; // Older engines keep the geometry fallback.
+  const document = {
+    fonts: { status: 'loaded' }, body: { dataset: { theme: 'dark' } },
+    documentElement: { hasAttribute: () => false },
+    scrollingElement: { scrollHeight: 2000, clientHeight: 600 },
+    querySelector: () => null,
+    querySelectorAll(selector) {
+      if (selector === 'body *') return elements;
+      assert.equal(selector, 'link[rel="stylesheet"]'); return [];
+    },
+  };
+  const expect = {
+    poll(callback, options) {
+      assert.equal(options.timeout, 5000);
+      assert.deepEqual(options.intervals, [100, 250, 500]);
+      return { async toMatchObject(expected) {
+        assert.deepEqual(expected, { ready: true, layoutStable: true });
+        for (let i = 0; i < (moving ? 3 : 2); i++) {
+          now = i * 600;
+          states.push(await callback());
+        }
+        assert.equal(states.at(-1).ready, true);
+        assert.equal(states.at(-1).layoutStable, true);
+      } };
+    },
+  };
+  const readiness = actualFailureProbeFunction('waitForVisualReadiness', {
+    document, expect, Date: { now: () => now }, innerHeight: 600, scrollX: 0, scrollY: 0,
+    location: { pathname: '/', hash: '' }, window: { VSAfterPaint: { started: true, done: true } },
+    VISUAL_SCENES, visualSceneState,
+    getComputedStyle(el) { styles.push(el.id); return { opacity: '1', visibility: 'visible', transform: 'none' }; },
+  });
+  await readiness({ keyboard: { async press(key) { keys.push(key); } }, async evaluate(callback, args) {
+    sampleIndex++;
+    const sample = callback(args); samples.push(sample); return sample;
+  } }, { name: 'home' });
+  return { reads, visibility, samples, states, styles, keys };
+}
+
+test('actual readiness sampler skips unrendered subtrees before measuring and reuses visible rectangles', async () => {
+  const witness = await actualReadinessGeometryWitness();
+  assert.deepEqual(witness.keys, ['Shift']);
+  assert.deepEqual(witness.reads, { skipped: 0, visible: 2, fallback: 2, offscreen: 2, collapsed: 2 });
+  assert.deepEqual(witness.styles, ['visible', 'fallback', 'visible', 'fallback']);
+  assert.ok(witness.visibility.every(({ options }) => options.contentVisibilityAuto === true));
+  for (const sample of witness.samples) {
+    const visibleRows = JSON.parse(sample.fingerprint)[3];
+    assert.deepEqual(visibleRows.map(row => row[1]), ['visible', 'fallback']);
+    assert.equal(visibleRows[0][3], 10);
+  }
+  assert.deepEqual(witness.states.map(state => state.layoutStable), [false, true]);
+});
+
+test('actual readiness still resets its stability window for visible geometry changes', async () => {
+  const witness = await actualReadinessGeometryWitness({ moving: true });
+  assert.deepEqual(witness.states.map(state => state.layoutStable), [false, false, true]);
+  assert.deepEqual(witness.samples.map(sample => JSON.parse(sample.fingerprint)[3][0][3]), [10, 20, 20]);
+  assert.equal(witness.reads.skipped, 0);
+  assert.equal(witness.reads.visible, 3);
 });

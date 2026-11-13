@@ -89,17 +89,51 @@ test.describe('Cookie consent banner', () => {
 });
 
 test.describe('Release truth surface', () => {
-  test('status exposes the staged identity receipt without claiming production readiness', async ({ page }) => {
+  for (const authority of [
+    { overall: 'partial', label: 'Partial', ready: 3 },
+    { overall: 'ready', label: 'Ready', ready: 4 },
+  ]) {
+  test(`status keeps identity held with ${authority.ready}/4 ${authority.overall} authority planes`, async ({ page }) => {
+    // These independent signals may legitimately change between releases.
+    // Supply deterministic data at the exact same-origin bundled-proof endpoint
+    // used by getProof(), rather than freezing the live artifact in a partial state.
+    const planes = Object.fromEntries(['dataRest', 'managementApi', 'sqlMigration', 'edgeFunctions']
+      .map((name, index) => [name, { status: index < authority.ready ? 'ready' : 'degraded' }]));
+    const proofData = {
+        'identity-migration-receipt': {
+          publicSafe: true, state: 'honest-dark', productionEligible: false,
+          blockers: ['real-provider-e2e-pending'],
+          bindings: { worker: { versionId: '11111111-1111-4111-8111-111111111111' } },
+        },
+        'supabase-control-plane': { publicSafe: true, overall: authority.overall, planes },
+        'deploy-currency': {
+          publicSafe: true, state: 'current', commitsBehind: 0,
+          shellParity: { state: 'matched' },
+        },
+    };
+    await page.route(new URL('/api/status-proof.json', BASE).href, route => route.fulfill({
+      json: { proofs: Object.fromEntries(Object.entries(proofData)
+        .map(([key, data]) => [key, { present: true, data }])) },
+    }));
+    // Concurrent getProof calls can take the exact individual-feed fallback
+    // while the shared manifest is loading. Both paths must use the same fixture.
+    for (const [key, data] of Object.entries(proofData)) {
+      await page.route(new URL(`/api/${key}.json`, BASE).href, route => route.fulfill({ json: data }));
+    }
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(BASE + '/status/');
 
     const signals = page.locator('#liveSignalsGrid');
-    await expect(signals).toContainText('Identity migration');
-    await expect(signals).toContainText('Staged · held');
-    await expect(signals).toContainText('Release authority');
-    await expect(signals).toContainText('Partial');
-    await expect(signals).toContainText('3/4 Supabase authority planes verified');
-    await expect(signals).not.toContainText('4/4 Supabase authority planes verified');
+    const identity = signals.locator(':scope > div').filter({ hasText: 'Identity migration' });
+    await expect(identity).toHaveCount(1);
+    await expect(identity).toContainText('Staged · held');
+    await expect(identity).toContainText('1 open proof');
+    await expect(identity).not.toContainText('Verified');
+    const releaseAuthority = signals.locator(':scope > div').filter({ hasText: 'Release authority' });
+    await expect(releaseAuthority).toHaveCount(1);
+    await expect(releaseAuthority.locator(':scope > div').nth(1)).toHaveText(authority.label);
+    await expect(releaseAuthority).toContainText(`${authority.ready}/4 Supabase authority planes verified`);
+    await expect(releaseAuthority).not.toContainText(`${authority.ready === 3 ? 4 : 3}/4 Supabase authority planes verified`);
     await expect(signals).toContainText('Production deploy currency');
     // S316 — this assertion used to read /shell fingerprint (drift|matched)/,
     // which matched the two DEGRADED strings but never the healthy one the page
@@ -116,6 +150,7 @@ test.describe('Release truth surface', () => {
     expect(box).not.toBeNull();
     expect(box.width).toBeLessThanOrEqual(390);
   });
+  }
 });
 
 test.describe('Game detail pages — stat-block hover styles', () => {

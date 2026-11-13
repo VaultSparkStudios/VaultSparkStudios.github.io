@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "session": 416,
+  "publicSafe": true,
+  "previousCandidate": "cc4037d0ad27d19a471d863a24bb6fdef9a0eb48",
+  "previousRequiredChecks": {
+    "e2e": { "runId": 43404940463, "state": "failed" },
+    "lighthouse": { "runId": 43404940199, "state": "passed" },
+    "accessibility": { "runId": 43404940298, "state": "passed" }
+  },
+  "repairs": [
+    "Test both partial and ready authority feeds with deterministic same-origin fixtures while requiring the identity surface to remain held.",
+    "Avoid geometry reads for skipped offscreen subtrees in visual readiness sampling, and reuse each sampled rectangle."
+  ],
+  "unchangedRequirements": {
+    "readinessTimeoutMs": 5000,
+    "stabilityWindowMs": 500,
+    "pixelTolerance": 0.015,
+    "baselinesUpdated": false
+  },
+  "verification": {
+    "fullSource": {
+      "passed": 555,
+      "failed": 0,
+      "firstStep": 1,
+      "nativeExit": 0,
+      "receiptId": "4c2d1ad69c278cdc9a5f4398",
+      "sourceFingerprint": "fc9f5b34656e429ae59dc8a7",
+      "finishedAt": "2026-11-13T10:55:55.537Z"
+    },
+    "readinessUnitCasesPassed": 39,
+    "authorityFixtureBrowserCasesPassed": 2,
+    "localReadinessBrowserCasesPassed": 3,
+    "oldReadinessAlsoPassedLocally": true,
+    "linuxFailureCauseProven": false,
+    "newRequiredCiPassed": false
+  },
+  "sourceRestoration": {
+    "path": "scripts/lib/git-window-guard.mjs",
+    "restoredToRawGitCommit": "cc4037d0ad27d19a471d863a24bb6fdef9a0eb48",
+    "sha256": "c23b0169d1f8587683099fc010d3d2b8738983fdd701323fea5f7f7dd55aea9a",
+    "bytes": 738,
+    "historicalProofsUnchanged": true
+  },
+  "nativeAuthenticatedAcceptance": false,
+  "productionPromoted": false
+}
