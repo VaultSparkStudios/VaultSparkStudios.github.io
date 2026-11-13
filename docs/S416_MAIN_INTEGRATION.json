@@ -2,17 +2,16 @@
   "schemaVersion": 1,
   "session": 416,
   "publicSafe": true,
-  "recordedAt": "2026-11-13T09:52:29.930Z",
-  "state": "revised-source-visual-mobile-verified-final-main-publication-pending",
-  "checkpoint": "a7ea4c8e1b1c47bb65dd5b5ddcabb55aa9c214a3",
-  "mergeCommit": "113d66a4ade544f52284109d38f8cdad0b8c058f",
-  "incomingMain": "30b6bd2e6413cf972ccb14f624dabc106bea415b",
-  "generatedConflictsResolved": 20,
-  "measuredHistoriesPreservedExactIncoming": 5,
+  "recordedAt": "2026-11-13T11:32:20.684Z",
+  "state": "repaired-source-and-derived-evidence-verified-main-checkpoint-pending",
+  "checkpoint": "8e09e3b22abee05d60e77689f5c63d83772ee583",
+  "mergeCommit": "5311dccd8505298877730038887938995c984cf7",
+  "incomingMain": "6da5a1400cb28b367d2915ab003b19d402c97505",
+  "generatedConflictsResolved": 0,
   "resync": {
     "nativeExit": 0,
-    "ownersPassed": 52,
-    "ownersChecked": 52,
+    "ownersPassed": 49,
+    "ownersChecked": 49,
     "sideEffectingDeploymentSkipped": 1
   },
   "visual": {
@@ -25,7 +24,7 @@
       390
     ],
     "canon053Passed": true,
-    "latestReceiptSha256": "87f52aaf289bf3a8563572601c84f661df85c40910e39a683c9a26db5c5f31e0",
+    "latestReceiptSha256": "ef68b7b50d8a6ae915724cd9da75fe8f24485a83b878966c38357e5a3d556a9e",
     "scopedLimitation": "Focused changed targets plus news first viewport. Seven tall mobile API crops include the fixed header over part of the unrelated first Desk card; the changed Forge Ledger card remains unobstructed. No numeric contrast, entire-panel-unobstructed, performance-score improvement, authenticated, current staging installation or production acceptance claim."
   },
   "mobile": {
@@ -58,8 +57,8 @@
   "remotePushed": false,
   "productionPromoted": false,
   "limitations": [
-    "Real affected authenticated journeys remain pending.",
-    "Final exact required CI, final current staging parity, main/tag publication, production and closeout remain pending."
+    "Affected positive authenticated journeys and bounded isolated-variant acceptance approval remain pending.",
+    "Main checkpoint publication and its own exact CI, final current staging parity, production and closeout remain pending."
   ],
   "fullSource": {
     "nativeExit": 0,
@@ -67,10 +66,11 @@
     "planned": 555,
     "passed": 555,
     "failed": 0,
-    "sourceFingerprint": "ef13778496df34d288f80a2b",
+    "receiptId": "4c2d1ad69c278cdc9a5f4398",
+    "sourceFingerprint": "fc9f5b34656e429ae59dc8a7",
     "planFingerprint": "9c1856e73ceb65a10fa09952",
-    "startedAt": "2026-11-13T09:35:30.116Z",
-    "finishedAt": "2026-11-13T09:42:25.963Z"
+    "startedAt": "2026-11-13T10:48:58.139Z",
+    "finishedAt": "2026-11-13T10:55:55.537Z"
   },
   "secondSourceAttempt": {
     "firstStep": 1,
@@ -165,12 +165,67 @@
     ]
   },
   "latestObservationMerge": {
-    "commit": "94c05bc624",
-    "incomingMain": "224dd3d6e124160e910f4e97bfd1b243415719cd",
-    "generatedConflictsResolved": 7,
-    "ownersChecked": 48,
-    "ownersPassed": 48,
+    "commit": "5311dccd8505298877730038887938995c984cf7",
+    "incomingMain": "6da5a1400cb28b367d2915ab003b19d402c97505",
+    "generatedConflictsResolved": 0,
+    "ownersChecked": 49,
+    "ownersPassed": 49,
     "sideEffectingDeploymentSkipped": 1,
-    "sourceFingerprintUnchanged": "ef13778496df34d288f80a2b"
+    "sourceFingerprintUnchanged": "fc9f5b34656e429ae59dc8a7"
+  },
+  "priorIntegrationRecords": [
+    {
+      "checkpoint": "a7ea4c8e1b1c47bb65dd5b5ddcabb55aa9c214a3",
+      "mergeCommit": "113d66a4ade544f52284109d38f8cdad0b8c058f",
+      "incomingMain": "30b6bd2e6413cf972ccb14f624dabc106bea415b",
+      "generatedConflictsResolved": 20,
+      "measuredHistoriesPreservedExactIncoming": 5,
+      "resync": {
+        "nativeExit": 0,
+        "ownersPassed": 52,
+        "ownersChecked": 52,
+        "sideEffectingDeploymentSkipped": 1
+      },
+      "fullSource": {
+        "nativeExit": 0,
+        "firstStep": 1,
+        "planned": 555,
+        "passed": 555,
+        "failed": 0,
+        "sourceFingerprint": "ef13778496df34d288f80a2b",
+        "planFingerprint": "9c1856e73ceb65a10fa09952",
+        "startedAt": "2026-11-13T09:35:30.116Z",
+        "finishedAt": "2026-11-13T09:42:25.963Z"
+      }
+    }
+  ],
+  "qaRequiredChecks": {
+    "sourceCommit": "8e09e3b22abee05d60e77689f5c63d83772ee583",
+    "lane": "hosted-exact-sha",
+    "checks": [
+      {
+        "workflow": ".github/workflows/e2e.yml",
+        "state": "passed",
+        "runId": 43413202691
+      },
+      {
+        "workflow": ".github/workflows/lighthouse.yml",
+        "state": "passed",
+        "runId": 43413205695
+      },
+      {
+        "workflow": ".github/workflows/accessibility.yml",
+        "state": "passed",
+        "runId": 43413208846
+      }
+    ],
+    "observedAt": "2026-11-13T11:24:07.802Z"
+  },
+  "requiredCheckScope": "QA source8e09 passed; the later main integration checkpoint still requires its own exact-commit workflows.",
+  "previousVerifiedMainPush": {
+    "before": "224dd3d6e124160e910f4e97bfd1b243415719cd",
+    "after": "cc4037d0ad27d19a471d863a24bb6fdef9a0eb48",
+    "verifiedAt": "2026-11-13T09:53:46.173Z",
+    "force": false
   }
 }

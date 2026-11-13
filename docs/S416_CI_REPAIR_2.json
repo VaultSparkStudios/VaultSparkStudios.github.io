@@ -33,7 +33,20 @@
     "localReadinessBrowserCasesPassed": 3,
     "oldReadinessAlsoPassedLocally": true,
     "linuxFailureCauseProven": false,
-    "newRequiredCiPassed": false
+    "newRequiredCiPassed": true,
+    "requiredCiSourceCommit": "8e09e3b22abee05d60e77689f5c63d83772ee583",
+    "requiredCiLane": "hosted-exact-sha",
+    "requiredCiRuns": { "e2e": 43413202691, "lighthouse": 43413205695, "accessibility": 43413208846 },
+    "lighthouseRemeasurement": {
+      "attempt": 2,
+      "authorizedReruns": 1,
+      "performance": 0.92,
+      "simulatedLcpMs": 3271,
+      "allNineRouteTiersPassed": true,
+      "firstAttemptFailurePreserved": true,
+      "rationale": "Identical runtime resources and Lighthouse settings produced a faster observed trace but worse simulated LCP in the first attempt. One controlled remeasurement retained every threshold.",
+      "scope": "Local exact-candidate route audits; conditional staging job skipped."
+    }
   },
   "sourceRestoration": {
     "path": "scripts/lib/git-window-guard.mjs",
