@@ -10,7 +10,7 @@
     "scope": "locally available Git history; not remote-history completeness",
     "ceiling": 2000,
     "fetched": 2001,
-    "inspected": 128,
+    "inspected": 126,
     "target": 24,
     "selected": 24,
     "quotaSatisfied": true,
@@ -18,6 +18,17 @@
     "state": "quota-satisfied"
   },
   "entries": [
+    {
+      "sha": "cefac83e",
+      "ts": "2026-11-14T01:50:17.000Z",
+      "type": "fix",
+      "scope": "release",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "bind affected-auth rollout to real native postflight",
+      "visitorFacing": true
+    },
     {
       "sha": "a6dcafd6",
       "ts": "2026-11-13T23:27:06.000Z",
@@ -269,17 +280,6 @@
       "move": "Tended",
       "tone": "muted",
       "summary": "preserve matrix context in S415 failure-only probe",
-      "visitorFacing": false
-    },
-    {
-      "sha": "8e5cc067",
-      "ts": "2026-11-12T06:06:47.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "add S415 after-failure-only pixel diagnostics",
       "visitorFacing": false
     }
   ]
