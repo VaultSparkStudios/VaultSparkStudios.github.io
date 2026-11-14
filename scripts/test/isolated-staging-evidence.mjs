@@ -452,13 +452,24 @@ await test('actual broker grammar and mode routing keep live operator, CI upload
   assert.equal(r.status,1);assert.equal(r.stdout,'');assert.equal(r.stderr.trim(),'isolated-staging:git-source');
  }
 });
-await test('production descriptor reads only owned files and exact sibling scripts namespace',()=>{
- const file='scripts/verify-provider-journey.mjs',sibling='../vaultspark-studio-ops/scripts/lib/git-window-guard.mjs';
- const d={schemaVersion:1,scope:'production-native-postflight-factory-v1',file,sha256:sha256(fs.readFileSync(file)),exportName:'runProductionPostflight',assertExportName:'assertProductionPostflightResult',dependencyRows:[{file,sha256:sha256(fs.readFileSync(file))},{file:sibling,sha256:sha256(fs.readFileSync(sibling))}]};
- assert.equal(validateProductionProducerDescriptor(process.cwd(),d),d);
- const drift=clone(d);drift.dependencyRows[1].sha256=h('0');assert.throws(()=>validateProductionProducerDescriptor(process.cwd(),drift),/production-producer-row-bytes/);
- for(const forbidden of ['../vaultspark-studio-ops/secrets/NEVER_READ','../vaultspark-studio-ops/scripts/../secrets/NEVER_READ','../other-project/scripts/NEVER_READ']){
-  const wrong=clone(d);wrong.dependencyRows[1].file=forbidden;assert.throws(()=>validateProductionProducerDescriptor(process.cwd(),wrong),/owned-path/);
+await test('production descriptor reads only owned files and exact sibling scripts namespace',async()=>{
+ const {tmpdir}=await import('node:os');
+ const fixtureRoot=fs.mkdtempSync(path.join(tmpdir(),'isolated-staging-descriptor-')),project=path.join(fixtureRoot,'project');
+ try{
+  const file='scripts/verify-provider-journey.mjs',sibling='../vaultspark-studio-ops/scripts/lib/git-window-guard.mjs';
+  const ownBytes=Buffer.from('// synthetic fixed production factory source\n'),siblingBytes=Buffer.from('// synthetic sibling guard source\n');
+  for(const [relative,bytes]of [[file,ownBytes],[sibling,siblingBytes],['../vaultspark-studio-ops/secrets/NEVER_READ',Buffer.from('synthetic forbidden file')],['../other-project/scripts/NEVER_READ',Buffer.from('synthetic forbidden file')]]){
+   const target=path.resolve(project,relative);assert(target.startsWith(fixtureRoot+path.sep));fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,bytes,{flag:'wx'});
+  }
+  const d={schemaVersion:1,scope:'production-native-postflight-factory-v1',file,sha256:sha256(ownBytes),exportName:'runProductionPostflight',assertExportName:'assertProductionPostflightResult',dependencyRows:[{file,sha256:sha256(ownBytes)},{file:sibling,sha256:sha256(siblingBytes)}]};
+  assert.equal(validateProductionProducerDescriptor(project,d),d);
+  const drift=clone(d);drift.dependencyRows[1].sha256=h('0');assert.throws(()=>validateProductionProducerDescriptor(project,drift),/production-producer-row-bytes/);
+  for(const forbidden of ['../vaultspark-studio-ops/secrets/NEVER_READ','../vaultspark-studio-ops/scripts/../secrets/NEVER_READ','../other-project/scripts/NEVER_READ']){
+   const wrong=clone(d);wrong.dependencyRows[1].file=forbidden;assert.throws(()=>validateProductionProducerDescriptor(project,wrong),/owned-path/);
+  }
+ }finally{
+  const stat=fs.lstatSync(fixtureRoot);assert(stat.isDirectory()&&!stat.isSymbolicLink());
+  const target=fs.realpathSync(fixtureRoot);assert(target.startsWith(fs.realpathSync(tmpdir())+path.sep)&&path.basename(target).startsWith('isolated-staging-descriptor-'));fs.rmSync(target,{recursive:true,force:true});
  }
 });
 console.log(JSON.stringify({scope:'offline-isolated-staging-contract',passed:results.length,failed:0,network:false,credentials:false,nativeAcceptance:false}));
