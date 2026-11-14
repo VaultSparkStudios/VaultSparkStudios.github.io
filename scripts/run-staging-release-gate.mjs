@@ -13,8 +13,12 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { resolveScope } from './check-promotion-scope.mjs';
+import * as isolated from './lib/isolated-staging-evidence.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const isolatedArgs = isolated.runtimeContextArgs(process.argv.slice(2));
+const isolatedContext = isolatedArgs ? await isolated.loadRuntimeContext(ROOT,isolatedArgs.file,isolatedArgs.hash) : null;
+const nativeRuntime = isolatedContext?.installation?.schemaVersion===2 ? isolated.stageNativeAuthorization(isolatedContext) : null;
 const RECEIPT_PATH = join(ROOT, 'api', 'staging-release-browser.json');
 const PROMOTION_PATH = join(ROOT, 'context', 'PRODUCTION_PROMOTION.json');
 const MANIFEST_PATH = join(ROOT, 'api', 'candidate-artifact-manifest.json');
@@ -62,7 +66,14 @@ export const CONTRACT_SURFACE = Object.freeze({
  * running; it can never be used to route around a failure on a surface that IS
  * shipping.
  */
-export function resolveHeldSurfaces({ promotion, leaves }) {
+export function resolveHeldSurfaces({ promotion, leaves, isolatedContext = null }) {
+  if (isolatedContext) {
+    isolated.assertAdmittedContext(isolatedContext);
+    if (promotion?.hold === true) {
+      const native = isolated.stageNativeAuthorization(isolatedContext);
+      return { mode: native.mode, held: [], reason: 'affected-identity-must-run' };
+    }
+  }
   if (!promotion || !Array.isArray(leaves) || leaves.length === 0) {
     return { mode: 'unresolved', held: [], reason: 'promotion-scope-unresolvable' };
   }
@@ -148,7 +159,7 @@ function parseReport(stdout) {
   return JSON.parse(text.slice(start));
 }
 
-function validateReceipt(receipt) {
+function validateReceipt(receipt, native = null) {
   const failures = [];
   if (!['passed', 'rejected'].includes(receipt?.state)) failures.push('unknown state');
   if (receipt?.publicSafe !== true) failures.push('receipt is not public-safe');
@@ -156,6 +167,10 @@ function validateReceipt(receipt) {
   if (!Number.isInteger(receipt?.observedTests)) failures.push('observed test count missing');
   if (!Array.isArray(receipt?.reasons) || !Array.isArray(receipt?.failures)) failures.push('outcome detail missing');
   if (Object.hasOwn(receipt || {}, 'rawOutput') || Object.hasOwn(receipt || {}, 'responseBody')) failures.push('raw output retained');
+  if (!native && receipt?.promotionMode==='affected-auth-stage-verified') failures.push('stage-native context required');
+  if (native && (receipt?.promotionMode!==native.mode || receipt.sourceCommit!==native.sourceCommit
+    || receipt.stageNativeSha256!==native.stageNativeSha256 || receipt.productionNativePending!==true
+    || receipt.fullReleaseAccepted!==false || receipt.held!==0 || receipt.heldContracts?.length!==0)) failures.push('stage-native browser association changed');
   return failures;
 }
 
@@ -238,7 +253,7 @@ if (process.argv.includes('--self-test')) {
 if (process.argv.includes('--check')) {
   try {
     const receipt = JSON.parse(readFileSync(RECEIPT_PATH, 'utf8'));
-    const failures = validateReceipt(receipt);
+    const failures = validateReceipt(receipt,nativeRuntime);
     if (failures.length) throw new Error(failures.join('; '));
     console.log(`run-staging-release-gate --check: ${receipt.state} · ${receipt.passed}/${receipt.expectedTests} passed · ${receipt.skipped} skipped`);
     process.exit(receipt.state === 'passed' || !process.argv.includes('--require-ready') ? 0 : 1);
@@ -266,7 +281,7 @@ let promotion = null;
 let leaves = [];
 try { promotion = JSON.parse(readFileSync(PROMOTION_PATH, 'utf8')); } catch { promotion = null; }
 try { leaves = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8')).leaves || []; } catch { leaves = []; }
-const scope = resolveHeldSurfaces({ promotion, leaves });
+const scope = resolveHeldSurfaces({ promotion, leaves, isolatedContext });
 const held = process.argv.includes('--prove-all') ? [] : heldContracts(scope.held);
 
 if (held.length) {
@@ -296,6 +311,17 @@ try {
   outcome = classify({ exitCode: run.status ?? 1, stats: {}, errors: [{ title: 'reporter', project: 'runner', message: error.message }], held, heldSurfaces: scope.held });
 }
 
+let nativeAuthorization = null;
+if (isolatedContext) {
+  try {
+    isolated.assertAdmittedContext(isolatedContext);
+    if (nativeRuntime) nativeAuthorization = isolated.stageNativeAuthorization(isolatedContext);
+  } catch {
+    outcome.state = 'rejected';
+    outcome.reasons.push('current-isolated-observation-invalid');
+  }
+}
+
 const receipt = {
   schemaVersion: 1,
   generatedAt: new Date().toISOString(),
@@ -303,6 +329,8 @@ const receipt = {
   origin,
   suite: SPEC_PATH,
   ...outcome,
+  ...(nativeAuthorization ? {promotionMode:nativeAuthorization.mode,sourceCommit:nativeAuthorization.sourceCommit,
+    stageNativeSha256:nativeAuthorization.stageNativeSha256,productionNativePending:true,fullReleaseAccepted:false} : {}),
 };
 mkdirSync(dirname(RECEIPT_PATH), { recursive: true });
 writeFileSync(RECEIPT_PATH, `${JSON.stringify(receipt, null, 2)}\n`);

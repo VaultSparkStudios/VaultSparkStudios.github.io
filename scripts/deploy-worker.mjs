@@ -4,27 +4,27 @@
  * Studio secrets gateway. Secret values are inherited by Wrangler and are
  * never copied into the parent shell or written to deploy output.
  */
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, mkdirSync, lstatSync, appendFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { spawnSync } from './lib/safe-spawn.mjs';
 
 import { admitDeployment } from './lib/deploy-argv.mjs';
-const admitted = admitDeployment({"name":"deploy-worker","boolFlags":["--self-test","--confirm-production"],"valueFlags":["--env"],"usage":"node scripts/deploy-worker.mjs [--env staging|production] [--confirm-production] | --self-test"});
+const admitted = admitDeployment({"name":"deploy-worker","boolFlags":["--self-test","--confirm-production"],"valueFlags":["--env","--isolated-staging-context","--isolated-staging-context-sha256"],"usage":"node scripts/deploy-worker.mjs [--env staging|production] [--confirm-production] [--isolated-staging-context=<file> --isolated-staging-context-sha256=<sha256>] | --self-test"});
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const args = process.argv.slice(2);
 
-export function productionPreflightPlan({ ci = false } = {}) {
+export function productionPreflightPlan({ ci = false, isolatedCli = [] } = {}) {
   return [
     {
       script: 'check-production-promotion-gate.mjs',
-      args: ['--require-allowed'],
+      args: ['--require-allowed',...isolatedCli],
       env: { GITHUB_EVENT_NAME: 'workflow_dispatch', PRODUCTION_CONFIRM: 'true' },
     },
     ci
-      ? { script: 'run-release-ceremony.mjs', args: ['--check', '--require-ready', '--require-fresh'] }
-      : { script: 'run-release-ceremony.mjs', args: ['--url=https://website.staging.vaultsparkstudios.com', '--require-ready'] },
+      ? { script: 'run-release-ceremony.mjs', args: ['--check', '--require-ready', '--require-fresh',...isolatedCli] }
+      : { script: 'run-release-ceremony.mjs', args: ['--url=https://website.staging.vaultsparkstudios.com', '--require-ready',...isolatedCli] },
   ];
 }
 
@@ -44,6 +44,14 @@ if (args.includes('--self-test')) {
 }
 
 const target = admitted.values['--env'] ?? 'staging';
+const isolated = admitted.values['--isolated-staging-context'] !== undefined || admitted.values['--isolated-staging-context-sha256'] !== undefined
+  ? await import('./lib/isolated-staging-evidence.mjs') : null;
+const isolatedArgs = isolated ? isolated.runtimeContextArgs(args) : null;
+const isolatedCli = isolatedArgs ? [`--isolated-staging-context=${isolatedArgs.file}`,`--isolated-staging-context-sha256=${isolatedArgs.hash}`] : [];
+if (isolatedArgs && target !== 'production') {
+  console.error('deploy-worker: isolated production context cannot target staging');
+  process.exit(2);
+}
 
 if (!['staging', 'production'].includes(target)) {
   console.error('deploy-worker: --env must be staging or production');
@@ -55,7 +63,7 @@ if (target === 'production' && !args.includes('--confirm-production')) {
 }
 
 if (target === 'production') {
-  for (const step of productionPreflightPlan({ ci: process.env.GITHUB_ACTIONS === 'true' })) {
+  for (const step of productionPreflightPlan({ ci: process.env.GITHUB_ACTIONS === 'true', isolatedCli })) {
     console.log(`deploy-worker: production preflight · ${step.script}`);
     const result = spawnSync(process.execPath, [resolve(ROOT, 'scripts', step.script), ...step.args], {
       cwd: ROOT,
@@ -66,6 +74,35 @@ if (target === 'production') {
       console.error(`deploy-worker: production preflight rejected by ${step.script}`);
       process.exit(result.status || 1);
     }
+  }
+}
+
+// The same Wrangler invocation writes the actual bundle it uploads. Never use
+// a later reconstruction or a caller-selected deployment JSON as that proof.
+let bundleDirectory = null;
+if (target === 'production' && isolatedArgs) {
+  const context = await isolated.loadRuntimeContext(ROOT,isolatedArgs.file,isolatedArgs.hash);
+  if (context.installation.schemaVersion === 2) {
+    const native = isolated.stageNativeAuthorization(context);
+    const rollback = isolated.productionRollbackAuthorization(context);
+    const {assertCurrentWorkerRollback} = await import('./lib/production-postflight.mjs');
+    await assertCurrentWorkerRollback(ROOT,context,rollback);
+    if (process.env.GITHUB_ACTIONS==='true') {
+      if (!process.env.GITHUB_OUTPUT) throw new Error('deploy-worker: original rollback output unavailable');
+      const workerVersion=rollback.worker.workerVersionId,pagesDeployment=rollback.pages.pagesDeploymentId;
+      if (!/^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(workerVersion)
+        || !/^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(pagesDeployment)) throw new Error('deploy-worker: original rollback identity malformed');
+      appendFileSync(process.env.GITHUB_OUTPUT,`production_rollback_worker_version=${workerVersion}\nproduction_rollback_pages_deployment=${pagesDeployment}\n`);
+    }
+    bundleDirectory = resolve(ROOT,'.cache','production-postflight',native.sourceCommit,
+      `${context.request.workflowRunId}-${context.request.workflowRunAttempt}`,'worker-build');
+    if (existsSync(bundleDirectory)) throw new Error('deploy-worker: owned bundle output already exists');
+    let current = ROOT;
+    for (const part of ['.cache','production-postflight',native.sourceCommit,`${context.request.workflowRunId}-${context.request.workflowRunAttempt}`]) {
+      current = resolve(current,part);
+      if (existsSync(current) && lstatSync(current).isSymbolicLink()) throw new Error('deploy-worker: linked bundle output refused');
+    }
+    mkdirSync(bundleDirectory,{recursive:true});
   }
 }
 
@@ -103,7 +140,7 @@ console.log(`deploy-worker: deploying ${target} - credentials from ${useBroker ?
 function deployWithEnv(env) {
   return spawnSync(
     process.execPath,
-    [wrangler, 'deploy', '--config', 'cloudflare/wrangler.toml', '--env', target],
+    [wrangler, 'deploy', '--config', 'cloudflare/wrangler.toml', '--env', target,...(bundleDirectory?['--outdir',bundleDirectory]:[])],
     { cwd: ROOT, env, stdio: 'inherit' },
   );
 }

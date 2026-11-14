@@ -26,6 +26,16 @@ on:
         required: false
         default: ""
         type: string
+      worker_upload_deployment_id:
+        description: "Exact actual-G Worker upload association request ID (paired with hash)"
+        required: false
+        default: ""
+        type: string
+      worker_upload_payload_sha256:
+        description: "SHA-256 of the actual-G Worker upload association request"
+        required: false
+        default: ""
+        type: string
       # S294 content-hotfix lane. The full interlock couples static content to
       # identity/Supabase readiness, so a broken public page could not be repaired
       # while unrelated migration work was pending. This lane rebuilds the tree
@@ -121,14 +131,20 @@ jobs:
           INSTALLATION_DEPLOYMENT_ID: ${{ inputs.installation_deployment_id }}
           INSTALLATION_PAYLOAD_SHA256: ${{ inputs.installation_payload_sha256 }}
 
-      - name: Evaluate production promotion gate
-        id: promotion-gate
+          WORKER_UPLOAD_DEPLOYMENT_ID: ${{ inputs.worker_upload_deployment_id }}
+          WORKER_UPLOAD_PAYLOAD_SHA256: ${{ inputs.worker_upload_payload_sha256 }}
+
+      - name: Evaluate production promotion preflight
+        id: promotion-preflight
         run: node scripts/check-production-promotion-gate.mjs --emit-github-output
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
+          INSTALLATION_DEPLOYMENT_ID: ${{ inputs.installation_deployment_id }}
+          INSTALLATION_PAYLOAD_SHA256: ${{ inputs.installation_payload_sha256 }}
 
       - name: Install release-ceremony browser dependencies
-        if: steps.promotion-gate.outputs.allowed == 'true'
+        if: steps.promotion-preflight.outputs.allowed == 'true' || steps.promotion-preflight.outputs.preflight_eligible == 'true'
         # S319: this step installed npm packages but never the Playwright BROWSER
         # BINARIES, so the ceremony's staging-browser step could not launch a
         # browser and failed in six seconds — writing a rejected receipt that
@@ -142,7 +158,7 @@ jobs:
 
       - name: Receive run-bound isolated staging observation
         id: isolated-staging
-        if: steps.promotion-gate.outputs.allowed == 'true' && steps.isolated-inputs.outputs.configured == 'true'
+        if: (steps.promotion-preflight.outputs.allowed == 'true' || steps.promotion-preflight.outputs.preflight_eligible == 'true') && steps.isolated-inputs.outputs.configured == 'true'
         run: node scripts/run-isolated-staging-rendezvous.mjs --emit-github-output >> "$GITHUB_OUTPUT"
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -152,6 +168,24 @@ jobs:
           CONFIRM_DESK: ${{ inputs.confirm_desk }}
           INSTALLATION_DEPLOYMENT_ID: ${{ inputs.installation_deployment_id }}
           INSTALLATION_PAYLOAD_SHA256: ${{ inputs.installation_payload_sha256 }}
+
+          WORKER_UPLOAD_DEPLOYMENT_ID: ${{ inputs.worker_upload_deployment_id }}
+          WORKER_UPLOAD_PAYLOAD_SHA256: ${{ inputs.worker_upload_payload_sha256 }}
+
+      - name: Authorize exact observed production candidate
+        id: promotion-gate
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
+          ISOLATED_CONTEXT: ${{ steps.isolated-staging.outputs.context_file }}
+          ISOLATED_CONTEXT_SHA256: ${{ steps.isolated-staging.outputs.context_sha256 }}
+        run: |
+          set -euo pipefail
+          ARGS=()
+          if [ -n "$ISOLATED_CONTEXT" ]; then
+            ARGS+=("--isolated-staging-context=$ISOLATED_CONTEXT" "--isolated-staging-context-sha256=$ISOLATED_CONTEXT_SHA256")
+          fi
+          node scripts/check-production-promotion-gate.mjs --emit-github-output "${ARGS[@]}"
 
       - name: Run canonical release ceremony
         if: steps.promotion-gate.outputs.allowed == 'true'
@@ -429,9 +463,25 @@ jobs:
         if: steps.promotion-gate.outputs.allowed == 'true' && steps.isolated-staging.outputs.configured == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           ISOLATED_CONTEXT: ${{ steps.isolated-staging.outputs.context_file }}
           ISOLATED_CONTEXT_SHA256: ${{ steps.isolated-staging.outputs.context_sha256 }}
-        run: node scripts/check-staging-deploy-receipt.mjs --remote "--isolated-staging-context=$ISOLATED_CONTEXT" "--isolated-staging-context-sha256=$ISOLATED_CONTEXT_SHA256"
+          PROMOTION_MODE: ${{ steps.promotion-gate.outputs.promotion_mode }}
+          INSTALLATION_DEPLOYMENT_ID: ${{ inputs.installation_deployment_id }}
+          INSTALLATION_PAYLOAD_SHA256: ${{ inputs.installation_payload_sha256 }}
+          WORKER_UPLOAD_DEPLOYMENT_ID: ${{ inputs.worker_upload_deployment_id }}
+          WORKER_UPLOAD_PAYLOAD_SHA256: ${{ inputs.worker_upload_payload_sha256 }}
+        run: |
+          set -euo pipefail
+          node scripts/check-staging-deploy-receipt.mjs --remote "--isolated-staging-context=$ISOLATED_CONTEXT" "--isolated-staging-context-sha256=$ISOLATED_CONTEXT_SHA256"
+          if [ "$PROMOTION_MODE" = "affected-auth-stage-verified" ]; then
+            node scripts/isolated-staging-evidence.mjs --check-worker-upload \
+              "--source-commit=$GITHUB_SHA" \
+              "--installation-deployment-id=$INSTALLATION_DEPLOYMENT_ID" \
+              "--installation-payload-sha256=$INSTALLATION_PAYLOAD_SHA256" \
+              "--worker-upload-deployment-id=$WORKER_UPLOAD_DEPLOYMENT_ID" \
+              "--worker-upload-payload-sha256=$WORKER_UPLOAD_PAYLOAD_SHA256"
+          fi
 
       - name: Deploy to Cloudflare Pages
         if: steps.promotion-gate.outputs.allowed == 'true' || steps.hotfix-gate.outputs.allowed == 'true' || steps.content-refs.outputs.allowed == 'true'
@@ -537,3 +587,86 @@ jobs:
             --continuity-output /tmp/pages-dist/api/content-release-continuity.json
           npx wrangler@4 pages deploy /tmp/pages-dist --project-name vaultsparkstudios-website --branch main --commit-dirty=true
           node scripts/check-live-news-release.mjs
+
+
+      - name: Request actual production native postflight
+        id: production-postflight-request
+        if: steps.promotion-gate.outputs.allowed == 'true' && steps.promotion-gate.outputs.promotion_mode == 'affected-auth-stage-verified'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ISOLATED_CONTEXT: ${{ steps.isolated-staging.outputs.context_file }}
+          ISOLATED_CONTEXT_SHA256: ${{ steps.isolated-staging.outputs.context_sha256 }}
+          INSTALLATION_DEPLOYMENT_ID: ${{ inputs.installation_deployment_id }}
+          INSTALLATION_PAYLOAD_SHA256: ${{ inputs.installation_payload_sha256 }}
+          WORKER_UPLOAD_DEPLOYMENT_ID: ${{ inputs.worker_upload_deployment_id }}
+          WORKER_UPLOAD_PAYLOAD_SHA256: ${{ inputs.worker_upload_payload_sha256 }}
+        run: |
+          set -euo pipefail
+          node scripts/isolated-staging-evidence.mjs --request-production-postflight \
+            "--source-commit=$GITHUB_SHA" \
+            "--installation-deployment-id=$INSTALLATION_DEPLOYMENT_ID" \
+            "--installation-payload-sha256=$INSTALLATION_PAYLOAD_SHA256" \
+            "--worker-upload-deployment-id=$WORKER_UPLOAD_DEPLOYMENT_ID" \
+            "--worker-upload-payload-sha256=$WORKER_UPLOAD_PAYLOAD_SHA256" \
+            "--isolated-staging-context=$ISOLATED_CONTEXT" \
+            "--isolated-staging-context-sha256=$ISOLATED_CONTEXT_SHA256" | node --input-type=module -e '
+              import fs from "node:fs";
+              const r=JSON.parse(fs.readFileSync(0,"utf8"));
+              if(!Number.isSafeInteger(r.requestDeploymentId)||r.requestDeploymentId<=0||!/^[a-f0-9]{64}$/.test(r.requestPayloadSha256))throw Error("Invalid production request response");
+              fs.appendFileSync(process.env.GITHUB_OUTPUT,`request_id=${r.requestDeploymentId}\nrequest_sha256=${r.requestPayloadSha256}\n`);
+              console.log(JSON.stringify({productionPostflightRequestId:r.requestDeploymentId,productionPostflightRequestSha256:r.requestPayloadSha256,productionNativePending:true,fullReleaseAccepted:false}));'
+
+      - name: Receive actual production native postflight
+        id: production-postflight
+        if: steps.promotion-gate.outputs.allowed == 'true' && steps.promotion-gate.outputs.promotion_mode == 'affected-auth-stage-verified' && steps.production-postflight-request.outcome == 'success'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          INSTALLATION_DEPLOYMENT_ID: ${{ inputs.installation_deployment_id }}
+          INSTALLATION_PAYLOAD_SHA256: ${{ inputs.installation_payload_sha256 }}
+          REQUEST_DEPLOYMENT_ID: ${{ steps.production-postflight-request.outputs.request_id }}
+          REQUEST_PAYLOAD_SHA256: ${{ steps.production-postflight-request.outputs.request_sha256 }}
+        run: |
+          set -euo pipefail
+          node scripts/isolated-staging-evidence.mjs --receive-production-postflight \
+            "--source-commit=$GITHUB_SHA" \
+            "--installation-deployment-id=$INSTALLATION_DEPLOYMENT_ID" \
+            "--installation-payload-sha256=$INSTALLATION_PAYLOAD_SHA256" \
+            "--request-deployment-id=$REQUEST_DEPLOYMENT_ID" \
+            "--request-payload-sha256=$REQUEST_PAYLOAD_SHA256" \
+            --output=.cache/isolated-staging/production-postflight-context.json | node --input-type=module -e '
+              import fs from "node:fs";
+              const r=JSON.parse(fs.readFileSync(0,"utf8"));
+              if(r.file!==".cache/isolated-staging/production-postflight-context.json"||!/^[a-f0-9]{64}$/.test(r.sha256))throw Error("Invalid production postflight context");
+              fs.appendFileSync(process.env.GITHUB_OUTPUT,`context_file=${r.file}\ncontext_sha256=${r.sha256}\n`);'
+
+      - name: Apply exact production observation metadata
+        if: steps.promotion-gate.outputs.allowed == 'true' && steps.promotion-gate.outputs.promotion_mode == 'affected-auth-stage-verified' && steps.production-postflight.outcome == 'success'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          POSTFLIGHT_CONTEXT: ${{ steps.production-postflight.outputs.context_file }}
+          POSTFLIGHT_CONTEXT_SHA256: ${{ steps.production-postflight.outputs.context_sha256 }}
+        run: >-
+          node scripts/production-postflight.mjs --apply-metadata-overlay
+          "--isolated-staging-context=$POSTFLIGHT_CONTEXT"
+          "--isolated-staging-context-sha256=$POSTFLIGHT_CONTEXT_SHA256"
+
+      - name: Publish exact production observation metadata
+        if: steps.promotion-gate.outputs.allowed == 'true' && steps.promotion-gate.outputs.promotion_mode == 'affected-auth-stage-verified' && steps.production-postflight.outcome == 'success'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler@4 pages deploy /tmp/pages-dist --project-name vaultsparkstudios-website --branch main --commit-dirty=true
+
+      - name: Verify actual production metadata finalization
+        if: steps.promotion-gate.outputs.allowed == 'true' && steps.promotion-gate.outputs.promotion_mode == 'affected-auth-stage-verified' && steps.production-postflight.outcome == 'success'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          POSTFLIGHT_CONTEXT: ${{ steps.production-postflight.outputs.context_file }}
+          POSTFLIGHT_CONTEXT_SHA256: ${{ steps.production-postflight.outputs.context_sha256 }}
+        run: >-
+          node scripts/isolated-staging-evidence.mjs --publish-finalization
+          "--source-commit=$GITHUB_SHA"
+          "--isolated-staging-context=$POSTFLIGHT_CONTEXT"
+          "--isolated-staging-context-sha256=$POSTFLIGHT_CONTEXT_SHA256"

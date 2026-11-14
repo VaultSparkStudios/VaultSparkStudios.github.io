@@ -3,10 +3,10 @@
  * Fail-closed production promotion gate.
  *
  * A main push may update source control, but it cannot mutate production.
- * Promotion requires all three conditions:
- *   1. context/PRODUCTION_PROMOTION.json has hold=false/releaseState=ready
- *   2. the workflow was started manually (workflow_dispatch)
- *   3. confirm_production=true was explicitly supplied
+ * Full rollout requires explicit manual confirmation and either the existing
+ * verified clear state or admitted exact-G affected-stage-native evidence.
+ * The latter retains the production-native hold pending actual postflight.
+ * Coarse manifest disjointness never authorizes a full archive or Worker.
  *
  * Usage:
  *   node scripts/check-production-promotion-gate.mjs --self-test
@@ -18,6 +18,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { resolveScope } from './check-promotion-scope.mjs';
+import * as isolated from './lib/isolated-staging-evidence.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PROMOTION_PATH = path.join(ROOT, 'context', 'PRODUCTION_PROMOTION.json');
@@ -32,6 +33,7 @@ const REQUIRED_WORKFLOW_STEPS = {
     'Deploy to Cloudflare Pages',
     'Purge edge HTML cache',
     'Post-purge edge liveness check',
+    'Publish exact production observation metadata',
   ],
   '.github/workflows/cloudflare-worker-deploy.yml': [
     'Install deps (pins wrangler via package.json)',
@@ -113,12 +115,18 @@ function dependenciesReady(identityReceipt, controlPlane) {
 /**
  * Promotion authority (S319, D-S319.2 — founder-authorized).
  *
- * Two ways to be allowed, and the ceremony reports which:
+ * The ceremony reports the actual authorization basis:
  *
  *   CLEAR   — the historical path. hold is genuinely false, releaseState is
  *             ready, and every dependency is verified. Unchanged.
  *
- *   SCOPED  — a hold is active, but every active reason declares a blast radius
+ *   AFFECTED-AUTH-STAGE-VERIFIED — actual source-bound native stage outcomes
+ *             authorize this exact full footprint; production remains pending.
+ *
+ *   SCOPED  — only an auth-preserving content footprint whose actual paths are
+ *             disjoint from every active radius may use this existing path.
+ *             A full archive/Worker cannot infer that from critical leaves.
+ *             A hold is active, but every active reason declares a blast radius
  *             and the candidate leaf set is provably disjoint from all of them.
  *             `dependenciesReady` is deliberately NOT required on this path:
  *             the entire point is that the unready dependency (the honest-dark
@@ -138,14 +146,39 @@ export function promotionMode(config, eventName, explicitConfirmation, dependenc
   if (validatePromotionConfig(config).length !== 0) return 'blocked';
   if (validatePromotionDependencies(config, dependencies.identityReceipt, dependencies.controlPlane).length !== 0) return 'blocked';
 
+  if (dependencies.isolatedContext) {
+    try { isolated.assertAdmittedContext(dependencies.isolatedContext); } catch { return 'blocked'; }
+  }
   if (config.hold === false
     && config.releaseState === 'ready'
     && dependenciesReady(dependencies.identityReceipt, dependencies.controlPlane)) {
     return 'clear';
   }
 
+  if (nativeHoldEligible(config, dependencies) && dependencies.isolatedContext) {
+    try {
+      const native = isolated.stageNativeAuthorization(dependencies.isolatedContext);
+      if (native.mode === 'affected-auth-stage-verified' && native.productionNativePending === true
+        && native.fullReleaseAccepted === false) return native.mode;
+    } catch { return 'blocked'; }
+  }
+
+  // A full archive/Worker includes bytes absent from the critical manifest.
+  // Its apparent leaf disjointness cannot authorize held identity changes.
+  if (dependencies.footprint !== 'content') return 'blocked';
+
   const scope = resolveScope(config, dependencies.candidateLeaves);
   return scope?.promotable === true ? 'scoped' : 'blocked';
+}
+
+export function nativeHoldEligible(config, dependencies) {
+  return config?.hold === true && config.releaseState === 'hold'
+    && validatePromotionConfig(config).length === 0
+    && validatePromotionDependencies(config,dependencies.identityReceipt,dependencies.controlPlane).length === 0
+    && config.reasons?.length === 1 && config.reasons[0] === 'real-provider-e2e-pending'
+    && dependencies.controlPlane?.overall === 'ready'
+    && Array.isArray(dependencies.identityReceipt?.blockers)
+    && dependencies.identityReceipt.blockers.every(reason => reason === 'real-provider-e2e-pending');
 }
 
 export function promotionAllowed(config, eventName, explicitConfirmation, dependencies = {}) {
@@ -165,6 +198,7 @@ function readDependencies() {
     identityReceipt: JSON.parse(fs.readFileSync(IDENTITY_RECEIPT_PATH, 'utf8')),
     controlPlane: JSON.parse(fs.readFileSync(CONTROL_PLANE_PATH, 'utf8')),
     candidateLeaves,
+    footprint: 'full',
   };
 }
 
@@ -194,7 +228,10 @@ export function validateWorkflowSource(source, requiredSteps) {
       errors.push(`required production step missing: ${stepName}`);
       continue;
     }
-    const directlyGated = block.includes("steps.promotion-gate.outputs.allowed == 'true'");
+    const preliminaryInstall = stepName === 'Install deps (pins wrangler via package.json)'
+      && source.includes('id: promotion-preflight')
+      && block.includes("if: steps.promotion-preflight.outputs.allowed == 'true' || steps.promotion-preflight.outputs.preflight_eligible == 'true'");
+    const directlyGated = block.includes("steps.promotion-gate.outputs.allowed == 'true'") || preliminaryInstall;
     if (!directlyGated) {
       errors.push(`production step is not gated: ${stepName}`);
     }
@@ -279,7 +316,7 @@ on:
       const unclassifiable = [...contentOnly, { path: 'weird/thing.bin' }];
       // darkIdentity is honest-dark / productionEligible:false — the exact
       // dependency state the blast radius exists to confine.
-      const deps = (leaves) => ({ identityReceipt: darkIdentity, controlPlane: partialControl, candidateLeaves: leaves });
+      const deps = (leaves) => ({ identityReceipt: darkIdentity, controlPlane: partialControl, candidateLeaves: leaves, footprint:'content' });
       // Same reasons, but one radius now covers content — which the candidate
       // does touch, so the promotion must block.
       const scopedIntersecting = { ...scoped,
@@ -322,32 +359,45 @@ on:
   console.log(`production-promotion-gate self-test: ${cases.length}/${cases.length} passed`);
 }
 
-const args = new Set(process.argv.slice(2));
-if (args.has('--self-test')) {
-  selfTest();
-} else if (args.has('--check')) {
-  const { config } = checkRepository();
-  console.log(`production-promotion-gate: ${config.releaseState} (${config.reasons.join(', ') || 'no blockers'})`);
-} else if (args.has('--emit-github-output')) {
-  const { config, dependencies } = checkRepository();
-  const mode = promotionMode(config, process.env.GITHUB_EVENT_NAME, process.env.PRODUCTION_CONFIRM, dependencies);
+async function main() {
+  const raw = process.argv.slice(2);
+  const contextArgs = isolated.runtimeContextArgs(raw);
+  const modes = raw.filter(arg => !arg.startsWith('--isolated-staging-context'));
+  if (modes.length !== 1 || !['--self-test','--check','--emit-github-output','--require-allowed'].includes(modes[0])) throw new Error('fixed-promotion-arguments');
+  const args = new Set(modes);
+  if (args.has('--self-test')) { selfTest(); return; }
+  const {config, dependencies} = checkRepository();
+  if (args.has('--check')) {
+    console.log(`production-promotion-gate: ${config.releaseState} (${config.reasons.join(', ') || 'no blockers'})`);
+    return;
+  }
+  let earlyEligible = false;
+  const id = process.env.INSTALLATION_DEPLOYMENT_ID || '', hash = process.env.INSTALLATION_PAYLOAD_SHA256 || '';
+  if (contextArgs) {
+    dependencies.isolatedContext = await isolated.loadRuntimeContext(ROOT,contextArgs.file,contextArgs.hash);
+  } else if (id || hash) {
+    if (!/^[1-9][0-9]*$/.test(id) || !Number.isSafeInteger(Number(id)) || !/^[a-f0-9]{64}$/.test(hash)
+      || process.env.GITHUB_EVENT_NAME !== 'workflow_dispatch' || process.env.PRODUCTION_CONFIRM !== 'true') throw new Error('invalid-installation-preflight-reference');
+    if (nativeHoldEligible(config,dependencies)) {
+      const preflight = await isolated.loadNativeInstallationPreflight(ROOT,Number(id),hash);
+      const native = isolated.stageNativeInstallationAuthorization(preflight);
+      earlyEligible = native.mode === 'affected-auth-stage-verified' && native.earlyEligibleOnly === true
+        && native.currentObservationRequired === true && native.productionNativePending === true;
+    }
+  }
+  const mode = promotionMode(config,process.env.GITHUB_EVENT_NAME,process.env.PRODUCTION_CONFIRM,dependencies);
   const allowed = mode !== 'blocked';
-  const scope = resolveScope(config, dependencies.candidateLeaves);
-  const outputPath = process.env.GITHUB_OUTPUT;
-  if (!outputPath) throw new Error('GITHUB_OUTPUT is required with --emit-github-output');
-  fs.appendFileSync(outputPath, `allowed=${allowed}\n`, 'utf8');
-  fs.appendFileSync(outputPath, `release_state=${config.releaseState}\n`, 'utf8');
-  // Say HOW it was authorised, and what stayed held. A run log that only says
-  // "allowed=true" hides the difference between a clear release and a scoped one.
-  fs.appendFileSync(outputPath, `promotion_mode=${mode}\n`, 'utf8');
-  fs.appendFileSync(outputPath, `held_surfaces=${(scope?.heldSurfaces || []).join(',')}\n`, 'utf8');
-  console.log(`production-promotion-gate: allowed=${allowed}; mode=${mode}; state=${config.releaseState}; reasons=${config.reasons.join(',') || 'none'}; held=${(scope?.heldSurfaces || []).join(',') || 'none'}`);
-} else if (args.has('--require-allowed')) {
-  const { config, dependencies } = checkRepository();
-  const allowed = promotionAllowed(config, process.env.GITHUB_EVENT_NAME, process.env.PRODUCTION_CONFIRM, dependencies);
-  console.log(`production-promotion-gate: allowed=${allowed}; state=${config.releaseState}; reasons=${config.reasons.join(',') || 'none'}`);
-  if (!allowed) process.exitCode = 1;
-} else {
-  console.error('Usage: --self-test | --check | --require-allowed | --emit-github-output');
-  process.exitCode = 2;
+  if (args.has('--emit-github-output')) {
+    const outputPath = process.env.GITHUB_OUTPUT;
+    if (!outputPath) throw new Error('github-output-required');
+    const held = mode === 'scoped' ? (resolveScope(config,dependencies.candidateLeaves)?.heldSurfaces || []) : [];
+    fs.appendFileSync(outputPath,`allowed=${allowed}\npreflight_eligible=${earlyEligible}\nrelease_state=${config.releaseState}\npromotion_mode=${mode}\nheld_surfaces=${held.join(',')}\nproduction_native_pending=${mode === 'affected-auth-stage-verified' || earlyEligible}\n`,'utf8');
+    console.log(`production-promotion-gate: allowed=${allowed}; preflight-eligible=${earlyEligible}; mode=${mode}; state=${config.releaseState}; reasons=${config.reasons.join(',') || 'none'}; held=${held.join(',') || 'none'}`);
+  } else {
+    console.log(`production-promotion-gate: allowed=${allowed}; state=${config.releaseState}; reasons=${config.reasons.join(',') || 'none'}`);
+    if (!allowed) process.exitCode = 1;
+  }
+}
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch(() => { console.error('production-promotion-gate: admission refused'); process.exitCode = 1; });
 }

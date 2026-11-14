@@ -6,11 +6,12 @@ import { fileURLToPath } from 'node:url';
 import { createStagingDeployReceipt, validateStagingDeployReceipt } from './lib/staging-deploy-receipt.mjs';
 import { historyRowFor, parseStagingDeployHistory, validateStagingDeployHistory } from './lib/staging-deploy-history.mjs';
 import { writeReleaseDependencies } from './build-release-dependencies.mjs';
-import { runtimeContextArgs, loadRuntimeContext, runtimeArtifactPath, variantReadiness, evaluateVariantRoutes } from './lib/isolated-staging-evidence.mjs';
+import { runtimeContextArgs, loadRuntimeContext, runtimeArtifactPath, variantReadiness, evaluateVariantRoutes, stageNativeAuthorization } from './lib/isolated-staging-evidence.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const direct=process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url);
 let OUT = path.join(ROOT, 'api', 'release-proof.json');
-const isolatedArgs=runtimeContextArgs(process.argv.slice(2));
+const isolatedArgs=direct?runtimeContextArgs(process.argv.slice(2)):null;
 const isolatedContext=isolatedArgs ? await loadRuntimeContext(ROOT,isolatedArgs.file,isolatedArgs.hash) : null;
 if (isolatedContext) OUT=runtimeArtifactPath(ROOT,isolatedContext,'release-proof');
 const CHECK = process.argv.includes('--check');
@@ -20,7 +21,8 @@ function readJson(relative) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relative), 'utf8'));
 }
 
-export function deriveReleaseProof({ staging, shell, build, workerWorkflow, workerRouteProvenance, deployCurrency, candidateManifest, stagingDeployReceipt, stagingDeployHistory, faviconValid, promotionReceipt, productionPromotion, identityMigration, supabaseControlPlane, releaseDependencies, isolatedContext = null }) {
+export function deriveReleaseProof({ staging, shell, build, workerWorkflow, workerRouteProvenance, deployCurrency, candidateManifest, stagingDeployReceipt, stagingDeployHistory, faviconValid, promotionReceipt, productionPromotion, identityMigration, supabaseControlPlane, releaseDependencies, isolatedContext = null, rolloutAuthorization = null }) {
+  if(!rolloutAuthorization&&isolatedContext?.installation?.schemaVersion===2)rolloutAuthorization=stageNativeAuthorization(isolatedContext);
   const reasons = [...new Set((staging.routes || []).flatMap((route) => route.reasonCodes || []))].sort();
   const rollbackAutomatic = /Auto-rollback on failed liveness/.test(workerWorkflow)
     && /Verify rollback restored the site/.test(workerWorkflow)
@@ -135,6 +137,7 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
     generatedAt,
     generatedBy: 'scripts/build-release-proof.mjs',
     publicSafe: true,
+    ...(rolloutAuthorization?{rolloutAuthorization:projectRolloutAuthorization(rolloutAuthorization)}:{}),
     releaseState: blockers.length ? 'hold' : 'ready',
     build: { sha: build.sha || null, shellVersion: shell.version || null },
     staging: {
@@ -235,6 +238,36 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
   };
 }
 
+/** Reporting projection only: never changes production identity/promotion checks. */
+export function projectRolloutAuthorization(value){
+  const fields=['mode','sourceCommit','sourceTreeSha','stageSealSha256','stageNativeSha256','installationPayloadSha256','productionNativePending','fullReleaseAccepted'];
+  if(!value||Object.keys(value).sort().join('|')!==fields.sort().join('|')||value.mode!=='affected-auth-stage-verified'
+      ||!/^[a-f0-9]{40}$/.test(value.sourceCommit)||!/^[a-f0-9]{40}$/.test(value.sourceTreeSha)
+      ||!['stageSealSha256','stageNativeSha256','installationPayloadSha256'].every(k=>/^[a-f0-9]{64}$/.test(value[k]))
+      ||value.productionNativePending!==true||value.fullReleaseAccepted!==false)throw Error('rollout authorization projection refused');
+  return structuredClone(value);
+}
+
+export function deriveProductionPostflightProof({preflightProof,identityReceipt,promotionReceipt,journeySha256,authorization}){
+  const a=projectRolloutAuthorization(authorization);
+  if(identityReceipt?.environment!=='production'||identityReceipt.state!=='verified'||identityReceipt.productionEligible!==true||identityReceipt.blockers?.length
+      ||identityReceipt.bindings?.worker?.sourceCommit!==a.sourceCommit||!/^([a-f0-9]{64})$/.test(journeySha256||'')
+      ||promotionReceipt?.productionPostflight?.sourceCommit!==a.sourceCommit||promotionReceipt.productionPostflight.fullRemoteAuthClosureObserved!==true
+      ||promotionReceipt.productionPostflight.fullInventoryBytesObserved!==false||promotionReceipt.productionPostflight.customOriginRoutesHeadersShellVerified!==true
+      ||promotionReceipt.productionPostflight.workerAssociationVerified!==true||promotionReceipt.reconciled!==true)throw Error('production postflight proof refused');
+  const allowed=new Set(['identityMigrationVerified','productionPromotionReady','productionShellParityMatched','identity:real-provider-e2e-pending','promotion:real-provider-e2e-pending']);
+  const remaining=(preflightProof.blockers||[]).filter(x=>!allowed.has(x));
+  const proof=structuredClone(preflightProof);
+  proof.generatedAt=identityReceipt.generatedAt;proof.productionPostflight={sourceCommit:a.sourceCommit,journeySha256,observedAt:identityReceipt.generatedAt,
+    productionIdentityVerified:true,productionReadbackVerified:true,sourcePolicyHoldPreserved:preflightProof.promotion?.hold!==false,
+    historicalPreflight:structuredClone(a),originalPreflightGeneratedAt:preflightProof.generatedAt,remainingBlockers:remaining,
+    productionNativePending:false,metadataPublicationPending:true,fullReleaseAccepted:false};
+  // Prepared observations are not a completed metadata deployment/readback.
+  proof.identityMigration={state:identityReceipt.state,productionEligible:true,environment:'production',workerVersion:identityReceipt.bindings.worker.versionId,blockers:[]};
+  return proof;
+}
+
+if(direct){
 if (SELF_TEST) {
   const base = {
     staging: { generatedAt: '2026-01-01T00:00:00Z', status: 'green', candidateReady: true, candidateFindings: [], candidateBuildSha: 'a'.repeat(40), stagingBuildSha: 'a'.repeat(40), artifactManifest: { candidateRoot: 'c'.repeat(64), stagingRoot: 'c'.repeat(64), candidateLeafCount: 24, stagingLeafCount: 24, matched: true }, routes: [{ stagingReachable: true }] },
@@ -363,4 +396,5 @@ if (CHECK) {
   if (isolatedContext) fs.mkdirSync(path.dirname(OUT),{recursive:true});
   fs.writeFileSync(OUT, content, 'utf8');
   console.log(`build-release-proof: ${proof.releaseState} (${proof.blockers.length} blocker(s))`);
+}
 }

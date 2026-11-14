@@ -13,14 +13,17 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { resolveScope } from './check-promotion-scope.mjs';
+import { promotionMode } from './check-production-promotion-gate.mjs';
+import * as nativeEvidence from './lib/isolated-staging-evidence.mjs';
 import { runtimeContextArgs, loadRuntimeContext, runtimeArtifactPath, CONTRACT_FILES, assertAdmittedContext } from './lib/isolated-staging-evidence.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const STUDIO_ROOT = resolve(ROOT, '..', 'vaultspark-studio-ops');
-const isolatedArgs=runtimeContextArgs(process.argv.slice(2));
+const direct=process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url);
+const isolatedArgs=direct ? runtimeContextArgs(process.argv.slice(2)) : null;
 const isolatedContext=isolatedArgs ? await loadRuntimeContext(ROOT,isolatedArgs.file,isolatedArgs.hash) : null;
 const isolatedCli=isolatedArgs ? [`--isolated-staging-context=${isolatedArgs.file}`,`--isolated-staging-context-sha256=${isolatedArgs.hash}`] : [];
+const nativeRuntime=isolatedContext?.installation?.schemaVersion===2 ? nativeEvidence.stageNativeAuthorization(isolatedContext) : null;
 const OUT = isolatedContext ? runtimeArtifactPath(ROOT,isolatedContext,'release-ceremony') : join(ROOT, 'api', 'release-ceremony.json');
 const CANONICAL_STAGING = 'https://website.staging.vaultsparkstudios.com';
 
@@ -143,53 +146,28 @@ function evaluateDoctorStep(score, deployCurrency, stagingEvidence = {}, duratio
 }
 
 /**
- * Promotion readiness, resolved rather than asserted (S319, D-S319.2).
- *
- * Historically this step demanded a globally clear hold. That made a hold owned
- * by a SIBLING repo — real-provider-e2e-pending, unsatisfiable here under
- * CANON-018 — permanently block every unrelated surface, which is why production
- * ran 651 commits / 12.3 days behind.
- *
- * The step now passes in two ways, and reports which:
- *   · `clear`  — hold is genuinely false. Unchanged behaviour.
- *   · `scoped` — a hold is active, every active reason declares a blast radius,
- *                and the candidate leaf set is provably disjoint from all of
- *                them. The held surfaces remain held and are named on the receipt.
- *
- * Everything else still rejects. The scope resolver fails closed on an
- * undeclared radius, an intersecting leaf, an unclassifiable leaf, or an empty
- * candidate — so this is a resolution of the hold, never a bypass of it.
+ * Full-rollout readiness uses the existing clear contract or actual admitted
+ * stage-native evidence for the exact affected candidate. The production hold
+ * remains truthful pending postflight. A critical-leaf subset cannot establish
+ * that the full archive or Worker is disjoint from affected identity bytes.
  */
 function promotionReadyStep() {
   const started = Date.now();
-  let promotion;
-  try { promotion = readJson('context/PRODUCTION_PROMOTION.json'); } catch {}
-  const clear = promotion?.hold === false && promotion?.releaseState === 'ready' && (promotion?.reasons || []).length === 0;
-
-  let scope = null;
-  if (!clear) {
-    try {
-      const manifest = readJson('api/candidate-artifact-manifest.json');
-      scope = resolveScope(promotion, manifest?.leaves);
-    } catch {
-      scope = null;
-    }
-  }
-
-  const passed = clear || scope?.promotable === true;
+  let promotion, identityReceipt, controlPlane, manifest;
+  try { promotion=readJson('context/PRODUCTION_PROMOTION.json'); } catch {}
+  try { identityReceipt=readJson('api/identity-migration-receipt.json'); } catch {}
+  try { controlPlane=readJson('api/supabase-control-plane.json'); } catch {}
+  try { manifest=readJson('api/candidate-artifact-manifest.json'); } catch {}
+  const mode=promotionMode(promotion,'workflow_dispatch','true',{
+    identityReceipt,controlPlane,candidateLeaves:manifest?.leaves,footprint:'full',isolatedContext,
+  });
+  const native=mode==='affected-auth-stage-verified' ? nativeEvidence.stageNativeAuthorization(isolatedContext) : null;
   return {
-    id: 'promotion-ready',
-    state: passed ? 'passed' : 'rejected',
-    exitCode: passed ? 0 : 1,
-    durationMs: Date.now() - started,
-    releaseState: promotion?.releaseState || 'unknown',
-    reasonCodes: Array.isArray(promotion?.reasons) ? promotion.reasons : ['promotion-receipt-unavailable'],
-    promotionMode: clear ? 'clear' : scope?.promotable ? 'scoped' : 'blocked',
-    scopeReason: clear ? null : scope?.reason ?? 'scope-unresolvable',
-    heldSurfaces: clear ? [] : scope?.heldSurfaces ?? [],
-    // Named so a reader of the public receipt can see exactly what did NOT ship.
-    blockedLeaves: clear ? [] : (scope?.blocked ?? []).map((b) => b.leaf).slice(0, 20),
-    unclassifiedLeaves: clear ? [] : (scope?.unclassified ?? []).slice(0, 20),
+    id:'promotion-ready',state:mode==='blocked'?'rejected':'passed',exitCode:mode==='blocked'?1:0,
+    durationMs:Date.now()-started,releaseState:promotion?.releaseState||'unknown',
+    reasonCodes:Array.isArray(promotion?.reasons)?promotion.reasons:['promotion-receipt-unavailable'],
+    promotionMode:mode,scopeReason:null,heldSurfaces:[],blockedLeaves:[],unclassifiedLeaves:[],
+    ...(native ? {stageNativeSha256:native.stageNativeSha256,productionNativePending:true,fullReleaseAccepted:false} : {}),
   };
 }
 
@@ -215,13 +193,45 @@ function evidenceHash(paths) {
   return sha256(parts.join('\n'));
 }
 
+function currentCeremonyHashes(contextFile=null) {
+  return {
+evidenceSha256:evidenceHash([
+    'api/obelisk-redirect-readiness.json',
+    'api/staging-deploy-receipt.json',
+    'api/staging-deploy-continuity.json',
+    'api/staging-release-browser.json',
+    'api/staging-attention-browser.json',
+    'context/PRODUCTION_PROMOTION.json',
+    'context/PROJECT_STATUS.json',
+    ...(contextFile ? [contextFile] : []),
+  ]),
+contractSha256:evidenceHash([
+    'scripts/run-release-ceremony.mjs',
+    'scripts/run-staging-release-gate.mjs',
+    'tests/staging-release.spec.js',
+    // S337: the release contract must cover the code that DECIDES pass/fail.
+    // The Trusted Types report-only classifier moved out of the spec into this
+    // module (a spec importing another spec double-registers its tests), and it
+    // is what separates an expected report-only notice from a real console
+    // error. Left unhashed, the single most consequential predicate in the
+    // browser gate could change without changing contractSha256.
+    'tests/lib/tt-report-only.js',
+    'scripts/run-attention-release-gate.mjs',
+    'tests/attention-surfaces.spec.js',
+    'scripts/check-production-promotion-gate.mjs',
+    ...(contextFile ? CONTRACT_FILES : []),
+  ]),
+  };
+}
+
 function priorReceiptHash() {
   try { return sha256(readFileSync(OUT)); } catch { return null; }
 }
 
 const EXPECTED_STEP_IDS = ['redirect-readiness-probe', 'redirect-readiness', 'staging-deploy-lineage', 'lane-held-asset-drift', 'staging-browser', 'staging-browser-receipt', 'attention-browser', 'attention-browser-receipt', 'promotion-contract', 'promotion-ready', 'doctor'];
+Object.freeze(EXPECTED_STEP_IDS);
 
-function validateReceipt(receipt) {
+function validateReceipt(receipt, native = null) {
   const errors = [];
   if (receipt?.stagingMode !== undefined && (receipt.stagingMode!=='isolated-variant'
     || !/^[a-f0-9]{64}$/.test(receipt.installationPayloadSha256 || '')
@@ -237,6 +247,13 @@ function validateReceipt(receipt) {
   if (Object.hasOwn(receipt || {}, 'stdout') || Object.hasOwn(receipt || {}, 'stderr')) errors.push('subprocess output retained');
   const allPassed = steps.length > 0 && steps.every((step) => step?.state === 'passed');
   if ((receipt?.state === 'passed') !== Boolean(allPassed)) errors.push('state/step disagreement');
+  if (!native && receipt?.promotionMode==='affected-auth-stage-verified') errors.push('stage-native context required');
+  if (native) {
+    const promotion = steps.find(step => step?.id === 'promotion-ready');
+    if (receipt?.promotionMode !== native.mode || receipt.productionNativePending !== true || receipt.fullReleaseAccepted !== false
+      || promotion?.promotionMode !== native.mode || promotion?.productionNativePending !== true
+      || promotion?.stageNativeSha256 !== native.stageNativeSha256) errors.push('stage-native authorization association changed');
+  }
   return errors;
 }
 
@@ -274,6 +291,7 @@ function selfTest() {
   console.log('run-release-ceremony --self-test: OK (origin + exact eleven-step IDs + fail-closed receipts + pre-deploy Doctor classification)');
 }
 
+if (direct) {
 if (process.argv.includes('--self-test')) {
   try { selfTest(); } catch (error) { console.error(`self-test failed: ${error.message}`); process.exit(1); }
   process.exit(0);
@@ -282,7 +300,10 @@ if (process.argv.includes('--self-test')) {
 if (process.argv.includes('--check')) {
   try {
     const receipt = JSON.parse(readFileSync(OUT, 'utf8'));
-    const errors = validateReceipt(receipt);
+    const expectedPromotion = promotionReadyStep();
+    const errors = validateReceipt(receipt,expectedPromotion.promotionMode==='affected-auth-stage-verified'?nativeRuntime:null);
+    const recordedPromotion = receipt.steps?.find(step=>step?.id==='promotion-ready');
+    if (recordedPromotion?.promotionMode!==expectedPromotion.promotionMode || recordedPromotion?.state!==expectedPromotion.state) errors.push('ceremony promotion authorization changed');
     if(isolatedContext && (receipt.stagingMode!=='isolated-variant'
       || receipt.installationPayloadSha256!==isolatedContext.transport.installationHash
       || receipt.observationPayloadSha256!==isolatedContext.transport.observationHash)) errors.push('ceremony runtime evidence association changed');
@@ -291,22 +312,7 @@ if (process.argv.includes('--check')) {
       if (!Number.isFinite(generatedAt) || generatedAt > Date.now() + 60_000 || Date.now() - generatedAt > 15 * 60_000) {
         errors.push('receipt is not fresh (maximum age 15 minutes)');
       }
-      const currentContractSha256 = evidenceHash([
-        'scripts/run-release-ceremony.mjs',
-        'scripts/run-staging-release-gate.mjs',
-        'tests/staging-release.spec.js',
-    // S337: the release contract must cover the code that DECIDES pass/fail.
-    // The Trusted Types report-only classifier moved out of the spec into this
-    // module (a spec importing another spec double-registers its tests), and it
-    // is what separates an expected report-only notice from a real console
-    // error. Left unhashed, the single most consequential predicate in the
-    // browser gate could change without changing contractSha256.
-    'tests/lib/tt-report-only.js',
-        'scripts/run-attention-release-gate.mjs',
-        'tests/attention-surfaces.spec.js',
-        'scripts/check-production-promotion-gate.mjs',
-        ...(isolatedContext ? CONTRACT_FILES : []),
-      ]);
+      const currentContractSha256 = currentCeremonyHashes(isolatedArgs?.file || null).contractSha256;
       if (receipt.contractSha256 !== currentContractSha256) errors.push('receipt is not bound to the current release contract');
     }
     if (errors.length) throw new Error(errors.join('; '));
@@ -337,7 +343,7 @@ steps.push(runScript('staging-deploy-lineage', 'scripts/check-staging-deploy-rec
 // number is in front of whoever is promoting, rather than reconstructed by hand
 // after a browser gate happens to trip over the consequence.
 steps.push(runScript('lane-held-asset-drift', 'scripts/check-lane-held-asset-drift.mjs', [`--origin=${CANONICAL_STAGING}`]));
-steps.push(runScript('staging-browser', 'scripts/run-staging-release-gate.mjs', [`--url=${CANONICAL_STAGING}`]));
+steps.push(runScript('staging-browser', 'scripts/run-staging-release-gate.mjs', [`--url=${CANONICAL_STAGING}`,...isolatedCli]));
 // S319: `held` is accepted, `skipped` is still not. A held contract is evidence
 // consciously scoped out of a blast-radius-disjoint promotion, declared on the
 // receipt with the surface that justifies it; a skip is evidence that silently
@@ -350,7 +356,10 @@ steps.push(artifactStep('staging-browser-receipt', 'api/staging-release-browser.
     && value.failed === 0
     && value.flaky === 0
     && value.observedTests === value.expectedTests
-    && (value.held ?? 0) === (value.heldContracts?.length ?? 0) * 3,
+    && (value.held ?? 0) === (value.heldContracts?.length ?? 0) * 3
+    && (!nativeRuntime || (value.held===0 && value.heldContracts?.length===0
+      && value.promotionMode===nativeRuntime.mode && value.sourceCommit===nativeRuntime.sourceCommit
+      && value.stageNativeSha256===nativeRuntime.stageNativeSha256)),
   (value) => ({
     passed: value.passed ?? 0,
     expected: value.expectedTests ?? 0,
@@ -388,38 +397,14 @@ const receipt = {
   schemaVersion: 1,
   ...(isolatedContext ? {stagingMode:'isolated-variant',installationPayloadSha256:isolatedContext.transport.installationHash,
     observationPayloadSha256:isolatedContext.transport.observationHash} : {}),
+  ...(steps.some(step=>step.productionNativePending===true)?{promotionMode:'affected-auth-stage-verified',productionNativePending:true,fullReleaseAccepted:false}:{}),
   generatedAt: new Date().toISOString(),
   generatedBy: 'scripts/run-release-ceremony.mjs',
   publicSafe: true,
   state: steps.every((step) => step.state === 'passed') ? 'passed' : 'rejected',
   stagingOrigin: CANONICAL_STAGING,
   steps,
-  evidenceSha256: evidenceHash([
-    'api/obelisk-redirect-readiness.json',
-    'api/staging-deploy-receipt.json',
-    'api/staging-deploy-continuity.json',
-    'api/staging-release-browser.json',
-    'api/staging-attention-browser.json',
-    'context/PRODUCTION_PROMOTION.json',
-    'context/PROJECT_STATUS.json',
-    ...(isolatedArgs ? [isolatedArgs.file] : []),
-  ]),
-  contractSha256: evidenceHash([
-    'scripts/run-release-ceremony.mjs',
-    'scripts/run-staging-release-gate.mjs',
-    'tests/staging-release.spec.js',
-    // S337: the release contract must cover the code that DECIDES pass/fail.
-    // The Trusted Types report-only classifier moved out of the spec into this
-    // module (a spec importing another spec double-registers its tests), and it
-    // is what separates an expected report-only notice from a real console
-    // error. Left unhashed, the single most consequential predicate in the
-    // browser gate could change without changing contractSha256.
-    'tests/lib/tt-report-only.js',
-    'scripts/run-attention-release-gate.mjs',
-    'tests/attention-surfaces.spec.js',
-    'scripts/check-production-promotion-gate.mjs',
-    ...(isolatedContext ? CONTRACT_FILES : []),
-  ]),
+  ...currentCeremonyHashes(isolatedArgs?.file || null),
   chain: { previousReceiptSha256: priorSha256 },
   privacy: { stdoutRetained: false, stderrRetained: false, responseBodiesRetained: false },
 };
@@ -428,3 +413,6 @@ writeFileSync(OUT, `${JSON.stringify(receipt, null, 2)}\n`);
 console.log(`release ceremony: ${receipt.state} · ${steps.filter((step) => step.state === 'passed').length}/${steps.length}`);
 for (const step of steps.filter((step) => step.state !== 'passed')) console.log(`  - ${step.id}: ${step.reason || step.verdict || step.releaseState || 'rejected'}`);
 process.exit(receipt.state === 'passed' || !process.argv.includes('--require-ready') ? 0 : 1);
+
+}
+export {EXPECTED_STEP_IDS,validateReceipt,currentCeremonyHashes};

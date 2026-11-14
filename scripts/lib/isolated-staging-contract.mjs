@@ -87,7 +87,7 @@ export function validatePreservationProjection(p) {
 }
 export function validatePublisherPolicy(policy) {
   exactKeys(policy,['schemaVersion','repository','environment','workflowPaths','publisherCommitmentSha256',
-    'requestBotCommitmentSha256','protectedObserver'],'policy-fields');
+    'requestBotCommitmentSha256','protectedObserver',...(['nativeProducer','productionPostflightProducer'].filter(k=>Object.hasOwn(policy,k)))],'policy-fields');
   requireFact(policy.schemaVersion === 1 && policy.repository === REPOSITORY
     && policy.environment === 'website-isolated-staging'
     && JSON.stringify(policy.workflowPaths) === JSON.stringify(['.github/workflows/pages-deploy.yml','.github/workflows/cloudflare-worker-deploy.yml']), 'policy-scope');
@@ -95,6 +95,44 @@ export function validatePublisherPolicy(policy) {
     && policy.publisherCommitmentSha256 !== policy.requestBotCommitmentSha256, 'publisher-unresolved');
   requireFact(policy.protectedObserver !== null, 'observer-unresolved');
   return policy;
+}
+/** Separate stage observations; never maps to production providerJourney statuses. */
+export function validateStageNative(v, installation, frozen, descriptor) {
+  requireFact(Buffer.byteLength(JSON.stringify(v)) <= 8192,'stage-native-bound');
+  exactKeys(v,['schemaVersion','scope','repository','environment','session','sourceCommit','sourceTreeSha','verifierContractSha256',
+    'stageSealSha256','installReceiptSha256','postReceiptSha256','stageManifestSha256','workerVersion','workerBindingsSha256',
+    'appInputClosureSha256','executionDescriptorSha256','startedAt','finishedAt','sameSubjectVerified','cleanupComplete','cases',
+    'productionNativePending','productionIdentityVerified','fullReleaseAccepted','wholeHistoricalDatabaseBaselinePreservedClaimed',
+    'signatureCryptographicallyVerifiedByHarness','nativeIssuanceServerRequestsObserved'],'stage-native-fields');
+  requireFact(v.schemaVersion===1&&v.scope==='selected-native-stage-pair-v4'&&v.repository===REPOSITORY
+    &&v.environment==='staging'&&v.session===416,'stage-native-scope');
+  for(const key of ['sourceCommit','sourceTreeSha','verifierContractSha256'])requireFact(v[key]===frozen[key],'stage-native-source');
+  const receipt=installation.receipt;
+  requireFact(v.stageSealSha256===receipt.stageVariant.sealSha256&&v.stageManifestSha256===receipt.stageVariant.rawManifestSha256
+    &&v.installReceiptSha256===receipt.installationEvidence.installReceiptSha256&&v.postReceiptSha256===receipt.installationEvidence.postReceiptSha256
+    &&v.workerVersion===receipt.installationEvidence.workerVersionId&&v.workerVersion==='d9bdd239-3fb7-43a3-9630-a7fe8d39922e','stage-native-installation');
+  hashFields(v,['stageSealSha256','installReceiptSha256','postReceiptSha256','stageManifestSha256','workerBindingsSha256',
+    'appInputClosureSha256','executionDescriptorSha256'],'stage-native');
+  requireFact(descriptor&&descriptor.scope==='selected-native-pair-factory-v4'&&v.executionDescriptorSha256===sha256(JSON.stringify(descriptor))
+    &&v.workerBindingsSha256===descriptor.workerBindingsSha256&&v.workerVersion===descriptor.workerVersionId,'stage-native-execution-source');
+  const time=s=>typeof s==='string'&&Number.isFinite(Date.parse(s))&&new Date(s).toISOString()===s;
+  requireFact(time(v.startedAt)&&time(v.finishedAt)&&Date.parse(v.startedAt)>=Date.parse(receipt.installationEvidence.postObservedAt)
+    &&Date.parse(v.finishedAt)>=Date.parse(v.startedAt)&&Date.parse(v.finishedAt)<=Date.now(),'stage-native-times');
+  requireFact(Array.isArray(v.cases)&&v.cases.length===2,'stage-native-cases');
+  let prior=Date.parse(v.startedAt);
+  for(const [index,row]of v.cases.entries()){
+    exactKeys(row,['audience','intent','startedAt','finishedAt','receiptSha256','safeOutcomeSha256','positiveUiPassed','ordinaryLogoutVerified','callbackBoundariesVerified'],'stage-native-case-fields');
+    requireFact(row.audience===['member','investor'][index]&&row.intent==='signin'&&time(row.startedAt)&&time(row.finishedAt)
+      &&Date.parse(row.startedAt)>=prior&&Date.parse(row.finishedAt)>=Date.parse(row.startedAt)&&Date.parse(row.finishedAt)<=Date.parse(v.finishedAt),'stage-native-case-identity-time');
+    hashFields(row,['receiptSha256','safeOutcomeSha256'],'stage-native-case');
+    requireFact(row.positiveUiPassed===true&&row.ordinaryLogoutVerified===true&&row.callbackBoundariesVerified===true,'stage-native-case-outcome');
+    prior=Date.parse(row.finishedAt);
+  }
+  requireFact(v.cases[0].receiptSha256!==v.cases[1].receiptSha256&&v.cases[0].safeOutcomeSha256!==v.cases[1].safeOutcomeSha256,'stage-native-distinct-cases');
+  requireFact(v.sameSubjectVerified===true&&v.cleanupComplete===true&&v.productionNativePending===true&&v.productionIdentityVerified===false
+    &&v.fullReleaseAccepted===false&&v.wholeHistoricalDatabaseBaselinePreservedClaimed===false
+    &&v.signatureCryptographicallyVerifiedByHarness===false&&v.nativeIssuanceServerRequestsObserved===false,'stage-native-nonclaims');
+  return v;
 }
 export function publisherCommitment(creator) {
   // Existing authenticated operator authority is retained; only its opaque commitment is persisted.

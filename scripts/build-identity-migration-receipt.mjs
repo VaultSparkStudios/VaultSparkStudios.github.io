@@ -129,6 +129,19 @@ export function validateReceipt(receipt) {
   return errors;
 }
 
+/** Pure production projection; callers must supply independently observed deployment facts. */
+export function deriveProductionIdentityReceipt({evidence,controlPlane,wranglerSource,authSource,hashes,journey,association}) {
+  if (association?.environment!=='production'||!/^([a-f0-9]{40})$/.test(association.sourceCommit||'')
+      ||!/^[a-f0-9-]{36}$/.test(association.workerVersionId||'')
+      ||association.anonymousHealth!=='passed'||!Number.isFinite(Date.parse(journey?.verifiedAt))) throw Error('production identity association unavailable');
+  const actual=structuredClone(evidence);
+  actual.environment='production';actual.updatedAt=journey.verifiedAt;actual.providerJourney=structuredClone(journey);
+  actual.edgeDeployment={workerName:'vaultspark-security-headers-production',versionId:association.workerVersionId,sourceCommit:association.sourceCommit,anonymousHealth:'passed'};
+  const receipt=deriveReceipt({evidence:actual,controlPlane,wranglerSource,authSource,hashes});
+  const errors=validateReceipt(receipt);if(errors.length)throw Error('production identity projection refused');
+  return {evidence:actual,receipt};
+}
+
 function selfTest() {
   const baseEvidence = {
     migrationId: 'obelisk-phase2', environment: 'staging', updatedAt: '2026-01-01T00:00:00Z',
@@ -181,6 +194,8 @@ function selfTest() {
 }
 
 const args = new Set(process.argv.slice(2));
+const direct=process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url);
+if(direct){
 if (args.has('--self-test')) {
   selfTest();
 } else {
@@ -210,4 +225,5 @@ if (args.has('--self-test')) {
     fs.writeFileSync(OUT, content, 'utf8');
     console.log(`identity-migration-receipt: ${receipt.state} (${receipt.blockers.length} blocker(s))`);
   }
+}
 }

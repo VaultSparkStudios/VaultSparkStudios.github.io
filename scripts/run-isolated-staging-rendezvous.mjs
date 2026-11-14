@@ -19,16 +19,24 @@ export async function runWorkflowRendezvous(env, {invoke, readContext, log = () 
   need(typeof env.GITHUB_SHA === 'string' && /^[a-f0-9]{40}$/.test(env.GITHUB_SHA), 'source');
   const common = ['--source-commit=' + env.GITHUB_SHA, '--installation-deployment-id=' + input.installationId,
     '--installation-payload-sha256=' + input.installationHash];
-  const parse = value => {need(typeof value === 'string' && Buffer.byteLength(value) <= 8192, 'response-size'); return JSON.parse(value);};
-  const request = parse(await invoke(['--request', ...common]));
+  const parse = value => {need(typeof value === 'string' && Buffer.byteLength(value) <= 8192, 'response-size');const result=JSON.parse(value);need(result&&typeof result==='object'&&!Array.isArray(result),'response-object');return result;};
+  const workerArgs=input.workerUploadId?['--worker-upload-deployment-id='+input.workerUploadId,'--worker-upload-payload-sha256='+input.workerUploadHash]:[];
+  const request = parse(await invoke(['--request', ...common,...workerArgs]));
   need(validId(request.requestDeploymentId) && validHash(request.requestPayloadSha256), 'request-reference');
+  need(Object.keys(request).sort().join('|')==='requestDeploymentId|requestPayloadSha256','request-response-fields');
   log({requestDeploymentId: request.requestDeploymentId, requestPayloadSha256: request.requestPayloadSha256});
   const result = parse(await invoke(['--receive', ...common, '--request-deployment-id=' + request.requestDeploymentId,
     '--request-payload-sha256=' + request.requestPayloadSha256, '--output=' + CONTEXT_FILE]));
   need(result.file === CONTEXT_FILE && validHash(result.sha256), 'context-reference');
+  need(Object.keys(result).sort().join('|')==='file|sha256','context-response-fields');
   const bytes = await readContext(CONTEXT_FILE);
   need(bytes instanceof Uint8Array && bytes.length > 0 && bytes.length <= 65536 && hash(bytes) === result.sha256, 'context-readback');
-  need(JSON.parse(Buffer.from(bytes).toString('utf8')).sourceCommit === env.GITHUB_SHA, 'context-source');
+  const refs=JSON.parse(Buffer.from(bytes).toString('utf8'));
+  need(refs.schemaVersion===1&&Object.keys(refs).sort().join('|')==='schemaVersion|sourceCommit|transport'&&refs.sourceCommit===env.GITHUB_SHA,'context-source');
+  const t=refs.transport;need(t&&Object.keys(t).sort().join('|')==='installationHash|installationId|observationHash|observationId|requestHash|requestId|runAttempt|runId','context-transport-fields');
+  need(t.installationId===Number(input.installationId)&&t.installationHash===input.installationHash&&t.requestId===request.requestDeploymentId&&t.requestHash===request.requestPayloadSha256
+    &&validId(t.observationId)&&validHash(t.observationHash)&&validId(t.runId)&&validId(t.runAttempt),'context-transport-parent');
+  if(env.GITHUB_ACTIONS==='true'||env.GITHUB_RUN_ID!==undefined||env.GITHUB_RUN_ATTEMPT!==undefined)need(t.runId===Number(env.GITHUB_RUN_ID)&&t.runAttempt===Number(env.GITHUB_RUN_ATTEMPT),'context-owning-run');
   return {configured: true, contextFile: CONTEXT_FILE, contextSha256: result.sha256};
 }
 

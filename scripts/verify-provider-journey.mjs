@@ -57,8 +57,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from './lib/safe-spawn.mjs';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath,pathToFileURL } from 'node:url';
+import {createRequire} from 'node:module';
 import { selectWebsiteProbeCredential, WEBSITE_SUPABASE_URL } from './lib/website-supabase-probe-credential.mjs';
+import {deriveProductionIdentityReceipt} from './build-identity-migration-receipt.mjs';
+import {deriveProductionPostflightProof} from './build-release-proof.mjs';
+import {assertProductionPostflightContext,productionPostflightAuthorization,verifyFrozenSource,validateProductionProducerDescriptor,readOwned} from './lib/isolated-staging-evidence.mjs';
+import {PRODUCTION_ORIGIN,postflightOutputRoot,postflightHash,validateProductionDeployment,validateProductionPreflight,productionAuthInputReport,readProductionInventory,readProductionWorker,readProductionPages,authReadbackBudget,pauseAuthReadbackBudget,resumeAuthReadbackBudget,readProductionRouteParity} from './lib/production-postflight.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const EVIDENCE_PATH = path.join(ROOT, 'context', 'IDENTITY_MIGRATION_EVIDENCE.json');
@@ -229,20 +234,26 @@ export async function serviceRoleKey({ getSecret: secretReader, fetchImpl = glob
   return null;
 }
 
-export async function expectedInvestorAllow(userId, { getSecret, fetchImpl = globalThis.fetch } = {}) {
+export async function expectedInvestorAllow(userId, { getSecret, fetchImpl = globalThis.fetch, deadlineEpochMs = null } = {}) {
   const key = await serviceRoleKey({ getSecret, fetchImpl });
   if (!key) return { expectedAllow: null, source: 'service-role-unavailable' };
   const res = await fetchImpl(
     `${SUPABASE_URL}/rest/v1/investor_requests?select=id&user_id=eq.${encodeURIComponent(userId)}&status=eq.approved&limit=1`,
-    { headers: { apikey: key, Authorization: `Bearer ${key}` } },
+    { headers: { apikey: key, Authorization: `Bearer ${key}` },...(deadlineEpochMs!==null?{signal:AbortSignal.timeout(Math.max(1,Math.min(8000,deadlineEpochMs-Date.now())))}:{}) },
   );
   if (!res.ok) return { expectedAllow: null, source: `truth-read-http-${res.status}` };
-  const rows = await res.json();
+  let rows;
+  if(deadlineEpochMs!==null){const reader=res.body.getReader(),chunks=[];let size=0;try{for(;;){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>8192||Date.now()>deadlineEpochMs)throw Error('production truth read bound');chunks.push(Buffer.from(value));}rows=JSON.parse(Buffer.concat(chunks));}finally{await reader.cancel().catch(()=>{});}}
+  else rows = await res.json();
   return { expectedAllow: Array.isArray(rows) && rows.length > 0, source: 'service-role' };
 }
 
-async function runLive({ origin, channel: forcedChannel = null, waitMs = SIGNIN_TIMEOUT_MS }) {
-  const { chromium } = await import('@playwright/test');
+async function runLive({ origin, channel: forcedChannel = null, waitMs = SIGNIN_TIMEOUT_MS, postflight = null }) {
+  let browser=null,deadlineTimer=null,expired=false;
+  const deadlineFailure=postflight?new Promise((_,reject)=>{deadlineTimer=setTimeout(()=>{expired=true;browser?.close().catch(()=>{});reject(Error('production live absolute deadline'));},Math.max(1,postflight.deadline-Date.now()));}):null;
+  try{
+  const execute=async()=>{
+  const { chromium } = postflight?postflight.runtime.playwright:await import('@playwright/test');
   console.log(`\nverify-provider-journey --live against ${origin}`);
   console.log('A browser window will open. Complete the Obelisk sign-in there.');
   console.log('KEEP THE WINDOW OPEN — a second tab is the measuring instrument;');
@@ -259,14 +270,14 @@ async function runLive({ origin, channel: forcedChannel = null, waitMs = SIGNIN_
   // reachable from either channel; one held by Chrome's own password manager is
   // not. That is a per-founder fact this script cannot detect, so it is an
   // explicit choice: --channel=chrome|msedge|chromium.
-  let browser = null;
   const order = forcedChannel
     ? [forcedChannel === 'chromium' ? null : forcedChannel]
     : ['msedge', 'chrome', null];
   const failures = [];
   for (const channel of order) {
     try {
-      browser = await chromium.launch({ headless: false, ...(channel ? { channel } : {}) });
+      const cleanEnv={};if(postflight)for(const key of ['SystemRoot','WINDIR','PATH','TEMP','TMP','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMFILES','PROGRAMFILES(X86)','PROGRAMDATA'])if(process.env[key])cleanEnv[key]=process.env[key];
+      browser = await chromium.launch({ headless: false, ...(channel ? { channel } : {}),...(postflight?{executablePath:postflight.runtime.browserPin.executablePath,env:cleanEnv,timeout:Math.max(1,Math.min(15000,postflight.deadline-Date.now()))}:{}) });
       console.log(`browser: ${channel || 'bundled chromium (no Windows Hello — install Edge/Chrome for passkeys)'}`);
       break;
     } catch (error) {
@@ -280,6 +291,8 @@ async function runLive({ origin, channel: forcedChannel = null, waitMs = SIGNIN_
       ? `--channel=${forcedChannel} could not be launched — ${failures.join(' · ')}`
       : `no launchable browser found — ${failures.join(' · ')}`);
   }
+  if(expired){await browser.close();throw Error('production live absolute deadline');}
+  try {
   const context = await browser.newContext();
   const founderPage = await context.newPage();
   let probePage = await context.newPage();
@@ -299,12 +312,12 @@ async function runLive({ origin, channel: forcedChannel = null, waitMs = SIGNIN_
   };
 
   const fetchJson = (page, url, init = null) =>
-    page.evaluate(async ([u, i]) => {
-      const r = await fetch(u, { credentials: 'same-origin', ...(i || {}) });
+    page.evaluate(async ([u, i,deadline]) => {
+      const r = await fetch(u, { credentials: 'same-origin', ...(i || {}),...(deadline!==null?{signal:AbortSignal.timeout(Math.max(1,Math.min(8000,deadline-Date.now())))}:{}) });
       let body = null;
-      try { body = await r.json(); } catch { body = null; }
+      try {if(deadline===null)body=await r.json();else{const reader=r.body.getReader(),chunks=[];let size=0;try{for(;;){const{done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>262144||Date.now()>deadline)throw Error('production page response bound');chunks.push(value);}const all=new Uint8Array(size);let offset=0;for(const chunk of chunks){all.set(chunk,offset);offset+=chunk.length;}body=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(all));}finally{await reader.cancel().catch(()=>{});}}} catch { body = null; }
       return { status: r.status, body };
-    }, [url, init]);
+    }, [url, init,postflight?.deadline??null]);
 
   const obs = {};
   const deadline = Date.now() + waitMs;
@@ -345,12 +358,12 @@ async function runLive({ origin, channel: forcedChannel = null, waitMs = SIGNIN_
   });
 
   const member = await rest('vault_members', `select=user_id&user_id=eq.${encodeURIComponent(userId)}&limit=1`, compatToken);
-  obs.memberProbe = { status: member.status };
+  obs.memberProbe = { status: member.status,ownedRowObserved:Array.isArray(member.body)&&member.body.length===1&&member.body[0]?.user_id===userId };
   console.log(`member-plane read: HTTP ${member.status}`);
 
   const investorObserved = await rest('investor_updates', 'select=id&limit=1', compatToken);
   const observedAllow = investorObserved.status === 200 && Array.isArray(investorObserved.body) && investorObserved.body.length > 0;
-  const truth = await expectedInvestorAllow(userId);
+  const truth = await expectedInvestorAllow(userId,postflight?{deadlineEpochMs:postflight.deadline}:{});
   obs.investorProbe = { observedAllow, expectedAllow: truth.expectedAllow, source: truth.source };
   console.log(`investor surface: observed=${observedAllow ? 'allow' : 'deny'} expected=${truth.expectedAllow === null ? 'UNKNOWN' : truth.expectedAllow ? 'allow' : 'deny'} (${truth.source})`);
 
@@ -358,10 +371,87 @@ async function runLive({ origin, channel: forcedChannel = null, waitMs = SIGNIN_
   const logout = await fetchJson(probePage, '/api/auth/logout', { method: 'POST' });
   obs.logout = logout.body;
   obs.meAfterLogout = (await fetchJson(probePage, '/api/auth/me')).body;
-  console.log(`providerLogout: attempted=${logout.body?.providerLogout?.attempted} revoked=[${(logout.body?.providerLogout?.revoked || []).join(',')}] failed=[${(logout.body?.providerLogout?.failed || []).join(',')}] reason=${logout.body?.providerLogout?.reason ?? '—'}`);
+  if(postflight)console.log('production logout response observed; details remain in memory');
+  else console.log(`providerLogout: attempted=${logout.body?.providerLogout?.attempted} revoked=[${(logout.body?.providerLogout?.revoked || []).join(',')}] failed=[${(logout.body?.providerLogout?.failed || []).join(',')}] reason=${logout.body?.providerLogout?.reason ?? '—'}`);
 
   await browser.close();
+  if(postflight)return await finalizeProductionPostflight(postflight,obs);
   writeEvidenceAndRebuild(deriveJourney(obs));
+  } finally {if(browser.isConnected())await browser.close();}
+  };
+  return postflight?await Promise.race([execute(),deadlineFailure]):await execute();
+  }finally{if(deadlineTimer)clearTimeout(deadlineTimer);if(postflight&&browser?.isConnected())await Promise.race([browser.close(),new Promise((_,reject)=>{const timer=setTimeout(()=>reject(Error('production browser cleanup incomplete')),15000);timer.unref();})]);}
+}
+
+const productionExecutions=new WeakMap();
+export function assertProductionPostflightResult(result){
+  if(!productionExecutions.has(result)||productionExecutions.get(result)!==postflightHash(JSON.stringify(result)))throw Error('production postflight execution not owned');return result;
+}
+export function deriveProductionJourney(obs){
+  const journey=deriveJourney(obs);
+  if(!journeyPassed(journey)||obs.memberProbe?.ownedRowObserved!==true||obs.meAfterLogout?.ok!==true||obs.investorProbe?.expectedAllow!==true||obs.investorProbe?.observedAllow!==true)throw Error('production positive approved journey incomplete');
+  return journey;
+}
+async function admitProductionBrowserRuntime(channel){
+  if(path.resolve(process.cwd()).toLowerCase()!==ROOT.toLowerCase())throw Error('production owning cwd required');
+  const policyFile='config/isolated-staging-admission.json',policyRaw=readOwned(ROOT,policyFile),policy=JSON.parse(policyRaw),descriptor=validateProductionProducerDescriptor(ROOT,policy.productionPostflightProducer);
+  const bindingFile='.cache/S416/native-selected-journey-v4/SOURCE_BINDINGS.json',helperFile='.cache/S416/native-selected-journey-v4/runtime-provenance.mjs';
+  const pinned=file=>{const row=descriptor.dependencyRows.find(r=>r.file===file);if(!row)throw Error('production runtime source pin missing');const raw=readOwned(ROOT,file);if(postflightHash(raw)!==row.sha256)throw Error('production runtime source pin changed');return raw;};
+  const bindingRaw=pinned(bindingFile),helperRaw=pinned(helperFile),binding=JSON.parse(bindingRaw),helper=await import(pathToFileURL(path.join(ROOT,helperFile)).href),selected=channel??'chrome';
+  const browserPin=helper.assertProtectedBrowserRuntime(ROOT,binding,selected),playwright=await import(pathToFileURL(path.join(ROOT,'node_modules/playwright/index.mjs')).href),owned=createRequire(import.meta.url)(path.join(ROOT,'node_modules/playwright/index.js'));
+  if(playwright.chromium!==owned.chromium||typeof playwright.chromium?.launch!=='function')throw Error('production Playwright export identity mismatch');
+  const facts={bindingSha256:postflightHash(bindingRaw),runtimeHelperSha256:postflightHash(helperRaw),nodeBinarySha256:binding.node.sha256,browserExecutableSha256:browserPin.sha256,playwrightInventorySha256:postflightHash(JSON.stringify(binding.playwrightRuntime))};
+  return {channel:selected,browserPin,playwright,facts,recheck(){if(!readOwned(ROOT,policyFile).equals(policyRaw))throw Error('production runtime policy changed');validateProductionProducerDescriptor(ROOT,descriptor);pinned(bindingFile);pinned(helperFile);const after=helper.assertProtectedBrowserRuntime(ROOT,binding,selected);if(after.executablePath!==browserPin.executablePath||after.sha256!==browserPin.sha256)throw Error('production browser changed');return facts;}};
+}
+
+/** Own actual headed browser/pages; accepts no Page, observation adapter or passed receipt. */
+export async function runProductionPostflight(options){
+  if(!options||Object.keys(options).some(k=>!['context','channel','waitMs'].includes(k)))throw Error('production postflight factory arguments');
+  const {context,channel=null,waitMs=SIGNIN_TIMEOUT_MS}=options;
+  assertProductionPostflightContext(context);const authorization=productionPostflightAuthorization(context),frozen=verifyFrozenSource(ROOT,authorization.sourceCommit);
+  if(process.env.NODE_OPTIONS||process.env.NODE_PATH||process.execArgv.length||!['chrome','msedge','chromium',null].includes(channel)||!Number.isFinite(waitMs)||waitMs<=0||waitMs>SIGNIN_TIMEOUT_MS)throw Error('production postflight runtime override');
+  if(context.request.phase!=='production-postflight')throw Error('production postflight request phase required');
+  const runtime=await admitProductionBrowserRuntime(channel);
+  const deployment=validateProductionDeployment(context.request.productionDeployment,authorization.sourceCommit);
+  const run={sourceCommit:authorization.sourceCommit,runId:context.request.workflowRunId,runAttempt:context.request.workflowRunAttempt};
+  const preflight=validateProductionPreflight(context.request.preflightProjection,run.sourceCommit,run.runId,run.runAttempt);
+  if(preflight.sourceTreeSha!==frozen.sourceTreeSha||preflight.installationPayloadSha256!==context.request.installationPayloadSha256||preflight.observationPayloadSha256!==context.historicalStagePreflight.observationHash||Date.parse(preflight.ceremonyGeneratedAt)>context.request.requestedAtEpochMs)throw Error('production historical preflight association');
+  const directory=path.join(postflightOutputRoot(ROOT,run),'native-live');if(fs.existsSync(directory))throw Error('production postflight output already exists');
+  const report=await productionAuthInputReport(ROOT,run.sourceCommit),initial=report.rows;if(postflightHash(JSON.stringify(initial))!==deployment.authInputClosureSha256)throw Error('production auth input association');
+  const deadline=context.request.requestedAtEpochMs+900000,budget=authReadbackBudget(deadline),before=await readProductionWorker(deployment,{budget}),pagesBefore=await readProductionPages(run.sourceCommit,{budget});if(!['pagesDeploymentId','pagesDeploymentUrl','pagesMetadataSha256'].every(k=>pagesBefore[k]===deployment[k]))throw Error('production Pages association drift');
+  await readProductionInventory(initial,{immutableOrigin:deployment.pagesDeploymentUrl,budget});await readProductionRouteParity(ROOT,run.sourceCommit,{budget});
+  if(Date.now()+waitMs+150000>deadline)throw Error('production request window insufficient');
+  pauseAuthReadbackBudget(budget);
+  fs.mkdirSync(directory,{recursive:true});fs.writeFileSync(path.join(directory,'ATTEMPT.json'),JSON.stringify({schemaVersion:1,...run,startedAt:new Date().toISOString(),authenticatedAcceptance:false})+'\n',{flag:'wx',mode:0o600});
+  return runLive({origin:PRODUCTION_ORIGIN,channel:runtime.channel,waitMs,postflight:{context,authorization,frozen,deployment,run,directory,initial,before,pagesBefore,deadline,report,budget,runtime,startedAt:new Date().toISOString()}});
+}
+
+async function finalizeProductionPostflight(p,obs){
+  const journey=deriveProductionJourney(obs);
+  resumeAuthReadbackBudget(p.budget);const after=await readProductionWorker(p.deployment,{budget:p.budget}),pagesAfter=await readProductionPages(p.run.sourceCommit,{budget:p.budget});await readProductionRouteParity(ROOT,p.run.sourceCommit,{budget:p.budget});pauseAuthReadbackBudget(p.budget);
+  if(Date.now()>p.deadline||JSON.stringify(pagesAfter)!==JSON.stringify(p.pagesBefore))throw Error('production Pages/request bracket drift');
+  if(JSON.stringify(after)!==JSON.stringify(p.before))throw Error('production provider bracket drift');
+  const rawSource=f=>{if(typeof f!=='string'||f.includes('..')||f.includes('\\')||!(/^(?:context\/IDENTITY_MIGRATION_EVIDENCE[.]json|context\/PRODUCTION_PROMOTION[.]json|api\/supabase-control-plane[.]json|cloudflare\/wrangler[.]toml|cloudflare\/obelisk-auth[.]js)$/.test(f)||/^supabase\/(?:migrations|functions)\/[A-Za-z0-9_.\/-]+$/.test(f)))throw Error('production fixed source input required');return execFileSync('git',['cat-file','blob',p.run.sourceCommit+':'+f],{cwd:ROOT,maxBuffer:4194304});};
+  const read=f=>JSON.parse(rawSource(f).toString('utf8'));
+  const evidence=read('context/IDENTITY_MIGRATION_EVIDENCE.json');
+  const hashes={migration:postflightHash(rawSource(evidence.runtimeUpdates.databaseMigration.path)),edgeFunction:postflightHash(rawSource(evidence.runtimeUpdates.edgeFunction.path))};
+  const projected=deriveProductionIdentityReceipt({evidence,controlPlane:read('api/supabase-control-plane.json'),wranglerSource:rawSource('cloudflare/wrangler.toml').toString('utf8'),authSource:rawSource('cloudflare/obelisk-auth.js').toString('utf8'),hashes,journey,association:{environment:'production',sourceCommit:p.run.sourceCommit,workerVersionId:after.workerVersionId,anonymousHealth:'passed'}});
+  if(!projected.receipt.productionEligible)throw Error('production identity still pending');
+  const journeySha256=postflightHash(JSON.stringify(journey)),promotion={schemaVersion:'1.1',generatedAt:journey.verifiedAt,generatedBy:'scripts/verify-provider-journey.mjs',publicSafe:true,receiptState:'verified',reconciled:true,productionPostflight:{sourceCommit:p.run.sourceCommit,sourceTreeSha:p.frozen.sourceTreeSha,fullRemoteAuthClosureObserved:true,beforeNativeBytesObserved:true,afterNativeImmutableAssociationRevalidated:true,afterNativeClosureBytesReobserved:false,fullInventoryBytesObserved:false,rawByteAuthority:'raw-immutable-pages-deployment-origin',customOriginRoutesHeadersShellVerified:true,workerAssociationVerified:true,applicationInventorySha256:p.deployment.applicationInventorySha256,authInputClosureSha256:p.deployment.authInputClosureSha256,runtimeProvenance:p.runtime.facts,readbackBudget:{requests:p.budget.requests,bytes:p.budget.bytes,activeElapsedMs:p.budget.activeElapsedMs,manualPauseExcluded:true,maxRequests:128,maxBytes:33554432,maxActiveElapsedMs:120000},pages:pagesAfter,worker:after,journeySha256,composite:'source-G-plus-three-production-observation-JSON-rows',metadataPublicationPending:true,fullReleaseAccepted:false}};
+  const preflight=validateProductionPreflight(p.context.request.preflightProjection,p.run.sourceCommit,p.run.runId,p.run.runAttempt),policy=read('context/PRODUCTION_PROMOTION.json');
+  const originalProof={schemaVersion:'1.1',mode:'isolated-variant',generatedAt:preflight.releaseProofGeneratedAt,generatedBy:'scripts/build-release-proof.mjs',publicSafe:true,releaseState:'hold',rolloutAuthorization:p.authorization,
+    staging:{candidateBuildSha:p.run.sourceCommit,productionSource:p.context.receipt.productionSource,stageVariant:p.context.receipt.stageVariant,historicalObservation:p.context.historicalStagePreflight},
+    promotion:{hold:policy.hold,releaseState:policy.releaseState,reasons:policy.reasons},checks:preflight.checks,blockers:preflight.blockers,actualRunPreflight:preflight};
+  const proof=deriveProductionPostflightProof({preflightProof:originalProof,identityReceipt:projected.receipt,promotionReceipt:promotion,journeySha256,authorization:p.authorization});
+  if(proof.productionPostflight.remainingBlockers.length)throw Error('production non-native blockers remain');
+  const outputs={'api/identity-migration-receipt.json':projected.receipt,'api/release-proof.json':proof,'api/promotion-receipt.json':promotion};
+  const rawOutputs=Object.fromEntries(Object.entries(outputs).map(([file,value])=>[file,Buffer.from(JSON.stringify(value,null,2)+'\n')]));
+  if(Object.values(rawOutputs).reduce((n,b)=>n+b.length,0)>32768)throw Error('production metadata carrier budget');
+  for(const[file,bytes]of Object.entries(rawOutputs)){const target=path.join(p.directory,file);fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,bytes,{flag:'wx',mode:0o600});}
+  fs.writeFileSync(path.join(p.directory,'AUTH_INPUT_CLOSURE_REPORT.json'),JSON.stringify(p.report,null,2)+'\n',{flag:'wx',mode:0o600});
+  const result={schemaVersion:1,environment:'production',sourceCommit:p.run.sourceCommit,sourceTreeSha:p.frozen.sourceTreeSha,runId:p.run.runId,runAttempt:p.run.runAttempt,installationPayloadSha256:p.context.request.installationPayloadSha256,startedAt:p.startedAt,finishedAt:new Date().toISOString(),journeySha256,identityReceiptSha256:postflightHash(fs.readFileSync(path.join(p.directory,'api/identity-migration-receipt.json'))),releaseProofSha256:postflightHash(fs.readFileSync(path.join(p.directory,'api/release-proof.json'))),promotionReceiptSha256:postflightHash(fs.readFileSync(path.join(p.directory,'api/promotion-receipt.json'))),associationSha256:postflightHash(JSON.stringify(p.deployment)),applicationInventorySha256:p.deployment.applicationInventorySha256,overlayPathSetSha256:postflightHash(JSON.stringify(Object.keys(outputs).sort())),allFiveLegsPassed:true,approvedInvestorObserved:true,cleanupComplete:true,metadataPublicationPending:true,fullReleaseAccepted:false};
+  p.runtime.recheck();if(Date.now()>p.deadline)throw Error('production result past absolute request deadline');
+  fs.writeFileSync(path.join(p.directory,'RESULT.json'),JSON.stringify(result,null,2)+'\n',{flag:'wx',mode:0o600});productionExecutions.set(result,postflightHash(JSON.stringify(result)));return result;
 }
 
 function writeEvidenceAndRebuild(journey) {
@@ -593,6 +683,7 @@ const opt = (name, fallback) => args.find((a) => a.startsWith(`${name}=`))?.spli
 
 const direct = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (direct) {
+if(flag('--production-postflight'))throw Error('run-bound production live observation requires the canonical source-pinned broker factory');
 if (flag('--self-test')) {
   selfTest();
 } else if (flag('--watch')) {
