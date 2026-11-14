@@ -81,7 +81,7 @@ export function extractText(html) {
  * only six named entities and `&#39;`, so CNBC's `&#x27;` survived into fact
  * text and the renderer escaped it again ("King&amp;#x27;s Trust" on the page).
  */
-const NAMED_ENTITIES = { nbsp: ' ', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", rsquo: '’', lsquo: '‘', rdquo: '”', ldquo: '“', ndash: '–', mdash: '—', hellip: '…' };
+const NAMED_ENTITIES = { nbsp: ' ', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", rsquo: '’', lsquo: '‘', rdquo: '”', ldquo: '“', ndash: '–', mdash: '—', hellip: '…', bull: '•', middot: '·', copy: '©', reg: '®', trade: '™', times: '×', euro: '€', pound: '£' };
 export function decodeEntities(text) {
   return String(text || '').replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (whole, code) => {
     if (code[0] === '#') {
@@ -1521,6 +1521,7 @@ async function selfTest() {
   /* S368 — numeric entities decode; publisher chrome never reaches a fact. */
   t('numeric and named entities decode once',
     decodeEntities('the King&#x27;s Trust &amp; the U.K.&#39;s &rsquo;AI&lsquo; &#8212; ok') === 'the King\'s Trust & the U.K.\'s ’AI‘ — ok');
+  t('bullet and symbol entities decode (byline separators)', decodeEntities('By A &bull; Published B &middot; &copy; &trade;') === 'By A • Published B · © ™');
   t('unknown entities are left untouched', decodeEntities('&bogus; &#xZZ;') === '&bogus; &#xZZ;');
   t('CNBC ticker chrome is removed and the claim kept',
     stripPageChrome('In this article NVDA GOOGL META Follow your favorite stocks CREATE FREE ACCOUNT The U.K.\'s King Charles is set to press leaders.') === 'The U.K.\'s King Charles is set to press leaders.');
