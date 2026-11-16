@@ -16,14 +16,14 @@
 | `assets/breadcrumb-render.js` | core | sitewide-core | — | — | — |
 | `assets/signed-in-state.js` | core | split-candidate | 6.6kb | session gated | low |
 | `assets/account-chip-loader.js` | core | sitewide-core | — | — | — |
-| `assets/ambient-loader.js` | core | split-candidate | 26.6kb | session gated | medium |
+| `assets/ambient-loader.js` | core | split-candidate | 26.9kb | session gated | medium |
 | `assets/hover-prefetch.js` | core | sitewide-core | — | — | — |
 | `assets/edge-swipe-nav.js` | core | sitewide-core | — | — | — |
 | `assets/pointerdown-warm.js` | core | sitewide-core | — | — | — |
 | `assets/command-palette-loader.js` | core | sitewide-core | — | — | — |
 | `assets/adaptive-speculation.js` | core | sitewide-core | 5.5kb | — | low |
 | `assets/rum-beacon.js` | core | sitewide-core | — | — | — |
-| `assets/page-sigil.js` | feature | feature-bundle | 8.5kb | — | low |
+| `assets/page-sigil.js` | feature | feature-bundle | 8.7kb | — | low |
 | `assets/vault-atlas.js` | feature | feature-bundle | 4.2kb | — | low |
 
 **Reason codes** — `sitewide-core`: shell primitive, must parse every page · `feature-bundle`: rotating engagement/intelligence surface · `split-candidate`: coverage flagged it gated → move to predicate loading next wave.
