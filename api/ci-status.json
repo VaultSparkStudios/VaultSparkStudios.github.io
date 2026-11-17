@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-11-17T06:42:24.186Z",
+  "generatedAt": "2026-11-17T06:55:59.308Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
-  "hasDeadCron": true,
+  "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 16,
-    "observed": 7,
-    "healthy": 6,
-    "unknown": 9,
+    "observed": 8,
+    "healthy": 8,
+    "unknown": 8,
     "stale": 0,
-    "dead": 1
+    "dead": 0
   },
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "CI gates are still running.",
   "deploymentReconciliation": {
     "state": "unobserved",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-30T21:19:31.294Z",
     "currentBehindStreak": 0,
     "newestGradableAt": "2026-11-03T02:31:55.485Z",
-    "newestAgeHours": 340.2,
+    "newestAgeHours": 340.4,
     "maxAgeHours": 48,
     "stale": true,
     "strandedAlert": false
@@ -40,7 +40,7 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-11-17T06:29:38Z",
+      "updatedAt": "2026-11-17T06:54:16Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/44031600076",
       "headSha": "15bf83cc86e0e3bebf8982eb778be01ab3a866a3",
       "event": "push"
@@ -57,10 +57,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-11-17T06:38:37Z",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-11-17T06:52:53Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/44031600105",
       "headSha": "15bf83cc86e0e3bebf8982eb778be01ab3a866a3",
       "event": "push"
@@ -90,13 +90,15 @@
     },
     {
       "name": "Cloudflare Analytics Pull",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-11-17T06:45:51Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 0.17,
       "staleAfterHours": 48
     },
     {
@@ -109,7 +111,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 7.1,
+      "ageHours": 7.32,
       "staleAfterHours": 48
     },
     {
@@ -155,7 +157,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 0.17,
+      "ageHours": 0.4,
       "staleAfterHours": 48
     },
     {
@@ -174,26 +176,26 @@
       "lastConclusion": "failure",
       "lastUpdatedAt": "2026-11-17T06:25:36Z",
       "recentConclusions": [
-        "failure",
         "failure"
       ],
-      "dead": true,
-      "streak": 2,
-      "state": "dead",
-      "ageHours": 0.28,
+      "dead": false,
+      "streak": 1,
+      "state": "healthy",
+      "ageHours": 0.51,
       "staleAfterHours": 48
     },
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-11-17T00:53:22Z",
+      "lastUpdatedAt": "2026-11-17T06:48:07Z",
       "recentConclusions": [
+        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.82,
+      "ageHours": 0.13,
       "staleAfterHours": 48
     },
     {
@@ -218,7 +220,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.19,
+      "ageHours": 2.41,
       "staleAfterHours": 48
     },
     {
@@ -231,22 +233,22 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.09,
+      "ageHours": 0.31,
       "staleAfterHours": 48
     },
     {
       "name": "uptime-probe",
-      "lastConclusion": "cancelled",
-      "lastUpdatedAt": "2026-11-17T06:40:34Z",
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-11-17T06:43:21Z",
       "recentConclusions": [
-        "cancelled",
         "success",
+        "cancelled",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.03,
+      "ageHours": 0.21,
       "staleAfterHours": 48
     },
     {
