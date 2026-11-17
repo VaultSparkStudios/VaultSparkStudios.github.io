@@ -124,6 +124,9 @@
 ║   96  [PRODUCT]      Complete affected successful sign-in/sign-  ║
 ║        Complete affected successful sign-in/sign-up and real me  ║
 ║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   93  [PRODUCT]      Integrate current main safely; pass full c  ║
 ║        Integrate current main safely; pass full current source   ║
 ║                                                                  ║
@@ -132,9 +135,6 @@
 ║                                                                  ║
 ║   84  [PRODUCT]      Affected deployed authentication, current   ║
 ║        Affected deployed authentication, current isolated stagi  ║
-║                                                                  ║
-║   78  [PRODUCT]      Integrate current main safely and complete  ║
-║        Integrate current main safely and complete exact candida  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
