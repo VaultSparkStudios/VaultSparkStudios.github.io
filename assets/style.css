@@ -2526,6 +2526,17 @@ body:has(.nav-center.open) .site-header {
   }
 }
 
+/* Project activity must wrap long commit identifiers beside the date. */
+#github-stream,
+#github-stream > .stream-item {
+  min-width: 0;
+}
+
+#github-stream .stream-msg {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 /* ══════════════════════════════════════════════════════════════
    Light Mode Surface Overrides
    Fixes hardcoded dark rgba(255,255,255,0.0x) card/panel
