@@ -13,7 +13,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  1d old (2026-11-17)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        11/17 (65%)  ·  3 failing                      ║
+║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
 ║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/56 pending review                            ║
 ║  Open current tasks 36 / Human-action entries 6                  ║

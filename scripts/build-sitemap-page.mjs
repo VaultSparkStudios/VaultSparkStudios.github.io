@@ -36,7 +36,7 @@ export const GROUPS = [
   ['intel', '📡', 'Live intelligence & evidence', ['evidence', 'studio-pulse', 'ignis', 'status', 'stats', 'api']],
   ['news', '📰', 'The Desk & Dispatch', ['news', 'dispatch']],
   ['community', '👥', 'Community & membership', ['community', 'membership', 'invite', 'pathways', 'social']],
-  ['legal', '📜', 'Legal & compliance', ['privacy', 'terms', 'cookies', 'accessibility', 'security', 'data-deletion', 'rights']],
+  ['legal', '📜', 'Legal & compliance', ['privacy', 'terms', 'cookies', 'accessibility', 'security', 'data-deletion', 'rights', 'dmca', 'subscription-terms']],
 ];
 
 export function parseLocs(xml) {

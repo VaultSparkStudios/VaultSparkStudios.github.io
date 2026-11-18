@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-11-18T09:03:18.556Z",
+  "capturedAt": "2026-11-18T09:47:56.773Z",
   "captureProvenance": {
     "version": 1,
-    "runId": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5",
+    "runId": "2026-11-18T09-46-45-399Z-c12f9c62722a7507",
     "producer": "scripts/capture-theme-matrix.mjs",
-    "startedAt": "2026-11-18T09:02:10.991Z",
+    "startedAt": "2026-11-18T09:46:45.399Z",
     "source": {
       "algorithm": "sha256",
-      "sha256": "26b6ff2d7730b0e1e929bc8f8826ddfa55bed8183fe61392fa0044ac8684ef17",
+      "sha256": "7bcec7ae9993c27892545d17f0f55c0a2eeafaa4eaba9455c3b752ade34ce346",
       "files": [
         "assets/ambient-loader.js",
         "assets/changelog-reactions.js",
@@ -650,12 +650,11 @@
         "assets/turnstile.js",
         "assets/vault-genome-strip.js",
         "assets/visit-depth.js",
-        "cookies/index.html",
+        "changelog/index.html",
         "data/news-desk/days/2026-08-21.json",
         "data/news-desk/days/2026-08-22.json",
         "data/news-desk/days/2026-08-23.json",
-        "games/solara/index.html",
-        "press/index.html",
+        "dmca/index.html",
         "scripts/build-deploy-currency.mjs",
         "scripts/build-news-desk.mjs",
         "scripts/capture-theme-matrix.mjs",
@@ -666,7 +665,8 @@
         "scripts/lib/news-desk.mjs",
         "scripts/lib/news-memes.mjs",
         "scripts/lib/visual-capture-provenance.mjs",
-        "studio-pulse/index.html",
+        "subscription-terms/index.html",
+        "terms/index.html",
         "tests/attention-surfaces.spec.js",
         "vault-member/portal-auth.js",
         "vault-member/portal-dashboard.js",
@@ -3231,8 +3231,8 @@
           "sha256": "a38df720d1d72356469962a43fe61f9750cc2defc7417a44f8a0016f9c72a765"
         },
         {
-          "path": "cookies/index.html",
-          "sha256": "ba75519af70db54232a8c486c3419485c838ce1bb972f8f79f4f7cd2e28698e2"
+          "path": "changelog/index.html",
+          "sha256": "fcabc406c40568036a9285cfc9982e80df3bfca8ddc3369a6896cb1fbd78f4e6"
         },
         {
           "path": "data/news-desk/days/2026-08-21.json",
@@ -3247,12 +3247,8 @@
           "sha256": "03da839472121835a27018b22ba8b20c6860b1f41745d07c88b13518558080a8"
         },
         {
-          "path": "games/solara/index.html",
-          "sha256": "87e5488cd97aa09099e6323ade2576f78c0b8de880f7e786a1802c67555a28d1"
-        },
-        {
-          "path": "press/index.html",
-          "sha256": "89b8309e90b10f0f0559ce366d8dc2a87e4d284486f96553b3c6b589086d08d5"
+          "path": "dmca/index.html",
+          "sha256": "8e02d0a88e6540855f80e48cf2a56a92e3c7c9bb1ad6c413c3fcc2c49ea8a0ea"
         },
         {
           "path": "scripts/build-deploy-currency.mjs",
@@ -3295,8 +3291,12 @@
           "sha256": "b850f11bfbaa6082bca16c4c82551ea5272f9babccd0360f40f6bde72de8429d"
         },
         {
-          "path": "studio-pulse/index.html",
-          "sha256": "771c0bb82984083f211b20b9b9e1b57ef1864ca956c8d9544e0a9c4ed8637ba6"
+          "path": "subscription-terms/index.html",
+          "sha256": "2c132c80cb474682294612ddffd647d047319dc180d29cf26d4f1b0624e1872f"
+        },
+        {
+          "path": "terms/index.html",
+          "sha256": "c5601530907699fe33cb28ad6947988e4882f2361cd23e47dd7d1f6fafdaef21"
         },
         {
           "path": "tests/attention-surfaces.spec.js",
@@ -3322,9 +3322,9 @@
     },
     "candidate": {
       "manifest": "api/candidate-artifact-manifest.json",
-      "manifestSha256": "73264e726a8bf22a28967ed12cdda6e166f2978a8b62de14dcbe3248281f4102",
-      "candidateSha": "aa506d16fb1c9d34f008323e6db7e068b66bef22",
-      "root": "c4737b62d79bc67a10c961459a3fa01c16c9deac09ca5279bb913ca0a0c1d165"
+      "manifestSha256": "539d8ec4dffbb8abf86e2d6b397f280093dba4a84bee91b11c6a1b7699db8210",
+      "candidateSha": "b1d63b4ca9ec23f1e1ec7d9f2edc3a62907b7c2a",
+      "root": "5408a245fb5964f16b76ffc4f2d9af61d9eb790fe9750db09ea1c3cfe0c572a8"
     }
   },
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
@@ -3339,7 +3339,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "26b6ff2d7730b0e1e929bc8f8826ddfa55bed8183fe61392fa0044ac8684ef17",
+    "sha256": "7bcec7ae9993c27892545d17f0f55c0a2eeafaa4eaba9455c3b752ade34ce346",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -3980,12 +3980,11 @@
       "assets/turnstile.js",
       "assets/vault-genome-strip.js",
       "assets/visit-depth.js",
-      "cookies/index.html",
+      "changelog/index.html",
       "data/news-desk/days/2026-08-21.json",
       "data/news-desk/days/2026-08-22.json",
       "data/news-desk/days/2026-08-23.json",
-      "games/solara/index.html",
-      "press/index.html",
+      "dmca/index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
       "scripts/capture-theme-matrix.mjs",
@@ -3996,7 +3995,8 @@
       "scripts/lib/news-desk.mjs",
       "scripts/lib/news-memes.mjs",
       "scripts/lib/visual-capture-provenance.mjs",
-      "studio-pulse/index.html",
+      "subscription-terms/index.html",
+      "terms/index.html",
       "tests/attention-surfaces.spec.js",
       "vault-member/portal-auth.js",
       "vault-member/portal-dashboard.js",
@@ -6561,8 +6561,8 @@
         "sha256": "a38df720d1d72356469962a43fe61f9750cc2defc7417a44f8a0016f9c72a765"
       },
       {
-        "path": "cookies/index.html",
-        "sha256": "ba75519af70db54232a8c486c3419485c838ce1bb972f8f79f4f7cd2e28698e2"
+        "path": "changelog/index.html",
+        "sha256": "fcabc406c40568036a9285cfc9982e80df3bfca8ddc3369a6896cb1fbd78f4e6"
       },
       {
         "path": "data/news-desk/days/2026-08-21.json",
@@ -6577,12 +6577,8 @@
         "sha256": "03da839472121835a27018b22ba8b20c6860b1f41745d07c88b13518558080a8"
       },
       {
-        "path": "games/solara/index.html",
-        "sha256": "87e5488cd97aa09099e6323ade2576f78c0b8de880f7e786a1802c67555a28d1"
-      },
-      {
-        "path": "press/index.html",
-        "sha256": "89b8309e90b10f0f0559ce366d8dc2a87e4d284486f96553b3c6b589086d08d5"
+        "path": "dmca/index.html",
+        "sha256": "8e02d0a88e6540855f80e48cf2a56a92e3c7c9bb1ad6c413c3fcc2c49ea8a0ea"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -6625,8 +6621,12 @@
         "sha256": "b850f11bfbaa6082bca16c4c82551ea5272f9babccd0360f40f6bde72de8429d"
       },
       {
-        "path": "studio-pulse/index.html",
-        "sha256": "771c0bb82984083f211b20b9b9e1b57ef1864ca956c8d9544e0a9c4ed8637ba6"
+        "path": "subscription-terms/index.html",
+        "sha256": "2c132c80cb474682294612ddffd647d047319dc180d29cf26d4f1b0624e1872f"
+      },
+      {
+        "path": "terms/index.html",
+        "sha256": "c5601530907699fe33cb28ad6947988e4882f2361cd23e47dd7d1f6fafdaef21"
       },
       {
         "path": "tests/attention-surfaces.spec.js",
@@ -6652,16 +6652,16 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "73264e726a8bf22a28967ed12cdda6e166f2978a8b62de14dcbe3248281f4102",
-    "candidateSha": "aa506d16fb1c9d34f008323e6db7e068b66bef22",
-    "root": "c4737b62d79bc67a10c961459a3fa01c16c9deac09ca5279bb913ca0a0c1d165"
+    "manifestSha256": "539d8ec4dffbb8abf86e2d6b397f280093dba4a84bee91b11c6a1b7699db8210",
+    "candidateSha": "b1d63b4ca9ec23f1e1ec7d9f2edc3a62907b7c2a",
+    "root": "5408a245fb5964f16b76ffc4f2d9af61d9eb790fe9750db09ea1c3cfe0c572a8"
   },
   "matrix": {
     "routes": [
-      "/cookies/",
-      "/games/solara/",
-      "/press/",
-      "/studio-pulse/"
+      "/dmca/",
+      "/subscription-terms/",
+      "/terms/",
+      "/changelog/"
     ],
     "themes": [
       "dark",
@@ -6718,9 +6718,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--cookies--dark--desktop.png",
-      "sha256": "24b0c3429ddda4b0ad6b21ea40f523f03db1a7a45193892fc5de02301ad49b36",
-      "page": "/cookies/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--dmca--dark--desktop.png",
+      "sha256": "76d788d88e8abf6dd44a78a9518af03ec5ed669e46ef619ffa98fef361f282fd",
+      "page": "/dmca/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -6739,9 +6739,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--games-solara--dark--desktop.png",
-      "sha256": "a78fa52847138daed240b31634a044167f4b6b4156fc780588550a6ca38c5a11",
-      "page": "/games/solara/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--subscription-terms--dark--desktop.png",
+      "sha256": "8b168e35f89c0e8fe2e7a7f9094d9bb33d9802f2619197721ec439f8a3dc8bf8",
+      "page": "/subscription-terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -6760,9 +6760,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--press--dark--desktop.png",
-      "sha256": "ea9b7281b46eb80644fb3787ed0edb8eed9d11476a468c53f1dd8866086dd5fa",
-      "page": "/press/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--terms--dark--desktop.png",
+      "sha256": "d70b640b9e3a5930095512e3c01378ab9458c192b9aa877521af3bb4fe499006",
+      "page": "/terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -6781,9 +6781,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--studio-pulse--dark--desktop.png",
-      "sha256": "27ab119dfb85d23bf943c3328262b8c62b6e7a3b039896fd782d5713fe98e3fa",
-      "page": "/studio-pulse/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--changelog--dark--desktop.png",
+      "sha256": "b2718201c3a94e9e985840f7294a72fe7d9dac96e907c7ca1be4b9b25d0c6f65",
+      "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -6802,72 +6802,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--cookies--light--desktop.png",
-      "sha256": "a78a99471636c196d3a5824d208ea676173dc2cc0a15c102854ee1f87b67c2b2",
-      "page": "/cookies/",
-      "state": "page",
-      "inspection": {
-        "mode": "automated-only"
-      }
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--games-solara--light--desktop.png",
-      "sha256": "ddb4a656283c1d6c78ee6007c4bbe017aaec51d47b6b3124163651ec59429108",
-      "page": "/games/solara/",
-      "state": "page",
-      "inspection": {
-        "mode": "automated-only"
-      }
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--press--light--desktop.png",
-      "sha256": "86af8890e0b826361bc82e08a274b5d9462511517b87e665745c97536218e0db",
-      "page": "/press/",
-      "state": "page",
-      "inspection": {
-        "mode": "automated-only"
-      }
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--studio-pulse--light--desktop.png",
-      "sha256": "27ff39f609d34ec91bf9f45d7fb410eea9cb960e54f4034c84de4816820085af",
-      "page": "/studio-pulse/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--dmca--light--desktop.png",
+      "sha256": "65adaf0b0aedcc0cc9fab08e351f9c312d3e21311147874c6681b7fdcb73307c",
+      "page": "/dmca/",
       "state": "page",
       "inspection": {
         "mode": "manual",
@@ -6875,11 +6812,11 @@
       }
     },
     {
-      "theme": "ambient",
+      "theme": "light",
       "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient",
-        "body": "ambient"
+        "stored": "light",
+        "root": "light",
+        "body": "light"
       },
       "viewportName": "desktop",
       "viewport": {
@@ -6887,9 +6824,51 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--cookies--ambient--desktop.png",
-      "sha256": "05f6e04dbacc11d8ea8f3467b7ea67ee0926d4bc20d3c37d4db886f8814700c8",
-      "page": "/cookies/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--subscription-terms--light--desktop.png",
+      "sha256": "b0c09364c5bc124c250dd1268175fc378e11b7cf419ccf21eb2df1a3c16c5488",
+      "page": "/subscription-terms/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--terms--light--desktop.png",
+      "sha256": "02a50bd7df409e65a3e990a982746196832fc068804cca5cd1bffb642d7f6b48",
+      "page": "/terms/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--changelog--light--desktop.png",
+      "sha256": "4ec41179edf3dbabe2b4c2c8b55408b7994107511dceb2a92638ed5baeb41240",
+      "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -6908,9 +6887,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--games-solara--ambient--desktop.png",
-      "sha256": "da335efdf5e1b01c59ab29e209cfcab77bcf9604f6fdb6d7c5303b6adc4f47e2",
-      "page": "/games/solara/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--dmca--ambient--desktop.png",
+      "sha256": "796cdcc768a31d21854032452ee2c0fb0cc7c20716369c57c28752576da67a91",
+      "page": "/dmca/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -6929,9 +6908,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--press--ambient--desktop.png",
-      "sha256": "4e6e386b0e8275a3177b9087226376bd3558ba7dfc1882612de5bce61bd082fd",
-      "page": "/press/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--subscription-terms--ambient--desktop.png",
+      "sha256": "5907c0c695145a744e085b9d22e9bfcede542a80b6137f71b0c1ddd479d51b92",
+      "page": "/subscription-terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -6950,9 +6929,30 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--studio-pulse--ambient--desktop.png",
-      "sha256": "43f06e2ea2aa5707dbc9d49e2a87619ea4400121c73aeb28e425dc38fe49631d",
-      "page": "/studio-pulse/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--terms--ambient--desktop.png",
+      "sha256": "4c20f00ac3f29501fd2f02b60e3d29acf03d10ef98a1fb388d4a29531a7e988c",
+      "page": "/terms/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--changelog--ambient--desktop.png",
+      "sha256": "74eaa622a9d210c7830dc1cba32fde3f1513a3602791be472c7079b2bf80ceff",
+      "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -6971,9 +6971,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--cookies--warm--desktop.png",
-      "sha256": "892d9ec0918a259610966ad00b30259a1e07f4adf7396b259060400c45997010",
-      "page": "/cookies/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--dmca--warm--desktop.png",
+      "sha256": "6a5681c10ec63a4a89bb18907e0b2ac161a397cecd7c5f43e90754a6e45a849d",
+      "page": "/dmca/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -6992,9 +6992,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--games-solara--warm--desktop.png",
-      "sha256": "e05086091d8aa0d0baa14e66efd0af624658f704972d08e1bff7b559d7f1af59",
-      "page": "/games/solara/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--subscription-terms--warm--desktop.png",
+      "sha256": "8603b562bceed9a23e3a6b355621cb3fb37cb9a2fd94ad251563aadeb6d537f3",
+      "page": "/subscription-terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7013,9 +7013,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--press--warm--desktop.png",
-      "sha256": "d57ffd8da020e5e52de34bdad009c59e7b77c7c4e7cff8f79ce9095dbd2141c7",
-      "page": "/press/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--terms--warm--desktop.png",
+      "sha256": "f11ff38c2b18b4f5c5a21db93e91e7c96f72691cc6cbbd2d5128d949f4a5b96e",
+      "page": "/terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7034,9 +7034,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--studio-pulse--warm--desktop.png",
-      "sha256": "e426e96e3e67c0cf17d01476b57b2e734c2ca9edc5951fb0fdc8fde766db25e9",
-      "page": "/studio-pulse/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--changelog--warm--desktop.png",
+      "sha256": "9e15790b6aca76dc407b18b8cf0d53d50e8654cf990753474ff3ee219bb26d91",
+      "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7055,9 +7055,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--cookies--cool--desktop.png",
-      "sha256": "c0c4270b7f0c2688794a6c9ab7f46eb2b4690e9c1e095e42ecffc8ae9f98c732",
-      "page": "/cookies/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--dmca--cool--desktop.png",
+      "sha256": "7fbb30535d317c8e82103e9d53cf9eb79c9be46534d05cbb25679d198059605a",
+      "page": "/dmca/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7076,9 +7076,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--games-solara--cool--desktop.png",
-      "sha256": "41e8a1632b2135c778c88d248ed1d3a66547dc083e0a40daec336d8c96d44dc6",
-      "page": "/games/solara/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--subscription-terms--cool--desktop.png",
+      "sha256": "6848a7f1af8544c58aafcade027c695db292ff093b4cfee1b8c7a32b952df3e6",
+      "page": "/subscription-terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7097,9 +7097,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--press--cool--desktop.png",
-      "sha256": "fc16973f714033dbdc58c6c61ddd30739c17ad282f88a96b20826ded3635be0b",
-      "page": "/press/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--terms--cool--desktop.png",
+      "sha256": "756277f4d8deee573ac530558e28c1d6b0a791c8bd22184e3f0a1a169ad42e5c",
+      "page": "/terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7118,9 +7118,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--studio-pulse--cool--desktop.png",
-      "sha256": "ad0837faecdf4862083b6b3c011e65723af78c8475769bfb18803fe3824cd648",
-      "page": "/studio-pulse/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--changelog--cool--desktop.png",
+      "sha256": "29d4265746f99ceb2630f2fed014d4abc47f1b599b449e3106ea5ca61180d1db",
+      "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7139,9 +7139,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--cookies--lava--desktop.png",
-      "sha256": "bc1c176955c688dd72d977f050de1ae3186364ee842c8f82a19ca32705fcb4a6",
-      "page": "/cookies/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--dmca--lava--desktop.png",
+      "sha256": "f217c6b867a23107c80d0d225bffe51715acd0620dc422100fe114385da0dbc7",
+      "page": "/dmca/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7160,9 +7160,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--games-solara--lava--desktop.png",
-      "sha256": "f02bd554b68ac038d870d70530ba75a2739d08ec0047bf780069a85e4f5683e9",
-      "page": "/games/solara/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--subscription-terms--lava--desktop.png",
+      "sha256": "2b87618af74ec95e050390165066e5d7fb565755ec3ea3b92a192c8a2010af35",
+      "page": "/subscription-terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7181,9 +7181,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--press--lava--desktop.png",
-      "sha256": "ae204f306a081926d1523bd810f78ec96973dbd0031c40afda9b0c23055e2a44",
-      "page": "/press/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--terms--lava--desktop.png",
+      "sha256": "3d0837b59d66d8760688692983c0c6408ce67ecea9bdd5b7ac4da52fdf8810b5",
+      "page": "/terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7202,9 +7202,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--studio-pulse--lava--desktop.png",
-      "sha256": "8003bae4d1d5b63c465b0a16c602aeb021f1943753cd2abc6999e2856bba3cdb",
-      "page": "/studio-pulse/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--changelog--lava--desktop.png",
+      "sha256": "f992cbb49d9e783aa621e87b1b1331441bc14f0660470cc4c9ee0d3c6610096f",
+      "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7223,9 +7223,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--cookies--high-contrast--desktop.png",
-      "sha256": "410c5c4d83955ce65afc48678d65271dfe6d4816cb8c2baf6c3cf118e7287cc8",
-      "page": "/cookies/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--dmca--high-contrast--desktop.png",
+      "sha256": "9020249f033ec514f1d35371229052847bb96e5cfd823a88a2c643c9672592a4",
+      "page": "/dmca/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7244,9 +7244,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--games-solara--high-contrast--desktop.png",
-      "sha256": "19b9f31b583bca1f191f143680ed9493ae80748e87a7dfce0aba3250feea3f18",
-      "page": "/games/solara/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--subscription-terms--high-contrast--desktop.png",
+      "sha256": "0351718331369e0c062050e1d7827ba639d116294c1db41446803daf6e8e16ac",
+      "page": "/subscription-terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7265,9 +7265,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--press--high-contrast--desktop.png",
-      "sha256": "d65cd70ce0b442dc5f53a53c3225e8f8253b1f019a59719d8dc4b663b7f72613",
-      "page": "/press/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--terms--high-contrast--desktop.png",
+      "sha256": "d7d8585c84c4cb02a67ca6d65b2ee09d23f2f211c7a281b32a63a64fe11e94cb",
+      "page": "/terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7286,9 +7286,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--studio-pulse--high-contrast--desktop.png",
-      "sha256": "8152426d5960c059cb74b5a38bbfcf394433ac9a0b9936a1d8f8192350706ce2",
-      "page": "/studio-pulse/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--changelog--high-contrast--desktop.png",
+      "sha256": "97a0a57f342541cc742b49deaa8d0c50fbf07f483306d748e8a16ba699f9acbd",
+      "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7307,9 +7307,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--cookies--dark--mobile.png",
-      "sha256": "29dd3e038b3702ed2d950c9c002ab1addf51f9904fcb9c13c32b5880ce364063",
-      "page": "/cookies/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--dmca--dark--mobile.png",
+      "sha256": "8685e23a4a5c4968bb118b9f4233fcc9f2f68a49d37c1d651b00b0400ab534ce",
+      "page": "/dmca/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7328,240 +7328,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--games-solara--dark--mobile.png",
-      "sha256": "bb3153e1a1c6d1270752837b5cd87aca1e73241853926df6bc258d022459cee1",
-      "page": "/games/solara/",
-      "state": "page",
-      "inspection": {
-        "mode": "automated-only"
-      }
-    },
-    {
-      "theme": "dark",
-      "observedTheme": {
-        "stored": "dark",
-        "root": "dark",
-        "body": "dark"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--press--dark--mobile.png",
-      "sha256": "50f8479468a0e2d2c3565d063d61f44953909d6ee011f69ca1fb84634e298c19",
-      "page": "/press/",
-      "state": "page",
-      "inspection": {
-        "mode": "automated-only"
-      }
-    },
-    {
-      "theme": "dark",
-      "observedTheme": {
-        "stored": "dark",
-        "root": "dark",
-        "body": "dark"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--studio-pulse--dark--mobile.png",
-      "sha256": "39cba7e55bc8a3246964ab8d035e3487b246849bdb6be523898bb25a8361c60f",
-      "page": "/studio-pulse/",
-      "state": "page",
-      "inspection": {
-        "mode": "automated-only"
-      }
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--cookies--light--mobile.png",
-      "sha256": "65dd66e789b7342e3f2eefa9f1ef24b36e9572dcf514bba4c4051d64ed5d0869",
-      "page": "/cookies/",
-      "state": "page",
-      "inspection": {
-        "mode": "automated-only"
-      }
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--games-solara--light--mobile.png",
-      "sha256": "8b8ed671351e9b80424fda55ab92d558730f1b0b9f240a3f8862f5adc0f5db01",
-      "page": "/games/solara/",
-      "state": "page",
-      "inspection": {
-        "mode": "automated-only"
-      }
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--press--light--mobile.png",
-      "sha256": "0041c498748ee61b3da4f416e240c90193ebd59f37b2d50682aca7cb13d3ddff",
-      "page": "/press/",
-      "state": "page",
-      "inspection": {
-        "mode": "automated-only"
-      }
-    },
-    {
-      "theme": "light",
-      "observedTheme": {
-        "stored": "light",
-        "root": "light",
-        "body": "light"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--studio-pulse--light--mobile.png",
-      "sha256": "3c39ad132ff7efdb2b32c41df30ad31cf655a291671fa03f4d43ca73a03624b1",
-      "page": "/studio-pulse/",
-      "state": "page",
-      "inspection": {
-        "mode": "automated-only"
-      }
-    },
-    {
-      "theme": "ambient",
-      "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient",
-        "body": "ambient"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--cookies--ambient--mobile.png",
-      "sha256": "21cb8d80c2c0d3b29208eb23afc3042c2f543837fc8f28825b552fb2875dcbac",
-      "page": "/cookies/",
-      "state": "page",
-      "inspection": {
-        "mode": "automated-only"
-      }
-    },
-    {
-      "theme": "ambient",
-      "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient",
-        "body": "ambient"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--games-solara--ambient--mobile.png",
-      "sha256": "548b820d585c5c4f24280658d8e4b8073e87caf3d5e2d342b7042ce317ce1d7d",
-      "page": "/games/solara/",
-      "state": "page",
-      "inspection": {
-        "mode": "automated-only"
-      }
-    },
-    {
-      "theme": "ambient",
-      "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient",
-        "body": "ambient"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--press--ambient--mobile.png",
-      "sha256": "d2a83f5e867199093518efb569276e65ff308210f009765e331365db4c16a030",
-      "page": "/press/",
-      "state": "page",
-      "inspection": {
-        "mode": "automated-only"
-      }
-    },
-    {
-      "theme": "ambient",
-      "observedTheme": {
-        "stored": "ambient",
-        "root": "ambient",
-        "body": "ambient"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--studio-pulse--ambient--mobile.png",
-      "sha256": "4fd3a7b0d3b081caaacd75c37f4480bcb7a031a4cf2268fac711f1ab225facf7",
-      "page": "/studio-pulse/",
-      "state": "page",
-      "inspection": {
-        "mode": "automated-only"
-      }
-    },
-    {
-      "theme": "warm",
-      "observedTheme": {
-        "stored": "warm",
-        "root": "warm",
-        "body": "warm"
-      },
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--cookies--warm--mobile.png",
-      "sha256": "4edd66adabde5c3864deac5f09bf1dc3826af0deef88b172291a36be5a7d8488",
-      "page": "/cookies/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--subscription-terms--dark--mobile.png",
+      "sha256": "b0afdf80d7cae3de25386125d704094ebbe4fd54e67c8512d0e9ef3cb17a1ae9",
+      "page": "/subscription-terms/",
       "state": "page",
       "inspection": {
         "mode": "manual",
@@ -7569,11 +7338,11 @@
       }
     },
     {
-      "theme": "warm",
+      "theme": "dark",
       "observedTheme": {
-        "stored": "warm",
-        "root": "warm",
-        "body": "warm"
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
       },
       "viewportName": "mobile",
       "viewport": {
@@ -7581,9 +7350,198 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--games-solara--warm--mobile.png",
-      "sha256": "5f1442aa55f366288bb42fe6d2a981dcecbdaf7e8245732b4bf06a1ef118c2f4",
-      "page": "/games/solara/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--terms--dark--mobile.png",
+      "sha256": "0c2987434fd20ec268586b941686250b724f9558543f824898e4b9df86e3cbe7",
+      "page": "/terms/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "dark",
+      "observedTheme": {
+        "stored": "dark",
+        "root": "dark",
+        "body": "dark"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--changelog--dark--mobile.png",
+      "sha256": "7853e825f5b6c82653762461694b404e04b8c1e1871f2cc97225b06e0f09c042",
+      "page": "/changelog/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--dmca--light--mobile.png",
+      "sha256": "200c77d2eefb8dde88c43fd8ba0e41fe2f4cb80370414d3dac0f98c7622e7733",
+      "page": "/dmca/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--subscription-terms--light--mobile.png",
+      "sha256": "bb7206fba1deaefbbdb1dd8376261c209482ebb4c2ac45b9612482b9e1ef9901",
+      "page": "/subscription-terms/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--terms--light--mobile.png",
+      "sha256": "8c59b49c2c2b540c271ac7a2d5b411e9994a817b64855a881e9fe6296ee88b58",
+      "page": "/terms/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "light",
+      "observedTheme": {
+        "stored": "light",
+        "root": "light",
+        "body": "light"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--changelog--light--mobile.png",
+      "sha256": "8cacf3f4def7833b16ebbb7c8cc4b6b2d74b5d27c525e1c29cd2aac9035448db",
+      "page": "/changelog/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--dmca--ambient--mobile.png",
+      "sha256": "c3f4c9ea18e996d97f1f70719c821e39ed7aab15efa41f6d2c4d2dcdefdffd34",
+      "page": "/dmca/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--subscription-terms--ambient--mobile.png",
+      "sha256": "bbd5d8a877443d78d24892b19c9796080c8cce395964735ab88694eccb562dcc",
+      "page": "/subscription-terms/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--terms--ambient--mobile.png",
+      "sha256": "70dee0a765eee59eacb51e6f9e87824d9de9816a1f30db9f723cc8ffecf44c35",
+      "page": "/terms/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "ambient",
+      "observedTheme": {
+        "stored": "ambient",
+        "root": "ambient",
+        "body": "ambient"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--changelog--ambient--mobile.png",
+      "sha256": "7400436b64370b353f9e84b99607e8f115b76b6e76c628905dbd318d5247e83b",
+      "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7602,9 +7560,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--press--warm--mobile.png",
-      "sha256": "3c4a3857d7472c8f6bd9e94dd3a2790d993a6d5830caaaa925d5ef937932e1a0",
-      "page": "/press/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--dmca--warm--mobile.png",
+      "sha256": "b237c9501b453963e0f49125fdc999776d0911e220f14aec02bc7194767ff57d",
+      "page": "/dmca/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7623,9 +7581,51 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--studio-pulse--warm--mobile.png",
-      "sha256": "b1c1f72cea7152d36cbda0e96ca633ee04a102c70b6dd8687a8cd7bbfe9c40ee",
-      "page": "/studio-pulse/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--subscription-terms--warm--mobile.png",
+      "sha256": "493fd26a117e8346e23a464a3c43a487a193f398196c8e3c0eb761e971b6c724",
+      "page": "/subscription-terms/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--terms--warm--mobile.png",
+      "sha256": "71b5fb1d1ce28778f6d2635ea4eb0962d5f513d0e62b247c8651cbb5a37a8a46",
+      "page": "/terms/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "warm",
+      "observedTheme": {
+        "stored": "warm",
+        "root": "warm",
+        "body": "warm"
+      },
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--changelog--warm--mobile.png",
+      "sha256": "d1da063091f0aa53c3d81ac857dfc0601fd4c9573e6414d1353290b1c27f1183",
+      "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7644,9 +7644,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--cookies--cool--mobile.png",
-      "sha256": "854d6096a9141924f7c0abaa30ecad4cc1686ff7ef1d87f7a432f2ba581fa0c3",
-      "page": "/cookies/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--dmca--cool--mobile.png",
+      "sha256": "c2a0e5a304be5c881f119336111b51ccbd8b2d098765c0e735e924b6772dfef1",
+      "page": "/dmca/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7665,9 +7665,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--games-solara--cool--mobile.png",
-      "sha256": "d35c1921b2a8fb2fa57796c0233b2936e980a497832c0deb3df7002f7bcf4c81",
-      "page": "/games/solara/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--subscription-terms--cool--mobile.png",
+      "sha256": "9588d391854d1b3c672cdaee3a545096e8f5d382f1ca2724be4eb4424a5067eb",
+      "page": "/subscription-terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7686,9 +7686,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--press--cool--mobile.png",
-      "sha256": "d06017f22bea525d470e83d2c91124b6e4ad8f4e278cc09bfa2465ccd84a8f0a",
-      "page": "/press/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--terms--cool--mobile.png",
+      "sha256": "d81a7a725844a5f9aed1363e295cd48012bbd798692aa15b6e440376046c48e1",
+      "page": "/terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7707,9 +7707,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--studio-pulse--cool--mobile.png",
-      "sha256": "6fa9648691db0f172e5db24e21890dca66b7507cd945bba75f4a93f128ea9aa7",
-      "page": "/studio-pulse/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--changelog--cool--mobile.png",
+      "sha256": "07c4006e36b57aafd945611f487b1a796cfb47754216e4608cba256e5adf336b",
+      "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7728,9 +7728,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--cookies--lava--mobile.png",
-      "sha256": "4b09bcd32f90da39b8968ad6a81583d1d40ffedb70acbe07a76800af002b41f5",
-      "page": "/cookies/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--dmca--lava--mobile.png",
+      "sha256": "6bbe37d6417274a5d1d4390e8aedce466a39b2df4a9258f5531a349198c19869",
+      "page": "/dmca/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7749,9 +7749,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--games-solara--lava--mobile.png",
-      "sha256": "1324789b1a7dc71f20382643e7036123747c0cb9073834ecb803e34aa18bd7a6",
-      "page": "/games/solara/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--subscription-terms--lava--mobile.png",
+      "sha256": "23dcb641bb912757d722f9119caec4f3b5988b2356df9bceef81730ff769ee55",
+      "page": "/subscription-terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7770,9 +7770,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--press--lava--mobile.png",
-      "sha256": "af1ece91d1ae3ab1bf29fc595e8f1416230ff515c36c1ce63322ce488641851b",
-      "page": "/press/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--terms--lava--mobile.png",
+      "sha256": "6af94d34aec4a828141fc32f05a97b17f5f06e73dcca0bfe43e03dca33c80491",
+      "page": "/terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7791,9 +7791,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--studio-pulse--lava--mobile.png",
-      "sha256": "9da23e8dc9c8a6617a5856b3deb1424a1aa8766132b80dfdb975eac5393532a9",
-      "page": "/studio-pulse/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--changelog--lava--mobile.png",
+      "sha256": "e1a58e00373b234ecffdecb3ca84a0338698939833c50cbc67ec3a57ff895c14",
+      "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7812,9 +7812,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--cookies--high-contrast--mobile.png",
-      "sha256": "3cb3972b6e3e6eca6020a0fa2350a9afb342f5c6018f8880e34de7f1edc8f9fd",
-      "page": "/cookies/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--dmca--high-contrast--mobile.png",
+      "sha256": "53451d2230dbc407f05a09253431eef8eae55d755f7e0ea93cccba97dd3a760c",
+      "page": "/dmca/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7833,9 +7833,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--games-solara--high-contrast--mobile.png",
-      "sha256": "16aa56a61ea23630e9df4be2f9f74dfff679f7c0a4a78ddc3fc56b09bfc813d8",
-      "page": "/games/solara/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--subscription-terms--high-contrast--mobile.png",
+      "sha256": "126a6d2b9c93d3d61d7a300b4b3285ed7853dad3975039ecdc424d75aed18fc8",
+      "page": "/subscription-terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7854,9 +7854,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--press--high-contrast--mobile.png",
-      "sha256": "18a6b757ebd791a516df9236ea9ba3d652ca839291063f94077e89558c991d58",
-      "page": "/press/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--terms--high-contrast--mobile.png",
+      "sha256": "a9a8066d09b94944465ebbefa614354a6733fced0a570a451851c0e5c28d3a2c",
+      "page": "/terms/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"
@@ -7875,9 +7875,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "2026-11-18T09-02-10-991Z-c3eb1206fa94e8c5--studio-pulse--high-contrast--mobile.png",
-      "sha256": "5a1e842988a2f6eaf5647e2e8a14c06796c23cbe33c30ab6020401cd51936262",
-      "page": "/studio-pulse/",
+      "file": "2026-11-18T09-46-45-399Z-c12f9c62722a7507--changelog--high-contrast--mobile.png",
+      "sha256": "e2ddeb184723e65fd84bd4e6b45671d5b986e1730a29e4b1842100b4e51fe615",
+      "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "automated-only"

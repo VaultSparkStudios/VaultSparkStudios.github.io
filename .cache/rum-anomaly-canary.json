@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-11-04T00:00:00.000Z",
+  "generatedAt": "2026-11-05T00:00:00.000Z",
   "windowDays": 7,
   "minSamples": 50,
   "evidenceState": "stale",
@@ -8,196 +8,34 @@
   "status": "stale",
   "ok": null,
   "coverage": {
-    "totalRows": 445,
-    "observedRoutes": 58,
+    "totalRows": 446,
+    "observedRoutes": 57,
     "sufficientRoutes": 0,
-    "latestDay": "2026-11-04",
-    "latestAgeDays": 14,
+    "latestDay": "2026-11-05",
+    "latestAgeDays": 13,
     "freshnessMaxDays": 7,
     "currentFresh": false
   },
   "comparison": {
     "basis": "last-known-observation",
-    "latestStart": "2026-10-29",
-    "latestEndExclusive": "2026-11-05",
-    "previousStart": "2026-10-22"
+    "latestStart": "2026-10-30",
+    "latestEndExclusive": "2026-11-06",
+    "previousStart": "2026-10-23"
   },
   "routes": {
     "/": {
       "currentSamples": 20,
-      "previousSamples": 19,
+      "previousSamples": 20,
       "sufficient": false,
       "current": {
-        "lcpP75": 3958,
-        "clsP75": 0.0193,
+        "lcpP75": 3750,
+        "clsP75": 0.00595,
         "inpP75": 0
       },
       "previous": {
-        "lcpP75": 763,
-        "clsP75": 0.0022,
+        "lcpP75": 1340,
+        "clsP75": 0.0041,
         "inpP75": 40
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/collaborate/": {
-      "currentSamples": 3,
-      "previousSamples": 1,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 5534,
-        "clsP75": 0.0064,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 2208,
-        "clsP75": 0.0014,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/contact/": {
-      "currentSamples": 4,
-      "previousSamples": 1,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 788,
-        "clsP75": 0.0178,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 265,
-        "clsP75": 0,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/": {
-      "currentSamples": 13,
-      "previousSamples": 12,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 1716,
-        "clsP75": 0.0904,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 958,
-        "clsP75": 0.04275,
-        "inpP75": 56
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/call-of-doodie/": {
-      "currentSamples": 3,
-      "previousSamples": 6,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 3636,
-        "clsP75": 0.01075,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 376,
-        "clsP75": 0.02195,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/franchise-architect/": {
-      "currentSamples": 19,
-      "previousSamples": 18,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 1580,
-        "clsP75": 0.0058,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 628,
-        "clsP75": 0.0008,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/gridiron-gm/": {
-      "currentSamples": 35,
-      "previousSamples": 50,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 1764,
-        "clsP75": 0.0115,
-        "inpP75": 80
-      },
-      "previous": {
-        "lcpP75": 1224,
-        "clsP75": 0.0123,
-        "inpP75": 56
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/solara/": {
-      "currentSamples": 14,
-      "previousSamples": 17,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 1860,
-        "clsP75": 0.0179,
-        "inpP75": 48
-      },
-      "previous": {
-        "lcpP75": 836,
-        "clsP75": 0.0089,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/projects/": {
-      "currentSamples": 3,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 6178,
-        "clsP75": 0.00975,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/projects/promogrind/": {
-      "currentSamples": 4,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 320,
-        "clsP75": 0.0073,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -239,6 +77,24 @@
       "clsDelta": null,
       "status": "insufficient"
     },
+    "/collaborate/": {
+      "currentSamples": 2,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 10580,
+        "clsP75": 0.0091,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 488,
+        "clsP75": 0.0037,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
     "/community/": {
       "currentSamples": 1,
       "previousSamples": 0,
@@ -252,6 +108,24 @@
         "lcpP75": null,
         "clsP75": null,
         "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/contact/": {
+      "currentSamples": 3,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 5608,
+        "clsP75": 0.01025,
+        "inpP75": 52
+      },
+      "previous": {
+        "lcpP75": 280,
+        "clsP75": 0.0182,
+        "inpP75": 0
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -311,6 +185,78 @@
       "clsDelta": null,
       "status": "insufficient"
     },
+    "/games/": {
+      "currentSamples": 12,
+      "previousSamples": 14,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 1716,
+        "clsP75": 0.0768,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 892,
+        "clsP75": 0.0766,
+        "inpP75": 56
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/call-of-doodie/": {
+      "currentSamples": 2,
+      "previousSamples": 4,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 6456,
+        "clsP75": 0.0215,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 552,
+        "clsP75": 0.00155,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/franchise-architect/": {
+      "currentSamples": 20,
+      "previousSamples": 15,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 1580,
+        "clsP75": 0.0058,
+        "inpP75": 48
+      },
+      "previous": {
+        "lcpP75": 2088,
+        "clsP75": 0.0017,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/gridiron-gm/": {
+      "currentSamples": 38,
+      "previousSamples": 41,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 1760,
+        "clsP75": 0.0115,
+        "inpP75": 80
+      },
+      "previous": {
+        "lcpP75": 1224,
+        "clsP75": 0.0091,
+        "inpP75": 48
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
     "/games/mindframe/": {
       "currentSamples": 2,
       "previousSamples": 0,
@@ -324,6 +270,24 @@
         "lcpP75": null,
         "clsP75": null,
         "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/solara/": {
+      "currentSamples": 15,
+      "previousSamples": 16,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 1724,
+        "clsP75": 0.0175,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 836,
+        "clsP75": 0.0089,
+        "inpP75": 0
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -348,17 +312,17 @@
       "status": "insufficient"
     },
     "/games/vaultfront/": {
-      "currentSamples": 5,
-      "previousSamples": 12,
+      "currentSamples": 7,
+      "previousSamples": 10,
       "sufficient": false,
       "current": {
-        "lcpP75": 4394,
-        "clsP75": 0.03125,
+        "lcpP75": 2956,
+        "clsP75": 0.0288,
         "inpP75": 0
       },
       "previous": {
-        "lcpP75": 966,
-        "clsP75": 0.0074,
+        "lcpP75": 980,
+        "clsP75": 0.0075,
         "inpP75": 0
       },
       "lcpDeltaPct": null,
@@ -527,6 +491,24 @@
       "clsDelta": null,
       "status": "insufficient"
     },
+    "/projects/": {
+      "currentSamples": 2,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 12036,
+        "clsP75": 0.0091,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 320,
+        "clsP75": 0.0104,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
     "/projects/concurrent/": {
       "currentSamples": 2,
       "previousSamples": 0,
@@ -576,6 +558,24 @@
         "lcpP75": null,
         "clsP75": null,
         "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/projects/promogrind/": {
+      "currentSamples": 3,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 4474,
+        "clsP75": 0.005,
+        "inpP75": 28
+      },
+      "previous": {
+        "lcpP75": 320,
+        "clsP75": 0.0073,
+        "inpP75": 0
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -923,6 +923,24 @@
       "clsDelta": null,
       "status": "insufficient"
     },
+    "/news/2026-08-31/inside-metas-push-to-put-robots-to-work-in/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 1100,
+        "clsP75": 0.0009,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
     "/news/2026-09-18/anthropic-and-openai-hunt-for-smaller-data-center-deals/": {
       "currentSamples": 2,
       "previousSamples": 0,
@@ -936,42 +954,6 @@
         "lcpP75": null,
         "clsP75": null,
         "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/news/2026-10-04/super-intelligence-legal-definition-60-day-deadline-what-to-watch/": {
-      "currentSamples": 0,
-      "previousSamples": 1,
-      "sufficient": false,
-      "current": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "previous": {
-        "lcpP75": 3200,
-        "clsP75": 0.0009,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/privacy/": {
-      "currentSamples": 0,
-      "previousSamples": 1,
-      "sufficient": false,
-      "current": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "previous": {
-        "lcpP75": 286,
-        "clsP75": 0,
-        "inpP75": 0
       },
       "lcpDeltaPct": null,
       "clsDelta": null,

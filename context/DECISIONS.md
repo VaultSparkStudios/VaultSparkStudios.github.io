@@ -1393,3 +1393,7 @@ Sentry and the page-speed beacon run only after "Accept Analytics"; a Global Pri
 ## D-S417.6 — signup posture copy waits for the safeguards
 
 Founder direction is open signup with safeguards for the public beta. The bot check and age screen are not built, and the auth project is shared with sibling products, so a project-wide captcha or redirect-list change would break their sign-in. Public copy is not flipped to "open" until the safeguards exist and a real sign-up is verified. Removed the expired Solara countdown without stating a new date.
+
+## D-S417.7 — two plain-language legal pages restate existing terms only
+
+`/dmca/` (copyright and takedown requests) and `/subscription-terms/` add no new promise: each sentence restates the Terms of Service or the canonical membership feed, and the Terms govern on conflict. No registered copyright agent is claimed; registration and a lawyer review remain founder actions before public beta. They are linked from the Terms and the sitemap page rather than the footer, so the footer contract is unchanged.

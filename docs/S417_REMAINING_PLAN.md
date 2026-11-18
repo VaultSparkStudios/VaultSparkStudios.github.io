@@ -6,7 +6,7 @@ Remaining, in order. Each item names its acceptance check.
 
 1. **Signup safeguards** — bot check and neutral age screen on the site's own signup path; anonymous sign-ins off after sibling owners confirm; then flip public copy to "open". Check: signup without a token is refused; under-13 stores nothing.
 2. **Deletion and export** — a processor for portal delete requests across database, payments and email, with confirmation. Check: staging account fully removed.
-3. **Subscription and takedown pages** — auto-renewal terms at checkout, `/subscription-terms/`, `/dmca/`, report-content form. Founder: designated-agent registration, lawyer review.
+3. **Subscription and takedown** — `/subscription-terms/` and `/dmca/` are drafted (D-S417.7). Still open: auto-renewal wording inside checkout, a report-content form. Founder: designated-agent registration, lawyer review.
 4. **Agent guardrails** — fence feed text as data in Desk prompts; split feed-reading from publishing credentials; shared rate limiter for AI endpoints; pin edge-function remote imports.
 5. **One truth source** — `api/public-intelligence.json` owns counts, signup posture and plan availability; coherence gate fails on hardcoded copies; real per-game waitlists.
 6. **Information architecture** — proof pages 6→3, studio identity 5→2, one newsletter centre, one sign-in door, one account area; delete retired page folders.
