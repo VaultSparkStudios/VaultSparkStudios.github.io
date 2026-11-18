@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-18T06:02:14.378Z",
+  "generatedAt": "2026-11-18T06:46:11.254Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -74,10 +74,10 @@
     {
       "id": "human-page-loads-30d",
       "label": "Human page loads",
-      "value": 1410,
+      "value": 1420,
       "unitOrDenominator": "bot-excluded browser page loads",
       "period": "30 complete UTC days",
-      "computedAt": "2026-11-17T06:45:42.742Z",
+      "computedAt": "2026-11-18T06:45:48.275Z",
       "source": "/api/ecosystem-analytics.json",
       "sourceType": "cloudflare-web-analytics",
       "sourceDataset": "rumPageloadEventsAdaptiveGroups",
@@ -88,13 +88,13 @@
         "sampleInterval": 10.833333333333334,
         "confidenceLevel": 0.95,
         "confidence": {
-          "estimate": 1410,
+          "estimate": 1420,
           "lower": 421,
-          "upper": 2465,
-          "sampleSize": 140
+          "upper": 2494,
+          "sampleSize": 141
         }
       },
-      "observedThrough": "2026-11-17",
+      "observedThrough": "2026-11-18",
       "freshnessState": "fresh",
       "category": "audience",
       "format": "integer",
@@ -102,8 +102,8 @@
       "available": true,
       "window": {
         "days": 30,
-        "start": "2026-10-18",
-        "endExclusive": "2026-11-17",
+        "start": "2026-10-19",
+        "endExclusive": "2026-11-18",
         "timezone": "UTC",
         "completeDaysOnly": true
       },
@@ -175,10 +175,10 @@
     {
       "id": "proof-freshness",
       "label": "Proof freshness",
-      "value": 83,
+      "value": 78,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-11-18T06:02:14.378Z",
+      "computedAt": "2026-11-18T06:46:11.254Z",
       "source": "/api/status-proof.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/status-proof.json",
@@ -187,11 +187,11 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-11-18T06:02:14.378Z",
+      "observedThrough": "2026-11-18T06:46:11.254Z",
       "freshnessState": "fresh",
       "category": "trust",
       "format": "percent",
-      "interpretation": "15 of 18 proof feeds are within their declared freshness windows; 3 are stale, not silently treated as green."
+      "interpretation": "14 of 18 proof feeds are within their declared freshness windows; 4 are stale, not silently treated as green."
     },
     {
       "id": "performance-samples-7d",
@@ -199,7 +199,7 @@
       "value": 0,
       "unitOrDenominator": "accepted anonymous route-performance observations",
       "period": "7 complete UTC days",
-      "computedAt": "2026-11-18T06:01:20.492Z",
+      "computedAt": "2026-11-18T06:45:48.316Z",
       "source": "/api/analytics-summary.json",
       "sourceType": "vaultspark-rum",
       "sourceDataset": "data/rum-history.ndjson",
@@ -234,10 +234,10 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-11-18T06:02:14.378Z",
+      "computedAt": "2026-11-18T06:46:11.254Z",
       "values": {
-        "fresh": 15,
-        "stale": 3,
+        "fresh": 14,
+        "stale": 4,
         "total": 18
       }
     },
@@ -320,16 +320,20 @@
       },
       {
         "day": "2026-11-04",
-        "samples": 25
+        "samples": 27
+      },
+      {
+        "day": "2026-11-05",
+        "samples": 19
       }
     ],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-11-18T06:01:20.492Z",
+    "computedAt": "2026-11-18T06:45:48.316Z",
     "warning": "Performance samples are not an audience trend."
   },
   "reconciliation": {
     "source": "/api/ecosystem-analytics.json",
-    "computedAt": "2026-11-17T06:45:42.742Z",
+    "computedAt": "2026-11-18T06:45:48.275Z",
     "dimensions": [
       {
         "id": "human-page-loads",
