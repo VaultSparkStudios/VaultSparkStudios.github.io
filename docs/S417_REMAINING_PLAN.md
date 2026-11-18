@@ -4,6 +4,8 @@ S417 shipped the first tranche: point-award integrity (live), script-injection h
 
 Remaining, in order. Each item names its acceptance check.
 
+0. **Full promotion** — the consent scripts, the Worker untrusted-content rule and removal of audits/ and portfolio/ from production are on main but held. Needs the promotion hold cleared (founder) or isolated-staging parity finished. Also fix the changelog annual-billing line at its sources (data/consumer-changelog.json, scripts/generate-public-intelligence.mjs).
+
 1. **Signup safeguards** — bot check and neutral age screen on the site's own signup path; anonymous sign-ins off after sibling owners confirm; then flip public copy to "open". Check: signup without a token is refused; under-13 stores nothing.
 2. **Deletion and export** — a processor for portal delete requests across database, payments and email, with confirmation. Check: staging account fully removed.
 3. **Subscription and takedown** — `/subscription-terms/` and `/dmca/` are drafted (D-S417.7). Still open: auto-renewal wording inside checkout, a report-content form. Founder: designated-agent registration, lawyer review.
