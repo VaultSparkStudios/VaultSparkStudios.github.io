@@ -46,10 +46,10 @@ jobs:
     # Set in: GitHub repo → Settings → Secrets and variables → Actions.
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '22' # wrangler v4 requires Node >= 22
 
@@ -83,7 +83,7 @@ jobs:
         # read as a failing quality gate rather than a missing dependency — the
         # same defect pages-deploy.yml carried.
         run: |
-          npm install --no-audit --no-fund
+          npm ci --ignore-scripts --no-audit --no-fund
           npx playwright install --with-deps chromium firefox webkit
 
       - name: Receive run-bound isolated staging observation

@@ -13,29 +13,51 @@ on:
         type: boolean
         default: false
 
+# Least privilege: this workflow only reads the repository.
+permissions:
+  contents: read
+
 jobs:
   migrate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Install psql
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
 
       - name: Determine migration files
         id: files
+        # Inputs reach the shell only through environment variables, never by
+        # interpolation into the script. There is no default list: replaying
+        # old migrations would overwrite later function definitions, including
+        # security fixes. Name the files explicitly.
+        env:
+          INPUT_FILES: ${{ inputs.files }}
         run: |
-          if [ -n "${{ inputs.files }}" ]; then
-            echo "list=${{ inputs.files }}" >> "$GITHUB_OUTPUT"
-          else
-            echo "list=supabase/migrations/supabase-phase40-fan-art.sql,supabase/migrations/supabase-phase41-fan-art-votes.sql,supabase/migrations/supabase-phase43-teams.sql,supabase/migrations/supabase-phase44-gift-subs-social-graph.sql,supabase/migrations/supabase-phase45-game-scores.sql,supabase/migrations/supabase-phase45-newsletter.sql,supabase/migrations/supabase-phase45-seasons.sql,supabase/supabase-phase46-treasury.sql,supabase/supabase-phase47-weekly-leaderboard.sql,supabase/supabase-phase48-seasons-xp.sql,supabase/supabase-phase49-social-graph.sql,supabase/migrations/supabase-phase50-referral-milestones.sql,supabase/migrations/supabase-phase51-treasury-expansion.sql" >> "$GITHUB_OUTPUT"
+          if [ -z "$INPUT_FILES" ]; then
+            echo "::error::No migration files named. Pass a comma-separated list of supabase/**/*.sql paths."
+            exit 1
           fi
+          IFS=',' read -ra CANDIDATES <<< "$INPUT_FILES"
+          CLEAN=""
+          for raw in "${CANDIDATES[@]}"; do
+            f="$(printf '%s' "$raw" | tr -d '[:space:]')"
+            if ! printf '%s' "$f" | grep -Eq '^supabase/(migrations/)?[A-Za-z0-9._-]+\.sql$'; then
+              echo "::error::Rejected path (must match supabase/[migrations/]<name>.sql)"
+              exit 1
+            fi
+            CLEAN="${CLEAN:+$CLEAN,}$f"
+          done
+          echo "list=$CLEAN" >> "$GITHUB_OUTPUT"
 
       - name: Run migrations
         env:
           DATABASE_URL: ${{ secrets.SUPABASE_DB_URL }}
+          FILE_LIST: ${{ steps.files.outputs.list }}
+          DRY_RUN: ${{ inputs.dry_run }}
         run: |
-          IFS=',' read -ra FILES <<< "${{ steps.files.outputs.list }}"
+          IFS=',' read -ra FILES <<< "$FILE_LIST"
           FAILED=0
 
           for file in "${FILES[@]}"; do
@@ -50,7 +72,7 @@ jobs:
             echo "Running: $file"
             echo "──────────────────────────────────────"
 
-            if [ "${{ inputs.dry_run }}" = "true" ]; then
+            if [ "$DRY_RUN" = "true" ]; then
               echo "DRY RUN — wrapping in transaction + rollback"
               (echo "BEGIN;" && cat "$file" && echo "ROLLBACK;") | psql "$DATABASE_URL" 2>&1
             else
@@ -75,8 +97,11 @@ jobs:
 
       - name: Summary
         if: always()
+        env:
+          DRY_RUN: ${{ inputs.dry_run }}
+          FILE_LIST: ${{ steps.files.outputs.list }}
         run: |
           echo "## Migration Results" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "- **Dry run:** ${{ inputs.dry_run }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "- **Files:** ${{ steps.files.outputs.list }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Dry run:** $DRY_RUN" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Files:** $FILE_LIST" >> "$GITHUB_STEP_SUMMARY"

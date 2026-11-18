@@ -6,6 +6,14 @@
   // Already responded — do not show banner again
   if (localStorage.getItem(CONSENT_KEY)) return;
 
+  // A Global Privacy Control signal is the visitor's answer. Record it as a
+  // refusal and do not ask a question they have already answered.
+  if (navigator.globalPrivacyControl === true) {
+    try { localStorage.setItem(CONSENT_KEY, 'declined'); } catch (_) {}
+    try { window.dispatchEvent(new CustomEvent('vs:consent', { detail: { analytics: false, source: 'gpc' } })); } catch (_) {}
+    return;
+  }
+
   var banner = document.createElement('div');
   banner.id = 'cookieConsent';
   banner.className = 'vs-cookie-banner';

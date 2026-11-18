@@ -2333,3 +2333,8 @@ Work-in-progress learning note only: actual writer probes caught stale-pixel reb
 ### 2026-11-11 — S414 partial recovery observation (unscored)
 
 S414 release verification was interrupted. Committed Games hero changes and intermediate staging/source receipts remain preserved; current full source check failed at step 3 (fixture navigation timeout), hosted E2E has ten visual failures, and doctor blockingFailing is 1 for production currency. No full closeout, new score or production acceptance is claimed. See docs/S414_RECOVERY_BOUNDARY.md. Prior S411 total 939/1000 and category values are historical. Do not credit this checkpoint as a completed scored closeout. Follow-up: bind visual capture provenance to its candidate and reject failed/wrong-origin baseline imports before filesystem writes.
+
+
+### 2026-11-17 — S417 in-progress observation (unscored)
+
+A production probe found caller-trusted and anonymously callable point writers that five sessions of release verification had not looked at; the lesson is that release evidence measured the candidate, not the live authorization surface. Fixed live with a probe. Score and full closeout wait for this tranche to reach production. Prior 939 remains historical.

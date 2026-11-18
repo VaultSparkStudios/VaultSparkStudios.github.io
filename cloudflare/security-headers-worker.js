@@ -903,6 +903,20 @@ class NonceInjector {
   }
 }
 
+// Containers marked data-untrusted-content hold text written by a model, a
+// feed or a member. Generators escape that text, so no script, frame or plugin
+// element belongs inside one. If one appears anyway it is removed here, before
+// NonceInjector could make it executable.
+const UNTRUSTED_ACTIVE_SELECTOR = ['script', 'iframe', 'object', 'embed', 'base']
+  .map((tag) => `[data-untrusted-content] ${tag}`)
+  .join(', ');
+
+class UntrustedActiveContentRemover {
+  element(el) {
+    el.remove();
+  }
+}
+
 // Removes <meta http-equiv="Content-Security-Policy"> so the HTTP-header
 // nonce-based policy is the sole enforcer (browser applies both if both exist).
 class MetaCspStripper {
@@ -1525,6 +1539,7 @@ const worker = {
       const nonce = await generateWindowNonce(env);
       const rewriter = new HTMLRewriter()
         .on('meta', new MetaCspStripper())
+        .on(UNTRUSTED_ACTIVE_SELECTOR, new UntrustedActiveContentRemover())
         .on('script,style', new NonceInjector(nonce))
         .on('script[src]', new LegacyGuideScriptRewriter(guideShellManifest.assets))
         .on('head', new NonceInjector(nonce));

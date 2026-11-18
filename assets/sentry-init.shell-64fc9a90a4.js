@@ -1,7 +1,15 @@
 /* sentry-init.js — shared Sentry initialization */
 (function () {
+  // Sentry is a third-party processor, so it loads only after the visitor has
+  // accepted analytics. A Global Privacy Control signal counts as a refusal.
+  function allowed() {
+    try {
+      if (navigator.globalPrivacyControl === true) return false;
+      return localStorage.getItem('vs_cookie_consent') === 'accepted';
+    } catch (_e) { return false; }
+  }
   function start() {
-    if (start.started) return;
+    if (start.started || !allowed()) return;
     start.started = true;
     // Narrow TT policy: the trust-reviewed 7.99.0 bundle is vendored because
     // the CDN varies bytes by browser engine, making cross-engine SRI invalid.
@@ -35,9 +43,20 @@
 
   // Error telemetry remains immediate when needed; routine visits do not pay
   // the third-party parse/layout cost inside their interaction-ready window.
-  window.addEventListener('error', start, { once: true });
-  window.addEventListener('unhandledrejection', start, { once: true });
-  window.addEventListener('pointerdown', start, { once: true, passive: true });
-  window.addEventListener('keydown', start, { once: true });
+  // The listeners stay attached until Sentry actually starts, so a visitor who
+  // accepts later in the visit is still covered from that point on.
+  function arm(type, opts) {
+    window.addEventListener(type, function handler() {
+      start();
+      if (start.started) window.removeEventListener(type, handler, opts);
+    }, opts);
+  }
+  arm('error');
+  arm('unhandledrejection');
+  arm('pointerdown', { passive: true });
+  arm('keydown');
   window.addEventListener('load', function () { setTimeout(start, 8000); }, { once: true });
+  window.addEventListener('vs:consent', function (e) {
+    if (e && e.detail && e.detail.analytics) setTimeout(start, 0);
+  });
 })();

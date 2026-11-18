@@ -680,3 +680,8 @@ Fresh startup/audit and source admission completed. Candidate capture/archive ha
 ## 2026-11-11 — S415 complete source attempt, acceptance still open
 
 The full553-step source run executed every check successfully but exited1 on its32.1% browser-command concentration. Preserved exact receipt and split that command into three coherent groups with identical76-file unit coverage; unchanged runner self-tests pass. Required exact-QA workflows failed before jobs, cause unknown. Synthetic stage Auth issuance/refresh controls ran and native cleanup restored empty state; data harness read ordering required correction, with all15 app tables independently confirmed empty. No production promotion or new score.
+
+
+## 2026-11-17 — S417 audit, plan and first hardening tranche
+
+Three read-only audits and a research pass produced the public-beta plan. Applied the point-award migration to production with founder approval (probe 9/9). Implemented inline-JSON escaping, untrusted-container stripping at the edge, invisible-character removal, lockfile and action pinning, read-only default tokens, served-surface boundary, opt-in analytics with Global Privacy Control, cookie policy correction and timeline filtering. Shipped one Ark pattern-share about shared-database function grants. Release verification in progress.

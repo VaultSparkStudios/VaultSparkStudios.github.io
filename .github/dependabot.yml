@@ -9,6 +9,7 @@
 # patch/minor + security updates after checks. Majors stay human-gated.
 #
 # Groups apply to BOTH version updates and security updates.
+# Cooldown (S425) applies to version updates only.
 version: 2
 updates:
   - package-ecosystem: "npm"
@@ -17,6 +18,11 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 10
     labels: ["dependencies"]
+    # S425 — release cooldown: version updates wait until a release is 3 days old
+    # (axios 2026 and Shai-Hulud releases were live for hours). Security updates
+    # are not delayed by cooldown.
+    cooldown:
+      default-days: 3
     groups:
       # Dev-toolchain churn (vite/vitest/esbuild/@babel/postcss/eslint …) — the
       # bulk of the alert noise. One grouped PR, auto-merged on patch/minor.
@@ -34,6 +40,10 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 5
     labels: ["dependencies", "github-actions"]
+    # S425 — actions are SHA-pinned (scripts/pin-github-actions.mjs); Dependabot
+    # proposes new SHAs, held for the same 3-day cooldown.
+    cooldown:
+      default-days: 3
     groups:
       github-actions:
         patterns: ["*"]

@@ -1,11 +1,11 @@
-# Canon Adoption — VaultSparkStudios.github.io
+# Canon Adoption — vaultsparkstudios.github.io
 
 > ACTIVELY CHECKED against the live `vaultspark-studio-ops/docs/STUDIO_CANON.md` (founder directive S183).
 > Refresh: `node ../vaultspark-studio-ops/scripts/check-canon-adoption.mjs --project . --write`.
 > Suggest: `node ../vaultspark-studio-ops/scripts/check-canon-adoption.mjs --project . --suggest` uses conformance evidence to pre-fill safe suggestions.
 > Mark each: **adopted** · **pending** · **review** · **exempt (reason)**. This file is maintained, not auto-trusted.
 
-Audience: public-live · Live ACTIVE canons: 55 · Pending review: 4
+Audience: public-live · Live ACTIVE canons: 56 · Pending review: 5
 
 | Canon | Title | Status | Evidence / note |
 |---|---|---|---|
@@ -64,4 +64,5 @@ Audience: public-live · Live ACTIVE canons: 55 · Pending review: 4
 | CANON-054 | Public Stats Surface: every website reports and analyzes its | adopted (suggested) | Conformance checker passed: conform |
 | CANON-055 | Surface Follow-Through: every project change reaches the thi | adopted (suggested) | Conformance checker passed: no files changed in range — nothing to follow through on |
 | CANON-056 | AI + SI Hybrid Terminology: keep AI, add Synthetic Intellige | adopted (suggested) | Conformance checker passed: 340 public content file(s) · no CANON-056 findings |
+| CANON-057 | AI-Era Security Baseline: agent surfaces, supply chain, edge | review |  |
 

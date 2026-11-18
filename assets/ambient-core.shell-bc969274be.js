@@ -1994,8 +1994,17 @@
   var nav = performance.getEntriesByType('navigation')[0];
   if (nav) v.ttfb = Math.round(nav.responseStart || 0);
   window.addEventListener('pageshow', function (event) { pageShowPersisted = !!(event && event.persisted); }, { once: true });
+  // Measurement is opt-in: nothing is sent unless the visitor accepted
+  // analytics, and a Global Privacy Control signal counts as a refusal. The
+  // check runs at send time, so accepting during the visit still counts.
+  function allowed() {
+    try {
+      if (navigator.globalPrivacyControl === true) return false;
+      return localStorage.getItem('vs_cookie_consent') === 'accepted';
+    } catch (_) { return false; }
+  }
   function send() {
-    if (sent) return;
+    if (sent || !allowed()) return;
     sent = true;
     var body = JSON.stringify({
       route: location.pathname || '/',

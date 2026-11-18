@@ -1,3 +1,10 @@
+<!-- S417-active-waves -->
+## S417 selected outcomes
+
+- [x] Point-award integrity live (probe 9/9); injection, supply-chain, served-surface and consent hardening in source.
+- [ ] Full source check, push, staging and production readback for this tranche.
+- [ ] Remaining public-beta waves: docs/S417_REMAINING_PLAN.md.
+
 <!-- S416-active-waves -->
 ## S416 selected outcomes
 

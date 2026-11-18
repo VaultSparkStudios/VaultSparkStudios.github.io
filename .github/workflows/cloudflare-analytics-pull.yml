@@ -15,7 +15,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           # S316 — build-deploy-currency resolves the deployed sha against repo
           # history. On the default depth-1 shallow clone that lookup always
@@ -23,12 +23,12 @@ jobs:
           # with null commit distance. Full history is required for the probe
           # to tell real divergence from a truncated clone.
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
       - name: Install derived-artifact build dependencies
         # build-shell-assets uses the existing Wrangler/esbuild toolchain.
-        run: npm install --no-audit --no-fund
+        run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Pull complete-day Cloudflare aggregates
         env:
           CLOUDFLARE_ANALYTICS_READ_TOKEN: ${{ secrets.CLOUDFLARE_ANALYTICS_READ_TOKEN }}

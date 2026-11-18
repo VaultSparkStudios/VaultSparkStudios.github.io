@@ -1,9 +1,9 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         Source UNVERIFIED: 555/555 steps (changed…     ║
+║  ⚠  Tests         Source UNVERIFIED: 264/561 steps; 1 failed;…   ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⛔  Context age   18d                                            ║
-║  ✓  IGNIS         45126 FORGE  ·  6d old                         ║
+║  ⛔  Context age   24d                                            ║
+║  ✓  IGNIS         44726 FORGE  ·  5d old                         ║
 ║  ⛔  Truth         yellow — S411 local recovery verified;…        ║
 ║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
@@ -11,11 +11,11 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⚠  Revenue sig.  8d old (2026-11-04)                            ║
+║  ✓  Revenue sig.  1d old (2026-11-17)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        12/17 (71%)  ·  3 failing                      ║
+║  ⛔  Doctor        11/17 (65%)  ·  3 failing                      ║
 ║  ✓  Codex trust   trusted project active                         ║
-║  ⚠  Canon adopt.  5/55 pending review                            ║
+║  ⚠  Canon adopt.  5/56 pending review                            ║
 ║  Open current tasks 36 / Human-action entries 6                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.00/7d · estimated metered total…       ║

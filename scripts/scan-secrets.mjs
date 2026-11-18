@@ -128,6 +128,17 @@ function isKnownPublicToken(line, matched, pat, relPath) {
       && /^(?:api\/news-desk-claims\.ndjson|docs\/visual-qa\/LATEST\.json|news\/)/.test(relPath.replace(/\\/g, '/'))
       && /^(?:(?:fact|news)-|-)?20\d{2}-\d{2}-\d{2}-[a-z0-9-]{12,}$/i.test(matched)) return true;
 
+  // Same receipt, different slice: the 40-character window can start inside
+  // the run timestamp ("20-915Z-<run id>--<route>--<theme>"), which the dated
+  // slug shape above does not cover. Accept it only when the WHOLE line is one
+  // capture filename in the capture tool's fixed format and the match lies
+  // inside that filename. Anything else on any other line still reaches the
+  // scanner.
+  if (pat.type === 'cf-maybe' && relPath.replace(/\\/g, '/') === 'docs/visual-qa/LATEST.json') {
+    const capture = line.match(/^\s*"file":\s*"(20\d{2}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}-\d{3}Z-[0-9a-f]{16}--[a-z0-9-]+\.png)",?\s*$/);
+    if (capture && capture[1].includes(matched)) return true;
+  }
+
   // The retention report lists public screenshot filenames, one JSON string per
   // line. Their long dated slugs can look like Cloudflare tokens to this broad
   // heuristic. Limit the exception to the exact generated filename shape; any
@@ -409,6 +420,10 @@ if (args.includes('--self-test')) {
     ['companion changed snapshot grammar still scans', scanContent(companion, snapshotLine.replace('1280', '1440')).some((f) => f.type === 'cf-maybe')],
     ['companion high-confidence pattern is not allowlisted', !isKnownPublicToken(snapshotLine, snapshotCandidate, { type: 'github' }, companion)],
     ['companion actual high-confidence token still scans', scanContent(companion, `"file": "${fakeGithub}"`).some((f) => f.type === 'github')],
+    ['run-id capture filename line is clean in the receipt', scanContent('docs/visual-qa/LATEST.json', '      "file": "2026-11-18T06-09-20-915Z-b073de7d4ab013e8--cookies--light--desktop.png",').length === 0],
+    ['run-id capture filename in another file still scans', scanContent('api/other.json', '      "file": "2026-11-18T06-09-20-915Z-b073de7d4ab013e8--cookies--light--desktop.png",').some((f) => f.type === 'cf-maybe')],
+    ['run-id capture line with a second field still scans', scanContent('docs/visual-qa/LATEST.json', '"file": "2026-11-18T06-09-20-915Z-b073de7d4ab013e8--cookies--light--desktop.png", "token": "20-915Z-b073de7d4ab013e8--cookies--lightXY"').some((f) => f.type === 'cf-maybe')],
+    ['a token-shaped value under another key in the receipt still scans', scanContent('docs/visual-qa/LATEST.json', '      "note": "20-915Z-b073de7d4ab013e8--cookies--lightXY",').some((f) => f.type === 'cf-maybe')],
   ];
   for (const [name, ok] of tests) process.stdout.write(`${ok ? '✓' : '✗'} ${name}\n`);
   process.exit(tests.every(([, ok]) => ok) ? 0 : 1);

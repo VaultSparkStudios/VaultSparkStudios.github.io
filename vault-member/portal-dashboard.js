@@ -1172,10 +1172,12 @@
         // Award anniversary bonus
         const bonus = years * 50; // 50 pts per year
         await VSSupabase.rpc('award_points', {
-          p_user_id: session.user.id,
-          p_amount: bonus,
-          p_reason: 'anniversary',
-          p_source: 'vault_member',
+          // The server computes the amount (50 per full year) and the yearly
+          // window; p_points is informational only.
+          p_reason:   'anniversary',
+          p_points:   bonus,
+          p_label:    years + '-Year Vault Anniversary',
+          p_once_per: 'ever',
         });
         localStorage.setItem(alreadyKey, '1');
 

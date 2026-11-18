@@ -37,7 +37,7 @@ test('failed, pending, foreign-SHA and non-dispatched baseline runs cannot be im
 });
 test('actual workflow admits source before installs and archives provisional source identity', () => {
   const workflow = fs.readFileSync('.github/workflows/visual-regression.yml','utf8');
-  assert.ok(workflow.indexOf('node scripts/admit-visual-capture.mjs') < workflow.indexOf('npm install'));
+  assert.ok(workflow.indexOf('node scripts/admit-visual-capture.mjs') < workflow.indexOf('npm ci --ignore-scripts'));
   assert.match(workflow, /default: 'http:\/\/127\.0\.0\.1:4173'/);
   assert.match(workflow, /CAPTURE_SHA: \$\{\{ github.sha \}\}/);
   assert.match(workflow, /\.cache\/visual-capture-source.json/);
@@ -222,7 +222,7 @@ test('actual failure collector takes paired samples before and after geometry, n
 test('actual workflow retains full matrix with default-off exclusive failure observation and no generation', () => {
   const workflow = fs.readFileSync('.github/workflows/visual-regression.yml','utf8');
   assert.match(workflow, /failure_scene_diagnostics:[\s\S]*?type: boolean\s+default: false/);
-  assert.ok(workflow.indexOf('Admit diagnostic scope') < workflow.indexOf('npm install'));
+  assert.ok(workflow.indexOf('Admit diagnostic scope') < workflow.indexOf('npm ci --ignore-scripts'));
   assert.match(workflow, /b==="true" && f==="true"/);
   assert.match(workflow, /u!=="false"/);
   const visualStep = workflow.split('- name: Run visual-regression snapshots')[1].split('- name: Stop candidate preview')[0];

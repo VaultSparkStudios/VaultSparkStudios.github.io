@@ -241,6 +241,60 @@ const PROBES = {
     return results;
   },
 
+  // 20261117_point_award_integrity. Catalog lookups plus calls that are
+  // expected to be refused; a refused call writes nothing.
+  async 'point-award-integrity'(client) {
+    const results = [];
+    const val = (x) => (typeof x === 'string' ? JSON.parse(x) : x) || {};
+    const [member] = await client.sql(`select id from vault_members order by created_at asc limit 1`);
+    if (!member) throw new Error('probe needs at least one member row');
+
+    const [grants] = await client.sql(`select
+      has_function_privilege('anon', 'public.award_points(text, integer, text, text)', 'execute') as anon_claim,
+      has_function_privilege('authenticated', 'public.award_points(text, integer, text, text)', 'execute') as member_claim,
+      has_function_privilege('anon', 'public.award_points(uuid, integer, text, text)', 'execute') as anon_internal,
+      has_function_privilege('authenticated', 'public.award_points(uuid, integer, text, text)', 'execute') as member_internal,
+      has_function_privilege('anon', 'public.award_vault_points(uuid, text, integer, jsonb)', 'execute') as anon_vault,
+      has_function_privilege('authenticated', 'public.award_vault_points(uuid, text, integer, jsonb)', 'execute') as member_vault,
+      has_function_privilege('anon', 'public.award_points_for_user(uuid, text, integer, text, text, text)', 'execute') as anon_for_user,
+      has_function_privilege('authenticated', 'public.award_points_for_user(uuid, text, integer, text, text, text)', 'execute') as member_for_user,
+      has_table_privilege('anon', 'public.point_award_rules', 'select') as anon_rules,
+      has_table_privilege('authenticated', 'public.point_award_rules', 'select') as member_rules,
+      (select count(*) from public.point_award_rules) as rule_count,
+      (select relrowsecurity from pg_class where oid = 'public.point_award_rules'::regclass) as rules_rls,
+      (select count(*) from information_schema.columns where table_schema = 'public'
+         and ((table_name = 'vault_members' and column_name = 'created_at') or (table_name = 'classified_files' and column_name = 'slug'))) as needed_columns;`);
+    const g = grants || {};
+    results.push({ name: 'members can call the rule-bound award_points', pass: g.member_claim === true && g.anon_claim === false, detail: JSON.stringify({ member: g.member_claim, anon: g.anon_claim }) });
+    results.push({ name: 'internal award_points overload is not client-callable', pass: g.anon_internal === false && g.member_internal === false, detail: JSON.stringify({ member: g.member_internal, anon: g.anon_internal }) });
+    results.push({ name: 'award_vault_points is not client-callable', pass: g.anon_vault === false && g.member_vault === false, detail: JSON.stringify({ member: g.member_vault, anon: g.anon_vault }) });
+    results.push({ name: 'award_points_for_user is not client-callable', pass: g.anon_for_user === false && g.member_for_user === false, detail: JSON.stringify({ member: g.member_for_user, anon: g.anon_for_user }) });
+    results.push({ name: 'rule table is service-only with RLS on', pass: g.anon_rules === false && g.member_rules === false && g.rules_rls === true && Number(g.rule_count) >= 26, detail: JSON.stringify({ rows: g.rule_count, rls: g.rules_rls }) });
+    results.push({ name: 'columns the function reads exist', pass: Number(g.needed_columns) === 2, detail: `found ${g.needed_columns}/2` });
+
+    // A caller-invented reason with a huge amount must be refused, and the
+    // member balance must be unchanged afterwards.
+    const [before] = await client.sql(`select points from vault_members where id = ${sqlLiteral(member.id)}`);
+    let refused = false, refusedDetail = '';
+    try {
+      const rows = await client.sql(`${asSubject(member.id)} select award_points('__probe_not_a_rule__', 999999, 'probe', 'ever') as r;`);
+      refused = val(rows[0]?.r).error === 'reason_not_allowed';
+      refusedDetail = JSON.stringify(rows[0]?.r);
+    } catch (e) { refusedDetail = (e.body || e.message).slice(0, 160); }
+    const [after] = await client.sql(`select points from vault_members where id = ${sqlLiteral(member.id)}`);
+    results.push({ name: 'caller-invented reason and amount are refused', pass: refused, detail: refusedDetail });
+    results.push({ name: 'refused call leaves the balance unchanged', pass: Number(before.points) === Number(after.points), detail: `${before.points} -> ${after.points}` });
+
+    let anonDenied = false, anonDetail = '';
+    try {
+      await client.sql(`set local role anon; select award_vault_points(${sqlLiteral(member.id)}::uuid, 'probe', 0, '{}'::jsonb);`);
+      anonDetail = 'call succeeded as anon';
+    } catch (e) { anonDenied = /permission denied|42501/i.test(e.body || e.message); anonDetail = (e.body || e.message).slice(0, 160); }
+    results.push({ name: 'anon cannot execute award_vault_points', pass: anonDenied, detail: anonDetail });
+
+    return results;
+  },
+
   // S356 — The Desk community comments. Read-only: catalog lookups plus
   // statements that are expected to fail with permission denied as anon /
   // authenticated (a denied statement writes nothing).
@@ -327,6 +381,7 @@ create or replace view public.public_leaderboard with (security_invoker = false)
     ['classifyProbe fail names', classifyProbe([{ name: 'a', pass: false }]).failures.join() === 'a'],
     ['probe registry has member-write-lockdown', typeof PROBES['member-write-lockdown'] === 'function'],
     ['probe registry has desk-comments', typeof PROBES['desk-comments'] === 'function'],
+    ['probe registry has point-award-integrity', typeof PROBES['point-award-integrity'] === 'function'],
   ];
   let failed = 0;
   for (const [name, ok] of checks) { console.log(`${ok ? '✓' : '✗'} ${name}`); if (!ok) failed++; }

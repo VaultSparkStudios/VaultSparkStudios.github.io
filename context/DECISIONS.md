@@ -1369,3 +1369,27 @@ The existing project-specific credential repair checker retrieved the website's 
 ## D-S416.6 — avoid measuring deferred article content during sigil placement
 
 The exact QA candidate passed E2E and Accessibility, but its measured news route scored0.88 against the unchanged0.90 Lighthouse floor. The report showed174ms observed first/largest paint,3.83s simulated largest paint and substantial style/layout work; it did not establish a hidden-text or font-delay defect. The sigil's top-zone collision scan measured controls inside content-visibility:auto sections before rejecting their distant positions. Reuse the existing browser visibility guard before those geometry reads, preserving visible header clearance and scrolling behavior. Focused browser tests verify no skipped-subtree measurements and intact navigation clearance. Treat score improvement as unverified until a revised exact candidate is measured; do not weaken thresholds or substitute a blind rerun for the recorded failure.
+
+## D-S417.1 — server-side rules own self-claimed point values
+
+A read-only production probe on 2026-11-17 found that `award_points` trusted the caller for the amount and that `award_vault_points` had no caller check and was executable without signing in. With founder approval the migration `20261117_point_award_integrity.sql` was applied: amounts and windows come from `point_award_rules`, service-only writers lost their public grants, and the internal overload that score milestones call now exists. Live probe `point-award-integrity` passed 9/9. Functions owned by sibling products on the shared database were reported through Ark and not edited here.
+
+## D-S417.2 — commit the lockfile and pin every action
+
+Reverses the gitignored-lockfile convention. `package-lock.json` is tracked, workflows run `npm ci --ignore-scripts`, every npm root carries `ignore-scripts=true` and a three-day release-age floor, all actions are pinned to commit SHAs, and workflows without a permissions block default to a read-only token. `db-migrate.yml` takes inputs through environment variables and has no default file list, because replaying old migrations would overwrite later security fixes. CANON-057 rule 2.
+
+## D-S417.3 — MCP launcher uses `--no-install` instead of a registry pin (CANON-057 justification)
+
+`.mcp.json` ran `npx ignis-mcp`. An unrelated public npm package has that name, so a missing local bin would have downloaded and run it. The studio package is not published to the registry, so an exact registry pin is not available; `--no-install` makes the launcher fail closed. The studio checker still reports `mcp-unpinned` for this file; this entry is the STRONG-tier justification.
+
+## D-S417.4 — operator records leave the served surface
+
+`audits/` and `portfolio/` were in the deploy allowlist and publicly reachable. Founder decision: remove both. `scripts/test/served-surface-boundary.mjs` fails if an operator folder returns. The public timeline withholds release-bookkeeping commit subjects instead of rewriting them.
+
+## D-S417.5 — analytics is opt-in and Global Privacy Control is a refusal
+
+Sentry and the page-speed beacon run only after "Accept Analytics"; a Global Privacy Control signal records a refusal without showing the banner. Cost accepted: field-vitals volume drops to consenting visitors. The cookie policy now describes what the site actually runs (no Google Analytics).
+
+## D-S417.6 — signup posture copy waits for the safeguards
+
+Founder direction is open signup with safeguards for the public beta. The bot check and age screen are not built, and the auth project is shared with sibling products, so a project-wide captcha or redirect-list change would break their sign-in. Public copy is not flipped to "open" until the safeguards exist and a real sign-up is verified. Removed the expired Solara countdown without stating a new date.

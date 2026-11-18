@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-677a0409eed07a96';
+const CACHE_NAME = 'vaultspark-shell-d046d92fd0f04741';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -32,7 +32,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/nav-sheet.shell-c0fddc0c73.js',
   '/assets/supabase-client.shell-bd7ccf3b3d.js',
   '/vault-member/portal-logic.shell-7928261818.js',
-  '/vault-member/portal-dashboard.shell-c353dfa54a.js',
+  '/vault-member/portal-dashboard.shell-977f649ce6.js',
   '/vault-member/portal.shell-0007bdfdfe.css',
   '/assets/investor-theme.shell-34033980bc.css',
   '/assets/investor-experience.shell-a2811f3789.js',
@@ -47,12 +47,12 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/membership-interview.shell-166b7790cf.js',
   '/assets/membership-idle-loader.shell-202362ca41.js',
   '/assets/ignis-platform.shell-0540285fff.js',
-  '/assets/sentry-init.shell-8b1d92d92b.js',
+  '/assets/sentry-init.shell-64fc9a90a4.js',
   '/assets/vault-pulse.shell-141c057d30.js',
   '/assets/recent-ships.shell-001af71d31.js',
   '/assets/members-directory.shell-2c3992e2b6.js',
   '/assets/home-idle-loader.shell-7b976ad580.js',
-  '/assets/ambient-core.shell-33bb8e8e79.js',
+  '/assets/ambient-core.shell-bc969274be.js',
   '/assets/ambient-feature.shell-dbfd95a4bb.js',
   '/assets/proof-verify.shell-4b68e2855f.js',
   '/assets/desk-reactions.shell-523b04a01e.js',
@@ -165,7 +165,7 @@ const STATIC_ASSETS = [
   '/',
   '/assets/style.shell-56ae8098ff.css',
   '/assets/shell-health.shell-0995bd7945.js',
-  '/assets/ambient-core.shell-33bb8e8e79.js',
+  '/assets/ambient-core.shell-bc969274be.js',
   '/assets/ambient-feature.shell-dbfd95a4bb.js',
   '/assets/kit.js',
   '/assets/icon-32.png',

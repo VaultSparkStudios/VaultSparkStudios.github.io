@@ -1,3 +1,8 @@
+<!-- S417-current-verification -->
+## S417 security and compliance tranche; release in progress
+
+Live in production: the point-award migration (probe 9/9). In source, pending the full check and promotion: structured data in model-written and member-written pages is escaped and the edge removes active elements from untrusted containers; feed text loses invisible characters before a model or a page sees it; the lockfile is committed, installs are locked and script-free, actions are SHA-pinned and tokens default to read-only; operator folders left the deploy allowlist; analytics is opt-in and honours Global Privacy Control; the cookie policy matches what runs; the public timeline withholds bookkeeping subjects; the expired Solara countdown is gone. Until promotion, production still serves the operator folders and the old consent behaviour. Remaining waves: docs/S417_REMAINING_PLAN.md.
+
 <!-- S416-current-verification -->
 ## S416 staging delivery verified; release acceptance in progress
 

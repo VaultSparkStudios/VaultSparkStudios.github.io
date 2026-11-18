@@ -23,6 +23,7 @@ import path from 'node:path';
 import url from 'node:url';
 import { PUBLIC_SUMMARY } from './lib/public-summaries.mjs';
 import { ORG_REF } from './lib/org-entity.mjs';
+import { stringifyForScript } from './lib/safe-inline-json.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -184,7 +185,7 @@ function renderHtml(p, slugPath) {
 <meta property="og:image:alt" content="${escape(p.name)} — VaultSpark Studios" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="${escape(ogImage)}" />
-<script type="application/ld+json">${JSON.stringify(factSheetJsonLd(p, url, status, diffs))}</script>
+<script type="application/ld+json">${stringifyForScript(factSheetJsonLd(p, url, status, diffs))}</script>
 <style>
 :root{color-scheme:dark light;font-family:Inter,system-ui,sans-serif;line-height:1.6;max-width:64ch;margin:3rem auto;padding:0 1.25rem;color:#1a1a1f;background:#fafafa}
 @media (prefers-color-scheme:dark){:root{color:#eef2ff;background:#07080f}}

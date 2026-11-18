@@ -73,6 +73,8 @@ const unavailable = (state, reason) => ({
   asVerdict() { throw new Error('desk-inference: advisory output can never become a verdict'); },
 });
 
+import { stripInvisibleDeep } from './invisible-text.mjs';
+
 export function buildRequestBody({ model, messages, budget, temperature, thinking = true }) {
   const body = { model, messages, max_tokens: budget, temperature };
   if (thinking === false) {
@@ -131,6 +133,9 @@ export async function chatOnce({
   transport = fetch,
 } = {}) {
   if (!Array.isArray(messages) || !messages.length) throw new Error('chat: messages[] is required');
+  // Prompts carry third-party feed text. Characters a human reviewer cannot
+  // see are removed before the model reads them (see invisible-text.mjs).
+  messages = stripInvisibleDeep(messages);
   const budget = Math.max(Number(maxTokens) || 0, MIN_MAX_TOKENS);
   const { key, base } = await resolveCredentials(env);
   if (!key || !base) return unavailable('credential-missing', 'hetzner.inference credentials are not resolvable in this environment');

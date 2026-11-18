@@ -22,6 +22,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PERSONAS, EDITIONS, NOVELTY_WINDOW_DAYS } from './lib/news-desk.mjs';
+import { stripInvisible, stripInvisibleDeep } from './lib/invisible-text.mjs';
 import {
   isPaywalledUrl,
   isOwnPublisherFeed,
@@ -228,7 +229,9 @@ const tag = (block, name) => {
  */
 export function parseFeed(xml, { primary = false, now = Date.now(), feedUrl = null, publisherFromDescription = false } = {}) {
   const out = [];
-  const blocks = String(xml || '').match(/<(item|entry)[\s>][\s\S]*?<\/\1>/gi) || [];
+  // Feed text is third-party input that later reaches a model and a public
+  // page. Invisible characters are removed at the door (see invisible-text.mjs).
+  const blocks = stripInvisible(String(xml || '')).match(/<(item|entry)[\s>][\s\S]*?<\/\1>/gi) || [];
   for (const block of blocks) {
     try {
       let title = tag(block, 'title');
@@ -289,7 +292,7 @@ export function parseFeed(xml, { primary = false, now = Date.now(), feedUrl = nu
 }
 
 export function parseHn(json, { now = Date.now() } = {}) {
-  const hits = json?.hits || [];
+  const hits = stripInvisibleDeep(json?.hits || []);
   return hits
     .filter((h) => h?.title && (h.url || h.objectID))
     .map((h) => ({

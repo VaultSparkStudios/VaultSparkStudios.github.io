@@ -22,6 +22,7 @@
  */
 import { createHash } from 'node:crypto';
 import { escapeNewsHtml } from './lib/news-html.mjs';
+import { safeInlineJson } from './lib/safe-inline-json.mjs';
 import { readerActionReceipts, renderReaderActions } from '../assets/lib/you-asked-shipped-render.mjs';
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
@@ -224,8 +225,8 @@ function chromeHead({ title, description, canonical, ogImage, ogTitle = null, de
   const deskStyle=shellManifest.assets?.newsDeskStyle?.path||'assets/news-desk.css';
   const styles=`<link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${article?'/'+articleStyle:depth+deskStyle}">`;
   return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title>${ogTitle ? `<meta property="og:title" content="${escapeHtml(ogTitle)}">` : ''}<meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json">${imagePreload}${styles}${speculationBlock}
-<script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
-${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}  <link rel="alternate" type="application/json" href="/agents.json" />
+<script type="application/ld+json" data-vs-breadcrumb>${safeInlineJson(breadcrumb)}</script>
+${jsonLd ? `<script type="application/ld+json">${safeInlineJson(jsonLd)}</script>\n` : ''}  <link rel="alternate" type="application/json" href="/agents.json" />
 </head><body class="dark-mode" data-theme="dark">
 ${themeBoot}<a href="#main-content" class="skip-link">Skip to main content</a>${atDepth(newsHeaderBlock, depth)}`;
 }
@@ -1004,7 +1005,7 @@ ${supersededUrl ? `  <div class="desk-superseded"><strong>Superseded edition.</s
   ${satireStage(story, day)}
   ${newsBrief(story, day)}
   ${storyToc(tocSections)}
-  <section class="desk-body" id="story" aria-label="The story">${bodyHtml(story)}</section>
+  <section class="desk-body" id="story" aria-label="The story" data-untrusted-content>${bodyHtml(story)}</section>
   <section class="desk-section" id="sources" aria-labelledby="desk-sources-title">
   <h2 class="desk-h2" id="desk-sources-title">Where this came from</h2>
   <p class="desk-section-note">Every factual claim in the piece, linked to the source it came from. Open a receipt to copy its verifiable id and hash.</p>

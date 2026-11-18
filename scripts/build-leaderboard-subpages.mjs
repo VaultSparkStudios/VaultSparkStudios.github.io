@@ -8,6 +8,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { safeInlineJson } from './lib/safe-inline-json.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
@@ -153,10 +154,10 @@ function buildPage(page) {
   <meta name="twitter:description" content="${page.description}" />
   <meta name="twitter:image" content="${BASE}/assets/og-leaderboards.png" />
   <script type="application/ld+json">
-${jsonLD}
+${safeInlineJson(jsonLD)}
   </script>
   <script type="application/ld+json">
-${faqLD}
+${safeInlineJson(faqLD)}
   </script>
   <link rel="icon" type="image/png" href="/assets/icon-32.png" />
   ${criticalCSS}

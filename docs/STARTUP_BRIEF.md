@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-11-17 (last closed Session 411; active/next Session 412) -->
+<!-- generated-at: 2026-11-18 (last closed Session 411; active/next Session 412) -->
 <!-- semantic-freshness: hash=12f74290af984853 next=412 silSession=411 silScore=939 handoff=- tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — last closed Session 411 · active/next Session 412 · generated 2026-11-17.
+> **Fast-boot brief** — last closed Session 411 · active/next Session 412 · generated 2026-11-18.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,7 +15,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 412 · 2026-11-17 · FOUNDER MODE                         ║
+║  Session 412 · 2026-11-18 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    939/1000   ██████████████████████░░   94%                     ║
 ║    SIL v3.0  ·  Avg3: 939  ·  Velocity 0→                        ║
-║    Last active: 6d  ·  Last closeout: 11d  ·  (active =…         ║
+║    Last active: 0d  ·  Last closeout: 12d  ·  (active =…         ║
 ║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -63,7 +63,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 411 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    Source UNVERIFIED: 559/559 steps (changed inputs)     ║
+║  Tests:    Source UNVERIFIED: 264/561 steps; 1 failed;…          ║
 ║  Deploy:   S411 release pending                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -74,30 +74,30 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         Source UNVERIFIED: 559/559 steps (changed…     ║
+║  ⚠  Tests         Source UNVERIFIED: 264/561 steps; 1 failed;…   ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⛔  Context age   23d                                            ║
-║  ⚠  IGNIS         45126 FORGE  ·  11d old                        ║
+║  ⛔  Context age   24d                                            ║
+║  ✓  IGNIS         44726 FORGE  ·  5d old                         ║
 ║  ⛔  Truth         yellow — S411 local recovery verified;…        ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
+║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.175  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ✓  Revenue sig.  1d old (2026-11-17)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        12/17 (71%)  ·  2 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
-║  ⚠  Canon adopt.  4/55 pending review                            ║
+║  ⛔  Doctor        11/17 (65%)  ·  3 failing                      ║
+║  ✓  Codex trust   trusted project active                         ║
+║  ⚠  Canon adopt.  5/56 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    86d · Authorize or decline immutable warm-origin migrati      ║
-║    86d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
+║    87d · Authorize or decline immutable warm-origin migrati      ║
+║    87d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -121,20 +121,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Complete affected successful sign-in/sign-  ║
+║   96  [PRODUCT]      Full source check, push, staging and produ  ║
+║        Full source check, push, staging and production readback  ║
+║                                                                  ║
+║   93  [PRODUCT]      Remaining public-beta waves: docs/S417_REM  ║
+║        Remaining public-beta waves: docs/S417_REMAINING_PLAN.md  ║
+║                                                                  ║
+║   90  [PRODUCT]      Complete affected successful sign-in/sign-  ║
 ║        Complete affected successful sign-in/sign-up and real me  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Integrate current main safely; pass full c  ║
+║   87  [PRODUCT]      Integrate current main safely; pass full c  ║
 ║        Integrate current main safely; pass full current source   ║
 ║                                                                  ║
-║   93  [INTELLIGENCE]  Complete recovered S415 writeback, all S4  ║
+║   87  [INTELLIGENCE]  Complete recovered S415 writeback, all S4  ║
 ║        Complete recovered S415 writeback, all S416 closeout sur  ║
-║                                                                  ║
-║   84  [PRODUCT]      Affected deployed authentication, current   ║
-║        Affected deployed authentication, current isolated stagi  ║
-║                                                                  ║
-║   78  [PRODUCT]      Integrate current main safely and complete  ║
-║        Integrate current main safely and complete exact candida  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -142,5 +142,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · last closed Session 411 · active/next Session 412 · 2026-11-17*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · last closed Session 411 · active/next Session 412 · 2026-11-18*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

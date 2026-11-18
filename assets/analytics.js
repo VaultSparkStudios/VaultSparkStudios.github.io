@@ -16,6 +16,10 @@
   // Respect DoNotTrack
   if (navigator.doNotTrack === '1' || window.doNotTrack === '1') return;
 
+  // Respect Global Privacy Control: the signal is an opt-out the visitor has
+  // already given, so it wins over any stored choice.
+  if (navigator.globalPrivacyControl === true) return;
+
   // Respect cookie consent — never track on decline; defer on first visit
   var consentVal;
   try { consentVal = localStorage.getItem('vs_cookie_consent'); } catch (e) {}

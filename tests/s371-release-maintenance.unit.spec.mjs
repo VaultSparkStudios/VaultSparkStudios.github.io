@@ -87,5 +87,6 @@ test('OG publisher accepts only main and checks out writable full-history main',
   const text = fs.readFileSync(new URL('../.github/workflows/og-images.yml', import.meta.url), 'utf8');
   assert.match(text, /push:\s+branches: \[main\]/);
   assert.match(text, /if: github.ref == 'refs\/heads\/main'/);
-  assert.match(text, /checkout@v4\s+with:\s+ref: main\s+fetch-depth: 0/);
+  // Actions are pinned to a commit SHA with the tag kept as a trailing comment.
+  assert.match(text, /checkout@[0-9a-f]{40} # v4\s+with:\s+ref: main\s+fetch-depth: 0/);
 });

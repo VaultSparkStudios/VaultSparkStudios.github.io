@@ -132,6 +132,21 @@ export function sanitizeSubject(message) {
   return { move, title: s || 'Untitled change' };
 }
 
+// Release bookkeeping is real work, but its commit subjects are written for
+// operators: they name sessions, receipts, candidates and ledgers. A visitor
+// reading the public timeline learns nothing from them, so they are withheld
+// (counted, never rewritten into something they did not say).
+const PROCESS_WORK_RE = new RegExp([
+  String.raw`\bS\d{3,4}\b`,
+  String.raw`\b(?:receipt|candidate|closeout|close-out|telemetry|provenance|writeback|write-back|handoff|ledger|residue|preflight|postflight|fingerprint|checkpoint|rebind|start-sync|session lock|native arc|recovery boundary|release|staging|fixture|projection|verifier|scanner|evidence|proof|descriptor|annotation|visual matrix|browser pin)s?\b`,
+  String.raw`^(?:bind|freeze|seal|rebind|reconcile|refresh|preserve|recover)\b.*\b(?:evidence|metadata|manifest|observations?|source|snapshot|baseline)\b`,
+].join('|'), 'i');
+
+/** True when a sanitized commit subject describes operator bookkeeping. */
+export function isProcessWork(title) {
+  return PROCESS_WORK_RE.test(String(title || ''));
+}
+
 /** Public name for a GitHub repo, or null (withheld). */
 export function publicRepoName(repoFullName, registry, catalog) {
   const full = String(repoFullName || '').toLowerCase();
@@ -261,6 +276,7 @@ export async function collectGithub({
       if (!Number.isFinite(at) || at < since || at > now + futureSlackMs('minute')) continue;
       if (!name) { source.withheld += 1; continue; }
       const { move, title } = sanitizeSubject(c.commit.message);
+      if (isProcessWork(title)) { source.withheld += 1; continue; }
       const url = typeof c.html_url === 'string' && c.html_url.startsWith(`https://github.com/${ORG}/`) ? c.html_url : null;
       items.push({ id: `commit:${String(repo.name).toLowerCase()}:${String(c.sha || '').slice(0, 12)}`, kind: 'commit', at: new Date(at).toISOString(), precision: 'minute', project: name, move, title, url });
     }
@@ -346,6 +362,7 @@ export function validateTimeline(payload) {
     if (/^session:/i.test(String(item?.id))) problems.push(`${where} id is a work-session row (CANON-028)`);
     if (Number.isNaN(Date.parse(item?.at))) problems.push(`${where} at invalid`);
     if (typeof item?.title !== 'string' || !item.title || item.title.length > TITLE_MAX) problems.push(`${where} title invalid`);
+    if (item?.kind === 'commit' && isProcessWork(item?.title)) problems.push(`${where} title publishes operator bookkeeping`);
     if (typeof item?.project !== 'string' || !item.project) problems.push(`${where} project missing (withheld rows must not be emitted)`);
     if (/[\w.+-]+@[\w-]+\.[\w.-]+/.test(`${item?.title} ${item?.project}`)) problems.push(`${where} contains an email-shaped string`);
     if (/\b[A-Za-z0-9_-]{32,}\b/.test(String(item?.title))) problems.push(`${where} title contains a token-shaped string`);
@@ -438,6 +455,13 @@ async function selfTest() {
   check('sanitize strips email/url/backticks/token/skip-ci/body; maps move', s1.move === 'Feature' && s1.title === 'ship timeline for see token' && !/body/.test(s1.title));
   check('sanitize truncates long subjects', sanitizeSubject('fix: ' + 'a '.repeat(120)).title.length <= TITLE_MAX);
   check('sanitize empty → Untitled change', sanitizeSubject('`only code`').title === 'Untitled change');
+  check('operator bookkeeping subjects are process work',
+    ['Bind S416 publication candidate to current observations and visual proof', 'freeze verified release candidate evidence',
+      'Refresh exact-source API visual receipt and release metadata', 'bind candidate manifest to reviewed source',
+      'recover closeout writeback'].every(isProcessWork));
+  check('visitor-meaningful subjects are not process work',
+    ['ship timeline for the pulse page', 'agent homes', 'real human work', 'faster first paint on game pages',
+      'new world map for the universe page'].every((t) => !isProcessWork(t)));
 
   const registry = [
     { id: 'website', githubRepo: `${ORG}/VaultSparkStudios.github.io` },

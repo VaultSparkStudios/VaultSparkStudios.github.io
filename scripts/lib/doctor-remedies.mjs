@@ -140,6 +140,11 @@ export const DRIFT_META = {
   'php-exposure':      { driftClass: 'local-broken', blocking: true },
   manifest:              { driftClass: 'local-broken', blocking: true },
   'supabase-rls-exposure': { driftClass: 'local-broken', blocking: true },
+  // S425: a hidden instruction or poisoned agent hook is an active compromise vector — blocking.
+  'agent-surface-integrity': { driftClass: 'local-broken', blocking: true },
+  'supply-chain-baseline': { driftClass: 'local-broken', blocking: true },
+  // S425: host fixes are founder-approved production changes (D-S425.2) — measured, never blocking.
+  'host-security': { driftClass: 'local-broken', blocking: false },
   // S288 [audit item 2] — studio-ops genuinely owns the CPX51 disk healer, so
   // the provenance-derived default would make this blocking. Explicitly NOT:
   // this probe DIAGNOSES the already-blocking cpx-capacity-admission fault by

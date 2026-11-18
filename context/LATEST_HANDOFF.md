@@ -1,3 +1,12 @@
+<!-- S417-active -->
+## S417 — security and compliance tranche, release in progress
+
+Session Intent: after a full audit, implement the approved public-beta plan in order, then closeout, push to main and deploy. Founder decisions: open signup with safeguards, stop serving operator records, security fixes before the pending release.
+
+Outcome so far: point-award integrity is live in production (D-S417.1, probe 9/9). Source changes for injection hardening, supply-chain baseline, served-surface boundary, opt-in analytics and stale claims are on branch feat/s417-beta-hardening (D-S417.2–6). The S416 branch was already contained in main; its leftover working files are preserved as local commit b032d20f4b on qa/s416-final-candidate-20261113.
+
+Owner: website implementation/release owner. Artifact: this branch and docs/THREAT_MODEL.md. Dependencies: full source check, staging, authorized production promotion and served readback. Acceptance: operator folders return 404 live, no telemetry request before consent, news pages carry no invisible characters. Not done: signup safeguards, deletion processor, legal pages, information architecture, visual system, new pages, AI cost work — docs/S417_REMAINING_PLAN.md. Sibling-owned database functions were reported through Ark, not edited. Founder-only: hardware keys on provider accounts, the local MCP auto-approve setting, Cloudflare analytics injection choice, lawyer review.
+
 <!-- S416-active-native-arc -->
 ## S416 — staging delivery verified, native and production acceptance pending
 

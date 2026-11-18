@@ -7,22 +7,25 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Least privilege: this workflow only reads the repository.
+permissions:
+  contents: read
+
 jobs:
   # ── Playwright + axe-core/playwright ──────────────────────
   playwright-axe:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24'
 
       - name: Install dependencies
-        # Lockfile is gitignored in this repo by convention, so `npm ci` can't
-        # run in CI. Use `npm install` to regenerate the lockfile from
-        # package.json on-the-fly. Slightly slower but correct for this repo.
-        run: npm install --no-audit --no-fund
+        # Locked install: package-lock.json is committed and install scripts are
+        # disabled, so CI resolves exactly the reviewed dependency tree.
+        run: npm ci --ignore-scripts --no-audit --no-fund
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
@@ -58,7 +61,7 @@ jobs:
 
       - name: Upload Playwright report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: playwright-a11y-report
           path: playwright-report/
@@ -68,9 +71,9 @@ jobs:
   axe-cli:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24'
 
@@ -107,7 +110,7 @@ jobs:
 
       - name: Upload axe results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: axe-results
           path: axe-results/

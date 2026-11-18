@@ -11,20 +11,16 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24'
 
       - name: Install project dependencies
-        # S353: the refresh-live-data profile runs build-news-desk.mjs --rebuild,
-        # which imports `sharp`. With no install step that import threw, the profile
-        # reported `build-news-desk.mjs:warn`, and this whole workflow went red on
-        # 2026-09-10 and stayed red, so nothing below was committed for four days.
-        # The lockfile is gitignored (check-workflow-install-consistency), so npm ci
-        # is unavailable; check-workflow-runtime-dependencies now gates this class.
-        run: npm install --no-audit --no-fund
+        # Locked install: package-lock.json is committed and install scripts are
+        # disabled, so CI resolves exactly the reviewed dependency tree.
+        run: npm ci --ignore-scripts --no-audit --no-fund
 
       - name: Refresh public intelligence snapshot
         # Feeds /oracle/, /studio-pulse/, and the homepage Studio Spine. The

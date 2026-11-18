@@ -11,6 +11,10 @@ on:
   push:
     branches: [main]
 
+# Least privilege: this workflow only reads the repository.
+permissions:
+  contents: read
+
 jobs:
   purge-cache:
     name: Purge Cloudflare Cache
@@ -19,9 +23,9 @@ jobs:
     # CF_API_TOKEN needs Zone / Cache Purge permission.
     # CF_ZONE_ID is the zone ID for vaultsparkstudios.com (found in Cloudflare dashboard).
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
 
@@ -37,7 +41,7 @@ jobs:
         # so the ceremony it feeds failed in seconds with nothing to launch and the
         # result read as a failing quality gate rather than a missing dependency.
         run: |
-          npm install --no-audit --no-fund
+          npm ci --ignore-scripts --no-audit --no-fund
           npx playwright install --with-deps chromium firefox webkit
 
       - name: Run canonical release ceremony

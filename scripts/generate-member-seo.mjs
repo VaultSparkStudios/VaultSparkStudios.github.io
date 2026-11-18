@@ -14,6 +14,7 @@ import { mkdirSync, writeFileSync, rmSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { ORG_REF } from './lib/org-entity.mjs';
+import { safeInlineJson } from './lib/safe-inline-json.mjs';
 
 const __dir  = dirname(fileURLToPath(import.meta.url));
 const ROOT   = join(__dir, '..');
@@ -116,7 +117,7 @@ function buildPage(member) {
   <meta name="twitter:description" content="${escHtml(desc)}" />
   <meta name="twitter:image" content="${BASE}/assets/og-members.png" />
 
-  <script type="application/ld+json">${jsonLd}</script>
+  <script type="application/ld+json">${safeInlineJson(jsonLd)}</script>
 
   <link rel="icon" type="image/png" href="/assets/icon-32.png" />
   <link rel="stylesheet" href="/assets/style.css" />

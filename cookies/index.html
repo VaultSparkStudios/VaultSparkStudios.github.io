@@ -116,6 +116,18 @@
       border-radius: 4px;
       font-size: 0.82rem;
     }
+    /* Four columns do not fit a phone: show each row as a labelled card. */
+    @media (max-width: 640px) {
+      .cookie-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+      .cookie-table, .cookie-table tbody, .cookie-table tr, .cookie-table td { display: block; }
+      .cookie-table tr { padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+      .cookie-table { table-layout: auto; max-width: 100%; overflow: visible; }
+      .cookie-table tbody, .cookie-table tr { width: 100%; min-width: 0; max-width: 100%; box-sizing: border-box; }
+      .cookie-table td { padding: 0.15rem 0; border-bottom: 0; white-space: normal; overflow-wrap: anywhere; min-width: 0; max-width: 100%; }
+      .cookie-table td:first-child { color: var(--text); font-weight: 700; margin-bottom: 0.2rem; }
+      .cookie-table td:nth-child(3)::before { content: "Duration: "; color: var(--text); font-weight: 600; }
+      .cookie-table td:nth-child(4)::before { content: "Where: "; color: var(--text); font-weight: 600; }
+    }
   </style>
 
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -216,7 +228,7 @@
       <div class="container">
         <div class="policy-body">
 
-          <span class="policy-updated">Last updated: April 3, 2026</span>
+          <span class="policy-updated">Last updated: November 17, 2026</span>
 
           <p>This Cookie Policy explains what cookies and similar technologies VaultSpark Studios uses on <strong>vaultsparkstudios.com</strong>, what they do, how long they last, and how you can manage or disable them.</p>
 
@@ -243,20 +255,26 @@
           </table>
 
           <h3>Analytics</h3>
-          <p>These help us understand how visitors use the site so we can improve content and performance. They are only set if you accept analytics cookies.</p>
+          <p>These help us understand how visitors use the site so we can improve content and performance. They run only if you choose &ldquo;Accept Analytics&rdquo;. If you decline, or have not answered yet, none of them run.</p>
 
           <table class="cookie-table">
             <thead>
               <tr><th>Name</th><th>Purpose</th><th>Duration</th><th>Provider</th></tr>
             </thead>
             <tbody>
-              <tr><td><code>_ga</code></td><td>Distinguishes unique visitors</td><td>2 years</td><td>Google Analytics</td></tr>
-              <tr><td><code>_ga_*</code></td><td>Maintains session state for GA4</td><td>2 years</td><td>Google Analytics</td></tr>
+              <tr><td><code>vs_sid</code></td><td>Groups the pages of one visit together. It is a random value, not linked to an account.</td><td>Until the tab closes</td><td>VaultSpark Studios (sessionStorage)</td></tr>
+              <tr><td>Page-speed measurement</td><td>Sends loading and responsiveness timings for the page you viewed. No cookie, no account identifier and no free text.</td><td>Not stored on your device</td><td>VaultSpark Studios</td></tr>
+              <tr><td>Error reporting</td><td>Reports script errors, with the browser and page they happened on, so we can fix them.</td><td>Not stored on your device</td><td>Sentry</td></tr>
             </tbody>
           </table>
 
+          <p>We do not use Google Analytics, and no <code>_ga</code> cookies are set.</p>
+
+          <h3>Global Privacy Control</h3>
+          <p>If your browser sends a <a href="https://globalprivacycontrol.org/" target="_blank" rel="noreferrer">Global Privacy Control</a> signal, we treat it as a refusal of analytics. We do not show the consent banner, and none of the analytics above run. The signal takes priority over any earlier choice stored in your browser.</p>
+
           <h3>Third-Party</h3>
-          <p>We do not use advertising cookies, social media tracking pixels, or behavioural targeting technologies. No third-party cookies are set beyond those listed above.</p>
+          <p>We do not use advertising cookies, social media tracking pixels, or behavioural targeting technologies. Our hosting provider, Cloudflare, may measure page views in aggregate without cookies. Payments are handled on Stripe&rsquo;s own pages, which set their own cookies under Stripe&rsquo;s policy.</p>
 
           <div class="policy-divider"></div>
 
@@ -271,8 +289,8 @@
             <li><strong>Edge:</strong> Settings &rarr; Cookies and site permissions</li>
           </ul>
 
-          <h3>Google Analytics Opt-Out</h3>
-          <p>You can opt out of Google Analytics tracking by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noreferrer">Google Analytics Opt-out Browser Add-on</a> or by enabling "Do Not Track" in your browser settings.</p>
+          <h3>Changing Your Choice</h3>
+          <p>To change your analytics choice, clear the <code>vs_cookie_consent</code> entry as described below and reload the page; the banner will ask again. Turning on Global Privacy Control or &ldquo;Do Not Track&rdquo; in your browser also switches analytics off.</p>
 
           <h3>Clearing Local Storage</h3>
           <p>To clear <code>localStorage</code> data set by VaultSpark Studios, open your browser's developer tools (usually F12), navigate to the Application or Storage tab, and clear the entries for <code>vaultsparkstudios.com</code>.</p>
@@ -440,7 +458,7 @@
   <script src="/assets/nav-toggle.shell-8c1f2155b5.js" defer></script>
 <script src="/assets/schema-injector.shell-33115efcde.js" defer></script>
   <!-- vs-ambient:start -->
-<script src="/assets/ambient-core.shell-33bb8e8e79.js" defer integrity="sha384-8ItgLTOriv+wHB8Wn+a70Z8npQuNWo7z1Kwg5uk/Zmaw2t9zwiHEc2yWKeJM50u2" crossorigin="anonymous"></script>
+<script src="/assets/ambient-core.shell-bc969274be.js" defer integrity="sha384-SbqKl4tnS7qTwMCRAVIW3kl2enK3fwPsu5KMYvPK533h4IiBodC7P4TTuefaNgMP" crossorigin="anonymous"></script>
 <script src="/assets/ambient-feature.shell-dbfd95a4bb.js" defer></script>
 <!-- vs-ambient:end -->
 <script src="/assets/nav-sheet.shell-c0fddc0c73.js" defer></script>

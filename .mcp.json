@@ -1,9 +1,10 @@
 {
-  "_comment": "IGNIS MCP server. Uses the global `ignis-mcp` bin from @vaultspark/ignis-core (install once per machine: `npm i -g <path-to-vaultspark-ignis-checkout>`). Portable — no absolute local paths (public-repo sanitization).",
+  "_comment": "IGNIS MCP server. Runs the `ignis-mcp` bin that @vaultspark/ignis-core installs on this machine (install once: `npm i -g <path-to-vaultspark-ignis-checkout>`). `--no-install` is load-bearing: an unrelated public npm package is also named ignis-mcp, and without this flag npx would download and run it whenever the local bin is missing. Portable — no absolute local paths (public-repo sanitization).",
   "mcpServers": {
     "ignis": {
       "command": "npx",
       "args": [
+        "--no-install",
         "ignis-mcp"
       ],
       "env": {
