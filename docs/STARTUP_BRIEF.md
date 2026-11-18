@@ -80,16 +80,16 @@
 ║  ⛔  Context age   24d                                            ║
 ║  ✓  IGNIS         44726 FORGE  ·  5d old                         ║
 ║  ⛔  Truth         yellow — S411 local recovery verified;…        ║
-║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
+║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.175  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  1d old (2026-11-17)                            ║
+║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        11/17 (65%)  ·  3 failing                      ║
-║  ✓  Codex trust   trusted project active                         ║
+║  ⛔  Doctor        13/17 (76%)  ·  2 failing                      ║
+║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  5/56 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
