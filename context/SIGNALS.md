@@ -1,5 +1,5 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         Source UNVERIFIED: 7/561 steps; partial…       ║
+║  ⚠  Tests         Source PARTIAL: 220/561 steps; partial         ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   24d                                            ║
