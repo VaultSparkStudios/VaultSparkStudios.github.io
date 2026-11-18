@@ -63,7 +63,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 411 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    Source PARTIAL: 220/561 steps; partial                ║
+║  Tests:    Source UNVERIFIED: 220/561 steps; partial (changed…   ║
 ║  Deploy:   S411 release pending                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -74,7 +74,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         Source PARTIAL: 220/561 steps; partial         ║
+║  ⚠  Tests         Source UNVERIFIED: 220/561 steps; partial…     ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   24d                                            ║
@@ -86,10 +86,10 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  1d old (2026-11-17)                            ║
+║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ✓  Codex trust   trusted project active                         ║
+║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  5/56 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
