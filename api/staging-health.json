@@ -1,25 +1,21 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-18T18:11:22.627Z",
+  "generatedAt": "2026-11-18T19:08:21.813Z",
   "candidateReady": false,
   "candidateFindings": [
     "staging-build-sha-mismatch",
     "staging-artifact-root-mismatch",
-    "staging-artifact-leaf-count-mismatch",
-    "/:stagingStatus",
     "/:stagingCanonicalCsp",
-    "/:stagingSecurityHeaders",
-    "/:localShellParity",
     "/studio-pulse/:stagingCanonicalCsp",
     "/membership/:stagingCanonicalCsp"
   ],
   "candidateBuildSha": "b1d63b4ca9ec23f1e1ec7d9f2edc3a62907b7c2a",
-  "stagingBuildSha": null,
+  "stagingBuildSha": "aa506d16fb1c9d34f008323e6db7e068b66bef22",
   "artifactManifest": {
     "candidateRoot": "5408a245fb5964f16b76ffc4f2d9af61d9eb790fe9750db09ea1c3cfe0c572a8",
     "candidateLeafCount": 79,
-    "stagingRoot": null,
-    "stagingLeafCount": null,
+    "stagingRoot": "c4737b62d79bc67a10c961459a3fa01c16c9deac09ca5279bb913ca0a0c1d165",
+    "stagingLeafCount": 79,
     "matched": false
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
@@ -30,7 +26,7 @@
   "surfaceParity": {
     "state": "uncomparable",
     "productionRoutes": null,
-    "stagingRoutes": null,
+    "stagingRoutes": 349,
     "missingOnStaging": [],
     "missingOnStagingCount": null,
     "aheadOnStaging": [],
@@ -43,12 +39,31 @@
     {
       "route": "/",
       "prodStatus": 403,
-      "stagingStatus": 502,
+      "stagingStatus": 200,
       "stagingReachable": true,
       "statusParity": false,
-      "shellParity": true,
+      "shellParity": false,
       "prodShell": [],
-      "stagingShell": [],
+      "stagingShell": [
+        "assets/after-paint.shell-0392b76d45.js",
+        "assets/ambient-core.shell-bc969274be.js",
+        "assets/ambient-feature.shell-dbfd95a4bb.js",
+        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+        "assets/hero-ticker.shell-550971e267.js",
+        "assets/home-idle-loader.shell-7b976ad580.js",
+        "assets/nav-sheet.shell-c0fddc0c73.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/public-intelligence.shell-c86a6ecc39.js",
+        "assets/pwa-install.shell-30b48f0ae6.js",
+        "assets/pwa-nav.shell-5f63b6b75a.js",
+        "assets/schema-injector.shell-33115efcde.js",
+        "assets/sentry-init.shell-64fc9a90a4.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/stats-surface.shell-b33242e1cc.js",
+        "assets/style.shell-56ae8098ff.css",
+        "assets/theme-toggle.shell-c2c9a3a78c.js",
+        "assets/vault-door.shell-20bb2584bc.js"
+      ],
       "headerParity": false,
       "prodHeaders": {
         "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
@@ -57,20 +72,21 @@
         "referrer": "same-origin"
       },
       "stagingHeaders": {
-        "csp": "",
-        "hsts": "",
-        "xcto": "",
-        "referrer": ""
+        "csp": "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://website-data.staging.vaultsparkstudios.com https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
+        "hsts": "max-age=31536000; includeSubDomains; preload",
+        "xcto": "nosniff",
+        "referrer": "strict-origin-when-cross-origin"
       },
       "stagingStaticCspSafe": true,
-      "stagingCspMode": "static",
+      "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": false,
-      "stagingSecurityHeaders": false,
+      "stagingSecurityHeaders": true,
       "reasonCodes": [
         "status-mismatch",
+        "prod-forbidden",
+        "shell-mismatch",
         "header-mismatch",
-        "staging-canonical-csp-drift",
-        "staging-security-header-baseline"
+        "staging-canonical-csp-drift"
       ]
     },
     {

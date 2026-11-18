@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-18T18:11:22.790Z",
+  "generatedAt": "2026-11-18T19:08:21.962Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -14,30 +14,27 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
       "staging-canonical-csp-drift",
-      "staging-security-header-baseline",
       "status-mismatch"
     ],
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
       "staging-artifact-root-mismatch",
-      "staging-artifact-leaf-count-mismatch",
-      "/:stagingStatus",
       "/:stagingCanonicalCsp",
-      "/:stagingSecurityHeaders",
-      "/:localShellParity",
       "/studio-pulse/:stagingCanonicalCsp",
       "/membership/:stagingCanonicalCsp"
     ],
     "candidateBuildSha": "b1d63b4ca9ec23f1e1ec7d9f2edc3a62907b7c2a",
-    "deployedBuildSha": null,
+    "deployedBuildSha": "aa506d16fb1c9d34f008323e6db7e068b66bef22",
     "candidateShaBound": false,
     "artifactManifest": {
       "candidateRoot": "5408a245fb5964f16b76ffc4f2d9af61d9eb790fe9750db09ea1c3cfe0c572a8",
       "candidateLeafCount": 79,
-      "stagingRoot": null,
-      "stagingLeafCount": null,
+      "stagingRoot": "c4737b62d79bc67a10c961459a3fa01c16c9deac09ca5279bb913ca0a0c1d165",
+      "stagingLeafCount": 79,
       "matched": false
     },
     "productionParity": false,
@@ -78,13 +75,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 28,
-    "ageHours": 7.6,
-    "observedAt": "2026-11-18T18:11:22.790Z",
+    "commitsBehind": 29,
+    "ageHours": 8.2,
+    "observedAt": "2026-11-18T19:08:21.962Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-11-18T18:11:22.790Z",
+      "observedAt": "2026-11-18T19:08:21.962Z",
       "expectedFrom": "9b4ce4dca932b11f1bd681adc0de3ad1861a468ddc3c375813511ae1b9d16f51",
       "supersededBy": null,
       "ageHours": 0,
