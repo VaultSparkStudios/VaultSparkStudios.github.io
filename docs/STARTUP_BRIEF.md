@@ -80,7 +80,7 @@
 ║  ⛔  Context age   24d                                            ║
 ║  ✓  IGNIS         44726 FORGE  ·  5d old                         ║
 ║  ⛔  Truth         yellow — S411 local recovery verified;…        ║
-║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
+║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.175  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -124,6 +124,9 @@
 ║   96  [PRODUCT]      Full source check, push, staging and produ  ║
 ║        Full source check, push, staging and production readback  ║
 ║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   93  [PRODUCT]      Remaining public-beta waves: docs/S417_REM  ║
 ║        Remaining public-beta waves: docs/S417_REMAINING_PLAN.md  ║
 ║                                                                  ║
@@ -132,9 +135,6 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Integrate current main safely; pass full c  ║
 ║        Integrate current main safely; pass full current source   ║
-║                                                                  ║
-║   87  [INTELLIGENCE]  Complete recovered S415 writeback, all S4  ║
-║        Complete recovered S415 writeback, all S416 closeout sur  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
