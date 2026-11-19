@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-19T18:12:18.368Z",
+  "generatedAt": "2026-11-19T18:36:56.869Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -14,27 +14,30 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "prod-forbidden",
-      "shell-mismatch",
       "staging-canonical-csp-drift",
+      "staging-security-header-baseline",
       "status-mismatch"
     ],
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
       "staging-artifact-root-mismatch",
+      "staging-artifact-leaf-count-mismatch",
+      "/:stagingStatus",
       "/:stagingCanonicalCsp",
+      "/:stagingSecurityHeaders",
+      "/:localShellParity",
       "/studio-pulse/:stagingCanonicalCsp",
       "/membership/:stagingCanonicalCsp"
     ],
     "candidateBuildSha": "b1d63b4ca9ec23f1e1ec7d9f2edc3a62907b7c2a",
-    "deployedBuildSha": "aa506d16fb1c9d34f008323e6db7e068b66bef22",
+    "deployedBuildSha": null,
     "candidateShaBound": false,
     "artifactManifest": {
       "candidateRoot": "1c4ed24e37e8dd723a6000eaef5a67bc8f3fadda4a5822bf3e1c6ca95d64840f",
       "candidateLeafCount": 79,
-      "stagingRoot": "c4737b62d79bc67a10c961459a3fa01c16c9deac09ca5279bb913ca0a0c1d165",
-      "stagingLeafCount": 79,
+      "stagingRoot": null,
+      "stagingLeafCount": null,
       "matched": false
     },
     "productionParity": false,
@@ -75,13 +78,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 112,
-    "ageHours": 32.9,
-    "observedAt": "2026-11-19T18:12:18.368Z",
+    "commitsBehind": 113,
+    "ageHours": 33.5,
+    "observedAt": "2026-11-19T18:36:56.869Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-11-19T18:12:18.368Z",
+      "observedAt": "2026-11-19T18:36:56.869Z",
       "expectedFrom": "9b4ce4dca932b11f1bd681adc0de3ad1861a468ddc3c375813511ae1b9d16f51",
       "supersededBy": null,
       "ageHours": 0,
