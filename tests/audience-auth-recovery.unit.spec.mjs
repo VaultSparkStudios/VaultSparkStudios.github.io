@@ -308,6 +308,8 @@ for (const audience of ['member', 'investor']) for (const intent of ['signin', '
         await f.page.locator('#panel-oauth-complete').waitFor({ state: 'visible' });
         assert.equal(new URL(f.page.url()).pathname, '/vault-member/', 'identity alone does not bypass profile completion');
         await f.page.locator('#oauth-username').fill('VaultPerson');
+        await f.page.selectOption('#oauth-birth-month', '1');
+        await f.page.selectOption('#oauth-birth-year', '1990');
         await f.page.locator('#oauth-subscribe').uncheck();
         await f.page.locator('#oauth-complete-form button[type="submit"]').click();
       }

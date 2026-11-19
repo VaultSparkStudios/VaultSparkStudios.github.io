@@ -12,15 +12,19 @@ after(async () => { await browser?.close(); });
 const page = html({ body: `<form id="oauth-complete-form">
   <div id="oauth-complete-error"></div>
   <input id="oauth-username" value="NewMember">
+  <select id="oauth-birth-month"><option value="1" selected>January</option></select>
+  <select id="oauth-birth-year"><option value="1990" selected>1990</option><option value="2020">2020</option></select>
   <input id="oauth-invite" value="">
   <input id="oauth-subscribe" type="checkbox">
   <button type="submit">Complete Registration →</button>
-</form><script src="/assets/registration-under-test.js"></script>` });
+</form><script src="/assets/age-screen-under-test.js"></script><script src="/assets/registration-under-test.js"></script>` });
 
 async function fixture({ denied = false, stored = '', ref, rejection = false }, run) {
   const f = await openFixture(browser, {
     pages: { '/vault-member/': page },
-    handlers: [{ match: url => url.pathname === '/assets/registration-under-test.js', handle: route =>
+    handlers: [{ match: url => url.pathname === '/assets/age-screen-under-test.js', handle: route =>
+      route.fulfill({ contentType: 'application/javascript', body: fs.readFileSync('vault-member/age-screen.js', 'utf8') }) },
+      { match: url => url.pathname === '/assets/registration-under-test.js', handle: route =>
       route.fulfill({ contentType: 'application/javascript', body: fs.readFileSync('vault-member/portal-auth.js', 'utf8') }) }],
     initScripts: [{ fn: options => {
       if (options.denied) Object.defineProperty(window, 'sessionStorage', { get() { throw new DOMException('Denied', 'SecurityError'); } });
@@ -143,7 +147,7 @@ test('new identity returns through profile completion before its passport, inclu
     state.setAuthenticated();await f.goto(callback.pathname+callback.search+callback.hash);
     await f.page.locator('#panel-oauth-complete').waitFor({state:'visible'});
     assert.equal(new URL(f.page.url()).pathname,'/vault-member/','identity alone does not resume');
-    await f.page.locator('#oauth-username').fill('NewMember');
+    await f.page.locator('#oauth-username').fill('NewMember'); await f.page.selectOption('#oauth-birth-month','1'); await f.page.selectOption('#oauth-birth-year','1990');
     await f.page.locator('#oauth-subscribe').uncheck();
     await f.page.locator('#oauth-complete-form button[type="submit"]').click();
     await f.page.waitForURL('**/vault-member/passport/**');
@@ -169,7 +173,7 @@ test('rejected registration or absent confirmed member row never resumes the des
   for(const options of [{rejection:true},{missingRow:true}])await journeyFixture(options,async(f,state)=>{
     state.setAuthenticated();await f.goto('/vault-member/?'+new URLSearchParams({return:'/vault-member/passport/'}));
     await f.page.locator('#panel-oauth-complete').waitFor({state:'visible'});
-    await f.page.locator('#oauth-username').fill('NewMember');await f.page.locator('#oauth-subscribe').uncheck();
+    await f.page.locator('#oauth-username').fill('NewMember'); await f.page.selectOption('#oauth-birth-month','1'); await f.page.selectOption('#oauth-birth-year','1990');await f.page.locator('#oauth-subscribe').uncheck();
     await f.page.locator('#oauth-complete-form button[type="submit"]').click();
     await waitFor(async()=>f.page.locator('#oauth-complete-error').evaluate(el=>el.classList.contains('show')));
     assert.equal(new URL(f.page.url()).pathname,'/vault-member/');
@@ -188,5 +192,19 @@ test('confirmed members ignore unsafe or nested self-loop destinations and defau
       assert.equal(await f.page.evaluate(()=>window.VSMemberEntry.resumeAfterProfile()),false);
       assert.equal(state.registrations.length,0);
     }
+  });
+});
+
+
+test('an under-age answer never reaches registration and is remembered on the device', async () => {
+  await fixture({}, async f => {
+    await f.page.selectOption('#oauth-birth-year', '2020');
+    await f.page.click('button[type="submit"]');
+    await waitFor(async () => f.page.locator('#oauth-complete-error').evaluate(el => el.classList.contains('show')));
+    assert.equal(await f.page.evaluate(() => window.__registrations.length), 0);
+    assert.equal(await f.page.locator('button[type="submit"]').isDisabled(), true);
+    assert.doesNotMatch(await f.page.locator('#oauth-complete-error').textContent(), /d|age|old|young|birth/i);
+    assert.equal(await f.page.evaluate(() => window.VSAgeScreen.check({ value: '1990' }, { value: '1' }).ok), false);
+    assert.equal(await f.page.evaluate(() => !!window.__completedMember), false);
   });
 });

@@ -75,7 +75,7 @@
   <!-- vs-speculation:end -->
   <link rel="alternate" type="application/json" href="/agents.json" />
 <style data-vs-spine-style>.vs-spine{border-bottom:1px solid rgba(127,127,127,.18);background:rgba(127,127,127,.04)}.vs-spine-in{display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.25rem;padding:.85rem 0;font-size:.9rem;line-height:1.5}.vs-spine-self{color:var(--text);font-weight:600;margin:0}.vs-spine-kin{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;list-style:none;margin:0;padding:0}.vs-spine-kin a{color:var(--muted);text-decoration:underline;text-underline-offset:3px}.vs-spine-kin a:hover,.vs-spine-kin a:focus-visible{color:var(--gold)}@media(max-width:640px){.vs-spine-in{flex-direction:column;gap:.5rem;padding:.75rem 0}}</style>
-  <link rel="stylesheet" href="/assets/member-access.shell-5bb645300d.css" />
+  <link rel="stylesheet" href="/assets/member-access.shell-0565eda203.css" />
   <script src="/assets/account-entry.shell-c3ddf1fcd0.js" defer></script>
 </head>
 <body class="dark-mode" data-theme="dark">
@@ -248,11 +248,23 @@
                     <input type="text" id="oauth-username" name="username" placeholder="VaultRunner42" autocomplete="username" minlength="3" maxlength="24" required />
                   </div>
                   <div class="form-group">
+                    <label for="oauth-birth-month" id="oauth-birth-label">When were you born?</label>
+                    <div class="birth-row">
+                      <select id="oauth-birth-month" name="birthMonth" aria-labelledby="oauth-birth-label" aria-describedby="oauth-birth-hint" autocomplete="bday-month" required>
+                        <option value="">Month</option><option value="1">January</option><option value="2">February</option><option value="3">March</option><option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option><option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option>
+                      </select>
+                      <select id="oauth-birth-year" name="birthYear" aria-label="Year you were born" aria-describedby="oauth-birth-hint" autocomplete="bday-year" required>
+                        <option value="">Year</option>
+                      </select>
+                    </div>
+                    <span class="form-hint" id="oauth-birth-hint">We ask only to check you can hold an account. Your answer stays in this browser and is not saved.</span>
+                  </div>
+                  <div class="form-group">
                     <label for="oauth-invite">Referral code <span style="font-size:0.78rem;font-weight:500;color:var(--dim);">(optional — earns +50 bonus XP)</span></label>
                     <input type="text" id="oauth-invite" name="inviteCode" placeholder="VAULT-XXXX  (optional)" autocomplete="off" class="input-invite" />
                   </div>
                   <label class="form-check">
-                    <input type="checkbox" id="oauth-subscribe" checked />
+                    <input type="checkbox" id="oauth-subscribe" />
                     <span>Subscribe to <strong>Vault Dispatch</strong> — studio updates, early access drops, and exclusive lore.</span>
                   </label>
                   <button type="submit" class="button auth-submit">Enter your Vault →</button>
@@ -1351,7 +1363,8 @@
   <script src="/vault-member/portal-logic.shell-7928261818.js" defer></script>
   <script src="portal-cache.js" defer></script>
   <script src="portal-core.js" defer></script>
-  <script src="/vault-member/portal-auth.shell-c4606e6160.js" defer></script>
+  <script src="age-screen.js" defer></script>
+  <script src="/vault-member/portal-auth.shell-83a9a8fdda.js" defer></script>
   <script src="portal-loop.js" defer></script>
   <script src="/vault-member/portal-dashboard.shell-977f649ce6.js" defer></script>
   <script src="portal-features.js" defer></script>

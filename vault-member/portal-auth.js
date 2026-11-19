@@ -434,6 +434,18 @@
       const invite   = document.getElementById('oauth-invite').value.trim().toUpperCase();
       const subscribe = document.getElementById('oauth-subscribe').checked;
       errEl.classList.remove('show');
+      // Age screen: decided in the browser from month and year; nothing is sent
+      // or stored. If the screen script is missing the form fails closed.
+      const ageScreen = window.VSAgeScreen;
+      const age = ageScreen
+        ? ageScreen.check(document.getElementById('oauth-birth-year'), document.getElementById('oauth-birth-month'))
+        : { ok: false, reason: 'unavailable' };
+      if (!age.ok) {
+        errEl.textContent = ageScreen ? ageScreen.message(age.reason) : 'We could not check your details. Please reload the page and try again.';
+        errEl.classList.add('show');
+        if (age.reason === 'under-age') btn.disabled = true;
+        return;
+      }
       btn.textContent = 'Completing…';
       btn.disabled    = true;
       try {
