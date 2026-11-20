@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-11-20T06:31:34.084Z",
+  "generatedAt": "2026-11-20T06:40:03.019Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": false,
-  "verifiedBrowserHeadSha": null,
-  "hasDeadCron": true,
+  "browserGatesGreen": true,
+  "verifiedBrowserHeadSha": "6784724ea7efcc229da42e0d66bbc29dc33ef7b8",
+  "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 16,
     "observed": 7,
-    "healthy": 6,
+    "healthy": 7,
     "unknown": 9,
     "stale": 0,
-    "dead": 1
+    "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "unknown",
   "knownTerminalBlockers": [],
-  "summary": "CI gates are still running.",
+  "summary": "CI gate status is unknown.",
   "deploymentReconciliation": {
     "state": "unobserved",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-30T21:19:31.294Z",
     "currentBehindStreak": 0,
     "newestGradableAt": "2026-11-03T02:31:55.485Z",
-    "newestAgeHours": 412,
+    "newestAgeHours": 412.1,
     "maxAgeHours": 48,
     "stale": true,
     "strandedAlert": false
@@ -37,10 +37,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-11-20T06:23:29Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-11-20T06:37:45Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/44687450615",
       "headSha": "6784724ea7efcc229da42e0d66bbc29dc33ef7b8",
       "event": "push"
@@ -57,10 +57,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-11-20T06:30:32Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-11-20T06:38:38Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/44687450602",
       "headSha": "6784724ea7efcc229da42e0d66bbc29dc33ef7b8",
       "event": "push"
@@ -109,7 +109,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 6.94,
+      "ageHours": 7.08,
       "staleAfterHours": 48
     },
     {
@@ -155,7 +155,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.05,
+      "ageHours": 0.19,
       "staleAfterHours": 48
     },
     {
@@ -174,13 +174,12 @@
       "lastConclusion": "failure",
       "lastUpdatedAt": "2026-11-20T06:25:02Z",
       "recentConclusions": [
-        "failure",
         "failure"
       ],
-      "dead": true,
-      "streak": 2,
-      "state": "dead",
-      "ageHours": 0.11,
+      "dead": false,
+      "streak": 1,
+      "state": "healthy",
+      "ageHours": 0.25,
       "staleAfterHours": 48
     },
     {
@@ -193,7 +192,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.65,
+      "ageHours": 5.79,
       "staleAfterHours": 48
     },
     {
@@ -218,18 +217,20 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.99,
+      "ageHours": 2.13,
       "staleAfterHours": 48
     },
     {
       "name": "RUM Field Pull",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": "2026-11-20T06:28:15Z",
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-11-20T06:34:24Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.06,
+      "ageHours": 0.09,
       "staleAfterHours": 48
     },
     {
@@ -244,7 +245,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.25,
+      "ageHours": 0.39,
       "staleAfterHours": 48
     },
     {
