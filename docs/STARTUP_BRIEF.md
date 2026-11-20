@@ -124,9 +124,6 @@
 ║   96  [PRODUCT]      Full source check, push, staging and produ  ║
 ║        Full source check, push, staging and production readback  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      Remaining public-beta waves: docs/S417_REM  ║
 ║        Remaining public-beta waves: docs/S417_REMAINING_PLAN.md  ║
 ║                                                                  ║
@@ -135,6 +132,9 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Integrate current main safely; pass full c  ║
 ║        Integrate current main safely; pass full current source   ║
+║                                                                  ║
+║   87  [INTELLIGENCE]  Complete recovered S415 writeback, all S4  ║
+║        Complete recovered S415 writeback, all S416 closeout sur  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
