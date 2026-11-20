@@ -1,5 +1,5 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         Source UNVERIFIED: 102/562 steps; 1 failed;…   ║
+║  ⚠  Tests         Source PARTIAL: 560/562 steps; partial         ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   26d                                            ║
@@ -13,7 +13,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  3d old (2026-11-17)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
+║  ⛔  Doctor        13/17 (76%)  ·  1 failing                      ║
 ║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/56 pending review                            ║
 ║  Open current tasks 36 / Human-action entries 6                  ║
