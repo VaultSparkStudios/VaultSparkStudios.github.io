@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-11-20T06:31:34.323Z",
+  "generatedAt": "2026-11-20T06:34:10.638Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 83,
     "worstStale": {
       "key": "identity-migration-receipt",
-      "ageSeconds": 7448780,
+      "ageSeconds": 7448936,
       "generatedAt": "2026-08-26T01:25:14.581Z"
     },
     "seedRisk": [
@@ -30,9 +30,9 @@
       },
       {
         "key": "supabase-control-plane",
-        "ageHours": 165,
+        "ageHours": 166,
         "staleAfterH": 168,
-        "pctOfWindow": 98
+        "pctOfWindow": 99
       }
     ]
   },
@@ -41,7 +41,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-11-20T06:16:04.868Z",
-      "freshnessSeconds": 929,
+      "freshnessSeconds": 1086,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -202,7 +202,7 @@
       "present": true,
       "source": "/api/worker-route-provenance.json",
       "generatedAt": "2026-11-18T08:35:23.346Z",
-      "freshnessSeconds": 165371,
+      "freshnessSeconds": 165527,
       "staleAfterH": 6,
       "stale": true,
       "data": {
@@ -337,7 +337,7 @@
       "present": true,
       "source": "/api/deploy-currency.json",
       "generatedAt": "2026-11-20T06:16:05.420Z",
-      "freshnessSeconds": 929,
+      "freshnessSeconds": 1085,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -531,8 +531,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-11-20T05:38:59.400Z",
-      "freshnessSeconds": 3155,
+      "generatedAt": "2026-11-20T06:33:39.604Z",
+      "freshnessSeconds": 31,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -547,12 +547,12 @@
           "boundary": "2026-06-05",
           "label": "S173 critical path + S175 origin migration to CF Pages",
           "verdict": "improved",
-          "lcpDeltaPct": -69.1,
+          "lcpDeltaPct": -68.8,
           "confidence": "high",
           "preSamples": 38,
-          "postSamples": 146,
+          "postSamples": 153,
           "preLcpP75": 9489,
-          "postLcpP75": 2929
+          "postLcpP75": 2962
         },
         "confirmed": [
           {
@@ -560,51 +560,51 @@
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "improved",
-            "lcpDeltaPct": -69.1,
+            "lcpDeltaPct": -68.8,
             "confidence": "high",
             "preSamples": 38,
-            "postSamples": 146,
+            "postSamples": 153,
             "preLcpP75": 9489,
-            "postLcpP75": 2929
+            "postLcpP75": 2962
           },
           {
             "route": "/games/",
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "improved",
-            "lcpDeltaPct": -25.9,
+            "lcpDeltaPct": -26.7,
             "confidence": "low",
             "preSamples": 8,
-            "postSamples": 56,
+            "postSamples": 53,
             "preLcpP75": 2000,
-            "postLcpP75": 1481
+            "postLcpP75": 1466
           },
           {
             "route": "/games/gridiron-gm/",
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "regressed",
-            "lcpDeltaPct": 38.6,
+            "lcpDeltaPct": 37.7,
             "confidence": "low",
             "preSamples": 5,
-            "postSamples": 154,
+            "postSamples": 152,
             "preLcpP75": 1294,
-            "postLcpP75": 1793
+            "postLcpP75": 1782
           }
         ],
-        "generatedAt": "2026-11-20T05:38:59.400Z"
+        "generatedAt": "2026-11-20T06:33:39.604Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-11-20T06:21:57.751Z",
-      "freshnessSeconds": 577,
+      "generatedAt": "2026-11-20T06:34:10.417Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-11-20T06:21:57.751Z",
+        "generatedAt": "2026-11-20T06:34:10.417Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -633,7 +633,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-11-20T06:31:34.084Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 157,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -914,7 +914,7 @@
       "present": true,
       "source": "/api/newsroom-run.json",
       "generatedAt": "2026-11-20T06:31:34.084Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 157,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -965,7 +965,7 @@
       "present": true,
       "source": "/api/promotion-receipt.json",
       "generatedAt": "2026-11-03T02:31:55.485Z",
-      "freshnessSeconds": 1483179,
+      "freshnessSeconds": 1483335,
       "staleAfterH": 336,
       "stale": true,
       "data": {
@@ -1084,7 +1084,7 @@
       "present": true,
       "source": "/api/site-health.json",
       "generatedAt": "2026-11-20T05:34:50.969Z",
-      "freshnessSeconds": 3403,
+      "freshnessSeconds": 3560,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -1112,7 +1112,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-11-20T06:16:05.341Z",
-      "freshnessSeconds": 929,
+      "freshnessSeconds": 1085,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -1323,7 +1323,7 @@
       "present": true,
       "source": "/api/identity-migration-receipt.json",
       "generatedAt": "2026-08-26T01:25:14.581Z",
-      "freshnessSeconds": 7448780,
+      "freshnessSeconds": 7448936,
       "staleAfterH": 336,
       "stale": true,
       "data": {
@@ -1495,7 +1495,7 @@
       "present": true,
       "source": "/api/supabase-control-plane.json",
       "generatedAt": "2026-11-13T09:03:11.261Z",
-      "freshnessSeconds": 595703,
+      "freshnessSeconds": 595859,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -1567,13 +1567,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-11-20T06:22:02.723Z",
-      "freshnessSeconds": 572,
+      "generatedAt": "2026-11-20T06:34:10.566Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-11-20T06:22:02.723Z",
+        "generatedAt": "2026-11-20T06:34:10.566Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\" (privacy). Rows under 20 samples are confidence:\"low\" — render those as \"insufficient samples\", not as a measurement. dataWindow reports when the underlying visits actually happened; readers must surface staleness rather than trusting generatedAt.",
@@ -1581,130 +1581,165 @@
         "confidenceSamples": 20,
         "dataWindow": {
           "firstDay": "2026-05-25",
-          "lastDay": "2026-09-10",
-          "days": 61
+          "lastDay": "2026-11-11",
+          "days": 60
         },
         "countries": [
           {
             "country": "US",
-            "samples": 891,
-            "lcpP75": 936,
-            "ttfbP75": 123,
+            "samples": 976,
+            "lcpP75": 1724,
+            "ttfbP75": 300,
             "confidence": "high",
             "colos": [
+              "ARN",
               "ATL",
+              "BGR",
               "BOS",
+              "CDG",
+              "CLT",
               "CMH",
+              "CVG",
               "DEN",
               "DFW",
-              "DTW",
               "EWR",
+              "GRU",
               "HNL",
               "IAD",
-              "JAX",
-              "LAS",
               "LAX",
+              "LHR",
               "MCI",
               "MIA",
-              "OMA",
+              "MSP",
               "ORD",
+              "PDX",
               "PHL",
               "PHX",
+              "SAN",
               "SEA",
               "SJC",
+              "SLC",
               "SMF",
+              "STL",
+              "TLH",
               "YYZ"
             ]
           },
           {
-            "country": "CN",
-            "samples": 13,
-            "lcpP75": 1000,
-            "ttfbP75": 10,
-            "confidence": "low",
+            "country": "CA",
+            "samples": 41,
+            "lcpP75": 720,
+            "ttfbP75": 230,
+            "confidence": "high",
             "colos": [
-              "AMS",
-              "LAX",
-              "SJC"
+              "BOS",
+              "EWR",
+              "YUL",
+              "YVR",
+              "YYZ"
             ]
           },
           {
             "country": "GB",
-            "samples": 13,
-            "lcpP75": 1072,
-            "ttfbP75": 337,
-            "confidence": "low",
+            "samples": 26,
+            "lcpP75": 904,
+            "ttfbP75": 293,
+            "confidence": "high",
             "colos": [
               "LHR",
               "MAN"
             ]
           },
           {
-            "country": "RU",
-            "samples": 10,
-            "lcpP75": 1584,
-            "ttfbP75": 196,
-            "confidence": "low",
-            "colos": [
-              "AMS",
-              "DME",
-              "FRA",
-              "GIG"
-            ]
-          },
-          {
-            "country": "AU",
-            "samples": 7,
-            "lcpP75": 2368,
-            "ttfbP75": 568,
-            "confidence": "low",
-            "colos": [
-              "MEL",
-              "PER",
-              "SIN"
-            ]
-          },
-          {
-            "country": "CA",
-            "samples": 7,
-            "lcpP75": 9960,
-            "ttfbP75": 1286,
-            "confidence": "low",
-            "colos": [
-              "YVR",
-              "YYZ"
-            ]
-          },
-          {
             "country": "IN",
-            "samples": 7,
+            "samples": 13,
             "lcpP75": 1340,
-            "ttfbP75": 906,
+            "ttfbP75": 954,
             "confidence": "low",
             "colos": [
               "BOM",
               "BOS",
+              "CDG",
+              "DFW",
               "SIN"
             ]
           },
           {
-            "country": "HN",
-            "samples": 5,
-            "lcpP75": 1876,
-            "ttfbP75": 78,
+            "country": "BR",
+            "samples": 10,
+            "lcpP75": 1284,
+            "ttfbP75": 467,
             "confidence": "low",
             "colos": [
-              "ATL"
+              "CWB",
+              "GRU"
             ]
           },
           {
-            "country": "BR",
-            "samples": 4,
-            "lcpP75": 1724,
+            "country": "CN",
+            "samples": 8,
+            "lcpP75": 1024,
+            "ttfbP75": 1210,
+            "confidence": "low",
+            "colos": [
+              "AMS",
+              "LAX"
+            ]
+          },
+          {
+            "country": "SE",
+            "samples": 8,
+            "lcpP75": 142,
+            "ttfbP75": 0,
+            "confidence": "low",
+            "colos": [
+              "ARN",
+              "GOT"
+            ]
+          },
+          {
+            "country": "DE",
+            "samples": 7,
+            "lcpP75": 660,
+            "ttfbP75": 397,
+            "confidence": "low",
+            "colos": [
+              "AMS",
+              "FRA",
+              "TXL",
+              "WAW"
+            ]
+          },
+          {
+            "country": "NL",
+            "samples": 5,
+            "lcpP75": 2204,
+            "ttfbP75": 1037,
+            "confidence": "low",
+            "colos": [
+              "AMS"
+            ]
+          },
+          {
+            "country": "PH",
+            "samples": 5,
+            "lcpP75": 1424,
             "ttfbP75": 538,
             "confidence": "low",
             "colos": [
-              "GRU"
+              "MNL",
+              "SIN"
+            ]
+          },
+          {
+            "country": "AU",
+            "samples": 4,
+            "lcpP75": 2956,
+            "ttfbP75": 1240,
+            "confidence": "low",
+            "colos": [
+              "PER",
+              "SIN"
             ]
           },
           {
@@ -1718,14 +1753,14 @@
             ]
           },
           {
-            "country": "DE",
+            "country": "CZ",
             "samples": 4,
-            "lcpP75": 9756,
-            "ttfbP75": 529,
+            "lcpP75": 774,
+            "ttfbP75": 240,
             "confidence": "low",
             "colos": [
-              "CPH",
-              "FRA"
+              "FRA",
+              "TXL"
             ]
           },
           {
@@ -1739,21 +1774,42 @@
             ]
           },
           {
-            "country": "PH",
+            "country": "ES",
             "samples": 4,
-            "lcpP75": 1522,
-            "ttfbP75": 880,
+            "lcpP75": 1528,
+            "ttfbP75": 556,
             "confidence": "low",
             "colos": [
-              "MNL",
-              "SIN"
+              "MAD"
+            ]
+          },
+          {
+            "country": "FR",
+            "samples": 4,
+            "lcpP75": 20912,
+            "ttfbP75": 230,
+            "confidence": "low",
+            "colos": [
+              "CDG",
+              "VIE"
+            ]
+          },
+          {
+            "country": "NP",
+            "samples": 4,
+            "lcpP75": 1764,
+            "ttfbP75": 617,
+            "confidence": "low",
+            "colos": [
+              "BOM",
+              "KTM"
             ]
           },
           {
             "country": "IT",
             "samples": 3,
-            "lcpP75": 1599,
-            "ttfbP75": 975,
+            "lcpP75": 3412,
+            "ttfbP75": 2752,
             "confidence": "low",
             "colos": [
               "FCO",
@@ -1761,23 +1817,13 @@
             ]
           },
           {
-            "country": "NL",
+            "country": "PT",
             "samples": 3,
-            "lcpP75": 2992,
-            "ttfbP75": 1037,
+            "lcpP75": 1128,
+            "ttfbP75": 768,
             "confidence": "low",
             "colos": [
-              "AMS"
-            ]
-          },
-          {
-            "country": "SG",
-            "samples": 3,
-            "lcpP75": 1084,
-            "ttfbP75": 118,
-            "confidence": "low",
-            "colos": [
-              "SIN"
+              "LIS"
             ]
           },
           {
@@ -1791,34 +1837,39 @@
             ]
           },
           {
-            "country": "UA",
+            "country": "VN",
             "samples": 3,
-            "lcpP75": 1824,
-            "ttfbP75": 318,
+            "lcpP75": 7020,
+            "ttfbP75": 644,
             "confidence": "low",
             "colos": [
-              "VIE"
+              "SIN"
             ]
           },
           {
             "country": "other",
-            "samples": 19,
-            "lcpP75": 1256,
-            "ttfbP75": 594,
-            "confidence": "low",
+            "samples": 24,
+            "lcpP75": 1964,
+            "ttfbP75": 993,
+            "confidence": "high",
             "colos": [
-              "AKL",
+              "ALA",
               "ARN",
-              "BOM",
               "BRU",
               "BUD",
-              "CDG",
-              "CPH",
-              "HKG",
-              "LIS",
-              "MAD",
+              "DFW",
+              "DME",
+              "EZE",
+              "FRA",
+              "GIG",
+              "GRU",
+              "MIA",
               "MRS",
+              "MXP",
+              "OSL",
               "PRG",
+              "SIN",
+              "VNO",
               "WAW"
             ]
           }
@@ -1829,7 +1880,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-09-10T00:00:00.000Z",
-      "freshnessSeconds": 6157894,
+      "freshnessSeconds": 6158051,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -2226,7 +2277,7 @@
       "present": true,
       "source": "/api/attention-pressure.json",
       "generatedAt": "2026-09-10T00:00:00.000Z",
-      "freshnessSeconds": 6157894,
+      "freshnessSeconds": 6158051,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -2256,13 +2307,13 @@
     "canonical-destination-reachability": {
       "present": true,
       "source": "/api/canonical-destination-reachability.json",
-      "generatedAt": "2026-11-20T06:21:56.442Z",
-      "freshnessSeconds": 578,
+      "generatedAt": "2026-11-20T06:34:10.235Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 36,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-11-20T06:21:56.442Z",
+        "generatedAt": "2026-11-20T06:34:10.235Z",
         "generatedBy": "scripts/probe-canonical-destinations.mjs",
         "publicSafe": true,
         "source": {
@@ -2282,7 +2333,7 @@
           "passed": 18,
           "failed": 0,
           "unknown": 2,
-          "longestUnknownStreak": 873,
+          "longestUnknownStreak": 874,
           "neverKnownGood": 2
         },
         "results": [
@@ -2300,7 +2351,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2317,7 +2368,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2334,7 +2385,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2351,7 +2402,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2368,7 +2419,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2385,7 +2436,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2402,7 +2453,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2419,7 +2470,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2436,7 +2487,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2447,7 +2498,7 @@
             "attemptCount": 2,
             "attempts": [
               {
-                "status": 401,
+                "status": 403,
                 "redirected": false,
                 "outcome": "unknown"
               },
@@ -2457,7 +2508,7 @@
                 "outcome": "unknown"
               }
             ],
-            "unknownStreak": 873,
+            "unknownStreak": 874,
             "lastKnownGoodAt": null,
             "lastKnownGoodAgeHours": null
           },
@@ -2475,7 +2526,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2492,7 +2543,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2509,7 +2560,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2526,7 +2577,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2543,7 +2594,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2564,7 +2615,7 @@
                 "outcome": "unknown"
               }
             ],
-            "unknownStreak": 836,
+            "unknownStreak": 837,
             "lastKnownGoodAt": null,
             "lastKnownGoodAgeHours": null
           },
@@ -2582,7 +2633,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2599,7 +2650,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2616,7 +2667,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2633,7 +2684,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-11-20T06:21:56.442Z",
+            "lastKnownGoodAt": "2026-11-20T06:34:10.235Z",
             "lastKnownGoodAgeHours": 0
           }
         ],
@@ -2644,7 +2695,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-11-20T00:00:00.000Z",
-      "freshnessSeconds": 23494,
+      "freshnessSeconds": 23651,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -2707,7 +2758,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-11-20T00:00:00.000Z",
-      "freshnessSeconds": 23494,
+      "freshnessSeconds": 23651,
       "staleAfterH": 720,
       "stale": false,
       "data": {
