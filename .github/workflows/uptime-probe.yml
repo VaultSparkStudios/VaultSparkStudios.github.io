@@ -26,13 +26,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # S316 — see cloudflare-analytics-pull.yml. This workflow also runs
           # build-deploy-currency, whose history lookup is meaningless in a
           # depth-1 clone.
           fetch-depth: 0
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
       - name: Install derived-artifact build dependencies
@@ -40,13 +40,13 @@ jobs:
         # This publisher closes that graph after updating its observations.
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Restore alert-dedup cache
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: .cache/uptime-alerts-sent.json
           key: uptime-alerts-${{ github.run_id }}
           restore-keys: uptime-alerts-
       - name: Restore colo-sample supplement
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           # S186: accumulate synthetic colo TTFB samples across runs so a thin
           # non-US sample set can confirm the origin-migration win globally,
