@@ -53,7 +53,10 @@
         "context/SELF_IMPROVEMENT_LOOP.md",
         "context/TASK_BOARD.md",
         "context/DECISIONS.md",
-        "context/TRUTH_AUDIT.md"
+        "context/TRUTH_AUDIT.md",
+        "config/project-waitlists.json",
+        "api/membership-tiers.json",
+        "scripts/lib/public-availability.mjs"
       ],
       "builder": "scripts/generate-public-intelligence.mjs",
       "check": [
@@ -62,6 +65,57 @@
         "--check"
       ],
       "publishCascade": true
+    },
+    {
+      "id": "project-waitlists",
+      "output": "api/project-waitlists.json",
+      "alsoStage": [
+        "supabase/functions/project-waitlist/projects.json",
+        "games/vaultfront/index.html",
+        "games/solara/index.html",
+        "games/the-exodus/index.html",
+        "universe/voidfall/index.html",
+        "games/vaultspark-forge/index.html",
+        "games/project-unknown/index.html",
+        "projects/canon/index.html",
+        "projects/ideaforge/index.html",
+        "projects/promogrind/index.html",
+        "projects/statvault/index.html",
+        "projects/the-living-protocol/index.html",
+        "projects/velaxis/index.html",
+        "projects/vorn/index.html"
+      ],
+      "sources": [
+        "config/project-waitlists.json",
+        "api/membership-tiers.json",
+        "api/public-intelligence.json",
+        "scripts/lib/public-availability.mjs",
+        "scripts/build-project-waitlists.mjs",
+        "games/vaultfront/index.html",
+        "games/solara/index.html",
+        "games/the-exodus/index.html",
+        "universe/voidfall/index.html",
+        "games/vaultspark-forge/index.html",
+        "games/project-unknown/index.html",
+        "projects/canon/index.html",
+        "projects/ideaforge/index.html",
+        "projects/promogrind/index.html",
+        "projects/statvault/index.html",
+        "projects/the-living-protocol/index.html",
+        "projects/velaxis/index.html",
+        "projects/vorn/index.html"
+      ],
+      "builder": "scripts/build-project-waitlists.mjs",
+      "builderArgs": [
+        "--apply"
+      ],
+      "check": [
+        "node",
+        "scripts/build-project-waitlists.mjs",
+        "--check"
+      ],
+      "publishCascade": false,
+      "note": "Deterministic configuration-derived public waitlist contract and marked HTML forms; generatedAt is config.updatedAt, not a clock or world-probe observation. public-intelligence is a required availability-coherence prerequisite, so repair runs it first. General PI/context/probe publication does not alter this output. Raw HTML inputs are also staged outputs; no provider/subscriber data, deployment or email action is performed. Config-changing automation must regenerate and stage the full declared output set."
     },
     {
       "id": "heartbeat",

@@ -63,6 +63,8 @@ const SKIP_FILES = new Set([
   'share/index.html',
   // S409: branded account chooser; mirrors the explicit propagation exemption.
   'sign-in/index.html',
+  // Project-email confirmation utility: minimal branded, no-referrer layout.
+  'waitlist/confirm/index.html',
   'vault-member/admin/ignis-spend/index.html',
   'vault-member/passport/index.html',
   // S207: Obelisk Passport login + OAuth callback — auth utility pages, own minimal layout.

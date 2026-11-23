@@ -2,13 +2,13 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-10-02",
-  "contractSha256": "c913291fa1ede2e3531becc48c10998e2dd5721bc1f693f48aaa854da75f8c4f",
+  "contractSha256": "6ccc3918e83017d58327b469fd6fa4c6b697521828ebf2bd7ee84e26263ac83c",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 90,
+  "nodeCount": 91,
   "cascadeNodeCount": 46,
   "buildOrder": [
     "ai-canonical-pages",
@@ -64,6 +64,7 @@
     "home-desk-module",
     "ignis-conduit",
     "news-pages",
+    "project-waitlists",
     "proof-aware-projects",
     "public-ecosystem",
     "security-posture",
@@ -1158,6 +1159,52 @@
       ]
     },
     {
+      "id": "project-waitlists",
+      "output": "api/project-waitlists.json",
+      "builder": "scripts/build-project-waitlists.mjs",
+      "verify": "node scripts/build-project-waitlists.mjs --check",
+      "publishCascade": false,
+      "alsoStage": [
+        "games/project-unknown/index.html",
+        "games/solara/index.html",
+        "games/the-exodus/index.html",
+        "games/vaultfront/index.html",
+        "games/vaultspark-forge/index.html",
+        "projects/canon/index.html",
+        "projects/ideaforge/index.html",
+        "projects/promogrind/index.html",
+        "projects/statvault/index.html",
+        "projects/the-living-protocol/index.html",
+        "projects/velaxis/index.html",
+        "projects/vorn/index.html",
+        "supabase/functions/project-waitlist/projects.json",
+        "universe/voidfall/index.html"
+      ],
+      "dependsOn": [
+        "api/public-intelligence.json"
+      ],
+      "feeds": [],
+      "externalSources": [
+        "api/membership-tiers.json",
+        "config/project-waitlists.json",
+        "games/project-unknown/index.html",
+        "games/solara/index.html",
+        "games/the-exodus/index.html",
+        "games/vaultfront/index.html",
+        "games/vaultspark-forge/index.html",
+        "projects/canon/index.html",
+        "projects/ideaforge/index.html",
+        "projects/promogrind/index.html",
+        "projects/statvault/index.html",
+        "projects/the-living-protocol/index.html",
+        "projects/velaxis/index.html",
+        "projects/vorn/index.html",
+        "scripts/build-project-waitlists.mjs",
+        "scripts/lib/public-availability.mjs",
+        "universe/voidfall/index.html"
+      ]
+    },
+    {
       "id": "promotion-receipt",
       "output": "api/promotion-receipt.json",
       "builder": "scripts/build-promotion-receipt.mjs",
@@ -1228,6 +1275,7 @@
         "api/intent-map.json",
         "api/nervous-system.json",
         "api/oracle-insights.json",
+        "api/project-waitlists.json",
         "api/public-status.json",
         "api/spark-manifest.json",
         "api/studio-timeline.json",
@@ -1235,13 +1283,16 @@
         "data/ignis-search-index.json"
       ],
       "externalSources": [
+        "api/membership-tiers.json",
+        "config/project-waitlists.json",
         "context/CURRENT_STATE.md",
         "context/DECISIONS.md",
         "context/LATEST_HANDOFF.md",
         "context/PROJECT_STATUS.json",
         "context/SELF_IMPROVEMENT_LOOP.md",
         "context/TASK_BOARD.md",
-        "context/TRUTH_AUDIT.md"
+        "context/TRUTH_AUDIT.md",
+        "scripts/lib/public-availability.mjs"
       ]
     },
     {

@@ -45,6 +45,8 @@ import { ORIGIN as SITE, ORG_REF as ORG_REF_ID, WEBSITE_REF as WEBSITE_REF_ID } 
 
 import { readAvailability, availabilityConflicts, renderMembershipSurfaceBlocks } from './lib/public-availability.mjs';
 
+import { extractFromHtml } from './lib/inline-style-extraction.mjs';
+
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 // Registry slug → public-intelligence id where they differ.
@@ -730,12 +732,17 @@ export function statusSurfaces(model) {
  * Apply every block to one file's html. Returns { html, problems[] } where problems
  * lists missing markers (after optional bootstrap).
  */
-export function applySurface(html, blocks, model, { bootstrap }) {
+export function applySurface(html, blocks, model, { bootstrap, expectedStyles }) {
   const problems = [];
   let out = html;
   for (const b of blocks) {
     if (bootstrap && b.legacy) out = bootstrapBlock(out, b.name, b.legacy);
-    const next = writeBlock(out, b.name, b.render(model));
+    let rendered = b.render(model);
+    // Write keeps raw declarations for the normal postbuild CSS collector.
+    // Check accepts only exact raw owner output or its exact normal extraction;
+    // actual HTML is never normalized or stripped for comparison.
+    if (expectedStyles && readBlock(out, b.name) !== rendered) rendered = extractFromHtml(rendered, expectedStyles);
+    const next = writeBlock(out, b.name, rendered);
     if (next === null) { problems.push(`missing <!-- registry:${b.name}:start/end --> markers`); continue; }
     out = next;
   }
@@ -748,7 +755,17 @@ function plan(model, { root, bootstrap, catalogExtras, surfaces = SURFACES }) {
   for (const s of surfaces) {
     const cur = read(s.file);
     if (cur === null) { results.push({ file: s.file, cur, next: cur, problems: ['file missing'] }); continue; }
-    let { html, problems } = applySurface(cur, s.blocks, model, { bootstrap });
+    const expectedStyles = !bootstrap && s.file === 'press/index.html' ? new Map() : undefined;
+    let { html, problems } = applySurface(cur, s.blocks, model, { bootstrap, expectedStyles });
+    if (expectedStyles?.size && html === cur) {
+      const sharedCss = read('assets/style.css') || '';
+      const pageCss = cur.match(/<style data-vs-page-styles>[\s\S]*?<\/style>/)?.[0] || '';
+      for (const [className, declarations] of expectedStyles) {
+        const rule = '.' + className + '{' + declarations + '}';
+        if (!sharedCss.includes(rule)) problems.push('missing or changed shared extracted style: ' + className);
+        if (!pageCss.includes(rule)) problems.push('missing or changed page extracted style: ' + className);
+      }
+    }
     if (s.file === 'projects/index.html') {
       if (!html.includes(CATALOG_START) || !html.includes(CATALOG_END)) problems.push('missing registry-project-catalog markers');
       else html = injectCatalog(html, renderCatalog(model.catalog, { extraPages: catalogExtras }));

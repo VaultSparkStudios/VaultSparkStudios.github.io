@@ -1,6 +1,6 @@
 {
   "schema": "public-rest-contract/v1",
-  "verifiedAt": "2026-10-29T01:21:26.808Z",
+  "verifiedAt": "2026-11-23T13:31:38.756Z",
   "queries": {
     "beta_keys|*": {
       "verdict": "ok",
@@ -11,10 +11,6 @@
       "status": 200
     },
     "challenge_completions|challenge_id,completed_at,challenges(title,points)|where:completed_at": {
-      "verdict": "ok",
-      "status": 200
-    },
-    "challenge_completions|challenge_id,completed_at|where:completed_at,user_id": {
       "verdict": "ok",
       "status": 200
     },
@@ -285,10 +281,6 @@
       "status": 200
     },
     "point_events|points,created_at|where:created_at": {
-      "verdict": "ok",
-      "status": 200
-    },
-    "point_events|points,reason,label,created_at|where:created_at,user_id": {
       "verdict": "ok",
       "status": 200
     },

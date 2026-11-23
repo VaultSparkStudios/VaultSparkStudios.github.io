@@ -110,19 +110,24 @@ function serve() {
 const slug = (s) => s.replace(/\//g, '-').replace(/^-|-$/g, '') || 'home';
 
 /** Planned before screenshots; no count is inferred from successful captures. */
-export function planScrollTiles(documentHeight, viewportHeight, viewportWidth) {
+export function planScrollTiles(documentHeight, viewportHeight, viewportWidth, occlusion) {
   if (![documentHeight, viewportHeight, viewportWidth].every(Number.isSafeInteger)
     || documentHeight < 1 || documentHeight > 100000 || viewportHeight <= 200 || viewportHeight > 3000
     || viewportWidth < 320 || viewportWidth > 3000) throw new Error('Invalid scroll-tile geometry');
-  const overlap = 200, last = Math.max(0, documentHeight - viewportHeight), offsets = [0];
+  if (occlusion !== undefined && (!occlusion || ![occlusion.top, occlusion.bottom].every(value => Number.isFinite(value) && value >= 0))) throw new Error('Invalid scroll-tile occlusion');
+  const edges = occlusion === undefined ? null : { top: Math.ceil(occlusion.top), bottom: Math.ceil(occlusion.bottom) };
+  const overlap = 200 + (edges ? edges.top + edges.bottom : 0);
+  if (viewportHeight <= overlap) throw new Error('Occlusion leaves no scroll-tile step');
+  const last = Math.max(0, documentHeight - viewportHeight), offsets = [0];
   while (offsets.at(-1) < last) {
     if (offsets.length >= 250) throw new Error('Scroll-tile plan exceeds capture bound');
     offsets.push(Math.min(last, offsets.at(-1) + viewportHeight - overlap));
   }
-  return { documentHeight, viewportHeight, viewportWidth, overlap, offsets };
+  return { documentHeight, viewportHeight, viewportWidth, overlap, offsets, ...(edges ? { contentOverlap: 200, occlusion: edges } : {}) };
 }
 
 export function validateScrollTileMeasurement(plan, measurement, offset) {
+  validateScrollTileOcclusion(plan, measurement);
   if (!measurement || ![measurement.scrollY, measurement.documentHeight, measurement.viewportHeight, measurement.viewportWidth, measurement.scrollWidth].every(Number.isSafeInteger)
     || Math.abs(measurement.documentHeight - plan.documentHeight) > 2
     || measurement.viewportHeight !== plan.viewportHeight || measurement.viewportWidth !== plan.viewportWidth
@@ -143,7 +148,7 @@ export function validateScrollTileCoverage(capturePlan, shots) {
     const id = key(row);
     if (!expected.has(id) || seen.has(id)) throw new Error('Duplicate or foreign scroll-tile case');
     seen.add(id);
-    const plan = planScrollTiles(row.plan?.documentHeight, row.plan?.viewportHeight, row.plan?.viewportWidth);
+    const plan = planScrollTiles(row.plan?.documentHeight, row.plan?.viewportHeight, row.plan?.viewportWidth, row.plan?.occlusion);
     if (JSON.stringify(plan) !== JSON.stringify(row.plan)) throw new Error('Noncanonical scroll-tile plan');
     const tiles = shots.filter(shot => key(shot) === id);
     if (tiles.length !== plan.offsets.length) throw new Error('Missing or duplicate scroll tile');
@@ -151,8 +156,18 @@ export function validateScrollTileCoverage(capturePlan, shots) {
     for (const [index, tile] of tiles.entries()) {
       if (tile.state !== 'scroll-tile' || tile.tileIndex !== index || tile.plannedOffset !== plan.offsets[index]) throw new Error('Unplanned scroll-tile state/order');
       validateScrollTileMeasurement(plan, tile.scroll, plan.offsets[index]);
+      if (plan.occlusion) {
+        validateScrollTileMeasurement(plan, tile.afterScroll, plan.offsets[index]);
+        if (tile.afterScroll.scrollY !== tile.scroll.scrollY) throw new Error('Scroll position changed during tile capture');
+      }
       if (index === 0 && tile.scroll.scrollY !== 0) throw new Error('First scroll tile must start at zero');
       if (prior !== null && (tile.scroll.scrollY <= prior || prior + plan.viewportHeight - tile.scroll.scrollY < plan.overlap)) throw new Error('Scroll-tile gap or insufficient overlap');
+      if (plan.occlusion && index > 0) {
+        const previous = tiles[index - 1].scroll;
+        const exposedEnd = previous.scrollY + plan.viewportHeight - previous.occlusion.bottom;
+        const exposedStart = tile.scroll.scrollY + tile.scroll.occlusion.top;
+        if (exposedEnd - exposedStart < plan.contentOverlap) throw new Error('Scroll-tile content gap or insufficient visible overlap');
+      }
       prior = tile.scroll.scrollY;
     }
     const last = tiles.at(-1).scroll;
@@ -161,6 +176,79 @@ export function validateScrollTileCoverage(capturePlan, shots) {
   }
   if (shots.some(shot => !expected.has(key(shot))) || shots.length !== plannedCaptures) throw new Error('Scroll-tile captures differ from planned matrix');
   return { plannedCaptures, completedCaptures: shots.length, plannedCases: cases.length };
+}
+
+/** Browser-side geometry only: fixed overlays and sticky elements actually pinned
+ * to their configured viewport edge. Ordinary in-flow content is never admitted.
+ * Visible descendant overflow is included, after ancestor clipping. */
+export function measureScrollTileOcclusion() {
+  const nodes = [...document.querySelectorAll('*')];
+  if (nodes.length > 30000) throw new Error('Occlusion DOM exceeds bound');
+  const vh = innerHeight, vw = innerWidth;
+  const visibleRect = element => {
+    let rect = element.getBoundingClientRect();
+    let box = { top: Math.max(0, rect.top), bottom: Math.min(vh, rect.bottom), left: Math.max(0, rect.left), right: Math.min(vw, rect.right) };
+    for (let ancestor = element; ancestor; ancestor = ancestor.parentElement) {
+      const style = getComputedStyle(ancestor);
+      if (style.display === 'none' || style.visibility !== 'visible' || Number(style.opacity) === 0) return null;
+      if (ancestor !== element) {
+        rect = ancestor.getBoundingClientRect();
+        if (/(hidden|clip|auto|scroll)/.test(style.overflowY)) { box.top = Math.max(box.top, rect.top); box.bottom = Math.min(box.bottom, rect.bottom); }
+        if (/(hidden|clip|auto|scroll)/.test(style.overflowX)) { box.left = Math.max(box.left, rect.left); box.right = Math.min(box.right, rect.right); }
+      }
+    }
+    return box.bottom > box.top && box.right > box.left ? box : null;
+  };
+  let top = 0, bottom = 0;
+  const sources = [];
+  for (const element of nodes) {
+    const style = getComputedStyle(element);
+    if (style.position !== 'fixed' && style.position !== 'sticky') continue;
+    const rect = element.getBoundingClientRect(), own = visibleRect(element);
+    if (!own) continue;
+    const topOffset = style.top === 'auto' ? null : Number.parseFloat(style.top);
+    const bottomOffset = style.bottom === 'auto' ? null : Number.parseFloat(style.bottom);
+    // Sticky elements still flowing through the middle of the page are not overlays.
+    // getComputedStyle resolves the auto inset of fixed boxes to used pixels in
+    // Chromium. Classify those by the nearest viewport edge, not resolved insets.
+    const atTop = style.position === 'fixed' ? rect.top <= vh - rect.bottom
+      : topOffset !== null && Number.isFinite(topOffset) && Math.abs(rect.top - topOffset) <= 1;
+    const atBottom = style.position === 'fixed' ? vh - rect.bottom <= rect.top
+      : bottomOffset !== null && Number.isFinite(bottomOffset) && Math.abs(vh - rect.bottom - bottomOffset) <= 1;
+    if (!atTop && !atBottom) continue;
+    let edgeTop = own.top, edgeBottom = own.bottom;
+    for (const child of element.querySelectorAll('*')) {
+      const box = visibleRect(child);
+      if (box) { edgeTop = Math.min(edgeTop, box.top); edgeBottom = Math.max(edgeBottom, box.bottom); }
+    }
+    // A stretched fixed overlay is intentionally refused by the planner rather
+    // than silently claiming the content behind it was visible.
+    if (atTop) top = Math.max(top, edgeBottom);
+    if (atBottom) bottom = Math.max(bottom, vh - edgeTop);
+    sources.push({ tag: element.tagName.toLowerCase(), id: element.id || null, position: style.position, top: atTop ? edgeBottom : 0, bottom: atBottom ? vh - edgeTop : 0 });
+  }
+  return { top, bottom, sources };
+}
+
+export function validateScrollTileOcclusion(plan, measurement) {
+  if (!plan.occlusion) return; // Historical three-argument plans remain valid.
+  const actual = measurement?.occlusion;
+  if (!actual || ![actual.top, actual.bottom].every(value => Number.isFinite(value) && value >= 0)
+    || actual.top > plan.occlusion.top || actual.bottom > plan.occlusion.bottom) throw new Error('Scroll-tile occlusion grew beyond plan');
+}
+
+/** Animation-driven overlay descendants must not prevent layout settlement.
+ * Occlusion remains measured independently in the walk and every tile. */
+export function scrollTileLayoutKey(measurement) {
+  const { scrollY, documentHeight, viewportHeight, viewportWidth, scrollWidth } = measurement;
+  return JSON.stringify({ scrollY, documentHeight, viewportHeight, viewportWidth, scrollWidth });
+}
+
+/** The publication writer uses this exact projection. Legacy captures without
+ * afterScroll keep their original shape; measured plans require it in validation. */
+export function serializeScrollTileState(shot) {
+  return { tileIndex: shot.tileIndex, plannedOffset: shot.plannedOffset, scroll: shot.scroll,
+    ...(shot.afterScroll === undefined ? {} : { afterScroll: shot.afterScroll }) };
 }
 
 function homeIdleSources() {
@@ -404,18 +492,38 @@ async function main() {
                 if (stable < 2) throw new Error('Homepage idle panels did not settle across activation walks');
               });
             }
-            const measure = () => page.evaluate(() => ({ scrollY: window.scrollY, documentHeight: document.documentElement.scrollHeight,
-              viewportHeight: innerHeight, viewportWidth: innerWidth, scrollWidth: document.documentElement.scrollWidth }));
+            const measure = async () => ({
+              ...await page.evaluate(() => ({ scrollY: window.scrollY, documentHeight: document.documentElement.scrollHeight,
+                viewportHeight: innerHeight, viewportWidth: innerWidth, scrollWidth: document.documentElement.scrollWidth })),
+              occlusion: await page.evaluate(measureScrollTileOcclusion)
+            });
             // Require a settled height before fixing the adaptive plan.
             let previous = null, stable = 0, geometry;
             for (let attempt = 0; attempt < 30 && stable < 3; attempt++) {
               await page.waitForTimeout(100); geometry = await measure();
-              const value = JSON.stringify(geometry); stable = value === previous ? stable + 1 : 0; previous = value;
+              const value = scrollTileLayoutKey(geometry); stable = value === previous ? stable + 1 : 0; previous = value;
             }
             if (stable < 3) throw new Error('Scroll-tile layout did not settle before planning');
-            const plan = planScrollTiles(geometry.documentHeight, geometry.viewportHeight, geometry.viewportWidth);
+            // Bounded preplan walk observes sticky/fixed controls at every legacy
+            // activation offset. It does not hide UI or relax height/width drift.
+            const legacyPlan = planScrollTiles(geometry.documentHeight, geometry.viewportHeight, geometry.viewportWidth);
+            const maxOcclusion = { top: 0, bottom: 0 };
+            const occlusionWalk = [];
+            for (const offset of legacyPlan.offsets) {
+              await page.evaluate(y => scrollTo({ top: y, left: 0, behavior: 'instant' }), offset);
+              await page.waitForTimeout(150);
+              const measured = await measure();
+              validateScrollTileMeasurement(legacyPlan, measured, offset);
+              maxOcclusion.top = Math.max(maxOcclusion.top, measured.occlusion.top);
+              maxOcclusion.bottom = Math.max(maxOcclusion.bottom, measured.occlusion.bottom);
+              occlusionWalk.push(measured);
+            }
+            await page.evaluate(() => scrollTo({ top: 0, left: 0, behavior: 'instant' }));
+            await page.waitForTimeout(150);
+            geometry = await measure();
+            const plan = planScrollTiles(geometry.documentHeight, geometry.viewportHeight, geometry.viewportWidth, maxOcclusion);
             validateScrollTileMeasurement(plan, geometry, 0);
-            capturePlan.cases.push({ route, theme, viewport: viewport.name, plan });
+            capturePlan.cases.push({ route, theme, viewport: viewport.name, plan, occlusionWalk });
             for (const [tileIndex, offset] of plan.offsets.entries()) {
               const target = tileIndex === plan.offsets.length - 1 ? Math.max(0, (await measure()).documentHeight - plan.viewportHeight) : offset;
               await page.evaluate(y => window.scrollTo({ top: y, left: 0, behavior: 'instant' }), target);
@@ -428,7 +536,7 @@ async function main() {
               const file = `${slug(route)}--${theme}--${viewport.name}--scroll-tile-y${scroll.scrollY}.png`;
               const sha256 = writeVisualCapture(path.join(runDir, file), pixels);
               manifest.push({ route, theme, observedTheme, capturedAt: new Date().toISOString(), viewport: viewport.name,
-                state: 'scroll-tile', tileIndex, plannedOffset: offset, scroll, file, sha256 });
+                state: 'scroll-tile', tileIndex, plannedOffset: offset, scroll, afterScroll: after, file, sha256 });
               console.log(`  ✓ ${file}`);
             }
             continue;
@@ -514,7 +622,7 @@ function writeCanonReceipt(manifest, captureDir = OUT_DIR) {
       sha256: shot.sha256,
       page: shot.route,
       state: shot.state,
-      ...(adaptive ? { tileIndex: shot.tileIndex, plannedOffset: shot.plannedOffset, scroll: shot.scroll } : {}),
+      ...(adaptive ? serializeScrollTileState(shot) : {}),
       inspection: reviewedFiles.has(shot.file)
         ? { mode: 'manual', reviewer }
         : { mode: 'automated-only' },

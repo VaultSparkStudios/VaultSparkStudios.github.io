@@ -28,6 +28,8 @@ import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { verifyImmutableDeskPublication } from './lib/immutable-desk-publication.mjs';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 
@@ -103,7 +105,10 @@ export function checkWorkflow(name, text, graph) {
   if (!String(text).includes('skip ci')) return { name, publisher: false, staged: [], resync: false, ok: true };
   const staged = stagedGraphSources(text, graphSources(graph));
   const resync = usesResync(text);
-  return { name, publisher: true, staged, resync, ok: staged.length === 0 || resync };
+  const immutable = verifyImmutableDeskPublication(text);
+  return { name, publisher: true, staged, resync, immutable,
+    mode: immutable.applicable ? 'immutable-artifact-cas' : resync ? 'rebase-resync' : 'unverified',
+    ok: immutable.applicable ? immutable.ok : staged.length === 0 || resync };
 }
 
 function loadGraph(root = ROOT) {
@@ -159,19 +164,20 @@ function run() {
   const results = files.map((f) => checkWorkflow(f, readFileSync(join(dir, f), 'utf8'), graph)).filter((r) => r.publisher);
   if (process.argv.includes('--list')) {
     for (const r of results) {
-      const verdict = r.staged.length === 0 ? 'no graph source staged' : r.resync ? 'graph sources + --resync' : 'GRAPH SOURCES WITHOUT --resync';
+      const verdict = r.staged.length === 0 ? 'no graph source staged' : r.immutable?.ok ? 'verified immutable artifact + CAS' : r.resync ? 'graph sources + --resync' : 'GRAPH SOURCES WITHOUT --resync';
       console.log(`${r.name.padEnd(32)} ${verdict}${r.staged.length ? ` (${r.staged.length} source(s))` : ''}`);
     }
   }
   const bad = results.filter((r) => !r.ok);
   if (bad.length) {
-    console.error('check-publisher-resync: [skip ci] publisher(s) stage evidence-graph sources without --resync:');
+    console.error('check-publisher-resync: [skip ci] publisher(s) lack a valid rebase-resync or immutable-artifact-CAS contract:');
     for (const r of bad) console.error(`  ✗ ${r.name}: stages ${r.staged.length} graph source(s), e.g. ${r.staged.slice(0, 3).join(', ')}`);
-    console.error('  fix: append --resync to its `bash scripts/ci/publish-push.sh "<label>"` call.');
+    console.error('  fix: rebasing publishers require publish-push.sh --resync; immutable publishers must preserve every verified artifact/CAS guard and must not rebase.');
+    for (const r of bad) for (const error of r.immutable?.errors || []) console.error('    ' + r.name + ': ' + error);
     process.exit(1);
   }
   const needing = results.filter((r) => r.staged.length).length;
-  console.log(`check-publisher-resync: ${results.length} [skip ci] publisher(s) · ${needing} stage graph sources · all push with --resync`);
+  console.log(`check-publisher-resync: ${results.length} [skip ci] publisher(s) · ${needing} stage graph sources · all have a verified resync or immutable-CAS publication mode`);
   process.exit(0);
 }
 

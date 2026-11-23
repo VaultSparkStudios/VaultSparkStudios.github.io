@@ -1,37 +1,39 @@
-## S418 technical outcomes — acceptance pending
+## S418 — acceptance pending
 
-The twelve selected outcomes and their acceptance contracts are retained in [IMPLEMENT_PLAN](../docs/IMPLEMENT_PLAN.md) and the dated audit sidecar. Source implementation/local checks do not mark a hosted outcome complete.
+See [IMPLEMENT_PLAN](../docs/IMPLEMENT_PLAN.md) and audit. Hosted proof required.
 
-- [ ] Complete current CI and source verification for all twelve selected outcomes.
-- [ ] Complete permitted candidate-based member and approved-investor acceptance, including refusal, recovery and logout boundaries.
-- [ ] Complete staging, authorized delivery, production served readback and rollback acceptance against the actual final candidate.
-- [ ] Reconcile every inherited outcome and complete public-safe writeback/closeout only after its acceptance evidence exists.
+- [ ] Verify current CI/source for all 12 outcomes.
+- [ ] Verify candidate member/approved-investor journeys: refusal, recovery, logout.
+- [ ] Verify final-candidate staging, authorized delivery, production readback and rollback.
+- [ ] Reconcile inherited outcomes; public-safe closeout follows acceptance.
 
-## S417 recovery disposition
+## S417 — recovery
 
-- [x] Reconstruct committed work and reconcile the partial release record.
-- [ ] [SIL][S417] Verify cumulative content deployments retain the approved executable baseline.
-- [ ] [SIL][S417] Complete affected account acceptance and full release evidence; existing holds remain enforced.
+- [x] Reconstruct committed work and partial release record.
+- [ ] Verify cumulative deployments preserve the approved executable baseline.
+- [ ] Complete affected account acceptance and release evidence; retain holds.
 
-Prior S412–S417 acceptance rows remain open with their original evidence. Recovery is a partial closeout, with no new release credit.
+S412–417 acceptance stays open; recovery earns no release credit.
 
 <!-- S417-active-waves -->
-## S417 selected outcomes
+## S417 — selected outcomes
 
-- [x] Point-award integrity live (probe 9/9); injection, supply-chain, served-surface and consent hardening in source.
-- [ ] Full source check, push, staging and production readback for this tranche.
-- [ ] Remaining public-beta waves: docs/S417_REMAINING_PLAN.md.
+- [x] Point-award probe9/9; injection, supply-chain, served-surface and consent source hardening.
+- [ ] Full source, push, staging and production readback.
+- [ ] Complete docs/S417_REMAINING_PLAN.md.
 
 <!-- S416-active-waves -->
 ## S416 selected outcomes
 
-- [x] Fresh bound startup, audit and implementation-plan admission.
-- [x] Install exact isolated staging Worker/static candidate; verify 22 private controls, 4,185 served files and separate 42-request HTTPS/TLS/data/policy preservation.
-- [ ] Complete affected successful sign-in/sign-up and real member/approved-investor positive application journeys.
-- [ ] Integrate current main safely; pass full current source and exact required workflows, applicable staging parity, authorized main/production promotion and readback.
-- [ ] Complete recovered S415 writeback, all S416 closeout surfaces and native completion audit.
+- [x] Fresh startup, native binding, nine-axis audit and plan admission.
+- [x] Isolated Worker/static staging verified:22 private controls,4,185 files,42 HTTPS/TLS/data/policy checks.
+- [ ] Verify affected signup/sign-in and real member/approved-investor journeys.
+- [ ] Safely integrate main; verify full source, required workflows/staging parity, authorized main/production and readback.
+- [ ] Finish S415/S416 writeback and closeout, then native-completion audit.
 
-Waves 1–2 admitted; wave 3 staging delivery verified with authenticated acceptance still open; waves 4–5 pending. Evidence: docs/S416_VERIFICATION_LEDGER.json. Historical session scores and receipts retain their original scope.
+Staging passed; auth/remaining waves pending. Evidence: docs/S416_VERIFICATION_LEDGER.json. History retains its scope.
+
+
 <!-- S415-active-waves -->
 
 ## S415 selected outcomes

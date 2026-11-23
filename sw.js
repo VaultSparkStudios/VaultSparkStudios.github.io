@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-051741a26bc3817e';
+const CACHE_NAME = 'vaultspark-shell-e0527e8a074dea12';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -23,7 +23,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/studio-pages.shell-69dd71f595.css',
   '/assets/report-content.shell-b74c6d5d2a.js',
   '/assets/notify-me.shell-d3784116f2.js',
-  '/assets/project-waitlist.shell-5a978350af.css',
+  '/assets/project-waitlist.shell-cfb67de166.css',
   '/assets/project-waitlist-confirm.shell-a223cf3d1b.js',
   '/vault-member/account-data.shell-054011fd5a.js',
   '/vault-member/account-data.shell-e6330c4a18.css',
@@ -231,7 +231,7 @@ const STATIC_ASSETS = [
   '/vault-member/',
   '/leaderboards/',
   '/community/',
-  '/journal/',
+  '/devlog/',
   '/games/call-of-doodie/',
   '/games/gridiron-gm/',
   '/games/franchise-architect/',
@@ -279,7 +279,6 @@ const STATIC_ASSETS = [
   '/assets/rate-page.shell-f047c9d940.js',
   '/assets/account-chip.js',
   '/assets/studio-living.js',
-  '/studio-pulse/',
   '/faq/',
 ];
 

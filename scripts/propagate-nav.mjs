@@ -67,6 +67,8 @@ const SKIP_FILES = new Set([
   'share/index.html',
   // S409: noindex audience chooser owns its branded account header and legal footer.
   'sign-in/index.html',
+  // Project-email confirmation utility: minimal branded, no-referrer layout.
+  'waitlist/confirm/index.html',
   // S135: internal admin (sub-page of vault-member admin)
   'vault-member/admin/ignis-spend/index.html',
   // S206: vault passport is auth-gated + noindex — own minimal nav, not sitewide shell

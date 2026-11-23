@@ -2,3 +2,59 @@
 .project-waitlist [hidden]{display:none!important}
 .project-waitlist h2{margin-top:0}.notify-me-fields{display:flex;gap:.75rem;flex-wrap:wrap}.notify-me-fields input{flex:1;min-width:12rem}.notify-me-fields input,.project-waitlist button{padding:.8rem;border:1px solid currentColor;border-radius:.5rem;color:var(--text);background:var(--bg-soft)}
 .notify-me-feedback{line-height:1.6}.project-waitlist button:disabled{opacity:.65}.project-waitlist label{display:block;margin:.5rem 0}.project-waitlist a{color:var(--accent,var(--text))}.project-waitlist :focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+/* Waitlist controls retain the same fonts, themes and state rules as their host. */
+.project-waitlist button,
+.project-waitlist input {
+  min-height: 44px;
+  font: inherit;
+}
+.project-waitlist button { min-width: 44px; }
+.project-waitlist input { font-size: max(16px, 1em); }
+.project-waitlist a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  text-decoration: underline;
+  text-underline-offset: .18em;
+}
+
+/* Email confirmation is an intentional utility page, separate from the site nav. */
+body.waitlist-confirm-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background-repeat: no-repeat;
+}
+.waitlist-confirm-header,
+.waitlist-confirm-footer {
+  width: min(42rem, calc(100% - 2rem));
+  margin-inline: auto;
+}
+.waitlist-confirm-header { padding-block: 1rem; }
+.waitlist-confirm-page > main.project-waitlist {
+  width: calc(100% - 2rem);
+  margin: 1rem auto 2rem;
+}
+.waitlist-confirm-footer {
+  margin-top: auto;
+  padding-block: 1rem 1.5rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.waitlist-confirm-header a,
+.waitlist-confirm-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: .18em;
+}
+.waitlist-confirm-page a:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}

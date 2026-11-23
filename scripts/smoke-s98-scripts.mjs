@@ -121,10 +121,23 @@ console.log('S98 scripts smoke test');
       pass('homepage LCP image preload policy avoids WebP fallback warning');
     }
 
-    if (!index.includes('data-spine-proof') || !spine.includes("safeFetch('/api/status-proof.json')") || !spine.includes("proofs['public-status']")) {
-      fail('homepage studio signal proof source', 'showcase spine must expose status-proof/public-status provenance, not heartbeat pulse counts');
+    if (!index.includes('data-spine-proof') || !spine.includes("safeFetch('/api/status-proof.json')") || !spine.includes("safeFetch('/api/public-intelligence.json')") || /(?:safeFetch|fetch)\s*\(\s*['"][^'"]*heartbeat[^'"]*['"]/.test(spine)) {
+      fail('homepage studio snapshot sources', 'counts must use public-intelligence and recorded proof must use status-proof; heartbeat counts are not a snapshot source');
     } else {
-      pass('homepage studio signal derives from status-proof provenance');
+      pass('homepage studio snapshot has public-intelligence counts and status-proof provenance');
+    }
+
+    // Reuse the owning renderer's actual runtime regressions: contradictory
+    // proof counts, both resolution orders, failed count feed, invalid timestamp
+    // and real pulse behavior. Source-subfield spelling is not count authority.
+    const snapshotRuntime = spawnSync(process.execPath, ['--test', '--test-reporter=tap', '--test-name-pattern=^Home snapshot', path.join(ROOT, 'tests', 'active-availability.unit.spec.mjs')], {
+      cwd: ROOT, encoding: 'utf8', timeout: 30_000,
+    });
+    const passedSnapshotTests = Number((snapshotRuntime.stdout || '').match(/^# pass (\d+)\s*$/m)?.[1] || 0);
+    if (snapshotRuntime.status !== 0 || passedSnapshotTests < 4) {
+      fail('homepage studio snapshot runtime authority', 'existing Home snapshot regressions failed: ' + (snapshotRuntime.stderr || snapshotRuntime.stdout || 'exit ' + snapshotRuntime.status));
+    } else {
+      pass('homepage studio snapshot runtime count authority, recording time and failure behavior');
     }
 
     if (!spine.includes('proof.summary.worstStale') || !spine.includes('proof.summary.seedRisk') || !spine.includes('no seed-risk')) {

@@ -39,23 +39,24 @@ const BANNED = [
 // feature — but a visitor must be able to find out what they mean. Rule: a
 // public page may use one of these terms only if its OWN copy (nav + footer
 // stripped, so the sitewide Resources column cannot satisfy it) links to the
-// explainer at /how-we-build/. Offenders are reported as `file: term`.
+// explainer at /studio/#how-we-build (or its retained legacy alias).
+// Offenders are reported as `file: term`.
 export const OPERATOR_TERMS = [
   { term: 'SIL score', pattern: /\bSIL [Ss]core\b/g },
   { term: 'CANON-NNN', pattern: /\bCANON-\d{3}\b/g },
   { term: 'closeout', pattern: /\bcloseout\b/gi },
   { term: 'handoff', pattern: /\bhandoff\b/gi },
 ];
-// Matches both markup (href="/how-we-build/#canon") and a script-built link
-// (el.href = '/how-we-build/#canon') — the status tiles are rendered by JS.
-export const HOW_WE_BUILD_LINK = /href\s*=\s*["'](?:https:\/\/vaultsparkstudios\.com)?\/how-we-build\/(?:#[\w-]+)?["']/;
+// Matches markup and script-built links to the actual explanation anchors.
+// An unrelated Studio Pulse link must not satisfy this explanation requirement.
+export const HOW_WE_BUILD_LINK = /href\s*=\s*["'](?:https:\/\/vaultsparkstudios\.com)?\/(?:how-we-build\/(?:#[\w-]+)?|studio\/#(?:how-we-build|sil|canon|handoff))["']/;
 // Public pages = tracked */index.html minus the gated/internal/agent/news surfaces.
 // The explainer itself is exempt (it is the definition, not a leak).
 const OPERATOR_EXCLUDED_DIRS = ['vault-member', 'investor-portal', 'studio-hub', 'ignis-health', '.ai', 'news'];
 export function isOperatorPublicPage(rel) {
   const p = String(rel).replace(/\\/g, '/');
   if (!/(^|\/)index\.html$/.test(p)) return false;
-  if (p === 'how-we-build/index.html') return false;
+  if (p === 'how-we-build/index.html' || p === 'studio/index.html') return false;
   const segments = p.split('/').slice(0, -1);
   return !segments.some((s) => OPERATOR_EXCLUDED_DIRS.includes(s));
 }
@@ -67,7 +68,7 @@ export function ownCopy(html) {
     .replace(/<!--[\s\S]*?-->/g, '')
     .replace(/\/\*[\s\S]*?\*\//g, '');
 }
-/** Returns the operator terms a page uses without linking to /how-we-build/ ([] when clean). */
+/** Returns operator terms without a link to the Studio explanation ([] when clean). */
 export function operatorTermOffenders(html) {
   const copy = ownCopy(html);
   if (HOW_WE_BUILD_LINK.test(copy)) return [];
@@ -122,12 +123,18 @@ if (SELF_TEST) {
   const opFail = [];
   const linked = '<main><p>The <a href="/how-we-build/#sil">SIL score</a> and CANON-007 after closeout.</p></main>';
   if (operatorTermOffenders(linked).length) opFail.push('linked page must be clean');
+  for (const anchor of ['how-we-build', 'sil', 'canon', 'handoff']) {
+    const canonical = `<main><p><a href="https://vaultsparkstudios.com/studio/#${anchor}">SIL score</a>, CANON-007, closeout and handoff.</p></main>`;
+    if (operatorTermOffenders(canonical).length) opFail.push(`canonical explanation #${anchor} must be accepted`);
+  }
+  if (!operatorTermOffenders('<main><p>SIL score <a href="/studio/#pulse">Pulse</a></p></main>').includes('SIL score')) opFail.push('unrelated Studio anchor must not explain operator vocabulary');
   const unlinked = '<main><p>Handoff done. SIL Score 812. CANON-031 holds after closeout.</p></main><footer><a href="/how-we-build/">How We Build</a></footer>';
   const off = operatorTermOffenders(unlinked);
   if (off.join(',') !== 'SIL score,CANON-NNN,closeout,handoff') opFail.push(`unlinked page must report all four terms (got: ${off.join(',') || 'none'})`);
+  if (operatorTermOffenders(unlinked.replace('/how-we-build/', '/studio/#how-we-build')).join(',') !== off.join(',')) opFail.push('canonical footer-only explanation must not count');
   if (operatorTermOffenders('<p>Canon-free copy about a hand off and a scoreboard.</p>').length) opFail.push('word-bounded: "hand off" / "scoreboard" must not match');
   if (!isOperatorPublicPage('status/index.html') || !isOperatorPublicPage('index.html')) opFail.push('status/ and root index must be public');
-  for (const rel of ['vault-member/index.html', 'investor-portal/apply/index.html', 'studio-hub/index.html', 'ignis-health/index.html', 'projects/seamline/.ai/index.html', 'news/2026/some-post/index.html', 'how-we-build/index.html', 'status/page.html']) {
+  for (const rel of ['vault-member/index.html', 'investor-portal/apply/index.html', 'studio-hub/index.html', 'ignis-health/index.html', 'projects/seamline/.ai/index.html', 'news/2026/some-post/index.html', 'how-we-build/index.html', 'studio/index.html', 'status/page.html']) {
     if (isOperatorPublicPage(rel)) opFail.push(`${rel} must be excluded`);
   }
   for (const f of opFail) console.error(`✗ self-test (operator vocabulary): ${f}`);
@@ -159,16 +166,16 @@ let operatorCount = 0;
 for (const rel of trackedPublicPages()) {
   const offenders = operatorTermOffenders(readFileSync(join(ROOT, rel), 'utf8'));
   for (const term of offenders) {
-    console.error(`✗ ${rel}: ${term} (operator term without a /how-we-build/ link in page copy)`);
+    console.error(`✗ ${rel}: ${term} (operator term without a Studio explanation link in page copy)`);
     operatorCount++;
   }
 }
 
 if (errorCount === 0 && operatorCount === 0) {
-  console.log('✓ vocabulary-consistency: no deprecated terms found; every operator term links /how-we-build/');
+  console.log('✓ vocabulary-consistency: no deprecated terms found; operator terms link the Studio explanation');
   process.exit(0);
 } else {
   if (errorCount) console.error(`✗ vocabulary-consistency: ${errorCount} file(s) with deprecated terms — fix before push`);
-  if (operatorCount) console.error(`✗ vocabulary-consistency: ${operatorCount} unexplained operator term(s) — link them to /how-we-build/ (see that page's anchors)`);
+  if (operatorCount) console.error(`✗ vocabulary-consistency: ${operatorCount} unexplained operator term(s) — link them to /studio/#how-we-build or its explanation anchors`);
   process.exit(1);
 }

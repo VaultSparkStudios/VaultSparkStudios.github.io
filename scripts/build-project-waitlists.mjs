@@ -22,9 +22,11 @@ export function build(root,{apply=false}={}){
  const availability=readAvailability(root),feed=JSON.parse(fs.readFileSync(path.join(root,'api/public-intelligence.json'),'utf8'));
  const conflicts=availabilityConflicts(feed.availability,availability);if(conflicts.length)throw Error(conflicts.join('; '));
  const config=JSON.parse(fs.readFileSync(path.join(root,'config/project-waitlists.json'),'utf8'));
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(config.updatedAt||'')||!Number.isFinite(Date.parse(config.updatedAt))||new Date(config.updatedAt).toISOString().slice(0,10)!==config.updatedAt)throw Error('Canonical waitlist configuration revision date is required');
  const changes=[];const write=(relative,next)=>{const file=path.join(root,relative),old=fs.existsSync(file)?fs.readFileSync(file,'utf8'):null;if(old!==next){changes.push(relative);if(apply){fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,next);}}};
  write('supabase/functions/project-waitlist/projects.json',JSON.stringify(config,null,2)+'\n');
- write('api/project-waitlists.json',JSON.stringify(availability.waitlists,null,2)+'\n');
+ // This date identifies the configured content revision, not email delivery or a live runtime probe.
+ write('api/project-waitlists.json',JSON.stringify({schemaVersion:'1.0',generatedAt:config.updatedAt,generatedBy:'scripts/build-project-waitlists.mjs',publicSafe:true,...availability.waitlists},null,2)+'\n');
  for(const project of availability.waitlists.projects){const relative=project.path.slice(1)+'index.html',html=fs.readFileSync(path.join(root,relative),'utf8');write(relative,reconcilePage(html,project));}
  return changes;
 }

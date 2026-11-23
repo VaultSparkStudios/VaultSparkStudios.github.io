@@ -8,6 +8,8 @@ import { spawnSync } from '../scripts/lib/safe-spawn.mjs';
 import { buildPrompt, applyProposal } from '../scripts/author-news-edition.mjs';
 import { captureDeskPublication, applyDeskPublication, allowedDeskPublicationPath } from '../scripts/desk-publication-artifact.mjs';
 
+import { immutableDeskPublicationRunBody, verifyImmutableDeskPublication } from '../scripts/lib/immutable-desk-publication.mjs';
+
 const digest = (bytes) => crypto.createHash('sha256').update(bytes).digest('hex');
 function fixture(t) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'vs-desk-artifact-'));
@@ -168,6 +170,7 @@ test('the publisher refuses a dirty checkout instead of mixing unvalidated chang
 
 test('the scheduled author cannot publish and the write job cannot author or silently rebase', () => {
   const source = fs.readFileSync(new URL('../.github/workflows/news-publish.yml', import.meta.url), 'utf8');
+  assert.equal(verifyImmutableDeskPublication(source).ok, true);
   const author = source.split('\n  author:\n')[1].split('\n  publish:\n')[0];
   const publisher = source.split('\n  publish:\n')[1].split('\n  regenerate:\n')[0];
   const regenerate = source.split('\n  regenerate:\n')[1];
@@ -194,8 +197,7 @@ test('the scheduled author cannot publish and the write job cannot author or sil
 
 function publicationRun(f, { lostAcknowledgement = false } = {}) {
   const source = fs.readFileSync(new URL('../.github/workflows/news-publish.yml', import.meta.url), 'utf8');
-  const step = source.split('      - name: Publish without changing the validated artifact\n')[1].split('\n  regenerate:\n')[0];
-  const body = step.split('        run: |\n')[1].split('\n').map((line) => line.replace(/^          /, '')).join('\n');
+  const body = immutableDeskPublicationRunBody(source);
   const output = path.join(f.root, '.git', 'step-output');
   const summary = path.join(f.root, '.git', 'step-summary');
   const prefix = lostAcknowledgement

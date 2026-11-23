@@ -68,6 +68,7 @@ const EXEMPT_PATTERNS = [
   /^\/login\.html$/,
   /^\/auth\/callback\/?$/,          // S207: OAuth callback landing — not nav-reachable by design
   /^\/auth\/callback\.html$/,
+  /^\/waitlist\/confirm\/$/,          // Email-token confirmation utility, intentionally noindex and reached from its project email.
   /^\/leaderboards\/[^/]+\//,       // S225: SEO sub-pages (global/challenges/recruiters/etc) — linked
                                     // from leaderboards/index.html via anchor CTAs, not from sitewide nav
   /^\/news\//,                      // S305: THE DESK dark-run — noindex preview, deliberately unlinked

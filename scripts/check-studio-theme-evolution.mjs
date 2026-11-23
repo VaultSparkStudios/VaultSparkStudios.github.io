@@ -14,7 +14,8 @@ const PAGE_CONTRACTS = {
   'projects/index.html': [/project portfolio/i, /infrastructure of the vault/i],
   'games/index.html': [/shared studio standards/i, /inside the portfolio/i],
   'universe/index.html': [/universe layer/i, /lore becomes an operating system/i],
-  'membership/index.html': [/identity layer/i, /free tier/i],
+  // Website membership is distinct from shared Studio sign-in and project access.
+  'membership/index.html': [/website membership/i, /Obelisk account/i, /shared sign-in does not imply that every project shares website ranks, progression or access/i],
   // S368: roadmap renovated into a registry-rendered Now / Next / Later.
   'roadmap/index.html': [/placed by where it actually stands/i, /same registry that drives/i]
 };

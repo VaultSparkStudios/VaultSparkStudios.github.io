@@ -62,9 +62,9 @@ const CHECKS = [
     contains: ['Membership', 'Vault Member'],
   },
   {
-    path: '/studio-pulse/',
+    path: '/studio/',
     status: 200,
-    contains: ['Studio Pulse'],
+    contains: ['Studio Pulse', 'id="pulse"'],
   },
   {
     // S335: the Vault Wall lives at /community/#wall; the retired route is an

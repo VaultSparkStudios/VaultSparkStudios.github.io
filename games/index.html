@@ -509,8 +509,7 @@
       .the-exodus.card-hero, .the-exodus.game-card-hero { background-image: image-set(url(/assets/covers/the-exodus.avif) type("image/avif"), url(/assets/covers/the-exodus.webp) type("image/webp"), url(/assets/covers/the-exodus.png) type("image/png")), radial-gradient(ellipse at 30% 35%, #f97316, #4a1d05 60%, transparent 100%); }
       .vault-sealed.card-hero, .vault-sealed.game-card-hero { background-image: image-set(url(/assets/covers/vault-sealed.avif) type("image/avif"), url(/assets/covers/vault-sealed.webp) type("image/webp"), url(/assets/covers/vault-sealed.png) type("image/png")), radial-gradient(ellipse at 30% 35%, #475569, #0f172a 60%, transparent 100%); }
     }
-    /* the cover already carries the title lockup; hide the duplicate DOM heading + keep status badge */
-    .card-hero h3, .game-card-hero h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    /* Covers are decorative; retain the visible DOM title lockups. */
     /* S368: registry titles without bespoke cover art (Voidfall, VaultSpark Forge) — the
        accent gradient is the art, so the DOM title stays visible as the lockup. */
     .card-hero.card-hero--titled h3 { position: relative; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; z-index: 1; color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,0.6); }
@@ -979,7 +978,7 @@
           </div>
           <div class="faq-item">
             <h3>How do I get early access to games in development?</h3>
-            <p>Create a free Vault Member account to join the early-access pool for upcoming releases. VaultSparked members get first-wave priority when invites, beta keys, and closed builds go live.</p>
+            <p>Check each project page for its current access and waitlist options. Joining a project waitlist requires confirming the email sent for that project; creating a Studio account does not enroll you automatically. Website membership is currently by invitation; see <a href="/membership/">membership availability and benefits</a>. VaultSparked and VaultSparked Eternal members retain first-wave development access priority when invites, beta keys, and closed builds become available.</p>
           </div>
           <div class="faq-item">
             <h3>Will VaultSpark games ever come to Steam or mobile app stores?</h3>

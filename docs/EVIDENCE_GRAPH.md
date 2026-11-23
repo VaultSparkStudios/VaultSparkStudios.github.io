@@ -5,7 +5,7 @@
 
 Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.
 
-**90 nodes** · **46** participate in the publish cascade ·
+**91 nodes** · **46** participate in the publish cascade ·
 derived only from a graph that passes `validateEvidenceGraph()`.
 
 This file is a projection. To change it, change `config/evidence-graph.json` and run
@@ -134,6 +134,7 @@ flowchart LR
   n_api_oracle_insights_json["api/oracle-insights.json"]
   n_api_ecosystem_velocity_json["api/ecosystem-velocity.json"]
   n_pathways_builders_index_html["pathways/builders/index.html"]
+  n_api_project_waitlists_json["api/project-waitlists.json"]
   n_api_promotion_receipt_json["api/promotion-receipt.json"]
   n_api_proof_aware_projects_json[["api/proof-aware-projects.json"]]
   n_api_ecosystem_state_json[["api/ecosystem-state.json"]]
@@ -197,7 +198,9 @@ flowchart LR
   n_api_ --> n_api_news_critique_packets_json
   n_api_ --> n_api_newsroom_run_json
   n_api_ --> n_api_oracle_insights_json
+  n_api_ --> n_api_project_waitlists_json
   n_api_ --> n_api_promotion_receipt_json
+  n_api_ --> n_api_public_intelligence_json
   n_api_ --> n_api_release_proof_json
   n_api_ --> n_api_site_health_json
   n_api_ --> n_api_staging_deploy_receipt_json
@@ -263,6 +266,7 @@ flowchart LR
   n_api_public_intelligence_json --> n_api_intent_map_json
   n_api_public_intelligence_json --> n_api_nervous_system_json
   n_api_public_intelligence_json --> n_api_oracle_insights_json
+  n_api_public_intelligence_json --> n_api_project_waitlists_json
   n_api_public_intelligence_json --> n_api_public_status_json
   n_api_public_intelligence_json --> n_api_spark_manifest_json
   n_api_public_intelligence_json --> n_api_studio_timeline_json
@@ -310,6 +314,8 @@ flowchart LR
   n_cloudflare_ --> n_api_security_posture_json
   n_cloudflare_ --> n_api_worker_route_provenance_json
   n_config_ --> n_api_evidence_graph_json
+  n_config_ --> n_api_project_waitlists_json
+  n_config_ --> n_api_public_intelligence_json
   n_config_ --> n_api_release_dependencies_json
   n_config_ --> n_api_release_proof_json
   n_config_ --> n_api_security_posture_json
@@ -377,6 +383,7 @@ flowchart LR
   n_feed_xml --> n_api_index_html
   n_games_ --> n_api_ai_discovery_health_json
   n_games_ --> n_api_candidate_artifact_manifest_json
+  n_games_ --> n_api_project_waitlists_json
   n_games_ --> n_api_spark_manifest_json
   n_games_ --> n_data_ignis_search_index_json
   n_games_ --> n_projects_vorn__ai_index_html
@@ -396,6 +403,7 @@ flowchart LR
   n_portfolio_ --> n_api_studio_timeline_json
   n_privacy_ --> n_data_ignis_search_index_json
   n_projects_ --> n_api_ai_discovery_health_json
+  n_projects_ --> n_api_project_waitlists_json
   n_projects_ --> n_projects_vorn__ai_index_html
   n_repo_structure_public_project_routes --> n__well_known_llms_txt
   n_repo_structure_public_project_routes --> n_agents_json
@@ -403,6 +411,8 @@ flowchart LR
   n_rights_ --> n_data_ignis_search_index_json
   n_scripts_ --> n_api_field_win_json
   n_scripts_ --> n_api_identity_migration_receipt_json
+  n_scripts_ --> n_api_project_waitlists_json
+  n_scripts_ --> n_api_public_intelligence_json
   n_scripts_ --> n_api_rank_climbers_json
   n_scripts_ --> n_api_release_proof_json
   n_scripts_ --> n_api_spark_manifest_json
@@ -423,6 +433,7 @@ flowchart LR
   n_supabase_ --> n_api_identity_migration_receipt_json
   n_terms_ --> n_data_ignis_search_index_json
   n_universe_ --> n_api_ai_discovery_health_json
+  n_universe_ --> n_api_project_waitlists_json
   n_universe_ --> n_data_ignis_search_index_json
   n_universe_ --> n_projects_vorn__ai_index_html
 ```
@@ -492,10 +503,11 @@ flowchart LR
 | `oracle-query-clusters` | `api/oracle-insights.json` | — | `api/public-intelligence.json`<br>`data/ignis-search-index.json` | `oracle/answers/index.json` |
 | `oracle-velocity-public` | `api/ecosystem-velocity.json` | — | — | — |
 | `pathways-pages` | `pathways/builders/index.html` | — | `assets/shell-manifest.json` | — |
+| `project-waitlists` | `api/project-waitlists.json` | — | `api/public-intelligence.json` | — |
 | `promotion-receipt` | `api/promotion-receipt.json` | — | — | `api/release-proof.json`<br>`api/status-proof.json` |
 | `proof-aware-projects` | `api/proof-aware-projects.json` | yes | `api/commit-map.json`<br>`api/field-win.json` | — |
 | `public-ecosystem` | `api/ecosystem-state.json` | yes | `api/public-intelligence.json` | `.well-known/llms.txt`<br>`agents.json`<br>`api/canonical-destination-reachability.json`<br>`data/stats-surface.json` |
-| `public-intelligence` | `api/public-intelligence.json` | yes | — | `api/candidate-artifact-manifest.json`<br>`api/citation.json`<br>`api/ecosystem-state.json`<br>`api/intelligence-budget.json`<br>`api/intent-map.json`<br>`api/nervous-system.json`<br>`api/oracle-insights.json`<br>`api/public-status.json`<br>`api/spark-manifest.json`<br>`api/studio-timeline.json`<br>`changelog/index.html`<br>`data/ignis-search-index.json` |
+| `public-intelligence` | `api/public-intelligence.json` | yes | — | `api/candidate-artifact-manifest.json`<br>`api/citation.json`<br>`api/ecosystem-state.json`<br>`api/intelligence-budget.json`<br>`api/intent-map.json`<br>`api/nervous-system.json`<br>`api/oracle-insights.json`<br>`api/project-waitlists.json`<br>`api/public-status.json`<br>`api/spark-manifest.json`<br>`api/studio-timeline.json`<br>`changelog/index.html`<br>`data/ignis-search-index.json` |
 | `public-status` | `api/public-status.json` | yes | `api/commit-map.json`<br>`api/heartbeat.json`<br>`api/public-intelligence.json`<br>`api/worker-route-history.json` | `api/intent-map.json`<br>`api/status-proof.json`<br>`data/stats-surface.json`<br>`index.html` |
 | `rank-climbers` | `api/rank-climbers.json` | — | — | — |
 | `release-dependencies` | `api/release-dependencies.json` | yes | — | `api/release-proof.json` |
@@ -587,6 +599,7 @@ flowchart LR
 | `oracle-query-clusters` | `scripts/build-oracle-query-clusters.mjs` | `node scripts/build-oracle-query-clusters.mjs --check` |
 | `oracle-velocity-public` | `scripts/build-oracle-velocity-public.mjs` | `node scripts/build-oracle-velocity-public.mjs --check` |
 | `pathways-pages` | `scripts/generate-pathways.mjs` | `node scripts/generate-pathways.mjs --check` |
+| `project-waitlists` | `scripts/build-project-waitlists.mjs` | `node scripts/build-project-waitlists.mjs --check` |
 | `promotion-receipt` | `scripts/build-promotion-receipt.mjs` | `node scripts/build-promotion-receipt.mjs --check` |
 | `proof-aware-projects` | `scripts/build-proof-aware-projects.mjs` | `node scripts/build-proof-aware-projects.mjs --check` |
 | `public-ecosystem` | `scripts/build-public-ecosystem.mjs` | `node scripts/build-public-ecosystem.mjs --check` |
@@ -626,10 +639,10 @@ flowchart LR
 - `.github/` → `newsroom-run`, `release-proof`
 - `.well-known/` → `security-posture`
 - `_redirects` → `spark-manifest`
-- `api/` → `api-index`, `attention-pressure`, `candidate-artifact-manifest`, `cta-readiness`, `deploy-currency`, `identity-migration-receipt`, `intent-map`, `membership-access`, `nervous-system`, `news-critique-packets`, `newsroom-run`, `oracle-answers`, `oracle-query-clusters`, `promotion-receipt`, `release-proof`, `site-health`, `staging-deploy-receipt`, `stats-surface`, `status-proof`, `ux-decision-ledger`
+- `api/` → `api-index`, `attention-pressure`, `candidate-artifact-manifest`, `cta-readiness`, `deploy-currency`, `identity-migration-receipt`, `intent-map`, `membership-access`, `nervous-system`, `news-critique-packets`, `newsroom-run`, `oracle-answers`, `oracle-query-clusters`, `project-waitlists`, `promotion-receipt`, `public-intelligence`, `release-proof`, `site-health`, `staging-deploy-receipt`, `stats-surface`, `status-proof`, `ux-decision-ledger`
 - `assets/` → `ambient-bundles`, `candidate-artifact-manifest`, `dispatch-desk-panel`, `favicon`, `home-desk-module`, `lqip-map`, `security-posture`, `shell-assets`
 - `cloudflare/` → `identity-migration-receipt`, `security-posture`, `worker-route-provenance`
-- `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `membership-access`, `release-dependencies`, `release-proof`, `security-posture`, `shell-assets`, `staging-deploy-continuity`, `staging-deploy-receipt`
+- `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `membership-access`, `project-waitlists`, `public-intelligence`, `release-dependencies`, `release-proof`, `security-posture`, `shell-assets`, `staging-deploy-continuity`, `staging-deploy-receipt`
 - `context/` → `heartbeat`, `identity-migration-receipt`, `ignis-conduit`, `intelligence-budget`, `nervous-system`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
 - `data/` → `analytics-summary`, `changelog-narrative`, `evidence-hub`, `feedback-provenance`, `field-win-proof`, `flight-director`, `home-desk-module`, `ignis-search-index`, `inp-soak-verdicts`, `lqip-map`, `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-search`, `news-desk-stats`, `news-pages`, `news-visual-receipts`, `oracle-query-clusters`, `pathways-pages`, `promotion-receipt`, `proof-aware-projects`, `release-proof`, `ship-receipts`, `site-health`, `spark-manifest`, `staging-deploy-continuity`, `staging-deploy-receipt`, `stats-surface`, `surface-spine`, `tt-summary`, `ux-decision-ledger`, `worker-route-history`
 - `devlog/` → `evidence-hub`, `pathways-pages`
@@ -642,7 +655,7 @@ flowchart LR
 - `external:production-worker-routes` → `worker-route-provenance`
 - `external:studio-ops-ark-log` → `release-dependencies`
 - `feed.xml` → `api-index`
-- `games/` → `ai-canonical-pages`, `ai-discovery-health`, `candidate-artifact-manifest`, `ignis-search-index`, `spark-manifest`
+- `games/` → `ai-canonical-pages`, `ai-discovery-health`, `candidate-artifact-manifest`, `ignis-search-index`, `project-waitlists`, `spark-manifest`
 - `ignis/` → `public-ecosystem`
 - `journal/` → `api-index`
 - `llms-full.txt` → `ignis-search-index`
@@ -651,16 +664,16 @@ flowchart LR
 - `package.json` → `security-posture`
 - `portfolio/` → `studio-timeline`
 - `privacy/` → `ignis-search-index`
-- `projects/` → `ai-canonical-pages`, `ai-discovery-health`
+- `projects/` → `ai-canonical-pages`, `ai-discovery-health`, `project-waitlists`
 - `repo-structure:public-project-routes` → `agents-json`, `llms-full-shards`, `spark-manifest`
 - `rights/` → `ignis-search-index`
-- `scripts/` → `ambient-bundles`, `ambient-ledger`, `cache-evidence-classification`, `dispatch-desk-panel`, `field-win-proof`, `identity-migration-receipt`, `membership-access`, `oracle-answers`, `rank-climbers`, `release-proof`, `shell-assets`, `spark-manifest`, `staging-deploy-continuity`, `staging-deploy-receipt`, `visual-qa-retention`
+- `scripts/` → `ambient-bundles`, `ambient-ledger`, `cache-evidence-classification`, `dispatch-desk-panel`, `field-win-proof`, `identity-migration-receipt`, `membership-access`, `oracle-answers`, `project-waitlists`, `public-intelligence`, `rank-climbers`, `release-proof`, `shell-assets`, `spark-manifest`, `staging-deploy-continuity`, `staging-deploy-receipt`, `visual-qa-retention`
 - `status/` → `candidate-artifact-manifest`
 - `studio-hub/` → `studio-timeline`
 - `studio/` → `candidate-artifact-manifest`
 - `supabase/` → `identity-migration-receipt`
 - `terms/` → `ignis-search-index`
-- `universe/` → `ai-canonical-pages`, `ai-discovery-health`, `ignis-search-index`
+- `universe/` → `ai-canonical-pages`, `ai-discovery-health`, `ignis-search-index`, `project-waitlists`
 
 ## Build order
 
@@ -717,40 +730,41 @@ flowchart LR
 51. `home-desk-module`
 52. `ignis-conduit`
 53. `news-pages`
-54. `proof-aware-projects`
-55. `public-ecosystem`
-56. `security-posture`
-57. `shell-assets`
-58. `sitemap-page`
-59. `studio-timeline`
-60. `worker-route-history`
-61. `canonical-destination-reachability`
-62. `early-hints-headers`
-63. `ignis-search-index`
-64. `llms-full-shards`
-65. `news-visual-receipts`
-66. `pathways-pages`
-67. `public-status`
-68. `ship-receipts`
-69. `ux-decision-ledger`
-70. `agents-json`
-71. `launch-age`
-72. `nervous-system`
-73. `news-critique-packets`
-74. `oracle-query-clusters`
-75. `you-asked-shipped`
-76. `ai-discovery-health`
-77. `api-index`
-78. `deploy-currency`
-79. `intelligence-budget`
-80. `oracle-answers`
-81. `intent-map`
-82. `startup-brief`
-83. `status-proof`
-84. `citation`
-85. `spark-manifest`
-86. `stats-surface`
-87. `candidate-artifact-manifest`
-88. `staging-deploy-receipt`
-89. `release-proof`
-90. `staging-deploy-continuity`
+54. `project-waitlists`
+55. `proof-aware-projects`
+56. `public-ecosystem`
+57. `security-posture`
+58. `shell-assets`
+59. `sitemap-page`
+60. `studio-timeline`
+61. `worker-route-history`
+62. `canonical-destination-reachability`
+63. `early-hints-headers`
+64. `ignis-search-index`
+65. `llms-full-shards`
+66. `news-visual-receipts`
+67. `pathways-pages`
+68. `public-status`
+69. `ship-receipts`
+70. `ux-decision-ledger`
+71. `agents-json`
+72. `launch-age`
+73. `nervous-system`
+74. `news-critique-packets`
+75. `oracle-query-clusters`
+76. `you-asked-shipped`
+77. `ai-discovery-health`
+78. `api-index`
+79. `deploy-currency`
+80. `intelligence-budget`
+81. `oracle-answers`
+82. `intent-map`
+83. `startup-brief`
+84. `status-proof`
+85. `citation`
+86. `spark-manifest`
+87. `stats-surface`
+88. `candidate-artifact-manifest`
+89. `staging-deploy-receipt`
+90. `release-proof`
+91. `staging-deploy-continuity`

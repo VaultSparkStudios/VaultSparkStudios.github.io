@@ -7,6 +7,7 @@ import crypto from 'node:crypto';
 import { spawnSync } from '../scripts/lib/safe-spawn.mjs';
 
 const source = fs.readFileSync(new URL('../scripts/extract-inline-styles.mjs', import.meta.url));
+const parserSource = fs.readFileSync(new URL('../scripts/lib/inline-style-extraction.mjs', import.meta.url));
 const declarations = 'color:var(--gold); padding: 1rem;';
 const className = `vsx-${crypto.createHash('sha1').update(declarations).digest('hex').slice(0, 10)}`;
 const html = `<html><head></head><body><p class="existing" style="${declarations}">Visible content</p></body></html>\n`;
@@ -19,7 +20,8 @@ function fixture(t) {
     assert.ok(path.basename(resolved).startsWith('vs-inline-style-transaction-'));
     fs.rmSync(resolved, { recursive: true, force: true });
   });
-  fs.mkdirSync(path.join(root, 'scripts'));
+  fs.mkdirSync(path.join(root, 'scripts/lib'), { recursive: true });
+  fs.writeFileSync(path.join(root, 'scripts/lib/inline-style-extraction.mjs'), parserSource);
   fs.mkdirSync(path.join(root, 'assets'));
   fs.writeFileSync(path.join(root, 'scripts/extract-inline-styles.mjs'), source);
   fs.writeFileSync(path.join(root, 'assets/style.css'), 'body{color:inherit;}\n');

@@ -151,7 +151,7 @@ function deskArtworkGuardFinding(src) {
 
 // Split a workflow into step blocks so a `git push` is judged together with the
 // rebase and retry logic that surrounds it, not against the whole file.
-function stepBlocks(src) {
+export function stepBlocks(src) {
   const lines = src.split('\n');
   const starts = [];
   lines.forEach((l, i) => { if (/^\s*-\s+(name|uses|run|id)\s*:/.test(l)) starts.push(i); });
@@ -163,7 +163,7 @@ function stepBlocks(src) {
 // whole file and was satisfied by the helper's own header comment explaining why
 // `git rebase --abort` matters; deleting the actual line left the gate green.
 // Evidence for a code property has to come from code.
-function stripShellComments(src) {
+export function stripShellComments(src) {
   return src.split('\n').map((l) => l.replace(/(^|\s)#.*$/, '$1')).join('\n');
 }
 function helperRecovers() {
