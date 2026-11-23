@@ -1,3 +1,9 @@
+## S417 recovered partial closeout — 2026-11-22
+
+Recovered S417 record from committed main and its authoritative handoff. Security/compliance and legal changes are committed; the handoff records consent scripts and served-folder pruning live, while the Worker untrusted-content rule and profile age screen remain unpromoted. Historical source and hosted checks cover their named candidates only. Real affected account journeys, full current staging parity and production promotion remain unfinished. This recovery closes the record as partial; it does not declare the prior beta plan or this new arc complete.
+
+Next owner: current website arc. Artifact/version: main at 2b2771b1f8. Dependency: applicable candidate checks and account/staging acceptance. Acceptance: exact source, staging parity, production readback. New native goal 01a2067e-6b0d-7060-a2b0-fe29b42ac60c requires a separate full startup and fresh audit after this recovery.
+
 <!-- S417-active -->
 ## S417 — security and compliance tranche, release in progress
 

@@ -1,3 +1,10 @@
+Last reviewed: 2026-11-22 (S417 recovered partial closeout)
+Overall status: yellow — S417 partial record recovered; full release acceptance pending.
+
+## S417 recovered truth boundary
+
+Recovered S417 record from committed main and its authoritative handoff. Security/compliance and legal changes are committed; the handoff records consent scripts and served-folder pruning live, while the Worker untrusted-content rule and profile age screen remain unpromoted. Historical source and hosted checks cover their named candidates only. Real affected account journeys, full current staging parity and production promotion remain unfinished. This recovery closes the record as partial; it does not declare the prior beta plan or this new arc complete. Fresh recovery doctor exits 0 with blockingFailing 0. No current full-suite or production acceptance is inferred.
+
 <!-- S412-full-local-source-verified -->
 ## S412 QA checkpoint — local proof verified, release incomplete
 

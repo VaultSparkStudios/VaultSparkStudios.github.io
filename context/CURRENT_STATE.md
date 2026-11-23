@@ -1,3 +1,9 @@
+## S417 recovered boundary — 2026-11-22
+
+Recovered S417 record from committed main and its authoritative handoff. Security/compliance and legal changes are committed; the handoff records consent scripts and served-folder pruning live, while the Worker untrusted-content rule and profile age screen remain unpromoted. Historical source and hosted checks cover their named candidates only. Real affected account journeys, full current staging parity and production promotion remain unfinished. This recovery closes the record as partial; it does not declare the prior beta plan or this new arc complete.
+
+This section supersedes contradictory older release summaries below; see context/LATEST_HANDOFF.md for the November 20 correction.
+
 <!-- S417-current-verification -->
 ## S417 security and compliance tranche; release in progress
 

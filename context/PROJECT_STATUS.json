@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "Security and compliance tranche for the public beta: point-award integrity is live; injection, supply-chain, served-surface and consent hardening are being released.",
+  "currentFocus": "S417 partial record recovered; fresh arc and release acceptance pending",
   "publicNote": "See the membership page for current plans, benefits and account-access availability.",
-  "nextMilestone": "Promote the current security and compliance tranche to production with served readback, then signup safeguards and the deletion processor.",
+  "nextMilestone": "Fresh audit, selected implementation, staging-first verified delivery",
   "blockers": [
     "Content-lane baseline advance shipped withheld executables on a later run (consent scripts and served-surface pruning are live as a result); founder to decide whether this is acceptable or a gate gap. Worker untrusted-content rule and the profile age screen remain off production under the promotion hold.",
     "S409: provider signup is reachable/global-open, but direct signup intent and affected real member/investor acceptance remain unverified. Ark followup01K6GAAQG1C5DFD95B4FFD9507 delivered; owner response not observed.",
@@ -27,15 +27,15 @@
     "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action.",
     "Shared account KV write budget remains a risk from other writers. S387 isolates Trusted Types diagnostics; actual release and usage evidence is in docs/RELEASE_S387.json."
   ],
-  "lastUpdated": "2026-11-20",
-  "currentSession": 411,
+  "lastUpdated": "2026-11-22",
+  "currentSession": 417,
   "truthAuditStatus": "yellow",
-  "truthAuditLastRun": "2026-11-06",
-  "silScore": 939,
-  "silAvg3": 939,
+  "truthAuditLastRun": "2026-11-22",
+  "silScore": 835,
+  "silAvg3": 904.3,
   "silVelocity": 0,
   "silDebt": "stable",
-  "silLastSession": 411,
+  "silLastSession": 417,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -92,145 +92,171 @@
   "silRubricVersion": "3.0",
   "silMax": 1000,
   "silCategoriesV3": {
-    "devHealth": 95,
+    "devHealth": 90,
     "creativeAlignment": 94,
-    "momentum": 92,
-    "engagement": 96,
-    "processQuality": 88,
-    "crossRepoCoherence": 94,
-    "securityPosture": 97,
-    "ecosystemIntegration": 91,
+    "momentum": 65,
+    "engagement": 90,
+    "processQuality": 60,
+    "crossRepoCoherence": 85,
+    "securityPosture": 90,
+    "ecosystemIntegration": 80,
     "capitalEfficiency": 95,
-    "automationCoverage": 97
+    "automationCoverage": 86
   },
-  "silCategoriesUpdatedSession": 411,
+  "silCategoriesUpdatedSession": 417,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-11-20",
+    "date": "2026-11-23",
+    "overallPass": true,
     "passing": 13,
-    "warning": 3,
-    "failing": 1,
+    "warning": 4,
+    "failing": 0,
     "blockingFailing": 0,
-    "advisoryFailing": 1,
+    "advisoryFailing": 0,
     "total": 17,
     "score": 76,
     "checks": [
       {
         "id": "manifest",
+        "label": "Studio manifest",
         "pass": true,
-        "warn": false,
+        "detail": "STUDIO_MANIFEST valid",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "validate",
+        "label": "Compliance validation",
         "pass": true,
         "warn": true,
+        "detail": "Compliance validation: 31 passed · 7 failed (0 self · 7 sibling-owned) · 0 skipped · 12 issue(s)",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "canon",
+        "label": "Canon compliance",
         "pass": true,
-        "warn": false,
+        "detail": "all canons aligned",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "compliance-velocity",
+        "label": "Compliance velocity",
         "pass": true,
         "warn": true,
+        "detail": "self 100% · portfolio 82% (12 sibling) → ▄▄▄▄▄▄▄▄",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "sanitize",
+        "label": "Sanitization ratchet",
         "pass": true,
-        "warn": false,
+        "detail": "baseline holding",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "launch",
+        "label": "Launch readiness (SPARKED)",
         "pass": true,
         "warn": true,
+        "detail": "self clear · 2 blocker(s) in sibling SPARKED projects",
         "driftClass": "expected-external",
         "blocking": false
       },
       {
         "id": "feedback",
+        "label": "Feedback ledger score",
         "pass": true,
-        "warn": false,
+        "detail": "acceptance 89% · impl 100%",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "entropy",
+        "label": "Protocol entropy",
         "pass": true,
-        "warn": false,
+        "detail": "score: 0.000 (healthy)",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "revenue",
+        "label": "Revenue signals freshness",
         "pass": true,
-        "warn": false,
+        "detail": "5d old ✓",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "sibling-locks",
+        "label": "Sibling session locks",
         "pass": false,
         "warn": true,
+        "detail": "5 stale / 8 total · oldest Solara 1207.4h",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "ignis",
+        "label": "IGNIS freshness",
         "pass": false,
         "warn": true,
+        "detail": "10d ago (⚠ stale — run: node scripts/ops.mjs rescore)",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "genome",
+        "label": "Protocol genome",
         "pass": true,
-        "warn": false,
+        "detail": "23/25 green",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "prompt-ver",
+        "label": "Prompt version alignment",
         "pass": true,
-        "warn": false,
+        "detail": "v3.3 ✓ start · v3.3 ✓ closeout",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "propagated-doc",
+        "label": "Propagated doc currency",
         "pass": true,
-        "warn": false,
+        "detail": "1 propagated doc(s) current",
         "driftClass": "expected-external",
         "blocking": false
       },
       {
         "id": "sched-staleness",
+        "label": "Scheduled CI freshness",
         "pass": false,
-        "warn": false,
+        "warn": true,
+        "detail": "scheduled observation timed out; not evaluated",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "desk-model-servability",
+        "label": "Desk authoring models servable",
         "pass": false,
         "warn": true,
+        "detail": "0/2 servable; unmeasured: Qwen/Qwen3.6-35B-A3B-FP8, Qwen3.8-27B",
         "driftClass": "expected-external",
         "blocking": false
       },
       {
         "id": "deploy-currency-live",
+        "label": "Deploy currency · live (CANON-036)",
         "pass": true,
-        "warn": false,
+        "warn": true,
+        "detail": "promoted artifact matches repo (shell parity at the Pages origin — the apex Worker path is not covered) · 325 commit(s) behind of held non-content work — identity backlog unpromoted by design",
         "driftClass": "local-broken",
         "blocking": false
       }
@@ -297,7 +323,7 @@
   "currentBuildNote": "S408: two complete native548-step runs; full Pages/OG production and complete3824-resource readback verified in docs/RELEASE_S408.json.",
   "lastDeploySession": 407,
   "lastDeployStatus": "pending — combined acceptance, including real account journeys",
-  "silAvg5": 939,
+  "silAvg5": 918.2,
   "lastReleaseAcceptance": {
     "session": 408,
     "candidate": "0105e464678997b2e3f180448e6bcef5a46d4ce1",
@@ -307,7 +333,7 @@
     "ogWorkerVersion": "e4b3070a-1090-49aa-b99d-d7ef44f6c192",
     "verifiedAt": "2026-11-03T03:38:48.399Z"
   },
-  "truthAuditSummary": "S409 local UI and callback regressions pass. Open provider enrollment, positive authenticated journeys and final release are separately pending; fixtures and anonymous walls do not prove private access.",
+  "truthAuditSummary": "S417 partial record recovered; current full source and release acceptance pending",
   "currentVerification": {
     "session": 408,
     "state": "accepted-full-production",
@@ -359,15 +385,6 @@
     "testsSourceFingerprint": "f63c114996ab8e31ec84f7e0",
     "evidence": "docs/S403_full-source-acceptance.json"
   },
-  "testsSession": 407,
-  "testsTotal": 549,
-  "testsPassing": 549,
-  "testsFailed": 0,
-  "testsLastRun": "2026-11-06",
-  "testsLabel": "measured build:check steps",
-  "testsEvidence": "api/build-check-diagnostics.json",
-  "testsPlanFingerprint": "2a897f15c691a81891ed531f",
-  "testsSourceFingerprint": "71664bd0c9808d2462cebf6a",
   "closeoutObservationAddendum": {
     "session": 400,
     "through": "35e5d5f181",
@@ -421,5 +438,24 @@
     939,
     939,
     939
-  ]
+  ],
+  "recoveryHistoricalFullSuite": {
+    "testsSession": 407,
+    "testsTotal": 549,
+    "testsPassing": 549,
+    "testsFailed": 0,
+    "testsLastRun": "2026-11-06",
+    "testsLabel": "measured build:check steps",
+    "testsEvidence": "api/build-check-diagnostics.json",
+    "testsPlanFingerprint": "2a897f15c691a81891ed531f",
+    "testsSourceFingerprint": "71664bd0c9808d2462cebf6a"
+  },
+  "recoveryUnitEvidence": {
+    "command": "npm run test:unit",
+    "exitCode": 0,
+    "passing": 864,
+    "skipped": 6,
+    "failed": 0,
+    "scope": "unit command only; not full build or release acceptance"
+  }
 }

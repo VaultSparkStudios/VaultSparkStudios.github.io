@@ -8,11 +8,10 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last8):939 ·939 ·939 ·939 ·939 ·939 ·939 ·939 ▄▄▄▄▄▄▄▄ (→)
-Avgs — 3:939.0 |5:939.0 |10:939.0
-  └ S411: Dev95 |Align94 |Momentum92 |Engage96 |Process88 |Coherence94 |Security97 |Ecosystem91 |Capital95 |Automation97
-Last session:2026-11-06 |Session 411 |Total:939/1000 |Velocity:0 |Protocol velocity:2
-  └ Release evidence: docs/RELEASE_S411.json; verified local recovery is not production acceptance.
+Sparkline (last8):939 ·939 ·939 ·939 ·939 ·939 ·939 ·835 (↓)
+Avgs — 3:904.3 |5:918.2 |10:928.6
+Last session:2026-11-22 |Session 417 |Total:835/1000 |Velocity:0
+  └ Recovered partial closeout; release/account acceptance remains open.
 <!-- rolling-status-end -->
 
 > Older entries through S401 live verbatim in `context/archive/SIL_S1-S401.md` (exact committed pre-rotation snapshot). Recent complete entries follow.
@@ -2338,3 +2337,12 @@ S414 release verification was interrupted. Committed Games hero changes and inte
 ### 2026-11-17 — S417 in-progress observation (unscored)
 
 A production probe found caller-trusted and anonymously callable point writers that five sessions of release verification had not looked at; the lesson is that release evidence measured the candidate, not the live authorization surface. Fixed live with a probe. Score and full closeout wait for this tranche to reach production. Prior 939 remains historical.
+
+
+## Session 417 — 2026-11-22 — recovered partial closeout
+
+Recovered S417 record from committed main and its authoritative handoff. Security/compliance and legal changes are committed; the handoff records consent scripts and served-folder pruning live, while the Worker untrusted-content rule and profile age screen remain unpromoted. Historical source and hosted checks cover their named candidates only. Real affected account journeys, full current staging parity and production promotion remain unfinished. This recovery closes the record as partial; it does not declare the prior beta plan or this new arc complete.
+
+Product rubric: devHealth 90/100 · creativeAlignment 94/100 · momentum 65/100 · engagement 90/100 · processQuality 60/100 · crossRepoCoherence 85/100 · securityPosture 90/100 · ecosystemIntegration 80/100 · capitalEfficiency 95/100 · automationCoverage 86/100
+
+Total: 835/1000. Velocity: 0 newly verified feature deliveries in recovery. Reduced momentum/process scores reflect unfinished release acceptance and stale writeback; historical 939 is not current acceptance. Doctor has zero blocking failures; historical build proofs remain candidate-specific. Brainstorm commitments: cumulative-baseline regression proof and affected-account acceptance, tracked as [SIL] in TASK_BOARD.
