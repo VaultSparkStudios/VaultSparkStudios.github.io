@@ -1104,7 +1104,7 @@ export async function handleObeliskAuthRequest(request, env, _ctx, { fetchImpl =
   if (url.pathname === '/api/auth/account' && request.method === 'GET') {
     return redirect(`${authConfig(env).issuer}/account`);
   }
-  if (!['/api/auth/session', '/api/auth/me', '/api/auth/logout'].includes(url.pathname)) return null;
+  if (!['/api/auth/session', '/api/auth/me', '/api/auth/logout', '/api/auth/progression'].includes(url.pathname)) return null;
 
   if (url.pathname === '/api/auth/logout') {
     if (request.method !== 'POST' || !sameOriginMutation(request)) return json({ ok: false, code: 'invalid_logout_request' }, 403);
@@ -1149,6 +1149,7 @@ export async function handleObeliskAuthRequest(request, env, _ctx, { fetchImpl =
     });
   }
   if (request.method !== 'GET') return json({ ok: false, code: 'method_not_allowed' }, 405);
+  if (url.pathname === '/api/auth/progression' && url.search) return json({ ok: false, code: 'invalid_request' }, 400);
   const loaded = await authenticateObeliskRequest(request, env, { fetchImpl });
   // Ambient identity is a public projection, so anonymous is a successful
   // null identity (avoids noisy browser 401s). The credential-bearing session
@@ -1158,6 +1159,34 @@ export async function handleObeliskAuthRequest(request, env, _ctx, { fetchImpl =
     return json({ ok: false, code: 'not_authenticated' }, 401);
   }
   if (url.pathname === '/api/auth/me') return json({ ok: true, identity: publicIdentity(loaded.record) });
+  if (url.pathname === '/api/auth/progression') {
+    // Existing configured data plane and the caller JWT keep own-row RLS in force.
+    // No service-role request, user-supplied UUID, point award or profile creation.
+    const userId = loaded.record.supabase.user.id;
+    const subject = loaded.record.obelisk.sub;
+    let tokenSubject;
+    try { tokenSubject = decodeJwtPart(loaded.record.supabase.access_token.split('.')[1])?.sub; } catch (_) {}
+    if (tokenSubject !== userId || loaded.record.link.userId !== userId) return json({ ok: false, code: 'progression_identity_invalid' }, 401);
+    const config = authConfig(env);
+    try {
+      const query = new URLSearchParams({ select: 'id,points', id: 'eq.' + userId, limit: '1' });
+      const response = await fetchImpl(config.supabaseUrl + '/rest/v1/vault_members?' + query, {
+        method: 'GET', redirect: 'error', cache: 'no-store',
+        headers: { apikey: config.supabaseAnonKey, Authorization: 'Bearer ' + loaded.record.supabase.access_token, Accept: 'application/json' },
+        signal: AbortSignal.timeout(8000),
+      });
+      if (response.status !== 200) return json({ ok: false, code: 'progression_unavailable' }, 502);
+      const rows = await response.json();
+      if (!Array.isArray(rows) || rows.length > 1 || (rows.length === 1 &&
+          (rows[0]?.id !== userId || !Number.isSafeInteger(rows[0]?.points) || rows[0].points < 0))) {
+        return json({ ok: false, code: 'progression_invalid' }, 502);
+      }
+      return json({ ok: true, identity: { sub: subject, supabaseUserId: userId },
+        progression: rows.length ? { id: userId, points: rows[0].points } : null });
+    } catch (_) {
+      return json({ ok: false, code: 'progression_unavailable' }, 502);
+    }
+  }
   await recordJourney(env, 'compat');
   return json({
     ok: true,

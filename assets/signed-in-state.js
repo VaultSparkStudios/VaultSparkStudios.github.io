@@ -16,6 +16,7 @@
   'use strict';
 
   var resolved = false;
+  var sessionVersion = 0;
   var cachedSession = null;
   var dataSession = null;
   var dataSessionPromise = null;
@@ -47,6 +48,7 @@
   function resolve(session) {
     if (resolved) return;
     resolved = true;
+    sessionVersion++;
     cachedSession = session || null;
     if (!cachedSession) {
       dataSession = null;
@@ -107,6 +109,31 @@
     return dataSessionPromise;
   }
 
+  async function readOwnProgression() {
+    var identity = await whenReady();
+    if (!identity) return null;
+    var version = sessionVersion;
+    if (!identity.userId || !identity.identityId) throw new Error('progression_identity_unavailable');
+    var controller = new AbortController();
+    var timer = setTimeout(function () { controller.abort(); }, 8000);
+    try {
+      var response = await window.fetch('/api/auth/progression', {
+        method: 'GET', credentials: 'same-origin', cache: 'no-store',
+        headers: { Accept: 'application/json' }, signal: controller.signal
+      });
+      if (!response.ok) throw new Error('progression_unavailable');
+      var payload = await response.json();
+      // A sign-out/re-sign-in of even the same subject invalidates the old read.
+      if (version !== sessionVersion || cachedSession !== identity || !payload || payload.ok !== true ||
+          !payload.identity || payload.identity.sub !== identity.identityId ||
+          payload.identity.supabaseUserId !== identity.userId) throw new Error('progression_identity_changed');
+      var row = payload.progression;
+      if (row === null) return null;
+      if (!row || row.id !== identity.userId || !Number.isSafeInteger(row.points) || row.points < 0) throw new Error('progression_invalid');
+      return { id: row.id, points: row.points };
+    } finally { clearTimeout(timer); }
+  }
+
   function applySignedInAttrs(signedIn, tier) {
     if (document.body) document.body.setAttribute('data-vs-signed-in', signedIn ? 'true' : 'false');
     document.documentElement.setAttribute('data-vs-signed-in', signedIn ? 'true' : 'false');
@@ -162,6 +189,7 @@
     isResolved: function () { return resolved; },
     whenReady: whenReady,
     getDataSession: getDataSession,
+    readOwnProgression: readOwnProgression,
     getDataSessionCached: function () { return dataSessionFresh(dataSession) ? dataSession : null; }
   };
 

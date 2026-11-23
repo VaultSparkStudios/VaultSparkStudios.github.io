@@ -157,3 +157,75 @@ test('account chip: exact plan-key tiers, promogrind_pro is not Eternal, expired
   assert.equal(ctx.tierLabel({}, null), 'MEMBER');
   assert.match(src, /tier === 'ETERNAL' \? ''/, 'Eternal members get no "Upgrade membership" link');
 });
+
+
+// Voidfall progression is a presentation of public story bytes, never a credential gate.
+function loreHarness({points=0,rows,anonymous=false,fail=false,identityMismatch=false,authority=true,reply}={}) {
+  class El {
+    constructor(tag='div',attrs={}){this.tagName=tag;this.attrs=attrs;this.children=[];this.hidden=false;this.inert=false;this.className='';this.textContent='';const set=new Set();this.classList={add:(c)=>set.add(c),toggle:(c,on)=>on?set.add(c):set.delete(c),contains:c=>set.has(c)};}
+    addEventListener(n,f){this.listeners=this.listeners||{};this.listeners[n]=f;}getAttribute(k){return this.attrs[k]??null;}setAttribute(k,v){this.attrs[k]=v;}
+    appendChild(c){c.parent=this;this.children.push(c);return c;}insertBefore(c){c.parent=this;this.children.unshift(c);}remove(){this.parent.children=this.parent.children.filter(x=>x!==this);}
+    querySelector(s){return this.children.find(c=>s==='[data-lore-content]'?'data-lore-content'in c.attrs:s[0]==='.'?c.className===s.slice(1):false)||null;}
+    get firstChild(){return this.children[0];}
+  }
+  const gates=[new El('div',{'data-lore-membership':'required'}),new El('div',{'data-lore-membership':'required','data-lore-rank':'vault_breacher'})];
+  gates.forEach(g=>g.appendChild(new El('div',{'data-lore-content':''})));
+  const listeners={},identity={userId:'own-uuid',identityId:'obelisk-sub'},calls=[];
+  let currentIdentity=anonymous?null:identity;
+  const document={readyState:'loading',visibilityState:'visible',head:new El('head'),querySelector:()=>null,querySelectorAll:()=>gates,createElement:t=>new El(t),createTextNode:t=>({textContent:t}),addEventListener:(n,f)=>{listeners[n]=f;}};
+  const cfg={};vm.runInNewContext(read('assets/membership-access.js'),{globalThis:cfg});
+  const window={VSMembership:authority?cfg.VSMembership:{config:{}},localStorage:{getItem:()=> '99999'},sessionStorage:{getItem:()=> '99999'},VSMember:{currentRank:()=>99999},VSSignedInState:{readOwnProgression:async()=>{
+    if(!currentIdentity)return null;calls.push('same-origin progression');
+    if(reply){const r=await reply();const value=await r.json();return value[0];}
+    if(fail||identityMismatch)throw Error('unavailable');
+    const value=rows===undefined?[{id:'own-uuid',points}]:rows;
+    if(!Array.isArray(value)||value.length>1)throw Error('invalid');if(!value.length)return null;
+    const row=value[0];if(row.id!=='own-uuid'||!Number.isSafeInteger(row.points)||row.points<0)throw Error('invalid');return row;
+  }}};
+  const sandbox={window,document,Promise,Array,Number,Error,AbortController,setTimeout,clearTimeout};
+  vm.runInNewContext(read('assets/lore-gates.js'),sandbox);
+  return {gates,calls,window,listeners,setIdentity:v=>{currentIdentity=v;},refresh:()=>window.VSLoreGates.refresh(),open:()=>gates.map(g=>!g.querySelector('[data-lore-content]').hidden)};
+}
+
+test('lore rule uses canonical Vault Breacher threshold and preserves public story prose',()=>{
+ const cfg=JSON.parse(read('config/membership-entitlements.json')),rank=cfg.ranks.findIndex(r=>r.key==='vault_breacher');
+ assert.equal(cfg.ranks[rank].label,'Vault Breacher');assert.equal(cfg.rankThresholds[rank],7500);
+ const html=read('universe/voidfall/index.html');assert.match(html,/data-lore-rank="vault_breacher"/);assert.doesNotMatch(html,/data-rank-required|Spark Adept/);
+ assert.equal((html.match(/data-lore-content hidden inert/g)||[]).length,2);assert.match(html,/Explore these public story previews as your member profile progresses/);
+ assert.match(html,/The Watcher was not first./);assert.match(html,/The Answered has never been one./);
+});
+test('anonymous forged rank caches never reveal either fragment or query profiles',async()=>{
+ const h=loreHarness({anonymous:true});await h.refresh();assert.deepEqual(h.open(),[false,false]);assert.equal(h.calls.length,0);
+});
+test('verified website member first fragment needs no rank or paid plan',async()=>{
+ const h=loreHarness({points:0});await h.refresh();assert.deepEqual(h.open(),[true,false]);assert.equal(h.calls.length,1);
+ assert.equal(h.calls[0],'same-origin progression');
+});
+test('second fragment reveals at canonical boundary and above, not below',async()=>{
+ const cfg=JSON.parse(read('config/membership-entitlements.json')),threshold=cfg.rankThresholds[cfg.ranks.findIndex(r=>r.key==='vault_breacher')];
+ for(const [points,expected]of[[threshold-1,false],[threshold,true],[threshold+1,true]]){const h=loreHarness({points});await h.refresh();assert.deepEqual(h.open(),[true,expected]);}
+});
+test('identity mismatch, absent member and malformed profile fail closed despite forged cache',async()=>{
+ for(const options of [{identityMismatch:true},{rows:[]},{rows:[{id:'other',points:99999}]},{rows:[{id:'own-uuid',points:'99999'}]},{rows:[{id:'own-uuid',points:-1}]},{rows:[{id:'own-uuid',points:Infinity}]},{rows:[{id:'own-uuid',points:9000},{id:'own-uuid',points:9000}]},{fail:true}]){const h=loreHarness(options);await h.refresh();assert.deepEqual(h.open(),[false,false]);}
+});
+test('unknown author gate and missing canonical rank authority never substitute browser rank',async()=>{
+ const h=loreHarness({points:99999,authority:false});await h.refresh();assert.deepEqual(h.open(),[true,false]);
+ const x=loreHarness({points:99999});x.gates[1].attrs['data-lore-rank']='constructor';await x.refresh();assert.deepEqual(x.open(),[true,false]);
+});
+test('refresh re-locks immediately and failed verification removes prior reveals',async()=>{
+ const h=loreHarness({points:99999});await h.refresh();assert.deepEqual(h.open(),[true,true]);h.setIdentity(null);const done=h.refresh();assert.deepEqual(h.open(),[false,false]);await done;assert.deepEqual(h.open(),[false,false]);assert.equal(h.gates[0].querySelector('.vs-lore-gate__reveal'),null);
+});
+test('late successful profile response cannot reveal after session changes',async()=>{
+ let release;const pending=new Promise(r=>{release=r;});const h=loreHarness({reply:()=>pending});const prior=h.refresh();await new Promise(r=>setImmediate(r));h.setIdentity(null);await h.refresh();release({ok:true,json:async()=>[{id:'own-uuid',points:99999}]});await prior;assert.deepEqual(h.open(),[false,false]);
+});
+test('locked contents are hidden and inert; unlocked contents return to accessibility tree',async()=>{
+ const h=loreHarness({points:0});await h.refresh();assert.equal(h.gates[0].querySelector('[data-lore-content]').inert,false);assert.equal(h.gates[1].querySelector('[data-lore-content]').inert,true);assert.match(h.gates[1].querySelector('.vs-lore-gate__lock').children[2].textContent,/Vault Breacher/);
+});
+
+test('lore unavailable state offers a real retry which rechecks and reveals, with theme-token label',async()=>{
+ const h=loreHarness({fail:true});await h.refresh();assert.deepEqual(h.open(),[false,false]);
+ const lock=h.gates[0].querySelector('.vs-lore-gate__lock'),retry=lock.children.find(c=>c.tagName==='button');
+ assert(retry);assert.equal(retry.type,'button');assert.equal(retry.textContent,'Try again');
+ h.window.VSSignedInState.readOwnProgression=async()=>({id:'own-uuid',points:0});await retry.listeners.click();assert.deepEqual(h.open(),[true,false]);
+ const source=read('assets/lore-gates.js');assert.match(source,/min-height:44px/);assert.match(source,/vs-lore-gate__reveal[^']*color:var\(--text\)/);assert.doesNotMatch(source,/supabase\.co|sb_publishable_|vs_member_rank/);
+});

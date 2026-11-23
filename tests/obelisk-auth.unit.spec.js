@@ -1034,3 +1034,59 @@ test('S367: a near-expiry compatibility token is renewed from the edge, and a re
   assert.equal(afterRevoke.data.session, null);
   assert.equal(events.at(-1).authenticated, false, 'revocation at the edge signs the tab out');
 });
+
+
+async function progressionFixture({tokenSubject='own-user',anonymous=false}={}) {
+ const kv=new FakeKv(),env={RATE_LIMIT:kv,OBELISK_SESSION_SIGNING_KEY:'progression-only-signing-fixture-key',SUPABASE_URL:'https://isolated-data.test',SUPABASE_ANON_KEY:'configured-public-key',SUPABASE_SERVICE_ROLE_KEY:'never-profile-read-service-key'};
+ const sid='p'.repeat(48),exp=Math.floor(Date.now()/1000)+3600;
+ const token=b64url('{}')+'.'+b64url(JSON.stringify({sub:tokenSubject,exp}))+'.fixture';
+ if(!anonymous)await kv.put('auth:session:'+sid,JSON.stringify({obelisk:{sub:'own-obelisk',idTokenExpiresAt:Date.now()+3600000},supabase:{user:{id:'own-user'},access_token:token,expires_at:exp},link:{userId:'own-user'}}));
+ const cookie=await __test.signedValue(sid,env),calls=[];
+ async function invoke(rows=[],{status=200,path='/api/auth/progression',method='GET',throws=false}={}) {
+  return handleObeliskAuthRequest(new Request('https://website-stage.test'+path,{method,headers:{Cookie:'vs_portal_session='+cookie}}),env,null,{fetchImpl:async(url,options)=>{calls.push({url:String(url),options});if(throws)throw Error('private provider detail');return Response.json(rows,{status});}});
+ }
+ return {invoke,calls,env,token};
+}
+test('progression: configured backend and caller JWT yield minimal own row, never service role',async()=>{
+ const f=await progressionFixture();const r=await f.invoke([{id:'own-user',points:7500,email:'must-not-return',plan:'must-not-return'}]);
+ assert.equal(r.status,200);assert.deepEqual(await r.json(),{ok:true,identity:{sub:'own-obelisk',supabaseUserId:'own-user'},progression:{id:'own-user',points:7500}});
+ assert.equal(r.headers.get('cache-control'),'no-store');assert.equal(f.calls.length,1);const {url,options}=f.calls[0],u=new URL(url);
+ assert.equal(u.origin,'https://isolated-data.test');assert.equal(u.pathname,'/rest/v1/vault_members');assert.deepEqual(Object.fromEntries(u.searchParams),{select:'id,points',id:'eq.own-user',limit:'1'});
+ assert.equal(options.method,'GET');assert.equal(options.redirect,'error');assert.equal(options.headers.apikey,f.env.SUPABASE_ANON_KEY);assert.equal(options.headers.Authorization,'Bearer '+f.token);assert(!JSON.stringify(options).includes(f.env.SUPABASE_SERVICE_ROLE_KEY));
+});
+test('progression: authenticated identity without website row remains no member; anonymous refuses',async()=>{
+ const f=await progressionFixture();assert.equal((await (await f.invoke([])).json()).progression,null);
+ const anon=await progressionFixture({anonymous:true});assert.equal((await anon.invoke()).status,401);assert.equal(anon.calls.length,0);
+ const mismatch=await progressionFixture({tokenSubject:'another-user'});assert.equal((await mismatch.invoke()).status,401);assert.equal(mismatch.calls.length,0);
+});
+test('progression: mismatched/malformed/provider responses refuse without exposing detail',async()=>{
+ const f=await progressionFixture();
+ for(const rows of [[{id:'other',points:99999}],[{id:'own-user',points:'7500'}],[{id:'own-user',points:-1}],[{id:'own-user',points:1.5}],[{id:'own-user',points:null}],[null],[{id:'own-user',points:0},{id:'own-user',points:0}],{points:99999}]){const r=await f.invoke(rows);assert.equal(r.status,502);assert.equal((await r.json()).ok,false);}
+ for(const opts of [{status:500},{throws:true}]){const r=await f.invoke([],opts);assert.equal(r.status,502);assert.doesNotMatch(await r.text(),/private provider|never-profile|Bearer/);}
+ const zero=await f.invoke([{id:'own-user',points:0}]);assert.equal((await zero.json()).progression.points,0);
+});
+test('progression: exact GET route accepts no caller identity/query and preserves session shape',async()=>{
+ const f=await progressionFixture();assert.equal((await f.invoke([],{method:'POST'})).status,405);assert.equal((await f.invoke([],{path:'/api/auth/progression?id=other'})).status,400);assert.equal(f.calls.length,0);
+ const session=await f.invoke([],{path:'/api/auth/session'});const value=await session.json();assert(value.supabase.access_token);assert.equal(value.progression,undefined);assert.equal(f.calls.length,0);
+});
+
+async function progressionStateFixture(fetchReply) {
+ const identity={provider:'obelisk',userId:'own-user',identityId:'own-obelisk'},events={},calls=[];let change;
+ const document={readyState:'complete',documentElement:{setAttribute(){}},body:{setAttribute(){}},addEventListener(n,f){events[n]=f;},removeEventListener(){},dispatchEvent(e){events[e.type]?.(e);}};
+ const window={VSIdentity:{getSession:async()=>identity,onChange(f){change=f;}},fetch:async(url,options)=>{calls.push({url,options});return fetchReply(url,options);}};
+ vm.runInNewContext(await readFile(new URL('../assets/signed-in-state.js',import.meta.url),'utf8'),{window,document,Promise,AbortController,Error,Number,setTimeout,clearTimeout,CustomEvent:class{constructor(type,options){this.type=type;this.detail=options.detail;}}});
+ await window.VSSignedInState.whenReady();return {state:window.VSSignedInState,calls,change};
+}
+function progressionPayload(points=7500){return {ok:true,identity:{sub:'own-obelisk',supabaseUserId:'own-user'},progression:{id:'own-user',points}};}
+test('progression facade: only same-origin GET, valid same-subject profile and absence accepted',async()=>{
+ const f=await progressionStateFixture(async()=>Response.json(progressionPayload()));assert.equal((await f.state.readOwnProgression()).points,7500);
+ assert.equal(f.calls[0].url,'/api/auth/progression');assert.equal(f.calls[0].options.credentials,'same-origin');assert.equal(f.calls[0].options.method,'GET');assert.equal(f.calls[0].options.cache,'no-store');assert.equal(f.calls[0].options.headers.Authorization,undefined);
+ const absent=await progressionStateFixture(async()=>Response.json({...progressionPayload(),progression:null}));assert.equal(await absent.state.readOwnProgression(),null);
+});
+test('progression facade: foreign subject/row and malformed values reject',async()=>{
+ for(const patch of [{identity:{sub:'other',supabaseUserId:'own-user'}},{progression:{id:'other',points:99999}},{progression:{id:'own-user',points:'99999'}},{progression:{id:'own-user',points:-1}},{ok:false}]){const f=await progressionStateFixture(async()=>Response.json({...progressionPayload(),...patch}));await assert.rejects(f.state.readOwnProgression());}
+ const denied=await progressionStateFixture(async()=>new Response('denied',{status:401}));await assert.rejects(denied.state.readOwnProgression());
+});
+test('progression facade: sign-out and same-subject sign-in race invalidates pending reply',async()=>{
+ for(const resign of [false,true]){let done;const f=await progressionStateFixture(()=>new Promise(r=>{done=r;}));const pending=f.state.readOwnProgression();await new Promise(r=>setImmediate(r));f.change({type:'SIGNED_OUT'});if(resign)f.change({type:'SIGNED_IN',session:{provider:'obelisk',userId:'own-user',identityId:'own-obelisk'}});done(Response.json(progressionPayload()));await assert.rejects(pending,/changed/);}
+});
