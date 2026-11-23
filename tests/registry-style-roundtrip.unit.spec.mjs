@@ -37,3 +37,26 @@ test('future owner style changes retain raw WRITE declarations so the normal pos
  const changed=[{...surfaces[0],blocks:surfaces[0].blocks.map(b=>b.name==='press-catalog'?{...b,render:m=>b.render(m).replaceAll('padding:1.25rem;','padding:1.37rem;')}:b)}],root=fixture(),options={surfaces:changed,catalogExtras:[]};
  proposed.applyAll(root,inputs,{surfaces:changed});assert.equal(check(root,options).ok,true);assert.match(fs.readFileSync(root+'/press/index.html','utf8'),/style="padding:1\.37rem;"/);extract(root);assert.equal(check(root,options).ok,true);assert.equal(check(root).ok,false);assert.ok(fs.readFileSync(root+'/assets/style.css','utf8').includes('{padding:1.37rem;}'));
 });
+
+const catalogRegistry=JSON.parse(fs.readFileSync(path.join(repo,'data/game-registry.json')));
+const catalogFeed=JSON.parse(fs.readFileSync(path.join(repo,'api/public-intelligence.json')));
+const renderCatalogActions=(feed=catalogFeed)=>proposed.renderGamesCatalog(proposed.buildModel(catalogRegistry,feed,{exists:relative=>fs.existsSync(path.join(repo,relative))}));
+test('catalog project interest uses actual six canonical hosts; vaulted fallback states membership availability',()=>{
+ const html=renderCatalogActions();let count=0;
+ for(const entry of catalogFeed.availability.waitlists.projects.filter(r=>r.key.startsWith('game:'))){
+  const id=entry.key.slice(5),card=(html.match(/<article[\s\S]*?<\/article>/g)||[]).find(row=>row.includes('data-game="'+id+'"'));
+  assert.ok(card,'actual catalog host '+id);assert.ok(card.includes('href="'+entry.path+'#waitlist-'+entry.key.replace(':','-')+'">Request project updates</a>'));assert.ok(!card.includes('/vault-member/#register'));count++;
+ }
+ assert.equal(count,6);const vaulted=html.match(/<article[^>]*data-game="gridiron-gm"[\s\S]*?<\/article>/)?.[0];
+ assert.ok(vaulted.includes('href="/membership/">Membership availability</a>'));assert.ok(!html.includes('href="/vault-member/#register"'));
+ const model=proposed.buildModel(catalogRegistry,catalogFeed);for(const g of model.games.filter(g=>g.playable))assert.ok(html.includes('href="'+g.playUrl+'"'));
+});
+test('catalog authority rejects malformed, duplicate, stale and vaulted project interest entries',()=>{
+ for(const mutate of [f=>f.availability.waitlists.mode='open',f=>f.availability.waitlists.projects.push({...f.availability.waitlists.projects[0]}),f=>f.availability.waitlists.projects[0].path='https://example.com/',f=>f.availability.waitlists.projects[0].path='/games/wrong-host/',f=>f.availability.waitlists.projects.push({key:'game:gridiron-gm',name:'Gridiron GM',path:'/games/gridiron-gm/'})]){
+  const feed=structuredClone(catalogFeed);mutate(feed);assert.throws(()=>renderCatalogActions(feed),/catalog waitlist/);
+ }
+});
+test('missing project interest authority never invents enrollment or a waitlist',()=>{
+ const feed=structuredClone(catalogFeed);delete feed.availability.waitlists;const html=renderCatalogActions(feed);
+ assert.ok(!html.includes('Request project updates'));assert.ok(!html.includes('/vault-member/#register'));assert.ok(html.includes('Membership availability'));
+});

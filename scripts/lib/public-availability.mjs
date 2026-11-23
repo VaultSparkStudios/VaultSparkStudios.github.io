@@ -54,10 +54,51 @@ export function renderMembershipSurfaceBlocks(availability) {
     'press-membership-overview':`<p>${profile}</p>\n          <p>${note} <a href="${href}">${label}</a>. Optional paid tiers and their current monthly terms are listed on the <a href="/membership/#tiers">membership page</a>.</p>\n          <div class="vsx-5d541e7bea">\n            <div class="vsx-252bf0a8c5"><strong class="vsx-a07b6250b2">Vault Rank</strong><span class="vsx-48343c0422">Earned progression</span></div>\n            <div class="vsx-252bf0a8c5"><strong class="vsx-a07b6250b2">${availability.plans.length}</strong><span class="vsx-48343c0422">Membership tiers</span></div>\n            <div class="vsx-252bf0a8c5"><strong class="vsx-a07b6250b2">Obelisk</strong><span class="vsx-48343c0422">Shared Studio sign-in</span></div>\n            <div class="vsx-252bf0a8c5"><strong class="vsx-a07b6250b2">${surfaceEsc(c.short)}</strong><span class="vsx-48343c0422">Website enrollment</span></div>\n          </div>`,
   };
 }
+// The owned PATHWAYS table uses literal string properties. Parse only that
+// bounded grammar: never execute browser source inside a production checker.
+function pathwayLiteralMetadata(source) {
+  if(typeof source!=='string'||source.length>100000)throw Error('Pathway source exceeds bound');
+  const tokens=[];let i=0;
+  while(i<source.length) {
+    const c=source[i];
+    if(/\s/.test(c)){i++;continue;}
+    if(source.startsWith('//',i)){const offset=source.slice(i+2).search(/[\n\r\u2028\u2029]/);if(offset<0)break;i+=2+offset;continue;}
+    if(source.startsWith('/*',i)){const end=source.indexOf('*/',i+2);if(end<0)throw Error('Unclosed pathway comment');i=end+2;continue;}
+    if(c==='"'||c==="'") {
+      const quote=c;let value='',closed=false;i++;
+      while(i<source.length){const ch=source[i++];if(ch===quote){closed=true;break;}if(ch==='\n'||ch==='\r')throw Error('Invalid pathway string');
+        if(ch!=='\\'){value+=ch;continue;}
+        const escaped=source[i++],simple={'\\':'\\',"'":"'",'"':'"','/':'/','n':'\n','r':'\r','t':'\t','b':'\b','f':'\f','v':'\v'};
+        if(Object.hasOwn(simple,escaped)){value+=simple[escaped];continue;}
+        if(escaped==='\n')continue;if(escaped==='\r'){if(source[i]==='\n')i++;continue;}
+        if(escaped==='x'||escaped==='u'){const count=escaped==='x'?2:4,text=source.slice(i,i+count);if(!new RegExp('^[a-f0-9]{'+count+'}$','i').test(text))throw Error('Unsupported pathway escape');value+=String.fromCharCode(parseInt(text,16));i+=count;continue;}
+        throw Error('Unsupported pathway escape');
+      }
+      if(!closed||value.length>32768)throw Error('Unclosed/oversized pathway string');tokens.push({kind:'string',value});
+    }else if(/[A-Za-z_$]/.test(c)){const start=i++;while(i<source.length&&/[A-Za-z0-9_$]/.test(source[i]))i++;tokens.push({kind:'word',value:source.slice(start,i)});}
+    else{if(c==='`')throw Error('Dynamic pathway templates require review');tokens.push({kind:'punct',value:c});i++;}
+    if(tokens.length>20000)throw Error('Pathway tokens exceed bound');
+  }
+  const is=(n,value)=>tokens[n]?.value===value&&tokens[n]?.kind!=='string';
+  const declarations=[];for(let n=0;n<tokens.length-3;n++)if(['var','let','const'].includes(tokens[n].value)&&tokens[n+1].kind==='word'&&tokens[n+1].value==='PATHWAYS'&&is(n+2,'=')){if(!is(n+3,'{'))throw Error('PATHWAYS must remain a literal table');declarations.push(n+3);}
+  if(declarations.length!==1)throw Error('Missing/duplicate PATHWAYS table');
+  const close=open=>{const pairs={'{':'}','[':']','(':')'},stack=[];for(let n=open;n<tokens.length;n++){const t=tokens[n];if(t.kind!=='punct')continue;if(Object.hasOwn(pairs,t.value)){stack.push(pairs[t.value]);if(stack.length>64)throw Error('Pathway nesting exceeds bound');}else if(['}',']',')'].includes(t.value)){if(stack.pop()!==t.value)throw Error('Unbalanced pathway table');if(!stack.length)return n;}}throw Error('Unclosed pathway table');};
+  const open=declarations[0],end=close(open);let member=null;
+  for(let n=open+1;n<end;){if(is(n,',')){n++;continue;}const key=tokens[n];if(!['word','string'].includes(key.kind)||!is(n+1,':')||!is(n+2,'{'))throw Error('Pathway entries must remain literal objects');const stop=close(n+2);
+    if(key.value==='member'){if(member)throw Error('Duplicate member pathway');member={};for(let p=n+3;p<stop;){if(is(p,',')){p++;continue;}const property=tokens[p],value=tokens[p+2];if(!['word','string'].includes(property.kind)||!is(p+1,':')||value?.kind!=='string'||!(is(p+3,',')||p+3===stop)||Object.hasOwn(member,property.value))throw Error('Member properties must remain unique literal strings');Object.defineProperty(member,property.value,{value:value.value,enumerable:true});p+=3;}}
+    n=stop+1;if(n<end&&!is(n,','))throw Error('Unexpected pathway table expression');
+  }
+  if(!member||member.key!=='member'||typeof member.summary!=='string'||typeof member.href!=='string')throw Error('Missing member pathway metadata');
+  // Current personalization clones entries; later direct member overrides must
+  // receive review rather than bypassing the literal metadata contract.
+  for(let n=end+1;n<tokens.length;n++)if(tokens[n].kind==='word'&&tokens[n].value==='PATHWAYS'&&((is(n+1,'.')&&tokens[n+2]?.value==='member')||(is(n+1,'[')&&tokens[n+2]?.kind==='string'&&tokens[n+2].value==='member')))throw Error('Later member override requires review');
+  return {member,activeStrings:tokens.filter(t=>t.kind==='string').map(t=>t.value).join(' ')};
+}
+
 export function availabilitySurfaceConflicts(file,source,availability) {
   // Historical articles/quotations and shared identity headers are not current
   // website membership enrollment surfaces. Never rewrite or patrol those here.
-  if(!['index.html','press/index.html','assets/contact-page.js','vault-member/index.html','assets/vault-cta.js','invite/index.html'].includes(file))return [];
+  if(!['index.html','press/index.html','assets/contact-page.js','vault-member/index.html','assets/vault-cta.js','invite/index.html','assets/pathways-router.js'].includes(file))return [];
   const errors=[],blocks=renderMembershipSurfaceBlocks(availability);
   if(file==='invite/index.html') {
     const main=source.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1]||'';
@@ -69,6 +110,17 @@ export function availabilitySurfaceConflicts(file,source,availability) {
     if(availability.signup.mode==='closed'&&!/website membership (?:enrollment )?is currently closed/i.test(text))errors.push('Invite must state current closed website membership');
     if(availability.signup.mode==='open'&&/website membership is currently by invitation|current website enrollment is by invitation|accept a website membership invitation/i.test(text))errors.push('Invite invitation copy differs from current open website membership');
     if(!/referral link does not grant website membership/i.test(text))errors.push('Invite must not imply a referral link grants website membership');
+    return errors;
+  }
+  if(file==='assets/pathways-router.js') {
+    let parsed;try{parsed=pathwayLiteralMetadata(source);}catch(error){errors.push('Pathway literal metadata unavailable: '+error.message);return errors;}
+    const {member,activeStrings}=parsed;
+    if(/rank progression, and a vault identity|identity you can carry across worlds|Start free, earn rank|rank-carrying identity|active backend services/i.test(activeStrings))errors.push('Pathway copy asserts unqualified membership, universal game progression or unverified backend activity');
+    if(!/free\s+Obelisk\s+Studio\s+account/i.test(member.summary)||!/website\s+membership/i.test(member.summary)||!/current\s+enrollment/i.test(member.summary)||member.href!=='/membership/')errors.push('Member pathway must separate shared identity and current website membership availability');
+    const mode=availability.signup.mode;
+    if(mode!=='open'&&/website membership(?: enrollment)? (?:is |is currently )?open(?: to everyone)?|no invitation (?:is )?needed|anyone can create a free Vault Member account/i.test(activeStrings))errors.push('Pathway copy implies open website membership contrary to current authority');
+    if(mode!=='invitation'&&/website membership(?: enrollment)? (?:is |is currently )?by invitation/i.test(activeStrings))errors.push('Pathway invitation claim differs from current authority');
+    if(mode!=='closed'&&/website membership(?: enrollment)? (?:is |is currently )?closed/i.test(activeStrings))errors.push('Pathway closed-enrollment claim differs from current authority');
     return errors;
   }
   if(file==='assets/vault-cta.js') {

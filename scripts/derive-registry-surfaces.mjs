@@ -123,7 +123,7 @@ export const GAME_COPY = {
   },
   'project-unknown': {
     genre: 'classified', hero: 'vault-sealed', shortName: 'Project ???',
-    desc: 'Something is charged. The vault walls are warm. A new world is building pressure behind the steel. Vault Members will hear about this first.',
+    desc: 'Something is charged. The vault walls are warm. A new world is building pressure behind the steel.',
     meta: ['Sealed Teaser', 'Unknown Genre'],
     waitLabel: 'Join The Vault',
   },
@@ -377,15 +377,29 @@ export function renderGamesStats(model) {
   return [heroStat(c.sparked, ['🔥 Sparked', 'sparked']), heroStat(c.forge, ['⚒️ In The Forge', 'forge']), heroStat(c.vaulted, ['🔒 Vaulted', 'vaulted'])].join(DIVIDER) + '\n          ';
 }
 
-function gameCta(g, copy) {
+function gameCta(g, copy, availability) {
   if (g.playable) return `<a class="button" href="${esc(g.playUrl)}" target="_blank" rel="noreferrer">${copy.playLabel || (g.status === 'sparked' ? 'Play Now' : 'Play the Beta')}</a>`;
   // A live non-game product (MindFrame) opens at its canon deployedUrl without
   // becoming a "Playable Beta": the vault badge still follows canon only.
   if (copy.openLabel && g.deployedUrl) return `<a class="button" href="${esc(g.deployedUrl)}" target="_blank" rel="noreferrer">${esc(copy.openLabel)}</a>`;
-  return `<a class="button" href="/vault-member/#register">${esc(copy.waitLabel || (g.status === 'vaulted' ? 'Join The Vault' : 'Join Waitlist'))}</a>`;
+  const waitlists = availability?.waitlists;
+  if (waitlists) {
+    if (waitlists.mode !== 'project-specific-double-opt-in' || !Array.isArray(waitlists.projects)) throw new Error('Invalid catalog waitlist authority');
+    const seen = new Set();
+    for (const entry of waitlists.projects) {
+      if (!entry || !/^(game|project):[a-z0-9-]+$/.test(entry.key) || seen.has(entry.key) || typeof entry.name !== 'string' || !entry.name.trim() || !/^\/(games|projects|universe)\/[a-z0-9-]+\/$/.test(entry.path)) throw new Error('Invalid or duplicate catalog waitlist entry');
+      seen.add(entry.key);
+    }
+    const entry = waitlists.projects.find(row => row.key === 'game:' + g.id);
+    if (entry) {
+      if (entry.path !== g.href || g.status === 'vaulted') throw new Error('Inapplicable or stale catalog waitlist host');
+      return `<a class="button" href="${esc(entry.path)}#waitlist-${esc(entry.key.replace(':', '-'))}">Request project updates</a>`;
+    }
+  }
+  return '<a class="button" href="/membership/">Membership availability</a>';
 }
 
-function renderGameCard(g) {
+function renderGameCard(g, availability) {
   const copy = GAME_COPY[g.id] || { genre: 'other', hero: 'vault-sealed card-hero--titled', desc: g.note || '', meta: [] };
   const key = statusKey(g);
   const display = copy.shortName || g.name;
@@ -400,14 +414,14 @@ function renderGameCard(g) {
               <p>${esc(copy.desc)}</p>
               <div class="meta">${meta}</div>
               <div class="game-card-actions">
-                ${gameCta(g, copy)}
+                ${gameCta(g, copy, availability)}
                 <a class="button-secondary" href="${esc(g.href)}">About ${esc(g.id === 'project-unknown' ? 'Project Unknown' : display)}</a>
               </div>
             </div>
           </article>`;
 }
 
-function renderFeaturedGame(g) {
+function renderFeaturedGame(g, availability) {
   const copy = GAME_COPY[g.id] || { genre: 'other', hero: 'vault-sealed', desc: g.note || '', meta: [] };
   const key = statusKey(g);
   const features = (copy.features || []).map((f) => `<li>${esc(f)}</li>`).join('\n                ');
@@ -428,7 +442,7 @@ function renderFeaturedGame(g) {
                 ${copy.meta.map((m) => `<span>${esc(m)}</span>`).join('')}
               </div>
               <div class="game-card-actions">
-                ${gameCta(g, copy)}
+                ${gameCta(g, copy, availability)}
                 <a class="button-secondary" href="${esc(g.href)}">About ${esc(g.name)}</a>
               </div>
             </div>
@@ -460,7 +474,7 @@ export function renderGamesCatalog(model) {
         <div class="games-section-label" data-section="${featured.status}" aria-hidden="true">
           <span style="color:${color};">${text}</span>
         </div>
-${renderFeaturedGame(featured)}
+${renderFeaturedGame(featured, model.availability)}
 `;
   }
   const c = model.counts.games;
@@ -470,7 +484,7 @@ ${renderFeaturedGame(featured)}
         </div>
 
         <div class="games-grid" id="games-grid">
-${rest.map(renderGameCard).join('\n')}
+${rest.map(g => renderGameCard(g, model.availability)).join('\n')}
 
         </div><!-- /games-grid -->
         `;

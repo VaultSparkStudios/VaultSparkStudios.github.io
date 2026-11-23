@@ -7,8 +7,8 @@
       key: 'player',
       eyebrow: 'Player Path',
       title: 'I want something playable tonight',
-      summary: 'Start with live games, rank progression, and a vault identity you can carry across worlds.',
-      proof: 'Best first stop: games, rankings, and a free account.',
+      summary: 'Start with live browser games. Each project page describes its access, account integration and progression.',
+      proof: 'Best first stop: games and their current access details.',
       href: '/games/',
       cta: 'Browse Live Games',
     },
@@ -16,10 +16,10 @@
       key: 'member',
       eyebrow: 'Member Path',
       title: 'I want an account that grows with me',
-      summary: 'Start free, earn rank, unlock achievements, and keep one identity across the entire studio.',
-      proof: 'Best first stop: Vault Member and membership overview.',
-      href: '/vault-member/#register',
-      cta: 'Claim Your Vault Identity',
+      summary: 'A free Obelisk Studio account provides shared sign-in. Website membership has its own profile, ranks and achievements; see current enrollment.',
+      proof: 'Best first stop: current website membership availability and benefits.',
+      href: '/membership/',
+      cta: 'Explore Website Membership',
     },
     supporter: {
       key: 'supporter',
@@ -113,8 +113,7 @@
     var stats = intel.stats || {};
     var proofBits = [];
 
-    if (stats.vaultRankTiers) proofBits.push(stats.vaultRankTiers + ' progression tiers');
-    if (stats.activeEdgeFunctions) proofBits.push(stats.activeEdgeFunctions + ' active backend services');
+    if (stats.vaultRankTiers) proofBits.push(stats.vaultRankTiers + ' website ranks');
     if (stats.trackedSocialAccounts) proofBits.push(stats.trackedSocialAccounts + ' social channels');
 
     if (context === 'membership' || context === 'join' || context === 'invite') {
@@ -138,8 +137,8 @@
 
       if (state.hesitation_signal === 'want_gameplay' && item.key === 'player') {
         next.title = 'I want the strongest playable proof';
-        next.summary = 'Skip explanation-heavy surfaces and go straight to the live games, progression signal, and worlds already in motion.';
-        next.proof = 'Best first stop: playable games and rank-carrying identity.';
+        next.summary = 'Go straight to live browser games and check each project page for its current access and progression.';
+        next.proof = 'Best first stop: playable games and their access details.';
         next.cta = 'Open Live Games';
       }
 
@@ -171,7 +170,7 @@
         '<div class="vault-journey-head">' +
           '<p class="vault-journey-kicker">Choose Your Path</p>' +
           '<h3 class="vault-journey-title">Start where your intent is strongest.</h3>' +
-          '<p class="vault-journey-copy">The site has games, rank identity, live member proof, public studio signals, and worldbuilding. Pick the right front door instead of wandering the whole vault cold.</p>' +
+          '<p class="vault-journey-copy">The site has games, website membership, public studio updates, and worldbuilding. Pick the right front door instead of wandering the whole vault cold.</p>' +
           '<p class="vault-journey-meta">' + (note || 'Pathway memory stays on this device so the site can stop asking you the same question.') + '</p>' +
         '</div>' +
         '<div class="vault-journey-grid">' +

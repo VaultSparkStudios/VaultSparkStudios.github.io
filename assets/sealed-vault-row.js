@@ -39,8 +39,9 @@
     '.vs-sealed-row .vs-sealed-countdown::before{content:"";width:7px;height:7px;border-radius:50%;',
     'background:#7EC9FF;box-shadow:0 0 6px rgba(126,201,255,0.7);animation:vs-seal-pulse 2.6s ease-in-out infinite;}',
     '@media (max-width:900px){.vs-sealed-row .vs-sealed-grid{grid-template-columns:repeat(4,1fr);}}',
-    '@media (max-width:520px){.vs-sealed-row .vs-sealed-grid{grid-template-columns:repeat(3,1fr);}}',
+    '@media (max-width:520px){.vs-sealed-row .vs-sealed-grid{grid-template-columns:repeat(3,1fr);}.vs-sealed-row .vs-sealed-label{letter-spacing:0.02em;}}',
     'body.light-mode .vs-sealed-row{background:rgba(255,255,255,0.85);border-color:rgba(17,24,39,0.12);}',
+    'body.light-mode .vs-sealed-row .vs-sealed-eyebrow{color:var(--gold);}',
     'body.light-mode .vs-sealed-row .vs-sealed-caption{color:#4a5568;}',
   ].join('');
 

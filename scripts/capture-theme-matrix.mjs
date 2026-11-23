@@ -21,7 +21,7 @@
  *   later, use --receipt-only --out <reported-run-directory>; stale inputs refuse.
  */
 import fs from 'node:fs';
-import {settleCaptureAnimations} from './lib/capture-animation-state.mjs';
+import {settleCaptureAnimations,validateRasterAnimationState} from './lib/capture-animation-state.mjs';
 import http from 'node:http';
 import path from 'node:path';
 import url from 'node:url';
@@ -531,7 +531,7 @@ async function main() {
               await page.waitForTimeout(150);
               const scroll = await measure(); validateScrollTileMeasurement(plan, scroll, offset);
               const pixels = await page.screenshot({ animations: 'allow', fullPage: false });
-              const after = await measure(); validateScrollTileMeasurement(plan, after, offset);
+              const after = await measure(); validateScrollTileMeasurement(plan, after, offset);validateRasterAnimationState(scroll,after);
               if (after.scrollY !== scroll.scrollY) throw new Error('Scroll position changed during tile capture');
               if (tileIndex === plan.offsets.length - 1 && after.scrollY + after.viewportHeight < after.documentHeight) throw new Error('Final tile changed before reaching bottom');
               const file = `${slug(route)}--${theme}--${viewport.name}--scroll-tile-y${scroll.scrollY}.png`;

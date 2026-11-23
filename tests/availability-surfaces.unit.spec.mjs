@@ -102,3 +102,55 @@ test('Invite separates open shared identity from invitation membership and refer
  assert.ok(availabilitySurfaceConflicts('invite/index.html',source,{...availability,signup:{...availability.signup,mode:'open'}}).length>0,'stale invitation copy fails when authority changes');
  const caller=read('scripts/check-content-coherence.mjs');assert.match(caller,/for\s*\(const file of \[[^\]]*'invite\/index\.html'[^\]]*\]\)/,'real coherence CLI checks Invite');
 });
+
+function pathwayRuntime(source) {
+ const window={location:{pathname:'/invite/'},localStorage:{getItem:()=>null,setItem:()=>{}}},document={readyState:'loading',addEventListener:()=>{}};
+ vm.runInNewContext(source,{window,document},{timeout:200});return window.VSPathways.all;
+}
+test('shared pathway neutral identity/membership copy and actual destination remain valid for all three canonical postures',()=>{
+ const source=read('assets/pathways-router.js'),cards=pathwayRuntime(source);
+ assert.equal(cards.member.href,'/membership/');assert.match(cards.member.summary,/free Obelisk Studio account/);
+ for(const mode of ['invitation','open','closed'])assert.deepEqual(availabilitySurfaceConflicts('assets/pathways-router.js',source,{...availability,signup:{...availability.signup,mode}}),[]);
+ assert.match(read('scripts/check-content-coherence.mjs'),/for\s*\(const file of \[[^\]]*'assets\/pathways-router\.js'[^\]]*\]\)/);
+});
+test('twelve pathway negatives mutate actual member/player/personalization/backend string producers rather than comments',()=>{
+ const source=read('assets/pathways-router.js'),summary=pathwayRuntime(source).member.summary;
+ const mutations=[source.replace(summary,'Start free, earn rank. '+summary),source.replace('Start with live browser games. Each project page describes its access, account integration and progression.','Start with live games, rank progression, and a vault identity you can carry across worlds.'),source.replace('Best first stop: playable games and their access details.','Best first stop: playable games and rank-carrying identity.'),source.replace("    if (stats.trackedSocialAccounts)","    if (stats.activeEdgeFunctions) proofBits.push(stats.activeEdgeFunctions + ' active backend services');\n    if (stats.trackedSocialAccounts)")];
+ for(const changed of mutations){assert.notEqual(changed,source);for(const mode of ['invitation','open','closed'])assert.ok(availabilitySurfaceConflicts('assets/pathways-router.js',changed,{...availability,signup:{...availability.signup,mode}}).length);}
+});
+test('actual unqualified open enrollment fails invitation/closed while neutral summary remains mode independent',()=>{
+ const source=read('assets/pathways-router.js'),summary=pathwayRuntime(source).member.summary,bad=source.replace(summary,'Website membership is open to everyone. No invitation needed. '+summary);
+ assert.match(pathwayRuntime(bad).member.summary,/open to everyone/);
+ for(const mode of ['invitation','closed'])assert.ok(availabilitySurfaceConflicts('assets/pathways-router.js',bad,{...availability,signup:{...availability.signup,mode}}).length);
+ assert.deepEqual(availabilitySurfaceConflicts('assets/pathways-router.js',bad,{...availability,signup:{...availability.signup,mode:'open'}}),[]);
+ for(const [phrase,allowed]of [['Website membership is currently by invitation. ','invitation'],['Website membership enrollment is currently closed. ','closed']])for(const mode of ['invitation','open','closed']){const changed=source.replace(summary,phrase+summary);assert.equal(availabilitySurfaceConflicts('assets/pathways-router.js',changed,{...availability,signup:{...availability.signup,mode}}).length===0,mode===allowed);}
+});
+test('actual member href cannot be masked by comments or another pathway destination; normal quoting/spacing is accepted',()=>{
+ const source=read('assets/pathways-router.js'),wrong=source.replace("href: '/membership/'","href: '/vault-member/#register'")+"\n// href: '/membership/'\n";
+ assert.equal(pathwayRuntime(wrong).member.href,'/vault-member/#register');assert.ok(availabilitySurfaceConflicts('assets/pathways-router.js',wrong,availability).length);
+ const other=wrong.replace("href: '/vaultsparked/#pricing'","href: '/membership/'");assert.ok(availabilitySurfaceConflicts('assets/pathways-router.js',other,availability).length);
+ for(const href of ['href: "/membership/"','href /* current info */ : "/membership/"',String.raw`href: '\/membership\/'`]){const formatted=source.replace("href: '/membership/'",href);assert.equal(pathwayRuntime(formatted).member.href,'/membership/');assert.deepEqual(availabilitySurfaceConflicts('assets/pathways-router.js',formatted,availability),[]);}
+ const commented=source+"\n// Website membership is open to everyone. No invitation needed.\n/* active backend services */\n";assert.deepEqual(availabilitySurfaceConflicts('assets/pathways-router.js',commented,availability),[]);
+});
+test('comment summary bait, duplicate properties, dynamic values and late member override cannot satisfy literal metadata',()=>{
+ const source=read('assets/pathways-router.js'),summary=pathwayRuntime(source).member.summary;
+ const late=source.replace('  window.VSPathways = {',"  PATHWAYS.member.href='/vault-member/#register';\n  window.VSPathways = {");assert.equal(pathwayRuntime(late).member.href,'/vault-member/#register');
+ for(const bad of [source.replace(summary,'Unknown membership copy.')+'\n// '+summary,source.replace("href: '/membership/'","href: '/membership/', href: '/vault-member/#register'"),source.replace("href: '/membership/'","href: window.memberDestination"),source.replace("href: '/membership/'","href: '/member' + 'ship/'"),late]){assert.ok(availabilitySurfaceConflicts('assets/pathways-router.js',bad,availability).length);}
+ assert.ok(availabilitySurfaceConflicts('assets/pathways-router.js','x'.repeat(100001),availability).length);
+});
+test('actual renderer exposes the guarded personalized/backend mutations and keeps proposed member destination neutral',async()=>{
+ const source=read('assets/pathways-router.js');
+ async function render(text){const root={dataset:{pathwaysContext:'invite',pathwaysLimit:'3'},innerHTML:''},listeners={},document={readyState:'loading',addEventListener:(name,fn)=>listeners[name]=fn,querySelectorAll:()=>[root]},window={location:{pathname:'/invite/'},localStorage:{getItem:()=>null,setItem:()=>{}},VSIntentState:{getState:()=>({hesitation_signal:'want_gameplay',pathway:null})},VSPublicIntel:{get:()=>Promise.resolve({stats:{vaultRankTiers:9,activeEdgeFunctions:16,trackedSocialAccounts:6}})}};vm.runInNewContext(text,{window,document},{timeout:200});listeners.DOMContentLoaded();await new Promise(setImmediate);return root.innerHTML;}
+ const good=await render(source);assert.ok(good.includes('href="/membership/"'));assert.ok(good.includes('current access and progression'));assert.ok(!good.includes('active backend services'));
+ const backend=source.replace("    if (stats.trackedSocialAccounts)","    if (stats.activeEdgeFunctions) proofBits.push(stats.activeEdgeFunctions + ' active backend services');\n    if (stats.trackedSocialAccounts)");assert.ok((await render(backend)).includes('16 active backend services'));assert.ok(availabilitySurfaceConflicts('assets/pathways-router.js',backend,availability).length);
+ const personalized=source.replace('Best first stop: playable games and their access details.','Best first stop: playable games and rank-carrying identity.');assert.ok((await render(personalized)).includes('rank-carrying identity'));assert.ok(availabilitySurfaceConflicts('assets/pathways-router.js',personalized,availability).length);
+});
+
+test('linecomment terminators cannot hide a later actual duplicate member destination',()=>{
+ const source=read('assets/pathways-router.js');
+ for(const end of ['\r','\u2028','\u2029']){
+  const bad=source.replace("href: '/membership/',","href: '/membership/', // visiblecomment"+end+" href: '/vault-member/#register',\n");
+  assert.equal(pathwayRuntime(bad).member.href,'/vault-member/#register');
+  assert.ok(availabilitySurfaceConflicts('assets/pathways-router.js',bad,availability).length);
+ }
+});
