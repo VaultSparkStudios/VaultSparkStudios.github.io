@@ -1327,6 +1327,8 @@
       letter-spacing: -0.04em;
       line-height: 1;
     }
+    /* Live score labels wrap between one and two lines; reserve both. */
+    #proof-resonance-val { min-block-size: 2lh; }
     .proof-stat span {
       font-size: 0.72rem;
       font-weight: 600;
@@ -1343,8 +1345,9 @@
 
     /* Skip below-fold layout/paint until a section approaches the viewport.
        The remembered intrinsic size keeps scroll geometry stable after the
-       first reveal while preserving the complete semantic DOM for agents. */
-    main > section:not(.hero) {
+       first reveal while preserving the complete semantic DOM for agents.
+       Keep live stats laid out because their labels can wrap while offscreen. */
+    main > section:not(.hero):not(#vault-proof) {
       content-visibility: auto;
       contain-intrinsic-size: auto 760px;
     }

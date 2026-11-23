@@ -124,7 +124,12 @@ export function planScrollTiles(documentHeight, viewportHeight, viewportWidth, o
     if (offsets.length >= 250) throw new Error('Scroll-tile plan exceeds capture bound');
     offsets.push(Math.min(last, offsets.at(-1) + viewportHeight - overlap));
   }
-  return { documentHeight, viewportHeight, viewportWidth, overlap, offsets, ...(edges ? { contentOverlap: 200, occlusion: edges } : {}) };
+  if (occlusion?.reservedColumns) {
+    if (!Array.isArray(occlusion.witnessOffsets) || occlusion.witnessOffsets.some(y=>!Number.isSafeInteger(y)||y<0||y>last)) throw Error('Invalid reserved-column witnesses');
+    offsets.splice(0,offsets.length,...[...new Set([...offsets,...occlusion.witnessOffsets])].sort((a,b)=>a-b));
+    if(offsets.length>250)throw Error('Scroll-tile plan exceeds capture bound');
+  }
+  return { documentHeight, viewportHeight, viewportWidth, overlap, offsets, ...(edges ? { contentOverlap: 200, occlusion: edges, ...(occlusion.reservedColumns ? { reservedColumns: occlusion.reservedColumns, witnessOffsets: occlusion.witnessOffsets } : {}) } : {}) };
 }
 
 export function validateScrollTileMeasurement(plan, measurement, offset) {
@@ -149,7 +154,7 @@ export function validateScrollTileCoverage(capturePlan, shots) {
     const id = key(row);
     if (!expected.has(id) || seen.has(id)) throw new Error('Duplicate or foreign scroll-tile case');
     seen.add(id);
-    const plan = planScrollTiles(row.plan?.documentHeight, row.plan?.viewportHeight, row.plan?.viewportWidth, row.plan?.occlusion);
+    const plan = planScrollTiles(row.plan?.documentHeight, row.plan?.viewportHeight, row.plan?.viewportWidth, row.plan?.occlusion ? {...row.plan.occlusion,...(row.plan.reservedColumns ? {reservedColumns:row.plan.reservedColumns,witnessOffsets:row.plan.witnessOffsets}: {})} : undefined);
     if (JSON.stringify(plan) !== JSON.stringify(row.plan)) throw new Error('Noncanonical scroll-tile plan');
     const tiles = shots.filter(shot => key(shot) === id);
     if (tiles.length !== plan.offsets.length) throw new Error('Missing or duplicate scroll tile');
@@ -173,11 +178,61 @@ export function validateScrollTileCoverage(capturePlan, shots) {
     }
     const last = tiles.at(-1).scroll;
     if (last.scrollY + last.viewportHeight < last.documentHeight) throw new Error('Final scroll tile does not reach bottom');
+    if (plan.reservedColumns) validateReservedColumnCoverage(plan.reservedColumns, tiles.flatMap(tile=>[intersectReservedMeasurements(tile.scroll.occlusion.reservedColumns,tile.afterScroll.occlusion.reservedColumns)]));
     plannedCaptures += plan.offsets.length;
   }
   if (shots.some(shot => !expected.has(key(shot))) || shots.length !== plannedCaptures) throw new Error('Scroll-tile captures differ from planned matrix');
   return { plannedCaptures, completedCaptures: shots.length, plannedCases: cases.length };
 }
+
+export async function closeScrollTilePlan(geometry,observe){
+  const legacy=planScrollTiles(geometry.documentHeight,geometry.viewportHeight,geometry.viewportWidth);
+  let plan=legacy,columns=null;const max={top:0,bottom:0},occlusionWalk=[],witnesses=new Set(legacy.offsets);
+  for(let pass=0;pass<8;pass++){
+    for(const offset of plan.offsets){
+      if(occlusionWalk.length>=2000)throw Error('Preplan observations exceed bound');
+      const measured=await observe(offset);validateScrollTileMeasurement(legacy,measured,offset);
+      if(!measured.occlusion||![measured.occlusion.top,measured.occlusion.bottom].every(x=>Number.isFinite(x)&&x>=0))throw Error('Missing preplan occlusion');
+      const found=measured.occlusion.reservedColumns||[];
+      if(columns===null)columns=found.map(({key,left,right,height,peerLeft,peerRight,leadingRow})=>({key,left,right,height,peerLeft,peerRight,...(leadingRow?{leadingRow:Object.fromEntries(['key','left','right','height','position','gridColumnStart','gridColumnEnd'].map(k=>[k,leadingRow[k]]))}: {})}));
+      if(columns.length)validateReservedColumnGeometry(columns,found);else if(found.length)throw Error('Reserved column appeared during preplan');
+      max.top=Math.max(max.top,measured.occlusion.top);max.bottom=Math.max(max.bottom,measured.occlusion.bottom);
+      witnesses.add(offset);occlusionWalk.push({...measured,preplanPass:pass});
+    }
+    if(columns.length)validateReservedColumnCoverage(columns,occlusionWalk.map(m=>m.occlusion.reservedColumns));
+    const next=planScrollTiles(geometry.documentHeight,geometry.viewportHeight,geometry.viewportWidth,{...max,...(columns.length?{reservedColumns:columns,witnessOffsets:[...witnesses].sort((a,b)=>a-b)}:{})});
+    if(JSON.stringify(next)===JSON.stringify(plan))return{plan:next,occlusionWalk};
+    plan=next;
+  }
+  throw Error('Preplan occlusion did not close over final raster offsets');
+}
+export function validateReservedColumnGeometry(expected,actual){
+  if(!Array.isArray(expected)||!expected.length||expected.length>16||!Array.isArray(actual)||actual.length!==expected.length||new Set(expected.map(x=>x.key)).size!==expected.length||new Set(actual.map(x=>x.key)).size!==actual.length)throw Error('Reserved column inventory changed');
+  for(const e of expected){const a=actual.find(x=>x.key===e.key);
+    if(!a||['left','right','height','peerLeft','peerRight'].some(k=>!Number.isFinite(a[k])||a[k]!==e[k])||a.height<=0||a.left<0||a.right<=a.left||!(a.right<=a.peerLeft||a.peerRight<=a.left))throw Error('Reserved column geometry changed or overlaps sibling');
+    if(Boolean(e.leadingRow)!==Boolean(a.leadingRow))throw Error('Reserved leading row inventory changed');
+    if(e.leadingRow){const row=a.leadingRow;
+      if(['key','left','right','height','position','gridColumnStart','gridColumnEnd'].some(k=>row[k]!==e.leadingRow[k])||![row.top,row.bottom,a.rectTop].every(Number.isFinite)||row.bottom>a.rectTop||!['static','relative'].includes(row.position)||row.gridColumnStart!=='1'||row.gridColumnEnd!=='-1')throw Error('Reserved leading row changed or overlaps sidebar');
+    }
+  }
+}
+export function intersectReservedMeasurements(before,after){
+  validateReservedColumnGeometry(before,after);
+  return before.map(b=>{const a=after.find(x=>x.key===b.key);return {...b,exposedStart:Math.max(b.exposedStart,a.exposedStart),exposedEnd:Math.min(b.exposedEnd,a.exposedEnd)};});
+}
+export function validateReservedColumnCoverage(expected,observations){
+  if(!Array.isArray(observations)||!observations.length)throw Error('Missing reserved-column exposure');
+  for(const rows of observations)validateReservedColumnGeometry(expected,rows);
+  for(const column of expected){
+    const intervals=observations.map(rows=>rows.find(x=>x.key===column.key)).map(row=>{
+      if(![row.exposedStart,row.exposedEnd].every(Number.isFinite)||row.exposedStart<0||row.exposedEnd>column.height)throw Error('Invalid reserved-column exposure');
+      return [row.exposedStart,row.exposedEnd];
+    }).filter(([a,b])=>b>a).sort((a,b)=>a[0]-b[0]);
+    let end=0;for(const [start,next] of intervals){if(start>end)throw Error('Reserved column has unexposed content');end=Math.max(end,next);}
+    if(end<column.height)throw Error('Reserved column bottom was never exposed');
+  }
+}
+
 
 /** Browser-side geometry only: fixed overlays and sticky elements actually pinned
  * to their configured viewport edge. Ordinary in-flow content is never admitted.
@@ -200,11 +255,72 @@ export function measureScrollTileOcclusion() {
     }
     return box.bottom > box.top && box.right > box.left ? box : null;
   };
+  // A sticky direct child of a two-column grid can reserve its own column.
+  // Every sibling and descendant must stay horizontally disjoint/contained.
+  // It is never discarded: its own local vertical exposure is separately proved.
+  const reservedNodes=new Set(),reservedColumns=[];
+  for(const element of nodes){
+    const style=getComputedStyle(element),parent=element.parentElement;
+    if(style.position!=='sticky'||!parent||getComputedStyle(parent).display!=='grid'||![2,3].includes(parent.children.length))continue;
+    const siblings=[...parent.children],r=element.getBoundingClientRect();
+    const peers=siblings.filter(x=>x!==element),disjoint=peers.filter(node=>{const box=node.getBoundingClientRect();return r.right<=box.left||box.right<=r.left;});
+    if(disjoint.length!==1)continue;
+    const other=disjoint[0],o=other.getBoundingClientRect(),leading=peers.find(node=>node!==other)||null;
+    let leadingRow;
+    if(leading){const ls=getComputedStyle(leading),lr=leading.getBoundingClientRect(),pr=parent.getBoundingClientRect();
+      if(ls.gridColumnStart!=='1'||ls.gridColumnEnd!=='-1'||!['static','relative'].includes(ls.position)||lr.width<=0||lr.height<=0||lr.bottom>r.top||lr.left<0||lr.right>vw||lr.left!==pr.left||lr.right!==pr.right)continue;
+      leadingRow={key:'grid-'+nodes.indexOf(parent)+'-child-'+siblings.indexOf(leading),left:lr.left,right:lr.right,height:lr.height,position:ls.position,gridColumnStart:ls.gridColumnStart,gridColumnEnd:ls.gridColumnEnd,top:lr.top,bottom:lr.bottom};
+    }
+    if(r.width<=0||r.height<=0||r.left<0||r.right>vw||!(r.right<=o.left||o.right<=r.left))continue;
+    if(!['static','relative'].includes(getComputedStyle(other).position)||element.scrollHeight>r.height+1||element.scrollWidth>r.width+1)continue;
+    let contained=true;
+    for(const child of element.querySelectorAll('*')){
+      const cs=getComputedStyle(child);if(cs.display==='none'||cs.visibility!=='visible')continue;
+      const cr=child.getBoundingClientRect();
+      if(cr.width&&cr.height&&(cr.left<r.left||cr.right>r.right||cr.top<r.top||cr.bottom>r.bottom)){contained=false;break;}
+    }
+    if(!contained)continue;
+    // Grid tracks alone do not clip a sibling's positioned or painted overflow.
+    // Refuse the exception unless every visible peer box stays inside its track;
+    // generated/positioned content is conservatively unproved, never ignored.
+    const clippedByTrack=(node,track,pseudo=false,vertical=false)=>{
+      const bounds=track.getBoundingClientRect(),ns=getComputedStyle(node);
+      if(ns.position==='fixed')return false;
+      let containingBlockKnown=pseudo?ns.position!=='static':ns.position!=='absolute';
+      for(let clip=pseudo?node:node.parentElement;clip;clip=clip.parentElement){
+        const cs=getComputedStyle(clip),cr=clip.getBoundingClientRect();
+        if(cs.position!=='static')containingBlockKnown=true;
+        if(containingBlockKnown&&/^(hidden|clip)$/.test(cs.overflowX)&&(!vertical||/^(hidden|clip)$/.test(cs.overflowY))&&cr.left>=bounds.left&&cr.right<=bounds.right&&(!vertical||(cr.top>=bounds.top&&cr.bottom<=bounds.bottom)))return true;
+        if(clip===track)break;
+      }
+      return false;
+    };
+    const generatedBox=(node,track=other,vertical=false)=>['::before','::after'].some(pseudo=>{
+      const ps=getComputedStyle(node,pseudo),painted=ps.display!=='none'&&ps.visibility==='visible'&&Number(ps.opacity)!==0&&typeof ps.content==='string'&&!['none','normal'].includes(ps.content);
+      return painted&&(ps.position!=='absolute'||!clippedByTrack(node,track,true,vertical));
+    });
+    for(const child of [other,...other.querySelectorAll('*')]){
+      const cs=getComputedStyle(child);if(cs.display==='none'||cs.visibility!=='visible'||Number(cs.opacity)===0)continue;
+      const cr=child.getBoundingClientRect();
+      if((!['static','relative'].includes(cs.position)&&!clippedByTrack(child,other))||generatedBox(child)||(cr.width&&cr.height&&(cr.left<o.left||cr.right>o.right)&&!clippedByTrack(child,other))){contained=false;break;}
+    }
+    if(!contained||[element,...element.querySelectorAll('*')].some(node=>generatedBox(node,element,true)))continue;
+    if(leading){const lr=leading.getBoundingClientRect();
+      for(const child of [leading,...leading.querySelectorAll('*')]){const cs=getComputedStyle(child);if(cs.display==='none'||cs.visibility!=='visible'||Number(cs.opacity)===0)continue;const cr=child.getBoundingClientRect();
+        if((!['static','relative'].includes(cs.position)&&!clippedByTrack(child,leading,false,true))||generatedBox(child,leading,true)||(cr.width&&cr.height&&(cr.left<lr.left||cr.right>lr.right||cr.top<lr.top||cr.bottom>lr.bottom)&&!clippedByTrack(child,leading,false,true))){contained=false;break;}
+      }
+      if(!contained)continue;
+    }
+    const key='grid-'+nodes.indexOf(parent)+'-child-'+siblings.indexOf(element);
+    const visible=visibleRect(element);
+    reservedNodes.add(element);reservedColumns.push({key,left:r.left,right:r.right,height:r.height,rectTop:r.top,visibleTop:visible?.top??r.top,visibleBottom:visible?.bottom??r.top,peerLeft:o.left,peerRight:o.right,...(leadingRow?{leadingRow}: {})});
+  }
   let top = 0, bottom = 0;
   const sources = [];
   for (const element of nodes) {
     const style = getComputedStyle(element);
     if (style.position !== 'fixed' && style.position !== 'sticky') continue;
+    if(reservedNodes.has(element))continue;
     const rect = element.getBoundingClientRect(), own = visibleRect(element);
     if (!own) continue;
     const topOffset = style.top === 'auto' ? null : Number.parseFloat(style.top);
@@ -228,7 +344,12 @@ export function measureScrollTileOcclusion() {
     if (atBottom) bottom = Math.max(bottom, vh - edgeTop);
     sources.push({ tag: element.tagName.toLowerCase(), id: element.id || null, position: style.position, top: atTop ? edgeBottom : 0, bottom: atBottom ? vh - edgeTop : 0 });
   }
-  return { top, bottom, sources };
+  for(const column of reservedColumns){
+    column.exposedStart=Math.min(column.height,Math.max(0,Math.max(top,column.visibleTop)-column.rectTop));
+    column.exposedEnd=Math.max(0,Math.min(column.height,Math.min(vh-bottom,column.visibleBottom)-column.rectTop));
+    if(column.exposedEnd<column.exposedStart)column.exposedEnd=column.exposedStart;
+  }
+  return { top, bottom, sources, ...(reservedColumns.length ? {reservedColumns}: {}) };
 }
 
 export function validateScrollTileOcclusion(plan, measurement) {
@@ -236,6 +357,8 @@ export function validateScrollTileOcclusion(plan, measurement) {
   const actual = measurement?.occlusion;
   if (!actual || ![actual.top, actual.bottom].every(value => Number.isFinite(value) && value >= 0)
     || actual.top > plan.occlusion.top || actual.bottom > plan.occlusion.bottom) throw new Error('Scroll-tile occlusion grew beyond plan');
+  if(plan.reservedColumns) validateReservedColumnGeometry(plan.reservedColumns,actual.reservedColumns);
+  else if(actual.reservedColumns?.length) throw Error('Unplanned reserved column');
 }
 
 /** Animation-driven overlay descendants must not prevent layout settlement.
@@ -493,7 +616,7 @@ async function main() {
                 if (stable < 2) throw new Error('Homepage idle panels did not settle across activation walks');
               });
             }
-            const measure = async () => { const animationCaptureState = await page.evaluate(settleCaptureAnimations); return ({ animationCaptureState,
+            const measure = async ({ preRaster = true } = {}) => { const animationCaptureState = await page.evaluate(settleCaptureAnimations, { resettleLateFinite: preRaster }); return ({ animationCaptureState,
               ...await page.evaluate(() => ({ scrollY: window.scrollY, documentHeight: document.documentElement.scrollHeight,
                 viewportHeight: innerHeight, viewportWidth: innerWidth, scrollWidth: document.documentElement.scrollWidth })),
               occlusion: await page.evaluate(measureScrollTileOcclusion)
@@ -505,24 +628,16 @@ async function main() {
               const value = scrollTileLayoutKey(geometry); stable = value === previous ? stable + 1 : 0; previous = value;
             }
             if (stable < 3) throw new Error('Scroll-tile layout did not settle before planning');
-            // Bounded preplan walk observes sticky/fixed controls at every legacy
-            // activation offset. It does not hide UI or relax height/width drift.
-            const legacyPlan = planScrollTiles(geometry.documentHeight, geometry.viewportHeight, geometry.viewportWidth);
-            const maxOcclusion = { top: 0, bottom: 0 };
-            const occlusionWalk = [];
-            for (const offset of legacyPlan.offsets) {
-              await page.evaluate(y => scrollTo({ top: y, left: 0, behavior: 'instant' }), offset);
-              await page.waitForTimeout(150);
-              const measured = await measure();
-              validateScrollTileMeasurement(legacyPlan, measured, offset);
-              maxOcclusion.top = Math.max(maxOcclusion.top, measured.occlusion.top);
-              maxOcclusion.bottom = Math.max(maxOcclusion.bottom, measured.occlusion.bottom);
-              occlusionWalk.push(measured);
-            }
-            await page.evaluate(() => scrollTo({ top: 0, left: 0, behavior: 'instant' }));
-            await page.waitForTimeout(150);
-            geometry = await measure();
-            const plan = planScrollTiles(geometry.documentHeight, geometry.viewportHeight, geometry.viewportWidth, maxOcclusion);
+            // Close over the actual newly proposed raster offsets: position-
+            // dependent fixed controls can yield at legacy offsets and reappear
+            // at the denser content-overlap offsets. No fixed UI is ignored.
+            const closed=await closeScrollTilePlan(geometry,async offset=>{
+              await page.evaluate(y=>scrollTo({top:y,left:0,behavior:'instant'}),offset);
+              await page.waitForTimeout(150);return measure();
+            });
+            const plan=closed.plan,occlusionWalk=closed.occlusionWalk;
+            await page.evaluate(()=>scrollTo({top:0,left:0,behavior:'instant'}));
+            await page.waitForTimeout(150);geometry=await measure();
             validateScrollTileMeasurement(plan, geometry, 0);
             capturePlan.cases.push({ route, theme, viewport: viewport.name, plan, occlusionWalk });
             for (const [tileIndex, offset] of plan.offsets.entries()) {
@@ -531,7 +646,7 @@ async function main() {
               await page.waitForTimeout(150);
               const scroll = await measure(); validateScrollTileMeasurement(plan, scroll, offset);
               const pixels = await page.screenshot({ animations: 'allow', fullPage: false });
-              const after = await measure(); validateScrollTileMeasurement(plan, after, offset);validateRasterAnimationState(scroll,after);
+              const after = await measure({ preRaster: false }); validateScrollTileMeasurement(plan, after, offset);validateRasterAnimationState(scroll,after);
               if (after.scrollY !== scroll.scrollY) throw new Error('Scroll position changed during tile capture');
               if (tileIndex === plan.offsets.length - 1 && after.scrollY + after.viewportHeight < after.documentHeight) throw new Error('Final tile changed before reaching bottom');
               const file = `${slug(route)}--${theme}--${viewport.name}--scroll-tile-y${scroll.scrollY}.png`;

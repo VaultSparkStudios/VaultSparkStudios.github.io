@@ -32,6 +32,7 @@
     '.vs-lore-gate--unlocked{border-style:solid;border-color:rgba(126,201,255,0.32);background:rgba(126,201,255,0.05);transition:border-color 800ms ease,background 800ms ease;}',
     '.vs-lore-gate__reveal{font-family:Georgia,serif;font-size:0.72rem;color:#7EC9FF;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.55rem;display:block;}',
     'body.light-mode .vs-lore-gate{background:rgba(255,253,247,0.92);}',
+    'body.light-mode .vs-lore-gate__cta{color:#fff;}',
     'body.light-mode .vs-lore-gate__lock{background:linear-gradient(180deg,rgba(255,253,247,0.96),rgba(255,253,247,0.92));}',
     'body.light-mode .vs-lore-gate--unlocked{background:rgba(126,201,255,0.08);}',
     '@media (prefers-reduced-motion: reduce){.vs-lore-gate--unlocked{transition:none;}}'

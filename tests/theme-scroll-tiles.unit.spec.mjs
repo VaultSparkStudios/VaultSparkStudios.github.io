@@ -128,3 +128,176 @@ test('typedpercent lookalikes, wrongunit/nonfinite/null time, missing source/axi
 test('native scroll source geometry and progress changes between RAF samples failclosed',()=>animationFixture(async f=>{for(const field of ['time','source','set']){const a=nativeScrollFixture(f);let frames=0;globalThis.requestAnimationFrame=fn=>setImmediate(()=>{if(++frames===4){if(field==='time')a.currentTime=new CSSUnitValue(26);if(field==='source')f.element.scrollTop++;if(field==='set')f.set([a,f.animation()]);}fn();});await assert.rejects(settleCaptureAnimations(),/changed|did not settle/);}}));
 test('mixed native scroll observer still naturally finishes DocumentTimeline finite entrances and pauses only document loops',()=>animationFixture(async f=>{const scroll=nativeScrollFixture(f),finite=f.animation(true),loop=f.animation();f.set([scroll,finite,loop]);const result=await settleCaptureAnimations();assert.equal(finite.playState,'finished');assert.equal(loop.playState,'paused');assert.equal(scroll.playState,'running');assert.equal(result.scrollDriven.length,1);assert.equal(result.finiteSettled.length,1);assert.equal(f.calls.pause,1);}));
 test('perraster source/progress/typedtime identity check rejects missing/new or changing native state; old no-state receipts unchanged',()=>{const value={animationCaptureState:{scrollDriven:[{nativeTimeline:'ScrollTimeline',axis:'block',source:{key:'document.scrollingElement',geometry:{scrollTop:375}},animationTime:{unit:'percent',value:25}}]}};assert.doesNotThrow(()=>validateRasterAnimationState(value,structuredClone(value)));assert.doesNotThrow(()=>validateRasterAnimationState({},{}));for(const change of [x=>x.animationCaptureState.scrollDriven[0].animationTime.value++,x=>x.animationCaptureState.scrollDriven[0].source.key='other',x=>x.animationCaptureState.scrollDriven[0].source.geometry.scrollTop++,x=>delete x.animationCaptureState.scrollDriven,x=>x.animationCaptureState.scrollDriven.push({})]){const after=structuredClone(value);change(after);assert.throws(()=>validateRasterAnimationState(value,after),/changed/);}});
+
+function inactiveNativeFixture(f,{view=false}={}){const a=nativeScrollFixture(f,{view});f.element.scrollHeight=f.element.clientHeight;f.element.scrollTop=0;a.currentTime=null;a.timeline.currentTime=null;a.effect.getComputedTiming=()=>({iterations:1,duration:new CSSUnitValue(100),endTime:new CSSUnitValue(100),progress:null,localTime:null,currentIteration:null});return a;}
+
+test('recognized inactive native timelines record exact zero-range and null state without manufactured percentage or pause',()=>animationFixture(async f=>{for(const view of [false,true]){const a=inactiveNativeFixture(f,{view});const result=await settleCaptureAnimations();const r=result.scrollDriven[0];assert.equal(r.nativeState,'inactive-zero-scroll-range');assert.equal(r.extent,0);assert.equal(r.animationTime,null);assert.equal(r.timelineTime,null);assert.equal(r.progress,null);assert.equal(r.source.geometry.scrollHeight,r.source.geometry.clientHeight);assert.equal(r.axis,'block');assert.equal(a.playState,'running');assert.equal(f.calls.pause,0);assert.equal(f.calls.finish,0);assert.doesNotThrow(()=>validateRasterAnimationState({animationCaptureState:result},{animationCaptureState:structuredClone(result)}));}}));
+
+test('inactive native mismatched nonnull time/progress, nonzero or negative range, unknown brand/source/axis still refuse',()=>animationFixture(async f=>{for(const mutate of [a=>a.currentTime=new CSSUnitValue(0),a=>a.timeline.currentTime=new CSSUnitValue(0),a=>a.effect.getComputedTiming=()=>({iterations:1,duration:new CSSUnitValue(100),endTime:new CSSUnitValue(100),progress:0,localTime:null,currentIteration:null}),a=>a.effect.getComputedTiming=()=>({iterations:1,duration:new CSSUnitValue(100),endTime:new CSSUnitValue(100),progress:null,localTime:0,currentIteration:null}),a=>f.element.scrollHeight++,a=>f.element.scrollHeight--,a=>a.timeline={constructor:{name:'ScrollTimeline'},source:f.element,axis:'block',currentTime:null},a=>a.timeline.source=null,a=>a.timeline.axis='unknown']){const a=inactiveNativeFixture(f);mutate(a);await assert.rejects(settleCaptureAnimations(),/native|timeline/i);}}));
+
+test('inactive-to-active during RAF and any raster inactive state/source/subject geometry change refuse',()=>animationFixture(async f=>{const a=inactiveNativeFixture(f,{view:true});let frames=0;globalThis.requestAnimationFrame=fn=>setImmediate(()=>{if(++frames===4)f.element.scrollHeight++;fn();});await assert.rejects(settleCaptureAnimations(),/native|settle/i);globalThis.requestAnimationFrame=fn=>setImmediate(fn);inactiveNativeFixture(f,{view:true});const state=await settleCaptureAnimations();for(const change of [s=>s.scrollDriven[0].nativeState='active',s=>s.scrollDriven[0].animationTime={unit:'percent',value:0},s=>s.scrollDriven[0].timelineTime={unit:'percent',value:0},s=>s.scrollDriven[0].progress=0,s=>s.scrollDriven[0].source.geometry.scrollHeight++,s=>s.scrollDriven[0].subject.geometry.rect.top++,s=>s.scrollDriven[0].axis='inline']){const after=structuredClone(state);change(after);assert.throws(()=>validateRasterAnimationState({animationCaptureState:state},{animationCaptureState:after}),/changed/);}}));
+
+
+test('late finite observer-style RAF entrance defaults to refusal but before-raster opt-in naturally completes',()=>animationFixture(async f=>{
+ for(const allow of [false,true]){const loop=f.animation();f.set([loop]);let frames=0,late;globalThis.requestAnimationFrame=fn=>setImmediate(()=>{if(++frames===2){late=f.animation(true);f.set([loop,late]);}fn();});
+ if(!allow)await assert.rejects(settleCaptureAnimations(),/New\/unsettled/);else{const result=await settleCaptureAnimations({resettleLateFinite:true});assert.equal(late.playState,'finished');assert.ok(result.finiteSettled.some(r=>r.name==='entry'));assert.equal(f.calls.finish,0);assert.equal(loop.currentTime,167);}
+ }
+}));
+test('before-raster resettlement remains deadline bounded and refuses late loops or paused finite',()=>animationFixture(async f=>{
+ for(const type of ['loop','paused','never']){const loop=f.animation();f.set([loop]);let frames=0;globalThis.requestAnimationFrame=fn=>setImmediate(()=>{if(++frames===2){const late=f.animation(type!=='loop');if(type==='paused')late.playState='paused';if(type==='never')late.finished=new Promise(()=>{});f.set([loop,late]);}fn();});await assert.rejects(settleCaptureAnimations({timeoutMs:50,resettleLateFinite:true}),/New\/unsettled|cannot naturally|deadline/);}
+}));
+
+test('late finite second observation-frame appearance completes only with before-raster opt-in',()=>animationFixture(async f=>{
+ for(const allow of [false,true]){
+  const loop=f.animation();f.set([loop]);let frames=0,late;
+  globalThis.requestAnimationFrame=fn=>setImmediate(()=>{if(++frames===4){late=f.animation(true);f.set([loop,late]);}fn();});
+  if(!allow)await assert.rejects(settleCaptureAnimations(),/Visible animation set changed/);
+  else{const result=await settleCaptureAnimations({resettleLateFinite:true});assert.equal(late.playState,'finished');assert.equal(result.finiteSettled.length,1);assert.equal(f.calls.finish,0);assert.equal(loop.currentTime,167);}
+ }
+}));
+test('late finite cannot mask native scroll progress change at the second observation seam',()=>animationFixture(async f=>{
+ const scroll=nativeScrollFixture(f);let frames=0;
+ globalThis.requestAnimationFrame=fn=>setImmediate(()=>{if(++frames===4){scroll.currentTime=new CSSUnitValue(26);f.set([scroll,f.animation(true)]);}fn();});
+ await assert.rejects(settleCaptureAnimations({resettleLateFinite:true}),/Native scroll progress/);
+}));
+
+test('real IntersectionObserver callback can create a late CSS entrance during capture RAF settlement',async()=>{
+ const {chromium}=await import('playwright');
+ const browser=await chromium.launch({headless:true});
+ try{
+  for(const appearanceFrame of [2,4])for(const resettleLateFinite of [false,true]){
+   const page=await browser.newPage({viewport:{width:1366,height:900}});
+   await page.route('**/*',route=>route.abort());
+   await page.setContent(`<style>@keyframes entry{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}#target{width:300px;height:100px;background:#111;color:white}.revealed{animation:entry 120ms linear both}</style><section id="target">Real observer entrance</section>`);
+   await page.evaluate(()=>{
+    window.observerEvents=[];
+    let release;
+    const gate=new Promise(resolve=>release=resolve);
+    const observer=new IntersectionObserver(async entries=>{
+     if(!entries.some(entry=>entry.isIntersecting))return;
+     observer.disconnect();window.observerEvents.push('actual-intersection');
+     await gate;
+     document.querySelector('#target').classList.add('revealed');
+     window.observerEvents.push('actual-class-created');
+    });
+    observer.observe(document.querySelector('#target'));
+    window.armLateEntrance=appearanceFrame=>{
+     const nativeRAF=requestAnimationFrame.bind(window);let frames=0;
+     window.requestAnimationFrame=callback=>nativeRAF(time=>{
+      if(++frames===appearanceFrame)release();
+      callback(time);
+     });
+    };
+   });
+   await page.waitForFunction(()=>window.observerEvents.includes('actual-intersection'));
+   await page.evaluate(frame=>window.armLateEntrance(frame),appearanceFrame);
+   if(!resettleLateFinite)await assert.rejects(page.evaluate(settleCaptureAnimations),/New\/unsettled|Visible animation set changed/);
+   else{
+    const state=await page.evaluate(settleCaptureAnimations,{resettleLateFinite:true});
+    assert.ok(state.finiteSettled.some(row=>row.name==='entry'));
+    assert.equal(state.seeked,false);assert.equal(state.cssChanged,false);
+    assert.deepEqual(await page.evaluate(()=>window.observerEvents),['actual-intersection','actual-class-created']);
+    assert.equal(await page.locator('#target').evaluate(node=>getComputedStyle(node).opacity),'1');
+   }
+   await page.close();
+  }
+ }finally{await browser.close();}
+});
+
+test('integrated inactive native state survives natural late finite settlement at either admitted before-raster seam',()=>animationFixture(async f=>{
+ for(const seam of [2,4]){const scroll=inactiveNativeFixture(f),loop=f.animation();f.set([scroll,loop]);let frames=0,late;globalThis.requestAnimationFrame=fn=>setImmediate(()=>{if(++frames===seam){late=f.animation(true);f.set([scroll,loop,late]);}fn();});const result=await settleCaptureAnimations({resettleLateFinite:true});assert.equal(late.playState,'finished');assert.equal(result.scrollDriven[0].nativeState,'inactive-zero-scroll-range');assert.equal(result.scrollDriven[0].timelineTime,null);assert.equal(scroll.playState,'running');assert.equal(loop.playState,'paused');assert.equal(f.calls.finish,0);}
+}));
+
+test('integrated late finite never masks inactive native transition at either observation seam',()=>animationFixture(async f=>{
+ for(const seam of [2,4]){const scroll=inactiveNativeFixture(f);let frames=0;globalThis.requestAnimationFrame=fn=>setImmediate(()=>{if(++frames===seam){f.element.scrollHeight++;f.set([scroll,f.animation(true)]);}fn();});await assert.rejects(settleCaptureAnimations({resettleLateFinite:true}),/native/i);}
+}));
+
+// Reserved grid-column exposure and fixed-point preplanning owner regressions.
+import {validateReservedColumnCoverage,validateReservedColumnGeometry,intersectReservedMeasurements,closeScrollTilePlan} from '../scripts/capture-theme-matrix.mjs';
+const column={key:'grid-1-child-1',left:983,right:1283,height:975.171875,peerLeft:83,peerRight:943};
+const exposure=(a,b)=>[{...column,exposedStart:a,exposedEnd:b}];
+test('actual measured disjoint Devlog columns require all975.171875px rather than wholeviewport900 top',()=>{
+ assert.doesNotThrow(()=>validateReservedColumnCoverage([column],[exposure(0,492),exposure(15,734.58),exposure(600,975.171875)]));
+ assert.throws(()=>validateReservedColumnCoverage([column],[exposure(0,492),exposure(15,734.58)]),/bottom/);
+ assert.throws(()=>validateReservedColumnCoverage([column],[exposure(0,492),exposure(493,975.171875)]),/unexposed/);
+});
+test('column overlap, changed x bounds, height, missing and duplicate inventory cannot waive occlusion',()=>{
+ for(const mutate of [x=>x[0].left=942,x=>x[0].right++,x=>x[0].height++,x=>x.pop(),x=>x.push(clone(x[0]))]){const x=exposure(0,column.height);mutate(x);assert.throws(()=>validateReservedColumnGeometry([column],x));}
+});
+test('before/after intersection exposes only pixels visible throughout the raster boundary',()=>{
+ assert.equal(intersectReservedMeasurements(exposure(0,600),exposure(40,650))[0].exposedStart,40);
+ assert.throws(()=>validateReservedColumnCoverage([column],[intersectReservedMeasurements(exposure(0,975.171875),exposure(1,975.171875))]),/unexposed/);
+});
+function reservedColumnFixture(){
+ const plan=planScrollTiles(2500,900,1366,{top:115,bottom:65.421875,reservedColumns:[column],witnessOffsets:[0,700,1400,1600]});
+ const shots=plan.offsets.map((y,i)=>{const scroll={scrollY:y,documentHeight:2500,viewportHeight:900,viewportWidth:1366,scrollWidth:1366,occlusion:{top:115,bottom:65.421875,reservedColumns:y===0?exposure(0,600):exposure(500,975.171875)}};return{route:'/devlog/',theme:'dark',viewport:'desktop',state:'scroll-tile',tileIndex:i,plannedOffset:y,scroll,afterScroll:clone(scroll)};});
+ return {plan,shots,capturePlan:{mode:'scroll-tiles-v1',routes:['/devlog/'],themes:['dark'],viewports:['desktop'],cases:[{route:'/devlog/',theme:'dark',viewport:'desktop',plan}]}};
+}
+test('witness offsets are planned before capture; actual JSON serialization validates complete pixel coverage',()=>{
+ const f=reservedColumnFixture();assert.ok(f.plan.offsets.includes(700));assert.ok(f.plan.offsets.includes(1400));
+ const published=JSON.parse(JSON.stringify(f.shots.map(s=>({...s,...serializeScrollTileState(s)}))));
+ assert.doesNotThrow(()=>validateScrollTileCoverage(JSON.parse(JSON.stringify(f.capturePlan)),published));
+});
+test('final raster coverage rejects absent witness, changed rectangle, hidden local gap and lost aftermeasurement',()=>{
+ for(const mutate of [f=>f.shots.splice(f.plan.offsets.indexOf(700),1),f=>f.shots[0].afterScroll.occlusion.reservedColumns[0].left++,f=>f.shots.forEach(s=>{s.scroll.occlusion.reservedColumns=exposure(1,975.171875);s.afterScroll=clone(s.scroll);}),f=>delete f.shots[0].afterScroll]){const f=reservedColumnFixture();mutate(f);assert.throws(()=>validateScrollTileCoverage(f.capturePlan,f.shots));}
+});
+test('existing fullwidth fixed obstruction,2px drift and growth negatives remain refusals',()=>{
+ assert.throws(()=>planScrollTiles(6486,900,1366,{top:900,bottom:65.421875}));
+ for(const mutate of [f=>f.shots[1].scroll.documentHeight+=3,f=>f.shots[1].afterScroll.occlusion.bottom=67,f=>f.shots[1].scroll.scrollY+=3]){const f=reservedColumnFixture();mutate(f);assert.throws(()=>validateScrollTileCoverage(f.capturePlan,f.shots));}
+});
+test('legacy3argument plan remains byteidentical',()=>assert.equal(JSON.stringify(planScrollTiles(2500,900,1366)),JSON.stringify({documentHeight:2500,viewportHeight:900,viewportWidth:1366,overlap:200,offsets:[0,700,1400,1600]})));
+test('actual exported DOM collector exempts only contained disjoint grid column and retains fixed overlays',()=>{
+ const keys=['document','innerHeight','innerWidth','getComputedStyle'],saved=keys.map(k=>[k,Object.getOwnPropertyDescriptor(globalThis,k)]);
+ const el=(tag,left,top,width,height,position='static')=>({tagName:tag.toUpperCase(),id:'',parentElement:null,children:[],scrollHeight:height,scrollWidth:width,style:{position,top:position==='sticky'?'100px':'auto',bottom:position==='fixed'?'0px':'auto',display:'block',visibility:'visible',opacity:'1',overflowX:'visible',overflowY:'visible'},getBoundingClientRect(){return {left,top,right:left+width,bottom:top+height,width,height};},querySelectorAll(){return this.children;}});
+ const parent=el('div',83,-358,1200,4154);parent.style.display='grid';const peer=el('main',83,-358,860,4154),side=el('aside',983,100,300,975.171875,'sticky');parent.children=[peer,side];peer.parentElement=parent;side.parentElement=parent;
+ const header=el('header',0,0,1366,115,'fixed'),cta=el('div',0,834.578125,1366,65.421875,'fixed');
+ Object.assign(globalThis,{innerHeight:900,innerWidth:1366,document:{querySelectorAll:()=>[parent,peer,side,header,cta]},getComputedStyle:e=>e.style});
+ try{
+  const measured=measureScrollTileOcclusion();assert.equal(measured.top,115);assert.equal(measured.bottom,65.421875);assert.equal(measured.reservedColumns.length,1);assert.equal(measured.reservedColumns[0].exposedStart,15);assert.equal(measured.reservedColumns[0].exposedEnd,734.578125);
+  side.scrollHeight=1000;assert.equal(measureScrollTileOcclusion().top,900);side.scrollHeight=975.171875;
+  const overflow=el('span',900,120,400,30);overflow.parentElement=side;side.children=[overflow];assert.equal(measureScrollTileOcclusion().top,900);side.children=[];
+  parent.style.display='block';assert.equal(measureScrollTileOcclusion().top,900);parent.style.display='grid';
+  const peerOverflow=el('span',930,150,80,25);peerOverflow.parentElement=peer;peer.children=[peerOverflow];assert.equal(measureScrollTileOcclusion().top,900);peer.children=[];
+  const peerPositioned=el('span',100,150,80,25,'absolute');peerPositioned.parentElement=peer;peer.children=[peerPositioned];assert.equal(measureScrollTileOcclusion().top,900);peer.children=[];
+  globalThis.getComputedStyle=(e,pseudo)=>pseudo&&e===peer?{...e.style,content:'""'}:e.style;assert.equal(measureScrollTileOcclusion().top,900);globalThis.getComputedStyle=e=>e.style;
+  // Actual Devlog .entry pattern: positioned card clips its absolute ::before.
+  const entry=el('article',83,150,860,400,'relative');entry.style.overflowX='hidden';entry.style.overflowY='hidden';entry.parentElement=peer;peer.children=[entry];
+  globalThis.getComputedStyle=(e,pseudo)=>pseudo&&e===entry?{...entry.style,position:'absolute',content:'""'}:e.style;
+  assert.equal(measureScrollTileOcclusion().top,115);assert.equal(measureScrollTileOcclusion().reservedColumns.length,1);
+  entry.style.overflowX='visible';assert.equal(measureScrollTileOcclusion().top,900);entry.style.overflowX='hidden';
+  const clippedAbsolute=el('span',930,170,100,20,'absolute');clippedAbsolute.parentElement=entry;entry.children=[clippedAbsolute];peer.querySelectorAll=()=>[entry,clippedAbsolute];
+  assert.equal(measureScrollTileOcclusion().top,115);entry.style.overflowX='visible';assert.equal(measureScrollTileOcclusion().top,900);entry.style.overflowX='hidden';
+  clippedAbsolute.style.position='fixed';assert.equal(measureScrollTileOcclusion().top,900);entry.children=[];peer.children=[];peer.querySelectorAll=()=>[];globalThis.getComputedStyle=e=>e.style;
+  const leading=el('div',83,0,1200,70);leading.style.gridColumnStart='1';leading.style.gridColumnEnd='-1';leading.parentElement=parent;parent.children=[leading,peer,side];
+  let actual=measureScrollTileOcclusion();assert.equal(actual.top,115);assert.equal(actual.reservedColumns[0].leadingRow.bottom,70);
+  leading.style.gridColumnEnd='auto';assert.equal(measureScrollTileOcclusion().top,900);leading.style.gridColumnEnd='-1';
+  leading.style.position='fixed';assert.equal(measureScrollTileOcclusion().top,900);leading.style.position='static';
+  const below=el('button',100,65,80,30);below.parentElement=leading;leading.children=[below];assert.equal(measureScrollTileOcclusion().top,900);leading.children=[];
+  globalThis.getComputedStyle=(e,pseudo)=>pseudo&&e===leading?{...leading.style,position:'absolute',content:'""'}:e.style;assert.equal(measureScrollTileOcclusion().top,900);
+  leading.style.position='relative';leading.style.overflowX='hidden';leading.style.overflowY='hidden';assert.equal(measureScrollTileOcclusion().top,115);globalThis.getComputedStyle=e=>e.style;
+  leading.getBoundingClientRect=()=>({left:83,right:1283,top:0,bottom:101,width:1200,height:101});assert.equal(measureScrollTileOcclusion().top,900);parent.children=[peer,side];
+  peer.getBoundingClientRect=()=>({left:83,right:1000,top:0,bottom:4154,width:917,height:4154});assert.equal(measureScrollTileOcclusion().top,900);
+ }finally{for(const[k,d]of saved)if(d)Object.defineProperty(globalThis,k,d);else delete globalThis[k];}
+});
+test('actual legal measured pattern closes over new513px offsets and preserves137.78125px Spark instead of waiving growth',async()=>{
+ const h=5155,vh=844,vw=390,seen=[];const closed=await closeScrollTilePlan({documentHeight:h,viewportHeight:vh,viewportWidth:vw},async y=>{seen.push(y);return{scrollY:y,documentHeight:h,viewportHeight:vh,viewportWidth:vw,scrollWidth:vw,occlusion:{top:y===0?131:79,bottom:y===2052?137.78125:0}};});
+ assert.ok(seen.includes(2052));assert.equal(closed.plan.occlusion.bottom,138);assert.equal(closed.plan.offsets[1],375);
+ const lastPass=Math.max(...closed.occlusionWalk.map(m=>m.preplanPass));assert.deepEqual(closed.occlusionWalk.filter(m=>m.preplanPass===lastPass).map(m=>m.scrollY),closed.plan.offsets);
+ for(let i=1;i<closed.plan.offsets.length;i++)assert.ok(closed.plan.offsets[i-1]+vh-137.78125-(closed.plan.offsets[i]+131)>=200);
+});
+test('fixedpoint preplan refuses geometry drift and endlessly growing bounds',async()=>{
+ const g={documentHeight:2500,viewportHeight:900,viewportWidth:1366},measurement=y=>({scrollY:y,...g,scrollWidth:1366,occlusion:{top:79,bottom:0}});
+ await assert.rejects(closeScrollTilePlan(g,async y=>({...measurement(y),documentHeight:2503})),/drift/);
+ let bottom=0;await assert.rejects(closeScrollTilePlan(g,async y=>({...measurement(y),occlusion:{top:79,bottom:bottom++}})),/did not close|no scroll-tile step|bound/);
+});
+test('natural parent-end sidebar exposure becomes actual planned witnesses; persistent bottom clipping refuses',async()=>{
+ const g={documentHeight:6486,viewportHeight:900,viewportWidth:1366};
+ const observe=async y=>{const top=Math.min(Math.max(100,942.375-y),4995.46875-y-column.height);return{scrollY:y,...g,scrollWidth:1366,occlusion:{top:115,bottom:65.421875,reservedColumns:[{...column,exposedStart:Math.min(column.height,Math.max(0,115-top)),exposedEnd:Math.min(column.height,Math.max(0,834.578125-top))}]}};};
+ const closed=await closeScrollTilePlan(g,observe);assert.ok(closed.plan.offsets.includes(4200));assert.ok(closed.plan.witnessOffsets.includes(4200));assert.ok(closed.plan.reservedColumns);
+ await assert.rejects(closeScrollTilePlan(g,async y=>{const m=await observe(y);m.occlusion.reservedColumns[0].exposedEnd=Math.min(900,m.occlusion.reservedColumns[0].exposedEnd);return m;}),/bottom/);
+});
+test('leading-row identity/geometry and above-column relation survive only exact planned inventory',()=>{
+ const row={key:'grid-1-child-0',left:83,right:1283,height:70,position:'relative',gridColumnStart:'1',gridColumnEnd:'-1'},expected=[{...column,leadingRow:row}],actual=[{...column,rectTop:100,leadingRow:{...row,top:0,bottom:70},exposedStart:15,exposedEnd:734}];
+ assert.doesNotThrow(()=>validateReservedColumnGeometry(expected,actual));
+ for(const mutate of [x=>delete x[0].leadingRow,x=>x[0].leadingRow.height++,x=>x[0].leadingRow.gridColumnEnd='auto',x=>x[0].leadingRow.bottom=101,x=>x[0].leadingRow.position='fixed']){const x=clone(actual);mutate(x);assert.throws(()=>validateReservedColumnGeometry(expected,x));}
+});
