@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-11-21 (last closed Session 411; active/next Session 412) -->
-<!-- semantic-freshness: hash=12f74290af984853 next=412 silSession=411 silScore=939 handoff=- tests=- -->
+<!-- generated-at: 2026-11-23 (last closed Session 417; active/next Session 418) -->
+<!-- semantic-freshness: hash=0980f796f200a999 next=418 silSession=417 silScore=835 handoff=- tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — last closed Session 411 · active/next Session 412 · generated 2026-11-21.
+> **Fast-boot brief** — last closed Session 417 · active/next Session 418 · generated 2026-11-23.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 412 · 2026-11-21 · FOUNDER MODE                         ║
+║  Session 418 · 2026-11-23 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S411) - WHAT SHIPPED ══════════════════════════╗
-║  S411 partial recovery preserves verified local work and all fa  ║
+╔══ LAST SESSION (S417) - WHAT SHIPPED ══════════════════════════╗
+║  S417 partial record recovered; fresh arc and release acceptanc  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -41,9 +41,9 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    939/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: 939  ·  Velocity 0→                        ║
-║    Last active: 1d  ·  Last closeout: 15d  ·  (active =…         ║
+║    835/1000   ████████████████████░░░░   84%                     ║
+║    SIL v3.0  ·  Avg3: 904.3  ·  Velocity 0→                      ║
+║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest…   ║
 ║    Trend  ▂▂▂▄  →  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -53,18 +53,18 @@
 ║    Momentum          92    █████████░  ▇▇▇▇▇▇▇▇ →                ║
 ║    Engagement        96    ██████████  ▇▇▇▇▇▇▇▇ →                ║
 ║    Process Qual      88    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Coherence         94    █████████░  ········ →                ║
-║    Security          97    ██████████  ········ →                ║
-║    Ecosystem         91    █████████░  ········ →                ║
+║    Coherence         85    █████████░  ········ →                ║
+║    Security          90    █████████░  ········ →                ║
+║    Ecosystem         80    ████████░░  ········ →                ║
 ║    Capital           95    ██████████  ········ →                ║
-║    Automation        97    ██████████  ········ →                ║
+║    Automation        86    █████████░  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 411 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 417 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    Source UNVERIFIED: 560/562 steps; partial (changed…   ║
-║  Deploy:   S411 release pending                                  ║
+║  Deploy:   current release UNVERIFIED                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -77,27 +77,27 @@
 ║  ⚠  Tests         Source UNVERIFIED: 560/562 steps; partial…     ║
 ║  ⛔  Velocity      0   ·  Debt: →                                 ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⛔  Context age   27d                                            ║
-║  ⚠  IGNIS         44726 FORGE  ·  8d old                         ║
-║  ⛔  Truth         yellow — S411 local recovery verified;…        ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
+║  ⛔  Context age   29d                                            ║
+║  ⚠  IGNIS         44726 FORGE  ·  10d old                        ║
+║  ⛔  Truth         yellow — S417 partial record recovered;…       ║
+║  ⛔  Compliance   31/38 (82%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.175  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ✓  Revenue sig.  5d old (2026-11-17)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⛔  Doctor        13/17 (76%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
+║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/56 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    90d · Authorize or decline immutable warm-origin migrati      ║
-║    90d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
+║    92d · Authorize or decline immutable warm-origin migrati      ║
+║    92d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -115,26 +115,26 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  0/1000  (↓939 vs current 939)                       ║
+║  Projected:  0/1000  (↓835 vs current 835)                       ║
 ║  All categories forecast stable or rising.                       ║
 ║  Calibration: MAE 191 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Full source check, push, staging and produ  ║
+║  100  [VERIFY]       Verify cumulative content deployments reta  ║
+║        Verify cumulative content deployments retain the approve  ║
+║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
+║   93  [PRODUCT]      Complete affected account acceptance and f  ║
+║        Complete affected account acceptance and full release ev  ║
+║                                                                  ║
+║   90  [PRODUCT]      Full source check, push, staging and produ  ║
 ║        Full source check, push, staging and production readback  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Remaining public-beta waves: docs/S417_REM  ║
+║   87  [PRODUCT]      Remaining public-beta waves: docs/S417_REM  ║
 ║        Remaining public-beta waves: docs/S417_REMAINING_PLAN.md  ║
-║                                                                  ║
-║   90  [PRODUCT]      Complete affected successful sign-in/sign-  ║
-║        Complete affected successful sign-in/sign-up and real me  ║
-║                                                                  ║
-║   87  [PRODUCT]      Integrate current main safely; pass full c  ║
-║        Integrate current main safely; pass full current source   ║
-║                                                                  ║
-║   87  [INTELLIGENCE]  Complete recovered S415 writeback, all S4  ║
-║        Complete recovered S415 writeback, all S416 closeout sur  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -142,5 +142,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · last closed Session 411 · active/next Session 412 · 2026-11-21*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · last closed Session 417 · active/next Session 418 · 2026-11-23*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

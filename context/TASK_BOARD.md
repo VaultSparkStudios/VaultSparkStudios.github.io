@@ -1,3 +1,11 @@
+## S417 recovery disposition
+
+- [x] Reconstruct committed work and reconcile the partial release record.
+- [ ] [SIL][S417] Verify cumulative content deployments retain the approved executable baseline.
+- [ ] [SIL][S417] Complete affected account acceptance and full release evidence; existing holds remain enforced.
+
+Prior S412–S417 acceptance rows remain open with their original evidence. Recovery is a partial closeout, with no new release credit.
+
 <!-- S417-active-waves -->
 ## S417 selected outcomes
 

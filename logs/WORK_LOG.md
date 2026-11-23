@@ -685,3 +685,10 @@ The full553-step source run executed every check successfully but exited1 on its
 ## 2026-11-17 — S417 audit, plan and first hardening tranche
 
 Three read-only audits and a research pass produced the public-beta plan. Applied the point-award migration to production with founder approval (probe 9/9). Implemented inline-JSON escaping, untrusted-container stripping at the edge, invisible-character removal, lockfile and action pinning, read-only default tokens, served-surface boundary, opt-in analytics with Global Privacy Control, cookie policy correction and timeline filtering. Shipped one Ark pattern-share about shared-database function grants. Release verification in progress.
+
+
+## 2026-11-22 — S417 record recovery
+
+Recovered S417 record from committed main and its authoritative handoff. Security/compliance and legal changes are committed; the handoff records consent scripts and served-folder pruning live, while the Worker untrusted-content rule and profile age screen remain unpromoted. Historical source and hosted checks cover their named candidates only. Real affected account journeys, full current staging parity and production promotion remain unfinished. This recovery closes the record as partial; it does not declare the prior beta plan or this new arc complete. Fresh doctor: 13 passing, 4 warnings, 0 blocking failures. Unit suite is running; no passing claim is made for it yet.
+
+S417 recovery verification update: npm run test:unit exited 0; 864 passed, 6 skipped, 0 failed across its three commands. Full build/release acceptance remains unverified.

@@ -1401,3 +1401,8 @@ Founder direction is open signup with safeguards for the public beta. The bot ch
 ## D-S417.8 — age screen at profile completion; bot check belongs to the identity provider
 
 Credentials are created at Obelisk; this site owns only profile completion. The site therefore adds a neutral age screen there (birth month and year, checked in the browser, nothing sent or stored, a refusal remembered on the device for a day, minimum 13 per the Terms) and fails closed if the screen script is missing. The newsletter box at profile completion is no longer pre-ticked. A bot check on account creation was requested from the Obelisk owner through Ark; a Supabase-level captcha is not usable because the auth project is shared with other products. The age screen is client-side attestation, not verification, and ships to production only with a full promotion.
+
+
+## D-S417.R — preserve partial release evidence
+
+Recovery preserves all prior decisions and hold configuration. The November 20 handoff correction supersedes older statements that consent and folder pruning were not live. Baseline advancement is an audit candidate requiring source verification, not assumed intended policy. No launch, pricing, identity policy or legal decision is changed.

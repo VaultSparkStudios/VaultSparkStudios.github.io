@@ -1,40 +1,38 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-11-03 (Session 408 closeout) -->
+<!-- generated-at: 2026-11-23 (Session 417 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S408 ═══════╗
-║  Date: 2026-11-03  ·  SIL: 939/1000  ·  Velocity: 1 stable       ║
-║  Mode: BUILDER  ·  Agent: codex                                  ║
-║  Autopilot: proven (S408)                                        ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S417 ═══════╗
+║  Date: 2026-11-23  ·  SIL: 835/1000  ·  Velocity: 0 stable       ║
+║  Mode: FOUNDER  ·  Agent: codex                                  ║
+║  Autopilot: BYPASSED (S417) — no receipt; run node scripts/clos  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
 ║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
-║  ✓ chore(S408): publish verified candidate and preserve observa  ║
-║  ✓ chore(S408): accept full staging and release candidate        ║
-║  ✓ chore: post-closeout events.ndjson + contracts reconcile [sk  ║
-║  ✓ fix(S408): reliable verification and readable archive sharin  ║
+║  ✓ chore: refresh live data feeds [skip ci]                      ║
+║  ✓ (only 2 non-automation commit(s) in the last 30; more histor  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 939/1000 ═══════════════════════════════════════╗
-║    Dev Health         95   ██████████                            ║
+╔══ SCORES · SIL 835/1000 ═══════════════════════════════════════╗
+║    Dev Health         90   █████████░                            ║
 ║    Alignment          94   █████████░                            ║
-║    Momentum           92   █████████░                            ║
-║    Engagement         96   ██████████                            ║
-║    Process Qual       88   █████████░                            ║
-║    Coherence          94   █████████░                            ║
-║    Security           97   ██████████                            ║
-║    Ecosystem          91   █████████░                            ║
+║    Momentum           65   ███████░░░                            ║
+║    Engagement         90   █████████░                            ║
+║    Process Qual       60   ██████░░░░                            ║
+║    Coherence          85   █████████░                            ║
+║    Security           90   █████████░                            ║
+║    Ecosystem          80   ████████░░                            ║
 ║    Capital            95   ██████████                            ║
-║    Automation         97   ██████████                            ║
+║    Automation         86   █████████░                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
 ║  ✓ context/CURRENT_STATE.md                                      ║
-║  · context/TASK_BOARD.md                                         ║
+║  ✓ context/TASK_BOARD.md                                         ║
 ║  ✓ context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
-║  · context/DECISIONS.md                                          ║
+║  ✓ context/DECISIONS.md                                          ║
 ║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
 ║  ✓ context/TRUTH_AUDIT.md                                        ║
@@ -42,7 +40,7 @@
 ║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 22 files  ·  M:14 A:0 D:0 ?:8                          ║
+║  Changes: 16 files  ·  M:15 A:0 D:0 ?:1                          ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -51,14 +49,14 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        15/17                                            ║
+║  Doctor:        13/17                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         548/548                                          ║
-║  Validation:    full-fresh                                       ║
-║  IGNIS:         4d ago                                           ║
+║  Tests:         ⚠ no test run recorded — run: node scripts/run-  ║
+║  Validation:    unknown                                          ║
+║  IGNIS:         10d ago                                          ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
-║  shells:        56 started · 56 closed · 0 running               ║
+║  shells:        unknown · missing/stale enumeration              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
 ║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║
