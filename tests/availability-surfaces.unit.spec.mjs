@@ -16,7 +16,7 @@ test('open/closed postures update copy and links together, and unknown or unsafe
  for(const signup of [{...availability.signup,mode:'unknown'},{...availability.signup,url:'https://unowned.invalid/'},{...availability.signup,url:'//unowned.invalid/'},{...availability.signup,label:''}])assert.throws(()=>membershipSurfaceCopy({...availability,signup}));
 });
 test('proposed active Home/Press/Contact are coherent; shared Studio identity headers remain byte-identical',()=>{
- for(const f of ['index.html','press/index.html','assets/contact-page.js','vault-member/index.html','assets/vault-cta.js'])assert.deepEqual(availabilitySurfaceConflicts(f,read(f),availability),[],f);
+ for(const f of ['index.html','press/index.html','assets/contact-page.js','vault-member/index.html','assets/vault-cta.js','invite/index.html'])assert.deepEqual(availabilitySurfaceConflicts(f,read(f),availability),[],f);
  const pi=JSON.parse(read('api/public-intelligence.json')),registry=JSON.parse(read('data/game-registry.json'));
  for(const f of ['index.html','press/index.html']){
   const blocks=SURFACES.find(s=>s.file===f).blocks.filter(b=>b.name.includes('membership-'));
@@ -90,4 +90,15 @@ test('delayed membership bar guard rejects added open-enrollment and universal i
    assert.ok(availabilitySurfaceConflicts('assets/vault-cta.js',changed,authority).some(e=>/neutral|universal/.test(e)),mode+': '+phrase);
   }
  }
+});
+
+test('Invite separates open shared identity from invitation membership and referral eligibility',()=>{
+ const source=read('invite/index.html');assert.deepEqual(availabilitySurfaceConflicts('invite/index.html',source,availability),[]);
+ for(const phrase of ['No invitation is needed.','Anyone can create a free Vault Member account.','Your free VaultSpark account carries a personal referral link.','Create a free VaultSpark account to unlock your personal referral link.','Create your free account, grab your referral link.']){
+  assert.ok(availabilitySurfaceConflicts('invite/index.html',source.replace('</main>','<p>'+phrase+'</p></main>'),availability).length>0,phrase);
+ }
+ for(const [a,b]of [['Website membership is currently by invitation','Website membership is open'],['A referral link does not grant website membership.',''],['free Obelisk Studio account','free website account']])assert.ok(availabilitySurfaceConflicts('invite/index.html',source.replaceAll(a,b),availability).length>0,a);
+ assert.deepEqual(availabilitySurfaceConflicts('invite/index.html',source.replace('</main>','<blockquote>No invitation is needed.</blockquote><!-- No invitation is needed. --><script>"No invitation is needed."</script></main>'),availability),[]);
+ assert.ok(availabilitySurfaceConflicts('invite/index.html',source,{...availability,signup:{...availability.signup,mode:'open'}}).length>0,'stale invitation copy fails when authority changes');
+ const caller=read('scripts/check-content-coherence.mjs');assert.match(caller,/for\s*\(const file of \[[^\]]*'invite\/index\.html'[^\]]*\]\)/,'real coherence CLI checks Invite');
 });

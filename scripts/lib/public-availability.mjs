@@ -57,8 +57,20 @@ export function renderMembershipSurfaceBlocks(availability) {
 export function availabilitySurfaceConflicts(file,source,availability) {
   // Historical articles/quotations and shared identity headers are not current
   // website membership enrollment surfaces. Never rewrite or patrol those here.
-  if(!['index.html','press/index.html','assets/contact-page.js','vault-member/index.html','assets/vault-cta.js'].includes(file))return [];
+  if(!['index.html','press/index.html','assets/contact-page.js','vault-member/index.html','assets/vault-cta.js','invite/index.html'].includes(file))return [];
   const errors=[],blocks=renderMembershipSurfaceBlocks(availability);
+  if(file==='invite/index.html') {
+    const main=source.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1]||'';
+    const active=main.replace(/<(script|style|blockquote)\b[\s\S]*?<\/\1>/gi,' ').replace(/<!--[\s\S]*?-->/g,' ');
+    const text=active.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ');
+    if(!/free Obelisk Studio account/i.test(text)||!active.includes('href="/membership/"'))errors.push('Invite must separate shared Studio identity and current website membership information');
+    if(availability.signup.mode!=='open'&&/no invitation (?:is )?needed|anyone can create a free Vault Member account|free VaultSpark account (?:carries|to unlock)|create your free account, grab your referral link/i.test(text))errors.push('Invite copy implies open website membership or identity-only referral eligibility');
+    if(availability.signup.mode==='invitation'&&!/website membership is currently by invitation/i.test(text))errors.push('Invite must state current invitation-based website membership');
+    if(availability.signup.mode==='closed'&&!/website membership (?:enrollment )?is currently closed/i.test(text))errors.push('Invite must state current closed website membership');
+    if(availability.signup.mode==='open'&&/website membership is currently by invitation|current website enrollment is by invitation|accept a website membership invitation/i.test(text))errors.push('Invite invitation copy differs from current open website membership');
+    if(!/referral link does not grant website membership/i.test(text))errors.push('Invite must not imply a referral link grants website membership');
+    return errors;
+  }
   if(file==='assets/vault-cta.js') {
     const bar=source.match(/bar\.innerHTML\s*=([\s\S]*?);\r?\n/)?.[1]||'';
     if(!bar.includes('href="/membership/"')||!bar.includes('Website membership')||!bar.includes('See membership'))errors.push('Sticky membership CTA must link current membership information');

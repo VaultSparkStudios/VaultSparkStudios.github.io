@@ -21,6 +21,7 @@
  *   later, use --receipt-only --out <reported-run-directory>; stale inputs refuse.
  */
 import fs from 'node:fs';
+import {settleCaptureAnimations} from './lib/capture-animation-state.mjs';
 import http from 'node:http';
 import path from 'node:path';
 import url from 'node:url';
@@ -262,7 +263,7 @@ function homeIdleSources() {
 
 function captureSourceFiles(routes) {
   return [
-    'assets/turnstile.js', 'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js', 'assets/vault-genome-strip.js',
+    'scripts/lib/capture-animation-state.mjs', 'assets/turnstile.js', 'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js', 'assets/vault-genome-strip.js',
     'assets/studio-pages.css', 'assets/contact-page.js', 'assets/report-content.js', 'assets/vault-cta.js',
     'assets/nav-sheet.js', 'assets/nav-toggle.js', 'assets/theme-toggle.js', 'vault-member/age-screen.js',
     'assets/adaptive-cta.js', 'assets/membership-proof-loop.js',
@@ -492,11 +493,11 @@ async function main() {
                 if (stable < 2) throw new Error('Homepage idle panels did not settle across activation walks');
               });
             }
-            const measure = async () => ({
+            const measure = async () => { const animationCaptureState = await page.evaluate(settleCaptureAnimations); return ({ animationCaptureState,
               ...await page.evaluate(() => ({ scrollY: window.scrollY, documentHeight: document.documentElement.scrollHeight,
                 viewportHeight: innerHeight, viewportWidth: innerWidth, scrollWidth: document.documentElement.scrollWidth })),
               occlusion: await page.evaluate(measureScrollTileOcclusion)
-            });
+            }); };
             // Require a settled height before fixing the adaptive plan.
             let previous = null, stable = 0, geometry;
             for (let attempt = 0; attempt < 30 && stable < 3; attempt++) {
@@ -529,7 +530,7 @@ async function main() {
               await page.evaluate(y => window.scrollTo({ top: y, left: 0, behavior: 'instant' }), target);
               await page.waitForTimeout(150);
               const scroll = await measure(); validateScrollTileMeasurement(plan, scroll, offset);
-              const pixels = await page.screenshot({ animations: 'disabled', fullPage: false });
+              const pixels = await page.screenshot({ animations: 'allow', fullPage: false });
               const after = await measure(); validateScrollTileMeasurement(plan, after, offset);
               if (after.scrollY !== scroll.scrollY) throw new Error('Scroll position changed during tile capture');
               if (tileIndex === plan.offsets.length - 1 && after.scrollY + after.viewportHeight < after.documentHeight) throw new Error('Final tile changed before reaching bottom');

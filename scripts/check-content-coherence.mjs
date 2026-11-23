@@ -135,7 +135,7 @@ function runLive() {
       if(source===null)errs.push(file+': active availability source missing');
       else errs.push(...activeAvailabilityConflicts(file,source,expected,JSON.parse(readSafe('api/membership-tiers.json'))));
     }
-    for(const file of ['index.html','press/index.html','assets/contact-page.js','vault-member/index.html','assets/vault-cta.js']) {
+    for(const file of ['index.html','press/index.html','assets/contact-page.js','vault-member/index.html','assets/vault-cta.js','invite/index.html']) {
       const source=readSafe(file);if(source===null)errs.push(file+': active membership surface missing');
       else errs.push(...availabilitySurfaceConflicts(file,source,expected));
     }

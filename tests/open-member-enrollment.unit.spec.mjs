@@ -14,7 +14,7 @@ after(async () => { await browser?.close(); });
 
 for (const [route, source] of Object.entries(pages)) {
   test(`${route}: shared identity creation stays separate from invitation-based website enrollment`, async () => {
-    if(route!=='/invite/')assert.match(source,/opened by invitation|Request your Vault invite/i);
+    assert.match(source,/opened by invitation|Request your Vault invite|website membership is currently by invitation/i);
     const f = await openFixture(browser, { pages: { [route]: source } });
     try {
       await f.goto(route);
@@ -40,7 +40,11 @@ for (const [route, source] of Object.entries(pages)) {
         assert.ok(await f.page.locator('#referral-link-input[readonly]').count());
         assert.ok(await f.page.locator('#copy-link-btn').count());
         assert.ok(await f.page.locator('a[href="/vault-member/#login"]').count());
-        assert.match(await f.page.locator('.invite-honest').textContent(), /No invitation is needed/);
+        const note=await f.page.locator('.invite-honest').textContent();
+        assert.match(note,/free Obelisk Studio account for shared sign-in/);
+        assert.match(note,/Website membership is currently by invitation/);
+        assert.match(note,/A referral link does not grant website membership/);
+        assert.equal(await f.page.locator('.invite-honest a[href="/membership/"]').count(),1);
       }
       assert.equal(f.log.requests.filter(req => req.method === 'POST'
         && /\/auth\/|\/contact\/submit/.test(new URL(req.url).pathname)).length, 0, 'entry never auto-registers or submits');

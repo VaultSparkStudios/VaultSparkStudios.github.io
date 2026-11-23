@@ -46,6 +46,7 @@
     .invite-hero .container { position: relative; z-index: 1; }
     .invite-honest { margin-top: 1.6rem; max-width: 62ch; padding: 1rem 1.15rem; border-radius: 16px; border: 1px solid var(--line, rgba(127,127,127,.28)); border-left: 3px solid var(--gold); background: var(--panel, transparent); }
     .invite-honest p { color: var(--text); line-height: 1.6; font-size: 0.98rem; }
+    .invite-honest p a { color: inherit; text-decoration: underline; text-underline-offset: .18em; }
     .invite-honest-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.85rem; }
 
     /* ── How it works ── */
@@ -382,9 +383,9 @@
         XP, and a permanent mark on the vault record.
       </p>
       <div class="invite-honest" role="note" aria-label="Join the Vault and share it">
-        <p><strong>Anyone can create a free Vault Member account.</strong> No invitation is needed. If a member sent you a referral link, use it when you join.</p>
+        <p><strong>Anyone can create a free Obelisk Studio account for shared sign-in.</strong> Website membership is currently by invitation; <a href="/membership/">see current membership information</a>. If a member sent you a referral link, use it when you join. A referral link does not grant website membership.</p>
         <div class="invite-honest-actions">
-          <a class="button button-sm" href="/vault-member/#register" data-vs-join>Create your free account</a>
+          <a class="button button-sm" href="/vault-member/#register" data-vs-join>Create your Studio account</a>
           <a class="button-secondary button-sm" href="/vault-member/#login">Sign in to your account</a>
         </div>
       </div>
@@ -419,7 +420,7 @@
         <div class="step-card">
           <div class="step-num">1</div>
           <div class="step-title">Join The Vault</div>
-          <div class="step-desc">Your free VaultSpark account carries a personal referral link. No paid membership required.</div>
+          <div class="step-desc">Website members get a personal referral link; current website enrollment is by invitation. No paid membership required.</div>
         </div>
         <div class="step-card">
           <div class="step-num">2</div>
@@ -474,13 +475,13 @@
     <div id="invite-guest" style="display:none;">
       <div class="guest-invite-cta">
         <div style="font-size:2.5rem;margin-bottom:1rem;">🔒</div>
-        <h2>Your referral link is waiting.</h2>
+        <h2>Website members get a referral link.</h2>
         <p>
-          Create a free VaultSpark account to unlock your personal referral link.
+          Create a free Obelisk Studio account for shared sign-in, then accept a website membership invitation to get your member referral link.
           Every friend you bring in earns you XP, achievements, and a permanent record in the vault.
         </p>
         <div class="cta-row">
-          <a class="button" id="invite-guest-account-cta" data-adaptive-cta="account" href="/vault-member/#register" data-vs-join>Create your free account</a>
+          <a class="button" id="invite-guest-account-cta" data-adaptive-cta="account" href="/vault-member/#register" data-vs-join>Create your Studio account</a>
           <a class="button-secondary" href="/vault-member/#login">Sign In</a>
         </div>
       </div>
@@ -541,10 +542,10 @@
         Ready to grow the vault?
       </h2>
       <p style="color:var(--muted);max-width:48ch;margin:0 auto 1.8rem;line-height:1.65;">
-        Create your free account, grab your referral link, and start building the community that backs the studio.
+        Create your free Obelisk Studio account, accept a website membership invitation, then use your member referral link to help build the community that backs the studio.
       </p>
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-        <a class="button" href="/vault-member/#register" data-vs-join>Create your free account</a>
+        <a class="button" href="/vault-member/#register" data-vs-join>Create your Studio account</a>
         <a class="button-secondary" href="/membership/#tiers">Explore Membership Tiers</a>
       </div>
     </section>
