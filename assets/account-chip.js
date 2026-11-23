@@ -89,6 +89,8 @@
       '.vs-account-chip__tier.tier-ETERNAL{background:rgba(139,92,246,0.12);color:#8B5CF6;border-color:rgba(139,92,246,0.3)}' +
       '.vs-account-chip__tier.tier-MEMBER{background:rgba(168,180,208,0.1);color:var(--muted);border-color:rgba(168,180,208,0.2)}' +
       '.vs-account-chip__caret{font-size:.55rem;opacity:.65;margin-left:.1rem}' +
+      // The shared tablet cap is too narrow for the full badge and caret.
+      '@media(min-width:641px) and (max-width:768px){.nav-right .vs-account-chip{max-width:180px}}' +
       // Keep all four mobile header controls reachable after the rank orb mounts.
       // The full name and tier remain in the existing account button aria-label.
       '@media(max-width:640px){.nav-right .vs-account-chip{box-sizing:border-box;flex:0 0 44px;width:44px;min-width:44px;max-width:44px;height:44px;min-height:44px;max-height:44px;padding:0;gap:0;justify-content:center}.nav-right .vs-account-chip__tier,.nav-right .vs-account-chip__caret{display:none}}' +
@@ -101,6 +103,8 @@
       '.vs-account-menu a:hover,.vs-account-menu button:hover{background:var(--nav-hover-bg,rgba(124,92,252,0.08))}' +
       '.vs-account-menu__sep{height:1px;background:var(--nav-divider,rgba(255,255,255,0.05));margin:.35rem 0}' +
       '.vs-account-menu__danger{color:#fca5a5}' +
+      // Bound the account popover below the existing header/wire tokens.
+      '.nav-right .vs-account-menu{box-sizing:border-box;max-height:calc(100dvh - var(--nav-height,78px) - var(--desk-wire-offset,0px) - 16px);overflow-y:auto;overscroll-behavior:contain}.nav-right .vs-account-menu a,.nav-right .vs-account-menu button{box-sizing:border-box;min-height:44px}' +
       '/* hide anonymous CTAs when chip is mounted */' +
       '.nav-right:has(.vs-account-chip) .nav-signin,' +
       '.nav-right:has(.vs-account-chip) .button.button-sm[href*="register"],' +
@@ -179,7 +183,11 @@
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') btn.setAttribute('aria-expanded', 'false');
+      if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
+        var restoreFocus = btn.contains(document.activeElement);
+        btn.setAttribute('aria-expanded', 'false');
+        if (restoreFocus) btn.focus({ preventScroll: true });
+      }
     });
 
     var signoutBtn = btn.querySelector('[data-vs-signout]');

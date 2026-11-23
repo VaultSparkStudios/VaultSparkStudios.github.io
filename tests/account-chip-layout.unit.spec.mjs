@@ -20,14 +20,14 @@ async function whollyReachable(locator) {
   });
 }
 
-for (const width of [360, 390, 430, 640, 1366]) {
+for (const width of [360, 390, 430, 640, 768, 1024, 1366]) {
   test(`signed-in header retains public navigation after the real rank orb mounts at ${width}px`, async () => {
     const f = await openFixture(browser, {
       pages: {
         '/universe/voidfall/': fs.readFileSync(path.join(ROOT, 'universe/voidfall/index.html'), 'utf8'),
         '/games/': fs.readFileSync(path.join(ROOT, 'games/index.html'), 'utf8'),
       },
-      contextOptions: { viewport: { width, height: width === 1366 ? 900 : 844 } },
+      contextOptions: { viewport: { width, height: width === 1366 ? 900 : 844 }, hasTouch: width === 768 || width === 1024 },
       initScripts: [beaconStub, () => { localStorage.setItem('vs_theme', 'dark'); localStorage.setItem('vs_cookie_consent', 'declined'); }],
       handlers: [{
         match: (u, req) => u.origin === ORIGIN && req.method() === 'GET' && !u.search && ['/api/auth/me', '/api/auth/progression', '/api/public-intelligence.json', '/assets/account-chip.js'].includes(u.pathname),
@@ -50,6 +50,7 @@ for (const width of [360, 390, 430, 640, 1366]) {
         assert.equal(await whollyReachable(f.page.locator(selector).first()), true, `${selector} remains contained and hit-reachable`);
       }
       assert.equal(await whollyReachable(chip), true, 'account button wholly contained and hit-reachable');
+      if (width <= 1024) assert.equal(await whollyReachable(f.page.locator('.hamburger')), true, 'public navigation also remains unobscured on touch-tablet widths');
       assert.match(await chip.getAttribute('aria-label'), /Header Member \(Vault Member\)/);
       assert.equal(await chip.locator('.vs-account-chip__tier').textContent(), 'MEMBER', 'presentation keeps actual free-member classification');
       if (width <= 640) {
@@ -62,18 +63,46 @@ for (const width of [360, 390, 430, 640, 1366]) {
         assert.equal(await chip.locator('.vs-account-chip__tier').isVisible(), true, 'desktop tier badge retained');
         assert.ok((await chip.boundingBox()).width > 44, 'desktop full chip retained');
       }
+      if (width === 768 || width === 1024) {
+        await chip.tap(); assert.equal(await chip.getAttribute('aria-expanded'), 'true', 'coarse-pointer tablet opens account menu by real touchscreen tap');
+        await chip.tap(); assert.equal(await chip.getAttribute('aria-expanded'), 'false', 'coarse-pointer tablet closes account menu by real touchscreen tap');
+      }
       await chip.focus(); await f.page.keyboard.press('Enter');
       assert.equal(await chip.getAttribute('aria-expanded'), 'true');
+      {
+        const heights = await chip.locator('[role="menuitem"]').evaluateAll(nodes => nodes.map(n => ({ height: n.getBoundingClientRect().height, minimum: parseFloat(getComputedStyle(n).minHeight) })));
+        assert.ok(heights.length >= 8 && heights.every(h => h.minimum >= 44 && h.height >= 44 - 0.0001), 'every account-menu action has a44px target');
+      }
       await f.page.keyboard.press('Tab');
       assert.equal(await f.page.evaluate(() => document.activeElement.getAttribute('href')), '/vault-member/');
       await f.page.keyboard.press('Escape');
       assert.equal(await chip.getAttribute('aria-expanded'), 'false');
-      if (width <= 640) {
-        await f.page.locator('.hamburger').click();
+      if (width === 390 || width === 1366) {
+        await f.page.setViewportSize({ width: width === 390 ? 640 : 1366, height: 360 });
+        await chip.click();
+        const menu = chip.locator('.vs-account-menu');
+        await menu.hover();
+        await f.page.mouse.wheel(0, 1000);
+        const signout = chip.locator('[data-vs-signout]');
+        await f.page.waitForFunction(() => { const n = document.querySelector('[data-vs-signout]'), r = n.getBoundingClientRect(), h = document.elementFromPoint(r.x+r.width/2,r.y+r.height/2); return r.y >= 0 && r.bottom <= innerHeight && r.right <= innerWidth && !!h && (h === n || n.contains(h)); });
+        assert.equal(await whollyReachable(signout), true, 'short-landscape Sign out reachable after real menu wheel, without clicking it');
+        await chip.focus();
+        const count = await chip.locator('[role="menuitem"]').count();
+        for (let i = 0; i < count; i++) await f.page.keyboard.press('Tab');
+        assert.equal(await f.page.evaluate(() => document.activeElement.hasAttribute('data-vs-signout')), true, 'keyboard can reach the last account action');
+        await f.page.keyboard.press('Escape');
+        assert.equal(await chip.getAttribute('aria-expanded'), 'false');
+        assert.equal(await chip.evaluate(n => document.activeElement === n), true, 'Escape restores account-button focus from the last menu action');
+        await f.page.setViewportSize({ width, height: width === 1366 ? 900 : 844 });
+      }
+      if (width <= 1024) {
+        if (width === 768 || width === 1024) await f.page.locator('.hamburger').tap();
+        else await f.page.locator('.hamburger').click();
         await f.page.locator('#nav-menu.open').waitFor({ state: 'visible' });
         const games = f.page.locator('#nav-menu > .nav-item > a[href="/games/"]');
         assert.equal(await games.isVisible(), true);
-        await games.click();
+        if (width === 768 || width === 1024) await games.tap();
+        else await games.click();
         const allGames = f.page.locator('#nav-menu .nav-dropdown a[href="/games/"]').first();
         await allGames.scrollIntoViewIfNeeded();
         assert.equal(await allGames.isVisible(), true, 'public destination link reachable within actual drawer');
