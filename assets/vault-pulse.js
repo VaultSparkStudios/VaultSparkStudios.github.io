@@ -47,7 +47,7 @@
     var sty = document.createElement('style');
     sty.id = 'vs-pulse-style';
     sty.textContent = [
-      '.vp-ticker{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.45rem;}',
+      '.vp-ticker{overflow-anchor:none;list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.45rem;}',
       '.vp-row{display:flex;align-items:center;gap:0.65rem;padding:0.55rem 0.85rem;',
       '  border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);',
       '  font-size:0.86rem;animation:vp-slide-in 0.4s ease;}',
@@ -178,6 +178,10 @@
 
     function rotateNext() {
       if (!pool.length) return;
+      // Keep the activity the visitor is reading still. Continue fetching real
+      // events, but rotate the rows only when this panel is outside the view.
+      var bounds = root.getBoundingClientRect();
+      if (bounds.bottom > 0 && bounds.top < window.innerHeight) return;
       // Cycle through the real event pool. When we reach the end, wrap — but
       // refresh the pool every REFRESH_INTERVAL so we pick up new rows.
       if (cursor >= pool.length) cursor = 0;
