@@ -6,6 +6,8 @@ import crypto from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { spawnSync } from '../scripts/lib/safe-spawn.mjs';
 import { beginVisualCapture, createVisualCaptureDirectory, writeVisualCapture, sealVisualCapture } from '../scripts/lib/visual-capture-provenance.mjs';
+import { planScrollTiles } from '../scripts/capture-theme-matrix.mjs';
+import { validateReceipt } from '../scripts/check-visual-review-receipt.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 
@@ -32,6 +34,31 @@ function runReceipt(f, nodeArgs = []) {
   return spawnSync(process.execPath, [...nodeArgs, path.join(f.dir, 'scripts/capture-theme-matrix.mjs'), '--out', f.raw, '--receipt-only'], { cwd: f.dir, encoding: 'utf8', windowsHide: true, timeout: 15000 });
 }
 function dispose(f) { assert.ok(f.dir.startsWith(path.join(root, '.cache') + path.sep)); fs.rmSync(f.dir, { recursive: true, force: true }); }
+
+test('actual adaptive receipt-only writer preserves the sealed planned matrix and refuses lost coverage before publication', () => {
+  const f = fixture();
+  try {
+    const provenance = beginVisualCapture(f.dir, f.files, 'scripts/capture-theme-matrix.mjs');
+    f.raw = path.join(f.dir, 'raw', provenance.runId); fs.mkdirSync(f.raw);
+    const plan = planScrollTiles(2000, 900, 1366);
+    const capturePlan = { mode: 'scroll-tiles-v1', routes: ['/'], themes: ['dark'], viewports: ['desktop'], cases: [{ route: '/', theme: 'dark', viewport: 'desktop', plan }] };
+    const shots = plan.offsets.map((offset, tileIndex) => {
+      const file = `home--dark--desktop--scroll-tile-y${offset}.png`;
+      return { ...f.shot, file, sha256: writeVisualCapture(path.join(f.raw, file), f.bytes), state: 'scroll-tile', tileIndex, plannedOffset: offset,
+        scroll: { scrollY: offset, documentHeight: 2000, viewportHeight: 900, viewportWidth: 1366, scrollWidth: 1366 } };
+    });
+    const manifest = sealVisualCapture(f.dir, f.raw, provenance, shots, f.files, { capturePlan });
+    const result = runReceipt(f); assert.equal(result.status, 0, result.stderr);
+    const receipt = JSON.parse(fs.readFileSync(f.latest));
+    assert.deepEqual(receipt.matrix.capturePlan, capturePlan); assert.equal(receipt.matrix.expectedCaptures, 3);
+    assert.equal(receipt.captures.length, 3); assert.deepEqual(receipt.captures.map(row => row.scroll.scrollY), [0, 700, 1100]);
+    assert.deepEqual(validateReceipt(receipt), []); assert.equal(receipt.inspection.renderedPixelsReviewed, false);
+    const before = fs.readFileSync(f.latest), names = fs.readdirSync(f.receiptDir).sort();
+    manifest.shots.pop(); fs.writeFileSync(path.join(f.raw, 'manifest.json'), JSON.stringify(manifest));
+    const missing = runReceipt(f); assert.notEqual(missing.status, 0); assert.match(missing.stderr, /Missing or duplicate scroll tile/);
+    assert.deepEqual(fs.readFileSync(f.latest), before); assert.deepEqual(fs.readdirSync(f.receiptDir).sort(), names);
+  } finally { dispose(f); }
+});
 
 test('actual receipt-only writer preserves capture-time bindings, immutable images and exact LATEST preimage', () => {
   const f = fixture();

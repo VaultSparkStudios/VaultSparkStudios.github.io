@@ -13,7 +13,7 @@
  *   SUPABASE_SERVICE_ROLE_KEY — service-role key (never in browser)
  */
 
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.119.2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin':  'https://vaultsparkstudios.com',

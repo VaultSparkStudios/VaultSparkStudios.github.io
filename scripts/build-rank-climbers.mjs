@@ -23,25 +23,25 @@ const OUT = join(ROOT, 'api', 'rank-climbers.json');
 const SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
 const SB_ANON_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
 
-// Rank thresholds mirror vault-rank-bar.js — source of truth is the client asset.
-const RANK_THRESHOLDS = [
-  { title: 'Spark Initiate', min: 0    },
-  { title: 'Vault Runner',   min: 50   },
-  { title: 'Rift Scout',     min: 100  },
-  { title: 'Vault Guard',    min: 200  },
-  { title: 'Vault Breacher', min: 400  },
-  { title: 'Void Operative', min: 800  },
-  { title: 'Vault Keeper',   min: 1500 },
-  { title: 'Forge Master',   min: 2500 },
-  { title: 'The Sparked',    min: 5000 },
-];
+// Labels and thresholds share the existing website membership authority.
+// Refuse unavailable/malformed facts rather than restoring an alternate scale.
+const rankConfig = JSON.parse(readFileSync(new URL('../config/membership-entitlements.json', import.meta.url), 'utf8'));
+if (!Array.isArray(rankConfig.ranks) || !Array.isArray(rankConfig.rankThresholds)
+    || rankConfig.ranks.length !== rankConfig.rankThresholds.length || rankConfig.ranks.length < 2
+    || rankConfig.rankThresholds[0] !== 0
+    || rankConfig.rankThresholds.some((n, i, values) => !Number.isFinite(n) || (i > 0 && n <= values[i - 1]))
+    || rankConfig.ranks.some(rank => !rank || typeof rank.label !== 'string' || !rank.label.trim())) {
+  throw new Error('INVALID canonical membership rank authority');
+}
+const RANK_THRESHOLDS = rankConfig.ranks.map((rank, i) => ({ title: rank.label, min: rankConfig.rankThresholds[i] }));
+const MIN_CLIMBER_POINTS = RANK_THRESHOLDS[1].min;
 
 function computeRank(points) {
   const p = Number(points) || 0;
   for (let i = RANK_THRESHOLDS.length - 1; i >= 0; i--) {
     if (p >= RANK_THRESHOLDS[i].min) return RANK_THRESHOLDS[i].title;
   }
-  return 'Spark Initiate';
+  return RANK_THRESHOLDS[0].title;
 }
 
 export function sameSupabaseProject(configuredUrl, targetUrl = SB_URL) {
@@ -85,7 +85,7 @@ export function validateRankReport(data, now = Date.now()) {
       || data.totalClimbers !== data.climbers.length) throw new Error('INVALID rank report count');
   for (const row of data.climbers) {
     if (!row || typeof row.handle !== 'string' || !row.handle.trim()
-        || !Number.isFinite(row.points) || row.points <= 49
+        || !Number.isFinite(row.points) || row.points < MIN_CLIMBER_POINTS
         || row.rank !== computeRank(row.points)) throw new Error('INVALID rank report climber');
   }
   return data;
@@ -94,9 +94,9 @@ export function validateRankReport(data, now = Date.now()) {
 export async function fetchClimbers({ fetchImpl = fetch, resolveKey = resolveServiceKey } = {}) {
   const { key, isServiceRole } = await resolveKey();
 
-  // Only fetch public-profile members above the starting rank (points > 49).
+  // Only fetch public-profile members at or above the first canonical promoted rank.
   // No rank_name column — rank is computed from points using RANK_THRESHOLDS.
-  const url = `${SB_URL}/rest/v1/vault_members?select=username,points&public_profile=eq.true&points=gt.49&order=points.desc&limit=10`;
+  const url = `${SB_URL}/rest/v1/vault_members?select=username,points&public_profile=eq.true&points=gte.${MIN_CLIMBER_POINTS}&order=points.desc&limit=10`;
 
   const headers = { apikey: key, Accept: 'application/json' };
   if (isServiceRole) headers['Authorization'] = `Bearer ${key}`;
@@ -109,7 +109,7 @@ export async function fetchClimbers({ fetchImpl = fetch, resolveKey = resolveSer
   if (!Array.isArray(rows)) throw new Error('Supabase rank response is not an array; previous report preserved');
 
   return rows.map(function (row) {
-    if (!row || !Number.isFinite(row.points) || row.points <= 49
+    if (!row || !Number.isFinite(row.points) || row.points < MIN_CLIMBER_POINTS
         || (row.username != null && typeof row.username !== 'string')) {
       throw new Error('Supabase rank row is invalid; previous report preserved');
     }

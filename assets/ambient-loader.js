@@ -397,11 +397,11 @@
       idle: true
     },
     {
-      // Vault Kinesis — SVG ship-pulse waveform on Studio Pulse page.
+      // The pulse mount now lives on the consolidated Studio page.
       src: '/assets/vault-kinesis.js',
       when: function () {
         var p = location.pathname || '/';
-        return p.indexOf('/studio-pulse') === 0;
+        return !!document.getElementById('vs-vault-kinesis') || p.indexOf('/studio-pulse') === 0;
       },
       idle: true
     },

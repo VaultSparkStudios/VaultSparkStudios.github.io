@@ -1,0 +1,45 @@
+name: Website Membership Deletion Retry
+
+on:
+  schedule:
+    - cron: '23 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-account-data-processor
+  cancel-in-progress: false
+
+jobs:
+  retry:
+    if: vars.ACCOUNT_DATA_PROCESSOR_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Retry bounded website deletion jobs
+        env:
+          ACCOUNT_DATA_PROCESSOR_SECRET: ${{ secrets.ACCOUNT_DATA_PROCESSOR_SECRET }}
+        run: |
+          set -euo pipefail
+          if [ "${#ACCOUNT_DATA_PROCESSOR_SECRET}" -lt 32 ]; then
+            echo "::error::The website deletion processor secret is missing or invalid."
+            exit 1
+          fi
+          RESPONSE=$(mktemp)
+          trap 'rm -f "$RESPONSE"' EXIT
+          STATUS=$(curl --silent --show-error --max-time 240 --output "$RESPONSE" --write-out '%{http_code}' \
+            --request POST --header "Authorization: Bearer ${ACCOUNT_DATA_PROCESSOR_SECRET}" \
+            --header 'Content-Type: application/json' --data '{"action":"process"}' \
+            'https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/account-data')
+          if [ "$STATUS" != '200' ]; then
+            echo "::error::The website deletion retry did not return verified processor success (HTTP $STATUS)."
+            exit 1
+          fi
+          jq -e '(.jobs | type == "array") and (.jobs | length <= 5) and (.complete | type == "boolean")' "$RESPONSE" > /dev/null
+          jq '{processed: (.jobs | length), states: [.jobs[].state], complete}' "$RESPONSE"
+          jq -e '.complete == true and all(.jobs[]; .state == "completed")' "$RESPONSE" > /dev/null || {
+            echo "::error::Some website deletion jobs remain pending; no complete deletion claim is made."
+            exit 1
+          }

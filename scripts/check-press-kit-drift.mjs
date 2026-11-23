@@ -100,7 +100,7 @@ if (!bannerMatch) {
 // git-tracked HTML (never an FS walk, never a hand-picked page list) and pins
 // every occurrence. Two pages are still required carriers so a regex rot that
 // stops matching anything cannot read as a pass.
-const REQUIRED_BANNER_FILES = ['index.html', 'studio-pulse/index.html'];
+const REQUIRED_BANNER_FILES = ['index.html', 'studio/index.html'];
 // Any portfolio-total phrasing that should match expected.total:
 //   - "N initiatives under the vault banner"  (footer legend, sitewide)
 //   - "N initiatives. One vault."             (homepage teaser heading)

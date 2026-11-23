@@ -100,7 +100,7 @@
         "index.html",
         "status/index.html",
         "membership/index.html",
-        "studio-pulse/index.html",
+        "studio/index.html",
         "agents.json",
         ".well-known/llms.txt",
         "api/build-sha.json",
@@ -807,7 +807,7 @@
       "sources": [
         "data/pathways.json",
         "assets/shell-manifest.json",
-        "journal/index.html"
+        "devlog/index.html"
       ],
       "builder": "scripts/generate-pathways.mjs",
       "check": [
@@ -822,14 +822,14 @@
         "pathways/press/index.html",
         "pathways/investors/index.html"
       ],
-      "note": "The generator writes all six pathway pages from data/pathways.json while harvesting the current nav/footer from journal/index.html and hashed shell paths from assets/shell-manifest.json. Builders is the canonical output; the other five pages are atomic sibling outputs."
+      "note": "The generator writes all six pathway pages from data/pathways.json while harvesting the current nav/footer from devlog/index.html and hashed shell paths from assets/shell-manifest.json. Builders is the canonical output; the other five pages are atomic sibling outputs."
     },
     {
       "id": "evidence-hub",
       "output": "evidence/index.html",
       "sources": [
         "data/evidence-hub.json",
-        "journal/index.html"
+        "devlog/index.html"
       ],
       "builder": "scripts/generate-evidence-hub.mjs",
       "check": [
@@ -1238,7 +1238,7 @@
       ],
       "alsoStage": [
         "games/index.html",
-        "studio-pulse/index.html",
+        "studio/index.html",
         "universe/index.html"
       ],
       "publishCascade": true

@@ -4,7 +4,7 @@ const anchor = (pathname, hash) => Object.freeze({ kind: 'named-fragment', pathn
 export const VISUAL_SCENES = Object.freeze({
   home: top('/'), membership: top('/membership/'), 'vault-member': top('/vault-member/'),
   games: top('/games/'), tombstones: top('/vault/tombstones/'),
-  journal: anchor('/changelog/', '#stories'), oracle: anchor('/ignis/', '#oracle'),
+  journal: top('/devlog/'), oracle: anchor('/ignis/', '#oracle'),
 });
 
 // Same CSS-pixel rounding allowance used by existing anchor-arrival checks.

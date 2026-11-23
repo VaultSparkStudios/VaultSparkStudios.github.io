@@ -39,6 +39,10 @@ async function fixture({ denied = false, stored = '', ref, rejection = false }, 
         },
         from: () => ({ select() { return this; }, eq() { return this; }, single: async () => ({ data: { username: 'NewMember', points: 10 } }) }),
       };
+      // This fixture isolates referral/registration decisions; the real
+      // tombstone client and pending/completed/error paths have separate actual
+      // browser coverage in account-data-browser.unit.spec.mjs.
+      window.VSAccountData = { allowEnrollment: async () => true };
     }, arg: { denied, stored, rejection } }],
   });
   try {
@@ -91,10 +95,11 @@ test('denied storage does not mask a genuine registration rejection', async () =
 
 // Real member/passport pages and real handoff, bootstrap and registration
 // listeners. The local endpoints model identity + member-row state only.
-async function journeyFixture({ existing = false, denied = false, rejection = false, missingRow = false } = {}, run) {
+async function journeyFixture({ existing = false, denied = false, rejection = false, missingRow = false, accountJob = null, accountStatusError = false } = {}, run) {
   let authenticated = false;
   let member = existing;
   const registrations = [];
+  const bootstraps = [];
   const memberRow = () => ({ username: 'NewMember', points: 10, created_at: '2026-01-01T00:00:00Z', achievements: [] });
   const dbScript = () => `(() => {
     const session = ${authenticated ? JSON.stringify({ user: { id: 'fixture-identity', email: 'fixture@example.test' } }) : 'null'};
@@ -105,7 +110,8 @@ async function journeyFixture({ existing = false, denied = false, rejection = fa
       q.single = q.maybeSingle = () => fetch('/fixture/member?table='+table).then(r=>r.json());
       return q;
     }
-    window.VSSupabase = { from:query, rpc:(name,payload)=>fetch('/fixture/rpc',{method:'POST',body:JSON.stringify({name,payload})}).then(r=>r.json()),
+    window.__cacheReads = 0;
+    window.VSSupabase = { from:query, functions:{invoke:async()=>(${JSON.stringify(accountStatusError ? { data:null,error:{message:'status unavailable'} } : {data:{job:accountJob},error:null})})}, rpc:(name,payload)=>fetch('/fixture/rpc',{method:'POST',body:JSON.stringify({name,payload})}).then(r=>r.json()),
       auth:{getSession:async()=>({data:{session},error:null}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}})} };
     window.VSGate = {getNextAppName:()=>null,redirect:()=>false};
   })();`;
@@ -117,6 +123,7 @@ async function journeyFixture({ existing = false, denied = false, rejection = fa
       { match:u=>u.pathname==='/fixture/member', handle:r=>r.fulfill({json:{data:member?memberRow():null,error:null}}) },
       { match:u=>u.pathname==='/fixture/rpc', handle:(r,req)=>{
         const {name,payload}=req.postDataJSON();
+        if(name==='get_member_bootstrap')bootstraps.push(name);
         if(name==='register_open'){
           registrations.push(payload);
           if(!rejection&&!missingRow)member=true;
@@ -129,13 +136,24 @@ async function journeyFixture({ existing = false, denied = false, rejection = fa
         let body=fs.readFileSync(name,'utf8');
         // Exclude unrelated downstream dashboard rendering from this fixture.
         if(name==='vault-member/portal-auth.js')body+='\nshowDashboard = function(member) { window.__dashboardMember = member; };';
+        if(name==='vault-member/portal-cache.js')body+='\nconst originalGet=VSMemberCache.get.bind(VSMemberCache);VSMemberCache.get=function(uid){window.__cacheReads++;return originalGet(uid);};';
         return r.fulfill({contentType:name.endsWith('.css')?'text/css':'application/javascript',body});
       } },
     ],
     initScripts: denied ? [()=>{Object.defineProperty(window,'sessionStorage',{get(){throw new DOMException('Denied','SecurityError');}});}] : [],
   });
-  try { await run(f,{setAuthenticated:()=>{authenticated=true;},registrations}); } finally { await f.close(); }
+  try { await run(f,{setAuthenticated:()=>{authenticated=true;},registrations,bootstraps}); } finally { await f.close(); }
 }
+
+test('actual portal initialization stops before cached progress and bootstrap on pending/completed/unknown deletion state', async () => {
+  for(const accountState of ['processing','completed','unavailable']) {
+    const accountJob=accountState==='unavailable'?null:{id:'22222222-2222-4222-8222-222222222222',state:accountState,requested_at:'2026-11-23T00:00:00Z',erased_at:'2026-11-23T00:00:01Z',completed_at:accountState==='completed'?'2026-11-23T00:00:02Z':null};
+    await journeyFixture({existing:true,accountJob,accountStatusError:accountState==='unavailable'},async(f,state)=>{
+      state.setAuthenticated();await f.goto('/vault-member/');await f.page.locator('#account-data-state').waitFor({state:'visible'});
+      assert.equal(await f.page.evaluate(()=>window.__cacheReads),0);assert.equal(state.bootstraps.length,0);assert.equal(state.registrations.length,0);assert.equal(await f.page.evaluate(()=>window.__dashboardMember),undefined);
+    });
+  }
+});
 
 test('new identity returns through profile completion before its passport, including denied storage', async () => {
   for(const denied of [false,true])await journeyFixture({denied},async(f,state)=>{

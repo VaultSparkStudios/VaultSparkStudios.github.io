@@ -43,6 +43,8 @@ import { renderCatalog, injectCatalog, offRegistryPages, CATALOG_START, CATALOG_
 import { toWord } from './build-portfolio-counts.mjs';
 import { ORIGIN as SITE, ORG_REF as ORG_REF_ID, WEBSITE_REF as WEBSITE_REF_ID } from './lib/org-entity.mjs';
 
+import { readAvailability, availabilityConflicts, renderMembershipSurfaceBlocks } from './lib/public-availability.mjs';
+
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 // Registry slug → public-intelligence id where they differ.
@@ -214,6 +216,7 @@ export function buildModel(registry, pi, { exists = defaultExists } = {}) {
     projects: projectTitles,
     catalog,
     contradictions,
+    availability: pi.availability || null,
     edgeFunctions: (pi.stats && pi.stats.activeEdgeFunctions) || null,
     counts: {
       portfolio: { total: p.total, sparked: p.sparked, forge: p.forge, vaulted: p.vaulted, sealed: p.sealedCount ?? 0 },
@@ -278,11 +281,10 @@ export function renderPressBio(model) {
   ];
   const listed = named.slice(0, 10);
   const vaulted = piTitlesByStatus(model, 'vaulted').map((t) => t.name);
-  const edge = model.edgeFunctions ? `${model.edgeFunctions} live edge functions` : 'live edge functions';
   let text = `Founded in March 2026, the studio now spans ${c.total} initiatives across games, platforms, and tools. `
     + `${cap(toWord(c.sparked))} are sparked — ${joinNames(sparked)} — with ${toWord(c.forge)} more in active forge across games, platforms, and tools, including ${joinNames(named.length > listed.length ? [...listed, 'more'] : listed)}. `;
   if (vaulted.length) text += `${cap(toWord(vaulted.length))} ${vaulted.length === 1 ? 'title is' : 'titles are'} vaulted — ${joinNames(vaulted)}. `;
-  text += `A cross-project membership platform called the Vault binds every title through a free 9-tier rank system, optional VaultSparked subscriptions, and a shared points economy powered by ${edge}.`;
+  text += `Website membership brings together profiles, Vault ranks, points, achievements and community challenges. Obelisk provides shared Studio sign-in, while access and releases are described on each project page.`;
   return `<p>${esc(text)}</p>`;
 }
 
@@ -328,26 +330,26 @@ export function renderPressCatalog(model) {
   const betas = piTitlesByStatus(model, 'forge').filter((t) => playable.has(t.id));
   const forge = piTitlesByStatus(model, 'forge').filter((t) => !playable.has(t.id));
   const vaulted = piTitlesByStatus(model, 'vaulted');
-  let out = h3('#fbbf24', `🔥 Sparked — Live Now (${sparked.length})`, false);
+  let out = h3('var(--gold)', `🔥 Sparked — Live Now (${sparked.length})`, false);
   for (const t of sparked) out += pressBigCard(t, hrefForPi(model, t), t.deployedUrl, '🔥 Sparked');
   if (betas.length) {
-    out += h3('#f59e0b', `⚒️ Playable Beta — In The Forge (${betas.length})`, true);
+    out += h3('var(--gold)', `⚒️ Playable Beta — In The Forge (${betas.length})`, true);
     for (const t of betas) {
       const g = model.games.find((x) => (x.piId || x.id) === t.id);
       out += pressBigCard(t, hrefForPi(model, t), g && g.playUrl, '⚒️ Forge (playable beta)');
     }
   }
-  out += h3('#f59e0b', `⚒️ In The Forge — Active Development (${forge.length})`, true);
+  out += h3('var(--gold)', `⚒️ In The Forge — Active Development (${forge.length})`, true);
   out += '\n        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0.85rem;">'
     + forge.map(pressSmallCard).join('') + '\n        </div>';
   if (vaulted.length) {
-    out += h3('#94a3b8', `🔒 Vaulted (${vaulted.length})`, true);
+    out += h3('var(--muted)', `🔒 Vaulted (${vaulted.length})`, true);
     out += '\n        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0.85rem;">'
       + vaulted.map(pressSmallCard).join('') + '\n        </div>';
   }
   const sealed = model.counts.portfolio.sealed;
   if (sealed > 0) {
-    out += `\n        <p style="margin-top:1.2rem;font-size:0.82rem;color:var(--dim);">${sealed} further initiative${sealed === 1 ? ' is' : 's are'} unannounced and appear${sealed === 1 ? 's' : ''} only as sealed silhouettes on the public <a href="/studio-pulse/" style="color:var(--gold);">Studio Pulse</a>. Details shared under embargo — email <a href="mailto:press@vaultsparkstudios.com" style="color:var(--gold);">press@vaultsparkstudios.com</a>.</p>`;
+    out += `\n        <p style="margin-top:1.2rem;font-size:0.82rem;color:var(--dim);">${sealed} further initiative${sealed === 1 ? ' is' : 's are'} unannounced and appear${sealed === 1 ? 's' : ''} only as sealed silhouettes on the public <a href="/studio/#pulse" style="color:var(--gold);">Studio Pulse</a>. Details shared under embargo — email <a href="mailto:press@vaultsparkstudios.com" style="color:var(--gold);">press@vaultsparkstudios.com</a>.</p>`;
   }
   return out + '\n        ';
 }
@@ -475,8 +477,8 @@ ${rest.map(renderGameCard).join('\n')}
 
 export function renderHomeSpine(model) {
   const c = model.counts.portfolio;
-  return `<strong data-spine-active>${c.sparked}</strong> live ·
-              <strong data-spine-pulses>${c.forge}</strong> in the forge`;
+  return `<strong data-spine-active>${c.sparked}</strong> projects marked live ·
+              <strong data-spine-pulses>${c.forge}</strong> projects in development`;
 }
 
 export function renderRoadmapCount(model) {
@@ -678,6 +680,8 @@ export const SURFACES = [
   { file: 'press/index.html', blocks: [
     { name: 'press-facts', render: renderPressFacts, legacy: /\n\s*<tr><td>Portfolio<\/td>[\s\S]*?<tr><td>Live titles &amp; tools<\/td><td>[^<]*<\/td><\/tr>\n\s*/ },
     { name: 'press-bio', render: renderPressBio, legacy: /<p>Founded in March 2026,[\s\S]*?<\/p>/ },
+    { name: 'press-membership-facts', render: model => renderMembershipSurfaceBlocks(model.availability)['press-membership-facts'], legacy: /<tr><td>Membership<\/td>[\s\S]*?<tr><td>Vault system<\/td>[\s\S]*?<\/tr>/ },
+    { name: 'press-membership-overview', render: model => renderMembershipSurfaceBlocks(model.availability)['press-membership-overview'], legacy: /<p>VaultSpark Studios operates a cross-game membership platform[\s\S]*?<div class="vsx-5d541e7bea">[\s\S]*?\n          <\/div>/ },
     { name: 'press-catalog', render: renderPressCatalog, legacy: /\n\s*<h3 style="[^"]*">🔥 Sparked — Live Now<\/h3>[\s\S]*?further initiatives are unannounced[\s\S]*?<\/p>\n\s*/ },
   ] },
   { file: 'projects/index.html', blocks: [
@@ -689,6 +693,14 @@ export const SURFACES = [
     { name: 'games-catalog', render: renderGamesCatalog, legacy: /\n\s*<!-- Filter bar: Genre -->[\s\S]*?<\/div><!-- \/games-grid -->\n\s*/ },
   ] },
   { file: 'index.html', blocks: [
+    { name: 'home-hero-membership-cta', render: model => renderMembershipSurfaceBlocks(model.availability)['home-hero-membership-cta'], legacy: /<a\b(?=[^>]*data-track-event="home_hero_member_click")[^>]*>[^<]*<\/a>/ },
+    { name: 'home-vault-membership-cta', render: model => renderMembershipSurfaceBlocks(model.availability)['home-vault-membership-cta'], legacy: /<a\b(?=[^>]*data-track-event="home_vault_door_invite_click")[^>]*>[^<]*<\/a>/ },
+    { name: 'home-vault-membership-description', render: model => renderMembershipSurfaceBlocks(model.availability)['home-vault-membership-description'], legacy: /<p>Behind this door is one Vault Member identity[\s\S]*?<\/p>/ },
+    { name: 'home-membership-rank-benefit', render: model => renderMembershipSurfaceBlocks(model.availability)['home-membership-rank-benefit'], legacy: /<strong>Cross-Game Ranking<\/strong>\s*<p>Your Vault Rank grows as you play across every live title\.<\/p>/ },
+    { name: 'home-vault-membership-note', render: model => renderMembershipSurfaceBlocks(model.availability)['home-vault-membership-note'], legacy: /<p class="vd-note vd-note--guest">[\s\S]*?<\/p>/ },
+    { name: 'home-membership-intro', render: model => renderMembershipSurfaceBlocks(model.availability)['home-membership-intro'], legacy: /<h2 id="membership-heading">[\s\S]*?<\/p>/ },
+    { name: 'home-membership-cta', render: model => renderMembershipSurfaceBlocks(model.availability)['home-membership-cta'], legacy: /<a\b(?=[^>]*data-track-event="home_membership_free_click")[^>]*>[^<]*<\/a>/ },
+    { name: 'home-membership-timeline', render: model => renderMembershipSurfaceBlocks(model.availability)['home-membership-timeline'], legacy: /<span class="tl-label">Live Now<\/span>\s*<strong>One Vault account across every world<\/strong>\s*<div class="tl-body">Membership is open:[\s\S]*?<\/div>/ },
     { name: 'home-spine', render: renderHomeSpine, legacy: /<strong data-spine-active>\d+<\/strong>[\s\S]*?<strong data-spine-pulses>\d+<\/strong> in the forge/ },
   ] },
   { file: 'roadmap/index.html', blocks: [
@@ -771,6 +783,10 @@ export function applyAll(root = ROOT, inputs = loadInputs(root), { surfaces } = 
 export function loadInputs(root = ROOT) {
   const registry = JSON.parse(readFileSync(join(root, 'data', 'game-registry.json'), 'utf8'));
   const pi = JSON.parse(readFileSync(join(root, 'api', 'public-intelligence.json'), 'utf8'));
+  if (existsSync(join(root,'api/membership-tiers.json')) && existsSync(join(root,'config/project-waitlists.json'))) {
+    const conflicts=availabilityConflicts(pi.availability,readAvailability(root));
+    if(conflicts.length)throw Error(conflicts.join('; '));
+  }
   return { registry, pi };
 }
 

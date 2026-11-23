@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
 import { createRequire } from 'node:module';
+import { validateScrollTileCoverage } from './capture-theme-matrix.mjs';
 const require = createRequire(import.meta.url);
 const { sourceBinding } = require('./lib/mobile-runtime-contract.cjs');
 
@@ -20,11 +21,24 @@ export function validateReceipt(receipt, { verifyFiles = false, root = ROOT } = 
   if (!receipt?.source?.files?.length) errors.push('source binding is required');
   if (!matrix?.routes?.length || !matrix?.themes?.length || !matrix?.viewports?.length || !matrix?.states?.length) errors.push('declared route × theme × viewport × state matrix is required');
   else {
+    if (matrix.coverageMode === 'scroll-tiles-v1') {
+      try {
+        const adaptive = validateScrollTileCoverage(matrix.capturePlan, captures);
+        if (JSON.stringify(matrix.routes) !== JSON.stringify(matrix.capturePlan.routes)
+          || JSON.stringify(matrix.themes) !== JSON.stringify(matrix.capturePlan.themes)
+          || JSON.stringify(matrix.viewports.map(viewport => viewport.name)) !== JSON.stringify(matrix.capturePlan.viewports)
+          || JSON.stringify(matrix.states) !== JSON.stringify(['scroll-tile'])
+          || matrix.plannedCases !== adaptive.plannedCases || matrix.expectedCaptures !== adaptive.plannedCaptures
+          || matrix.completedCaptures !== captures.length) errors.push('adaptive matrix differs from sealed capture plan');
+      } catch (error) { errors.push(`invalid scroll-tile coverage: ${error.message}`); }
+    } else {
+    if (matrix.coverageMode || captures.some(capture => capture.state === 'scroll-tile')) errors.push('scroll-tile matrix requires its explicit coverage mode and plan');
     const expected = matrix.routes.length * matrix.themes.length * matrix.viewports.length * matrix.states.length;
     if (matrix.expectedCaptures !== expected || matrix.completedCaptures !== captures.length) errors.push('matrix counts do not match declared dimensions/captures');
     const keys = new Set();
     for (const capture of captures) keys.add(`${capture.page}|${capture.theme}|${capture.viewportName}|${capture.state}`);
     if (keys.size !== expected) errors.push('route × theme × viewport × state matrix is incomplete or duplicated');
+    }
   }
   if (verifyFiles && receipt?.source?.files?.length && sourceBinding(root, receipt.source.files).sha256 !== receipt.source.sha256) errors.push('visual proof is stale for current bound source');
 

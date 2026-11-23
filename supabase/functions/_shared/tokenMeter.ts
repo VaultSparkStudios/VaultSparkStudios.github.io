@@ -18,7 +18,7 @@
  * price table lives in ./modelPricing.ts for estimates/logging only.
  */
 
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.119.2';
 
 export type AnthropicUsage = {
   input_tokens?: number;

@@ -28,9 +28,9 @@
     },
     vaultmember: {
       eyebrow: 'Portal',
-      title: 'Create your vault identity',
-      copy: 'Free account, live rank, achievements, streaks, and portal access.',
-      href: '/vault-member/#register',
+      title: 'Explore website membership',
+      copy: 'Website profiles, ranks and community activities. Check current enrollment and project-specific access.',
+      href: '/membership/',
     },
     invite: {
       eyebrow: 'Referral',
@@ -66,7 +66,7 @@
       eyebrow: 'Studio Pulse',
       title: 'Read the operating signal',
       copy: 'Current focus, next milestones, and public studio truth in one place.',
-      href: '/studio-pulse/',
+      href: '/studio/#pulse',
     },
     games: {
       eyebrow: 'Games',
@@ -163,7 +163,7 @@
     },
     voidfall: {
       title: 'Stay inside the wrong transmission a little longer.',
-      copy: 'The Voidfall page should hand you into DreadSpike, membership, and the studio signal instead of leaving the saga isolated.'
+      copy: 'Continue into DreadSpike, explore membership, or follow the latest studio signals.'
     },
     dreadspike: {
       title: 'Push the DreadSpike signal deeper.',

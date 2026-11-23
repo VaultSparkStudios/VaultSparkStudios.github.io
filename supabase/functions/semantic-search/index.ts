@@ -54,7 +54,8 @@
  *     two weeks, set ASK_VAULT_PROMPT_CACHE=0 to drop the 25% write premium.
  */
 
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.119.2';
+import { enforceAiRequestLimit, verifiedAiUser } from '../_shared/aiRequestLimit.ts';
 import {
   capExceededResponse,
   isCapBreached,
@@ -251,6 +252,13 @@ Deno.serve(async (req) => {
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
   const supabase: Db = createClient(supabaseUrl, supabaseKey);
   const meterDb = supabaseUrl ? supabase : null;
+
+  const authClient = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY') || supabaseKey);
+  const verifiedUserId = await verifiedAiUser(authClient, req.headers.get('Authorization'));
+  const rateRefusal = await enforceAiRequestLimit({
+    req, endpoint: 'semantic-search', supabase, verifiedUserId, serverKey: supabaseKey,
+  }, cors);
+  if (rateRefusal) return rateRefusal;
 
   let body: { query?: unknown };
   try { body = await req.json(); } catch { return json({ error: 'Bad JSON' }, 400); }

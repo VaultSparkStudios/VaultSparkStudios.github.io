@@ -37,7 +37,7 @@ const GRAPH = path.join(ROOT, 'data', 'intent-graph.json');
 const TARGETS = [
   { route: '/membership/', file: 'membership/index.html' },
   { route: '/games/', file: 'games/index.html' },
-  { route: '/studio-pulse/', file: 'studio-pulse/index.html' },
+  { route: '/studio/', file: 'studio/index.html' },
   { route: '/universe/', file: 'universe/index.html' },
   // 2026-10-02 asset-diet: the homepage's 0.037 was a LOAD-only reading. The panel
   // is injected by the idle ambient loader after the first scroll, so a scroll pass

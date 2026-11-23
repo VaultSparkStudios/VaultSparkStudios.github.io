@@ -12,9 +12,9 @@ const HTML_TARGETS = [
   'index.html',
   'oracle/index.html',
   'social/index.html',
-  'studio-pulse/index.html',
+  'studio/index.html',
   'nervous-system/index.html',
-  'security/index.html'
+  'trust/index.html'
 ];
 
 const RUNTIME_TARGETS = [

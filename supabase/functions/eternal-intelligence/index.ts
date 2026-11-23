@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.119.2';
+import { enforceAiRequestLimit, nonAnonymousAiRateUserId } from '../_shared/aiRequestLimit.ts';
 import {
   getActivePlanKey,
   isVaultSparkedProPlan,
@@ -15,6 +16,7 @@ import {
 type AccessState = {
   authenticated: boolean;
   userId: string | null;
+  rateUserId: string | null;
   planKey: string;
   isPro: boolean;
 };
@@ -64,18 +66,18 @@ async function getAccessState(
   authHeader: string | null,
 ): Promise<AccessState> {
   if (!authHeader) {
-    return { authenticated: false, userId: null, planKey: 'free', isPro: false };
+    return { authenticated: false, userId: null, rateUserId: null, planKey: 'free', isPro: false };
   }
 
   const token = authHeader.replace(/^Bearer\s+/i, '').trim();
   if (!token) {
-    return { authenticated: false, userId: null, planKey: 'free', isPro: false };
+    return { authenticated: false, userId: null, rateUserId: null, planKey: 'free', isPro: false };
   }
 
   const { data: authData, error: authError } = await authClient.auth.getUser(token);
   const user = authData?.user;
   if (authError || !user) {
-    return { authenticated: false, userId: null, planKey: 'free', isPro: false };
+    return { authenticated: false, userId: null, rateUserId: null, planKey: 'free', isPro: false };
   }
 
   const [{ data: member }, { data: subscription }] = await Promise.all([
@@ -98,6 +100,7 @@ async function getAccessState(
   return {
     authenticated: true,
     userId: user.id,
+    rateUserId: nonAnonymousAiRateUserId(user),
     planKey,
     isPro: isVaultSparkedProPlan(planKey),
   };
@@ -331,9 +334,6 @@ serve(async (req) => {
   const supabaseAnon = Deno.env.get('SUPABASE_ANON_KEY') ?? serviceRoleKey;
   const supabase = createClient(supabaseUrl, serviceRoleKey);
   const authClient = createClient(supabaseUrl, supabaseAnon);
-  const body = req.method === 'POST' ? await parseRequestJson(req) : {};
-  const probe = body?.probe === true || new URL(req.url).searchParams.get('probe') === '1';
-
   const access = await getAccessState(supabase, authClient, req.headers.get('Authorization'));
   if (!access.authenticated) {
     return new Response(JSON.stringify({
@@ -349,6 +349,15 @@ serve(async (req) => {
       planKey: access.planKey,
     }), { status: 403, headers: { ...cors, 'Content-Type': 'application/json' } });
   }
+
+  const rateRefusal = await enforceAiRequestLimit({
+    req, endpoint: 'eternal-intelligence', supabase,
+    verifiedUserId: access.rateUserId, serverKey: serviceRoleKey,
+  }, cors);
+  if (rateRefusal) return rateRefusal;
+
+  const body = req.method === 'POST' ? await parseRequestJson(req) : {};
+  const probe = body?.probe === true || new URL(req.url).searchParams.get('probe') === '1';
 
   const revealEntries = parseJsonEnv<RevealEntry[]>('SEALED_REVEALS_JSON', []);
   const creditEntries = parseJsonEnv<CreditEntry[]>('ETERNAL_CREDITS_JSON', []);

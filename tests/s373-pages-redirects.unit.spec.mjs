@@ -4,9 +4,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parsePagesRedirects, matchPagesRedirect, redirectLocation, pagesRedirectResponse, resetPagesRedirectsCache, PAGES_REDIRECTS_TTL_MS } from '../cloudflare/pages-redirects.js';
 
-// S373: staging answers retired routes the way production does. Every expectation in
-// the first test was MEASURED against the production Pages origin on 2026-10-10, using
-// this repository's real `_redirects`, so the emulation is pinned to observed behaviour.
+// S373 pinned redirect matching/query semantics to the observed Pages behavior.
+// S418 updates the destinations to the reviewed canonical route map.
 const ROOT = path.resolve(import.meta.dirname, '..');
 const REAL = fs.readFileSync(path.join(ROOT, '_redirects'), 'utf8');
 const ORIGIN = 'https://website.staging.vaultsparkstudios.com';
@@ -17,15 +16,19 @@ function resolve(pathAndQuery, rules = parsePagesRedirects(REAL)) {
   return hit ? [hit.status, redirectLocation(hit.to, url.search, ORIGIN)] : null;
 }
 
-test('the real _redirects resolves exactly as production was observed to', () => {
+test('the real _redirects preserves matching semantics and current canonical destinations', () => {
   const observed = [
-    ['/journal/?x=1', '/changelog/?x=1#stories'],
-    ['/journal', '/changelog/#stories'],
+    ['/journal/?x=1', '/devlog/?x=1'],
+    ['/journal', '/devlog/'],
     ['/journal/archive/old-post/?y=2', '/changelog/?y=2#stories'],
     ['/vaultspark-football-gm/play/index.html', '/games/franchise-architect/play/index.html'],
     ['/franchise-architect/game.html', '/games/franchise-architect/'],
     ['/stats', '/evidence/#numbers'],
-    ['/notebook/anything/here', '/studio-pulse/#forge-ledger'],
+    ['/notebook/anything/here', '/studio/#forge-ledger'],
+    ['/brand/?x=1', '/press/?x=1'],
+    ['/brand', '/press/'],
+    ['/security/', '/trust/'],
+    ['/studio-pulse/', '/studio/'],
   ];
   for (const [request, location] of observed) assert.deepEqual(resolve(request), [301, `${ORIGIN}${location}`], request);
 });
@@ -33,7 +36,7 @@ test('the real _redirects resolves exactly as production was observed to', () =>
 test('every rule in the real file is understood, and served pages are left alone', () => {
   const written = REAL.split(/\r?\n/).map((l) => l.trim()).filter((l) => l && !l.startsWith('#')).length;
   assert.equal(parsePagesRedirects(REAL).length, written, 'a rule this module cannot parse would silently not apply on staging');
-  for (const served of ['/', '/games/', '/changelog/', '/journal/first-sparks/', '/news/', '/stats.json', '/ask-founders/submit']) assert.equal(resolve(served), null, served);
+  for (const served of ['/', '/games/', '/changelog/', '/journal/first-sparks/', '/journal/dispatches/feed.xml', '/brand/assets.json', '/brand/tokens.json', '/devlog/', '/trust/', '/news/', '/stats.json', '/ask-founders/submit']) assert.equal(resolve(served), null, served);
 });
 
 test('parsing skips what it does not implement instead of guessing', () => {
@@ -71,7 +74,7 @@ test('the edge Worker applies _redirects only when the staging flag is set', asy
     const get = (p) => worker.fetch(new Request(`${ORIGIN}${p}`, { headers: { accept: 'text/html' } }), env, ctx);
     const retired = await get('/journal/?x=1');
     assert.equal(retired.status, 301);
-    assert.equal(retired.headers.get('Location'), `${ORIGIN}/changelog/?x=1#stories`);
+    assert.equal(retired.headers.get('Location'), `${ORIGIN}/devlog/?x=1`);
     const splat = await get('/vaultspark-football-gm/play/');
     // The Worker's own legacy map answers this one first, exactly as on production.
     assert.equal(splat.status, 301);
@@ -103,7 +106,7 @@ test('the Worker hook redirects, caches the file, and never fails a request', as
   const originFetch = async (request) => { fetches += 1; assert.equal(new URL(request.url).pathname, '/_redirects'); return new Response(REAL, { status: 200 }); };
   const first = await pagesRedirectResponse(new URL(`${ORIGIN}/journal/?x=1`), { originFetch, publicOrigin: ORIGIN, now: 1_000 });
   assert.equal(first.status, 301);
-  assert.equal(first.headers.get('Location'), `${ORIGIN}/changelog/?x=1#stories`);
+  assert.equal(first.headers.get('Location'), `${ORIGIN}/devlog/?x=1`);
   assert.equal(await pagesRedirectResponse(new URL(`${ORIGIN}/games/`), { originFetch, publicOrigin: ORIGIN, now: 2_000 }), null);
   assert.equal(fetches, 1, 'the parsed file is reused inside the TTL');
   await pagesRedirectResponse(new URL(`${ORIGIN}/stats`), { originFetch, publicOrigin: ORIGIN, now: 2_000 + PAGES_REDIRECTS_TTL_MS + 1 });

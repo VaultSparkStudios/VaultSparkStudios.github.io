@@ -51,13 +51,16 @@
     '.vs-rp__group{display:block;min-width:0;max-width:100%;}',
     '.vs-rp__group-label{font-size:0.74rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.55rem;}',
     '.vs-rp__segs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.4rem;min-width:0;max-width:100%;}',
-    '.vs-rp__seg{appearance:none;min-width:0;max-width:100%;min-height:52px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:var(--text);padding:0.65rem 0.5rem;border-radius:10px;cursor:pointer;font-size:0.88rem;font-weight:700;text-align:center;transition:border-color 150ms,background 150ms,color 150ms;line-height:1.2;overflow-wrap:anywhere;}',
+    '.vs-rp__seg{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.15rem;appearance:none;min-width:0;max-width:100%;min-height:52px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:var(--text);padding:0.65rem 0.5rem;border-radius:10px;cursor:pointer;font-size:0.88rem;font-weight:700;text-align:center;transition:border-color 150ms,background 150ms,color 150ms;line-height:1.2;overflow-wrap:normal;word-break:normal;}',
+    '.vs-rp__seg-label{display:block;max-width:100%;white-space:nowrap;word-break:normal;overflow-wrap:normal;}',
     '.vs-rp__seg small{display:block;min-width:0;font-size:0.68rem;font-weight:500;color:var(--dim);margin-top:0.15rem;text-transform:none;letter-spacing:0;overflow-wrap:anywhere;}',
     '.vs-rp__seg:hover{border-color:rgba(255,196,0,0.25);}',
     '.vs-rp__seg.is-active{background:rgba(255,196,0,0.08);border-color:rgba(255,196,0,0.45);color:var(--gold,#d4af37);}',
-    '.vs-rp__seg.is-active small{color:rgba(255,196,0,0.7);}',
+    '.vs-rp__seg.is-active small{color:inherit;}',
     '.vs-rp__seg.is-active-eternal{background:rgba(168,139,250,0.1);border-color:rgba(168,139,250,0.45);color:#a78bfa;}',
-    '.vs-rp__seg.is-active-eternal small{color:rgba(168,139,250,0.7);}',
+    '.vs-rp__seg.is-active-eternal small{color:inherit;}',
+    'body.light-mode .vs-rp__seg.is-active{color:var(--text);border-color:var(--gold);}',
+    'body.light-mode .vs-rp__seg.is-active-eternal{color:#6d28d9;border-color:#6d28d9;}',
     'body.light-mode .vs-rp__seg{background:rgba(20,28,52,0.04);}',
     '.vs-rp__slider-wrap{min-width:0;max-width:100%;margin-top:0.15rem;}',
     '.vs-rp__label{font-size:0.88rem;color:var(--muted);margin-bottom:0.55rem;display:flex;flex-wrap:wrap;gap:0.25rem 0.6rem;justify-content:space-between;align-items:baseline;}',
@@ -72,9 +75,10 @@
     '.vs-rp__icon{font-size:2rem;line-height:1;flex-shrink:0;}',
     '.vs-rp__rank-block{flex:1;min-width:0;}',
     '.vs-rp__rank-name{font-family:Georgia,serif;font-size:1.35rem;letter-spacing:-0.02em;color:var(--gold,#d4af37);line-height:1.15;}',
-    'body.light-mode .vs-rp__rank-name{color:#8a6000;}',
+    'body.light-mode .vs-rp__rank-name{color:var(--text);}',
     '.vs-rp__rank-sub{font-size:0.78rem;color:var(--dim);margin-top:0.1rem;}',
     '.vs-rp__timeline{font-size:0.9rem;color:var(--muted);line-height:1.55;}',
+    '.vs-rp__renewal-note{color:var(--text);font-size:0.83rem;}',
     '.vs-rp__timeline em{color:var(--text);font-style:normal;font-weight:600;}',
     '.vs-rp__ladder{min-width:0;max-width:100%;margin-top:1rem;display:flex;gap:0.3rem;align-items:flex-end;}',
     '.vs-rp__rung{flex:1;height:22px;border-radius:4px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:0.75rem;transition:all 200ms;position:relative;cursor:default;}',
@@ -87,7 +91,7 @@
     '.vs-rp__cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(212,175,55,0.28);}',
     '.vs-rp__cta--secondary{background:rgba(255,255,255,0.05);color:var(--text);border:1px solid rgba(255,255,255,0.1);}',
     'body.light-mode .vs-rp__cta{background:#8a6000;color:#fff;}',
-    '@media(max-width:560px){.vs-rp__inner{padding:0;}.vs-rp__segs{grid-template-columns:repeat(3,minmax(0,1fr));}.vs-rp__seg{padding:0.55rem 0.3rem;font-size:0.82rem;}.vs-rp__result{padding:1.2rem 1rem;}.vs-rp__cta-row{display:grid;grid-template-columns:1fr;gap:0.5rem;}.vs-rp__cta{width:100%;margin:0;}}'
+    '@media(max-width:560px){.vs-rp__inner{padding:0;}.vs-rp__segs{grid-template-columns:1fr;}.vs-rp__seg{padding:0.55rem 0.3rem;font-size:0.82rem;}.vs-rp__result{padding:1.2rem 1rem;}.vs-rp__cta-row{display:grid;grid-template-columns:1fr;gap:0.5rem;}.vs-rp__cta{width:100%;margin:0;}}'
   ].join('\n');
 
   function injectStyle() {
@@ -153,7 +157,7 @@
       '    <div class="vs-rp__segs" id="vs-rp-profile" role="radiogroup" aria-label="Engagement level">',
       Object.keys(PROFILES).map(function (k) {
         var p = PROFILES[k];
-        return '<button type="button" class="vs-rp__seg" data-profile="' + k + '" role="radio" aria-checked="false">' + p.label + '<small>' + p.hint + '</small></button>';
+        return '<button type="button" class="vs-rp__seg" data-profile="' + k + '" role="radio" aria-checked="false"><span class="vs-rp__seg-label">' + p.label + '</span><small>' + p.hint + '</small></button>';
       }).join(''),
       '    </div>',
       '  </div>',
@@ -164,7 +168,7 @@
       Object.keys(TIERS).map(function (k) {
         var t = TIERS[k];
         var xp = t.monthlyXP ? '+' + t.monthlyXP + ' XP/mo' : 'no monthly XP';
-        return '<button type="button" class="vs-rp__seg" data-tier="' + k + '" role="radio" aria-checked="false">' + t.chip + '<small>' + xp + '</small></button>';
+        return '<button type="button" class="vs-rp__seg" data-tier="' + k + '" role="radio" aria-checked="false"><span class="vs-rp__seg-label">' + t.chip + '</span><small>' + xp + '</small></button>';
       }).join(''),
       '    </div>',
       '  </div>',
@@ -193,7 +197,7 @@
       '</div>',
 
       '<div class="vs-rp__cta-row">',
-      '  <a href="/vault-member/#register" class="vs-rp__cta">Start Climbing — It\'s Free</a>',
+      '  <a href="/membership/" class="vs-rp__cta">See current website membership</a>',
       '  <a href="/vaultsparked/" class="vs-rp__cta vs-rp__cta--secondary" id="vs-rp-tier-cta">See Tier Perks</a>',
       '</div>'
     ].join('');
@@ -252,7 +256,6 @@
       ptsPerMoEl.textContent = '  ·  ' + fmtPts(ppm) + ' pts/mo';
       iconEl.textContent = rank.icon;
       rankEl.textContent = rank.name;
-      rankEl.style.color = rank.color;
 
       // Eternal visual variant
       resultEl.classList.toggle('is-eternal', state.tier === 'eternal');
@@ -283,7 +286,7 @@
       if (state.tier === 'free') {
         timelineHtml += '<br><span style="color:var(--gold,#d4af37);font-size:0.83rem;">⚡ VaultSparked would add ~500 pts/mo — roughly ' + Math.round(500 / ppm * 100) + '% faster climb.</span>';
       } else if (state.tier === 'sparked') {
-        timelineHtml += '<br><span style="color:#a78bfa;font-size:0.83rem;">◆ Eternal doubles monthly XP to 1,000 — plus permanent studio credits.</span>';
+        timelineHtml += '<br><span class="vs-rp__renewal-note">◆ Eternal includes 1,000 bonus Vault Points every renewal.</span>';
       }
       timeEl.innerHTML = timelineHtml;
 

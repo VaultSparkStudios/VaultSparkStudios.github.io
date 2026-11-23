@@ -25,7 +25,7 @@
 //
 // Request (POST, Authorization: Bearer <NEWSLETTER_SECRET>), JSON body — exactly one of:
 //   {"dryRun": true}                 build everything, send nothing, counts only
-//   {"previewTo": "<email>"}         render with the first eligible member's data,
+//   {"previewTo": "<email>"}         render with synthetic preview data,
 //                                    send ONLY to previewTo, subject "[PREVIEW] ",
 //                                    no member_newsletter_log write
 //   {"send": true}                   real monthly send (idempotent per YYYY-MM period)
@@ -34,7 +34,7 @@
 //
 // Trigger: .github/workflows/member-newsletter.yml
 
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.119.2';
 
 export const BREVO_SEND_URL = 'https://api.brevo.com/v3/smtp/email';
 export const DEFAULT_FROM = 'news@vaultsparkstudios.com';
@@ -123,6 +123,8 @@ export interface Paged<T> {
 /** Data access boundary — the real implementation is Supabase; tests inject a fake. */
 export interface NewsletterData {
   listMembers(): Promise<Paged<Member>>;
+  /** Fresh tombstone read immediately before a send; unknown status rejects send. */
+  deletionRequested(userId: string): Promise<boolean>;
   /** user id → email, confirmed non-anonymous addresses only. */
   loadAuthEmails(): Promise<{ emails: Map<string, string>; truncated: boolean }>;
   loadLoggedUserIds(period: string): Promise<Set<string>>;
@@ -723,6 +725,7 @@ export function createHandler(deps: Deps) {
         if (lateOptOut) throw new Error('late opt-out');
         const issue = await buildFor(member, token ?? '');
         if (issue.activityTruncated) activityTruncated++;
+        if (await data.deletionRequested(member.id)) { lateOptOut = true; throw new Error('deletion requested'); }
         const result = await sendViaBrevo(deps.fetch, apiKey, {
           from,
           to: emails.get(member.id)!,
@@ -841,13 +844,19 @@ export function supabaseData(client: Client): NewsletterData {
       // points change between pages and drop them out of the listing entirely — the
       // member would silently never be mailed. Points-based ordering belongs to the
       // decorative top-members query below, not to the pagination key.
+      // Missing/failed/truncated deletion-state reads fail the whole audience
+      // load; an unknown erasure request is never an implicit marketing opt-in.
+      const tombstones = await pageAll<{ user_id: string }>((a, b) => client.from('website_account_deletions')
+        .select('user_id').order('user_id', { ascending: true }).range(a, b));
+      if (tombstones.truncated) throw new Error('deletion audience incomplete');
+      const excluded = new Set(tombstones.rows.map(row => row.user_id));
       const page = await pageAll<Row>((a, b) => client.from('vault_members')
         .select('id, username, points, created_at, newsletter_preferences(opted_out, unsubscribe_token)')
         .order('id', { ascending: true })
         .range(a, b));
       return {
         truncated: page.truncated,
-        rows: page.rows.map((r) => {
+        rows: page.rows.filter(r => !excluded.has(r.id)).map((r) => {
           const prefs = Array.isArray(r.newsletter_preferences) ? r.newsletter_preferences[0] : r.newsletter_preferences;
           return {
             id: r.id, username: r.username, points: r.points, created_at: r.created_at,
@@ -855,6 +864,12 @@ export function supabaseData(client: Client): NewsletterData {
           };
         }),
       };
+    },
+
+    async deletionRequested(userId) {
+      const { data, error } = await client.from('website_account_deletions').select('id').eq('user_id', userId).maybeSingle();
+      if (error) throw new Error('deletion status unavailable');
+      return Boolean(data);
     },
 
     async loadAuthEmails() {

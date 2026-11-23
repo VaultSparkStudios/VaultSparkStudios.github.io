@@ -1,3 +1,11 @@
+## S418 source work and remaining acceptance
+
+The current source work covers the twelve technical outcomes in [IMPLEMENT_PLAN](../docs/IMPLEMENT_PLAN.md): content baseline preservation; account safeguards and acceptance; export/deletion; checkout/reporting; feed/publish isolation; AI request limits and imports; availability/waitlists; canonical routes; visual consistency; Trust/Beta/Devlog/Agents; AI/cache verification; and complete inherited release acceptance.
+
+Local build, focused tests and working desktop/mobile reviews have passed at the current checkpoint. These are source/local results. Required current CI, candidate-based member and approved-investor journeys, isolated staging, production served readback and final closeout remain open until independently evidenced. Historical receipts do not establish current acceptance.
+
+Preserve the existing shared identity and recovery/logout contracts, prices and membership/rank authority, privacy boundaries, content-release hold and rollback requirements. Keep incomplete outcomes visible; do not mark the arc complete from a source commit or a visual working review.
+
 ## S417 recovered partial closeout — 2026-11-22
 
 Recovered S417 record from committed main and its authoritative handoff. Security/compliance and legal changes are committed; the handoff records consent scripts and served-folder pruning live, while the Worker untrusted-content rule and profile age screen remain unpromoted. Historical source and hosted checks cover their named candidates only. Real affected account journeys, full current staging parity and production promotion remain unfinished. This recovery closes the record as partial; it does not declare the prior beta plan or this new arc complete.

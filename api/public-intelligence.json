@@ -1,6 +1,138 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-11-23T08:40:09.213Z",
+  "availability": {
+    "schemaVersion": "1.0",
+    "signup": {
+      "mode": "invitation",
+      "label": "Request your Vault invite",
+      "url": "/invite/",
+      "identityProvider": "Obelisk"
+    },
+    "billing": {
+      "interval": "month",
+      "annualOffered": false
+    },
+    "plans": [
+      {
+        "id": "free",
+        "name": "Vault Member",
+        "planCode": "free",
+        "monthlyPrice": 0,
+        "annualPrice": null,
+        "cta": {
+          "label": "Request your Vault invite",
+          "url": "/invite/",
+          "signedInUrl": "/vault-member/"
+        },
+        "purchase": "membership-enrollment"
+      },
+      {
+        "id": "sparked",
+        "name": "VaultSparked",
+        "planCode": "vault_sparked",
+        "monthlyPrice": 4.99,
+        "annualPrice": null,
+        "cta": {
+          "label": "Get VaultSparked",
+          "url": "/vault-member/#upgrade",
+          "signedInUrl": "/vault-member/#upgrade"
+        },
+        "purchase": "checkout-verifies-current-eligibility"
+      },
+      {
+        "id": "eternal",
+        "name": "VaultSparked Eternal",
+        "planCode": "vault_sparked_pro",
+        "monthlyPrice": 29.99,
+        "annualPrice": null,
+        "cta": {
+          "label": "Go Eternal",
+          "url": "/vault-member/#upgrade",
+          "signedInUrl": "/vault-member/#upgrade"
+        },
+        "purchase": "checkout-verifies-current-eligibility"
+      }
+    ],
+    "waitlists": {
+      "mode": "project-specific-double-opt-in",
+      "endpoint": "/api/project-waitlist",
+      "confirmationPath": "/waitlist/confirm/",
+      "projectCount": 13,
+      "projects": [
+        {
+          "key": "game:vaultfront",
+          "name": "VaultFront",
+          "path": "/games/vaultfront/"
+        },
+        {
+          "key": "game:solara",
+          "name": "Solara: Sunfall",
+          "path": "/games/solara/"
+        },
+        {
+          "key": "game:the-exodus",
+          "name": "The Exodus",
+          "path": "/games/the-exodus/"
+        },
+        {
+          "key": "game:voidfall",
+          "name": "Voidfall",
+          "path": "/universe/voidfall/"
+        },
+        {
+          "key": "game:vaultspark-forge",
+          "name": "VaultSpark Forge",
+          "path": "/games/vaultspark-forge/"
+        },
+        {
+          "key": "game:project-unknown",
+          "name": "Project Unknown",
+          "path": "/games/project-unknown/"
+        },
+        {
+          "key": "project:canon",
+          "name": "Canon",
+          "path": "/projects/canon/"
+        },
+        {
+          "key": "project:ideaforge",
+          "name": "IdeaForge",
+          "path": "/projects/ideaforge/"
+        },
+        {
+          "key": "project:promogrind",
+          "name": "PromoGrind",
+          "path": "/projects/promogrind/"
+        },
+        {
+          "key": "project:statvault",
+          "name": "StatVault",
+          "path": "/projects/statvault/"
+        },
+        {
+          "key": "project:the-living-protocol",
+          "name": "The Living Protocol",
+          "path": "/projects/the-living-protocol/"
+        },
+        {
+          "key": "project:velaxis",
+          "name": "Velaxis",
+          "path": "/projects/velaxis/"
+        },
+        {
+          "key": "project:vorn",
+          "name": "Vorn",
+          "path": "/projects/vorn/"
+        }
+      ],
+      "sourceSha256": "f3443b33447d238fefb5fdd396bdbf54ebfd0c39e7c9f956c54bd719f2566b00"
+    },
+    "sources": [
+      "api/membership-tiers.json",
+      "config/project-waitlists.json"
+    ]
+  },
+  "generatedAt": "2026-11-23T10:14:10.557Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -397,7 +529,7 @@
       "category": "Crafting World",
       "status": "FORGE",
       "progress": 14,
-      "note": "Crafting-and-building world in early concept. Vaulted silhouette for now.",
+      "note": "Crafting-and-building world in early concept.",
       "deployedUrl": null,
       "color": "#fb923c"
     },

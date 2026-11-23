@@ -236,7 +236,9 @@ export function contextWindowForAgent(agent) {
 const SONNET5_PRICE = { input: 2.00, cacheWrite: 2.50, cacheRead: 0.20, output: 10.00 };
 // S353 — 5.5 generation list prices (Claude API catalog, cached 2026-09-25).
 // cacheWrite follows the 1.25× input rule the other rows use.
-const SONNET55_PRICE = { input: 2.00, cacheWrite: 2.50, cacheRead: 0.20, output: 10.00 };
+// First-party pricing rechecked 2026-11-23: Sonnet 5.5 cache hits are 0.05x
+// input ($0.10/MTok); Sonnet 5 keeps its separate historical $0.20 rate.
+const SONNET55_PRICE = { input: 2.00, cacheWrite: 2.50, cacheRead: 0.10, output: 10.00 };
 const OPUS55_PRICE   = { input: 4.00, cacheWrite: 5.00, cacheRead: 0.20, output: 20.00 };
 const OPUS5_PRICE    = { input: 5.00, cacheWrite: 6.25, cacheRead: 0.50, output: 25.00 };
 

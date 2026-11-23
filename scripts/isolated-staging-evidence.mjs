@@ -5,14 +5,14 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { REPOSITORY, sha256, requireFact as need, isHash, validatePublisherPolicy, parseBoundedJson } from './lib/isolated-staging-contract.mjs';
 import { canonical, readOwned, verifyFrozenSource, githubApi, validateDeployment, validateInstallation, validateRequest,
-  makeRequest, publishMetadata, findObservation, findRequest, admitRuntime, invokeProtectedObserver, observationFromProtected, invokeInstallProjection, invokeNativeInstallProjection, validateObserverDescriptor, loadRuntimeContext, loadHistoricalStageContext, makeWorkerUploadRequest, makeProductionPostflightRequest, checkProductionWorkerUpload, admitProductionPhaseRequest, invokeProductionPostflight, admitProductionPostflightObservation, makeStagingRequest, nativeObservationFromProtected, makeProductionFinalizationObservation } from './lib/isolated-staging-evidence.mjs';
+  makeRequest, publishMetadata, findObservation, findRequest, admitRuntime, invokeProtectedObserver, observationFromProtected, invokeInstallProjection, invokeNativeInstallProjection, invokeNativeInstallProjectionS418, validateObserverDescriptor, validateSelectedProtectedBroker, loadRuntimeContext, loadHistoricalStageContext, makeWorkerUploadRequest, makeProductionPostflightRequest, checkProductionWorkerUpload, admitProductionPhaseRequest, invokeProductionPostflight, admitProductionPostflightObservation, makeStagingRequest, nativeObservationFromProtected, makeProductionFinalizationObservation } from './lib/isolated-staging-evidence.mjs';
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const args=process.argv.slice(2);
 if (!args.length || (args.length===1 && args[0]==='--help')) {
   console.log('isolated-staging-evidence: inert. Explicit --project-install / --publish-install / --request / --receive / --observe; unresolved publisher/observer refuses.');
 } else {
   try {
-    need(['--project-install','--publish-install','--request','--receive','--observe','--find-request','--publish-install-native','--publish-worker-upload','--check-worker-upload','--request-production-postflight','--receive-production-postflight','--observe-production-postflight','--publish-finalization'].includes(args[0]),'broker-mode');
+    need(['--project-install','--publish-install','--request','--receive','--observe','--find-request','--publish-install-native','--publish-install-native-s418','--publish-worker-upload','--check-worker-upload','--request-production-postflight','--receive-production-postflight','--observe-production-postflight','--publish-finalization'].includes(args[0]),'broker-mode');
     const flags={};
     for (const arg of args.slice(1)) {
       const match=arg.match(/^--([a-z][a-z0-9-]*)=([^\r\n]+)$/); need(match && !flags[match[1]],'broker-argument'); flags[match[1]]=match[2];
@@ -27,6 +27,7 @@ if (!args.length || (args.length===1 && args[0]==='--help')) {
       '--project-install':['source-commit','runtime-bindings','runtime-bindings-sha256','output'],
       '--publish-install':['source-commit','runtime-bindings','runtime-bindings-sha256'],
       '--publish-install-native':['source-commit','runtime-bindings','runtime-bindings-sha256','native-runtime','native-runtime-sha256','channel','actor-ready'],
+      '--publish-install-native-s418':['source-commit','runtime-bindings','runtime-bindings-sha256','native-runtime','native-runtime-sha256','channel','actor-ready'],
       '--find-request':['source-commit','workflow-run-id','workflow-run-attempt','workflow-path','installation-deployment-id','installation-payload-sha256',...(flags.phase?['phase']:[])],
       '--publish-worker-upload':['source-commit','isolated-staging-context','isolated-staging-context-sha256'],
       '--check-worker-upload':['source-commit','installation-deployment-id','installation-payload-sha256','worker-upload-deployment-id','worker-upload-payload-sha256'],
@@ -45,8 +46,7 @@ if (!args.length || (args.length===1 && args[0]==='--help')) {
     const frozen=verifyFrozenSource(ROOT,flags['source-commit']);
     const policy=validatePublisherPolicy(JSON.parse(readOwned(ROOT,'config/isolated-staging-admission.json')));
     async function localGithub(action, callback) {
-      validateObserverDescriptor(ROOT,policy.protectedObserver);
-      need(policy.protectedObserver.dependencyRows.some(r=>r.file==='../vaultspark-studio-ops/scripts/lib/github-broker.mjs'),'github-broker-not-pinned');
+      validateSelectedProtectedBroker(ROOT,policy);
       const {withGithubToken}=await import(pathToFileURL(path.resolve(ROOT,'../vaultspark-studio-ops/scripts/lib/github-broker.mjs')).href);
       // The API and every token use remain inside the canonical signed action closure.
       return withGithubToken(action,token=>callback(githubApi(token)),{params:{repository:REPOSITORY,sourceCommit:frozen.sourceCommit}});
@@ -86,10 +86,12 @@ if (!args.length || (args.length===1 && args[0]==='--help')) {
       const selector={workflowRunId:Number(flags['workflow-run-id']),workflowRunAttempt:Number(flags['workflow-run-attempt']),
         workflowPath:flags['workflow-path'],installationDeploymentId:Number(flags['installation-deployment-id']),installationPayloadSha256:flags['installation-payload-sha256'],...(flags.phase?{phase:flags.phase}:{})};
       console.log(JSON.stringify(await localGithub('isolated-staging-request-discovery',api=>findRequest(api,policy,frozen,selector))));
-    } else if(['--project-install','--publish-install','--publish-install-native'].includes(args[0])) {
+    } else if(['--project-install','--publish-install','--publish-install-native','--publish-install-native-s418'].includes(args[0])) {
       need(Object.keys(flags).every(k=>['source-commit','runtime-bindings','runtime-bindings-sha256','output','native-runtime','native-runtime-sha256','channel','actor-ready'].includes(k)),'install-project-arguments');
       const bindings=parseBoundedJson(readOwned(ROOT,flags['runtime-bindings'],65536),flags['runtime-bindings-sha256']);
-      const envelope=args[0]==='--publish-install-native'
+      const envelope=args[0]==='--publish-install-native-s418'
+        ?await invokeNativeInstallProjectionS418(ROOT,policy,frozen,bindings,{file:flags['native-runtime'],sha256:flags['native-runtime-sha256']},flags.channel,flags['actor-ready'])
+        :args[0]==='--publish-install-native'
         ?await invokeNativeInstallProjection(ROOT,policy,frozen,bindings,{file:flags['native-runtime'],sha256:flags['native-runtime-sha256']},flags.channel,flags['actor-ready'])
         :invokeInstallProjection(ROOT,policy,frozen,bindings);
       if(args[0]==='--project-install') {

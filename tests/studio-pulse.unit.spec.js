@@ -5,8 +5,17 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import fs from 'node:fs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+test('consolidated Studio loads the pulse runtime once from its nav-owned ambient block', () => {
+  const html = fs.readFileSync(path.join(ROOT, 'studio/index.html'), 'utf8');
+  const scripts = html.match(/<script\b[^>]*\bsrc=["']\/assets\/studio-pulse-live(?:\.shell-[a-f0-9]+)?\.js["'][^>]*><\/script>/g) || [];
+  assert.equal(scripts.length, 1, 'duplicate pulse execution appends the same asynchronous field verdict twice');
+  const ambient = html.match(/<!-- vs-ambient:start -->([\s\S]*?)<!-- vs-ambient:end -->/);
+  assert.ok(ambient && ambient[1].includes(scripts[0]), 'the nav generator must own the single pulse runtime');
+});
 
 function runScript(args) {
   return spawnSync(process.execPath, args, { cwd: ROOT, encoding: 'utf8', windowsHide: true, timeout: 60_000 });

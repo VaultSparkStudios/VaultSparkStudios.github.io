@@ -10,6 +10,9 @@
  * Usage:
  *   node scripts/capture-theme-matrix.mjs [--out <dir>] [--themes dark,light] [--routes /,/evidence/]
  *   Use --focus-selector '.desk-profile-feed .desk-profile-entry:first-child' to inspect a touched panel.
+ *   Use --scroll-tiles for planned, overlapping viewport captures of every vertical
+ *   region. --full-page remains available for diagnostics, but tall Chromium
+ *   stitched images can repeat compositor tiles and cannot prove viewport pixels.
  *   Add --receipt --receipt-all to hash-bind every requested route/theme/viewport
  *   into docs/visual-qa/LATEST.json for a focused changed-surface review. Pass
  *   --reviewed-files <comma-separated filenames> only after directly inspecting
@@ -65,6 +68,18 @@ const FOCUS_SELECTOR = arg('--focus-selector', null);
 const FOCUS_FOOTER = argv.includes('--footer');
 const FOCUS_DISPATCH = argv.includes('--dispatch');
 const FOCUS_CHANGELOG_REACTIONS = argv.includes('--changelog-reactions');
+const FULL_PAGE = argv.includes('--full-page');
+const SCROLL_TILES = argv.includes('--scroll-tiles');
+if (SCROLL_TILES && (FULL_PAGE || OPEN_NAV || FOCUS_CHANGED || FOCUS_SELECTOR || FOCUS_FOOTER || FOCUS_DISPATCH || FOCUS_CHANGELOG_REACTIONS)) {
+  throw new Error('--scroll-tiles cannot be combined with full-page, focused or open-navigation states');
+}
+if (FULL_PAGE && (OPEN_NAV || FOCUS_CHANGED || FOCUS_SELECTOR || FOCUS_FOOTER || FOCUS_DISPATCH || FOCUS_CHANGELOG_REACTIONS)) {
+  throw new Error('--full-page cannot be combined with a focused or open-navigation state');
+}
+// Explicit installed-browser selection avoids an implicit binary download. The
+// default remains the committed Playwright runtime used by screenshot oracles.
+const BROWSER_CHANNEL = arg('--browser-channel', null);
+if (BROWSER_CHANNEL && !['chrome', 'msedge'].includes(BROWSER_CHANNEL)) throw new Error('Unsupported installed browser channel');
 
 const MIME = new Map([
   ['.html', 'text/html; charset=utf-8'], ['.css', 'text/css; charset=utf-8'],
@@ -94,9 +109,84 @@ function serve() {
 
 const slug = (s) => s.replace(/\//g, '-').replace(/^-|-$/g, '') || 'home';
 
+/** Planned before screenshots; no count is inferred from successful captures. */
+export function planScrollTiles(documentHeight, viewportHeight, viewportWidth) {
+  if (![documentHeight, viewportHeight, viewportWidth].every(Number.isSafeInteger)
+    || documentHeight < 1 || documentHeight > 100000 || viewportHeight <= 200 || viewportHeight > 3000
+    || viewportWidth < 320 || viewportWidth > 3000) throw new Error('Invalid scroll-tile geometry');
+  const overlap = 200, last = Math.max(0, documentHeight - viewportHeight), offsets = [0];
+  while (offsets.at(-1) < last) {
+    if (offsets.length >= 250) throw new Error('Scroll-tile plan exceeds capture bound');
+    offsets.push(Math.min(last, offsets.at(-1) + viewportHeight - overlap));
+  }
+  return { documentHeight, viewportHeight, viewportWidth, overlap, offsets };
+}
+
+export function validateScrollTileMeasurement(plan, measurement, offset) {
+  if (!measurement || ![measurement.scrollY, measurement.documentHeight, measurement.viewportHeight, measurement.viewportWidth, measurement.scrollWidth].every(Number.isSafeInteger)
+    || Math.abs(measurement.documentHeight - plan.documentHeight) > 2
+    || measurement.viewportHeight !== plan.viewportHeight || measurement.viewportWidth !== plan.viewportWidth
+    || measurement.scrollWidth > plan.viewportWidth + 1 || measurement.scrollWidth < 1
+    || Math.abs(measurement.scrollY - offset) > 2) throw new Error('Scroll-tile drift: ' + JSON.stringify({h:[plan.documentHeight,measurement?.documentHeight],y:[offset,measurement?.scrollY],w:[plan.viewportWidth,measurement?.scrollWidth],v:[plan.viewportHeight,measurement?.viewportHeight]}));
+}
+
+/** Validates the sealed adaptive matrix and every case's actual coverage. */
+export function validateScrollTileCoverage(capturePlan, shots) {
+  if (!capturePlan || capturePlan.mode !== 'scroll-tiles-v1' || !Array.isArray(shots) || !shots.length) throw new Error('Missing scroll-tile plan');
+  const { routes, themes, viewports, cases } = capturePlan;
+  for (const dimension of [routes, themes, viewports]) if (!Array.isArray(dimension) || !dimension.length || new Set(dimension).size !== dimension.length) throw new Error('Invalid scroll-tile matrix');
+  if (!Array.isArray(cases) || cases.length !== routes.length * themes.length * viewports.length) throw new Error('Incomplete scroll-tile case plan');
+  const key = row => `${row.route ?? row.page}|${row.theme}|${typeof row.viewport === 'string' ? row.viewport : row.viewportName}`;
+  const expected = new Set(routes.flatMap(route => themes.flatMap(theme => viewports.map(viewport => `${route}|${theme}|${viewport}`))));
+  const seen = new Set(); let plannedCaptures = 0;
+  for (const row of cases) {
+    const id = key(row);
+    if (!expected.has(id) || seen.has(id)) throw new Error('Duplicate or foreign scroll-tile case');
+    seen.add(id);
+    const plan = planScrollTiles(row.plan?.documentHeight, row.plan?.viewportHeight, row.plan?.viewportWidth);
+    if (JSON.stringify(plan) !== JSON.stringify(row.plan)) throw new Error('Noncanonical scroll-tile plan');
+    const tiles = shots.filter(shot => key(shot) === id);
+    if (tiles.length !== plan.offsets.length) throw new Error('Missing or duplicate scroll tile');
+    let prior = null;
+    for (const [index, tile] of tiles.entries()) {
+      if (tile.state !== 'scroll-tile' || tile.tileIndex !== index || tile.plannedOffset !== plan.offsets[index]) throw new Error('Unplanned scroll-tile state/order');
+      validateScrollTileMeasurement(plan, tile.scroll, plan.offsets[index]);
+      if (index === 0 && tile.scroll.scrollY !== 0) throw new Error('First scroll tile must start at zero');
+      if (prior !== null && (tile.scroll.scrollY <= prior || prior + plan.viewportHeight - tile.scroll.scrollY < plan.overlap)) throw new Error('Scroll-tile gap or insufficient overlap');
+      prior = tile.scroll.scrollY;
+    }
+    const last = tiles.at(-1).scroll;
+    if (last.scrollY + last.viewportHeight < last.documentHeight) throw new Error('Final scroll tile does not reach bottom');
+    plannedCaptures += plan.offsets.length;
+  }
+  if (shots.some(shot => !expected.has(key(shot))) || shots.length !== plannedCaptures) throw new Error('Scroll-tile captures differ from planned matrix');
+  return { plannedCaptures, completedCaptures: shots.length, plannedCases: cases.length };
+}
+
+function homeIdleSources() {
+  const source = fs.readFileSync(path.join(ROOT, 'assets/home-idle-loader.js'), 'utf8');
+  const block = source.match(/const scripts\s*=\s*\[([\s\S]*?)\];/);
+  if (!block) throw new Error('Homepage idle-loader source contract unavailable');
+  const paths = [...block[1].matchAll(/['"](\/assets\/[^'"\s]+\.js)['"]/g)].map(match => match[1]);
+  if (!paths.length || paths.length > 32 || new Set(paths).size !== paths.length) throw new Error('Homepage idle-loader source list invalid');
+  return paths;
+}
+
 function captureSourceFiles(routes) {
   return [
     'assets/turnstile.js', 'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js', 'assets/vault-genome-strip.js',
+    'assets/studio-pages.css', 'assets/contact-page.js', 'assets/report-content.js', 'assets/vault-cta.js',
+    'assets/nav-sheet.js', 'assets/nav-toggle.js', 'assets/theme-toggle.js', 'vault-member/age-screen.js',
+    'assets/adaptive-cta.js', 'assets/membership-proof-loop.js',
+    'assets/telemetry-matrix.js', 'assets/membership-idle-loader.js',
+    'assets/membership-access.js', 'assets/live-proof.js', 'assets/vault-rank-bar.js',
+    'assets/rank-economy-simulator.js', 'data/rank-economy.json', 'assets/showcase-spine.js',
+    'assets/member-voices.js', 'data/member-voices.json', 'assets/supabase-public.js',
+    'assets/public-intelligence.js', 'api/public-intelligence.json', 'api/membership-tiers.json',
+    'assets/studio-pulse-live.js', 'assets/honest-traction-scoreboard.js', 'assets/sealed-vault-row.js',
+    'assets/notify-me.js', 'vault-member/account-data.js', 'vault-member/account-data.css', 'vault-member/portal-settings.js',
+    'assets/project-waitlist.css', 'assets/project-waitlist-confirm.js',
+    ...(routes.includes('/') && fs.existsSync(path.join(ROOT, 'assets/home-idle-loader.js')) ? ['assets/home-idle-loader.js', ...homeIdleSources().map(file => file.slice(1))] : []),
     'assets/news-desk.css', 'assets/desk-presence.js', 'scripts/generate-news-pages.mjs',
     ...fs.readdirSync(path.join(ROOT, 'assets', 'desk-personas'))
       .filter((file) => file.endsWith('.webp'))
@@ -130,8 +220,10 @@ async function main() {
   const provenance = beginVisualCapture(ROOT, files, 'scripts/capture-theme-matrix.mjs');
   const runDir = createVisualCaptureDirectory(ROOT, OUT_DIR, provenance);
   const server = await serve();
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(BROWSER_CHANNEL ? { channel: BROWSER_CHANNEL } : {});
+  const browserRuntime = { channel: BROWSER_CHANNEL || 'playwright-chromium', version: browser.version() };
   const manifest = [];
+  const capturePlan = SCROLL_TILES ? { mode: 'scroll-tiles-v1', routes: ROUTES, themes: THEMES, viewports: VIEWPORTS.map(viewport => viewport.name), cases: [] } : null;
   const failures = [];
   for (const viewport of VIEWPORTS) {
     for (const theme of THEMES) {
@@ -232,15 +324,124 @@ async function main() {
               });
             }
           }
-          const stateSuffix = OPEN_NAV ? '--nav-open' : FOCUS_FOOTER ? '--footer' : FOCUS_CHANGELOG_REACTIONS ? '--changelog-reactions' : focusSelector ? '--changed-surface' : '';
+          if (FULL_PAGE || SCROLL_TILES) {
+            // Visit every vertical region so lazy images and intersection-driven
+            // sections render before the full-page image is taken.
+            await page.evaluate(async () => {
+              const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
+              document.documentElement.style.setProperty('scroll-behavior', 'auto', 'important');
+              document.body.style.setProperty('scroll-behavior', 'auto', 'important');
+              let top = 0;
+              for (let step = 0; step < 250; step++) {
+                const height = document.documentElement.scrollHeight;
+                if (height > 100000) throw new Error('Full-page height exceeds reviewed capture bound');
+                window.scrollTo(0, top);
+                await pause(75);
+                if (top + innerHeight >= document.documentElement.scrollHeight) {
+                  window.scrollTo(0, 0);
+                  await pause(150);
+                  return;
+                }
+                top += Math.max(200, innerHeight - 100);
+              }
+              throw new Error('Full-page scrolling did not reach the final region');
+            });
+          }
+          if (SCROLL_TILES) {
+            // The signed-out membership bar appears on a delayed deadline and
+            // reserves its wrapped height. Plan only after that real state
+            // settles, so short pages cannot lose their footer mid-capture.
+            if (await page.locator('script[src*="/vault-cta"]').count()) {
+              await page.waitForFunction(() => {
+                const dismissed = Number(localStorage.getItem('vs_cta_dismissed'));
+                return !!document.getElementById('vs-cta-bar') ||
+                  (dismissed > 0 && Date.now() - dismissed < 86400000);
+              }, null, { timeout: 20000 });
+            }
+            if (route === '/membership/') {
+              await page.waitForFunction(() =>
+                !!document.querySelector('[data-telemetry-matrix] .telemetry-matrix-shell'),
+              null, { timeout: 20000 });
+              await page.waitForFunction(() =>
+                ['[data-member-voices]','[data-member-outcomes]','[data-rank-distribution]'].every(selector =>
+                  ['ready','empty','unavailable'].includes(document.querySelector(selector)?.dataset.state)),
+              null, { timeout: 20000 });
+            }
+            if (route === '/') {
+              // The real homepage starts its idle queue 1.2s after the first
+              // scroll. A short geometry plateau can precede those modules.
+              // Observe completion of their actual source-declared resources;
+              // do not hide their content or accept a changing height.
+              await page.waitForFunction(expected => {
+                const canonical = value => new URL(value, location.href).pathname.replace(/\.shell-[a-f0-9]+\.js$/, '.js');
+                const scripts = new Set([...document.scripts].filter(script => script.src).map(script => canonical(script.src)));
+                const completed = new Set(performance.getEntriesByType('resource').map(entry => canonical(entry.name)));
+                return expected.every(file => scripts.has(file) && completed.has(file));
+              }, homeIdleSources(), { timeout: 20000 });
+            }
+            await page.evaluate(() => document.fonts.ready);
+            if (route === '/') {
+              // Source-declared idle modules can mount scroll-observed panels
+              // only after the initial activation walk has already finished.
+              // Require two complete subsequent walks with stable total height.
+              await page.evaluate(async () => {
+                const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
+                let stable = 0;
+                for (let pass = 0; pass < 4 && stable < 2; pass++) {
+                  const before = document.documentElement.scrollHeight;
+                  if (before > 100000) throw new Error('Homepage activation exceeds height bound');
+                  let reached = false;
+                  for (let top = 0, step = 0; step < 250; step++, top += Math.max(200, innerHeight - 100)) {
+                    scrollTo(0, top);
+                    await pause(150);
+                    if (top + innerHeight >= document.documentElement.scrollHeight) { reached = true; break; }
+                  }
+                  if (!reached) throw new Error('Homepage activation walk incomplete');
+                  scrollTo(0, 0);
+                  await pause(400);
+                  stable = Math.abs(document.documentElement.scrollHeight - before) <= 2 ? stable + 1 : 0;
+                }
+                if (stable < 2) throw new Error('Homepage idle panels did not settle across activation walks');
+              });
+            }
+            const measure = () => page.evaluate(() => ({ scrollY: window.scrollY, documentHeight: document.documentElement.scrollHeight,
+              viewportHeight: innerHeight, viewportWidth: innerWidth, scrollWidth: document.documentElement.scrollWidth }));
+            // Require a settled height before fixing the adaptive plan.
+            let previous = null, stable = 0, geometry;
+            for (let attempt = 0; attempt < 30 && stable < 3; attempt++) {
+              await page.waitForTimeout(100); geometry = await measure();
+              const value = JSON.stringify(geometry); stable = value === previous ? stable + 1 : 0; previous = value;
+            }
+            if (stable < 3) throw new Error('Scroll-tile layout did not settle before planning');
+            const plan = planScrollTiles(geometry.documentHeight, geometry.viewportHeight, geometry.viewportWidth);
+            validateScrollTileMeasurement(plan, geometry, 0);
+            capturePlan.cases.push({ route, theme, viewport: viewport.name, plan });
+            for (const [tileIndex, offset] of plan.offsets.entries()) {
+              const target = tileIndex === plan.offsets.length - 1 ? Math.max(0, (await measure()).documentHeight - plan.viewportHeight) : offset;
+              await page.evaluate(y => window.scrollTo({ top: y, left: 0, behavior: 'instant' }), target);
+              await page.waitForTimeout(150);
+              const scroll = await measure(); validateScrollTileMeasurement(plan, scroll, offset);
+              const pixels = await page.screenshot({ animations: 'disabled', fullPage: false });
+              const after = await measure(); validateScrollTileMeasurement(plan, after, offset);
+              if (after.scrollY !== scroll.scrollY) throw new Error('Scroll position changed during tile capture');
+              if (tileIndex === plan.offsets.length - 1 && after.scrollY + after.viewportHeight < after.documentHeight) throw new Error('Final tile changed before reaching bottom');
+              const file = `${slug(route)}--${theme}--${viewport.name}--scroll-tile-y${scroll.scrollY}.png`;
+              const sha256 = writeVisualCapture(path.join(runDir, file), pixels);
+              manifest.push({ route, theme, observedTheme, capturedAt: new Date().toISOString(), viewport: viewport.name,
+                state: 'scroll-tile', tileIndex, plannedOffset: offset, scroll, file, sha256 });
+              console.log(`  ✓ ${file}`);
+            }
+            continue;
+          }
+          const stateSuffix = OPEN_NAV ? '--nav-open' : FOCUS_FOOTER ? '--footer' : FOCUS_CHANGELOG_REACTIONS ? '--changelog-reactions' : focusSelector ? '--changed-surface' : FULL_PAGE ? '--full-page' : '';
           const file = `${slug(route)}--${theme}--${viewport.name}${stateSuffix}.png`;
           let pixels;
           if (FOCUS_FOOTER) pixels = await page.locator('footer.site-footer').screenshot({ animations: 'disabled' });
           else if (FOCUS_CHANGELOG_REACTIONS) pixels = await page.locator('.cl-phase').nth(Math.max(0, Math.min(8, (await page.locator('.cl-phase').count()) - 1))).screenshot({ animations: 'disabled' });
           else if (focusSelector) pixels = await page.locator(focusSelector).screenshot({ animations: 'disabled' });
-          else pixels = await page.screenshot({ animations: 'disabled' });
+          else pixels = await page.screenshot({ animations: 'disabled', fullPage: FULL_PAGE });
           const sha256 = writeVisualCapture(path.join(runDir, file), pixels);
-          manifest.push({ route, theme, observedTheme, capturedAt: new Date().toISOString(), viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : FOCUS_FOOTER ? 'footer' : FOCUS_CHANGELOG_REACTIONS ? 'changelog-reactions' : focusSelector ? 'changed-surface' : 'page', file, sha256 });
+          manifest.push({ route, theme, observedTheme, capturedAt: new Date().toISOString(), viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : FOCUS_FOOTER ? 'footer' : FOCUS_CHANGELOG_REACTIONS ? 'changelog-reactions' : focusSelector ? 'changed-surface' : FULL_PAGE ? 'full-page' : 'page', file, sha256 });
           console.log(`  ✓ ${file}`);
         } catch (error) {
           // S341: count it. A skipped capture used to shrink the receipt silently,
@@ -266,7 +467,9 @@ async function main() {
     process.exitCode = 1;
     return;
   }
-  const sealed = sealVisualCapture(ROOT, runDir, provenance, manifest, captureSourceFiles(ROUTES));
+  if (SCROLL_TILES) validateScrollTileCoverage(capturePlan, manifest);
+  const sealed = sealVisualCapture(ROOT, runDir, provenance, manifest, captureSourceFiles(ROUTES), capturePlan ? { capturePlan } : undefined);
+  fs.writeFileSync(path.join(runDir, 'browser-runtime.json'), JSON.stringify(browserRuntime, null, 2) + '\n', { flag: 'wx' });
   if (argv.includes('--receipt')) writeCanonReceipt(sealed, runDir);
 }
 
@@ -285,6 +488,8 @@ function writeCanonReceipt(manifest, captureDir = OUT_DIR) {
   // Partial receipts cannot prove route × theme × viewport completion.
   const wanted = manifest.shots;
   if (!Array.isArray(wanted) || !wanted.length) throw new Error('capture manifest has no shots');
+  const adaptive = manifest.capturePlan ? validateScrollTileCoverage(manifest.capturePlan, wanted) : null;
+  if (!adaptive && wanted.some(shot => shot.state === 'scroll-tile')) throw new Error('Scroll-tile receipt requires its original sealed plan');
   for (const shot of wanted) {
     if (!shot.observedTheme) throw new Error(`Theme evidence missing for ${shot.file}; recapture before writing a receipt`);
     if (['stored', 'root', 'body'].some(key => shot.observedTheme[key] !== shot.theme)) {
@@ -309,6 +514,7 @@ function writeCanonReceipt(manifest, captureDir = OUT_DIR) {
       sha256: shot.sha256,
       page: shot.route,
       state: shot.state,
+      ...(adaptive ? { tileIndex: shot.tileIndex, plannedOffset: shot.plannedOffset, scroll: shot.scroll } : {}),
       inspection: reviewedFiles.has(shot.file)
         ? { mode: 'manual', reviewer }
         : { mode: 'automated-only' },
@@ -330,7 +536,8 @@ function writeCanonReceipt(manifest, captureDir = OUT_DIR) {
     themes: THEMES,
     source: manifest.captureProvenance.source,
     candidate: manifest.captureProvenance.candidate,
-    matrix: { routes, themes, viewports, states, expectedCaptures: routes.length * themes.length * viewports.length * states.length, completedCaptures: captures.length },
+    matrix: { routes, themes, viewports, states, expectedCaptures: adaptive ? adaptive.plannedCaptures : routes.length * themes.length * viewports.length * states.length, completedCaptures: captures.length,
+      ...(adaptive ? { coverageMode: 'scroll-tiles-v1', capturePlan: manifest.capturePlan, plannedCases: adaptive.plannedCases } : {}) },
     inspection: {
       renderedPixelsReviewed: completeManualReview,
       coverage: {
@@ -353,7 +560,8 @@ function writeCanonReceipt(manifest, captureDir = OUT_DIR) {
   console.log(`capture-theme-matrix: CANON-053 receipt → docs/visual-qa/${receiptName} (${captures.length} hash-bound capture(s))`);
 }
 
-if (argv.includes('--receipt-only')) {
+const IS_DIRECT = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(url.fileURLToPath(import.meta.url));
+if (IS_DIRECT && argv.includes('--receipt-only')) {
   try {
     const prior = JSON.parse(fs.readFileSync(path.join(OUT_DIR, 'manifest.json'), 'utf8'));
     if (!Array.isArray(prior.shots) || !prior.shots.length) throw new Error('capture manifest has no shots');
@@ -362,6 +570,6 @@ if (argv.includes('--receipt-only')) {
     console.error(error);
     process.exit(1);
   }
-} else {
+} else if (IS_DIRECT) {
   main().catch((error) => { console.error(error); process.exit(1); });
 }

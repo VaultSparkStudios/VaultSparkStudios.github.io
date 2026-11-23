@@ -27,7 +27,7 @@
  *   ANTHROPIC_API_KEY           — sk-ant-…
  *   ANTHROPIC_MODEL             — default: claude-sonnet-5-5
  *   PUBLIC_INTEL_URL            — default: https://vaultsparkstudios.com/api/public-intelligence.json
- *   ASK_IGNIS_RATE_LIMIT_RPM    — default: 12 (per IP per minute)
+ *   Request bounds live in claim_website_ai_request (shared durable website AI limiter).
  *   ASK_IGNIS_ALLOWED_ORIGIN    — default: https://vaultsparkstudios.com
  *
  * Deploy:
@@ -40,7 +40,8 @@
  * ──────────────────────────────────────────────────────────────────────────────
  */
 
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.119.2';
+import { enforceAiRequestLimit, nonAnonymousAiRateUserId } from '../_shared/aiRequestLimit.ts';
 import {
   getActivePlanKey,
   isVaultSparkedPlan,
@@ -214,24 +215,6 @@ function deriveSuggestions(reply: string): Array<{ label: string; href: string }
   return matched;
 }
 
-// ── Rate limiter ──────────────────────────────────────────────────────────────
-// Per-isolate only (best effort). The Cloudflare Worker does not front the
-// Supabase function routes, so there is no edge RPM layer; the durable bounds
-// are the per-function daily USD caps (fail-closed for anonymous callers) and
-// the member monthly quota.
-const ipBuckets = new Map<string, { count: number; resetAt: number }>();
-function checkRateLimit(ip: string, rpm: number): boolean {
-  const now = Date.now();
-  const bucket = ipBuckets.get(ip);
-  if (!bucket || now > bucket.resetAt) {
-    ipBuckets.set(ip, { count: 1, resetAt: now + 60_000 });
-    return true;
-  }
-  if (bucket.count >= rpm) return false;
-  bucket.count += 1;
-  return true;
-}
-
 // ── Semantic response cache helpers (key + eligibility in ../_shared/ignisCache.ts) ──
 async function getCachedReply(supabase: ReturnType<typeof createClient>, hash: string) {
   try {
@@ -270,6 +253,7 @@ async function setCachedReply(
 type MembershipAccess = {
   authenticated: boolean;
   userId: string | null;
+  rateUserId: string | null;
   planKey: string;
   isSparked: boolean;
   isPro: boolean;
@@ -304,6 +288,7 @@ async function resolveMembershipAccess(
     return {
       authenticated: false,
       userId: null,
+      rateUserId: null,
       planKey: 'free',
       isSparked: false,
       isPro: false,
@@ -316,6 +301,7 @@ async function resolveMembershipAccess(
     return {
       authenticated: false,
       userId: null,
+      rateUserId: null,
       planKey: 'free',
       isSparked: false,
       isPro: false,
@@ -329,6 +315,7 @@ async function resolveMembershipAccess(
     return {
       authenticated: false,
       userId: null,
+      rateUserId: null,
       planKey: 'free',
       isSparked: false,
       isPro: false,
@@ -358,6 +345,7 @@ async function resolveMembershipAccess(
   return {
     authenticated: true,
     userId: user.id,
+    rateUserId: nonAnonymousAiRateUserId(user),
     planKey: isSparked ? planKey : 'free',
     isSparked,
     isPro,
@@ -440,17 +428,16 @@ Deno.serve(async (req) => {
   const supabase     = createClient(supabaseUrl, supabaseKey);
   const authClient   = createClient(supabaseUrl, supabaseAnon);
   const membership = await resolveMembershipAccess(supabase, authClient, req.headers.get('Authorization'));
+  const rateRefusal = await enforceAiRequestLimit({
+    req, endpoint: 'ask-ignis', supabase,
+    verifiedUserId: membership.rateUserId, serverKey: supabaseKey,
+  }, cors);
+  if (rateRefusal) return rateRefusal;
   const monthBucket = currentMonthBucket();
   const usageBefore = membership.userId
     ? await getMonthlyUsage(supabase, membership.userId, monthBucket)
     : 0;
   const access = buildAccessPayload(membership, usageBefore);
-
-  const ip = req.headers.get('CF-Connecting-IP') || req.headers.get('X-Forwarded-For')?.split(',')[0]?.trim() || 'unknown';
-  const rpm = Number(Deno.env.get('ASK_IGNIS_RATE_LIMIT_RPM') || '12');
-  if (!checkRateLimit(ip, rpm)) {
-    return new Response(JSON.stringify({ error: 'IGNIS is overloaded — wait a minute and try again.' }), { status: 429, headers: { ...cors, 'Content-Type': 'application/json' } });
-  }
 
   // Body parse must precede mode-aware gates (interview bypasses Sparked check).
   let body: {

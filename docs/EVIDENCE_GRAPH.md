@@ -43,6 +43,7 @@ flowchart LR
     n_config_["config/"]
     n_context_["context/"]
     n_data_["data/"]
+    n_devlog_["devlog/"]
     n_docs_["docs/"]
     n_external_build_vantage_worker_routes["external:build-vantage-worker-routes"]
     n_external_founder_brand_masters["external:founder-brand-masters"]
@@ -67,7 +68,7 @@ flowchart LR
     n_scripts_["scripts/"]
     n_status_["status/"]
     n_studio_hub_["studio-hub/"]
-    n_studio_pulse_["studio-pulse/"]
+    n_studio_["studio/"]
     n_supabase_["supabase/"]
     n_terms_["terms/"]
     n_universe_["universe/"]
@@ -360,6 +361,8 @@ flowchart LR
   n_data_ --> n_pathways_builders_index_html
   n_data_ignis_search_index_json --> n_api_intelligence_budget_json
   n_data_ignis_search_index_json --> n_api_oracle_insights_json
+  n_devlog_ --> n_evidence_index_html
+  n_devlog_ --> n_pathways_builders_index_html
   n_docs_ --> n_api_ignis_roi_json
   n_docs_ --> n_api_ship_receipts_json
   n_docs_ --> n_docs_performance_visual_qa_retention_json
@@ -381,8 +384,6 @@ flowchart LR
   n_index_html --> n_api_candidate_artifact_manifest_json
   n_index_html --> n_api_deploy_currency_json
   n_journal_ --> n_api_index_html
-  n_journal_ --> n_evidence_index_html
-  n_journal_ --> n_pathways_builders_index_html
   n_llms_full_txt --> n_data_ignis_search_index_json
   n_membership_index_html --> n_api_candidate_artifact_manifest_json
   n_membership_index_html --> n_data_ignis_search_index_json
@@ -417,8 +418,8 @@ flowchart LR
   n_scripts_ --> n_oracle_answers_index_json
   n_sitemap_xml --> n_sitemap_page_index_html
   n_status_ --> n_api_candidate_artifact_manifest_json
+  n_studio_ --> n_api_candidate_artifact_manifest_json
   n_studio_hub_ --> n_api_studio_timeline_json
-  n_studio_pulse_ --> n_api_candidate_artifact_manifest_json
   n_supabase_ --> n_api_identity_migration_receipt_json
   n_terms_ --> n_data_ignis_search_index_json
   n_universe_ --> n_api_ai_discovery_health_json
@@ -631,6 +632,7 @@ flowchart LR
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `membership-access`, `release-dependencies`, `release-proof`, `security-posture`, `shell-assets`, `staging-deploy-continuity`, `staging-deploy-receipt`
 - `context/` → `heartbeat`, `identity-migration-receipt`, `ignis-conduit`, `intelligence-budget`, `nervous-system`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
 - `data/` → `analytics-summary`, `changelog-narrative`, `evidence-hub`, `feedback-provenance`, `field-win-proof`, `flight-director`, `home-desk-module`, `ignis-search-index`, `inp-soak-verdicts`, `lqip-map`, `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-search`, `news-desk-stats`, `news-pages`, `news-visual-receipts`, `oracle-query-clusters`, `pathways-pages`, `promotion-receipt`, `proof-aware-projects`, `release-proof`, `ship-receipts`, `site-health`, `spark-manifest`, `staging-deploy-continuity`, `staging-deploy-receipt`, `stats-surface`, `surface-spine`, `tt-summary`, `ux-decision-ledger`, `worker-route-history`
+- `devlog/` → `evidence-hub`, `pathways-pages`
 - `docs/` → `ignis-roi`, `ship-receipts`, `visual-qa-retention`
 - `external:build-vantage-worker-routes` → `worker-route-provenance`
 - `external:founder-brand-masters` → `brand-assets`
@@ -642,7 +644,7 @@ flowchart LR
 - `feed.xml` → `api-index`
 - `games/` → `ai-canonical-pages`, `ai-discovery-health`, `candidate-artifact-manifest`, `ignis-search-index`, `spark-manifest`
 - `ignis/` → `public-ecosystem`
-- `journal/` → `api-index`, `evidence-hub`, `pathways-pages`
+- `journal/` → `api-index`
 - `llms-full.txt` → `ignis-search-index`
 - `news/` → `early-hints-headers`, `news-visual-receipts`, `sitemap`
 - `oracle/` → `ignis-search-index`
@@ -655,7 +657,7 @@ flowchart LR
 - `scripts/` → `ambient-bundles`, `ambient-ledger`, `cache-evidence-classification`, `dispatch-desk-panel`, `field-win-proof`, `identity-migration-receipt`, `membership-access`, `oracle-answers`, `rank-climbers`, `release-proof`, `shell-assets`, `spark-manifest`, `staging-deploy-continuity`, `staging-deploy-receipt`, `visual-qa-retention`
 - `status/` → `candidate-artifact-manifest`
 - `studio-hub/` → `studio-timeline`
-- `studio-pulse/` → `candidate-artifact-manifest`
+- `studio/` → `candidate-artifact-manifest`
 - `supabase/` → `identity-migration-receipt`
 - `terms/` → `ignis-search-index`
 - `universe/` → `ai-canonical-pages`, `ai-discovery-health`, `ignis-search-index`

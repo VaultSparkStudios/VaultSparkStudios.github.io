@@ -51,6 +51,8 @@ function harness(opts: {
   prefs?: Record<string, { opted_out: boolean; unsubscribe_token: string }>;
   ensureFails?: boolean;
   listTruncated?: boolean;
+  deleted?: string[];
+  deletionReadFails?: boolean;
 } = {}): Harness {
   const members = opts.members ?? [member('a'), member('b', { opted_out: true }), member('c'), member('d')];
   const emails = new Map(Object.entries(opts.emails ?? { a: 'a@example.com', b: 'b@example.com', c: 'c@example.com' }));
@@ -66,6 +68,7 @@ function harness(opts: {
   };
   const data: NewsletterData = {
     listMembers: () => Promise.resolve({ rows: members, truncated: Boolean(opts.listTruncated) }),
+    deletionRequested: (id) => opts.deletionReadFails ? Promise.reject(new Error('deletion status unavailable')) : Promise.resolve(Boolean(opts.deleted?.includes(id))),
     loadAuthEmails: () => Promise.resolve({ emails, truncated: false }),
     loadLoggedUserIds: () => Promise.resolve(new Set(log.keys())),
     loadStudioStats: () => Promise.resolve({ totalMembers: 4, activeMembers: 2, activeMembersAtLeast: false, topMembers: [{ username: '<b>top</b>', points: 9000 }] }),
@@ -477,7 +480,7 @@ Deno.test('preview works with no eligible members at all', async () => {
 // ── supabaseData query shape (fake client — no network, no Supabase) ────────
 
 // deno-lint-ignore-file no-explicit-any
-function fakeClient(rows: Record<string, unknown[]>) {
+function fakeClient(rows: Record<string, unknown[]>, failingTables: string[] = []) {
   const queries: { table: string; op: string; ops: string[] }[] = [];
   const from = (table: string) => {
     const state = { table, op: 'select', ops: [] as string[] };
@@ -495,7 +498,7 @@ function fakeClient(rows: Record<string, unknown[]>) {
       then: (resolve: any, reject: any) => {
         queries.push(state);
         const data = rows[table] ?? [];
-        return Promise.resolve({ data, error: null, count: data.length }).then(resolve, reject);
+        return Promise.resolve({ data: failingTables.includes(table) ? null : data, error: failingTables.includes(table) ? { message: 'fixture query unavailable' } : null, count: data.length }).then(resolve, reject);
       },
     };
     return self;
@@ -509,9 +512,21 @@ Deno.test('supabaseData pages vault_members by id only, never by mutable points'
   const page = await mod.supabaseData(client).listMembers();
   eq(page.rows.length, 0, 'rows');
   eq(page.truncated, false, 'short page is not truncated');
-  const q = queries[0];
+  const q = queries.find(q => q.table === 'vault_members')!;
   assert(q.ops.includes('order:id:true'), 'ordered by the immutable id');
   assert(!q.ops.some((o) => o.startsWith('order:points')), 'points is never a pagination key — it can change mid-run and skip a member');
+});
+
+Deno.test('supabaseData excludes accepted deletion jobs from the paged audience and fails closed when that read fails', async () => {
+  const rows = { vault_members: [member('a'), member('b')], website_account_deletions: [{ user_id: 'a' }] };
+  const good = fakeClient(rows);
+  const result = await mod.supabaseData(good.client).listMembers();
+  eq(result.rows.length, 1, 'deleted member excluded');
+  eq(result.rows[0].id, 'b', 'other member preserved');
+  const failed = fakeClient(rows, ['website_account_deletions']);
+  let rejected = false;
+  try { await mod.supabaseData(failed.client).listMembers(); } catch { rejected = true; }
+  assert(rejected, 'unknown deletion audience never becomes an empty exclusion set');
 });
 
 Deno.test('supabaseData sweep is scoped to this period, sending status, and the age cutoff', async () => {
@@ -623,4 +638,21 @@ Deno.test('preview uses a placeholder token, creates no preference row, and note
   eq(b.headers['List-Unsubscribe'], `<${url}>`, 'placeholder URL');
   eq(b.headers['List-Unsubscribe-Post'], 'List-Unsubscribe=One-Click', 'one-click header');
   assert(b.htmlContent.includes('placeholder token and changes no subscription'), 'preview note');
+});
+
+Deno.test('accepted deletion excludes a member immediately before sending even with a valid existing unsubscribe token', async () => {
+  const h = harness({ members: [member('a', { unsubscribe_token: 'a'.repeat(32) })], deleted: ['a'] });
+  const body = await (await h.handler(post({ send: true }))).json();
+  eq(h.calls.length, 0, 'no provider send for accepted deletion');
+  eq(body.skipped, 1, 'deletion skip counted');
+  eq(h.log.has('a'), false, 'unsent claim released');
+});
+
+Deno.test('unknown deletion status fails closed before provider send', async () => {
+  const h = harness({ members: [member('a', { unsubscribe_token: 'a'.repeat(32) })], deletionReadFails: true });
+  const body = await (await h.handler(post({ send: true }))).json();
+  eq(h.calls.length, 0, 'unknown deletion state never becomes permission to mail');
+  eq(body.ok, false, 'failure is visible');
+  eq(body.failed, 1, 'failed eligibility proof counted');
+  eq(h.log.has('a'), false, 'unsent claim released');
 });

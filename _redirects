@@ -1,8 +1,8 @@
 # Cloudflare Pages native 301 redirects (deploy with every Pages push — no Worker needed).
 # S284 Franchise Architect rebrand: the VaultSpark Football GM slug is retired.
 # S330 Studio Nervous System is now the signal-digest section of Studio Pulse.
-/nervous-system/*                              /studio-pulse/#signal-digest                       301
-/nervous-system                                /studio-pulse/#signal-digest                       301
+/nervous-system/*                              /studio/#signal-digest                       301
+/nervous-system                                /studio/#signal-digest                       301
 /membership-value/*                            /membership/#benefits                              301
 /membership-value                              /membership/#benefits                              301
 /vaultsparked/*                                 /membership/#tiers                                 301
@@ -31,8 +31,8 @@
 /brand/system                                   /press/#brand                                      301
 /ignis/roi/*                                    /ignis/#roi                                        301
 /ignis/roi                                      /ignis/#roi                                        301
-/security/trusted-types/*                       /security/#trusted-types                           301
-/security/trusted-types                         /security/#trusted-types                           301
+/security/trusted-types/*                       /trust/#trusted-types                           301
+/security/trusted-types                         /trust/#trusted-types                           301
 # S334: the * splat here 301'd every sub-path of the two legacy app trees into a
 # 404 — /solara/assets/*.js (the Solara SPA bundle, still loaded by
 # /solara/404.html) and the whole 30-file /franchise-architect/ build. A splat
@@ -90,25 +90,41 @@
 # /ask-founders/submit, which a Pages splat must never shadow.
 /stats/                                         /evidence/#numbers                                 301
 /stats                                          /evidence/#numbers                                 301
-/notebook/*                                     /studio-pulse/#forge-ledger                        301
-/notebook                                       /studio-pulse/#forge-ledger                        301
+/notebook/*                                     /studio/#forge-ledger                        301
+/notebook                                       /studio/#forge-ledger                        301
 /oracle/                                        /ignis/#oracle                                     301
 /oracle                                         /ignis/#oracle                                     301
 /atlas/*                                        /projects/                                         301
 /atlas                                          /projects/                                         301
 /ask-founders/                                  /faq/#ask                                          301
 /ask-founders                                   /faq/#ask                                          301
-/brand/                                         /press/#brand                                      301
-/brand                                          /press/#brand                                      301
 /careers/*                                      /collaborate/                                      301
 /careers                                        /collaborate/                                      301
 /members/*                                      /community/#members                                301
 /members                                        /community/#members                                301
 /journal/archive/*                              /changelog/#stories                                301
 /journal/archive                                /changelog/#stories                                301
-/journal/                                       /changelog/#stories                                301
-/journal                                        /changelog/#stories                                301
 /games/voidfall/*                               /universe/voidfall/                                301
 /games/voidfall                                 /universe/voidfall/                                301
 /games/gridiron-gm-play/*                       /games/gridiron-gm/                                301
 /games/gridiron-gm-play                         /games/gridiron-gm/                                301
+
+# S418 canonical indices only; keep Journal articles and Brand JSON resources.
+/studio-pulse                                  /studio/                                         301
+/studio-pulse/                                 /studio/                                         301
+/studio-pulse/index.html                       /studio/                                         301
+/how-we-build                                  /studio/                                         301
+/how-we-build/                                 /studio/                                         301
+/how-we-build/index.html                       /studio/                                         301
+/brand                                         /press/                                          301
+/brand/                                        /press/                                          301
+/brand/index.html                              /press/                                          301
+/security                                      /trust/                                          301
+/security/                                     /trust/                                          301
+/security/index.html                           /trust/                                          301
+/journal                                       /devlog/                                         301
+/journal/                                      /devlog/                                         301
+/journal/index.html                            /devlog/                                         301
+/ignis-health                                  /status/                                         301
+/ignis-health/                                 /status/                                         301
+/ignis-health/index.html                       /status/                                         301

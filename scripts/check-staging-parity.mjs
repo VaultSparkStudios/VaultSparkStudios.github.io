@@ -25,7 +25,11 @@ const SELF_TEST = args.includes('--self-test');
 const REFRESH = args.includes('--refresh');
 const PROD = 'https://vaultsparkstudios.com';
 const STAGING = 'https://website.staging.vaultsparkstudios.com';
-const ROUTES = ['/', '/studio-pulse/', '/membership/'];
+// Current ordinary parity follows the canonical source. An admitted isolated
+// installation retains its exact sealed route tuple, including historical Pulse.
+const ROUTES = isolatedContext
+  ? isolatedContext.receipt.stageVariant.routeContracts.map(({route}) => route)
+  : ['/', '/studio/', '/membership/'];
 
 export function normalizeCsp(csp) {
   // S174: production injects a per-request CSP nonce; staging is a static
@@ -413,7 +417,8 @@ if (CHECK || (REQUIRE_GREEN && !isolatedContext)) {
   if (REQUIRE_GREEN) {
     const maxAgeArg = args.find((arg) => arg.startsWith('--max-age-hours='));
     const maxAgeHours = maxAgeArg ? Number(maxAgeArg.split('=')[1]) : 12;
-    const expectedShellByRoute = Object.fromEntries(ROUTES.map((route) => {
+    // Isolated shells are checked against admitted sealed route contracts.
+    const expectedShellByRoute = isolatedContext ? {} : Object.fromEntries(ROUTES.map((route) => {
       const local = route === '/' ? path.join(ROOT, 'index.html') : path.join(ROOT, route.slice(1), 'index.html');
       return [route, shellPaths(fs.readFileSync(local, 'utf8'))];
     }));
@@ -444,7 +449,8 @@ const candidateBuildSha = isolatedContext?.receipt.productionSource.commitSha ||
 const stagingBuildSha = await stagingBuildPromise;
 const stagingArtifactManifest = await stagingManifestPromise;
 const candidateArtifactManifest = localArtifactManifest();
-const expectedShellByRoute = Object.fromEntries(ROUTES.map((route) => {
+// Isolated shells are checked against admitted sealed route contracts.
+const expectedShellByRoute = isolatedContext ? {} : Object.fromEntries(ROUTES.map((route) => {
   const local = route === '/' ? path.join(ROOT, 'index.html') : path.join(ROOT, route.slice(1), 'index.html');
   return [route, shellPaths(fs.readFileSync(local, 'utf8'))];
 }));

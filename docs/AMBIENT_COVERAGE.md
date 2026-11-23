@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/report-ambient-coverage.mjs -->
-<!-- generated-at: 2026-11-20 -->
+<!-- generated-at: 2026-11-23 -->
 
 # Ambient Bundle — Activation Shape Report
 
@@ -9,14 +9,14 @@
 > confirmation via the Playwright harness is the follow-up step.
 
 - Sources: **16**  ·  Total: **98.0 KB** (raw)
-- Guarded (conditional): **13** modules · **74.1 KB** — split candidates
+- Guarded (conditional): **13** modules · **74.2 KB** — split candidates
 - Always-on: **3** modules · **23.9 KB**
 
 ## By size (split candidates flagged)
 
 | Source | Size | Shape | Why conditional |
 |---|--:|:-:|---|
-| `ambient-loader.js` | 26.9 KB | 🔶 guarded | session gated |
+| `ambient-loader.js` | 27.0 KB | 🔶 guarded | session gated |
 | `command-palette-loader.js` | 16.4 KB | always | — |
 | `page-sigil.js` | 8.7 KB | 🔶 guarded | — |
 | `signed-in-state.js` | 6.6 KB | 🔶 guarded | session gated |

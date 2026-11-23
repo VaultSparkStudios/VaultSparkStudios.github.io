@@ -136,7 +136,7 @@ function indexFor(projects) {
   lines.push('- IGNIS + the Oracle (live cross-project intelligence): https://vaultsparkstudios.com/ignis/#oracle');
   lines.push('- Where to play (every title you can open today): https://vaultsparkstudios.com/play/');
   lines.push('- Roadmap (Now / Next / Later, from the registry): https://vaultsparkstudios.com/roadmap/');
-  lines.push('- Studio Pulse (live heartbeat): https://vaultsparkstudios.com/studio-pulse/');
+  lines.push('- Studio Pulse (live heartbeat): https://vaultsparkstudios.com/studio/#pulse');
   lines.push('- Membership: https://vaultsparkstudios.com/membership/');
   lines.push('- Insider Dispatches (lore transmissions): https://vaultsparkstudios.com/journal/dispatches/');
   lines.push('- Changelog and studio stories: https://vaultsparkstudios.com/changelog/');

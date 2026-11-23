@@ -326,7 +326,7 @@ export function validateChrome(chrome) {
 
 /** Harvest shared chrome from a page this generator does not write (S305). */
 function readChrome() {
-  const sample = readFileSync(join(ROOT, 'how-we-build/index.html'), 'utf8');
+  const sample = readFileSync(join(ROOT, 'studio/index.html'), 'utf8');
   const between = (start, end) => {
     const a = sample.indexOf(start);
     if (a < 0) return '';

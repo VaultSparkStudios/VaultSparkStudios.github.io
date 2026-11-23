@@ -1,0 +1,757 @@
+{
+  "schemaVersion": "2.1",
+  "date": "2026-11-22",
+  "generatedAt": "2026-11-23T03:58:07.433Z",
+  "session": 418,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Public technical projection of the twelve S418 outcomes and acceptance contracts; current source/local evidence does not establish final hosted release acceptance.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "features-depth": 1.5,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 2,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1.5,
+    "observability-honesty": 1.5,
+    "sil-debt": 1
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "content-baseline-preservation",
+      "axis": "security",
+      "title": "Preserve executable baselines across repeated content releases",
+      "tier": "🔥",
+      "effortHours": 3,
+      "impact": 10,
+      "innovation": 6,
+      "priority": 51.68,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "Preserve the served executable baseline when publishing content-only changes, including repeated releases and supported content lanes. Deployment-source attestations must remain distinct from the artifact actually served; stale or conflicting baseline inputs must fail.",
+      "recipe": "Preserve the served executable baseline when publishing content-only changes, including repeated releases and supported content lanes. Deployment-source attestations must remain distinct from the artifact actually served; stale or conflicting baseline inputs must fail.",
+      "conversionOutcome": "Preserve the served executable baseline when publishing content-only changes, including repeated releases and supported content lanes. Deployment-source attestations must remain distinct from the artifact actually served; stale or conflicting baseline inputs must fail.",
+      "acceptance": "Focused regressions cover independent serving and source-attestation evidence, conflicting overlays, stale overrides, hotfixes and successive content releases that retain withheld executable bytes. Existing release holds remain enforced.",
+      "stageRationale": "Supported-release quality; no lifecycle launch, pricing, rank or identity-authority expansion.",
+      "premises": [
+        {
+          "claim": "The inspected source retains the content-baseline-preservation trigger requiring current acceptance.",
+          "adapter": "file-content",
+          "target": "scripts/build-deploy-currency.mjs",
+          "pattern": "agreementCount >= 2",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1.5,
+          "recipe": "Diagnose the demonstrated issue and establish a focused regression."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Preserve the served executable baseline when publishing content-only changes, including repeated releases and supported content lanes. Deployment-source attestations must remain distinct from the artifact actually served; stale or conflicting baseline inputs must fail."
+        },
+        "L3": {
+          "effortHours": 4.5,
+          "recipe": "Extend focused boundary coverage only for a demonstrated acceptance gap."
+        }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 2,
+      "slug": "signup-and-account-acceptance",
+      "axis": "security",
+      "title": "Complete signup safeguards and affected account acceptance",
+      "tier": "🔥",
+      "effortHours": 5,
+      "impact": 10,
+      "innovation": 4,
+      "priority": 28.5,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "Preserve shared Obelisk identity ownership and website profile-completion safeguards. Verify the existing member and approved-investor journeys without broadening signup, account or access authority.",
+      "recipe": "Preserve shared Obelisk identity ownership and website profile-completion safeguards. Verify the existing member and approved-investor journeys without broadening signup, account or access authority.",
+      "conversionOutcome": "Preserve shared Obelisk identity ownership and website profile-completion safeguards. Verify the existing member and approved-investor journeys without broadening signup, account or access authority.",
+      "acceptance": "Missing and underage paths cannot create website profiles. Candidate-based tests must establish permitted profile completion, sign-in, own-member data, existing approved-investor access, refusal boundaries, recovery and logout/revocation. Source tests alone do not establish hosted account acceptance.",
+      "stageRationale": "Supported-release quality; no lifecycle launch, pricing, rank or identity-authority expansion.",
+      "premises": [
+        {
+          "claim": "The inspected source retains the signup-and-account-acceptance trigger requiring current acceptance.",
+          "adapter": "file-content",
+          "target": "vault-member/portal-auth.js",
+          "pattern": "age",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 2.5,
+          "recipe": "Diagnose the demonstrated issue and establish a focused regression."
+        },
+        "L2": {
+          "effortHours": 5,
+          "recipe": "Preserve shared Obelisk identity ownership and website profile-completion safeguards. Verify the existing member and approved-investor journeys without broadening signup, account or access authority."
+        },
+        "L3": {
+          "effortHours": 7.5,
+          "recipe": "Extend focused boundary coverage only for a demonstrated acceptance gap."
+        }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 3,
+      "slug": "account-export-deletion",
+      "axis": "features-depth",
+      "title": "Finish complete export and idempotent account deletion",
+      "tier": "🔥",
+      "effortHours": 7,
+      "impact": 10,
+      "innovation": 5,
+      "priority": 23.66,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "Export all website-owned personal data and support confirmed, idempotent deletion across owned database, subscription and email records. Preserve shared identity ownership and unrelated users/content.",
+      "recipe": "Export all website-owned personal data and support confirmed, idempotent deletion across owned database, subscription and email records. Preserve shared identity ownership and unrelated users/content.",
+      "conversionOutcome": "Export all website-owned personal data and support confirmed, idempotent deletion across owned database, subscription and email records. Preserve shared identity ownership and unrelated users/content.",
+      "acceptance": "A permitted disposable account can export its complete owned data and request deletion. Retries and partial database, subscription or email failures remain visible and cannot be reported as completed deletion. Shared data and other users remain preserved.",
+      "stageRationale": "Supported-release quality; no lifecycle launch, pricing, rank or identity-authority expansion.",
+      "premises": [
+        {
+          "claim": "The inspected source retains the account-export-deletion trigger requiring current acceptance.",
+          "adapter": "file-content",
+          "target": "vault-member/portal-settings.js",
+          "pattern": "delete_requested",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 3.5,
+          "recipe": "Diagnose the demonstrated issue and establish a focused regression."
+        },
+        "L2": {
+          "effortHours": 7,
+          "recipe": "Export all website-owned personal data and support confirmed, idempotent deletion across owned database, subscription and email records. Preserve shared identity ownership and unrelated users/content."
+        },
+        "L3": {
+          "effortHours": 10.5,
+          "recipe": "Extend focused boundary coverage only for a demonstrated acceptance gap."
+        }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 4,
+      "slug": "checkout-and-content-reporting",
+      "axis": "ui-ux-feedback",
+      "title": "Finish renewal disclosure and content reporting",
+      "tier": "⚡",
+      "effortHours": 4,
+      "impact": 8,
+      "innovation": 4,
+      "priority": 30.95,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "Show existing renewal terms clearly before checkout without changing prices or membership promises. Provide validated content reporting through existing contact infrastructure with honest delivery/error states.",
+      "recipe": "Show existing renewal terms clearly before checkout without changing prices or membership promises. Provide validated content reporting through existing contact infrastructure with honest delivery/error states.",
+      "conversionOutcome": "Show existing renewal terms clearly before checkout without changing prices or membership promises. Provide validated content reporting through existing contact infrastructure with honest delivery/error states.",
+      "acceptance": "Checkout displays current renewal disclosure. Reports validate input and provide useful acknowledgement or failure feedback; actual delivery and required external legal/registration acceptance remain separately evidenced.",
+      "stageRationale": "Supported-release quality; no lifecycle launch, pricing, rank or identity-authority expansion.",
+      "premises": [
+        {
+          "claim": "The inspected source retains the checkout-and-content-reporting trigger requiring current acceptance.",
+          "adapter": "file-content",
+          "target": "docs/S417_REMAINING_PLAN.md",
+          "pattern": "report-content",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Diagnose the demonstrated issue and establish a focused regression."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Show existing renewal terms clearly before checkout without changing prices or membership promises. Provide validated content reporting through existing contact infrastructure with honest delivery/error states."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Extend focused boundary coverage only for a demonstrated acceptance gap."
+        }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 5,
+      "slug": "agent-input-and-publish-boundaries",
+      "axis": "ai-intelligence",
+      "title": "Fence feed input and separate authoring from publishing",
+      "tier": "🔥",
+      "effortHours": 5,
+      "impact": 9,
+      "innovation": 5,
+      "priority": 16.03,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "Treat external feed facts as bounded untrusted data and separate read/author authority from publishing. Publish only the exact validated artifact through the existing constrained transfer boundary.",
+      "recipe": "Treat external feed facts as bounded untrusted data and separate read/author authority from publishing. Publish only the exact validated artifact through the existing constrained transfer boundary.",
+      "conversionOutcome": "Treat external feed facts as bounded untrusted data and separate read/author authority from publishing. Publish only the exact validated artifact through the existing constrained transfer boundary.",
+      "acceptance": "Hostile feed instructions cannot become publishing instructions; authoring authority cannot publish. Exact artifact path, base, hash and regular-file restrictions are enforced, and bounded stale-source retries rerun validation.",
+      "stageRationale": "Supported-release quality; no lifecycle launch, pricing, rank or identity-authority expansion.",
+      "premises": [
+        {
+          "claim": "The inspected source retains the agent-input-and-publish-boundaries trigger requiring current acceptance.",
+          "adapter": "file-content",
+          "target": "scripts/author-news-edition.mjs",
+          "pattern": "facts",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 2.5,
+          "recipe": "Diagnose the demonstrated issue and establish a focused regression."
+        },
+        "L2": {
+          "effortHours": 5,
+          "recipe": "Treat external feed facts as bounded untrusted data and separate read/author authority from publishing. Publish only the exact validated artifact through the existing constrained transfer boundary."
+        },
+        "L3": {
+          "effortHours": 7.5,
+          "recipe": "Extend focused boundary coverage only for a demonstrated acceptance gap."
+        }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 6,
+      "slug": "edge-rate-and-import-integrity",
+      "axis": "security",
+      "title": "Complete shared AI endpoint throttling and exact imports",
+      "tier": "🔥",
+      "effortHours": 5,
+      "impact": 9,
+      "innovation": 4,
+      "priority": 25.65,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "Apply shared concurrency-safe request limits to the relevant public AI endpoints while preserving verified-principal classification, privacy, cache behavior and existing cost caps. Pin actual remote imports to reviewed versions.",
+      "recipe": "Apply shared concurrency-safe request limits to the relevant public AI endpoints while preserving verified-principal classification, privacy, cache behavior and existing cost caps. Pin actual remote imports to reviewed versions.",
+      "conversionOutcome": "Apply shared concurrency-safe request limits to the relevant public AI endpoints while preserving verified-principal classification, privacy, cache behavior and existing cost caps. Pin actual remote imports to reviewed versions.",
+      "acceptance": "Concurrent requests and anonymous bypass attempts respect shared limits. Request admission fails closed when required state is unavailable, genuine cache hits preserve independent admission, and reviewed imports pass focused dependency/function checks.",
+      "stageRationale": "Supported-release quality; no lifecycle launch, pricing, rank or identity-authority expansion.",
+      "premises": [
+        {
+          "claim": "The inspected source retains the edge-rate-and-import-integrity trigger requiring current acceptance.",
+          "adapter": "file-content",
+          "target": "docs/S417_REMAINING_PLAN.md",
+          "pattern": "shared rate limiter",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 2.5,
+          "recipe": "Diagnose the demonstrated issue and establish a focused regression."
+        },
+        "L2": {
+          "effortHours": 5,
+          "recipe": "Apply shared concurrency-safe request limits to the relevant public AI endpoints while preserving verified-principal classification, privacy, cache behavior and existing cost caps. Pin actual remote imports to reviewed versions."
+        },
+        "L3": {
+          "effortHours": 7.5,
+          "recipe": "Extend focused boundary coverage only for a demonstrated acceptance gap."
+        }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 7,
+      "slug": "availability-and-project-waitlists",
+      "axis": "observability-honesty",
+      "title": "Unify public availability and real project waitlists",
+      "tier": "⚡",
+      "effortHours": 5,
+      "impact": 8,
+      "innovation": 4,
+      "priority": 17.1,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "Use the existing public availability authority consistently across current pages and generators. Persist project-specific waitlists with explicit confirmation, bounded abuse controls and truthful receipt states.",
+      "recipe": "Use the existing public availability authority consistently across current pages and generators. Persist project-specific waitlists with explicit confirmation, bounded abuse controls and truthful receipt states.",
+      "conversionOutcome": "Use the existing public availability authority consistently across current pages and generators. Persist project-specific waitlists with explicit confirmation, bounded abuse controls and truthful receipt states.",
+      "acceptance": "Public counts, lifecycle labels, enrollment posture and access descriptions agree with current authorities. Waitlists retain the selected project and confirmation semantics; duplicate, expired, provider-failed and removal cases remain honest.",
+      "stageRationale": "Supported-release quality; no lifecycle launch, pricing, rank or identity-authority expansion.",
+      "premises": [
+        {
+          "claim": "The inspected source retains the availability-and-project-waitlists trigger requiring current acceptance.",
+          "adapter": "file-content",
+          "target": "config/membership-entitlements.json",
+          "pattern": "waitlist",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 2.5,
+          "recipe": "Diagnose the demonstrated issue and establish a focused regression."
+        },
+        "L2": {
+          "effortHours": 5,
+          "recipe": "Use the existing public availability authority consistently across current pages and generators. Persist project-specific waitlists with explicit confirmation, bounded abuse controls and truthful receipt states."
+        },
+        "L3": {
+          "effortHours": 7.5,
+          "recipe": "Extend focused boundary coverage only for a demonstrated acceptance gap."
+        }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 8,
+      "slug": "canonical-site-information-architecture",
+      "axis": "speed-organization-efficiency",
+      "title": "Consolidate overlapping public and account routes",
+      "tier": "⚡",
+      "effortHours": 6,
+      "impact": 8,
+      "innovation": 4,
+      "priority": 21.33,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "Consolidate overlapping identity, evidence, newsletter and account entry surfaces through existing content, canonical routes, generators and redirects while preserving meaningful anchors and protected deep links.",
+      "recipe": "Consolidate overlapping identity, evidence, newsletter and account entry surfaces through existing content, canonical routes, generators and redirects while preserving meaningful anchors and protected deep links.",
+      "conversionOutcome": "Consolidate overlapping identity, evidence, newsletter and account entry surfaces through existing content, canonical routes, generators and redirects while preserving meaningful anchors and protected deep links.",
+      "acceptance": "Navigation, incoming links, query/fragment behavior, discovery, sitemap and crawl agree with the canonical route map. Published article/feed/Brand JSON resources remain available and retired index files do not return as redirect stubs.",
+      "stageRationale": "Supported-release quality; no lifecycle launch, pricing, rank or identity-authority expansion.",
+      "premises": [
+        {
+          "claim": "The inspected source retains the canonical-site-information-architecture trigger requiring current acceptance.",
+          "adapter": "file-content",
+          "target": "docs/S417_REMAINING_PLAN.md",
+          "pattern": "Information architecture",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 3,
+          "recipe": "Diagnose the demonstrated issue and establish a focused regression."
+        },
+        "L2": {
+          "effortHours": 6,
+          "recipe": "Consolidate overlapping identity, evidence, newsletter and account entry surfaces through existing content, canonical routes, generators and redirects while preserving meaningful anchors and protected deep links."
+        },
+        "L3": {
+          "effortHours": 9,
+          "recipe": "Extend focused boundary coverage only for a demonstrated acceptance gap."
+        }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 9,
+      "slug": "shared-visual-system",
+      "axis": "ui-ux-feedback",
+      "title": "Finish shared hero, card and action hierarchy",
+      "tier": "🔥",
+      "effortHours": 6,
+      "impact": 9,
+      "innovation": 4,
+      "priority": 30,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "Use the existing theme and shared shell system to provide clear hero, card and action hierarchy on affected pages, with readable desktop and mobile presentation in every supported theme.",
+      "recipe": "Use the existing theme and shared shell system to provide clear hero, card and action hierarchy on affected pages, with readable desktop and mobile presentation in every supported theme.",
+      "conversionOutcome": "Use the existing theme and shared shell system to provide clear hero, card and action hierarchy on affected pages, with readable desktop and mobile presentation in every supported theme.",
+      "acceptance": "Affected routes and states require actual before/after rendered inspection across the supported themes and widths, with source-matching evidence. Accessibility, mobile parity and geometry checks cannot be replaced by source-only assertions.",
+      "stageRationale": "Supported-release quality; no lifecycle launch, pricing, rank or identity-authority expansion.",
+      "premises": [
+        {
+          "claim": "The inspected source retains the shared-visual-system trigger requiring current acceptance.",
+          "adapter": "file-content",
+          "target": "docs/S417_REMAINING_PLAN.md",
+          "pattern": "Visual system",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 3,
+          "recipe": "Diagnose the demonstrated issue and establish a focused regression."
+        },
+        "L2": {
+          "effortHours": 6,
+          "recipe": "Use the existing theme and shared shell system to provide clear hero, card and action hierarchy on affected pages, with readable desktop and mobile presentation in every supported theme."
+        },
+        "L3": {
+          "effortHours": 9,
+          "recipe": "Extend focused boundary coverage only for a demonstrated acceptance gap."
+        }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 10,
+      "slug": "trust-beta-devlog-agent-surfaces",
+      "axis": "features-depth",
+      "title": "Finish Trust, Beta, Devlog and Agents surfaces",
+      "tier": "⚡",
+      "effortHours": 7,
+      "impact": 8,
+      "innovation": 5,
+      "priority": 18.93,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "Provide Trust, Beta, Devlog and Agents surfaces from current security, evidence, release, journal and discovery sources. Expose only declared public read operations through MCP and preserve factual beta/undated-roadmap posture.",
+      "recipe": "Provide Trust, Beta, Devlog and Agents surfaces from current security, evidence, release, journal and discovery sources. Expose only declared public read operations through MCP and preserve factual beta/undated-roadmap posture.",
+      "conversionOutcome": "Provide Trust, Beta, Devlog and Agents surfaces from current security, evidence, release, journal and discovery sources. Expose only declared public read operations through MCP and preserve factual beta/undated-roadmap posture.",
+      "acceptance": "Human and agent routes link and render correctly. MCP rejects mutations and undeclared operations; the public surfaces do not invent deployment, access, launch or readiness claims.",
+      "stageRationale": "Supported-release quality; no lifecycle launch, pricing, rank or identity-authority expansion.",
+      "premises": [
+        {
+          "claim": "The inspected source retains the trust-beta-devlog-agent-surfaces trigger requiring current acceptance.",
+          "adapter": "file-content",
+          "target": "docs/S417_REMAINING_PLAN.md",
+          "pattern": "Trust Center",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 3.5,
+          "recipe": "Diagnose the demonstrated issue and establish a focused regression."
+        },
+        "L2": {
+          "effortHours": 7,
+          "recipe": "Provide Trust, Beta, Devlog and Agents surfaces from current security, evidence, release, journal and discovery sources. Expose only declared public read operations through MCP and preserve factual beta/undated-roadmap posture."
+        },
+        "L3": {
+          "effortHours": 10.5,
+          "recipe": "Extend focused boundary coverage only for a demonstrated acceptance gap."
+        }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 11,
+      "slug": "ai-currency-cache-and-scoped-verification",
+      "axis": "token-cost",
+      "title": "Verify model currency and existing cost-saving paths",
+      "tier": "⚡",
+      "effortHours": 4,
+      "impact": 7,
+      "innovation": 4,
+      "priority": 16.25,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "Review actual provider defaults against current official evidence while preserving intentional pins and provider constraints. Verify existing cache isolation, corpus invalidation and scoped checks, correcting demonstrated gaps without replacing full release verification.",
+      "recipe": "Review actual provider defaults against current official evidence while preserving intentional pins and provider constraints. Verify existing cache isolation, corpus invalidation and scoped checks, correcting demonstrated gaps without replacing full release verification.",
+      "conversionOutcome": "Review actual provider defaults against current official evidence while preserving intentional pins and provider constraints. Verify existing cache isolation, corpus invalidation and scoped checks, correcting demonstrated gaps without replacing full release verification.",
+      "acceptance": "Model choices and price estimates have applicable official evidence; cache hits/isolation and complete corpus invalidation pass focused checks. Scoped verification measurements are explicitly partial and cannot satisfy required full release acceptance.",
+      "stageRationale": "Supported-release quality; no lifecycle launch, pricing, rank or identity-authority expansion.",
+      "premises": [
+        {
+          "claim": "The existing static index builder is available for reuse and verification.",
+          "adapter": "file-exists",
+          "target": "scripts/build-ignis-search-index.mjs",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Diagnose the demonstrated issue and establish a focused regression."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Review actual provider defaults against current official evidence while preserving intentional pins and provider constraints. Verify existing cache isolation, corpus invalidation and scoped checks, correcting demonstrated gaps without replacing full release verification."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Extend focused boundary coverage only for a demonstrated acceptance gap."
+        }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 12,
+      "slug": "recent-goals-full-release-closeout",
+      "axis": "sil-debt",
+      "title": "Finish all recent-session acceptance and authorized delivery",
+      "tier": "🔥",
+      "effortHours": 10,
+      "impact": 10,
+      "innovation": 4,
+      "priority": 11.16,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "Complete the inherited technical outcomes and the current source/release acceptance process without borrowing historical completion claims. Preserve required CI, staging/account journeys, production verification and rollback requirements.",
+      "recipe": "Complete the inherited technical outcomes and the current source/release acceptance process without borrowing historical completion claims. Preserve required CI, staging/account journeys, production verification and rollback requirements.",
+      "conversionOutcome": "Complete the inherited technical outcomes and the current source/release acceptance process without borrowing historical completion claims. Preserve required CI, staging/account journeys, production verification and rollback requirements.",
+      "acceptance": "Each inherited outcome retains inspected acceptance evidence. Required current CI, isolated staging/account checks, authorized delivery, served production readback, rollback readiness and final closeout remain pending until their actual evidence exists.",
+      "stageRationale": "Supported-release quality; no lifecycle launch, pricing, rank or identity-authority expansion.",
+      "premises": [
+        {
+          "claim": "The inspected source retains the recent-goals-full-release-closeout trigger requiring current acceptance.",
+          "adapter": "file-content",
+          "target": "context/TASK_BOARD.md",
+          "pattern": "S416 selected outcomes",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 5,
+          "recipe": "Diagnose the demonstrated issue and establish a focused regression."
+        },
+        "L2": {
+          "effortHours": 10,
+          "recipe": "Complete the inherited technical outcomes and the current source/release acceptance process without borrowing historical completion claims. Preserve required CI, staging/account journeys, production verification and rollback requirements."
+        },
+        "L3": {
+          "effortHours": 15,
+          "recipe": "Extend focused boundary coverage only for a demonstrated acceptance gap."
+        }
+      },
+      "executionLog": []
+    }
+  ],
+  "totals": {
+    "count": 12,
+    "priority": 291.24,
+    "top3": [
+      "content-baseline-preservation",
+      "checkout-and-content-reporting",
+      "shared-visual-system"
+    ]
+  },
+  "innovationReserve": [],
+  "skipped": [
+    {
+      "slug": "market-baseline",
+      "reason": "No market file or installed studio-market skill is available. No competitor claim is inferred. Existing requested product/release outcomes remain selected; market evidence gap remains explicit."
+    }
+  ],
+  "evidenceSources": [
+    "context/TASK_BOARD.md",
+    "context/LATEST_HANDOFF.md",
+    "docs/S417_REMAINING_PLAN.md",
+    "context/DECISIONS.md"
+  ],
+  "executionLog": [],
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-11-23T03:58:21.965Z",
+    "head": "d243da595ead939e607e7c33cf436ca0da4ddf39",
+    "sidecar": "docs/AUDIT_2026-11-22.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 12,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "daa30b872527dfc772ddc430a7532b8f76f61e909102d9ddb3968c24643aeb6c",
+    "implementationDirty": [
+      "docs/S418_COMPLETION_LEDGER.json",
+      "docs/S418_audit-brief.json",
+      "docs/S418_plan-brief.json"
+    ]
+  },
+  "publicProjection": {
+    "schemaVersion": 1,
+    "sourceRawSha256": "790fe567b54788b3f7b9f8aacb11889fb9dc2f3b4570c97e251c6f0383c409f1",
+    "sourceDate": "2026-11-22",
+    "sourceSession": 418,
+    "originalPrivateHistoryPreserved": true,
+    "operatorExecutionHistoryIncluded": false,
+    "verificationRecordsRenewed": false,
+    "statement": "Typed premises and the original premiseGate record are unchanged historical evidence. This projection performs no verification, renews no proof and claims no completed acceptance."
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [
+        "account-export-deletion",
+        "trust-beta-devlog-agent-surfaces"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "duplicate-roadmap",
+          "premise": "A new dated roadmap is needed.",
+          "evidence": "roadmap/index.html explicitly keeps roadmap undated; preserve it."
+        },
+        {
+          "slug": "second-search-index",
+          "premise": "A second static index must be built.",
+          "evidence": "scripts/build-ignis-search-index.mjs already exists; selected work verifies it."
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [
+        "checkout-and-content-reporting",
+        "shared-visual-system"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "new-theme-count",
+          "premise": "Add another theme before fixing hierarchy.",
+          "evidence": "Seven current themes already require full readability acceptance; no evidence supports expanding theme count."
+        },
+        {
+          "slug": "extra-newsletter-door",
+          "premise": "Add another newsletter landing route.",
+          "evidence": "The inherited requirement is one newsletter centre; adding a door worsens the observed overlap."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "new-season",
+          "premise": "Introduce a new challenge season.",
+          "evidence": "SOUL protects the existing nine-tier economy; current task is delivery and existing journeys, with no new season requested."
+        },
+        {
+          "slug": "reward-economy-rewrite",
+          "premise": "Replace the points model.",
+          "evidence": "S417 point-award integrity is implemented; no demonstrated new economy defect justifies replacing it."
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [
+        "agent-input-and-publish-boundaries"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "uncited-answer-mesh",
+          "premise": "Novel automatic answer mesh across all projects.",
+          "evidence": "Existing Oracle/index/caches can be verified without a new generative feature or broader data access."
+        },
+        {
+          "slug": "feed-prompt-autonomy",
+          "premise": "Let feed instructions choose publication actions.",
+          "evidence": "author-news-edition interpolates third-party data; this expands the demonstrated trust boundary defect."
+        }
+      ]
+    },
+    "security": {
+      "surviving": [
+        "content-baseline-preservation",
+        "signup-and-account-acceptance",
+        "edge-rate-and-import-integrity"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "shared-captcha-toggle",
+          "premise": "Enable captcha globally on shared Supabase.",
+          "evidence": "D-S417.8 explicitly assigns credential protection to Obelisk; retain ownership."
+        },
+        {
+          "slug": "baseline-majority",
+          "premise": "Treat workflow/source majority as served artifact identity.",
+          "evidence": "Independent deriveQuorum reproduction certifies B while HTTP serves A; selected repair prevents this."
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "surviving": [
+        "canonical-site-information-architecture"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "second-tiered-runner",
+          "premise": "Build a second tiered check runner.",
+          "evidence": "gate-scope.mjs, impacted checks and existing planner already provide scoped lanes."
+        },
+        {
+          "slug": "delete-before-map",
+          "premise": "Delete overlapping routes immediately.",
+          "evidence": "Current aliases carry incoming and account deep links; require explicit mapping first."
+        }
+      ]
+    },
+    "token-cost": {
+      "surviving": [
+        "ai-currency-cache-and-scoped-verification"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "duplicate-semantic-cache",
+          "premise": "Build a second response cache.",
+          "evidence": "ask-ignis and semantic-search already cache; verify isolation/hits before changing."
+        },
+        {
+          "slug": "paid-model-currency-probe",
+          "premise": "Spend API funds to establish model currency.",
+          "evidence": "Current frontier radar has 10/10 official sources; documented catalogs suffice."
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [
+        "availability-and-project-waitlists"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "proofless-score-upgrade",
+          "premise": "Reuse prior 939 as current acceptance.",
+          "evidence": "S417 recovery records 835 and unfinished release; score is not deployment proof."
+        },
+        {
+          "slug": "source-sha-as-artifact",
+          "premise": "Report content head as fully deployed source.",
+          "evidence": "Content workflow stamps baseline separately from overlay head; preserve that distinction."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [
+        "recent-goals-full-release-closeout"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "new-session-per-continuation",
+          "premise": "Start another arc on automatic continuation.",
+          "evidence": "Native binding resolves resume-current-arc S418; continuation preserves this session."
+        },
+        {
+          "slug": "receipt-only-completion",
+          "premise": "Close inherited tasks using old partial receipts.",
+          "evidence": "S411–S417 board and handoff explicitly leave current final release/account acceptance open."
+        }
+      ]
+    }
+  }
+}

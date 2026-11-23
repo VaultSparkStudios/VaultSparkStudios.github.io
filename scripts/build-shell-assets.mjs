@@ -10,6 +10,13 @@ const root = process.cwd();
 const checkMode = process.argv.includes('--check');
 
 const SHELL_ASSETS = [
+  { key: 'studioPagesStyle', source: 'assets/studio-pages.css', stem: 'studio-pages.shell', attribute: 'href' },
+  { key: 'contentReport', source: 'assets/report-content.js', stem: 'report-content.shell', attribute: 'src' },
+  { key: 'projectWaitlist', source: 'assets/notify-me.js', stem: 'notify-me.shell', attribute: 'src' },
+  { key: 'projectWaitlistStyle', source: 'assets/project-waitlist.css', stem: 'project-waitlist.shell', attribute: 'href' },
+  { key: 'projectWaitlistConfirm', source: 'assets/project-waitlist-confirm.js', stem: 'project-waitlist-confirm.shell', attribute: 'src' },
+  { key: 'memberAccountData', source: 'vault-member/account-data.js', stem: 'account-data.shell', attribute: 'src' },
+  { key: 'memberAccountDataStyle', source: 'vault-member/account-data.css', stem: 'account-data.shell', attribute: 'href' },
   { key: 'sparkCompanion', source: 'assets/spark-compass.js', stem: 'spark-compass.shell', attribute: 'src' },
   { key: 'sparkStyle', source: 'assets/spark-compass.css', stem: 'spark-compass.shell', attribute: 'href' },
   { key: 'pwaInstall', source: 'assets/pwa-install.js', stem: 'pwa-install.shell', attribute: 'src' },

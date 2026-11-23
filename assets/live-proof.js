@@ -3,6 +3,21 @@
 
   if (!window.VSPublic) return;
 
+  // Reuse the existing generated membership authority; no alternate rank scale.
+  var membershipReady = window.VSMembership
+    ? Promise.resolve(window.VSMembership)
+    : import('/assets/membership-access.js').then(function () { return window.VSMembership; });
+  membershipReady = membershipReady.then(function (authority) {
+    if (!authority || !authority.config || !Array.isArray(authority.config.ranks) ||
+        !Array.isArray(authority.config.rankThresholds) || typeof authority.getRankIndex !== 'function' ||
+        authority.config.ranks.length !== authority.config.rankThresholds.length || !authority.config.ranks.length) {
+      throw new Error('rank_authority_unavailable');
+    }
+    return authority;
+  });
+  // Missing authority suppresses enhancement; it never substitutes a guessed scale.
+  membershipReady.catch(function () {});
+
   var RANK_CONFIG = [
     { title: 'Spark Initiate', color: '#94a3b8' },
     { title: 'Vault Runner', color: '#60a5fa' },
@@ -26,19 +41,14 @@
   }
 
   function pointsToRankTitle(points) {
-    var p = Number(points) || 0;
-    if (p >= 5000) return 'The Sparked';
-    if (p >= 2500) return 'Forge Master';
-    if (p >= 1500) return 'Vault Keeper';
-    if (p >= 800)  return 'Void Operative';
-    if (p >= 400)  return 'Vault Breacher';
-    if (p >= 200)  return 'Vault Guard';
-    if (p >= 100)  return 'Rift Scout';
-    if (p >= 50)   return 'Vault Runner';
-    return 'Spark Initiate';
+    var authority = window.VSMembership;
+    return authority.config.ranks[authority.getRankIndex(points)].label;
   }
 
   function renderRankDistribution(rankRows) {
+    RANK_CONFIG = window.VSMembership.config.ranks.map(function (rank, i) {
+      return { title: rank.label, color: RANK_CONFIG[i] && RANK_CONFIG[i].color || '#94a3b8' };
+    });
     var counts = {};
     (rankRows || []).forEach(function (row) {
       var rank = pointsToRankTitle(row.points);
@@ -115,7 +125,7 @@
       });
     }
 
-    renderRankDistribution(rankRows);
+    membershipReady.then(function () { renderRankDistribution(rankRows); }).catch(function () {});
   }).catch(function () {
     // REST unavailable — fall back to public intelligence snapshot for public-safe aggregates.
     if (window.VSPublicIntel) window.VSPublicIntel.get().then(renderFromIntel).catch(function () {});

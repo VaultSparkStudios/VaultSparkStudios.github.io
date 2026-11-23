@@ -123,6 +123,10 @@ function collectFailures({ homeHtml, paritySource, htmlFiles }) {
   }
 
   const pulse = htmlFiles.find((file) => file.rel === 'studio-pulse/index.html');
+  const studio = htmlFiles.find((file) => file.rel === 'studio/index.html');
+  if (!pulse && studio && !/id="pulse-heading"/.test(studio.html)) {
+    failures.push('studio/index.html: consolidated Studio Pulse heading is missing');
+  }
   if (pulse && !/<title>Studio Pulse — VaultSpark Studios<\/title>/.test(pulse.html)) {
     failures.push('studio-pulse/index.html: title must use Studio Pulse');
   }
@@ -133,7 +137,7 @@ function collectFailures({ homeHtml, paritySource, htmlFiles }) {
   // lives can't catch the lie). Police the visible body too. The `forge window`
   // bigram is the banned product LABEL; it does not match the `.forge-*` CSS
   // class names or the "forge" verb/metaphor prose ("Live from the forge").
-  if (pulse && /forge\s+window/i.test(visibleText(pulse.html))) {
+  if ((pulse || studio) && /forge\s+window/i.test(visibleText((pulse || studio).html))) {
     failures.push('studio-pulse/index.html: body still shows the retired "Forge Window" label (S185 → Studio Pulse)');
   }
 

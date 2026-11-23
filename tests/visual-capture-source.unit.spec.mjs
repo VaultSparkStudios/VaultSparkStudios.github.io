@@ -106,7 +106,7 @@ const fragmentObservation = (surface, documentTop, scrollMarginTop, scrollY, max
 });
 
 test('ordinary visual surfaces require document top and their exact resolved route', () => {
-  for (const surface of ['home', 'membership', 'vault-member', 'games', 'tombstones']) {
+  for (const surface of ['home', 'membership', 'vault-member', 'games', 'tombstones', 'journal']) {
     const observed = topObservation(VISUAL_SCENES[surface].pathname);
     assert.equal(visualSceneState(surface, observed).sceneReady, true, surface);
     assert.equal(visualSceneState(surface, { ...observed, scrollY: 1 }).sceneReady, false);
@@ -117,14 +117,20 @@ test('ordinary visual surfaces require document top and their exact resolved rou
   }
 });
 
-test('legacy Oracle and Journal scenes match actual redirects and named targets', () => {
+test('legacy scene routes follow current canonical destinations and their declared viewport intent', () => {
   const redirects = fs.readFileSync('_redirects', 'utf8');
-  for (const [surface, alias, destination] of [['oracle','/oracle/','/ignis/#oracle'],['journal','/journal/','/changelog/#stories']]) {
+  for (const [surface, alias, destination] of [['oracle','/oracle/','/ignis/#oracle'],['journal','/journal/','/devlog/']]) {
     const line = redirects.split(/\r?\n/).find(line => line.trim().split(/\s+/)[0] === alias);
     assert.equal(line.trim().split(/\s+/)[1], destination);
     const scene = VISUAL_SCENES[surface];
-    assert.equal(scene.kind, 'named-fragment');
     assert.equal(scene.pathname + scene.hash, destination);
+    if (surface === 'journal') {
+      assert.equal(scene.kind, 'document-top');
+      assert.equal(visualSceneState(surface, topObservation('/devlog/')).sceneReady, true);
+      assert.equal(visualSceneState(surface, {...topObservation('/devlog/'), pathname:alias}).sceneReady, false);
+      continue;
+    }
+    assert.equal(scene.kind, 'named-fragment');
     assert.equal(scene.anchorId, scene.hash.slice(1));
     const observed = fragmentObservation(surface, 5000, 94, 4906);
     assert.equal(visualSceneState(surface, observed).sceneReady, true);
@@ -147,7 +153,7 @@ test('Oracle geometry rejects the accidental33px offset despite a stable viewpor
 });
 
 test('fragment geometry follows current CSS margin and document height, with bounded rounding', () => {
-  for (const surface of ['oracle', 'journal']) {
+  for (const surface of ['oracle']) {
     for (const margin of [94, 131, 142.5]) {
       const observed = fragmentObservation(surface, 4000.25, margin, 4000.25 - margin);
       assert.equal(visualSceneState(surface, observed).sceneReady, true);

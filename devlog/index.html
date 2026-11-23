@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <link rel="dns-prefetch" href="https://js.stripe.com" />
+  <link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Devlog · From the Forge | VaultSpark Studios</title>
+  <meta name="description" content="The VaultSpark Studios signal log — studio devlog, game development updates, behind-the-scenes decisions, and dispatches from the forge." />
+  <meta name="keywords" content="VaultSpark Studios devlog, game development blog, indie game journal, VaultSpark updates, game studio behind the scenes" />
+  <link rel="canonical" href="https://vaultsparkstudios.com/devlog/" />
+  <link rel="alternate" type="application/rss+xml" title="Signal Log — VaultSpark Studios" href="https://vaultsparkstudios.com/feed.xml" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Devlog · From the Forge | VaultSpark Studios" />
+  <meta property="og:description" content="Dispatches from the forge — game development updates, studio decisions, and signals from VaultSpark Studios." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/devlog/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og/og-devlog.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSparkStudios" />
+  <meta name="twitter:title" content="Devlog · From the Forge | VaultSpark Studios" />
+  <meta name="twitter:description" content="Dispatches from the forge — game development updates, studio decisions, and signals from VaultSpark Studios." />
+  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og/og-devlog.png" />
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Devlog","item":"https://vaultsparkstudios.com/devlog/"}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../assets/icon-32.png" />
+  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <style data-vs-critical-shell>:root{--max:1200px;--nav-height:78px;--bg:#07080f;--bg-soft:#0c0e18;--text:#eef2ff;--muted:#a8b4d0;--dim:#6e7fb0;--gold:#ffc400;--page-bg:#07080f;--header-bg:rgba(7,8,16,.90);--header-border:rgba(255,255,255,.05);--radius:24px;--shadow:0 18px 60px rgba(0,0,0,.55);color-scheme:dark}*{box-sizing:border-box}body{margin:0;position:relative;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--page-bg);line-height:1.55;overflow-x:clip}a{color:inherit;text-decoration:none}.skip-link{position:absolute;top:-100%;left:1rem;z-index:9999}.skip-link:focus{top:0}img,video{max-width:100%;display:block}h1,h2,h3,h4,h5,h6{margin:0;line-height:1.1}h1,h2{font-family:Georgia,"Times New Roman",serif;letter-spacing:0}p{margin:0}.container{width:min(calc(100% - 2rem),var(--max));margin:0 auto}.site-header{position:sticky;top:0;z-index:100;border-bottom:1px solid var(--header-border);background:var(--header-bg)}.nav{min-height:var(--nav-height);display:flex;align-items:center;justify-content:space-between;gap:1rem}.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0;min-height:44px}.brand img{width:44px;height:44px;object-fit:contain}.brand>span{display:block;line-height:1.15;font-size:1rem;white-space:nowrap}.brand small{display:block;color:var(--muted);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;margin-top:.16rem}.nav-center{display:flex;align-items:center;gap:.15rem;flex:1;justify-content:center}.nav-center a{color:var(--muted);font-size:.91rem;font-weight:500;padding:.44rem .8rem;border-radius:8px;white-space:nowrap}.nav-item{position:relative;display:flex;align-items:center}.nav-item>a{display:flex;align-items:center;gap:.3rem}.nav-dropdown{display:none}.mobile-nav-footer{display:none}.nav-icon-link{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;color:var(--muted);flex-shrink:0}.nav-signin{color:var(--muted);font-size:.88rem;font-weight:600;padding:.44rem .8rem;border-radius:8px;white-space:nowrap}.nav-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0;justify-content:flex-end;min-width:292px}.nav-right::after{content:"";display:block;flex:0 0 92px;height:34px;order:20}.nav-right:has(.theme-picker)::after{display:none}.theme-picker{position:relative;flex:0 0 92px;min-width:0}.theme-picker-btn{display:flex;width:100%;align-items:center;gap:.42rem;padding:.38rem .64rem;min-height:44px;min-width:92px;border-radius:10px;border:1px solid var(--header-border);background:var(--header-bg);color:var(--text);font:600 .8rem/1 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap}.theme-picker-swatch{width:11px;height:11px;border-radius:50%;flex-shrink:0}.theme-picker-label{font-size:.78rem;font-weight:600}.theme-picker-arrow{font-size:.48rem;margin-left:.05rem}.theme-picker-dropdown{position:absolute;top:calc(100% + 8px);right:0;width:228px;opacity:0;visibility:hidden;pointer-events:none}.button,.button-secondary,.button-ghost{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:48px;padding:0 1.3rem;border-radius:999px;font-weight:700;font-size:.94rem;font-family:inherit;border:1px solid transparent;text-decoration:none;white-space:nowrap}.button-sm{min-height:44px;min-width:44px;padding:0 1rem;font-size:.86rem}.hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;border:0;background:transparent;padding:0}.hero{position:relative;padding:6.5rem 0 4rem;overflow:clip}.hero::before{content:"";position:absolute;inset:0;pointer-events:none}.hero-center{position:relative;z-index:1;text-align:center}.hero-chamber{position:absolute;inset:0;pointer-events:none;z-index:0}.hero-glow{position:absolute;border-radius:50%;pointer-events:none;will-change:transform}.hero-glow.blue{width:45vw;height:45vw;max-width:640px;max-height:640px;left:-10%;top:-20%}.hero-glow.orange{width:40vw;height:40vw;max-width:560px;max-height:560px;right:-8%;top:-10%}.hero-glow.gold{width:30vw;height:30vw;max-width:380px;max-height:380px;left:30%;top:40%}.forge-wordmark{margin:0;font-family:Georgia,"Times New Roman",serif;line-height:1;text-align:center}.forge-line{display:block}.forge-line-1{font-size:clamp(2.6rem,13vw,9rem);font-weight:700;letter-spacing:0}.forge-line-2{font-size:clamp(1.7rem,8.4vw,5.8rem);font-weight:400;letter-spacing:.1em;margin-top:.04em}.forge-letter{opacity:1}.hero-tagline{margin:.65rem 0 0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.45rem,3.2vw,2.6rem);line-height:1.1;letter-spacing:0;font-style:italic}.hero-sub{max-width:54ch;margin:0 auto;color:var(--muted);font-size:1.1rem;line-height:1.68}.hero-ticker{min-height:44px;display:flex;align-items:center;justify-content:center}section{padding:1.6rem 0 4.2rem}@media(max-width:1024px){.nav-center{display:none}.hamburger{display:flex}.nav-right{min-width:0}.nav-right::after{display:none}.nav-right .nav-signin,.nav-right .button.button-sm,.nav-right .nav-icon-link{display:none}}@media(min-width:641px) and (max-width:1024px){.container{padding-left:1.5rem;padding-right:1.5rem}}@media(max-width:768px){.brand small,.brand .brand-suffix{display:none}.brand>span{font-size:.85rem;letter-spacing:0}.brand{gap:.45rem}.brand img{width:32px;height:32px}}@media(max-width:640px){section{padding:1.4rem 0 3rem}.hero{padding:5rem 0 2.8rem}.theme-picker{display:none}.button:not(.nav-right .button),.button-secondary,.button-ghost{width:100%;justify-content:center}}@media(max-width:430px){.brand>span{font-size:.78rem;letter-spacing:0}.brand img{width:30px;height:30px}}.desk-wire{height:36px;overflow:hidden;border-top:1px solid var(--header-border)}.desk-wire__inner{height:100%;display:flex;align-items:center;gap:.75rem}.desk-wire__brand{flex:0 0 9.5rem;display:flex;align-items:center;height:100%;color:var(--text);text-decoration:none}.desk-wire__subscribe{flex:0 0 auto;display:flex;align-items:center;height:100%;padding-inline:.8rem;border-left:1px solid var(--header-border);color:var(--text);font-size:.72rem;font-weight:700;white-space:nowrap;text-decoration:none}.desk-wire__link{display:flex;align-items:center;gap:.75rem;width:100%;height:100%;min-width:0;font-size:.82rem}.desk-wire__label{flex:0 0 9.5rem;display:inline-flex;align-items:center;gap:.45rem;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;overflow:hidden;color:var(--muted)}.desk-wire__dot{flex:0 0 auto;width:7px;height:7px;border-radius:50%}.desk-wire__headline{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.desk-wire__cta{flex:0 0 auto;font-size:.78rem;white-space:nowrap}@media(max-width:640px){.desk-wire__cta{display:none}}@media(max-width:430px){.desk-wire{display:none}}:root{--desk-wire-height:36px}body:has(.site-header .desk-wire){--desk-wire-offset:var(--desk-wire-height)}@media(max-width:430px){:root{--desk-wire-height:0px}}.nav-right .vs-palette-loader-trigger{flex:0 0 86px}@media(max-width:640px){.nav-right{min-width:139.6px}}@media(min-width:641px) and (max-width:720px){.nav-right{min-width:241.2px}}@media(min-width:721px) and (max-width:1024px){.nav-right{min-width:145.6px}}@media(min-width:1025px){.nav{gap:.6rem}.nav-center{gap:.1rem}.nav-right{gap:.35rem}.nav-center>a,.nav-center>.nav-item>a{padding-inline:.2rem}}.site-header .vs-rank-orb-anon::before{border-color:var(--muted,#a8b4d0)}.site-header .vs-rank-orb-anon .vs-rank-orb-num{color:var(--muted,#a8b4d0)}.site-header .vs-rank-orb-tip{background:var(--bg-soft,#0c0e18);color:var(--text,#eef2ff);border-color:var(--header-border)}@media(min-width:1025px){.site-header .brand small,.site-header .brand .brand-suffix{display:none}}@media(min-width:1025px) and (max-width:1450px){.site-header .brand{gap:.45rem}.site-header .brand img{width:36px;height:36px}.site-header .brand>span{font-size:.9rem}.site-header .brand small{font-size:.6rem;letter-spacing:.04em}.site-header .nav{gap:.4rem}.site-header .nav-center a{font-size:.82rem;padding-inline:.25rem}.site-header .nav-right{gap:.35rem}.site-header .nav-signin{padding-inline:.35rem}}@media(min-width:1451px){.site-header .container{width:min(calc(100% - 2rem),1360px)}.site-header .brand small{display:block}.site-header .brand .brand-suffix{display:inline}}</style>
+  <link rel="stylesheet" href="../assets/style.shell-4e79cfea95.css" />
+<script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Signal Log",
+  "description": "Studio updates, game development insights, and lore from VaultSpark Studios",
+  "url": "https://vaultsparkstudios.com/devlog/",
+  "publisher": {
+    "@id": "https://vaultsparkstudios.com/#org"
+  }
+}
+  </script>
+
+  <style>
+    /* Dispatch strip — mirrors the homepage rules this page's markup assumes.
+       Without them the panel rendered unstyled and the success message was
+       permanently visible (S305 CANON-053 capture). */
+    .dispatch-strip { padding: 0 0 2rem; }
+    .dispatch-inner {
+      padding: 2rem 2.2rem;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(31,162,255,0.07) 0%, rgba(255,196,0,0.06) 50%, rgba(255,122,0,0.07) 100%),
+        rgba(10,13,22,0.85);
+      border: 1px solid rgba(255,255,255,0.09);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .dispatch-copy .dispatch-label {
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+    .dispatch-copy h2 { font-family: inherit; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .dispatch-copy p { color: var(--muted); font-size: 0.93rem; max-width: 42ch; }
+    .dispatch-form { display: flex; gap: 0.65rem; flex-wrap: wrap; flex-shrink: 0; }
+    .dispatch-form input[type="email"] {
+      width: 100%;
+      max-width: 340px;
+      height: 48px;
+      padding: 0 1.1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      font-size: 0.93rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .dispatch-form input[type="email"]::placeholder { color: var(--dim); }
+    .dispatch-form input[type="email"]:focus {
+      border-color: rgba(255,196,0,0.45);
+      background: rgba(255,255,255,0.08);
+    }
+    .dispatch-success {
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+      color: #86efac;
+      font-weight: 600;
+      font-size: 0.94rem;
+    }
+    .dispatch-success.show { display: flex; }
+    @media (max-width: 640px) {
+      .dispatch-inner { flex-direction: column; align-items: flex-start; }
+      .dispatch-form { width: 100%; }
+      .dispatch-form input[type="email"] { max-width: none; font-size: 16px; }
+    }
+
+    .journal-hero { padding: 5rem 0 3rem; position: relative; }
+    .journal-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 50%, rgba(31,162,255,0.08), transparent 35%),
+        radial-gradient(circle at 85% 50%, rgba(255,196,0,0.06), transparent 35%);
+      pointer-events: none;
+    }
+    .journal-hero .container { position: relative; z-index: 1; }
+    .journal-hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+      margin: 0.75rem 0 1rem;
+    }
+
+    .journal-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 2.5rem;
+      align-items: start;
+      padding-bottom: 5rem;
+    }
+    .journal-entries { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
+
+    .entry {
+      position: relative;
+      overflow: hidden;
+      padding: 2rem 2.2rem;
+      border-radius: var(--radius);
+      background: var(--panel-strong);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    .entry::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255,196,0,0.45), rgba(31,162,255,0.25), transparent 78%);
+      pointer-events: none;
+    }
+    .entry-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .entry-date {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+    }
+    .entry-tag {
+      padding: 0.28rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .entry h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+    .entry-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.18s ease;
+    }
+    .entry-link:hover { color: var(--gold); }
+    .entry-body { color: var(--muted); font-size: 0.97rem; line-height: 1.8; }
+    .entry-body p { margin-bottom: 1rem; }
+    .entry-body p:last-child { margin-bottom: 0; }
+    .entry-body strong { color: var(--text); }
+    .entry-divider { height: 1px; background: var(--line); margin: 1.2rem 0; }
+    .entry-readtime,
+    .entry-note {
+      color: var(--dim);
+      font-size: 0.87rem;
+    }
+
+    .journal-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: sticky;
+      top: 6.25rem;
+    }
+    .sidebar-block {
+      padding: 1.4rem;
+      border-radius: 20px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    .sidebar-block h3 {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+    }
+    .archive-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.88rem;
+      color: var(--muted);
+      transition: color 0.18s, transform 0.18s;
+    }
+    .archive-link:last-child { border-bottom: none; }
+    .archive-link:hover { color: var(--text); transform: translateX(2px); }
+    .archive-link span { flex: 1; }
+    .archive-link small { font-size: 0.75rem; color: var(--dim); }
+    .sidebar-note {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 0.9rem;
+    }
+    .sidebar-tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+    .sidebar-tag-cloud span {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .upcoming-title {
+      font-size: 0.84rem;
+      color: var(--text);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    @media (max-width: 900px) {
+      .journal-layout { grid-template-columns: 1fr; }
+      .journal-sidebar { position: static; }
+    }
+    @media (max-width: 640px) {
+      .entry { padding: 1.4rem; }
+      .entry-meta { flex-wrap: wrap; gap: 0.5rem; }
+      .entry h2 { font-size: clamp(1.2rem, 5vw, 1.6rem); }
+    }
+    @media (max-width: 480px) {
+      .reaction-row { gap: 0.35rem; }
+      .reaction-btn { padding: 0.3rem 0.6rem; font-size: 0.78rem; }
+      .journal-hero h1 { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+    }
+
+    /* Upcoming / planned sidebar entries */
+    .archive-upcoming { flex-direction:column; align-items:flex-start; gap:0.2rem; cursor:default; }
+    .archive-upcoming:hover { color:var(--muted); }
+
+    /* Pin badge */
+    .pin-badge { display:inline-flex; align-items:center; gap:0.3rem; padding:0.22rem 0.55rem; border-radius:999px; font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; background:rgba(255,196,0,0.12); border:1px solid rgba(255,196,0,0.3); color:var(--gold); }
+
+    /* Tag filter pills */
+    .tag-filter-row {
+      grid-column: 1 / -1;
+      display:flex;
+      gap:0.45rem;
+      flex-wrap:wrap;
+      margin-bottom:0.25rem;
+      padding:0.85rem;
+      border-radius:20px;
+      background:var(--panel);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+    .tag-filter-btn { padding:0.3rem 0.75rem; border-radius:999px; font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; background:transparent; border:1px solid var(--line); color:var(--muted); cursor:pointer; font-family:inherit; transition:all 0.15s; }
+    .tag-filter-btn:hover { border-color:rgba(255,196,0,0.35); color:var(--text); }
+    .tag-filter-btn.active { background:rgba(255,196,0,0.12); border-color:rgba(255,196,0,0.4); color:var(--gold); }
+
+    /* Entry hidden state */
+    .entry.hidden { display:none; }
+
+    /* Reaction row */
+    .share-row { display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid var(--line); }
+    .share-label { font-size:0.8rem; color:var(--dim); align-self:center; }
+    .share-chip {
+      display:inline-flex;
+      align-items:center;
+      gap:0.4rem;
+      padding:0.4rem 0.9rem;
+      border-radius:999px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-family:inherit;
+      font-size:0.8rem;
+      text-decoration:none;
+      cursor:pointer;
+      transition:transform 0.15s, border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .share-chip:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,196,0,0.35);
+      background: rgba(255,196,0,0.06);
+      color: var(--text);
+    }
+    .reaction-row { display:flex; align-items:center; gap:0.65rem; flex-wrap:wrap; margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--line); }
+    .reaction-btn { display:inline-flex; align-items:center; gap:0.35rem; padding:0.35rem 0.85rem; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,0.04); color:var(--muted); font-family:inherit; font-size:0.82rem; font-weight:600; cursor:pointer; transition:all 0.15s; user-select:none; }
+    .reaction-btn:hover { border-color:rgba(255,196,0,0.4); background:rgba(255,196,0,0.07); color:var(--text); }
+    .reaction-btn.reacted { border-color:rgba(255,196,0,0.5); background:rgba(255,196,0,0.12); color:var(--gold,#FFC400); }
+    .reaction-btn .reaction-emoji { font-size:1rem; line-height:1; }
+    .reaction-btn .reaction-count { min-width:1ch; }
+    /* Journal toast */
+    .jrn-toast { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%) translateY(8px); background:var(--panel-strong); border:1px solid var(--line); color:var(--text); font-size:0.85rem; font-weight:600; padding:0.55rem 1.3rem; border-radius:999px; opacity:0; transition:opacity 0.2s, transform 0.2s; pointer-events:none; z-index:9999; box-shadow:var(--shadow); }
+    .jrn-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+  </style>
+
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+<script defer src="/assets/theme-toggle.shell-c2c9a3a78c.js"></script>
+<script src="/assets/analytics.js" defer></script>
+<script src="/assets/pwa-nav.shell-5f63b6b75a.js" defer></script>
+<!-- vs-speculation:start -->
+  <script type="speculationrules">
+  {
+    "prerender": [
+      {
+        "where": {
+          "and": [
+            { "href_matches": "/*" },
+            { "not": { "href_matches": "/vault-member/*" } },
+            { "not": { "href_matches": "/investor-portal/*" } },
+            { "not": { "href_matches": "/admin/*" } },
+            { "not": { "href_matches": "/api/*" } },
+            { "not": { "href_matches": "/*/admin/*" } },
+            { "not": { "selector_matches": "[data-no-prerender]" } },
+            { "not": { "selector_matches": ".no-prerender" } }
+          ]
+        },
+        "eagerness": "moderate"
+      }
+    ],
+    "prefetch": [
+      { "where": { "href_matches": "/*" }, "eagerness": "conservative" }
+    ]
+  }
+  </script>
+  <!-- vs-speculation:end -->
+  <link rel="alternate" type="application/json" href="/agents.json" />
+<style data-vs-spine-style>.vs-spine{border-bottom:1px solid rgba(127,127,127,.18);background:rgba(127,127,127,.04)}.vs-spine-in{display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.25rem;padding:.85rem 0;font-size:.9rem;line-height:1.5}.vs-spine-self{color:var(--text);font-weight:600;margin:0}.vs-spine-kin{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;list-style:none;margin:0;padding:0}.vs-spine-kin a{color:var(--muted);text-decoration:underline;text-underline-offset:3px}.vs-spine-kin a:hover,.vs-spine-kin a:focus-visible{color:var(--gold)}@media(max-width:640px){.vs-spine-in{flex-direction:column;gap:.5rem;padding:.75rem 0}}</style>
+  <link rel="stylesheet" href="/assets/studio-pages.shell-a5d96bef6d.css" />
+  <style data-vs-page-styles>.vsx-2748b6aed6{color:var(--gold);font-size:0.82rem;margin-top:0.4rem;}.vsx-4b53cdc8dc{width:100%;justify-content:center;display:flex;}.vsx-714723889e{color:var(--gold);}.vsx-ae73b7843e{display:none !important;}.vsx-b37854d81e{margin-top:1rem;line-height:1.8;}.vsx-c16ecaa368{padding:0 0 1rem;}.vsx-f95edd64f0{color:var(--muted);font-size:1.05rem;max-width:52ch;line-height:1.65;}</style>
+<!-- collection-jsonld:start (generated by inject-collection-jsonld.mjs) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Signal Log — VaultSpark Studios",
+  "url": "https://vaultsparkstudios.com/journal/",
+  "isPartOf": {
+    "@id": "https://vaultsparkstudios.com/#website"
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "url": "https://vaultsparkstudios.com/journal/q1-2026-dispatch/",
+        "name": "Q1 2026: The Vault Accelerates"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "url": "https://vaultsparkstudios.com/journal/nine-ranks-of-the-vault/",
+        "name": "The Nine Ranks of the Vault"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "url": "https://vaultsparkstudios.com/journal/community-enters-the-vault/",
+        "name": "Community Enters The Vault"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "url": "https://vaultsparkstudios.com/journal/roadmap-goes-public/",
+        "name": "The Roadmap Is Public. Here's Why."
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "url": "https://vaultsparkstudios.com/journal/dreadspike-origins/",
+        "name": "DreadSpike: The Character Who Arrived First"
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "url": "https://vaultsparkstudios.com/journal/building-vault-membership/",
+        "name": "Building The Vault Membership Portal"
+      },
+      {
+        "@type": "ListItem",
+        "position": 7,
+        "url": "https://vaultsparkstudios.com/journal/signal-log-launches/",
+        "name": "The Signal Log Is Live"
+      },
+      {
+        "@type": "ListItem",
+        "position": 8,
+        "url": "https://vaultsparkstudios.com/journal/first-sparks/",
+        "name": "Three Worlds Leave The Vault"
+      },
+      {
+        "@type": "ListItem",
+        "position": 9,
+        "url": "https://vaultsparkstudios.com/journal/studio-os-public/",
+        "name": "We Made The System Visible"
+      },
+      {
+        "@type": "ListItem",
+        "position": 10,
+        "url": "https://vaultsparkstudios.com/journal/vault-opened/",
+        "name": "The Vault Was Opened"
+      }
+    ]
+  }
+}
+</script>
+<!-- collection-jsonld:end -->
+</head>
+<body class="dark-mode" data-theme="dark">
+<script>!function(){try{var t=localStorage.getItem('vs_theme')||'dark',m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(m[t]){var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement.classList,r);document.body.classList.remove.apply(document.body.classList,r);var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}var mo=localStorage.getItem('vs_motion');if(mo==='reduced'){document.documentElement.dataset.motion='reduced';document.body.dataset.motion='reduced';}}catch(e){}}();</script>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/">
+        <img fetchpriority="high" src="../assets/vaultspark-icon-nav.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span class="brand-wordmark">VaultSpark<span class="brand-suffix"> Studios</span><small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><a href="/play/">Where to play</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/projects/veilos/">VEILOS</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/velaxis/">Velaxis</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/community/#wall">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/universe/">Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/trust/" class="dropdown-link-intel">Trust</a><a href="/studio/#pulse" class="dropdown-link-intel">Pulse</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/changelog/#stories">Stories</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/dispatch/">Newsletters</a><a href="/devlog/">Devlog</a><a href="/beta/">Beta Hub</a><a href="/agents/">AI Agents Guide</a><a href="/collaborate/">Collaborate</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/press/#brand">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/collaborate/">Collaborate</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/studio/#how-we-build">How We Build</a><a href="/synthetic-intelligence/">Synthetic Intelligence (SI)</a><a href="/ai-vs-si/">AI vs. SI Explained</a><a href="/api/">Developer API & Feeds</a><a href="/trust/">Trust Center</a><a href="/faq/#ask">Ask the Studio</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><a href="/beta/">Beta Hub</a><a href="/devlog/">Devlog</a><a href="/agents/">AI Agents Guide</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/press/#brand">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
+
+        <div class="mobile-nav-footer">
+          <a class="mobile-nav-signin" href="/sign-in/">Sign In</a>
+          <a class="mobile-nav-join" href="/membership/">Membership</a>
+          <a class="mobile-nav-join" href="/vault-member/#register" data-vs-join>Create Account</a>
+          <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/sign-in/">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register" data-vs-join>Create Account</a>
+        <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="desk-wire" data-desk-wire>
+      <div class="container desk-wire__inner">
+        <a class="desk-wire__brand" href="/news/"><span class="desk-wire__label"><span class="desk-wire__dot" aria-hidden="true"></span><span data-desk-wire-label>The Desk · AI News</span></span></a>
+        <a class="desk-wire__link" href="/news/" data-desk-wire-link data-track-event="desk_wire_click">
+          <span class="desk-wire__headline" data-desk-wire-headline>Latest AI signal from the newsroom</span>
+          <span class="desk-wire__cta" aria-hidden="true">Read &rarr;</span>
+        </a>
+        <a class="desk-wire__subscribe" href="/dispatch/#dispatch-h-dispatch-page">Subscribe &rarr;</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content"><aside class="vs-spine" data-vs-spine aria-label="What this page is"><div class="container vs-spine-in"><p class="vs-spine-self">This is the studio's own record, written as narrative — what we decided and why.</p><ul class="vs-spine-kin"><li><a href="/changelog/">Session-by-session shipped list</a></li><li><a href="/notebook/">Commit-by-commit, unedited</a></li><li><a href="/journal/dispatches/">In-fiction transmissions</a></li></ul></div></aside>
+    <section class="journal-hero vs-page-hero" aria-labelledby="journal-heading">
+      <div class="container">
+        <span class="eyebrow">VaultSpark Studios &nbsp;·&nbsp; Signal Log</span>
+        <h1 id="journal-heading">From The Forge.</h1>
+        <p class="vsx-f95edd64f0">
+          The Signal Log preserves the studio's dated essays and dispatches. For current AI news,
+          read The Desk. For published studio changes, open the changelog.
+        </p>
+        <p class="vsx-b37854d81e"><a href="/news/">Read The Desk →</a> &nbsp;·&nbsp; <a href="/changelog/">Studio updates →</a> &nbsp;·&nbsp; <a href="/api/">Feeds &amp; integrations →</a></p>
+      </div>
+    </section>
+
+    <section class="dispatch-strip" aria-labelledby="dispatch-heading">
+      <div class="container">
+        <div class="dispatch-inner">
+          <div class="dispatch-copy">
+            <div class="dispatch-label">Vault Dispatch</div>
+            <h2 id="dispatch-heading">Choose your next signal.</h2>
+            <p>Visit the newsletter centre to choose studio updates or The Desk, and review what each subscription includes.</p>
+          </div>
+          <div>
+            <a class="button" href="/dispatch/">Choose your newsletters &nbsp;→</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vsx-c16ecaa368">
+      <div class="container">
+        <div class="journal-layout">
+
+          <div class="tag-filter-row" role="group" aria-label="Filter by tag">
+            <button type="button" class="tag-filter-btn active" data-filter="all" onclick="filterJournal(this)">All</button>
+            <button type="button" class="tag-filter-btn" data-filter="Studio" onclick="filterJournal(this)">Studio</button>
+            <button type="button" class="tag-filter-btn" data-filter="Games" onclick="filterJournal(this)">Games</button>
+            <button type="button" class="tag-filter-btn" data-filter="Community" onclick="filterJournal(this)">Community</button>
+            <button type="button" class="tag-filter-btn" data-filter="Lore" onclick="filterJournal(this)">Lore</button>
+            <button type="button" class="tag-filter-btn" data-filter="Launch" onclick="filterJournal(this)">Launch</button>
+            <button type="button" class="tag-filter-btn" data-filter="Origin" onclick="filterJournal(this)">Origin</button>
+            <button type="button" class="tag-filter-btn" data-filter="Site" onclick="filterJournal(this)">Site</button>
+          </div>
+
+          <div class="journal-entries">
+
+            <!-- Entry 3 — pinned -->
+            <article class="entry" id="studio-os-public" data-tags="Studio OS,Site">
+              <div class="entry-meta">
+                <span class="pin-badge">📌 Pinned</span>
+                <span class="entry-date">March 1, 2026</span>
+                <span class="entry-readtime">· 3 min read</span>
+                <span class="entry-tag">Studio OS</span>
+                <span class="entry-tag">Site</span>
+              </div>
+              <h2><a class="entry-link" href="/journal/studio-os-public/">We Made The System Visible</a></h2>
+              <div class="entry-body">
+                <p>
+                  Most studios hide how they operate. We decided to show it.
+                </p>
+                <p>
+                  VaultSpark runs on what we call the <strong>Studio OS</strong> — a way of working that lets a lean studio
+                  build and ship at a pace most teams with ten people couldn't match. Every project keeps a written
+                  record of its strategy, its identity and creative direction, where it stands today, and every
+                  decision made along the way. Nothing gets re-litigated. Context never drifts.
+                </p>
+                <p>
+                  This month we surfaced the Studio OS publicly for the first time via the
+                  <a href="/roadmap/" class="vsx-714723889e">Vault Pipeline page</a>. The full pipeline —
+                  all six active projects, their stages, and the four-pillar system behind them — is now visible
+                  to anyone who wants to see how the vault actually runs.
+                </p>
+                <div class="entry-divider"></div>
+                <p>
+                  We also launched <strong>Vault Membership</strong>, added the Gridiron GM dedicated landing page,
+                  the Signal Log (this page), a press kit, and a DreadSpike dedicated page. The site went from
+                  a studio presence to a full operating web layer in a single session.
+                </p>
+              </div>
+              <div class="share-row">
+                <span class="share-label">Share:</span>
+                <a class="share-chip" href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/studio-os-public/&text=We+Made+The+System+Visible+—+VaultSpark+Studios" target="_blank" rel="noopener">
+                  𝕏 Share
+                </a>
+                <button type="button" class="share-chip" data-copy-url="https://vaultsparkstudios.com/journal/studio-os-public/" onclick="copyJournalLink(this)">
+                  Copy link
+                </button>
+              </div>
+              <div class="reaction-row" id="reactions-studio-os-public" data-slug="studio-os-public">
+                <button type="button" class="reaction-btn" data-emoji="fire" onclick="jrnReact(this)"><span class="reaction-emoji">🔥</span><span class="reaction-count">0</span></button>
+                <button type="button" class="reaction-btn" data-emoji="love" onclick="jrnReact(this)"><span class="reaction-emoji">❤️</span><span class="reaction-count">0</span></button>
+                <button type="button" class="reaction-btn" data-emoji="gaming" onclick="jrnReact(this)"><span class="reaction-emoji">🎮</span><span class="reaction-count">0</span></button>
+                <button type="button" class="reaction-btn" data-emoji="sparked" onclick="jrnReact(this)"><span class="reaction-emoji">⚡</span><span class="reaction-count">0</span></button>
+              </div>
+            </article>
+
+            <!-- Entry: Nine ranks of the vault -->
+            <article class="entry" id="nine-ranks-of-the-vault" data-tags="Studio,Community">
+              <div class="entry-meta">
+                <span class="entry-date">March 20, 2026</span>
+                <span class="entry-readtime">· 3 min read</span>
+                <span class="entry-tag">Studio</span>
+                <span class="entry-tag">Community</span>
+              </div>
+              <h2><a class="entry-link" href="/journal/nine-ranks-of-the-vault/">The Nine Ranks of the Vault</a></h2>
+              <div class="entry-body">
+                <p>From Spark to Archon — a dispatch on the nine-tier rank system inside VaultSpark's membership portal, how XP works, and what rising through the vault actually means.</p>
+              </div>
+              <div class="share-row">
+                <span class="share-label">Share:</span>
+                <a class="share-chip" href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/nine-ranks-of-the-vault/&text=The+Nine+Ranks+of+the+Vault+—+VaultSpark+Studios" target="_blank" rel="noopener">𝕏 Share</a>
+                <button type="button" class="share-chip" data-copy-url="https://vaultsparkstudios.com/journal/nine-ranks-of-the-vault/" onclick="copyJournalLink(this)">Copy link</button>
+              </div>
+              <div class="reaction-row" id="reactions-nine-ranks-of-the-vault" data-slug="nine-ranks-of-the-vault">
+                <button type="button" class="reaction-btn" data-emoji="fire" onclick="jrnReact(this)"><span class="reaction-emoji">🔥</span><span class="reaction-count">0</span></button>
+                <button type="button" class="reaction-btn" data-emoji="love" onclick="jrnReact(this)"><span class="reaction-emoji">❤️</span><span class="reaction-count">0</span></button>
+                <button type="button" class="reaction-btn" data-emoji="gaming" onclick="jrnReact(this)"><span class="reaction-emoji">🎮</span><span class="reaction-count">0</span></button>
+                <button type="button" class="reaction-btn" data-emoji="sparked" onclick="jrnReact(this)"><span class="reaction-emoji">⚡</span><span class="reaction-count">0</span></button>
+              </div>
+            </article>
+
+            <!-- Entry: Roadmap goes public -->
+            <article class="entry" id="roadmap-goes-public" data-tags="Studio,Site">
+              <div class="entry-meta">
+                <span class="entry-date">March 18, 2026</span>
+                <span class="entry-readtime">· 3 min read</span>
+                <span class="entry-tag">Studio</span>
+                <span class="entry-tag">Site</span>
+              </div>
+              <h2><a class="entry-link" href="/journal/roadmap-goes-public/">The Roadmap Is Public. Here's Why.</a></h2>
+              <div class="entry-body">
+                <p>Every project, every stage, every unreleased game — all visible on the Vault Pipeline. Why VaultSpark chose radical transparency over the traditional closed roadmap.</p>
+              </div>
+              <div class="share-row">
+                <span class="share-label">Share:</span>
+                <a class="share-chip" href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/roadmap-goes-public/&text=The+Roadmap+Is+Public.+Here%27s+Why.+—+VaultSpark+Studios" target="_blank" rel="noopener">𝕏 Share</a>
+                <button type="button" class="share-chip" data-copy-url="https://vaultsparkstudios.com/journal/roadmap-goes-public/" onclick="copyJournalLink(this)">Copy link</button>
+              </div>
+              <div class="reaction-row" id="reactions-roadmap-goes-public" data-slug="roadmap-goes-public">
+                <button type="button" class="reaction-btn" data-emoji="fire" onclick="jrnReact(this)"><span class="reaction-emoji">🔥</span><span class="reaction-count">0</span></button>
+                <button type="button" class="reaction-btn" data-emoji="love" onclick="jrnReact(this)"><span class="reaction-emoji">❤️</span><span class="reaction-count">0</span></button>
+                <button type="button" class="reaction-btn" data-emoji="gaming" onclick="jrnReact(this)"><span class="reaction-emoji">🎮</span><span class="reaction-count">0</span></button>
+                <button type="button" class="reaction-btn" data-emoji="sparked" onclick="jrnReact(this)"><span class="reaction-emoji">⚡</span><span class="reaction-count">0</span></button>
+              </div>
+            </article>
+
+            <div id="journal-feed" data-journal-feed data-feed-src="/data/journal-feed.json">
+              <article class="entry">
+                <div class="entry-body">
+                  <p>Loading more dispatches from the Signal Log...</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="journal-sidebar">
+            <div class="sidebar-block">
+              <h3>Recent Dispatches</h3>
+              <a class="archive-link" href="/journal/q1-2026-dispatch/">
+                <span>Q1 2026: The Vault Accelerates</span>
+                <small>Mar 1, 2026</small>
+              </a>
+              <a class="archive-link" href="/journal/community-enters-the-vault/">
+                <span>Community Enters The Vault</span>
+                <small>Mar 18, 2026</small>
+              </a>
+              <a class="archive-link" href="/journal/dreadspike-origins/">
+                <span>DreadSpike: The Character Who Arrived First</span>
+                <small>Mar 14, 2026</small>
+              </a>
+              <a class="archive-link" href="/journal/building-vault-membership/">
+                <span>Building The Vault Membership Portal</span>
+                <small>Mar 10, 2026</small>
+              </a>
+              <a class="archive-link vsx-2748b6aed6" href="/journal/archive/">
+                <span>View all entries →</span>
+              </a>
+            </div>
+
+            <div class="sidebar-block">
+              <h3>Tags</h3>
+              <div class="sidebar-tag-cloud">
+                <span>Studio</span>
+                <span>Games</span>
+                <span>Community</span>
+                <span>Lore</span>
+                <span>Launch</span>
+                <span>Site</span>
+              </div>
+            </div>
+
+            <div class="sidebar-block">
+              <h3>Get Dispatches</h3>
+              <p class="sidebar-note">
+                Studio updates and lore signals delivered direct. Subscribe to Vault Dispatch.
+              </p>
+              <a class="button vsx-4b53cdc8dc" href="/#vault-dispatch">Subscribe Free</a>
+            </div>
+
+            <div class="sidebar-block">
+              <h3>Related</h3>
+              <a class="archive-link" href="/roadmap/">
+                <span>Vault Pipeline</span>
+              </a>
+              <a class="archive-link" href="/studio/">
+                <span>Studio Manifesto</span>
+              </a>
+              <a class="archive-link" href="/universe/">
+                <span>The Universe</span>
+              </a>
+            </div>
+
+          </aside>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Where worlds are built. Where stories ignite. The vault is sparked. ⚡</p>
+        </div>
+        <div class="footer-col">
+          <h2>Games</h2>
+          <a href="/games/">All Games</a>
+          <a href="/play/">Where to play</a>
+          <a href="/games/franchise-architect/">Franchise Architect</a>
+          <a href="/games/call-of-doodie/">Call of Doodie</a>
+          <a href="/games/vaultfront/">VaultFront</a>
+          <a href="/games/solara/">Solara: Sunfall</a>
+          <a href="/games/mindframe/">MindFrame</a>
+          <a href="/games/the-exodus/">The Exodus</a>
+          <a href="/games/vaultspark-forge/">VaultSpark Forge</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/leaderboards/">Leaderboards</a>
+          <a href="/community/">Community Hub</a>
+        </div>
+        <div class="footer-col">
+          <h2>Projects</h2>
+          <a href="/projects/">All Projects</a>
+          <a href="/projects/veilos/">VEILOS</a>
+          <a href="/projects/vorn/">Vorn</a>
+          <a href="/projects/concurrent/">Concurrent</a>
+          <a href="/projects/hashmark/">Hashmark</a>
+          <a href="/projects/obelisk/">Obelisk</a>
+          <a href="/projects/ouren/">Ouren</a>
+          <a href="/projects/promogrind/">PromoGrind</a>
+          <a href="/projects/seamline/">Seamline</a>
+          <a href="/projects/shadow/">SHADOW</a>
+          <a href="/projects/sparkraid/">SparkRaid</a>
+          <a href="/projects/syntha/">Syntha</a>
+          <a href="/projects/velaxis/">Velaxis</a>
+        </div>
+        <div class="footer-col">
+          <h2>Studio</h2>
+          <a href="/">Home</a>
+          <a href="/studio/">About</a>
+          <a href="/evidence/">Evidence</a>
+          <a href="/trust/">Trust</a>
+          <a href="/studio/#pulse">Pulse</a>
+          <a href="/ignis/">IGNIS</a>
+          <a href="/status/">Status</a>
+          <a href="/changelog/">Changelog</a>
+          <a href="/roadmap/">Roadmap</a>
+          <a href="/search/">Search</a>
+          <a href="/news/">The Desk · News</a>
+          <a href="/changelog/#stories">Stories</a>
+          <a href="/dispatch/">Studio Dispatch</a>
+          <a href="/press/">Press Kit</a>
+          <a href="/press/#brand">Brand Kit</a>
+          <a href="/collaborate/">Collaborate</a>
+          <a href="/journal/dispatches/">Insider Dispatches</a>
+          <a href="/vault/tombstones/">Tombstones</a>
+        </div>
+        <div class="footer-col">
+          <h2>Membership</h2>
+          <a href="/membership/">About Membership</a>
+          <a href="/membership/#tiers">Choose Your Tier</a>
+          <a href="/membership/#benefits">Value Breakdown</a>
+          <a href="/vault-member/">Vault Member</a>
+          <a href="/community/#members">Member Directory</a>
+          <a href="/member/">Member Lookup</a>
+          <a href="/community/#wall">Vault Wall</a>
+          <a href="/leaderboards/#ranks">Vault Ranks</a>
+          <a href="/invite/">Refer a Friend</a>
+        </div>
+        <div class="footer-col">
+          <h2>Worlds</h2>
+          <a href="/universe/">Universe Home</a>
+          <a href="/universe/voidfall/">Voidfall</a>
+          <a href="/universe/dreadspike/">DreadSpike</a>
+        </div>
+        <div class="footer-col">
+          <h2>Portals</h2>
+          <a href="/sign-in/">Sign In</a>
+          <a href="/vault-member/">Vault Member</a>
+          <a href="/investor-portal/">Investor Portal</a>
+          <a href="/investor-portal/apply/">Investor Application</a>
+        </div>
+        <div class="footer-col">
+          <h2>Resources</h2>
+          <a href="/pathways/">Pathways</a>
+          <a href="/status/">Status</a>
+          <a href="/search/">Search</a>
+          <a href="/faq/">Frequently Asked Questions</a>
+          <a href="/collaborate/">Collaborate</a>
+          <a href="/rights/">Technology & Rights</a>
+          <a href="/accessibility/">Accessibility</a>
+          <a href="/studio/#how-we-build">How We Build</a>
+          <a href="/synthetic-intelligence/">Synthetic Intelligence (SI)</a>
+          <a href="/ai-vs-si/">AI vs. SI Explained</a>
+          <a href="/api/">Developer API & Feeds</a>
+          <a href="/trust/">Trust Center</a>
+          <a href="/faq/#ask">Ask the Studio</a>
+          <a href="/sitemap-page/">Sitemap</a>
+          <a href="/contact/">Contact</a>
+          <a href="/beta/">Beta Hub</a>
+          <a href="/devlog/">Devlog</a>
+          <a href="/agents/">AI Agents Guide</a>
+        </div>
+        <div class="footer-col footer-col--dispatch">
+          <h2>Studio Dispatch</h2>
+          <p class="footer-dispatch-sub">Studio news: one email when something leaves the forge — new games, tools, and reveals. No account needed, no spam.</p>
+          <form class="footer-dispatch-form" id="footer-email-form" data-source="footer" novalidate>
+            <label class="vs-visually-hidden" for="footer-email-input">Email address</label>
+            <input id="footer-email-input" type="email" autocomplete="email" placeholder="you@email.com" required />
+            <input id="footer-botcheck" type="checkbox" name="botcheck" tabindex="-1" class="footer-dispatch-bot vsx-ae73b7843e" aria-label="Spam prevention; leave blank" aria-hidden="true" hidden  />
+            <button type="submit" class="button button-sm">Join the dispatch</button>
+          </form>
+          <div class="footer-dispatch-success" id="footer-success" role="status" aria-live="polite" hidden>&#10003; Your subscription request was accepted. Check your email for any confirmation step.</div>
+          <a class="footer-dispatch-home" href="/dispatch/">Past editions &amp; the Dispatch home &rarr;</a>
+          <a class="footer-dispatch-home" href="/dispatch/#dispatch-h-dispatch-page">Want daily AI news instead? Get The Desk Dispatch &rarr;</a>
+        </div>
+      </div>
+      <div class="footer-socials-row" aria-label="Follow VaultSpark Studios">
+        <span class="footer-socials-label">Follow the Studio</span>
+        <div class="footer-socials">
+          <a class="footer-social" href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer me" aria-label="YouTube" title="YouTube"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-youtube"/></svg></a>
+          <a class="footer-social" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer me" aria-label="GitHub" title="GitHub"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-github"/></svg></a>
+          <a class="footer-social" href="https://www.reddit.com/r/VaultSparkStudios/" target="_blank" rel="noreferrer me" aria-label="Reddit" title="Reddit"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-reddit"/></svg></a>
+          <a class="footer-social" href="https://x.com/VaultSpark" target="_blank" rel="noreferrer me" aria-label="X" title="X"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-x"/></svg></a>
+          <a class="footer-social" href="https://www.instagram.com/vaultsparkstudios/" target="_blank" rel="noreferrer me" aria-label="Instagram" title="Instagram"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-instagram"/></svg></a>
+          <a class="footer-social" href="https://www.tiktok.com/@vaultsparkstudios" target="_blank" rel="noreferrer me" aria-label="TikTok" title="TikTok"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-tiktok"/></svg></a>
+          <a class="footer-social" href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer me" aria-label="Discord" title="Discord"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-discord"/></svg></a>
+          <a class="footer-social" href="https://bsky.app/profile/vaultsparkstudios.bsky.social" target="_blank" rel="noreferrer me" aria-label="Bluesky" title="Bluesky"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-bluesky"/></svg></a>
+          <a class="footer-social" href="https://www.threads.com/@vaultsparkstudios" target="_blank" rel="noreferrer me" aria-label="Threads" title="Threads"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-threads"/></svg></a>
+          <a class="footer-social" href="https://www.facebook.com/VaultSparkStudios/" target="_blank" rel="noreferrer me" aria-label="Facebook" title="Facebook"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-facebook"/></svg></a>
+          <a class="footer-social" href="https://www.pinterest.com/VaultSparkStudios/" target="_blank" rel="noreferrer me" aria-label="Pinterest" title="Pinterest"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-pinterest"/></svg></a>
+          <a class="footer-social" href="https://vaultsparkstudios.gumroad.com/" target="_blank" rel="noreferrer me" aria-label="Gumroad" title="Gumroad"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-gumroad"/></svg></a>
+          <a class="footer-social" href="https://suno.com/@VaultSparkStudios" target="_blank" rel="noreferrer me" aria-label="Suno" title="Suno"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-suno"/></svg></a>
+          <a class="footer-social" href="https://sora.chatgpt.com/profile/vaultsparkstudios" target="_blank" rel="noreferrer me" aria-label="Sora" title="Sora"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-sora"/></svg></a>
+        </div>
+        <a class="footer-socials-all" href="/social/">All channels &rarr;</a>
+      </div>
+      <div class="vault-status-legend">
+        <span class="legend-status-sparked">🔥 SPARKED — Live &amp; improving</span>
+        <span class="legend-status-forge">⚒️ FORGE — Building</span>
+        <span class="legend-status-vaulted">🔒 VAULTED — Paused or archived</span>
+        <span class="legend-status-meta">26 initiatives under the vault banner · <a href="/studio/#pulse">open Studio Pulse &rarr;</a></span>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 VaultSpark Studios LLC. All rights reserved. VaultSpark&trade; and VaultSpark Studios&trade; are trademarks of VaultSpark Studios LLC.</span>
+        <span><a href="/privacy/">Privacy</a> &nbsp;&middot;&nbsp; <a href="/cookies/">Cookies</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms</a> &nbsp;&middot;&nbsp; <a href="/data-deletion/">Data Deletion</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a> &nbsp;&middot;&nbsp; <a href="/evidence/#verify" title="Re-verify our deploy ledger in your own browser">Independently verifiable &#10003;</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Journal reactions toast -->
+  <div class="jrn-toast" id="jrn-toast"></div>
+
+  <script src="/assets/supabase-public.js" defer></script>
+  <script>
+    function readTime(text) {
+      const words = text.split(/\s+/).length;
+      return Math.max(1, Math.ceil(words / 200));
+    }
+  </script>
+  <script>
+  (function(){
+    var SB  = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+    var KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
+    var H   = { apikey: KEY, Authorization: 'Bearer ' + KEY, 'Content-Type': 'application/json' };
+
+    // Edge-verified compatibility session, held in memory only.
+    var activeSession = null;
+    function getSession(){ return activeSession; }
+
+    // ── Toast ──────────────────────────────────────────────────────
+    function showToast(msg){
+      var t = document.getElementById('jrn-toast');
+      if(!t) return;
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function(){ t.classList.remove('show'); }, 2500);
+    }
+
+    // ── Load counts + user reactions ──────────────────────────────
+    var SLUGS = [
+      'studio-os-public',
+      'nine-ranks-of-the-vault',
+      'roadmap-goes-public',
+      'q1-2026-dispatch',
+      'community-enters-the-vault',
+      'dreadspike-origins',
+      'building-vault-membership',
+      'signal-log-launches',
+      'first-sparks',
+      'vault-opened'
+    ];
+
+    function loadReactions(){
+      var session = getSession();
+      var userId  = session && session.user ? session.user.id : null;
+
+      // Fetch all counts for our known slugs
+      var inFilter = SLUGS.map(function(s){ return '"'+s+'"'; }).join(',');
+      var countUrl = SB+'/rest/v1/journal_reactions?select=post_slug,emoji&post_slug=in.('+SLUGS.join(',')+')'
+      fetch(countUrl, { headers: { apikey: KEY, Accept: 'application/json' } })
+        .then(function(r){ return r.ok ? r.json() : []; })
+        .then(function(rows){
+          if(!Array.isArray(rows)) rows = [];
+          // Aggregate counts
+          var counts = {}; // {slug: {emoji: n}}
+          rows.forEach(function(r){
+            if(!counts[r.post_slug]) counts[r.post_slug] = {};
+            counts[r.post_slug][r.emoji] = (counts[r.post_slug][r.emoji]||0) + 1;
+          });
+
+          // Determine user's reactions
+          var userReacted = {}; // {slug+emoji: bool}
+          if(userId){
+            rows.forEach(function(r){
+              // We need user_id in the select — re-fetch with user filter
+            });
+          }
+
+          applyCountsToUI(counts);
+
+          // If logged in, fetch this user's own reactions to mark them
+          if(userId){
+            fetch(SB+'/rest/v1/journal_reactions?select=post_slug,emoji&user_id=eq.'+encodeURIComponent(userId), {
+              headers: { apikey: KEY, Authorization: 'Bearer '+session.access_token, Accept: 'application/json' }
+            })
+            .then(function(r){ return r.ok ? r.json() : []; })
+            .then(function(mine){
+              if(!Array.isArray(mine)) return;
+              mine.forEach(function(rx){
+                var row = document.getElementById('reactions-'+rx.post_slug);
+                if(!row) return;
+                var btn = row.querySelector('[data-emoji="'+rx.emoji+'"]');
+                if(btn) btn.classList.add('reacted');
+              });
+            }).catch(function(){});
+          }
+        })
+        .catch(function(){});
+    }
+
+    function applyCountsToUI(counts){
+      SLUGS.forEach(function(slug){
+        var row = document.getElementById('reactions-'+slug);
+        if(!row) return;
+        var slugCounts = counts[slug] || {};
+        row.querySelectorAll('.reaction-btn').forEach(function(btn){
+          var emoji = btn.dataset.emoji;
+          var countEl = btn.querySelector('.reaction-count');
+          if(countEl) countEl.textContent = slugCounts[emoji] || 0;
+        });
+      });
+    }
+
+    // ── React handler ─────────────────────────────────────────────
+    window.jrnReact = function(btn){
+      var row    = btn.closest('.reaction-row');
+      var slug   = row ? row.dataset.slug : null;
+      var emoji  = btn.dataset.emoji;
+      if(!slug || !emoji) return;
+
+      var session = getSession();
+      if(!session || !session.user){
+        // Not logged in — prompt
+        showToast('Sign in to react \u2192 /vault-member/');
+        setTimeout(function(){
+          window.location.href = '/vault-member/';
+        }, 1800);
+        return;
+      }
+
+      var userId      = session.user.id;
+      var accessToken = session.access_token;
+      var authH = Object.assign({}, H, { Authorization: 'Bearer '+accessToken });
+      var isReacted = btn.classList.contains('reacted');
+      var countEl   = btn.querySelector('.reaction-count');
+      var current   = parseInt(countEl ? countEl.textContent : '0', 10) || 0;
+
+      // Optimistic update
+      if(isReacted){
+        btn.classList.remove('reacted');
+        if(countEl) countEl.textContent = Math.max(0, current - 1);
+      } else {
+        btn.classList.add('reacted');
+        if(countEl) countEl.textContent = current + 1;
+      }
+
+      if(isReacted){
+        // DELETE
+        var delUrl = SB+'/rest/v1/journal_reactions?post_slug=eq.'+encodeURIComponent(slug)+'&emoji=eq.'+encodeURIComponent(emoji)+'&user_id=eq.'+encodeURIComponent(userId);
+        fetch(delUrl, { method: 'DELETE', headers: authH })
+          .then(function(r){
+            if(!r.ok) throw new Error(r.status);
+          })
+          .catch(function(){
+            // Rollback
+            btn.classList.add('reacted');
+            if(countEl) countEl.textContent = current;
+          });
+      } else {
+        // INSERT
+        fetch(SB+'/rest/v1/journal_reactions', {
+          method: 'POST',
+          headers: Object.assign({}, authH, { Prefer: 'return=minimal' }),
+          body: JSON.stringify({ post_slug: slug, emoji: emoji, user_id: userId })
+        })
+        .then(function(r){
+          if(!r.ok) throw new Error(r.status);
+        })
+        .catch(function(){
+          // Rollback
+          btn.classList.remove('reacted');
+          if(countEl) countEl.textContent = current;
+        });
+      }
+    };
+
+    window.loadJournalReactions = loadReactions;
+
+    // Load on DOM ready
+    document.addEventListener('vs:session-ready', function(){
+      if(window.VSSignedInState && window.VSSignedInState.getDataSession){
+        window.VSSignedInState.getDataSession().then(function(session){
+          activeSession = session;
+          loadReactions();
+        }).catch(function(){});
+      }
+    }, { once: true });
+
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', loadReactions);
+    } else {
+      loadReactions();
+    }
+  })();
+  </script>
+  <script>
+    function copyJournalLink(btn) {
+      const url = btn.dataset.copyUrl;
+      if (!url) return;
+      navigator.clipboard.writeText(url).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy link'; }, 2000);
+      }).catch(() => {
+        btn.textContent = 'Copy failed';
+        setTimeout(() => { btn.textContent = 'Copy link'; }, 2000);
+      });
+    }
+
+    function filterJournal(btn) {
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.tag-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.journal-entries .entry').forEach(entry => {
+        if (filter === 'all') {
+          entry.classList.remove('hidden');
+        } else {
+          const tags = (entry.dataset.tags || '').split(',').map(t => t.trim());
+          entry.classList.toggle('hidden', !tags.includes(filter));
+        }
+      });
+    }
+  </script>
+  <script src="/assets/journal-feed.js" defer></script>
+  <script src="/assets/nav-toggle.shell-8c1f2155b5.js" defer></script>
+  <script src="/assets/cookie-consent.js" defer></script>
+  <script src="/assets/pwa-install.shell-30b48f0ae6.js" defer></script>
+<script src="/assets/vault-cta.js" defer></script>
+<script src="/assets/schema-injector.shell-33115efcde.js" defer></script>
+  <!-- vs-ambient:start -->
+<script src="/assets/ambient-core.shell-1393921d90.js" defer integrity="sha384-Zey3Z3oDFwPX7V3Rgyui31c4tEDXZHUAd1UA7o0U3FOujfIkNGlY+ttdm6F5kKo+" crossorigin="anonymous"></script>
+<script src="/assets/ambient-feature.shell-dbfd95a4bb.js" defer></script>
+<!-- vs-ambient:end -->
+<script src="/assets/nav-sheet.shell-c0fddc0c73.js" defer></script>
+</body>
+</html>
+
+

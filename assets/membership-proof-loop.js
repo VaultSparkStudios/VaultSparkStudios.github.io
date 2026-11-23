@@ -20,7 +20,7 @@
     var tier = String(intent && intent.tier || 'Free').toLowerCase();
     var world = tier.indexOf('eternal') >= 0 ? 'Eternal channel' : tier.indexOf('sparked') >= 0 ? 'Sparked archive' : 'free Vault';
     return [
-      { label: 'Create your Vault identity', detail: 'Claim the free profile so rank, challenge, and archive progress can persist.' },
+      { label: 'Check website membership', detail: 'Review current enrollment and website profile features; project access is described separately.' },
       { label: 'Complete one Vault Challenge', detail: 'A first challenge gives the rank economy a real signal instead of a blank account.' },
       { label: 'Open your ' + world + ' path', detail: 'Use the recommendation as a starting point, then compare tiers after the portal is live.' }
     ];
@@ -37,7 +37,7 @@
         return '<li><strong>' + esc(item.label) + '</strong><span>' + esc(item.detail) + '</span></li>';
       }).join(''),
       '</ol>',
-      '<a class="button" href="/vault-member/#register">Start with the free account</a>',
+      '<a class="button" href="/membership/">See current membership</a>',
       '</div>'
     ].join('');
   }

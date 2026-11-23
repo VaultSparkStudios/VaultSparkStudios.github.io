@@ -627,14 +627,30 @@ export function deriveQuorum(vantages, observedAt = new Date().toISOString()) {
     groups.set(vantage._sha, group);
   }
   const ranked = [...groups.entries()].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
-  const winner = ranked[0] || [null, []];
-  const agreementCount = winner[1].length;
   const observedShas = ranked.map(([sha, members]) => ({ shaShort: sha.slice(0, 12), sha256: sha256(sha), count: members.length }));
-  const overlay = vantages.find((vantage) => vantage?._sha && vantage?._contentLaneHead)
-    && vantages.some((vantage) => vantage?._sha === vantages.find((candidate) => candidate?._sha && candidate?._contentLaneHead)?._contentLaneHead);
-  const overlayProvider = overlay ? vantages.find((vantage) => vantage?._sha && vantage?._contentLaneHead) : null;
-  const state = agreementCount >= 2 ? 'agreed' : (overlay ? 'overlay-agreed' : (ranked.length > 1 ? 'disagreed' : 'insufficient'));
-  const certifiedSha = state === 'agreed' ? winner[0] : (state === 'overlay-agreed' ? overlayProvider._sha : null);
+  // A deployment's source commit is not its artifact baseline: content lanes
+  // intentionally publish baseline A plus an overlay from source B. Two source
+  // attestations for B must not outvote the HTTP artifact stamp for A, otherwise
+  // the next lane archives B and silently promotes previously withheld code.
+  const artifacts = vantages.filter((v) => v?._sha
+    && ['routed-http', 'provider-origin-http', 'http'].includes(v.evidenceClass));
+  const artifactShas = new Set(artifacts.map((v) => v._sha));
+  const overlays = artifacts.filter((v) => v._contentLaneHead);
+  const overlayPairs = new Set(overlays.map((v) => `${v._sha}:${v._contentLaneHead}`));
+  const overlayProvider = overlays[0] || null;
+  const baseline = artifactShas.size === 1 ? artifacts[0]._sha : null;
+  const conflictingArtifacts = artifactShas.size > 1 || overlayPairs.size > 1;
+  const overlayAttested = overlayProvider && (overlays.length >= 2
+    || vantages.some((v) => !artifacts.includes(v) && v?._sha === overlayProvider._contentLaneHead));
+  const overlaySupport = overlayProvider && baseline && !conflictingArtifacts
+    ? vantages.filter((v) => v?._sha && (v._sha === baseline || v._sha === overlayProvider._contentLaneHead)) : [];
+  const baselineSupport = baseline ? (groups.get(baseline) || []) : [];
+  const agreementCount = overlayAttested ? overlaySupport.length : baselineSupport.length;
+  const state = conflictingArtifacts ? 'disagreed'
+    : (overlayAttested && agreementCount >= 2 ? 'overlay-agreed'
+      : (baseline && baselineSupport.length >= 2 ? 'agreed'
+        : (ranked.length > 1 ? 'disagreed' : 'insufficient')));
+  const certifiedSha = ['agreed', 'overlay-agreed'].includes(state) ? baseline : null;
   return {
     state,
     required: 2,
@@ -651,16 +667,8 @@ export function deriveQuorum(vantages, observedAt = new Date().toISOString()) {
     evidence: vantages.map(({ _sha, _contentLaneHead, ...publicFields }) => publicFields),
     disagreements: observedShas,
     _sha: certifiedSha,
-    // S336: private, stripped before publication exactly like _sha. The content
-    // clock needs the RAW lane head; only its short form and hash are public.
-    // Any vantage that served a lane head supplies the content base — not just
-    // the overlay-agreed case. When two vantages agree on the held BASELINE sha the
-    // quorum is plain 'agreed', yet the content lane may still have promoted well
-    // past it; measuring content lag from the baseline would then report pages as
-    // undeployed that a reader can already load.
-    _contentLaneHead: (overlayProvider && overlayProvider._contentLaneHead)
-      || (vantages.find((v) => v && v._contentLaneHead) || {})._contentLaneHead
-      || null,
+    // Only a certified artifact's overlay may advance the content clock.
+    _contentLaneHead: state === 'overlay-agreed' ? overlayProvider._contentLaneHead : null,
   };
 }
 

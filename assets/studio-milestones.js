@@ -48,21 +48,21 @@
         status: 'live',
         era: 'Now',
         title: 'The Vault Is Sparked',
-        body: (liveProjects || '—') + ' worlds playable · ' + (forgeCount || '—') + ' more in the forge · ' + (sealedCount || '—') + ' sealed behind locks · ' + (sessions || '—') + ' build sessions on the record.',
+        body: (liveProjects || '—') + ' projects marked live · ' + (forgeCount || '—') + ' more in the forge · ' + (sealedCount || '—') + ' sealed behind locks · ' + (sessions || '—') + ' build sessions on the record.',
         accent: '#10B981'
       },
       {
         status: 'next',
         era: 'On The Horizon',
         title: 'The Forge Expands',
-        body: (totalInitiatives ? totalInitiatives + ' initiatives under the vault banner. ' : '') + 'New worlds open as the forge fires — members see each one first.',
+        body: (totalInitiatives ? totalInitiatives + ' initiatives under the vault banner. ' : '') + 'Project pages describe release status and any available access.',
         accent: '#8B5CF6'
       },
       {
         status: 'next',
         era: 'Ahead',
         title: 'The Full Catalog',
-        body: 'Every sealed world eventually steps into the light. The horizon keeps moving — the vault keeps building.',
+        body: 'Follow project pages for announced releases and access updates.',
         accent: '#7EC9FF'
       }
     ];

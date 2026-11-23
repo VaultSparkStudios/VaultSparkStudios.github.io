@@ -1,14 +1,11 @@
 /* showcase-spine.js — S147 showcase-spine
  *
- * Hydrates the homepage Studio Spine section from existing public feeds.
- * Three live cards in one strip, one CTA into the full Oracle.
- *
- *   - Latest Pulse  → /api/public-intelligence.json → .pulse.now[0]
- *                     (falls back to ecosystem.listingMetadata.tagline)
- *   - Studio Signal → /api/status-proof.json → public-status proof payload
- *                     (falls back to /api/public-intelligence.json portfolio counts)
- *   - Oracle Read   → /api/public-intelligence.json → .ecosystem.listingMetadata.canonicalSummary
- *                     (or .stats summary if present)
+ * Hydrates the homepage studio snapshot from public feeds.
+ * Portfolio counts come only from public-intelligence.json.
+ * A public pulse is shown only when pulse.now includes an entry.
+ * status-proof.json supplies recorded proof freshness and its recording time;
+ * it never overwrites the portfolio counts or claims a current trust score.
+ * The overview card points readers to the public studio overview.
  *
  * Micro-feedback (showcase-pulse-prompt) posts an anonymous {source:'spine',vote}
  * to /api/feedback when that endpoint is available; degrades to localStorage tally.
@@ -39,50 +36,38 @@
   safeFetch('/api/public-intelligence.json').then(function(pi){
     if (pi && pi.pulse && Array.isArray(pi.pulse.now) && pi.pulse.now[0]) {
       safeText(pulseEl, pi.pulse.now[0]);
-    } else if (pi && pi.ecosystem && pi.ecosystem.listingMetadata && pi.ecosystem.listingMetadata.tagline) {
-      safeText(pulseEl, pi.ecosystem.listingMetadata.tagline);
+    } else {
+      safeText(pulseEl, 'No recent public dispatch is recorded here. Read the Signal Log.');
     }
     if (pi && pi.portfolio) {
       if (activeEl && typeof pi.portfolio.sparked === 'number') activeEl.textContent = String(pi.portfolio.sparked);
       if (pulsesEl && typeof pi.portfolio.forge === 'number') pulsesEl.textContent = String(pi.portfolio.forge);
     }
-    if (pi && pi.ecosystem && pi.ecosystem.listingMetadata) {
-      var meta = pi.ecosystem.listingMetadata;
-      // Prefer concise summary; fall back to canonicalSummary truncated.
-      var line = meta.tagline || meta.canonicalSummary || '';
-      if (line.length > 180) line = line.slice(0, 177).replace(/\s+\S*$/, '') + '…';
-      safeText(oracleEl, line || 'The Oracle is still synthesising today\'s read.');
-    }
+    safeText(oracleEl, 'Read the public studio overview and recorded status.');
   }).catch(function(){
     safeText(pulseEl,  'Latest dispatch is available in the Signal Log when the feed is unreachable.');
-    safeText(oracleEl, 'Open the Oracle for the full ecosystem forecast.');
+    safeText(oracleEl, 'Read the public studio overview and recorded status.');
   });
   safeFetch('/api/status-proof.json').then(function(proof){
-    var publicStatus = proof && proof.proofs && proof.proofs['public-status'] && proof.proofs['public-status'].data;
-    var studio = publicStatus && publicStatus.studio;
-    if (studio) {
-      if (activeEl && typeof studio.sparked === 'number') activeEl.textContent = String(studio.sparked);
-      if (pulsesEl && typeof studio.forge === 'number') pulsesEl.textContent = String(studio.forge);
-    }
-    if (proofEl && proof.summary) {
+    if (proofEl && proof && proof.summary) {
       var fresh = typeof proof.summary.fresh === 'number' ? proof.summary.fresh : null;
       var feeds = typeof proof.summary.feeds === 'number' ? proof.summary.feeds : null;
-      var trust = typeof proof.summary.trustScore === 'number' ? proof.summary.trustScore : null;
+      var recordedAt = typeof proof.generatedAt === 'string' && Number.isFinite(Date.parse(proof.generatedAt)) ? new Date(proof.generatedAt).toISOString() : null;
       var oldest = proof.summary.worstStale || null;
       var seedRisk = Array.isArray(proof.summary.seedRisk) ? proof.summary.seedRisk : [];
       var parts = [];
-      if (fresh !== null && feeds !== null) parts.push(fresh + '/' + feeds + ' proofs fresh');
-      if (trust !== null) parts.push('trust ' + trust + '%');
+      if (fresh !== null && feeds !== null) parts.push(fresh + '/' + feeds + ' proofs recorded fresh');
+      parts.push(recordedAt ? 'recorded ' + recordedAt : 'recording timestamp unavailable');
       if (oldest && oldest.key && typeof oldest.ageSeconds === 'number') {
         var ageHours = Math.max(0, Math.round(oldest.ageSeconds / 3600));
-        parts.push('oldest ' + oldest.key + ' ' + ageHours + 'h');
+        parts.push('oldest ' + oldest.key + ' ' + ageHours + 'h at recording');
       }
       if (seedRisk.length) {
         parts.push(seedRisk.length + ' seed-risk');
       } else {
         parts.push('no seed-risk');
       }
-      proofEl.textContent = parts.length ? ('Proof: ' + parts.join(' · ')) : 'Proof: status manifest live';
+      proofEl.textContent = 'Proof snapshot: ' + parts.join(' · ');
     }
   }).catch(function(){
     safeText(proofEl, 'Proof: status manifest unavailable');

@@ -32,6 +32,8 @@ import { handleHubRequest, isHubRequest } from './hub-auth.js';
 import { authenticateObeliskRequest, handleObeliskAuthRequest } from './obelisk-auth.js';
 import { handleAgentActions } from './agent-actions.js';
 import { pagesRedirectResponse } from './pages-redirects.js';
+import { createPublicMcp } from './public-mcp.mjs';
+import { handleProjectWaitlist } from './project-waitlist-proxy.mjs';
 import {
   drKeyFor,
   independentBufferedResponse,
@@ -186,7 +188,10 @@ function isBlockedRequest(request) {
   // recipient limits as browsers. This exception grants no portal access.
   if (GENERIC_HTTP_CLIENT_PATTERNS.some((p) => p.test(ua))) {
     const deskInvitation = request.method === 'POST' && url.pathname === '/desk/dispatch/subscribe';
-    if (isGatedPath(url.pathname) || (!SAFE_METHODS.has(request.method) && !deskInvitation)) return true;
+    // MCP uses POST as a transport for four existing public read resources.
+    // Its SDK exposes no application writes or authenticated portal access.
+    const publicMcpRead = request.method === 'POST' && url.pathname === '/mcp';
+    if (isGatedPath(url.pathname) || (!SAFE_METHODS.has(request.method) && !deskInvitation && !publicMcpRead)) return true;
   }
   return false;
 }
@@ -1342,7 +1347,8 @@ const worker = {
       '/projects/vaultfront': '/games/vaultfront/',
       // S160 #20 (redundance-purge): /signal-log/ retired into /journal/; S368 then
       // retired the /journal/ index into /changelog/#stories. S372: one hop, not two.
-      '/signal-log': '/changelog/#stories',
+      // S418: dated studio writing has its own canonical Devlog again.
+      '/signal-log': '/devlog/',
     };
     // /products/<slug> tree → canonical per-project surfaces (S147)
     const PRODUCTS_PATH_REDIRECTS = {
@@ -1465,6 +1471,17 @@ const worker = {
         // authority. Portal role checks still happen after identity succeeds.
         return portalGateRedirect(publicOrigin, url.pathname, url.search);
       }
+    }
+
+    if (url.pathname === '/api/project-waitlist') {
+      return withSecurityHeaders(await handleProjectWaitlist(request, env), { ttl: 0, csp: WORKER_CSP });
+    }
+
+    if (url.pathname === '/mcp') {
+      const mcp = createPublicMcp({ publicOrigin, readFeed: (path, signal) => originFetch(new Request(`${publicOrigin}${path}`, {
+        headers: { Accept: 'application/json', 'User-Agent': 'VaultSparkPublicMCP/1.0' }, signal,
+      })) });
+      return withSecurityHeaders(await mcp.fetch(request), { ttl: 0, csp: WORKER_CSP });
     }
 
     // --- Layer 3: Turnstile + CSRF + optional rate limit on public forms ---

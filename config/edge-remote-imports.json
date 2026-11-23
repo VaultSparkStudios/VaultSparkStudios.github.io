@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-23",
+  "scope": "Exact first-party package versions for existing Supabase Edge Function remote imports; no package installation or module download performed.",
+  "packages": [
+    {
+      "name": "@supabase/supabase-js",
+      "version": "2.119.2",
+      "selection": "Current stable major-2 registry version, preserving the existing @2 resolution.",
+      "publishedAt": "2026-11-19T10:43:46.676Z",
+      "registry": "https://registry.npmjs.org/@supabase/supabase-js/2.119.2",
+      "source": "https://github.com/supabase/supabase-js/releases/tag/v2.119.2",
+      "license": "MIT",
+      "maintainers": ["etienne_supa", "mandarini"],
+      "registryIntegrity": "sha512-4HvF4G2DwdqjmwPBpz9RHnXWfdK0wSkw4yBhxe64CdeF8gdxsTF9WZuHFuNWtQnHllq71ZDyAghr4Q8nC0m/NA==",
+      "trust": "APPROVE 86/100; official immutable signed release and current registry repository/maintainer/license/integrity metadata verified."
+    },
+    {
+      "name": "stripe",
+      "version": "14.25.0",
+      "selection": "Final stable major-14 registry version; preserves existing major/API compatibility.",
+      "publishedAt": "2024-04-09T21:12:35.302Z",
+      "registry": "https://registry.npmjs.org/stripe/14.25.0",
+      "source": "https://github.com/stripe/stripe-node/releases/tag/v14.25.0",
+      "license": "MIT",
+      "maintainers": ["stripe-bindings"],
+      "registryIntegrity": "sha512-wQS3GNMofCXwH8TSje8E1SE8zr6ODiGtHQgPtO95p9Mb4FhKC9jvXR2NUTpZ9ZINlckJcFidCmaTFV4P6vsb9g==",
+      "trust": "REVIEW 78/100 resolved with current official registry metadata, maintainer continuity, official release, MIT license, mature release age and absence of install/postinstall hooks."
+    }
+  ],
+  "limits": "Registry integrity values are provenance metadata, not a claim that downloaded tarball or esm.sh transformed-module bytes were verified. Exact imports remove floating direct package versions; runtime deployment checks remain required."
+}

@@ -185,6 +185,10 @@ function isGeneric(url) { return GENERIC_CARDS.includes(asPath(url)); }
 // A card this generator already produced — re-render it so a template/title change
 // (e.g. cleanCardTitle) refreshes the PNG content even though the meta already points here.
 function isOurs(url) { return /\/assets\/og\/og-[^"?]+\.png(\?|$)/.test(url || ''); }
+export function rewriteCardImages(html, cardUrl, forceBespoke = false) {
+  return html.replace(/(<meta\s+(?:property|name)="(?:og:image|twitter:image)"\s+content=")([^"]+)(")/gi,
+    (tag, before, value, after) => forceBespoke || isGeneric(value) || isOurs(value) ? before + cardUrl + after : tag);
+}
 
 export async function renderCardPng({ title, eyebrow, status }) {
   const svg = renderSvg({ title, eyebrow, status, theme: 'dark' });
@@ -192,8 +196,10 @@ export async function renderCardPng({ title, eyebrow, status }) {
 }
 
 function listPages() {
-  return execSync('git ls-files "*.html"', { cwd: ROOT, encoding: 'utf8' })
-    .split('\n').filter(Boolean)
+  return [...new Set(execSync('git ls-files -co --exclude-standard -- "*.html"', { cwd: ROOT, encoding: 'utf8' })
+    .split(/\r?\n/).filter(Boolean))]
+    .filter((file) => existsSync(join(ROOT, file)))
+    .sort()
     .filter((f) => !f.startsWith('docs/'))
     // S356: never mint a card for, or inject og tags into, a file the deploy prunes.
     // SKIP_PATH lists public paths we choose not to card; it says nothing about
@@ -259,13 +265,7 @@ async function run({ check } = {}) {
       writeFileSync(join(ROOT, cardRel), png);
       generated++;
       // Rewrite ONLY the meta tags that currently point at a generic card.
-      let next = html;
-      if (forceBespoke || isGeneric(og)) {
-        next = next.replace(/(<meta\s+property="og:image"\s+content=")[^"]+(")/i, `$1${cardUrl}$2`);
-      }
-      if (forceBespoke || isGeneric(tw)) {
-        next = next.replace(/(<meta\s+(?:property|name)="twitter:image"\s+content=")[^"]+(")/i, `$1${cardUrl}$2`);
-      }
+      const next = rewriteCardImages(html, cardUrl, forceBespoke);
       if (next !== html) { writeFileSync(full, next, 'utf8'); rewritten++; }
     }
   }
@@ -287,6 +287,14 @@ async function selfTest() {
   assert(isGeneric('https://vaultsparkstudios.com/assets/og-image.png'), 'prod generic detected');
   assert(isGeneric('/assets/og-journal.png'), 'path generic detected');
   assert(!isGeneric('/assets/og-cod.png'), 'bespoke card not flagged generic');
+  for (const [page, old] of [['beta','home'],['agents','home'],['dispatch','home'],['trust','security'],['devlog','journal']]) {
+    const card = `${PROD}/assets/og/og-${page}.png`;
+    const oldHtml = `<meta property="og:image" content="${PROD}/assets/og/og-${old}.png"><meta name="twitter:image" content="/assets/og-studio.png">`;
+    const next = rewriteCardImages(oldHtml, card);
+    assert(metaImage(next, 'og:image') === card, `${page} reused generated card follows its canonical title`);
+    assert(metaImage(next, 'twitter:image') === '/assets/og-studio.png', `${page} mixed bespoke image is preserved`);
+    assert(rewriteCardImages(next, card) === next, `${page} metadata update is idempotent`);
+  }
   assert(metaFor('games/gridiron-gm/index.html').status === 'forge', 'game status mapped');
   assert(cleanCardTitle('FAQ | VaultSpark Studios') === 'FAQ', 'strips trailing brand suffix');
   assert(cleanCardTitle('VaultSpark Studios | The Vault Is Sparked') === 'The Vault Is Sparked', 'strips leading brand segment');

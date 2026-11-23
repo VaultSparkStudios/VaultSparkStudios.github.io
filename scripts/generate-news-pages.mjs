@@ -85,11 +85,11 @@ const storyTime = (day, story) => resolveStoryTime(day, story, publishTimes);
 
 /* ── Harvest shared chrome from a live sibling page ────────────────────── */
 
-// Harvest from journal/index.html — a hand-maintained page that provably
+// Harvest from devlog/index.html — a hand-maintained page that provably
 // carries the full chrome. NEVER harvest from a generator's own output:
 // generate-pathways did, one bad harvest became self-perpetuating, and all
 // six pathways pages silently lost their primary nav (found S305).
-const sample = readFileSync(join(ROOT, 'journal/index.html'), 'utf8');
+const sample = readFileSync(join(ROOT, 'devlog/index.html'), 'utf8');
 const slice = (startMark, endMark, endOffset) => {
   const start = sample.indexOf(startMark);
   const end = sample.indexOf(endMark, start) + endOffset;
@@ -234,7 +234,7 @@ ${themeBoot}<a href="#main-content" class="skip-link">Skip to main content</a>${
 /**
  * S317 — rewrite relative asset refs in HARVESTED chrome to the page's depth.
  *
- * The footer/ambient blocks are sliced verbatim out of journal/index.html, a
+ * The footer/ambient blocks are sliced verbatim out of devlog/index.html, a
  * DEPTH-1 page, so every `../assets/…` in them resolves one level up. Pasted
  * unchanged into a depth-3 article, `../assets/social-icons.svg` resolves to
  * /news/<date>/assets/social-icons.svg → 404. That is exactly what every Desk

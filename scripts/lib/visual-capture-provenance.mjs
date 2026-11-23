@@ -97,8 +97,8 @@ export function validateVisualCapture(root, directory, manifest, files) {
   return images;
 }
 
-export function sealVisualCapture(root, directory, provenance, shots, files) {
-  const manifest = { capturedAt: new Date().toISOString(), captureProvenance: provenance, shots };
+export function sealVisualCapture(root, directory, provenance, shots, files, { capturePlan } = {}) {
+  const manifest = { capturedAt: new Date().toISOString(), captureProvenance: provenance, shots, ...(capturePlan ? { capturePlan } : {}) };
   validateVisualCapture(root, directory, manifest, files);
   fs.writeFileSync(path.join(directory, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n', { flag: 'wx' });
   return manifest;

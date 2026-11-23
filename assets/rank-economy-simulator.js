@@ -1,6 +1,21 @@
 /* rank-economy-simulator.js — local-only Vault rank economy simulator. */
 (function () {
   'use strict';
+  // Reuse the existing generated membership authority; no alternate rank scale.
+  var membershipReady = window.VSMembership
+    ? Promise.resolve(window.VSMembership)
+    : import('/assets/membership-access.js').then(function () { return window.VSMembership; });
+  membershipReady = membershipReady.then(function (authority) {
+    if (!authority || !authority.config || !Array.isArray(authority.config.ranks) ||
+        !Array.isArray(authority.config.rankThresholds) || typeof authority.getRankIndex !== 'function' ||
+        authority.config.ranks.length !== authority.config.rankThresholds.length || !authority.config.ranks.length) {
+      throw new Error('rank_authority_unavailable');
+    }
+    return authority;
+  });
+  // Missing authority suppresses enhancement; it never substitutes a guessed scale.
+  membershipReady.catch(function () {});
+
   function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
   function rankFor(points, ranks) {
     var active = ranks[0];
@@ -11,10 +26,13 @@
     }
     return { active: active, next: next };
   }
-  function mount(root, data) {
+  function mount(root, data, authority) {
+    var ranks = authority.config.ranks.map(function (rank, i) {
+      return { name: rank.label, min: authority.config.rankThresholds[i] };
+    });
     var actions = data.actions || {};
     var keys = Object.keys(actions);
-    root.innerHTML = '<div class="vs-rank-sim"><div><div class="eyebrow">Rank Economy</div><h2>Model your Vault climb.</h2><p>Local-only sliders. No account state changes, no server writes.</p><div class="vs-rank-sim__out" aria-live="polite"></div></div><div class="vs-rank-sim__controls">' + keys.map(function (key) {
+    root.innerHTML = '<div class="vs-rank-sim"><div><div class="eyebrow">Rank Economy</div><h2>Model your Vault climb.</h2><p>Hypothetical action estimates against current website rank thresholds. Local-only sliders; no account state changes or server writes.</p><div class="vs-rank-sim__out" aria-live="polite"></div></div><div class="vs-rank-sim__controls">' + keys.map(function (key) {
       var a = actions[key];
       return '<label><span>' + esc(a.label) + '</span><input type="range" min="0" max="' + Number(a.max || 10) + '" value="0" data-rank-action="' + esc(key) + '"></label>';
     }).join('') + '</div></div>';
@@ -43,7 +61,7 @@
         var input = root.querySelector('[data-rank-action="' + key + '"]');
         points += Number(input.value || 0) * Number(actions[key].xp || 0);
       });
-      var r = rankFor(points, data.ranks || []);
+      var r = rankFor(points, ranks);
       root.querySelector('.vs-rank-sim__out').innerHTML = '<strong>' + points.toLocaleString() + ' projected points</strong><br>Rank: ' + esc(r.active.name) + (r.next ? ' · Next: ' + esc(r.next.name) + ' at ' + r.next.min.toLocaleString() : ' · max public rank reached');
     }
     root.addEventListener('input', update);
@@ -61,9 +79,9 @@
       roots.push(section);
     }
     if (!roots.length) return;
-    fetch('/data/rank-economy.json', { cache: 'default' }).then(function (r) { return r.json(); }).then(function (data) {
-      roots.forEach(function (root) { mount(root, data); });
-    });
+    Promise.all([fetch('/data/rank-economy.json', { cache: 'default' }).then(function (r) { if (!r.ok) throw new Error('rank_model_unavailable'); return r.json(); }), membershipReady]).then(function (values) {
+      roots.forEach(function (root) { mount(root, values[0], values[1]); });
+    }).catch(function () {});
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();

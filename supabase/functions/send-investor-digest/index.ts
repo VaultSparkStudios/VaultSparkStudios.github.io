@@ -12,7 +12,7 @@
 // Can also be called manually from Supabase dashboard for testing.
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.119.2';
 
 const RESEND_API_KEY  = Deno.env.get('RESEND_API_KEY')  ?? '';
 const FROM_EMAIL      = Deno.env.get('DIGEST_FROM_EMAIL') ?? 'studio@vaultsparkstudios.com';

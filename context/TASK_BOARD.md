@@ -1,3 +1,12 @@
+## S418 technical outcomes — acceptance pending
+
+The twelve selected outcomes and their acceptance contracts are retained in [IMPLEMENT_PLAN](../docs/IMPLEMENT_PLAN.md) and the dated audit sidecar. Source implementation/local checks do not mark a hosted outcome complete.
+
+- [ ] Complete current CI and source verification for all twelve selected outcomes.
+- [ ] Complete permitted candidate-based member and approved-investor acceptance, including refusal, recovery and logout boundaries.
+- [ ] Complete staging, authorized delivery, production served readback and rollback acceptance against the actual final candidate.
+- [ ] Reconcile every inherited outcome and complete public-safe writeback/closeout only after its acceptance evidence exists.
+
 ## S417 recovery disposition
 
 - [x] Reconstruct committed work and reconcile the partial release record.

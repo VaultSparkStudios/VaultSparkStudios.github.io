@@ -220,6 +220,15 @@ export function buildManifest(state) {
       },
     },
     discovery: {
+      guide: `${SITE}/agents/`,
+      mcp: {
+        url: `${SITE}/mcp`,
+        transport: 'streamable-http',
+        authentication: 'none; public read-only resources',
+        resources: ['vaultspark://studio/overview', 'vaultspark://studio/status', 'vaultspark://studio/agents', 'vaultspark://studio/pathways'],
+        operations: ['resources/list', 'resources/read'],
+        exclusions: ['tools', 'writes', 'private data', 'subscriptions', 'model execution'],
+      },
       manifest: `${SITE}/agents.json`,
       sitemap: `${SITE}/sitemap.xml`,
       robots: `${SITE}/robots.txt`,

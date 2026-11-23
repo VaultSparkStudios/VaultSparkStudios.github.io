@@ -848,16 +848,36 @@ body.light-mode .whats-new-close-btn { color:#fff; }
   margin-bottom: 0.55rem;
 }
 .newsletter-toggle p { font-size: 0.88rem; color: var(--muted); margin-top: 0.2rem; }
+.birth-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 0.75rem;
+}
+.birth-row select {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel-strong);
+  color: var(--text);
+  font: inherit;
+}
+.birth-row select:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
 .toggle-switch {
   position: relative;
-  width: 44px; height: 24px;
+  width: 44px; height: 44px;
   flex-shrink: 0;
 }
 .toggle-switch input { opacity: 0; width: 0; height: 0; }
 .toggle-switch .slider {
   position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.1);
+  inset: 10px 0;
+  background: var(--muted);
   border-radius: 999px;
   cursor: pointer;
   transition: background 0.2s ease;
@@ -867,12 +887,13 @@ body.light-mode .whats-new-close-btn { color:#fff; }
   position: absolute;
   left: 3px; top: 3px;
   width: 18px; height: 18px;
-  background: white;
+  background: var(--bg);
   border-radius: 50%;
   transition: transform 0.2s ease;
 }
 .toggle-switch input:checked + .slider { background: var(--gold); }
 .toggle-switch input:checked + .slider::before { transform: translateX(20px); }
+.toggle-switch input:focus-visible + .slider { outline: 2px solid var(--gold); outline-offset: 3px; }
 
 .signout-btn {
   background: transparent;
@@ -1024,8 +1045,8 @@ body.light-mode .whats-new-close-btn { color:#fff; }
 .settings-block {
   padding: 1.6rem;
   border-radius: 20px;
-  background: rgba(13,17,28,0.9);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
 }
 .settings-block h3 {
   font-size: 0.75rem;
@@ -2308,6 +2329,7 @@ body.light-mode .form-group input::placeholder,
 body.light-mode .form-group textarea::placeholder {
   color: var(--dim);
 }
+body.light-mode .form-error { color: #b91c1c; }
 body.light-mode .auth-footnote {
   background: rgba(0,0,0,0.04);
   border-color: rgba(0,0,0,0.07);

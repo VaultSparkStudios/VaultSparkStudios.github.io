@@ -136,3 +136,12 @@ verify_jwt = false
 # Brevo double opt-in, all enforced in-code.
 [functions.subscribe-desk-dispatch]
 verify_jwt = false
+
+# account-data authenticates confirmed shared-provider member tokens in-code;
+# its bounded retry processor has a separate secret bearer contract.
+[functions.account-data]
+verify_jwt = false
+
+# Project email interests validate human checks and confirmation tokens in-code.
+[functions.project-waitlist]
+verify_jwt = false

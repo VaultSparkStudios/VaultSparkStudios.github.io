@@ -2,7 +2,7 @@
  *
  * Renders a 2px gradient bar at the very bottom of the viewport showing
  * progress to the next Vault rank. Subtle — no UI surface, no banner.
- * Visible only when signed in. Hides at max rank (The Sparked / 5000+).
+ * Visible only when signed in. Hides at max rank (the canonical final rank).
  *
  * Listens for vs:session-ready from signed-in-state.js (no extra auth call).
  * Points data fetched from vault_members table on first sign-in per session.
@@ -11,34 +11,34 @@
 (function () {
   'use strict';
 
-  var RANK_THRESHOLDS = [
-    { title: 'Spark Initiate', min: 0,    next: 50 },
-    { title: 'Vault Runner',   min: 50,   next: 100 },
-    { title: 'Rift Scout',     min: 100,  next: 200 },
-    { title: 'Vault Guard',    min: 200,  next: 400 },
-    { title: 'Vault Breacher', min: 400,  next: 800 },
-    { title: 'Void Operative', min: 800,  next: 1500 },
-    { title: 'Vault Keeper',   min: 1500, next: 2500 },
-    { title: 'Forge Master',   min: 2500, next: 5000 },
-    { title: 'The Sparked',    min: 5000, next: null },
-  ];
+  // Reuse the existing generated membership authority; no alternate rank scale.
+  var membershipReady = window.VSMembership
+    ? Promise.resolve(window.VSMembership)
+    : import('/assets/membership-access.js').then(function () { return window.VSMembership; });
+  membershipReady = membershipReady.then(function (authority) {
+    if (!authority || !authority.config || !Array.isArray(authority.config.ranks) ||
+        !Array.isArray(authority.config.rankThresholds) || typeof authority.getRankIndex !== 'function' ||
+        authority.config.ranks.length !== authority.config.rankThresholds.length || !authority.config.ranks.length) {
+      throw new Error('rank_authority_unavailable');
+    }
+    return authority;
+  });
+  // Missing authority suppresses enhancement; it never substitutes a guessed scale.
+  membershipReady.catch(function () {});
 
-  var STORAGE_KEY = 'vs-rank-bar-data';
+
+  var STORAGE_KEY = 'vs-rank-bar-canonical-data';
   var BAR_ID = 'vs-rank-bar';
   var VELOCITY_ID = 'vs-rank-velocity';
   var barEl = null;
 
   function getRankProgress(points) {
-    var p = Number(points) || 0;
-    for (var i = RANK_THRESHOLDS.length - 1; i >= 0; i--) {
-      if (p >= RANK_THRESHOLDS[i].min) {
-        var tier = RANK_THRESHOLDS[i];
-        if (tier.next === null) return { pct: 100, rank: tier.title, maxed: true };
-        var pct = Math.min(100, Math.round(((p - tier.min) / (tier.next - tier.min)) * 100));
-        return { pct: pct, rank: tier.title, next: RANK_THRESHOLDS[i + 1].title, maxed: false };
-      }
-    }
-    return { pct: 0, rank: 'Spark Initiate', next: 'Vault Runner', maxed: false };
+    var authority = window.VSMembership, config = authority.config;
+    var p = Math.max(0, Number(points) || 0), index = authority.getRankIndex(p);
+    var next = config.rankThresholds[index + 1];
+    if (next === undefined) return { pct: 100, rank: config.ranks[index].label, maxed: true };
+    return { pct: Math.min(100, Math.round((p - config.rankThresholds[index]) / (next - config.rankThresholds[index]) * 100)),
+      rank: config.ranks[index].label, next: config.ranks[index + 1].label, maxed: false };
   }
 
   function ensureBar() {
@@ -312,9 +312,12 @@
   }
 
   async function fetchAndRender(userId) {
-    // Check session cache first (avoids re-query on same-session navigations).
+    var authority;
+    try { authority = await membershipReady; } catch (_) { return; }
+    var authorityKey = JSON.stringify([authority.config.version, authority.config.rankThresholds, authority.config.ranks]);
+    // Reuse only data computed against this exact canonical authority.
     var cached = getCached();
-    if (cached && cached.userId === userId) {
+    if (cached && cached.userId === userId && cached.authorityKey === authorityKey) {
       renderBar(cached);
       return;
     }
@@ -334,9 +337,9 @@
         var daysSinceJoin = Math.max(1, (Date.now() - joinMs) / 86400000);
         var pointsPerDay = points / daysSinceJoin;
         if (pointsPerDay > 0) {
-          var currentTier = RANK_THRESHOLDS.find(function (r) { return r.title === progress.rank; });
-          if (currentTier && currentTier.next !== null) {
-            var pointsNeeded = currentTier.next - points;
+          var nextThreshold = authority.config.rankThresholds[authority.getRankIndex(points) + 1];
+          if (nextThreshold !== undefined) {
+            var pointsNeeded = nextThreshold - points;
             weeksToNext = Math.ceil(pointsNeeded / (pointsPerDay * 7));
             if (weeksToNext < 1) weeksToNext = 1;
             if (weeksToNext > 999) weeksToNext = null; // suppress implausible projections
@@ -344,7 +347,7 @@
         }
       }
 
-      var data = { userId: userId, pct: progress.pct, rank: progress.rank, next: progress.next, maxed: progress.maxed, weeksToNext: weeksToNext };
+      var data = { userId: userId, authorityKey: authorityKey, pct: progress.pct, rank: progress.rank, next: progress.next, maxed: progress.maxed, weeksToNext: weeksToNext };
       setCache(data);
       renderBar(data);
     } catch (_) { /* silent */ }

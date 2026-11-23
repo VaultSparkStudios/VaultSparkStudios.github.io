@@ -47,7 +47,7 @@ const REQUIRED = [
   { path: 'press/index.html',      expected: ['Organization', 'WebPage', 'BreadcrumbList'] },
   { path: 'studio/index.html',     expected: ['Organization', 'WebPage', 'BreadcrumbList'] },
   { path: 'changelog/index.html',  expected: ['CollectionPage', 'ItemList', 'BreadcrumbList'] },
-  { path: 'journal/index.html',    expected: ['Blog', 'CollectionPage', 'BreadcrumbList'] },
+  { path: 'devlog/index.html',    expected: ['Blog', 'CollectionPage', 'BreadcrumbList'] },
   { path: 'community/index.html',  expected: ['WebPage', 'BreadcrumbList'] },
 ];
 

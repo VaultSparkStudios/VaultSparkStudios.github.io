@@ -6,7 +6,7 @@ function fail(message) {
   process.exit(1);
 }
 
-const index = readFileSync('journal/index.html', 'utf8');
+const index = readFileSync('devlog/index.html', 'utf8');
 const feed = JSON.parse(readFileSync('data/journal-feed.json', 'utf8'));
 const renderer = readFileSync('assets/journal-feed.js', 'utf8');
 
@@ -18,20 +18,20 @@ if (new Set(slugs).size !== slugs.length) fail('duplicate post slugs in data/jou
 
 const staticEntryMatches = index.match(/<article class="entry" id="/g) || [];
 if (staticEntryMatches.length !== 3) {
-  fail(`expected exactly 3 static journal entries in journal/index.html, found ${staticEntryMatches.length}`);
+  fail(`expected exactly 3 static journal entries in devlog/index.html, found ${staticEntryMatches.length}`);
 }
 
 for (const slug of slugs) {
   if (index.includes(`id="${slug}"`)) {
-    fail(`dynamic feed slug ${slug} is still inlined in journal/index.html`);
+    fail(`dynamic feed slug ${slug} is still inlined in devlog/index.html`);
   }
   if (!index.includes(`'${slug}'`)) {
-    fail(`reaction slug ${slug} missing from journal/index.html SLUGS list`);
+    fail(`reaction slug ${slug} missing from devlog/index.html SLUGS list`);
   }
 }
 
 if (!index.includes('data-journal-feed') || !index.includes('/assets/journal-feed.js')) {
-  fail('journal feed mount or renderer script is missing from journal/index.html');
+  fail('journal feed mount or renderer script is missing from devlog/index.html');
 }
 
 if (!renderer.includes('window.loadJournalReactions')) {

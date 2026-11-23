@@ -13,12 +13,12 @@ before(async () => { browser = await launchBrowser(); });
 after(async () => { await browser?.close(); });
 
 for (const [route, source] of Object.entries(pages)) {
-  test(`${route}: public member entry offers direct registration and preserves referrals`, async () => {
-    assert.doesNotMatch(source, /invite-led|by invitation|opened by invitation|Request (?:your (?:Vault )?)?invite|Request Invite|topic=invite/i);
+  test(`${route}: shared identity creation stays separate from invitation-based website enrollment`, async () => {
+    if(route!=='/invite/')assert.match(source,/opened by invitation|Request your Vault invite/i);
     const f = await openFixture(browser, { pages: { [route]: source } });
     try {
       await f.goto(route);
-      const joins = await f.page.locator('a[data-vs-join], a[data-adaptive-cta="account"]').evaluateAll(nodes =>
+      const joins = await f.page.locator('header a[data-vs-join]').evaluateAll(nodes =>
         nodes.map(node => ({ href: node.getAttribute('href'), text: node.textContent.trim() })));
       assert.ok(joins.length >= 2, 'desktop and mobile member join entries exist');
       for (const link of joins) {
@@ -29,7 +29,8 @@ for (const [route, source] of Object.entries(pages)) {
       assert.ok(referralLinks.some(text => /Refer a Friend/.test(text)), 'referral page remains reachable');
       assert.ok(await f.page.locator('a[href="/investor-portal/"]').count(), 'investor destination remains separate');
       if (route === '/membership/') {
-        assert.equal(await f.page.locator('.mem-cta-free.mem-tier-cta').getAttribute('href'), '/vault-member/#register');
+        assert.equal(await f.page.locator('.mem-cta-free.mem-tier-cta').getAttribute('href'), '/invite/');
+        assert.match(await f.page.locator('.mem-cta-free.mem-tier-cta').textContent(), /invite/i);
         assert.match(await f.page.locator('.tier-free .mem-tier-cta-note').textContent(), /Sign in/);
         const structured = await f.page.locator('script[type="application/ld+json"]').allTextContents();
         assert.ok(structured.some(text => text.includes('https://vaultsparkstudios.com/vault-member/#register')));
@@ -55,11 +56,12 @@ test('canonical nav offers registration while keeping neutral sign-in and referr
   assert.match(source, /href="\/invite\/">Refer a Friend/);
 });
 
-test('legacy invitation contact URL offers account help without an approval promise', () => {
+test('legacy invitation contact URL offers account help and current enrollment information', () => {
   const source = fs.readFileSync('assets/contact-page.js', 'utf8');
   assert.match(source, /subject: 'Vault account help'/);
-  assert.match(source, /No invitation is needed to join/);
-  assert.match(source, /\/vault-member\/#register/);
+  assert.match(source, /current website membership enrollment and access/);
+  assert.match(source, /membershipHref: '\/membership\/'/);
+  assert.doesNotMatch(source, /No invitation is needed to join/);
   assert.doesNotMatch(source, /invite-led|reply with an invite|Vault invite request/);
   assert.match(source, /event: 'invite_request_view'/, 'existing analytics contract remains stable');
 });

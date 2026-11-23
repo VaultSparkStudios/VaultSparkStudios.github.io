@@ -57,13 +57,13 @@
       selectors: ['.hero', '.hero-wordmark', 'main .container:first-of-type'],
       eyebrow: 'The forge',
       title: 'This is the vault you are standing in.',
-      body: 'VaultSpark Studios ships worlds — games, tools, and a living protocol layer. Everything on this page is live repo truth, not marketing.',
+      body: 'VaultSpark Studios ships worlds — games, tools, and a living protocol layer. Public project pages distinguish released work from projects in development.',
     },
     {
       selectors: ['#vault-membership', '#membership', '.membership-section', 'a[href="/membership/"]'],
       eyebrow: 'The membership',
-      title: 'Members see deeper layers first.',
-      body: 'Vault members unlock sealed previews, early signal on unannounced projects, and direct lines into the forge. Free tier is real; paid tiers are earned.',
+      title: 'Explore website membership.',
+      body: 'Website membership covers profiles, ranks and community activities. See the membership page for current enrollment and tier details; project access follows each project page.',
     },
     {
       selectors: ['[data-recent-ships]', '.proof-rail', '[data-vs-spine]'],

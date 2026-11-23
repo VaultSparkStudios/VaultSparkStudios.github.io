@@ -48,6 +48,7 @@ export const OG_DARK_PATHS = new Map([
   ['offline.html', 'offline fallback'],
   ['login.html', 'auth flow'],
   ['auth/callback.html', 'oauth callback'],
+  ['waitlist/confirm/index.html', 'noindex email confirmation utility; token stays in browser fragment'],
   ['obelisk-passport/login.html', 'auth flow'],
   ['obelisk-passport/callback.html', 'oauth callback'],
   ['search/index.html', 'utility search'],
@@ -239,8 +240,10 @@ function runSelfTest() {
  * scoping fix.
  */
 export function listScannableHtml(root = ROOT) {
-  return execSync('git ls-files "*.html"', { cwd: root, encoding: 'utf8' })
-    .split('\n').filter(Boolean)
+  return [...new Set(execSync('git ls-files -co --exclude-standard -- "*.html"', { cwd: root, encoding: 'utf8' })
+    .split(/\r?\n/).filter(Boolean))]
+    .filter((file) => existsSync(join(root, file)))
+    .sort()
     .filter((f) => !f.startsWith('docs/') && !isInternal(f));
 }
 

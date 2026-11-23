@@ -11,7 +11,7 @@
 //   SUPABASE_SERVICE_ROLE_KEY — auto-injected by Supabase
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.119.2';
 import { getActivePlanKey, hasEntitlement } from '../_shared/membershipAccess.ts';
 
 const ODDS_API_KEY = Deno.env.get('ODDS_API_KEY') ?? '';

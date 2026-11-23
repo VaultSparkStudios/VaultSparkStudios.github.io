@@ -17,6 +17,7 @@ import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
+import { priceForModel } from '../scripts/lib/model-router.mjs';
 
 import {
   buildReplyCacheKey,
@@ -182,10 +183,13 @@ test('S368 price table: per-model pricing, SQL and TS mirror agree', () => {
   assert.equal(priceKeyFor(undefined), 'default');
   const usage = { input_tokens: 1_000_000, output_tokens: 1_000_000 };
   assert.equal(estimateUsd('claude-sonnet-5-5', usage), 12);
+  assert.equal(estimateUsd('claude-sonnet-5-5', { cache_read_input_tokens: 1_000_000 }), 0.10);
+  assert.equal(priceForModel('claude-sonnet-5-5').cacheRead, 0.10);
+  assert.equal(priceForModel('claude-sonnet-5').cacheRead, 0.20, 'the older Sonnet generation retains its own price');
   assert.equal(estimateUsd(HAIKU_MODEL, usage), 6);
   assert.equal(estimateUsd('mystery-model', usage), 18);
 
-  const sql = read('supabase/migrations/supabase-s368-ignis-meter-model-pricing.sql');
+  const sql = read('supabase/migrations/20261123044000_ignis_sonnet_cache_price.sql');
   const rows = [
     ['claude-sonnet-5-5', MODEL_PRICES['claude-sonnet-5-5']],
     ['claude-haiku-4-5', MODEL_PRICES['claude-haiku-4-5']],

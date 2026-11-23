@@ -264,6 +264,13 @@
     },
   };
 
+  window.VSTurnstile.consumeToken = function (slot) {
+    return window.VSTurnstile.getToken(slot).then(function (token) {
+      if (_cachedToken === token) { _cachedToken = null; _tokenExpiry = 0; }
+      return token;
+    });
+  };
+
   // Pre-load Turnstile API as early as possible so the first form submit is instant
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () { ensureLoaded(); });

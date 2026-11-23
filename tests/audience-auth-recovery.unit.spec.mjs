@@ -213,12 +213,14 @@ test('investor protected gates preserve safe deep link through branded gateway w
 // Compose the real entry controllers and member bootstrap/profile listener with
 // the real edge start/callback handlers. Only identity/data providers and final
 // destination content are local fixtures; no browser URL construction is mocked.
-async function entryComposition(run, { member = true, intent = 'signin' } = {}) {
+async function entryComposition(run, { member = true, intent = 'signin', accountStatus = { data: { job: null }, error: null } } = {}) {
   browser ||= await launchBrowser();
   let authenticated = false;
+  const statusCalls = [];
   const row = { username: 'VaultPerson', points: 10, created_at: '2026-01-01T00:00:00Z', achievements: [] };
   const dataScript = () => `(() => {
-    const session = ${authenticated ? JSON.stringify({ user: { id: 'composition-person', email: 'person@example.test' } }) : 'null'};
+    const session = ${authenticated ? JSON.stringify({ user: { id: '11111111-1111-4111-8111-111111111111', email: 'person@example.test', email_confirmed_at: '2026-01-01T00:00:00Z' }, access_token: 'fixture-compatibility-access' }) : 'null'};
+    window.__fixtureDataCalls = [];
     let hasMember = ${member && intent === 'signin'};
     function q(table) {
       const result = {};
@@ -228,11 +230,15 @@ async function entryComposition(run, { member = true, intent = 'signin' } = {}) 
       return result;
     }
     window.VSSupabase = {from:q,rpc:async(name) => {
+      window.__fixtureDataCalls.push(name);
       if(name==='get_member_bootstrap')return {data:{member:hasMember?${JSON.stringify(row)}:null},error:null};
       if(name==='register_open'){hasMember=true;return {data:{},error:null};}
       if(name==='get_my_investor_profile')return {data:{id:'approved-investor'},error:null};
       return {data:null,error:null};
-    },auth:{getSession:async()=>({data:{session},error:null}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}})}};
+    },functions:{invoke:async(name,options)=>{
+      if(name!=='account-data'||!session||options.headers.Authorization!=='Bearer '+session.access_token)throw Error('unexpected account-status identity');
+      return fetch('/fixture/account-data',{method:'POST',headers:{'content-type':'application/json',authorization:options.headers.Authorization},body:JSON.stringify(options.body)}).then(response=>response.json());
+    }},auth:{getSession:async()=>({data:{session},error:null}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}})}};
     window.VSObeliskIdentity=session?{sub:'fixture-sub',supabaseUserId:session.user.id,email:session.user.email}:null;
     window.VSCompatibilitySession=session?{...session,access_token:'fixture-compatibility-access'}:null;
     window.VSAuthReady=Promise.resolve();
@@ -246,6 +252,13 @@ async function entryComposition(run, { member = true, intent = 'signin' } = {}) 
       '/investor-portal/documents/': html({ body: '<h1>Investor destination fixture</h1>' }),
     },
     handlers: [
+      { match: u => u.pathname === '/fixture/account-data', handle: (route, request) => {
+        assert.equal(authenticated, true, 'account status requires an authenticated provider fixture');
+        assert.equal(request.headers().authorization, 'Bearer fixture-compatibility-access');
+        assert.deepEqual(request.postDataJSON(), { action: 'status' });
+        statusCalls.push(request.postDataJSON());
+        return route.fulfill({ json: accountStatus });
+      } },
       { match: u => u.pathname.startsWith('/assets/supabase-client'), handle: r => r.fulfill({ contentType: 'application/javascript', body: dataScript() }) },
       { match: u => /^\/assets\/(?:account-entry|investor-experience)(?:\.shell-[a-f0-9]+)?\.js$/.test(u.pathname), handle: (r, req) => {
         const name = new URL(req.url()).pathname.includes('account-entry') ? 'account-entry' : 'investor-experience';
@@ -257,13 +270,13 @@ async function entryComposition(run, { member = true, intent = 'signin' } = {}) 
       } },
     ],
   });
-  try { await run(f, () => { authenticated = true; }); } finally { await f.close(); }
+  try { await run(f, () => { authenticated = true; }, { statusCalls, setAccountStatus: value => { accountStatus = value; } }); } finally { await f.close(); }
 }
 
 for (const audience of ['member', 'investor']) for (const intent of ['signin', 'signup']) {
   test(`${audience} ${intent}: actual entry -> signed edge denial -> actual retry -> confirmed destination`, async () => {
     const member = audience === 'member';
-    await entryComposition(async (f, authenticate) => {
+    await entryComposition(async (f, authenticate, provider) => {
       const leaf = member ? '/vault-member/passport/?view=progress#achievements' : '/investor-portal/documents/?type=legal#record';
       const entry = member ? '/vault-member/' : '/investor-portal/login/';
       await f.goto(entry + '?' + new URLSearchParams({ next: leaf, ...(member ? { ref: 'VaultFriend' } : {}) }) + (member ? (intent === 'signup' ? '#register' : '#login') : ''));
@@ -285,6 +298,7 @@ for (const audience of ['member', 'investor']) for (const intent of ['signin', '
         assert.equal(recovery.hash, intent === 'signup' ? '#register' : '#login');
       }
       await f.goto(recovery.pathname + recovery.search + recovery.hash);
+      assert.equal(provider.statusCalls.length, 0, 'signed denial must not issue authenticated account-status requests');
       if (member) assert.equal(await f.page.locator(intent === 'signup' ? '#panel-register' : '#panel-login').isVisible(), true);
       const retry = new URL(await f.page.locator(selector).getAttribute('href'), origin);
       assert.equal(retry.searchParams.get('intent'), intent);
@@ -318,7 +332,32 @@ for (const audience of ['member', 'investor']) for (const intent of ['signin', '
       assert.equal(arrived.searchParams.get(member ? 'view' : 'type'), member ? 'progress' : 'legal');
       assert.equal(arrived.hash, member ? '#achievements' : '#record');
       if (member) assert.equal(arrived.searchParams.get('ref'), 'VaultFriend');
+      if (member) assert.ok(provider.statusCalls.length >= (intent === 'signup' ? 2 : 1), 'actual account-data guard checks startup and profile completion');
     }, { member, intent });
+  });
+}
+
+for (const state of ['unavailable', 'processing']) {
+  test(`member recovery composition keeps ${state} authoritative status fail-closed before profile reads/writes`, async () => {
+    const accountStatus = state === 'unavailable' ? { data: null, error: { message: 'provider unavailable' } }
+      : { data: { job: { id: '22222222-2222-4222-8222-222222222222', state, requested_at: '2026-11-23T00:00:00Z' } }, error: null };
+    await entryComposition(async (f, authenticate, provider) => {
+      authenticate();
+      await f.goto('/vault-member/?return=%2Fvault-member%2Fpassport%2F#register');
+      await f.page.locator('#account-data-state').waitFor({ state: 'visible' });
+      assert.equal(await f.page.locator('#account-data-state').getAttribute('data-state'), state);
+      assert.equal(await f.page.locator('#panel-oauth-complete').isVisible(), false);
+      assert.deepEqual(await f.page.evaluate(() => window.__fixtureDataCalls), []);
+      assert.equal(provider.statusCalls.length, 1);
+      if (state === 'unavailable') {
+        assert.equal(await f.page.locator('#account-data-state-message').getAttribute('role'), 'alert');
+        provider.setAccountStatus({ data: { job: null }, error: null });
+        await f.page.locator('#account-data-state-retry').click();
+        await f.page.locator('#panel-oauth-complete').waitFor({ state: 'visible' });
+        assert.ok(provider.statusCalls.length >= 3, 'retry and reloaded startup both check authoritative status');
+        assert.deepEqual(await f.page.evaluate(() => window.__fixtureDataCalls), ['get_member_bootstrap']);
+      }
+    }, { member: true, intent: 'signup', accountStatus });
   });
 }
 

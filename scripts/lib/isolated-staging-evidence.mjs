@@ -9,7 +9,7 @@ import { validateStagingDeployReceipt } from './staging-deploy-receipt.mjs';
 import { parseStagingDeployHistory, historyRowFor, renderStagingDeployHistory } from './staging-deploy-history.mjs';
 import { buildContinuitySummary } from './staging-deploy-continuity.mjs';
 import { REPOSITORY, STAGING_ORIGIN, sha256, requireFact as need, exactKeys, hashFields, isHash,
-  positiveInteger, parseBoundedJson, validatePublisherPolicy, publisherCommitment, validatePreservationProjection, validateStageNative } from './isolated-staging-contract.mjs';
+  positiveInteger, parseBoundedJson, validatePublisherPolicy, publisherCommitment, validatePreservationProjection, validateStageNative, validateNativeSuccessorRecord, nativeDescriptorFor, NATIVE_S418_PREFIX, validateProtectedSuccessorShape } from './isolated-staging-contract.mjs';
 
 export const CONTRACT_FILES = Object.freeze([
   'config/isolated-staging-admission.json','scripts/lib/isolated-staging-contract.mjs',
@@ -119,7 +119,7 @@ export function validateInstallation(v, frozen, baseHistoryText, policy = null) 
   need(receipt.predecessor.receiptId === (head?.receiptId ?? null), 'receipt-predecessor');
   const historyText = renderStagingDeployHistory([...rows,expected]);
   need(canonical(buildContinuitySummary(historyText,receipt)) === canonical(v.continuity), 'continuity-projection');
-  if(v.schemaVersion===2)validateStageNative(v.stageNative,v,frozen,policy?.nativeProducer);
+  if(v.schemaVersion===2)validateStageNative(v.stageNative,v,frozen,nativeDescriptorFor(policy,v.stageNative));
   return {receipt,historyText};
 }
 const REQUEST_KEYS = ['schemaVersion','kind','repository','sourceCommit','sourceTreeSha','verifierContractSha256',
@@ -237,9 +237,14 @@ function validateStageObservationFacts(v, request, installation, now, minimumSec
   if(installation.schemaVersion===2)need(v.captureStartedAtEpochMs>=Date.parse(installation.stageNative.finishedAt),'native-current-capture-after-journeys');
   need(v.installReceiptSha256 === r.installationEvidence.installReceiptSha256 && v.postReceiptSha256 === r.installationEvidence.postReceiptSha256
     && v.stageManifestSha256 === r.stageVariant.rawManifestSha256 && v.fullInventorySha256 === r.stageVariant.fullInventorySha256, 'observation-installed-association');
+  if(installation.stageNative?.scope==='s418-new-website-profile-pair-v1'){
+    const p=v.opaquePreservation,n=installation.stageNative;exactKeys(p,['scope','relationCount','manifestSha256','beforeProjectionSha256','afterProjectionSha256','nativePreservationSha256'],'s418-opaque-fields');
+    need(p.scope==='s418-actual-database-manifest-v1'&&p.relationCount===n.preservationRelationCount&&p.manifestSha256===n.preservationManifestSha256&&p.nativePreservationSha256===n.nativePreservationSha256&&isHash(p.beforeProjectionSha256)&&p.beforeProjectionSha256===p.afterProjectionSha256,'s418-actual-native-preservation');
+  }else{
   exactKeys(v.opaquePreservation,['relationCount','beforeProjectionSha256','afterProjectionSha256'],'opaque-preservation-fields');
   need(v.opaquePreservation.relationCount === 21 && isHash(v.opaquePreservation.beforeProjectionSha256)
     && v.opaquePreservation.beforeProjectionSha256 === v.opaquePreservation.afterProjectionSha256, 'opaque-21-preservation');
+  }
   validatePreservationProjection(v.preservationProjection);
   return v;
 }
@@ -308,8 +313,8 @@ export async function admitRuntime({api, policy, frozen, installationId, install
     && run.path === request.workflowPath && policy.workflowPaths.includes(run.path) && run.event === 'workflow_dispatch', 'runtime-workflow');
   const observation = await get(observationId,observationHash,'observer');
   need(observation.requestDeploymentId === requestId && observation.requestPayloadSha256 === requestHash
-    && observation.observerContractSha256 === policy.protectedObserver.sha256
-    && observation.observerClosureSha256 === sha256(canonical(policy.protectedObserver.dependencyRows)), 'runtime-observer-contract');
+    && observation.observerContractSha256 === selectedProtectedDescriptor(policy,installation).sha256
+    && observation.observerClosureSha256 === sha256(canonical(selectedProtectedDescriptor(policy,installation).dependencyRows)), 'runtime-observer-contract');
   validateObservation(observation,request,installation,now,minimumSeconds);
   if(installation.schemaVersion===2&&request.workflowPath==='.github/workflows/pages-deploy.yml'){
     const worker=await validateWorkerUploadRecord({api,policy,frozen,installationId,installationHash,workerUploadReference:request.workerUploadReference,baseHistoryText});
@@ -318,7 +323,7 @@ export async function admitRuntime({api, policy, frozen, installationId, install
   }
   const context = {mode:'isolated-variant',installation,request,observation,...ledger,
     transport:{installationId,installationHash,requestId,requestHash,observationId,observationHash,runId,runAttempt}};
-  if(installation.schemaVersion===2)nativeDescriptors.set(context,policy.nativeProducer);
+  if(installation.schemaVersion===2)nativeDescriptors.set(context,nativeDescriptorFor(policy,installation.stageNative));
   branded.set(context,sha256(canonical(context))); return context;
 }
 function nativeAuthorizationFacts(installation, installationHash) {
@@ -538,8 +543,7 @@ export async function loadProductionPostflightContext(root,file,expectedHash,{ap
   need(process.env.GITHUB_SHA===frozen.sourceCommit&&Number(process.env.GITHUB_RUN_ID)===refs.transport.runId&&Number(process.env.GITHUB_RUN_ATTEMPT)===refs.transport.runAttempt,'ci-execution-context');
   const{getSecret}=await import('./secrets.mjs');return admit(githubApi(getSecret('GITHUB_TOKEN','github.api')));
  }
- validateObserverDescriptor(root,policy.protectedObserver);
- need(policy.protectedObserver.dependencyRows.some(r=>r.file==='../vaultspark-studio-ops/scripts/lib/github-broker.mjs'),'github-broker-not-pinned');
+ validateSelectedProtectedBroker(root,policy);
  const{withGithubToken}=await import(pathToFileURL(path.resolve(root,'../vaultspark-studio-ops/scripts/lib/github-broker.mjs')).href);
  return withGithubToken('isolated-staging-production-postflight-read',token=>admit(githubApi(token)),{params:{repository:REPOSITORY,sourceCommit:frozen.sourceCommit}});
 }
@@ -585,7 +589,7 @@ export async function loadNativeInstallationPreflight(root,id,hash,{api}={}) {
   const head=spawnSync('git',['rev-parse','HEAD'],{cwd:root,windowsHide:true,encoding:'utf8',maxBuffer:1024});
   need(head.status===0,'native-install-head');const frozen=verifyFrozenSource(root,head.stdout.trim());
   const policy=validatePublisherPolicy(JSON.parse(readOwned(root,'config/isolated-staging-admission.json')));
-  need(policy.nativeProducer,'native-producer-unresolved');
+  need(policy.nativeProducer||policy.nativeSuccessor,'native-producer-unresolved');
   const runId=Number(process.env.GITHUB_RUN_ID),runAttempt=Number(process.env.GITHUB_RUN_ATTEMPT);
   const admit=client=>admitNativeInstallation({api:client,policy,frozen,installationId:id,installationHash:hash,
     baseHistoryText:String(readOwned(root,'data/staging-deploy-history.ndjson')),runId,runAttempt});
@@ -594,8 +598,7 @@ export async function loadNativeInstallationPreflight(root,id,hash,{api}={}) {
     need(process.env.GITHUB_SHA===frozen.sourceCommit&&positiveInteger(Number(process.env.GITHUB_RUN_ID))&&positiveInteger(Number(process.env.GITHUB_RUN_ATTEMPT)),'ci-execution-context');
     const{getSecret}=await import('./secrets.mjs');return admit(githubApi(getSecret('GITHUB_TOKEN','github.api')));
   }
-  validateObserverDescriptor(root,policy.protectedObserver);
-  need(policy.protectedObserver.dependencyRows.some(r=>r.file==='../vaultspark-studio-ops/scripts/lib/github-broker.mjs'),'github-broker-not-pinned');
+  validateSelectedProtectedBroker(root,policy);
   const{withGithubToken}=await import(pathToFileURL(path.resolve(root,'../vaultspark-studio-ops/scripts/lib/github-broker.mjs')).href);
   return withGithubToken('isolated-staging-native-install-preflight',token=>admit(githubApi(token)),{params:{repository:REPOSITORY,sourceCommit:frozen.sourceCommit}});
 }
@@ -746,6 +749,7 @@ export function invokeInstallProjection(root, policy, frozen, runtimeBindings, e
 }
 /** Only this invocation's actual pinned protected process can produce an observation. */
 export function invokeProtectedObserver(root, policy, frozen, request, installation, runtimeBindings, execute = spawnSync) {
+  if(installation.stageNative?.scope==='s418-new-website-profile-pair-v1')return invokeProtectedObserverS418(root,policy,frozen,request,installation,runtimeBindings,execute);
   validatePublisherPolicy(policy); validateObserverDescriptor(root,policy.protectedObserver);
   validateRuntimeBindings(root,runtimeBindings);
   need(runtimeBindings.installationReceipt.sha256 === installation.receipt.installationEvidence.installReceiptSha256, 'private-installation-bytes');
@@ -784,7 +788,7 @@ function protectedObservationBody(raw, request, requestId, requestHash, descript
 export function observationFromProtected(raw,request,requestId,requestHash,installation,descriptor,now=Date.now()){const result=protectedObservationBody(raw,request,requestId,requestHash,descriptor,installation);validateObservation(result,request,installation,now);publishable.set(result,sha256(canonical(result)));return result;}
 export async function nativeObservationFromProtected(root,api,raw,request,requestId,requestHash,installation,policy){
  need(installation.schemaVersion===2,'native-observation-installation-required');
- const base=protectedObservationBody(raw,request,requestId,requestHash,policy.protectedObserver,installation);
+ const base=protectedObservationBody(raw,request,requestId,requestHash,selectedProtectedDescriptor(policy,installation),installation);
  validateStageObservationFacts(base,request,installation,Date.now());
  const seed={installation,request,observation:base,transport:{requestId,requestHash}};
  let productionRollback,productionRollbackParent=null;
@@ -820,8 +824,7 @@ export async function loadRuntimeContext(root, file, expectedHash, {api, now = D
     const {getSecret}=await import('./secrets.mjs');
     context=await admit(githubApi(getSecret('GITHUB_TOKEN','github.api')));
   } else {
-    validateObserverDescriptor(root,policy.protectedObserver);
-    need(policy.protectedObserver.dependencyRows.some(r=>r.file==='../vaultspark-studio-ops/scripts/lib/github-broker.mjs'),'github-broker-not-pinned');
+    validateSelectedProtectedBroker(root,policy);
     const {withGithubToken}=await import(pathToFileURL(path.resolve(root,'../vaultspark-studio-ops/scripts/lib/github-broker.mjs')).href);
     context=await withGithubToken('isolated-staging-evidence-read',token=>admit(githubApi(token)),{params:{repository:REPOSITORY,sourceCommit:frozen.sourceCommit}});
   }
@@ -873,4 +876,99 @@ export function evaluateVariantRoutes(context, routes) {
       || sha256(row.stagingHeaders?.csp || '')!==contract.normalizedCspSha256) findings.push(`variant-route-${index}`);
   });
   return findings;
+}
+
+/** Fixed S418 factory admission; policy/source bytes are checked before import. */
+export function validateNativeSuccessorDescriptor(root,record) {
+  const d=validateNativeSuccessorRecord(record),rows=new Map(d.dependencyRows.map(r=>[r.file,r]));
+  const ops='../vaultspark-studio-ops/';
+  for(const row of rows.values()){
+    const bytes=row.file.startsWith(ops+'scripts/')?readOwned(path.resolve(root,ops),row.file.slice(ops.length)):readOwned(root,row.file);
+    need(sha256(bytes)===row.sha256,'s418-reviewed-source-drift');
+    if(/\.(?:mjs|js|cjs|ts)$/.test(row.file)){
+      const text=bytes.toString().replace(/\/\*[\s\S]*?\*\//g,'').replace(/^\s*\/\/.*$/gm,'');
+      for(const match of text.matchAll(/(?:from\s*|import\s*\(?\s*|require\s*\(\s*)['"](\.[^'"]+)['"]/g)){
+        const dependency=path.posix.normalize(path.posix.join(path.posix.dirname(row.file),match[1]));
+        need(rows.has(dependency),'s418-relative-import-unpinned');
+      }
+    }
+  }
+  return d;
+}
+/** Original INSTALL and frozen G are established before any factory executes. */
+export async function invokeNativeInstallProjectionS418(root,policy,frozen,runtimeBindings,nativeRuntimeRef,channel,actorReadiness) {
+  need(channel==='chrome'&&actorReadiness==='existing-authorized-actor','s418-native-readiness');
+  exactKeys(frozen,['sourceCommit','sourceTreeSha','verifierContractSha256'],'s418-frozen-fields');
+  const actual=verifyFrozenSource(root,frozen.sourceCommit);
+  for(const key of Object.keys(actual))need(actual[key]===frozen[key],'s418-current-frozen-source');
+  validatePublisherPolicy(policy);
+  const descriptor=validateNativeSuccessorDescriptor(root,policy.nativeSuccessor);
+  exactKeys(nativeRuntimeRef,['file','sha256'],'s418-runtime-reference');
+  need(nativeRuntimeRef.file===NATIVE_S418_PREFIX+'runtime/RUNTIME_BINDING.json'&&isHash(nativeRuntimeRef.sha256),'s418-fixed-runtime-reference');
+  parseBoundedJson(readOwned(root,nativeRuntimeRef.file,65536),nativeRuntimeRef.sha256);
+  const envelope=invokeInstallProjectionS418(root,policy,frozen,runtimeBindings);
+  need(envelope.schemaVersion===1,'s418-original-install-required');
+  const producer=await import(pathToFileURL(path.resolve(root,descriptor.file)).href);
+  need(typeof producer.executeNativePair==='function'&&typeof producer.consumeNativePair==='function','s418-factory-exports');
+  const execution=await producer.executeNativePair({installation:envelope,frozen,nativeDescriptor:descriptor,runtimeBinding:nativeRuntimeRef,channel,actorReadiness});
+  const stageNative=producer.consumeNativePair(execution);
+  validateNativeSuccessorDescriptor(root,policy.nativeSuccessor);
+  const after=verifyFrozenSource(root,frozen.sourceCommit);
+  for(const key of Object.keys(after))need(after[key]===frozen[key],'s418-post-native-source-drift');
+  validateStageNative(stageNative,envelope,frozen,descriptor);
+  const combined={...envelope,schemaVersion:2,stageNative};
+  validateInstallation(combined,frozen,String(readOwned(root,'data/staging-deploy-history.ndjson')),policy);
+  need(Buffer.byteLength(canonical(combined))<=49152,'metadata-public-bound');
+  publishable.set(combined,sha256(canonical(combined)));return combined;
+}
+
+export function validateRuntimeBindingsS418(root,bindings) {
+  exactKeys(bindings,['snapshot','sourceClosure','snapshotBinding','installationReceipt','transaction'],'s418-install-runtime-fields');
+  const prefix='.cache/S418/protected-install-successor-v1/runtime/';
+  const files={snapshot:'CURRENT_SNAPSHOT.json',sourceClosure:'SOURCE_CLOSURE.json',snapshotBinding:'ROOT_SNAPSHOT_BINDING.json',installationReceipt:'INSTALLATION_RECEIPT.json',transaction:'TRANSACTION_BINDING.json'};
+  for(const [role,name]of Object.entries(files)){
+    const ref=bindings[role];exactKeys(ref,['file','sha256'],'s418-install-runtime-ref');
+    need(ref.file===prefix+name&&isHash(ref.sha256)&&sha256(readOwned(root,ref.file,16777216))===ref.sha256,'s418-install-runtime-fixed-bytes');
+  }
+}
+export function validateProtectedSuccessorDescriptor(root,d) {
+  validateProtectedSuccessorShape(d);
+  const files=new Set();
+  for(const row of d.dependencyRows){
+    exactKeys(row,['file','sha256'],'s418-protected-row');need(!files.has(row.file)&&isHash(row.sha256),'s418-protected-duplicate');files.add(row.file);
+    const ops='../vaultspark-studio-ops/';const raw=row.file.startsWith(ops+'scripts/')?readOwned(path.resolve(root,ops),row.file.slice(ops.length)):readOwned(root,row.file);
+    need(sha256(raw)===row.sha256,'s418-protected-source-bytes');
+  }
+  for(const file of ['observer.mjs','contract.mjs','project-install.mjs','activate-static.mjs','capture-host.mjs','observe-host.mjs'])need(files.has('.cache/S418/protected-install-successor-v1/'+file),'s418-protected-complete-producer-closure');
+  for(const [file,digest]of [[d.file,d.sha256],[d.payloadFile,d.payloadSha256]])need(d.dependencyRows.some(r=>r.file===file&&r.sha256===digest),'s418-protected-whole-body');
+  return d;
+}
+export function invokeInstallProjectionS418(root,policy,frozen,runtimeBindings,execute=spawnSync) {
+  validatePublisherPolicy(policy);const d=validateProtectedSuccessorDescriptor(root,policy.protectedSuccessor);validateRuntimeBindingsS418(root,runtimeBindings);
+  for(const key of ['NODE_OPTIONS','NODE_PATH','VAULTSPARK_FAST_NODE','VAULTSPARK_SECRETS_DIR_OVERRIDE','STUDIO_OPS_SECRETS_DIR'])need(!process.env[key],'s418-protected-runtime-override');
+  const result=execute(process.execPath,[path.join(root,d.file),'--canonical-install-envelope-stdin-s418-v1'],{cwd:root,windowsHide:true,encoding:'utf8',timeout:330000,maxBuffer:65536,input:JSON.stringify({schemaVersion:1,...frozen,runtimeBindings}),env:{...process.env}});
+  need(result.status===0&&typeof result.stdout==='string'&&Buffer.byteLength(result.stdout)<=65536,'s418-original-install-projection-failed');
+  const envelope=JSON.parse(result.stdout);need(envelope.schemaVersion===1,'s418-original-install-schema');validateInstallation(envelope,frozen,String(readOwned(root,'data/staging-deploy-history.ndjson')));
+  need(envelope.receipt.installationEvidence.installReceiptSha256===runtimeBindings.installationReceipt.sha256,'s418-original-raw-install-association');
+  publishable.set(envelope,sha256(canonical(envelope)));return envelope;
+}
+
+export function selectedProtectedDescriptor(policy,installation){
+ if(installation?.stageNative?.scope==='s418-new-website-profile-pair-v1')return validateProtectedSuccessorShape(policy.protectedSuccessor);
+ return policy.protectedObserver;
+}
+export function validateSelectedProtectedBroker(root,policy){
+ let d;if(policy.nativeSuccessor&&policy.protectedSuccessor)d=validateProtectedSuccessorDescriptor(root,policy.protectedSuccessor);else{d=policy.protectedObserver;validateObserverDescriptor(root,d);}
+ need(d.dependencyRows.some(r=>r.file==='../vaultspark-studio-ops/scripts/lib/github-broker.mjs'),'github-broker-not-pinned');return d;
+}
+export function invokeProtectedObserverS418(root,policy,frozen,request,installation,runtimeBindings,execute=spawnSync){
+ validatePublisherPolicy(policy);const d=validateProtectedSuccessorDescriptor(root,selectedProtectedDescriptor(policy,installation));validateRuntimeBindingsS418(root,runtimeBindings);
+ validateInstallation(installation,frozen,String(readOwned(root,'data/staging-deploy-history.ndjson')),policy);
+ need(runtimeBindings.installationReceipt.sha256===installation.receipt.installationEvidence.installReceiptSha256,'s418-private-installation-bytes');
+ for(const k of['NODE_OPTIONS','NODE_PATH','VAULTSPARK_FAST_NODE','VAULTSPARK_SECRETS_DIR_OVERRIDE','STUDIO_OPS_SECRETS_DIR'])need(!process.env[k],'s418-observer-runtime-override');
+ const started=Date.now(),input={schemaVersion:1,request,installation,...frozen,runtimeBindings},result=execute(process.execPath,[path.join(root,d.file),'--canonical-observation-stdin-s418-v1'],{cwd:root,windowsHide:true,encoding:'utf8',timeout:330000,maxBuffer:65536,input:JSON.stringify(input),env:{...process.env}});
+ need(result.status===0&&typeof result.stdout==='string'&&Buffer.byteLength(result.stdout)<=65536,'s418-protected-observer-failed');const raw=JSON.parse(result.stdout);
+ exactKeys(raw,['schemaVersion','scope','readOnly','sourceCommit','sourceTreeSha','verifierContractSha256','requestSha256','installReceiptSha256','postReceiptSha256','observerClosureSha256','observedAtEpochMs','captureStartedAtEpochMs','captureExpiresAtEpochMs','effectiveExpiresAtEpochMs','stageManifestSha256','fullInventorySha256','stableBracketSha256','workerProofObservedAtEpochMs','workerProofExpiresAtEpochMs','postAdmissionStartedAtEpochMs','opaquePreservation','preservationProjection'],'s418-protected-result-fields');
+ need(raw.schemaVersion===1&&raw.scope===d.scope&&raw.readOnly===true&&raw.requestSha256===sha256(canonical(request))&&raw.observedAtEpochMs>=started,'s418-protected-result-invocation');for(const[k,v]of Object.entries(frozen))need(raw[k]===v,'s418-protected-result-source');need(raw.observerClosureSha256===sha256(canonical(d.dependencyRows)),'s418-protected-result-closure');
+ need(raw.opaquePreservation.manifestSha256===d.actualRelationManifestSha256&&raw.opaquePreservation.relationCount===d.actualRelationCount,'s418-admitted-actual-manifest');protectedResults.set(raw,{rawSha256:sha256(canonical(raw)),requestSha256:sha256(canonical(request)),installationSha256:sha256(canonical(installation))});return raw;
 }

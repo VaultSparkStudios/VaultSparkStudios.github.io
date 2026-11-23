@@ -61,8 +61,8 @@ for (const [slug, iso] of Object.entries(posts)) {
   }
 }
 
-// Step 3: update journal/index.html entry-date spans
-let indexHtml = readFileSync('journal/index.html', 'utf8');
+// Step 3: update devlog/index.html entry-date spans
+let indexHtml = readFileSync('devlog/index.html', 'utf8');
 const indexBefore = indexHtml;
 
 // Each <article class="entry"> contains a link to /journal/SLUG/ — replace its entry-date span
@@ -88,8 +88,8 @@ for (const [slug, iso] of Object.entries(posts)) {
 }
 
 if (indexHtml !== indexBefore) {
-  writeFileSync('journal/index.html', indexHtml);
-  console.log('  ✓ journal/index.html');
+  writeFileSync('devlog/index.html', indexHtml);
+  console.log('  ✓ devlog/index.html');
   totalChanges++;
 }
 

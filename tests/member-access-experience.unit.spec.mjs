@@ -37,15 +37,18 @@ async function fixture(run,{denied=false,seal=false,slowEntry=false}={}){
   ],initScripts:denied?[()=>{Object.defineProperty(window,'sessionStorage',{get(){throw new DOMException('Denied','SecurityError')}});}]:[]});
  try{await run(f);}finally{await f.close();}
 }
-test('member entrance defaults to returning members; open creation is a separate editable journey',async()=>{
+test('member entrance defaults to returning members; shared identity creation keeps website enrollment separate',async()=>{
  await fixture(async f=>{
   await f.goto('/vault-member/');
   assert.equal(await f.page.locator('#panel-login').isVisible(),true);
   assert.equal(await f.page.locator('#panel-register').isVisible(),false);
   await f.page.click('#tab-register');
   assert.equal(await f.page.locator('#panel-register').isVisible(),true);
-  assert.match(await f.page.locator('#panel-register').innerText(),/open to everyone/i);
-  assert.match(await f.page.locator('#panel-register').innerText(),/No membership invite/);
+  const copy=await f.page.locator('#panel-register').innerText();
+  assert.match(copy,/Shared Studio account/i);
+  assert.match(copy,/Check current website membership availability/);
+  assert.doesNotMatch(copy,/open to everyone|No membership invite/i);
+  assert.equal(await f.page.locator('#panel-register a[href="/membership/"]').count(),1);
   assert.equal(await f.page.locator('#auth-view input[type="password"]').count(),0);
   assert.equal(new URL(await f.page.locator('#obelisk-create-account').getAttribute('href'),'https://unit.fixture.test').searchParams.get('intent'),'signup');
  });

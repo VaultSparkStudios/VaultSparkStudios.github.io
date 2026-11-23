@@ -10,6 +10,8 @@ const OUT = path.join(ROOT, 'data', 'ignis-search-index.json');
 const CHECK = process.argv.includes('--check');
 const SELFTEST = process.argv.includes('--self-test');
 const FORCE = process.argv.includes('--force');
+const PUBLIC_PAGES = ['privacy', 'terms', 'rights', 'membership', 'games', 'universe', 'oracle', 'synthetic-intelligence', 'ai-vs-si', 'trust', 'beta', 'agents', 'devlog', 'studio', 'press', 'dispatch']
+  .map((page) => `${page}/index.html`);
 
 function read(rel) {
   try { return fs.readFileSync(path.join(ROOT, rel), 'utf8'); } catch { return ''; }
@@ -52,7 +54,9 @@ function sanitize(s) {
     .trim();
 }
 function strip(s, max = 700) {
-  return sanitize(String(s || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ')).slice(0, max).trim();
+  return sanitize(String(s || '')
+    .replace(/<(script|style|template|noscript)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ')).slice(0, max).trim();
 }
 // Pull a page's <meta name="description"> as the cleanest public summary.
 function metaDescription(html) {
@@ -162,11 +166,11 @@ function build() {
   if (security && (security.controls || []).length) {
     const active = security.controls.filter((c) => c.status === 'active');
     const labels = (active.length ? active : security.controls).map((c) => c.label).filter(Boolean);
-    add('Security posture', '/security/',
+    add('Security posture', '/trust/',
       `The site is protected by ${labels.join(', ')}. ${security.controls.map((c) => c.detail).filter(Boolean).slice(0, 2).join(' ')}`);
   }
 
-  ['privacy/index.html', 'terms/index.html', 'rights/index.html', 'membership/index.html', 'games/index.html', 'universe/index.html', 'oracle/index.html', 'synthetic-intelligence/index.html', 'ai-vs-si/index.html'].forEach((rel) => {
+  PUBLIC_PAGES.forEach((rel) => {
     const html = read(rel);
     const pageSlug = rel.replace('/index.html', '');
     if (html) add(pageSlug, '/' + rel.replace('index.html', ''), html, metaDescription(html), STATIC_ENTITY[pageSlug] || null);
@@ -222,22 +226,32 @@ const VOICE_LEAK = /\bS\d{2,3}\b|goal[\s-]*chain|\/(start|audit|implement|closeo
 
 // Content-hash skip: rebuild only when input data files change.
 const IGNIS_INPUTS = [
+  // Include the builder, shared hashing contract and registry-driven facts.
+  // A warm hash must never conceal a logic or canonical fact-sheet change.
+  url.fileURLToPath(import.meta.url),
+  path.join(ROOT, 'scripts', 'lib', 'build-cache.mjs'),
+  path.join(ROOT, 'agents.json'),
   path.join(ROOT, 'api', 'public-intelligence.json'),
   path.join(ROOT, 'api', 'feedback-provenance.json'),
   path.join(ROOT, 'api', 'security-posture.json'),
   path.join(ROOT, 'data', 'game-registry.json'),
   path.join(ROOT, 'llms-full.txt'),
-  ...['privacy/index.html', 'terms/index.html', 'rights/index.html',
-      'membership/index.html', 'games/index.html', 'universe/index.html',
-      'oracle/index.html'].map((r) => path.join(ROOT, r)),
+  ...PUBLIC_PAGES.map((r) => path.join(ROOT, r)),
+  ...((readJson('agents.json') || {}).projects || [])
+    .filter((project) => project.aiFactSheet)
+    .map((project) => path.join(ROOT, project.aiFactSheet.replace('https://vaultsparkstudios.com/', '') + 'index.html')),
 ];
-const ignisCache = (!FORCE) ? checkHash('ignis-index', IGNIS_INPUTS) : { hit: false, hash: '' };
-if (ignisCache.hit) {
+const ignisCache = checkHash('ignis-index', IGNIS_INPUTS);
+const outputCache = checkHash('ignis-index-output', [OUT]);
+// Checks independently rebuild/compare even when source hashes are warm.
+// Normal builds also repair missing or modified generated output.
+if (!CHECK && !FORCE && ignisCache.hit && fs.existsSync(OUT) && outputCache.hit) {
   console.log('build-ignis-search-index: SKIP (inputs unchanged)');
   process.exit(0);
 }
 
 const artifact = build();
+if (process.exitCode) process.exit(process.exitCode);
 const text = JSON.stringify(artifact, null, 2) + '\n';
 if (CHECK) {
   // Voice-leak gate folded INTO --check (no new build:check segment — the chain
@@ -259,4 +273,5 @@ if (CHECK) {
 }
 fs.writeFileSync(OUT, text);
 saveHash('ignis-index', ignisCache.hash);
+saveHash('ignis-index-output', checkHash('ignis-index-output', [OUT]).hash);
 console.log(`build-ignis-search-index -> data/ignis-search-index.json (${artifact.documents.length} docs)`);

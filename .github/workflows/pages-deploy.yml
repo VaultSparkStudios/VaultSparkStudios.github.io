@@ -54,7 +54,7 @@ on:
         default: ""
         type: string
       baseline_sha:
-        description: "Commit already in production to rebuild from (blank = deployedSha in api/deploy-currency.json)"
+        description: "Exact live artifact baseline to confirm (blank = read the production artifact stamp)"
         required: false
         default: ""
         type: string
@@ -218,6 +218,16 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
 
+      - name: Resolve live content artifact baseline
+        id: content-baseline
+        if: (inputs.confirm_hotfix == true || inputs.confirm_content == true || inputs.confirm_desk == true) && steps.promotion-gate.outputs.allowed != 'true'
+        env:
+          BASELINE_INPUT: ${{ inputs.baseline_sha }}
+        # Read once for every overlay lane. A deployment source/head, stale
+        # deploy-currency receipt or historical override cannot select the tree
+        # whose executable files are retained. All gates and archives reuse it.
+        run: node scripts/resolve-content-baseline.mjs --emit-github-output >> "$GITHUB_OUTPUT"
+
       - name: Evaluate content hotfix gate
         id: hotfix-gate
         # Fail-closed and independent: only an explicitly listed, allowlisted set of
@@ -228,12 +238,10 @@ jobs:
         # a `${{ }}` splice into a shell line is a script-injection surface.
         env:
           HOTFIX_PATHS: ${{ inputs.hotfix_paths }}
-          BASELINE_INPUT: ${{ inputs.baseline_sha }}
+          BASELINE: ${{ steps.content-baseline.outputs.baseline }}
         run: |
-          BASELINE="$BASELINE_INPUT"
-          if [ -z "$BASELINE" ]; then
-            BASELINE=$(node -e "process.stdout.write(require('./api/deploy-currency.json').deployedSha || '')")
-          fi
+          set -euo pipefail
+          [[ "$BASELINE" =~ ^[0-9a-f]{40}$ ]] || { echo "Missing resolved artifact baseline" >&2; exit 1; }
           # --baseline makes the gate resolve every asset the overlaid markup
           # references against the tree that is actually deployed. Without it the
           # first real hotfix shipped a 404: HEAD's markup pointed at a shell hash
@@ -252,7 +260,7 @@ jobs:
         # allowed — a full promotion supersedes it.
         if: (inputs.confirm_content == true || inputs.confirm_desk == true) && steps.promotion-gate.outputs.allowed != 'true'
         env:
-          BASELINE_INPUT: ${{ inputs.baseline_sha }}
+          BASELINE: ${{ steps.content-baseline.outputs.baseline }}
           DESK_ONLY: ${{ inputs.confirm_desk }}
           CONTENT_ONLY: ${{ inputs.confirm_content }}
         run: |
@@ -261,22 +269,13 @@ jobs:
             echo "Desk and broad content lanes cannot be combined" >&2
             exit 1
           fi
-          BASELINE="$BASELINE_INPUT"
-          if [ -z "$BASELINE" ]; then
-            BASELINE=$(node -e "process.stdout.write(require('./api/deploy-currency.json').deployedSha || '')")
-          fi
-          if [ -z "$BASELINE" ]; then
-            echo "no baseline sha available — probe deploy-currency first" >&2
-            exit 1
-          fi
-          if ! git cat-file -e "$BASELINE"; then
+          [[ "$BASELINE" =~ ^[0-9a-f]{40}$ ]] || { echo "Missing resolved artifact baseline" >&2; exit 1; }
+          if ! git cat-file -e "$BASELINE^{commit}"; then
             echo "baseline $BASELINE is not in this repository's history" >&2
             exit 1
           fi
           echo "content-lane baseline: $BASELINE"
           if [ "$DESK_ONLY" = "true" ]; then
-            LIVE_BASELINE=$(curl -fsS https://vaultsparkstudios-website.pages.dev/api/build-sha.json | node -e "let s='';process.stdin.on('data',x=>s+=x).on('end',()=>process.stdout.write(JSON.parse(s).sha||''))")
-            [ "$BASELINE" = "$LIVE_BASELINE" ] || { echo "Desk baseline differs from live production" >&2; exit 1; }
             node scripts/check-content-lane-purity.mjs --range "$BASELINE..HEAD" --partition --desk --emit-github-output
           else
             node scripts/check-content-lane-purity.mjs --range "$BASELINE..HEAD" --partition --emit-github-output
@@ -291,14 +290,11 @@ jobs:
         # the tree it lands in is a broken page, however pure its diff was.
         if: steps.content-lane.outputs.deployable == 'true'
         env:
-          BASELINE_INPUT: ${{ inputs.baseline_sha }}
+          BASELINE: ${{ steps.content-baseline.outputs.baseline }}
           LANE_PATHS: ${{ steps.content-lane.outputs.paths }}
         run: |
           set -euo pipefail
-          BASELINE="$BASELINE_INPUT"
-          if [ -z "$BASELINE" ]; then
-            BASELINE=$(node -e "process.stdout.write(require('./api/deploy-currency.json').deployedSha || '')")
-          fi
+          [[ "$BASELINE" =~ ^[0-9a-f]{40}$ ]] || { echo "Missing resolved artifact baseline" >&2; exit 1; }
           node scripts/check-content-hotfix-gate.mjs \
             --paths "$LANE_PATHS" \
             "--baseline=$BASELINE" \
@@ -376,19 +372,12 @@ jobs:
         # paths over it. The resulting tree differs from live by those files alone,
         # so none of the pending identity/Supabase work is promoted.
         env:
-          BASELINE_INPUT: ${{ inputs.baseline_sha }}
+          BASELINE: ${{ steps.content-baseline.outputs.baseline }}
           HOTFIX_RESOLVED: ${{ steps.hotfix-gate.outputs.paths }}
         run: |
           set -euo pipefail
-          BASELINE="$BASELINE_INPUT"
-          if [ -z "$BASELINE" ]; then
-            BASELINE=$(node -e "process.stdout.write(require('./api/deploy-currency.json').deployedSha || '')")
-          fi
-          if [ -z "$BASELINE" ]; then
-            echo "no baseline sha available — supply baseline_sha or probe deploy-currency first" >&2
-            exit 1
-          fi
-          if ! git cat-file -e "$BASELINE"; then
+          [[ "$BASELINE" =~ ^[0-9a-f]{40}$ ]] || { echo "Missing resolved artifact baseline" >&2; exit 1; }
+          if ! git cat-file -e "$BASELINE^{commit}"; then
             echo "baseline $BASELINE is not in this repository's history" >&2
             exit 1
           fi
@@ -417,14 +406,11 @@ jobs:
         # serves, then overlay only the promotable partition. Every withheld path
         # keeps its baseline copy, so no identity work is promoted.
         env:
-          BASELINE_INPUT: ${{ inputs.baseline_sha }}
+          BASELINE: ${{ steps.content-baseline.outputs.baseline }}
           LANE_PATHS: ${{ steps.content-refs.outputs.paths }}
         run: |
           set -euo pipefail
-          BASELINE="$BASELINE_INPUT"
-          if [ -z "$BASELINE" ]; then
-            BASELINE=$(node -e "process.stdout.write(require('./api/deploy-currency.json').deployedSha || '')")
-          fi
+          [[ "$BASELINE" =~ ^[0-9a-f]{40}$ ]] || { echo "Missing resolved artifact baseline" >&2; exit 1; }
           mkdir -p /tmp/pages-dist
           git archive "$BASELINE" | tar -x -C /tmp/pages-dist
           node scripts/prune-served-surface.mjs --dist /tmp/pages-dist

@@ -26,7 +26,7 @@
 // Function env (names only): SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY (platform),
 //   APP_URL (optional, default https://vaultsparkstudios.com).
 
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.119.2';
 
 const DEFAULT_APP_URL = 'https://vaultsparkstudios.com';
 const MAX_BODY_BYTES = 2048;

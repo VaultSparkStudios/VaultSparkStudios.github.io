@@ -15,6 +15,11 @@ const CHECK = process.argv.includes('--check');
 const SELF_TEST = process.argv.includes('--self-test');
 const START = '<!-- intelligence-suite:start -->';
 const END = '<!-- intelligence-suite:end -->';
+export function fileForRoute(href) {
+  if (!href.startsWith('/') || href.startsWith('//')) throw new Error('Suite route must be an owned site path');
+  const pathname = new URL(href, 'https://vaultsparkstudios.com').pathname;
+  return pathname === '/' ? 'index.html' : pathname.slice(1) + 'index.html';
+}
 
 export function renderSuite(activeHref, config = CONFIG) {
   const links = config.routes.map((route) => {
@@ -42,13 +47,14 @@ function selfTest() {
   if (once !== twice) throw new Error('renderer is not idempotent');
   if ((once.match(/aria-current="page"/g) || []).length !== 1) throw new Error('active route is not singular');
   if (!once.includes('/search/')) throw new Error('shared route registry is incomplete');
+  if (fileForRoute('/studio/#pulse') !== 'studio/index.html' || fileForRoute('/trust/?topic=privacy') !== 'trust/index.html') throw new Error('section links must resolve their actual page source');
   console.log('build-intelligence-suite: self-test passed');
 }
 
 function main() {
   const failures = [];
   for (const route of CONFIG.routes) {
-    const relative = route.href === '/' ? 'index.html' : route.href.slice(1) + 'index.html';
+    const relative = fileForRoute(route.href);
     const file = path.join(ROOT, relative);
     if (!fs.existsSync(file)) {
       failures.push(relative + ': route file missing');

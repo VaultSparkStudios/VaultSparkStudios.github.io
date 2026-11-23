@@ -34,7 +34,7 @@ const AMBIENT_FEATURE_PATH = shellManifest.assets?.ambientFeature?.path || 'asse
 // S305: the sample must be a page this generator does NOT write. Harvesting from
 // pathways/builders/index.html (its own output) let one failed nav harvest become
 // self-perpetuating — every pathways page silently lost the primary nav menu.
-const SAMPLE = join(ROOT, 'journal/index.html');
+const SAMPLE = join(ROOT, 'devlog/index.html');
 const sample = readFileSync(SAMPLE, 'utf8');
 
 // Extract nav block (from <nav class="nav-center" to </nav>) and footer block.

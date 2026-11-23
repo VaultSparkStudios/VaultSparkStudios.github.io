@@ -44,7 +44,7 @@ export const CORE_PATHS = Object.freeze([
   'index.html',
   'status/index.html',
   'membership/index.html',
-  'studio-pulse/index.html',
+  'studio/index.html',
   'agents.json',
   '.well-known/llms.txt',
   'api/build-sha.json',

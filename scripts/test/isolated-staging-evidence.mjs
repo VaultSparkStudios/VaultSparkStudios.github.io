@@ -267,35 +267,61 @@ await test('raw G closure binds direct and transitive executed helper bytes',()=
  }
  assert.equal(context.verifyFrozenSource('/offline',G).sourceTreeSha,tree);
 });
-await test('actual variant --require-green entrypoint refreshes before consuming fresh per-run health',async()=>{
- const context=await admit();assertCurrentStageManifest(stageManifestRaw,context);
- const html='<script src="/assets/test.shell-aaaaaaaaaa.js"></script>',root='/offline';
- const files=new Map([[path.join(root,'api/build-sha.json'),JSON.stringify({sha:receipt.copiedHistoricalBuildStamp.commitSha})],
+// These fixtures exercise the actual parity program offline. The historical
+// receipt corpus above stays Pulse-bound; no retired page file is fabricated.
+async function currentStudioFixtureContext(){
+ const nextFacts=clone(facts);nextFacts.stageVariant.routeContracts=nextFacts.stageVariant.routeContracts.map((r,i)=>({...r,route:i===1?'/studio/':r.route}));
+ const nextReceipt=createVariantReceipt(nextFacts),nextRow=historyRowFor(nextReceipt),nextInstall={...installation,receipt:nextReceipt,
+  historyAppend:{...installation.historyAppend,row:nextRow},continuity:buildContinuitySummary(renderStagingDeployHistory([nextRow]),nextReceipt)};
+ const ih=sha256(canonical(nextInstall)),nextRequest={...request,installationPayloadSha256:ih},rh=sha256(canonical(nextRequest)),
+  nextObservation={...observation,installationPayloadSha256:ih,requestPayloadSha256:rh},oh=sha256(canonical(nextObservation));
+ const nextRecords=new Map([[1,makeRecord(1,nextInstall)],[2,makeRecord(2,nextRequest,false)],[3,makeRecord(3,nextObservation)]]);
+ const nextApi=async(method,suffix)=>{assert.equal(method,'GET');if(suffix==='/actions/runs/11')return api(method,suffix);return clone(nextRecords.get(Number(suffix.split('/').at(-1))));};
+ return admit({api:nextApi,installationHash:ih,requestHash:rh,observationHash:oh});
+}
+async function exerciseParityEntrypoint(context,{cached=null,expectedExit=0}={}){
+ if(context)assertCurrentStageManifest(stageManifestRaw,context);
+ const html='<script src="/assets/test.shell-aaaaaaaaaa.js"></script>',root='/offline',build=context?receipt.copiedHistoricalBuildStamp.commitSha:G;
+ const expectedRoutes=context?context.receipt.stageVariant.routeContracts.map(r=>r.route):['/','/studio/','/membership/'];
+ const files=new Map([[path.join(root,'api/build-sha.json'),JSON.stringify({sha:build})],
   [path.join(root,'api/candidate-artifact-manifest.json'),JSON.stringify(manifest)],
-  ...['index.html','studio-pulse/index.html','membership/index.html'].map(f=>[path.join(root,f),html])]);
- const writes=new Map(),events=[];
+  ...['index.html','studio/index.html','membership/index.html'].map(f=>[path.join(root,f),html])]);
+ const output=context?runtimeArtifactPath(root,context,'staging-health'):path.join(root,'api/staging-health.json');
+ if(cached)files.set(output,JSON.stringify(cached));
+ const writes=new Map(),events=[],reads=[],requests=[],errors=[];
  const source=paritySource.replace(/^#![^\n]*\n/,'').replace(/^import .*;\r?\n/gm,'').replaceAll('export function ','function ');
  const fakeFs={existsSync:file=>files.has(file)||writes.has(file),readFileSync:(file,encoding)=>{
-   const text=files.get(file)??writes.get(file);assert.notEqual(text,undefined,`unexpected fixture read ${file}`);return encoding?text:Buffer.from(text);},
+   reads.push(file);const text=files.get(file)??writes.get(file);assert.notEqual(text,undefined,`unexpected fixture read ${file}`);return encoding?text:Buffer.from(text);},
   mkdirSync:()=>{},writeFileSync:(file,text)=>{events.push('write-health');writes.set(file,String(text));}};
+ const argv=['node','check-staging-parity.mjs',context?'--require-green':cached?'--require-green':'--refresh',
+  ...(context?['--isolated-staging-context=.cache/ctx.json','--isolated-staging-context-sha256='+h('a')]:[]),...(cached?['--check']:[])];
  const runtime={fs:fakeFs,path,shellPaths,PAGE_CSP:headers.csp,WORKER_CSP:headers.csp,runtimeContextArgs,
-  loadRuntimeContext:async()=>context,runtimeArtifactPath,variantReadiness,evaluateVariantRoutes,AbortSignal,URL,
-  console:{log:()=>{},warn:()=>{},error:()=>{}},
-  process:{cwd:()=>root,argv:['node','check-staging-parity.mjs','--require-green','--isolated-staging-context=.cache/ctx.json','--isolated-staging-context-sha256='+h('a')],
-   exit:status=>{throw{fixtureExit:true,status};}},
-  fetch:async url=>{events.push('anonymous-get');const u=new URL(url);
-   if(u.pathname==='/sitemap.xml')return new Response('<loc>https://vaultsparkstudios.com/</loc>',{status:200});
-   if(u.pathname==='/api/build-sha.json')return new Response(JSON.stringify({sha:receipt.copiedHistoricalBuildStamp.commitSha}),{status:200});
-   if(u.pathname==='/api/candidate-artifact-manifest.json')return new Response(stageManifestRaw,{status:200});
+  loadRuntimeContext:async()=>{assert(context,'ordinary parity must not load an isolated context');return context;},runtimeArtifactPath,variantReadiness,evaluateVariantRoutes,AbortSignal,URL,
+  console:{log:()=>{},warn:()=>{},error:text=>errors.push(String(text))},process:{cwd:()=>root,argv,exit:status=>{throw{fixtureExit:true,status};}},
+  fetch:async url=>{events.push('anonymous-get');const u=new URL(url);requests.push({origin:u.origin,path:u.pathname});
+   if(u.pathname==='/sitemap.xml')return new Response(expectedRoutes.map(r=>'<loc>https://vaultsparkstudios.com'+r+'</loc>').join(''),{status:200});
+   if(u.pathname==='/api/build-sha.json')return new Response(JSON.stringify({sha:build}),{status:200});
+   if(u.pathname==='/api/candidate-artifact-manifest.json')return new Response(context?stageManifestRaw:JSON.stringify(manifest),{status:200});
+   assert(expectedRoutes.includes(u.pathname),`unexpected route probe ${u.pathname}`);
    return new Response(html,{status:200,headers:{'content-security-policy':headers.csp,'strict-transport-security':headers.hsts,
     'x-content-type-options':headers.xcto,'referrer-policy':headers.referrer}});
   }};
  vm.createContext(runtime);
- try{await vm.runInContext('(async()=>{'+source+'\n})()',runtime);assert.fail('entrypoint did not exit');}catch(error){if(!error.fixtureExit)throw error;assert.equal(error.status,0);}
+ try{await vm.runInContext('(async()=>{'+source+'\n})()',runtime);assert.fail('entrypoint did not exit');}catch(error){if(!error.fixtureExit)throw error;assert.equal(error.status,expectedExit,errors.join('\n'));}
+ if(cached){assert.equal(requests.length,0);assert.equal(writes.size,0);return{reads,errors};}
  assert(events.indexOf('anonymous-get')>=0);assert(events.indexOf('write-health')>events.indexOf('anonymous-get'));
- assert.equal(writes.size,1);const [file,text]=[...writes][0];assert(file.includes('.cache'));assert.equal(JSON.parse(text).candidateReady,true);
- assert.equal(JSON.parse(text).mode,'isolated-variant');assert.equal(JSON.parse(text).stagingBuildSha,receipt.copiedHistoricalBuildStamp.commitSha);
-});
+ assert.deepEqual(requests.filter(r=>!r.path.startsWith('/api/')&&r.path!=='/sitemap.xml').map(r=>r.path),expectedRoutes.flatMap(r=>[r,r]));
+ assert.equal(writes.size,1);const[file,text]=[...writes][0],health=JSON.parse(text);assert.equal(file,output);assert.equal(health.candidateReady,true);
+ assert.equal(health.stagingBuildSha,build);assert.deepEqual(health.routes.map(r=>r.route),expectedRoutes);
+ const pageReads=reads.filter(f=>f.endsWith('.html'));assert.deepEqual(pageReads,context?[]:['index.html','studio/index.html','membership/index.html'].map(f=>path.join(root,f)));
+ if(context){assert(file.includes('.cache'));assert.equal(health.mode,'isolated-variant');}else assert.equal(health.mode,undefined);
+ assert(!reads.some(f=>f.includes('studio-pulse')));return{health,reads,requests};
+}
+await test('actual ordinary parity entrypoint probes current Studio and reads only canonical local pages',async()=>{const result=await exerciseParityEntrypoint(null);assert(result.requests.some(r=>r.path==='/studio/'));assert(!result.requests.some(r=>r.path==='/studio-pulse/'));});
+await test('actual historical admitted Pulse parity refresh preserves its sealed tuple without retired local files',async()=>{const context=await admit(),result=await exerciseParityEntrypoint(context);assert(result.requests.some(r=>r.path==='/studio-pulse/'));await exerciseParityEntrypoint(context,{cached:result.health});});
+await test('actual current admitted Studio parity refresh and cached check use its sealed tuple',async()=>{const context=await currentStudioFixtureContext(),result=await exerciseParityEntrypoint(context);assert(result.requests.some(r=>r.path==='/studio/'));assert(!result.requests.some(r=>r.path==='/studio-pulse/'));await exerciseParityEntrypoint(context,{cached:result.health});});
+await test('actual ordinary cached parity refuses a retired Pulse sample rather than aliasing its contract',async()=>{const result=await exerciseParityEntrypoint(null),cached=clone(result.health);cached.routes[1].route='/studio-pulse/';const checked=await exerciseParityEntrypoint(null,{cached,expectedExit:1});assert(checked.errors.some(s=>s.includes('/studio-pulse/:localShellParity')));});
+
 await test('actual Doctor variant staleness exemption requires current observation and both browser receipts',async()=>{
  const source=fs.readFileSync(new URL('../run-release-ceremony.mjs',import.meta.url),'utf8');
  const start=source.indexOf('function evaluateDoctorStep('),end=source.indexOf('\n/**',start);

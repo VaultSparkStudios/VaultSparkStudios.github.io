@@ -65,7 +65,7 @@ export const CRON_WRITE_EXEMPT = Object.freeze({
   'index.html': 'cloudflare-analytics-pull embeds real analytics values; a change here is a genuine content change that should invalidate the candidate and force a staging redeploy, not time-drift.',
   'status/index.html': 'Same producer and same reasoning as index.html — the rewritten bytes are measured values the site is meant to publish.',
   'membership/index.html': 'Scheduled publishers re-render this shared intent surface only after committed source feeds move; changed bytes are visitor-facing content and must invalidate the candidate.',
-  'studio-pulse/index.html': 'Scheduled publishers re-render the portfolio pulse from committed source changes; changed bytes are real public content, not a wall-clock-only observation.',
+  'studio/index.html': 'Scheduled publishers re-render the portfolio pulse from committed source changes; changed bytes are real public content, not a wall-clock-only observation.',
   'agents.json': 'Scheduled publishers regenerate the agent manifest from committed public catalog/discovery inputs; changed bytes are a real contract change that must invalidate the candidate.',
   'api/spark-manifest.json': 'Scheduled builders project committed public navigation sources; changed routes, availability or shipping evidence are content changes and must invalidate the candidate.',
   'games/index.html': 'Scheduled registry projections change the public catalog only when committed source content changes; those changes must invalidate the candidate.',

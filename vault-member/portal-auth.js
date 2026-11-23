@@ -451,6 +451,9 @@
       try {
         const { data: { session } } = await VSSupabase.auth.getSession();
         if (!session) throw new Error('Session expired. Please sign in again.');
+        if (!window.VSAccountData || !await window.VSAccountData.allowEnrollment()) {
+          throw new Error('Your website membership status must be checked before enrollment. Use the request status panel to retry.');
+        }
         // Referral attribution is optional; unavailable browser storage must not
         // prevent an authenticated visitor from completing their profile.
         const validReferral = value => typeof value === 'string' && /^[a-zA-Z0-9_]{1,32}$/.test(value) ? value : '';

@@ -117,6 +117,11 @@
 
   function applyConfig(element, config) {
     if (!element || !config) return;
+    // Intent/referral hints do not establish website enrollment eligibility.
+    if (config.href === '/vault-member/#register') config = {
+      href: '/membership/', label: 'See website membership',
+      note: 'Check current website enrollment. Shared Studio sign-in and access to individual projects are separate.'
+    };
     if (config.href) element.setAttribute('href', config.href);
     if (config.label) element.innerHTML = config.label;
     if (config.note && element.dataset.adaptiveNoteTarget) {
@@ -162,7 +167,7 @@
         applyConfig(element, {
           href: '/vault-member/#register',
           label: 'Claim Your Invited Spot',
-          note: 'Your invite is active. Create the free account first, then upgrade later if you want deeper access.'
+          note: 'Check the current invitation process on the membership page.'
         });
         return;
       }

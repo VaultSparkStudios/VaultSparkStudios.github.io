@@ -28,9 +28,19 @@
     return 'home';
   }
 
+  function enrollmentNote(intel) {
+    var mode = intel && intel.availability && intel.availability.signup && intel.availability.signup.mode;
+    switch (mode) {
+      case 'invitation': return 'New website memberships are currently opened by invitation.';
+      case 'open': return 'New website memberships are currently open.';
+      case 'closed': return 'New website membership enrollment is currently closed.';
+      default: return 'See the membership page for current website enrollment.';
+    }
+  }
+
   function buildModules(context, state, intel) {
     var freshShipCount = intel && intel.pulse && intel.pulse.shipped ? intel.pulse.shipped.length : 0;
-    var activeEdges = intel && intel.stats ? intel.stats.activeEdgeFunctions || 0 : 0;
+    var enrollment = enrollmentNote(intel);
     var liveProjects = intel && intel.stats ? intel.stats.liveProjects || 0 : 0;
     var projectsInForge = intel && intel.stats ? intel.stats.projectsInForge || 0 : 0;
     var trackedAccounts = intel && intel.social && intel.social.summary ? intel.social.summary.trackedAccounts || 0 : 0;
@@ -48,13 +58,13 @@
       home: [
         {
           label: 'Proof You Can Check',
-          title: 'This is already a live operating system, not a mood board.',
-          copy: liveProjects + ' public projects are live, ' + projectsInForge + ' more are in development, and ' + activeEdges + ' backend services already power the member layer.'
+          title: 'Check the public project catalog and status evidence.',
+          copy: liveProjects + ' projects are marked live in the public catalog and ' + projectsInForge + ' are in development. Each project page lists its current release and access details.'
         },
         {
           label: 'Safest First Move',
-          title: 'Start with identity before money.',
-          copy: 'The lowest-risk path is free: create one vault account, let rank/progression/world access begin there, then decide later whether the studio has earned paid backing.'
+          title: 'Check website membership before enrolling.',
+          copy: enrollment + ' Obelisk provides shared Studio sign-in. Website profiles and progression are separate from access to individual projects.'
         },
         {
           label: 'If You Came For Worlds',
@@ -65,38 +75,38 @@
         },
         {
           label: 'What Happens Next',
-          title: 'The system should keep handing you forward.',
+          title: 'Choose where to explore next.',
           copy: topGoal && topGoal.key === 'track_progress'
             ? 'If you want to track what the studio is actually shipping, the Studio Pulse and the changelog are where that lives — updated the day things land.'
-            : 'After the first click, the site stays coherent. Identity, worlds, live proof, and paid support all point into each other instead of acting like separate microsites.'
+            : 'Explore the games, read the universe stories, or compare website membership. Each project page explains its current release and access.'
         },
         {
           label: 'What Still Needs To Be Earned',
-          title: 'The brand promise is stronger when it admits the pressure.',
-          copy: blockerCopy + ' The point of this layer is to treat hesitation as design work, not user failure.'
+          title: 'Tell us what would help you decide.',
+          copy: blockerCopy + ' Share a question or report a problem using the feedback box below.'
         }
       ],
       membership: [
         {
           label: 'What Membership Is',
-          title: 'Membership is the account layer that makes everything accumulate.',
-          copy: 'One identity carries rank, achievements, challenges, referrals, future access, and the right to keep one continuous history as the studio expands.'
+          title: 'Website membership brings together your profile and progression.',
+          copy: 'Website profiles bring together Vault ranks, points, achievements and community challenges. Project access and releases are described on each project page.'
         },
         {
           label: 'What Changes Immediately',
-          title: 'Free already unlocks the real foundation.',
-          copy: 'The moment you register, the vault can start recognizing you. That is why the free tier matters: it is not a teaser, it is the base identity system the paid tiers build on.'
+          title: 'Check the current enrollment path.',
+          copy: enrollment + ' Shared Studio sign-in is separate from website membership enrollment.'
         },
         {
           label: 'Why Free Is Real',
           title: 'You do not have to pay to see whether the system feels earned.',
-          copy: 'The correct order for most people is account first, then public proof, then paid depth only if the portal, worlds, and operating signal feel worth backing.'
+          copy: 'Public project pages and status evidence are available before you decide whether to join or support the studio.'
         },
         {
           label: 'When Paid Depth Matters',
           title: 'Upgrade only when support and access begin to matter more than curiosity.',
           copy: state.membership_temperature === 'warm' || state.membership_temperature === 'hot'
-            ? 'It looks like you\'re already past "is this worth it?" — the real question now is whether the support + priority tiers match how deep you want to go.'
+            ? 'Compare the support tiers and their listed features to decide which fits how you want to take part.'
             : 'If you\'re still just curious, stay there. Paid depth should follow conviction, not pressure.'
         },
         {
@@ -167,12 +177,12 @@
       {
         label: 'What Your Friend Gets',
         title: 'You are inviting someone into the real vault, not a marketing funnel.',
-        copy: 'A free account with rank tracking, challenges, classified lore access, and a permanent community identity. No credit card. No pressure to upgrade. The same free tier you use if you have it, or a genuine entry point if they are new.'
+        copy: 'Website membership includes profiles, Vault ranks, points, achievements and community challenges. An invitation does not grant access to every project or paid archive.'
       },
       {
         label: 'Why Referrals Are Tracked',
         title: 'Referring is recorded as community signal, not lead generation.',
-        copy: 'Every successful referral adds to your vault rank progress and contributes to recruiter achievements. The studio tracks it because building a tight community through personal trust is how the vault should grow — not ads.'
+        copy: enrollment + ' See the invitation page for the current referral process and eligibility.'
       },
       {
         label: 'What The Honest Ask Is',
@@ -203,7 +213,7 @@
     };
     var copies = {
       home: 'What\'s already live. What the safest first step is. What still has to be earned.',
-      membership: 'What membership means. What free already unlocks. When paid depth actually matters.',
+      membership: 'Website profiles and progression, current enrollment, and optional support.',
       vaultsparked: 'What the paid tiers are for. What changes after upgrade. The honest guardrails. How to decide without pressure.',
       join: 'What free means. What starts immediately. Why invite-only. What still has to be earned.',
       invite: 'What your friend gets. Why referrals are tracked. The honest ask.'

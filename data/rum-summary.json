@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-20T05:34:27.371Z",
+  "generatedAt": "2026-11-23T10:14:20.039Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,10 +10,59 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 0,
+  "totalSamples": 7,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
-  "routes": {}
+  "routes": {
+    "/": {
+      "samples": 1,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 763,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 62,
+        "ttfb": 0
+      }
+    },
+    "/games/franchise-architect/": {
+      "samples": 2,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 366,
+        "cls": 0,
+        "inp": 64,
+        "fcp": 311,
+        "ttfb": 390
+      }
+    },
+    "/games/gridiron-gm/": {
+      "samples": 3,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 1228,
+        "cls": 0.002,
+        "inp": 0,
+        "fcp": 1228,
+        "ttfb": 611
+      }
+    },
+    "/news/2026-09-01/anthropic-releases-claude-fable-5-1-and-claude-mythos/": {
+      "samples": 1,
+      "sufficient": false,
+      "cwvPass": false,
+      "p75": {
+        "lcp": 3160,
+        "cls": 0.0017,
+        "inp": 0,
+        "fcp": 3160,
+        "ttfb": 1274
+      }
+    }
+  }
 }

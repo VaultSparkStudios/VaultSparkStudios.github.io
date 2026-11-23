@@ -48,11 +48,10 @@ function key(p) {
 
 export function judge({ rules, redirects, stubExists, refreshFiles }) {
   const findings = [];
-  const byFrom = new Map(redirects.map((r) => [key(r.from), r]));
   for (const rule of rules) {
-    const slash = byFrom.get(key(rule.from));
-    if (!slash) findings.push(`no _redirects rule for ${rule.from}`);
-    else if (key(slash.to) !== key(rule.to)) findings.push(`${rule.from} → ${slash.to} in _redirects but analysis says ${rule.to}`);
+    const matches = redirects.filter((r) => key(r.from) === key(rule.from));
+    if (!matches.length) findings.push(`no _redirects rule for ${rule.from}`);
+    for (const match of matches) if (key(match.to) !== key(rule.to)) findings.push(`${rule.from} → ${match.to} in _redirects but analysis says ${rule.to}`);
     if (stubExists(rule.from)) findings.push(`${rule.from} still ships index.html (stub must be deleted; the edge 301 owns this route)`);
   }
   for (const file of refreshFiles) findings.push(`${file} contains http-equiv="refresh" (meta-refresh stubs are retired; use _redirects)`);
@@ -74,6 +73,7 @@ function selfTest() {
     ['clean tree passes', judge({ rules, redirects: good, stubExists: () => false, refreshFiles: [] }).length === 0],
     ['missing edge rule fails', judge({ rules, redirects: [], stubExists: () => false, refreshFiles: [] })[0].includes('no _redirects rule')],
     ['destination drift fails', judge({ rules, redirects: bad, stubExists: () => false, refreshFiles: [] })[0].includes('analysis says')],
+    ['a later matching duplicate cannot hide an earlier conflicting destination', judge({ rules, redirects: [...bad, ...good], stubExists: () => false, refreshFiles: [] }).some(f => f.includes('analysis says'))],
     ['surviving stub fails', judge({ rules, redirects: good, stubExists: () => true, refreshFiles: [] }).some((f) => f.includes('still ships index.html'))],
     ['any meta-refresh anywhere fails', judge({ rules, redirects: good, stubExists: () => false, refreshFiles: ['x/index.html'] }).some((f) => f.includes('meta-refresh'))],
     ['hash anchors compare exactly', key('/a/#b') === '/a#b' && key('/a/') === '/a'],

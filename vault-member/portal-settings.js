@@ -1,52 +1,15 @@
 
 
     async function exportMyData() {
-      const btn = document.getElementById('export-data-btn');
-      if (btn) { btn.disabled = true; btn.textContent = 'Preparing…'; }
-      try {
-        const { data: { session } } = await VSSupabase.auth.getSession();
-        if (!session) return;
-        const uid = session.user.id;
-
-        const [{ data: profile }, { data: points }, { data: challenges }] = await Promise.all([
-          VSSupabase.from('vault_members').select('*').eq('id', uid).single(),
-          VSSupabase.from('point_events').select('points,reason,label,created_at').eq('user_id', uid).order('created_at', { ascending: false }).limit(500),
-          VSSupabase.from('challenge_completions').select('challenge_id,completed_at').eq('user_id', uid).order('completed_at', { ascending: false }),
-        ]);
-
-        const exportData = {
-          exported_at: new Date().toISOString(),
-          email: session.user.email,
-          profile: profile || {},
-          point_history: points || [],
-          challenge_completions: challenges || [],
-        };
-
-        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url; a.download = 'vaultspark-data-' + (profile?.username || uid) + '.json';
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      } catch (_) {}
-      if (btn) { btn.disabled = false; btn.textContent = '⬇ Export My Data'; }
+      if (window.VSAccountData) return window.VSAccountData.exportData();
+      const message = document.getElementById('account-data-message');
+      if (message) { message.hidden = false; message.setAttribute('role', 'alert'); message.textContent = 'Your data controls could not load. Please reload the page.'; }
     }
 
     function requestDeleteAccount() {
-      const confirmed = confirm(
-        'Delete your Vault Member account?\n\n' +
-        'This is permanent and irreversible. All your points, achievements, and data will be erased.\n\n' +
-        'To confirm, click OK. You will be signed out immediately and your account will be queued for deletion.'
-      );
-      if (!confirmed) return;
-      VSSupabase.auth.getSession().then(async ({ data: { session } }) => {
-        if (!session) return;
-        // Mark for deletion in vault_members (soft delete — admin can confirm)
-        // Wrapped: builders have no .catch, and the TypeError skipped the request.
-        await Promise.resolve(VSSupabase.from('vault_members').update({ delete_requested: true }).eq('id', session.user.id)).catch(() => {});
-        await VSSupabase.auth.signOut();
-        window.location.href = '/';
-      });
+      if (window.VSAccountData) return window.VSAccountData.openDeleteDialog();
+      const message = document.getElementById('account-data-message');
+      if (message) { message.hidden = false; message.setAttribute('role', 'alert'); message.textContent = 'Your deletion controls could not load. Please reload the page.'; }
     }
 
     async function refreshPointsDisplay() {
@@ -521,6 +484,16 @@
       const { data: { session } } = await VSSupabase.auth.getSession();
 
       if (session) {
+        // Consult the authoritative website tombstone before cached progress,
+        // bootstrap side effects or profile completion can recreate a membership.
+        if (!window.VSAccountData || !await window.VSAccountData.allowEnrollment()) {
+          if (!window.VSAccountData) {
+            showAuth();
+            const error = document.getElementById('login-error');
+            if (error) { error.textContent = 'Your membership status controls could not load. Please reload and try again.'; error.classList.add('show'); }
+          }
+          return;
+        }
         // Instant pre-render: show cached member immediately while fresh data loads
         if (typeof VSMemberCache !== 'undefined') {
           const cached = await VSMemberCache.get(session.user.id);

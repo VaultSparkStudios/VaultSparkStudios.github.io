@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { ACTIVE_AVAILABILITY_FILES, activeAvailabilityConflicts } from './lib/active-availability.mjs';
 /**
  * check-content-coherence.mjs — cross-surface truth sentinel (S234)
  *
@@ -25,6 +26,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from './lib/safe-spawn.mjs';
 import { findVoiceLeaks, visibleText } from './lib/voice-leak.mjs';
+import { readAvailability, availabilityConflicts, availabilitySurfaceConflicts } from './lib/public-availability.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -123,6 +125,22 @@ function runLive() {
   const memVal = readSafe('membership-value/index.html');
   const mem = readSafe('membership/index.html');
 
+  try { errs.push(...availabilityConflicts(intelText?JSON.parse(intelText).availability:null,readAvailability(ROOT))); }
+  catch (error) { errs.push('Public availability could not be verified: '+error.message); }
+
+  try {
+    const expected=readAvailability(ROOT);
+    for (const file of ACTIVE_AVAILABILITY_FILES) {
+      const source=readSafe(file);
+      if(source===null)errs.push(file+': active availability source missing');
+      else errs.push(...activeAvailabilityConflicts(file,source,expected,JSON.parse(readSafe('api/membership-tiers.json'))));
+    }
+    for(const file of ['index.html','press/index.html','assets/contact-page.js','vault-member/index.html','assets/vault-cta.js']) {
+      const source=readSafe(file);if(source===null)errs.push(file+': active membership surface missing');
+      else errs.push(...availabilitySurfaceConflicts(file,source,expected));
+    }
+  } catch(error) { errs.push('Active membership copy could not be verified: '+error.message); }
+
   if (statusText) errs.push(...findRetiredLabels(statusText));
 
   if (memVal && mem) {
@@ -185,6 +203,12 @@ function runLive() {
 function runSelfTest() {
   let pass = 0, fail = 0;
   const ok = (cond, name) => { if (cond) { pass++; } else { fail++; console.error('  ✗ ' + name); } };
+
+  // Current signup copy is checked only on active owned surfaces.
+  const current={signup:{mode:'invitation',label:'Request your Vault invite',url:'/invite/'},plans:[{},{},{}]};
+  ok(availabilitySurfaceConflicts('news/historical/index.html','<blockquote>Membership is open. No invitation needed.</blockquote>',current).length===0,'historical article quotations remain untouched');
+  ok(availabilitySurfaceConflicts('index.html','<main>Membership is open. No invitation needed.</main>',current).length>0,'active home open-enrollment contradiction fails');
+  ok(availabilitySurfaceConflicts('press/index.html','<main>16 live edge functions bind every studio title.</main>',current).length>0,'unsupported active press claim fails');
 
   // 1. retired label
   ok(findRetiredLabels('{"label":"Sealed"}').length === 1, 'detects retired "Sealed" label');

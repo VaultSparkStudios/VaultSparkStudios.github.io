@@ -35,7 +35,7 @@ async function unobstructedFooter(page){
 test('eligible Vault CTA yields to the primary drawer and stays dismissed after reopening',async({page,baseURL})=>{
  await unsignedPublicPage(page,baseURL);
  const bar=page.locator('#vs-cta-bar');await expect(bar).toBeVisible({timeout:22000});
- await expect(bar.getByRole('link',{name:'Join The Vault',exact:true})).toHaveAttribute('href','/vault-member/#register');
+ await expect(bar.getByRole('link',{name:'See membership',exact:true})).toHaveAttribute('href','/membership/');
  await openDrawer(page);await expect(bar).toBeAttached();await expect(bar).toBeHidden();
  await unobstructedFooter(page);
  await page.keyboard.press('Escape');await expect(page.locator('#hamburger')).toHaveAttribute('aria-expanded','false');await expect(bar).toBeVisible();
@@ -46,6 +46,36 @@ test('eligible Vault CTA yields to the primary drawer and stays dismissed after 
  await openDrawer(page);await unobstructedFooter(page);await expect(bar).toHaveCount(0);
  await page.keyboard.press('Escape');await expect(page.locator('#hamburger')).toHaveAttribute('aria-expanded','false');await expect(bar).toHaveCount(0);
  expect(await page.evaluate(()=>localStorage.getItem('vs_cta_dismissed'))).toBe(dismissed);
+});
+
+test('wrapped membership bar leaves the final footer reachable across resizing and dismissal',async({page,baseURL})=>{
+ await unsignedPublicPage(page,baseURL);
+ const bar=page.locator('#vs-cta-bar');await expect(bar).toBeVisible({timeout:22000});
+ for(const width of [390,1366,390]){
+  await page.setViewportSize({width,height:844});
+  await expect.poll(()=>page.evaluate(()=>{
+   const bar=document.querySelector('#vs-cta-bar'),spacer=document.querySelector('#vs-cta-spacer');
+   return !!spacer&&Math.abs(spacer.getBoundingClientRect().height-bar.getBoundingClientRect().height)<=1;
+  })).toBe(true);
+  // Activating the homepage's real idle queue can append content below the
+  // initial bottom. Reach the settled final region rather than an old offset.
+  await page.evaluate(async()=>{
+   document.documentElement.style.scrollBehavior='auto';
+   for(let i=0;i<10;i++){
+    scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'});
+    await new Promise(resolve=>setTimeout(resolve,300));
+   }
+   scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'});
+  });
+  const privacy=page.locator('footer').getByRole('link',{name:'Privacy',exact:true});
+  await expect(privacy).toBeVisible();
+  await expect.poll(()=>privacy.evaluate(e=>{
+   const r=e.getBoundingClientRect(),bar=document.querySelector('#vs-cta-bar').getBoundingClientRect();
+   return r.bottom<=bar.top&&r.top>=0;
+  })).toBe(true);
+ }
+ await bar.getByRole('button',{name:'Dismiss',exact:true}).click();
+ await expect(page.locator('#vs-cta-spacer')).toHaveCount(0);
 });
 
 test('Vault CTA arriving at its normal deadline stays hidden in an already open drawer',async({page,baseURL})=>{

@@ -28,8 +28,8 @@
     var p = (data && data.portfolio) || {};
     var live = n(s.liveProjects != null ? s.liveProjects : p.sparked);
     var forge = n(s.projectsInForge != null ? s.projectsInForge : p.forge);
-    // SEALED retired — VAULTED is what sealed means (coined vocab); accept either source key.
-    var vaulted = n(p.vaultedCount != null ? p.vaultedCount : p.sealedCount);
+    // Paused/archived projects are distinct from anonymous unannounced initiatives.
+    var vaulted = n(p.vaulted);
     var sessions = n(s.sessionsCompleted);
     var figs = [];
     if (live != null && live >= 1) figs.push({ v: live, label: 'sparked', animate: false });
@@ -115,7 +115,7 @@
     meta.className = 'vs-traction__meta';
     var line1 = document.createElement('span');
     var datePart = dateStr ? 'as of ' + dateStr + ' · ' : '';
-    line1.innerHTML = datePart + 'every number is live — <a href="/studio-pulse/">see the pulse</a>';
+    line1.innerHTML = datePart + 'current catalog snapshot — <a href="/studio/#pulse">see the pulse</a>';
     meta.appendChild(line1);
     if (recency) {
       var line2 = document.createElement('span');

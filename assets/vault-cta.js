@@ -41,19 +41,35 @@
 
     bar.innerHTML =
       '<div style="flex:1;min-width:160px;">' +
-        '<div style="font-size:0.88rem;font-weight:800;color:#fff;margin-bottom:0.1rem;">Join the Vault — Free</div>' +
-        '<div style="font-size:0.76rem;color:rgba(255,255,255,0.5);line-height:1.4;">Earn points, access classified files, and climb the leaderboard.</div>' +
+        '<div style="font-size:0.88rem;font-weight:800;color:#fff;margin-bottom:0.1rem;">Website membership</div>' +
+        '<div style="font-size:0.76rem;color:rgba(255,255,255,0.5);line-height:1.4;">Explore member features and current enrollment.</div>' +
       '</div>' +
       '<div style="display:flex;align-items:center;gap:0.6rem;flex-shrink:0;">' +
-        '<a href="/vault-member/#register" style="display:inline-block;padding:0.45rem 1.1rem;background:#FFC400;color:#000;font-weight:800;font-size:0.84rem;border-radius:9px;text-decoration:none;white-space:nowrap;">Join The Vault</a>' +
-        '<a href="/vault-member/#login" style="font-size:0.8rem;color:rgba(255,255,255,0.4);text-decoration:none;white-space:nowrap;">Sign in</a>' +
-        '<button id="vs-cta-close" aria-label="Dismiss" style="padding:0.3rem 0.55rem;background:transparent;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.35);font-size:0.78rem;border-radius:7px;cursor:pointer;font-family:inherit;">✕</button>' +
+        '<a href="/membership/" style="display:inline-block;padding:0.45rem 1.1rem;background:#FFC400;color:#000;font-weight:800;font-size:0.84rem;border-radius:9px;text-decoration:none;white-space:nowrap;">See membership</a>' +
+        '<a href="/vault-member/#login" style="font-size:0.8rem;color:rgba(255,255,255,0.7);text-decoration:none;white-space:nowrap;">Sign in</a>' +
+        '<button id="vs-cta-close" aria-label="Dismiss" style="padding:0.3rem 0.55rem;background:transparent;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.75);font-size:0.78rem;border-radius:7px;cursor:pointer;font-family:inherit;">✕</button>' +
       '</div>';
 
     document.body.appendChild(bar);
 
+    // Reserve the actual wrapped height so the final footer remains reachable.
+    var spacer = document.createElement('div');
+    spacer.id = 'vs-cta-spacer';
+    spacer.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(spacer);
+    function reserveHeight() {
+      spacer.style.height = Math.ceil(bar.getBoundingClientRect().height) + 'px';
+    }
+    var resizeObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(reserveHeight) : null;
+    if (resizeObserver) resizeObserver.observe(bar);
+    window.addEventListener('resize', reserveHeight);
+    reserveHeight();
+
     document.getElementById('vs-cta-close').addEventListener('click', function () {
       localStorage.setItem(DISMISS_KEY, String(Date.now()));
+      if (resizeObserver) resizeObserver.disconnect();
+      window.removeEventListener('resize', reserveHeight);
+      spacer.remove();
       bar.remove();
     });
   }

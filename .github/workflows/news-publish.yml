@@ -37,6 +37,14 @@ on:
         description: "Edition to publish (wire | midday | close | latenight). Blank = infer from the current hour."
         required: false
         default: ""
+      retry_attempt:
+        description: "Bounded stale-source regeneration attempt (0, 1 or 2)"
+        required: false
+        default: "0"
+      retry_of_run_id:
+        description: "Run whose validated candidate lost the main publication race"
+        required: false
+        default: ""
 
 concurrency:
   # Two editions writing data/news-desk/days/ at once would race the day artifact.
@@ -44,10 +52,15 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  publish:
+  author:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
+    outputs:
+      ready: ${{ steps.artifact.outputs.ready }}
+      manifest_sha256: ${{ steps.artifact.outputs.manifest_sha256 }}
+      edition: ${{ steps.slot.outputs.edition }}
+      retry_attempt: ${{ steps.slot.outputs.retry_attempt }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -56,6 +69,7 @@ jobs:
           # any non-tip commit at the default depth of 1 — the shallow-clone class
           # that published a false `diverged` in S316.
           fetch-depth: 0
+          persist-credentials: false
 
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
@@ -68,8 +82,17 @@ jobs:
 
       - name: Resolve edition slot
         id: slot
+        env:
+          REQUESTED_EDITION: ${{ inputs.edition }}
+          RETRY_ATTEMPT: ${{ inputs.retry_attempt }}
+          RETRY_OF_RUN_ID: ${{ inputs.retry_of_run_id }}
         run: |
-          requested="${{ github.event.inputs.edition }}"
+          retry_attempt="${RETRY_ATTEMPT:-0}"
+          case "$retry_attempt" in 0|1|2) ;; *) echo "::error::Unsupported regeneration attempt"; exit 1 ;; esac
+          if [ -n "$RETRY_OF_RUN_ID" ] && ! [[ "$RETRY_OF_RUN_ID" =~ ^[0-9]+$ ]]; then exit 1; fi
+          echo "retry_attempt=$retry_attempt" >> "$GITHUB_OUTPUT"
+          echo "Regeneration attempt $retry_attempt; prior run ${RETRY_OF_RUN_ID:-none}; source $GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+          requested="$REQUESTED_EDITION"
           if [ -n "$requested" ]; then
             edition="$requested"
           else
@@ -81,6 +104,7 @@ jobs:
               *)            edition="latenight" ;;
             esac
           fi
+          case "$edition" in wire|midday|close|latenight) ;; *) echo "::error::Unsupported edition"; exit 1 ;; esac
           echo "edition=$edition" >> "$GITHUB_OUTPUT"
           echo "date=$(date -u +%F)" >> "$GITHUB_OUTPUT"
           echo "Publishing slot: $edition ($(date -u +%F))"
@@ -328,11 +352,12 @@ jobs:
         if: always() && steps.slot.outputs.edition == 'latenight'
         run: node scripts/build-news-freshness.mjs --require-today
 
-      - name: Commit and publish
+      - name: Capture the exact gated publication artifact
+        id: artifact
         if: steps.promote.outputs.ok == 'yes'
+        env:
+          DESK_ARTIFACT_DIR: ${{ runner.temp }}/desk-publication
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           # Keep the required publication transaction atomic. An optional RUM
           # history file is staged separately: putting a missing path in this
           # command makes git add reject EVERY path while `|| true` paints the
@@ -344,15 +369,17 @@ jobs:
           if git diff --cached --quiet; then
             echo "Nothing new to publish for the ${{ steps.slot.outputs.edition }} slot"
           else
-            git commit -m "feat(desk): publish the ${{ steps.slot.outputs.edition }} edition [skip ci]"
-            # S341 — this loop was the ONE of twelve publishers that could already
-            # survive a conflict (-X theirs to keep the gated publication
-            # transaction, rebase --abort to unwedge before retrying). Its shape is
-            # now the shared implementation every publisher calls, plus the
-            # re-validation it lacked: -X theirs settles a collision but says
-            # nothing about a dependent that merely hashes an input the rebase moved.
-            bash scripts/ci/publish-push.sh "Desk edition (${{ steps.slot.outputs.edition }})" --resync --attempts 3
+            node scripts/desk-publication-artifact.mjs --capture --output "$DESK_ARTIFACT_DIR"
           fi
+
+      - name: Upload the validated candidate
+        if: steps.artifact.outputs.ready == 'yes'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: desk-publication-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/desk-publication/
+          if-no-files-found: error
+          retention-days: 2
 
       - name: Slot summary
         if: always()
@@ -365,3 +392,91 @@ jobs:
           echo "- promote: \`${{ steps.promote.outputs.status || 'skipped' }}\`" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "A non-zero status is a dropped slot, not an incident — the next scheduled edition retries." >> "$GITHUB_STEP_SUMMARY"
+
+  publish:
+    needs: author
+    if: needs.author.outputs.ready == 'yes'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      retry: ${{ steps.publish.outputs.retry }}
+    steps:
+      # Only this job receives repository write credentials. It never fetches
+      # third-party feeds, invokes inference or executes artifact-supplied code.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+
+      - name: Download this run's immutable validated artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          ARTIFACT_NAME: desk-publication-${{ github.run_id }}-${{ github.run_attempt }}
+        run: gh run download "$RUN_ID" --name "$ARTIFACT_NAME" --dir "$RUNNER_TEMP/desk-publication"
+
+      - name: Verify and stage the exact validated candidate
+        env:
+          EXPECTED_MANIFEST_SHA256: ${{ needs.author.outputs.manifest_sha256 }}
+        run: |
+          node scripts/desk-publication-artifact.mjs --apply --input "$RUNNER_TEMP/desk-publication" --expected-manifest-sha256 "$EXPECTED_MANIFEST_SHA256"
+
+      - name: Publish without changing the validated artifact
+        id: publish
+        env:
+          EDITION: ${{ needs.author.outputs.edition }}
+        run: |
+          case "$EDITION" in wire|midday|close|latenight) ;; *) exit 1 ;; esac
+          base_sha="$(git rev-parse HEAD)"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "feat(desk): publish the $EDITION edition [skip ci]"
+          candidate_sha="$(git rev-parse HEAD)"
+          # Never rebase/resync into bytes the authoring job never gated. A CAS
+          # race regenerates the entire pipeline at current main in a new run.
+          if ! git push origin HEAD:main; then
+            git fetch --no-tags origin main
+            remote_sha="$(git rev-parse FETCH_HEAD)"
+            # A lost push acknowledgement may follow a successful server write.
+            # Confirm containment instead of republishing that edition.
+            if git merge-base --is-ancestor "$candidate_sha" "$remote_sha"; then
+              echo "Validated candidate $candidate_sha is already on main." >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            if [[ "$remote_sha" =~ ^[0-9a-f]{40}$ ]] && [ "$remote_sha" != "$base_sha" ]; then
+              echo "retry=yes" >> "$GITHUB_OUTPUT"
+              echo "Validated source $base_sha lost the main race to $remote_sha; artifact unchanged." >> "$GITHUB_STEP_SUMMARY"
+            fi
+            exit 1
+          fi
+          echo "Published the exact validated $EDITION artifact." >> "$GITHUB_STEP_SUMMARY"
+
+  regenerate:
+    needs: [author, publish]
+    if: always() && needs.author.result == 'success' && needs.publish.outputs.retry == 'yes' && needs.author.outputs.retry_attempt != '2'
+    runs-on: ubuntu-latest
+    # Dispatch authority never co-resides with feeds, inference, artifact
+    # application or repository write authority.
+    permissions:
+      actions: write
+    steps:
+      - name: Regenerate the whole pipeline at current main (at most two retries)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          EDITION: ${{ needs.author.outputs.edition }}
+          RETRY_ATTEMPT: ${{ needs.author.outputs.retry_attempt }}
+          PRIOR_RUN_ID: ${{ github.run_id }}
+        run: |
+          case "$EDITION" in wire|midday|close|latenight) ;; *) exit 1 ;; esac
+          case "$RETRY_ATTEMPT" in 0|1) ;; *) exit 1 ;; esac
+          next_attempt=$((RETRY_ATTEMPT + 1))
+          gh workflow run news-publish.yml --ref main -f edition="$EDITION" -f retry_attempt="$next_attempt" -f retry_of_run_id="$PRIOR_RUN_ID"
+          echo "Requested whole-pipeline regeneration $next_attempt/2 on main, after run $PRIOR_RUN_ID." >> "$GITHUB_STEP_SUMMARY"

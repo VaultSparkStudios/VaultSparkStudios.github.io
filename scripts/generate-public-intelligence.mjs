@@ -4,6 +4,7 @@ import { pathToFileURL } from 'node:url';
 import { buildPublicContracts } from './lib/public-intelligence-contracts.mjs';
 import { matchesProjectSlug, normalizeProjectSlug, readPortfolioEvents } from './lib/public-activity.mjs';
 import { portfolioTotalFromRegistry } from './lib/project-activity.mjs';
+import { readAvailability } from './lib/public-availability.mjs';
 
 const root = process.cwd();
 const projectStatusPath = path.join(root, 'context', 'PROJECT_STATUS.json');
@@ -37,7 +38,7 @@ const CATALOG_NOTES = {
   'football-gm': 'Live beta. Deep football GM with analytics — polish rounds still in motion.',
   'gridiron-gm': 'Vaulted. Paused and honored in the vault — not currently playable.',
   'solara': 'Browser roguelite RPG with a shared world — every death dims a shared sun.',
-  'vaultspark-forge': 'Crafting-and-building world in early concept. Vaulted silhouette for now.',
+  'vaultspark-forge': 'Crafting-and-building world in early concept.',
   'the-exodus': 'Engine-building card game for 2–4 players (plus solo) aboard a generation ship fleeing a dying star.',
   'voidfall': 'Nine-book cosmic-horror saga. Book 1 at lock. Not a game — a world.',
   'promogrind': 'Sportsbook promo conversion suite — calculators, tracking and a profit-and-loss ledger. 21+.',
@@ -432,6 +433,8 @@ const pulse = {
 const registryModule = await import(pathToFileURL(path.join(process.cwd(), 'studio-hub', 'src', 'data', 'studioRegistry.js')).href);
 const normalizedActivity = buildNormalizedActivity(registryModule.PROJECTS || []);
 const contracts = await buildPublicContracts(runtimePack, projectStatus, pulse, CATALOG, normalizedActivity);
+const availability = readAvailability(root);
+contracts.websitePublic.availability = availability;
 contracts.websitePublic.intelligence.currentSession = currentSession;
 contracts.hub.pulse.currentSession = currentSession;
 contracts.hub.pulse.lastUpdated = projectStatus.lastUpdated || (updatedMatch && updatedMatch[1]);
@@ -683,6 +686,7 @@ const PORTFOLIO_TOTAL = portfolioTotalFromRegistry(registryModule.PROJECTS);
 
 const payload = {
   schemaVersion: '1.2',
+  availability,
   generatedAt: new Date().toISOString(),
   project: {
     name: projectStatus.name,

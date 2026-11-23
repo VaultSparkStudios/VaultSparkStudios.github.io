@@ -63,26 +63,16 @@
         '<circle cx="24" cy="24" r="11" fill="none" stroke="currentColor" stroke-width="1.2"/>' +
         '<path d="M24 15 v10 M19 24 h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>' +
       '</svg>' +
-      '<span class="vs-sealed-label">VAULTED</span>';
+      '<span class="vs-sealed-label">UNANNOUNCED</span>';
     return tile;
   }
 
   function contextCopy(context, count, total) {
-    var map = {
-      games: {
-        heading: 'Worlds still vaulted.',
-        body: '<strong>' + count + '</strong> of the vault\'s <strong>' + total + '</strong> initiatives are still shaping behind vault doors. You\'re looking at what we\'ve let breathe so far.',
-      },
-      projects: {
-        heading: 'More tools still vaulted.',
-        body: '<strong>' + count + '</strong> vaulted initiatives are still forming. Vault Members hear about each one the moment it\'s ready to speak.',
-      },
-      default: {
-        heading: 'Vaulted.',
-        body: '<strong>' + count + '</strong> more initiatives are taking shape behind vault doors across the studio.',
-      },
+    // Plain text is assigned with textContent. No project names are disclosed.
+    return {
+      heading: 'Unannounced initiatives.',
+      body: count + ' more initiatives are taking shape behind vault doors across the studio.'
     };
-    return map[context] || map.default;
   }
 
   function daysUntil(iso) {
@@ -127,7 +117,7 @@
       if (text) node.textContent = text;
       return node;
     }
-    wrap.appendChild(el('div', 'vs-sealed-eyebrow', 'Vaulted'));
+    wrap.appendChild(el('div', 'vs-sealed-eyebrow', 'Unannounced'));
     wrap.appendChild(el('h2', null, copy.heading));
     wrap.appendChild(el('p', 'vs-sealed-caption', copy.body));
     var grid = el('div', 'vs-sealed-grid');
@@ -139,13 +129,9 @@
       wrap.appendChild(chipWrap);
     }
     var foot = el('p', 'vs-sealed-foot');
-    foot.appendChild(document.createTextNode('When a vault opens, '));
-    var memberLink = el('a', null, 'Vault Members hear first');
-    memberLink.href = '/membership/';
-    foot.appendChild(memberLink);
-    foot.appendChild(document.createTextNode('. See everything live in '));
+    foot.appendChild(document.createTextNode('Follow announced release and access updates in '));
     var pulseLink = el('a', null, 'Studio Pulse');
-    pulseLink.href = '/studio-pulse/';
+    pulseLink.href = '/studio/#pulse';
     foot.appendChild(pulseLink);
     foot.appendChild(document.createTextNode('.'));
     wrap.appendChild(foot);

@@ -103,7 +103,7 @@ export function buildLd(kind, entries) {
 }
 
 const TARGETS = [
-  ['journal/index.html', 'journal'],
+  ['devlog/index.html', 'journal'],
   ['journal/archive/index.html', 'archive'],
   ['journal/dispatches/index.html', 'dispatches'],
   ['changelog/index.html', 'changelog'],

@@ -3,14 +3,15 @@
  *
  * Pure module (no remote imports) so Node tests can import it too.
  *
- * The SQL RPC increment_ignis_meter (supabase-s368-ignis-meter-model-pricing.sql)
+ * The SQL RPC increment_ignis_meter (20261123044000_ignis_sonnet_cache_price.sql)
  * holds the authoritative copy of these prices; the meter writes are priced
  * there. This table is the edge-side mirror used for logging/estimates and is
  * kept in lockstep by tests/s368-wave0-security.unit.spec.mjs.
  *
  * Prices are USD per million tokens. Verify against the current pricing page
  * (https://www.anthropic.com/pricing) whenever a model ID changes. Values below
- * are from the Claude API model catalog cached 2026-09-25.
+ * were rechecked 2026-11-23 against the first-party pricing reference:
+ * https://platform.claude.com/docs/en/about-claude/pricing
  */
 
 export const SONNET_MODEL = 'claude-sonnet-5-5';
@@ -29,7 +30,7 @@ export type ModelPrice = {
 
 // verify against current pricing page
 export const MODEL_PRICES: Record<string, ModelPrice> = {
-  'claude-sonnet-5-5': { input: 2.00, output: 10.00, cacheRead: 0.20, cacheWrite: 2.50 },
+  'claude-sonnet-5-5': { input: 2.00, output: 10.00, cacheRead: 0.10, cacheWrite: 2.50 },
   'claude-haiku-4-5': { input: 1.00, output: 5.00, cacheRead: 0.10, cacheWrite: 1.25 },
   'claude-opus-5-5': { input: 4.00, output: 20.00, cacheRead: 0.20, cacheWrite: 5.00 },
   // Legacy default for unknown/omitted models (Sonnet 4.6 rates). Deliberately

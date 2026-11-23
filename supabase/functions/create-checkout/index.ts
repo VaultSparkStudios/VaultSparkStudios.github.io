@@ -15,8 +15,8 @@
 // Optional (default off): ANNUAL_ENABLED=true re-opens annual checkout.
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import Stripe from 'https://esm.sh/stripe@14?target=deno';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.119.2';
+import Stripe from 'https://esm.sh/stripe@14.25.0?target=deno';
 import { normalizePlanKey } from '../_shared/membershipAccess.ts';
 import {
   annualGate,
@@ -157,6 +157,15 @@ serve(async (req: Request) => {
       line_items:           [{ price: priceId, quantity: 1 }],
       success_url:          successUrl,
       cancel_url:           `${APP_URL}/vault-member/?checkout=canceled`,
+      ...(isMonthlyPhasePlan(plan) || isAnnualPlan(plan) ? {
+        custom_text: {
+          submit: {
+            message: 'Your subscription renews automatically at the price and billing interval shown until you cancel. ' +
+              'Cancel future renewals using Manage billing in your Vault Member settings. ' +
+              `[Subscription terms](${APP_URL}/subscription-terms/).`,
+          },
+        },
+      } : {}),
       metadata: {
         vault_user_id:  user.id,
         plan,

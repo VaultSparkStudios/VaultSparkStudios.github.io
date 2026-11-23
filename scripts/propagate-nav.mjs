@@ -270,7 +270,7 @@ function buildNav(assetPrefix, activeHref) {
         <div class="nav-item has-dropdown"><a href="/projects/"${projectsActive}>Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a>${buildStatusSections(NAV_PROJECTS)}</div></div>
         <div class="nav-item has-dropdown"><a href="/membership/"${membershipActive}>Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/community/#wall">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
         <div class="nav-item has-dropdown"><a href="/universe/"${activeAttr(activeHref === '/universe/')}>Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/studio/"${activeAttr(activeHref === '/studio/')}>Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span>${intelligenceLinks(activeHref)}<div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/"${activeAttr(activeHref === '/news/')}>The Desk · News</a><a href="/changelog/#stories">Stories</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/dispatch/">Studio Dispatch</a><a href="/collaborate/">Collaborate</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/press/#brand">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/studio/"${activeAttr(activeHref === '/studio/')}>Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span>${intelligenceLinks(activeHref)}<div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/"${activeAttr(activeHref === '/news/')}>The Desk · News</a><a href="/changelog/#stories">Stories</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/dispatch/">Newsletters</a><a href="/devlog/">Devlog</a><a href="/beta/">Beta Hub</a><a href="/agents/">AI Agents Guide</a><a href="/collaborate/">Collaborate</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/press/#brand">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
         <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span>${resourceLinks(activeHref)}<div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/press/#brand">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
 
         <div class="mobile-nav-footer">
@@ -296,7 +296,7 @@ function buildNav(assetPrefix, activeHref) {
           <span class="desk-wire__headline" data-desk-wire-headline>Latest AI signal from the newsroom</span>
           <span class="desk-wire__cta" aria-hidden="true">Read &rarr;</span>
         </a>
-        <a class="desk-wire__subscribe" href="/news/#desk-dispatch">Subscribe &rarr;</a>
+        <a class="desk-wire__subscribe" href="/dispatch/#dispatch-h-dispatch-page">Subscribe &rarr;</a>
       </div>
     </div>
   </header>`;
@@ -413,9 +413,9 @@ function buildFooter(assetPrefix) {
             <input id="footer-botcheck" type="checkbox" name="botcheck" tabindex="-1" class="footer-dispatch-bot" aria-label="Spam prevention; leave blank" aria-hidden="true" hidden style="display:none !important;" />
             <button type="submit" class="button button-sm">Join the dispatch</button>
           </form>
-          <div class="footer-dispatch-success" id="footer-success" role="status" aria-live="polite" hidden>&#10003; You're on the list — watch for the next signal.</div>
+          <div class="footer-dispatch-success" id="footer-success" role="status" aria-live="polite" hidden>&#10003; Your subscription request was accepted. Check your email for any confirmation step.</div>
           <a class="footer-dispatch-home" href="/dispatch/">Past editions &amp; the Dispatch home &rarr;</a>
-          <a class="footer-dispatch-home" href="/news/#desk-dispatch">Want daily AI news instead? Get The Desk Dispatch &rarr;</a>
+          <a class="footer-dispatch-home" href="/dispatch/#dispatch-h-dispatch-page">Want daily AI news instead? Get The Desk Dispatch &rarr;</a>
         </div>
       </div>
       <div class="footer-socials-row" aria-label="Follow VaultSpark Studios">
@@ -429,7 +429,7 @@ function buildFooter(assetPrefix) {
         <span class="legend-status-sparked">🔥 SPARKED — Live &amp; improving</span>
         <span class="legend-status-forge">⚒️ FORGE — Building</span>
         <span class="legend-status-vaulted">🔒 VAULTED — Paused or archived</span>
-        <span class="legend-status-meta">${portfolioTotal()} initiatives under the vault banner · <a href="/studio-pulse/">open Studio Pulse &rarr;</a></span>
+        <span class="legend-status-meta">${portfolioTotal()} initiatives under the vault banner · <a href="/studio/#pulse">open Studio Pulse &rarr;</a></span>
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 VaultSpark Studios LLC. All rights reserved. VaultSpark&trade; and VaultSpark Studios&trade; are trademarks of VaultSpark Studios LLC.</span>
@@ -468,7 +468,7 @@ function findHtmlFiles(dir, base = dir) {
 //   Lazy-loads vault-oracle.js on click → Oracle is effectively sitewide.
 // - exit-intent.js: one micro-feedback pulse per session, respects preferences.
 // - scroll-reveal.js + scroll-depth.js + native-feel.js: motion + analytics.
-// Context-conditional: studio-pulse-live on /studio-pulse/, /leaderboards/ + /ranks/,
+// Context-conditional: studio-pulse-live on /studio/#pulse, /leaderboards/ + /ranks/,
 //                      lore-gates on /universe/*.
 function buildAmbientBlock(relPath) {
   const p = relPath.replace(/\\/g, '/').replace(/\/index\.html$/, '').replace(/\.html$/, '');
@@ -478,7 +478,7 @@ function buildAmbientBlock(relPath) {
   // previous `/^universe\//` regex silently skipped the index page so it
   // never received `lore-gates.js` in its ambient block.
   const universe  = /^universe(\/|$)/.test(p);
-  const leaderRanks = /^(studio-pulse|leaderboards|ranks)/.test(p);
+  const leaderRanks = /^(studio|leaderboards|ranks)/.test(p);
   const desk = /^news(\/|$)/.test(p);
   // S136 speed sprint: 18 previously-separate ambient scripts are now
   // concatenated into a single hashed `assets/ambient.shell-<hash>.js` bundle

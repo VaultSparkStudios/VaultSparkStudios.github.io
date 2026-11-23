@@ -2,7 +2,7 @@
   'use strict';
 
   var STATUS_COPY = {
-    SPARKED: { label: 'PLAYABLE NOW', tone: 'sparked' },
+    SPARKED: { label: 'SPARKED — LIVE', tone: 'sparked' },
     FORGE:   { label: 'TAKING SHAPE', tone: 'forge' },
     VAULTED: { label: 'RESTING',      tone: 'vaulted' },
   };
@@ -49,9 +49,10 @@
     var el = document.getElementById('forge-heartbeat');
     if (!el || !portfolio) return;
     el.innerHTML = [
-      statTile(portfolio.sparked, 'Playable now', 'sparked'),
+      statTile(portfolio.sparked, 'Sparked projects', 'sparked'),
       statTile(portfolio.forge, 'Taking shape in the forge', 'forge'),
-      statTile(portfolio.sealedCount, 'Vaulted in the deep', 'sealed'),
+      statTile(portfolio.vaulted, 'Vaulted projects', 'vaulted'),
+      statTile(portfolio.sealedCount, 'Unannounced initiatives', 'sealed'),
       statTile(portfolio.total, 'Initiatives under the vault banner', 'total'),
     ].join('');
   }
@@ -326,7 +327,7 @@
     var count = portfolio.sealedCount || 0;
     if (caption) {
       caption.innerHTML = '<strong>' + count + '</strong> more initiatives are taking shape behind vault doors. ' +
-        'Not ready to speak yet. When a vault opens, Vault Members hear first.';
+        'Project pages carry announced release and access updates.';
     }
     var tiles = [];
     for (var i = 0; i < count; i += 1) {
@@ -337,7 +338,7 @@
             '<circle cx="24" cy="24" r="11" fill="none" stroke="currentColor" stroke-width="1.2" />' +
             '<path d="M24 15 v10 M19 24 h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />' +
           '</svg>' +
-          '<span class="forge-sealed-label">VAULTED</span>' +
+          '<span class="forge-sealed-label">UNANNOUNCED</span>' +
         '</div>'
       );
     }
