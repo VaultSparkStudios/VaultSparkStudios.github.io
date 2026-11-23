@@ -45,7 +45,7 @@ jobs:
           LOCAL_PREVIEW_PORT: '4173'
 
       - name: Wait for local preview
-        run: npx --yes wait-on --timeout 30000 --interval 500 http://127.0.0.1:4173/
+        run: timeout 30 bash -c 'until curl --fail --silent --output /dev/null http://127.0.0.1:4173/; do sleep 0.5; done'
 
       - name: Run axe accessibility tests via Playwright
         run: npx playwright test tests/accessibility.spec.js --project=chromium
@@ -67,48 +67,24 @@ jobs:
           path: playwright-report/
           retention-days: 7
 
-  # ── Standalone axe-cli audit (existing) ───────────────────
+  # Served production remains supplementary; authoritative local scans above are unchanged.
   axe-cli:
+    name: Served production accessibility (supplementary)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24'
-
-      - name: Install axe-cli
-        run: npm install -g @axe-core/cli
-
-      - name: Install matching Chrome + ChromeDriver
-        run: npx browser-driver-manager install chrome
-
-      # Note: axe-cli runs from a GitHub Actions runner IP, which Cloudflare
-      # sometimes challenges with a managed-challenge HTML page. That page
-      # contains a `<meta http-equiv="refresh">` which axe flags as a violation
-      # — but we're auditing Cloudflare's challenge, not our site. The
-      # authoritative a11y signal is the playwright-axe job above (real Chromium,
-      # real session), which bypasses the challenge. This step stays as a
-      # supplementary check but must not fail CI on challenge-page noise.
-      - name: Run axe accessibility audit (supplementary — non-blocking)
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      # Reuses the locked Playwright browser runtime.
+      - name: Install canonical Playwright browser
+        run: node node_modules/@playwright/test/cli.js install --with-deps chromium
+      - name: Audit six served production routes (supplementary — non-blocking)
         continue-on-error: true
-        run: |
-          PAGES=(
-            "https://vaultsparkstudios.com/"
-            "https://vaultsparkstudios.com/games/"
-            "https://vaultsparkstudios.com/community/"
-            "https://vaultsparkstudios.com/leaderboards/"
-            "https://vaultsparkstudios.com/journal/"
-            "https://vaultsparkstudios.com/contact/"
-          )
-          EXIT=0
-          for url in "${PAGES[@]}"; do
-            echo "Auditing $url"
-            axe "$url" --exit || EXIT=1
-          done
-          exit $EXIT
-
-      - name: Upload axe results
+        run: node scripts/audit-served-accessibility.mjs --audit-served-production
+      - name: Upload served accessibility results
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:

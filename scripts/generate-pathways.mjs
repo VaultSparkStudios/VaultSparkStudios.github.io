@@ -71,9 +71,16 @@ if (WIRE_START >= 0 && !deskWireBlock.includes('data-desk-wire-headline')) {
   process.exit(1);
 }
 
-const FOOTER_START = sample.indexOf('<footer class="site-footer"');
-const FOOTER_END = sample.indexOf('</footer>') + 9;
-const footerBlock = sample.slice(FOOTER_START, FOOTER_END);
+// Devlog is an inline-style extraction target; pathway pages are not. Harvest
+// the footer from their non-generated hub so this writer agrees with the raw
+// shared footer restored by propagate-nav during postbuild.
+const footerSample = readFileSync(join(ROOT, 'pathways/index.html'), 'utf8');
+const FOOTER_START = footerSample.indexOf('<footer class="site-footer"');
+const FOOTER_CLOSE = footerSample.indexOf('</footer>', FOOTER_START);
+if (FOOTER_START < 0 || FOOTER_CLOSE < FOOTER_START) {
+  throw new Error('generate-pathways: hub footer harvest failed; refusing to write pages');
+}
+const footerBlock = footerSample.slice(FOOTER_START, FOOTER_CLOSE + '</footer>'.length);
 
 function footerForDepth(depthPrefix) {
   return footerBlock.replaceAll('../assets/', depthPrefix + 'assets/');

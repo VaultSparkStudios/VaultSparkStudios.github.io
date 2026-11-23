@@ -104,7 +104,16 @@ const newsHeaderBlock = headerBlock.replace(
   '<a href="/news/">The Desk · News</a>',
   '<a href="/news/" class="active" aria-current="page">The Desk · News</a>',
 );
-const footerBlock = slice('<footer class="site-footer"', '</footer>', 9);
+// Devlog is an inline-style extraction target; News outputs are not. Read
+// the non-generated pathway hub's raw shared footer so this generator agrees
+// with the footer restored by propagate-nav during postbuild.
+const footerSample = readFileSync(join(ROOT, 'pathways/index.html'), 'utf8');
+const footerStart = footerSample.indexOf('<footer class="site-footer"');
+const footerClose = footerSample.indexOf('</footer>', footerStart);
+if (footerStart < 0 || footerClose < footerStart) {
+  throw new Error('generate-news-pages: hub footer harvest failed; refusing to write pages');
+}
+const footerBlock = footerSample.slice(footerStart, footerClose + '</footer>'.length);
 const ambientBlock = slice('<!-- vs-ambient:start -->', '<!-- vs-ambient:end -->', '<!-- vs-ambient:end -->'.length);
 let deskAmbientBlock = ambientBlock.replace(
   '<!-- vs-ambient:end -->',
@@ -234,8 +243,8 @@ ${themeBoot}<a href="#main-content" class="skip-link">Skip to main content</a>${
 /**
  * S317 — rewrite relative asset refs in HARVESTED chrome to the page's depth.
  *
- * The footer/ambient blocks are sliced verbatim out of devlog/index.html, a
- * DEPTH-1 page, so every `../assets/…` in them resolves one level up. Pasted
+ * The footer and ambient blocks are harvested from depth-1 sibling pages,
+ * so every `../assets/…` in them resolves one level up. Pasted
  * unchanged into a depth-3 article, `../assets/social-icons.svg` resolves to
  * /news/<date>/assets/social-icons.svg → 404. That is exactly what every Desk
  * article footer was doing: the whole social-icon sprite row was broken, with

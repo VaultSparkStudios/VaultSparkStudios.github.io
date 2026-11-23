@@ -51,7 +51,7 @@ jobs:
           LOCAL_PREVIEW_PORT: '4173'
 
       - name: Wait for local preview
-        run: npx --yes wait-on --timeout 30000 --interval 500 http://127.0.0.1:4173/
+        run: timeout 30 bash -c 'until curl --fail --silent --output /dev/null http://127.0.0.1:4173/; do sleep 0.5; done'
 
       - name: HTTP smoke pre-gate
         run: node scripts/smoke-http.mjs
@@ -202,7 +202,7 @@ jobs:
           LOCAL_PREVIEW_PORT: '4173'
 
       - name: Wait for local preview
-        run: npx --yes wait-on --timeout 30000 --interval 500 http://127.0.0.1:4173/
+        run: timeout 30 bash -c 'until curl --fail --silent --output /dev/null http://127.0.0.1:4173/; do sleep 0.5; done'
 
       - name: HTTP smoke pre-gate
         run: node scripts/smoke-http.mjs
