@@ -1,16 +1,16 @@
-# Genius Hit List — Session 411
+# Genius Hit List — Session 417
 
-Generated: 2026-11-20
+Generated: 2026-11-23
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **80/100**
+- Overall opportunity pressure: **82/100**
 - Health: **yellow**
-- Current SIL: **939/1000**
+- Current SIL: **835/1000**
 - CI health: **check gh run list**
-- Current focus: Security and compliance tranche for the public beta: point-award integrity is live; injection, supply-chain, served-surface and consent hardening are being released.
+- Current focus: S417 partial record recovered; fresh arc and release acceptance pending
 
 ## Strategic Read
 
@@ -22,10 +22,12 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Full source check, push, staging and production readback for this tra…
-Final score: **96**
-Full source check, push, staging and production readback for this tranche.
-Why it matters: Full source check, push, staging and production readback for this tran is open, local, and unblocked — can ship this session.
+#### 1. [VERIFY] Verify cumulative content deployments retain the approved executable …
+Final score: **100**
+[SIL][S417] Verify cumulative content deployments retain the approved executable baseline.
+Why it matters: Verify cumulative content deployments retain the approved executable b shipped last session — confirm it works in production before piling new work on top.
+
+First command: `npm run build:check`
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -34,67 +36,65 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Remaining public-beta waves: docs/S417_REMAINING_PLAN.md.
+#### 3. [PRODUCT] Complete affected account acceptance and full release evidence; exist…
 Final score: **93**
-Remaining public-beta waves: docs/S417_REMAINING_PLAN.md.
-Why it matters: Remaining public-beta waves: docs/S417_REMAINING_PLAN.md. is open, local, and unblocked — can ship this session.
+[SIL][S417] Complete affected account acceptance and full release evidence; existing holds remain enforced.
+Why it matters: Complete affected account acceptance and full release evidence; existi is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Complete affected successful sign-in/sign-up and real member/approved…
+#### 4. [PRODUCT] Full source check, push, staging and production readback for this tra…
 Final score: **90**
-Complete affected successful sign-in/sign-up and real member/approved-investor positive application journeys.
-Why it matters: Complete affected successful sign-in/sign-up and real member/approved- is open, local, and unblocked — can ship this session.
+Full source check, push, staging and production readback for this tranche.
+Why it matters: Full source check, push, staging and production readback for this tran is open, local, and unblocked — can ship this session.
 
 ### NEXT
 
-#### 1. [PRODUCT] Integrate current main safely; pass full current source and exact req…
+#### 1. [PRODUCT] Remaining public-beta waves: docs/S417_REMAINING_PLAN.md.
 Final score: **87**
+Remaining public-beta waves: docs/S417_REMAINING_PLAN.md.
+Why it matters: Remaining public-beta waves: docs/S417_REMAINING_PLAN.md. is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Complete affected successful sign-in/sign-up and real member/approved…
+Final score: **84**
+Complete affected successful sign-in/sign-up and real member/approved-investor positive application journeys.
+Why it matters: Complete affected successful sign-in/sign-up and real member/approved- is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Integrate current main safely; pass full current source and exact req…
+Final score: **81**
 Integrate current main safely; pass full current source and exact required workflows, applicable staging parity, authorized main/production promotion and readback.
 Why it matters: Integrate current main safely; pass full current source and exact requ is open, local, and unblocked — can ship this session.
 
-#### 2. [INTELLIGENCE] Complete recovered S415 writeback, all S416 closeout surfaces and nat…
-Final score: **87**
+#### 4. [INTELLIGENCE] Complete recovered S415 writeback, all S416 closeout surfaces and nat…
+Final score: **81**
 Complete recovered S415 writeback, all S416 closeout surfaces and native completion audit.
 Why it matters: Complete recovered S415 writeback, all S416 closeout surfaces and nati keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 3. [PRODUCT] Affected deployed authentication, current isolated staging parity, au…
-Final score: **78**
+#### 5. [PRODUCT] Affected deployed authentication, current isolated staging parity, au…
+Final score: **72**
 Affected deployed authentication, current isolated staging parity, authorized production promotion/readback and full closeout.
 Why it matters: Affected deployed authentication, current isolated staging parity, aut is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Integrate current main safely and complete exact candidate required c…
-Final score: **72**
+### LATER
+
+#### 1. [PRODUCT] Integrate current main safely and complete exact candidate required c…
+Final score: **66**
 Integrate current main safely and complete exact candidate required checks.
 Why it matters: Integrate current main safely and complete exact candidate required ch is open, local, and unblocked — can ship this session.
 
-#### 5. [VERIFY] Finish merged candidate full source verification and exact required E…
-Final score: **71**
+#### 2. [VERIFY] Finish merged candidate full source verification and exact required E…
+Final score: **65**
 Finish merged candidate full source verification and exact required E2E, Lighthouse and accessibility checks.
-Why it matters: Finish merged candidate full source verification and exact required E2 is a 411-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Finish merged candidate full source verification and exact required E2 is a 417-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-### LATER
-
-#### 1. [SECURITY] Complete isolated access/security acceptance and affected member/inve…
-Final score: **69**
+#### 3. [SECURITY] Complete isolated access/security acceptance and affected member/inve…
+Final score: **63**
 Complete isolated access/security acceptance and affected member/investor journeys before data-route exposure.
 Why it matters: Complete isolated access/security acceptance and affected member/inves lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
-
-#### 2. [VERIFY] Verify affected authenticated journeys and current staging parity bef…
-Final score: **59**
-Verify affected authenticated journeys and current staging parity before authorized production promotion/readback.
-Why it matters: Verify affected authenticated journeys and current staging parity befo is a 411-session-old carry-forward; verify or close it so it stops polluting the hit list.
-
-First command: `npm run build:check`
-
-#### 3. [PRODUCT] Authorized main/production promotion, served readback and full closeout.
-Final score: **57**
-Authorized main/production promotion, served readback and full closeout.
-Why it matters: Authorized main/production promotion, served readback and full closeou is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -140,18 +140,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Full source check, push, staging and production readback for this tra…
+1. Verify cumulative content deployments retain the approved executable …
 2. Post-push CI confirmation
-3. Remaining public-beta waves: docs/S417_REMAINING_PLAN.md.
-4. Complete affected successful sign-in/sign-up and real member/approved…
-5. Integrate current main safely; pass full current source and exact req…
-6. Complete recovered S415 writeback, all S416 closeout surfaces and nat…
-7. Affected deployed authentication, current isolated staging parity, au…
-8. Integrate current main safely and complete exact candidate required c…
-9. Finish merged candidate full source verification and exact required E…
-10. Complete isolated access/security acceptance and affected member/inve…
-11. Verify affected authenticated journeys and current staging parity bef…
-12. Authorized main/production promotion, served readback and full closeout.
+3. Complete affected account acceptance and full release evidence; exist…
+4. Full source check, push, staging and production readback for this tra…
+5. Remaining public-beta waves: docs/S417_REMAINING_PLAN.md.
+6. Complete affected successful sign-in/sign-up and real member/approved…
+7. Integrate current main safely; pass full current source and exact req…
+8. Complete recovered S415 writeback, all S416 closeout surfaces and nat…
+9. Affected deployed authentication, current isolated staging parity, au…
+10. Integrate current main safely and complete exact candidate required c…
+11. Finish merged candidate full source verification and exact required E…
+12. Complete isolated access/security acceptance and affected member/inve…
 
 ## Best Immediate Move
 
