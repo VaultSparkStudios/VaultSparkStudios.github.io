@@ -89,6 +89,9 @@
       '.vs-account-chip__tier.tier-ETERNAL{background:rgba(139,92,246,0.12);color:#8B5CF6;border-color:rgba(139,92,246,0.3)}' +
       '.vs-account-chip__tier.tier-MEMBER{background:rgba(168,180,208,0.1);color:var(--muted);border-color:rgba(168,180,208,0.2)}' +
       '.vs-account-chip__caret{font-size:.55rem;opacity:.65;margin-left:.1rem}' +
+      // Keep all four mobile header controls reachable after the rank orb mounts.
+      // The full name and tier remain in the existing account button aria-label.
+      '@media(max-width:640px){.nav-right .vs-account-chip{box-sizing:border-box;flex:0 0 44px;width:44px;min-width:44px;max-width:44px;height:44px;min-height:44px;max-height:44px;padding:0;gap:0;justify-content:center}.nav-right .vs-account-chip__tier,.nav-right .vs-account-chip__caret{display:none}}' +
       '.vs-account-menu{position:absolute;top:calc(100% + 8px);right:0;min-width:220px;background:var(--nav-dropdown-bg,rgba(8,9,19,0.99));border:1px solid var(--nav-dropdown-border,rgba(255,255,255,0.07));border-radius:12px;padding:.5rem;box-shadow:0 18px 60px rgba(0,0,0,0.55);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-4px);transition:opacity 160ms ease,transform 160ms ease;z-index:2147483640}' +
       '.vs-account-chip[aria-expanded="true"] .vs-account-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}' +
       '.vs-account-menu__head{padding:.55rem .7rem .6rem;border-bottom:1px solid var(--nav-divider,rgba(255,255,255,0.06));margin-bottom:.4rem}' +
