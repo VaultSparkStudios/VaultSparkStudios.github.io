@@ -673,6 +673,17 @@ async function main() {
           // reviewed" captures rather than a failure.
           failures.push(`${route} ${theme} ${viewport.name}: ${String(error.message).slice(0, 120)}`);
           console.error(`  ✗ ${route} ${theme} ${viewport.name}: ${String(error.message).slice(0, 120)}`);
+          // Preserve only the helper's bounded, safe animation-set diagnostic.
+          // Arbitrary navigation/network stacks may contain URLs and stay compact.
+          const animationDetail = String(error.message).match(/^(?:page\.evaluate: Error: )?Visible animation set changed during scroll observation CAPTURE_ANIMATION_SET_CHANGED (\{[^\r\n]*\})(?:\r?\n|$)/);
+          if (animationDetail && Buffer.byteLength(animationDetail[1], 'utf8') <= 16384) {
+            try {
+              const detail = JSON.parse(animationDetail[1]);
+              if (detail.schemaVersion === 1 && ['BEFORE_RASTER', 'AFTER_RASTER'].includes(detail.phase)) {
+                console.error(`  CAPTURE_ANIMATION_SET_CHANGED ${JSON.stringify(detail)}`);
+              }
+            } catch { /* Malformed detail cannot replace the original failure. */ }
+          }
         } finally {
           await page.close();
         }

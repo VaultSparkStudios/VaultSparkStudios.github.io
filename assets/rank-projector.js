@@ -62,6 +62,7 @@
     'body.light-mode .vs-rp__seg.is-active{color:var(--text);border-color:var(--gold);}',
     'body.light-mode .vs-rp__seg.is-active-eternal{color:#6d28d9;border-color:#6d28d9;}',
     'body.ambient-mode .vs-rp__seg.is-active-eternal,body.warm-mode .vs-rp__seg.is-active-eternal,body.cool-mode .vs-rp__seg.is-active-eternal,body.lava-mode .vs-rp__seg.is-active-eternal{color:var(--text);}',
+    'body.high-contrast-mode .vs-rp__seg.is-active-eternal{color:var(--text);}',
     'body.light-mode .vs-rp__seg{background:rgba(20,28,52,0.04);}',
     '.vs-rp__slider-wrap{min-width:0;max-width:100%;margin-top:0.15rem;}',
     '.vs-rp__label{font-size:0.88rem;color:var(--muted);margin-bottom:0.55rem;display:flex;flex-wrap:wrap;gap:0.25rem 0.6rem;justify-content:space-between;align-items:baseline;}',

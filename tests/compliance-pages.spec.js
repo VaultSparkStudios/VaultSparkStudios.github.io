@@ -13,7 +13,7 @@ const COMPLIANCE_PAGES = [
   { path: '/faq/',           title: /FAQ|Frequently/i, h1: true },
   { path: '/collaborate/',   title: /Collaborate/i, h1: true },
   { path: '/data-deletion/', title: /Data Deletion/i, h1: true },
-  { path: '/security/',      title: /Security/i,    h1: true },
+  { path: '/security/',      title: /Trust Center/i, h1: true, canonical: '/trust/' },
   { path: '/sitemap.html',   title: /Sitemap/i,     h1: true },
   { path: '/changelog/',     title: /Changelog|Vault/i, h1: true },
 ];
@@ -23,6 +23,7 @@ test.describe('Compliance & utility pages (S38b)', () => {
     test(`${pg.path} loads correctly`, async ({ page }) => {
       await page.goto(BASE + pg.path);
       await expect(page).toHaveTitle(pg.title);
+      if (pg.canonical) await expect(page).toHaveURL(new URL(pg.canonical, BASE).href);
       if (pg.h1) {
         await expect(page.locator('h1').first()).toBeVisible();
       }

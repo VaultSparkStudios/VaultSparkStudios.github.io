@@ -26,6 +26,16 @@ export async function settleCaptureAnimations({timeoutMs=2000,resettleLateFinite
   return {index,name:a.animationName||a.id||null,target:elementPath(a.effect.target),pseudoElement:a.effect.pseudoElement||null,nativeTimeline,axis:timeline.axis,playState:a.playState,source,subject,...(inactive?{nativeState:'inactive-zero-scroll-range',extent:0,animationTime:null,timelineTime:null,localTime:null,currentIteration:null}:{animationTime:percent(a.currentTime,'animation currentTime'),timelineTime:percent(timeline.currentTime,'timeline currentTime')}),duration:percent(timing.duration,'effect duration'),endTime:percent(timing.endTime,'effect endTime'),progress:timing.progress,iterations:timing.iterations,viewport:{scrollX,scrollY,width:innerWidth,height:innerHeight,documentHeight:document.documentElement.scrollHeight,documentWidth:document.documentElement.scrollWidth}};
  };
  if(typeof resettleLateFinite!=='boolean')throw Error('Invalid finite resettlement option');
+ const finishedFinite=a=>{const t=a.effect?.getComputedTiming();return kind(a)==='DocumentTimeline'&&a.playState==='finished'&&t&&Number.isFinite(t.iterations)&&t.iterations>0&&Number.isFinite(t.duration)&&t.duration>=0&&Number.isFinite(t.endTime)&&t.endTime>=0;};
+ const animationSetError=(first,second)=>{
+  const identities=[...new Set([...first,...second])],ids=arr=>arr.map(a=>identities.indexOf(a)),added=second.filter(a=>!first.includes(a)),removed=first.filter(a=>!second.includes(a));
+  const text=(value,n)=>String(value??'').slice(0,n),scalar=v=>typeof v==='number'?(Number.isFinite(v)?v:String(v)):v===null?null:text(v,32);
+  const describe=a=>{const el=a.effect?.target,t=a.effect?.getComputedTiming();return {identity:identities.indexOf(a),type:text(a.constructor?.name,40),name:text(a.animationName||a.id,80),tag:text(el?.tagName,24),id:text(el?.id,64),className:text(el?.className?.baseVal??el?.className,80),timeline:text(a.timeline?.constructor?.name,40),playState:text(a.playState,24),currentTime:scalar(a.currentTime),timing:{duration:scalar(t?.duration),iterations:scalar(t?.iterations),endTime:scalar(t?.endTime)}};};
+  const changed=[...new Set([...added,...removed,...identities])],survivingFirst=first.filter(a=>second.includes(a)),survivingSecond=second.filter(a=>first.includes(a));
+  const detail={schemaVersion:1,phase:resettleLateFinite?'BEFORE_RASTER':'AFTER_RASTER',firstIdentityOrder:ids(first),secondIdentityOrder:ids(second),addedIds:ids(added),removedIds:ids(removed),orderChanged:survivingFirst.some((a,i)=>a!==survivingSecond[i]),details:changed.slice(0,16).map(describe),detailsTruncatedCount:Math.max(0,changed.length-16)};
+  let serialized=JSON.stringify(detail);while(new TextEncoder().encode(serialized).length>16384&&detail.details.length){detail.details.pop();detail.detailsTruncatedCount++;serialized=JSON.stringify(detail);}
+  return Error('Visible animation set changed during scroll observation CAPTURE_ANIMATION_SET_CHANGED '+serialized);
+ };
  const finiteSettled=[];let rows,list,scrollDriven;
  for(;;){
  for(;;){const finite=visible().filter(a=>kind(a)==='DocumentTimeline'&&a.effect.getComputedTiming().iterations!==Infinity&&a.playState!=='finished');if(!finite.length)break;for(const a of finite){const t=a.effect.getComputedTiming();if(!Number.isFinite(t.endTime)||a.playState==='paused')throw Error('Finite animation cannot naturally settle');}await bounded(Promise.all(finite.map(async a=>{await a.finished;finiteSettled.push({name:a.animationName||a.id||null,time:a.currentTime,playState:a.playState});})));}
@@ -39,13 +49,20 @@ export async function settleCaptureAnimations({timeoutMs=2000,resettleLateFinite
  await frame();continue;
  }
  const scrollRows=list.filter(a=>kind(a)!=='DocumentTimeline').map((a,index)=>({a,index})),first=scrollRows.map(({a,index})=>scrollState(a,index));
+ const knownFinishedFinite=new Set(list.filter(finishedFinite));
  await frame();const secondVisible=visible();
  // Native scroll source/progress identity must remain stable even when a late document entrance appears.
  const secondScroll=secondVisible.filter(a=>kind(a)!=='DocumentTimeline');if(secondScroll.length!==scrollRows.length||secondScroll.some((a,i)=>a!==scrollRows[i].a))throw Error('Native scroll animation set changed');
  scrollDriven=scrollRows.map(({a,index})=>scrollState(a,index));if(JSON.stringify(first)!==JSON.stringify(scrollDriven))throw Error('Native scroll progress/geometry did not settle');
  if(secondVisible.length!==list.length||secondVisible.some((a,i)=>a!==list[i])){
-  const newEffects=secondVisible.filter(a=>!list.includes(a));
-  if(!resettleLateFinite||!newEffects.length||newEffects.some(a=>{const t=a.effect.getComputedTiming();return kind(a)!=='DocumentTimeline'||!Number.isFinite(t.iterations)||!Number.isFinite(t.endTime)||a.playState==='paused';}))throw Error('Visible animation set changed during scroll observation');
+  const newEffects=secondVisible.filter(a=>!list.includes(a)),removedEffects=list.filter(a=>!secondVisible.includes(a));
+  const survivingBefore=list.filter(a=>secondVisible.includes(a)),survivingAfter=secondVisible.filter(a=>list.includes(a));
+  const reordered=survivingBefore.some((a,i)=>a!==survivingAfter[i]);
+  // Only finished finite document effects already known BEFORE this frame may
+  // disappear naturally. Mixed churn and all native/unknown/running removals refuse.
+  const finishedCleanup=resettleLateFinite&&!newEffects.length&&removedEffects.length>0&&!reordered&&removedEffects.every(a=>knownFinishedFinite.has(a)&&finishedFinite(a));
+  if(finishedCleanup){await frame();continue;}
+  if(removedEffects.length||reordered||!resettleLateFinite||!newEffects.length||newEffects.some(a=>{const t=a.effect.getComputedTiming();return kind(a)!=='DocumentTimeline'||!Number.isFinite(t.iterations)||!Number.isFinite(t.endTime)||a.playState==='paused';}))throw animationSetError(list,secondVisible);
   await frame();continue;
  }
  break;

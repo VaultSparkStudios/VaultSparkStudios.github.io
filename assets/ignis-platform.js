@@ -43,6 +43,14 @@
     var frame = null;
     var timer = null;
     var observer = null;
+    var initialArrivalSettled = false;
+    var hydrationReady = false;
+    function onInitialScrollEnd() {
+      if (!active) return;
+      initialArrivalSettled = true;
+      window.removeEventListener('scrollend', onInitialScrollEnd);
+      if (hydrationReady) arrival.settle(true);
+    }
     var intentEvents = ['wheel', 'touchstart', 'touchmove', 'pointerdown', 'hashchange', 'popstate', 'pagehide'];
     var scrollingKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End', ' ', 'Tab'];
     function cleanup() {
@@ -52,17 +60,29 @@
       if (observer) observer.disconnect();
       intentEvents.forEach(function (event) { window.removeEventListener(event, cleanup); });
       window.removeEventListener('keydown', onKey);
+      window.removeEventListener('scrollend', onInitialScrollEnd);
     }
     function onKey(event) {
       if (scrollingKeys.indexOf(event.key) !== -1) cleanup();
     }
     intentEvents.forEach(function (event) { window.addEventListener(event, cleanup, { passive: true }); });
     window.addEventListener('keydown', onKey);
+    window.addEventListener('scrollend', onInitialScrollEnd);
     timer = setTimeout(cleanup, 10000);
     var arrival = {
       settle: function (hydrated) {
         if (!active) return;
         if (!hydrated || location.pathname + location.hash !== initialUrl) { cleanup(); return; }
+        hydrationReady = true;
+        // Do not interrupt the browser's initial smooth fragment arrival.
+        // Once it ends, keep repairing only subsequent uncompensated growth.
+        if (!initialArrivalSettled) {
+          var initialTarget = document.getElementById('oracle');
+          var initialMargin = initialTarget ? parseFloat(getComputedStyle(initialTarget).scrollMarginTop) || 0 : 0;
+          if (!initialTarget || Math.abs(initialTarget.getBoundingClientRect().top - initialMargin) > 1) return;
+          initialArrivalSettled = true;
+          window.removeEventListener('scrollend', onInitialScrollEnd);
+        }
         // The platform panel is not the only asynchronous content above the
         // fragment: the live score can wrap after public intelligence arrives.
         // Keep the existing bounded arrival window, observing only earlier

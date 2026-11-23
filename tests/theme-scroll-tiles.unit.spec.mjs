@@ -301,3 +301,56 @@ test('leading-row identity/geometry and above-column relation survive only exact
  assert.doesNotThrow(()=>validateReservedColumnGeometry(expected,actual));
  for(const mutate of [x=>delete x[0].leadingRow,x=>x[0].leadingRow.height++,x=>x[0].leadingRow.gridColumnEnd='auto',x=>x[0].leadingRow.bottom=101,x=>x[0].leadingRow.position='fixed']){const x=clone(actual);mutate(x);assert.throws(()=>validateReservedColumnGeometry(expected,x));}
 });
+
+test('finished finite removal known before observation settles only for pre-raster opt-in',()=>animationFixture(async f=>{
+ for(const allow of [false,true]){
+  const done=f.animation(true),loop=f.animation();done.playState='finished';done.currentTime=500;f.set([done,loop]);let frames=0;
+  globalThis.requestAnimationFrame=fn=>setImmediate(()=>{if(++frames===4)f.set([loop]);fn();});
+  if(!allow)await assert.rejects(settleCaptureAnimations(),/Visible animation set changed/);
+  else{const result=await settleCaptureAnimations({resettleLateFinite:true});assert.equal(result.seeked,false);assert.equal(loop.playState,'paused');assert.equal(f.calls.finish,0);}
+ }
+}));
+
+test('finished finite removal refuses running paused infinite and newly-finished removals',()=>animationFixture(async f=>{
+ for(const variant of ['running-loop','paused-loop','finished-infinite','newly-finished','restarted-finite','unknown-duration']){
+  const a=f.animation(variant==='restarted-finite'||variant==='unknown-duration');
+  if(['finished-infinite','restarted-finite','unknown-duration'].includes(variant))a.playState='finished';
+  if(variant==='paused-loop')a.playState='paused';
+  if(variant==='unknown-duration')a.effect.getComputedTiming=()=>({iterations:1,duration:Infinity,endTime:500});
+  f.set([a]);let frames=0;
+  globalThis.requestAnimationFrame=fn=>setImmediate(()=>{if(++frames===4){if(variant==='restarted-finite')a.playState='running';if(variant==='newly-finished'){a.playState='finished';a.effect.getComputedTiming=()=>({iterations:1,duration:500,endTime:500});}f.set([]);}fn();});
+  await assert.rejects(settleCaptureAnimations({resettleLateFinite:true}),/Visible animation set changed|Unsettled|deadline/);
+ }
+}));
+
+test('finished finite removal cannot permit mixed replacement churn or pure identity reorder',()=>animationFixture(async f=>{
+ for(const variant of ['churn','order']){
+  const a=f.animation(true),b=f.animation(true),c=f.animation(true);for(const x of [a,b,c])x.playState='finished';f.set([a,b]);let frames=0;
+  globalThis.requestAnimationFrame=fn=>setImmediate(()=>{if(++frames===4)f.set(variant==='order'?[b,a]:[b,c]);fn();});
+  await assert.rejects(settleCaptureAnimations({resettleLateFinite:true}),/Visible animation set changed/);
+ }
+}));
+
+test('finished finite removal never waives native set progress geometry or unknown timeline guards',()=>animationFixture(async f=>{
+ for(const variant of ['native-set','native-progress','native-geometry','unknown-timeline']){
+  const done=f.animation(true);done.playState='finished';const scroll=nativeScrollFixture(f);if(variant==='unknown-timeline')done.timeline={};f.set([done,scroll]);let frames=0;
+  globalThis.requestAnimationFrame=fn=>setImmediate(()=>{if(++frames===4){if(variant==='native-progress')scroll.currentTime=new CSSUnitValue(26);if(variant==='native-geometry')f.element.scrollTop++;f.set(variant==='native-set'?[]:[scroll]);}fn();});
+  await assert.rejects(settleCaptureAnimations({resettleLateFinite:true}),/Native scroll|Unknown animation timeline/);
+ }
+}));
+
+test('cleanup rejection diagnostics retain actual identity orders and safe bounded phase details',()=>animationFixture(async f=>{
+ const a=f.animation(true),b=f.animation(true);a.playState=b.playState='finished';f.set([a,b]);let frames=0;
+ globalThis.requestAnimationFrame=fn=>setImmediate(()=>{if(++frames===4)f.set([b,a]);fn();});
+ await assert.rejects(settleCaptureAnimations(),error=>{
+  const marker=' CAPTURE_ANIMATION_SET_CHANGED ',at=error.message.indexOf(marker);assert.ok(at>0);const raw=error.message.slice(at+marker.length);assert.ok(Buffer.byteLength(raw)<16384);const d=JSON.parse(raw);
+  assert.equal(d.schemaVersion,1);assert.equal(d.phase,'AFTER_RASTER');assert.deepEqual(d.firstIdentityOrder,[0,1]);assert.deepEqual(d.secondIdentityOrder,[1,0]);assert.equal(d.orderChanged,true);assert.deepEqual(d.addedIds,[]);assert.deepEqual(d.removedIds,[]);assert.equal(d.details[0].tag,'SPAN');assert.equal('rect' in d.details[0],false);return true;
+ });
+}));
+
+
+test('cleanup rejection UTF8 bounds preserve complete128-effect identity sets with unicode labels',()=>animationFixture(async f=>{
+ const list=Array.from({length:128},()=>{const a=f.animation(true);a.playState='finished';a.animationName='火'.repeat(160);a.constructor={name:'火'.repeat(40)};a.timeline.constructor={name:'火'.repeat(40)};a.currentTime='火'.repeat(32);return a;});f.element.tagName='火'.repeat(24);f.element.id='火'.repeat(160);f.element.className='火'.repeat(160);f.set(list);let frames=0;
+ globalThis.requestAnimationFrame=fn=>setImmediate(()=>{if(++frames===4)f.set([...list].reverse());fn();});
+ await assert.rejects(settleCaptureAnimations(),error=>{const marker=' CAPTURE_ANIMATION_SET_CHANGED ',raw=error.message.split(marker)[1];assert.ok(raw);assert.ok(Buffer.byteLength(raw)<=16384);const d=JSON.parse(raw);assert.equal(d.firstIdentityOrder.length,128);assert.equal(d.secondIdentityOrder.length,128);assert.equal(d.orderChanged,true);assert.ok(d.detailsTruncatedCount>112);return true;});
+}));

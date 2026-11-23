@@ -1,4 +1,4 @@
-// contract-files: assets/vault-oracle.js
+// contract-files: assets/vault-oracle.js assets/ignis-platform.js
 import test, { before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -215,4 +215,35 @@ test('bounded arrival owner repairs uncompensated above-target growth and stops 
   noHash.owner.settle(true); noHash.flush();
   assert.equal(noHash.observers.length, 0);
   assert.equal(noHash.calls(), 0);
+});
+
+import {runInNewContext as runOracleArrivalFixture} from 'node:vm';
+function oracleInitialArrivalFixture(readyState='interactive') {
+const source=fs.readFileSync(new URL('../assets/ignis-platform.js', import.meta.url),'utf8'),start=source.indexOf('function initialOracleArrival() {'),end=source.indexOf('  var oracleArrival = initialOracleArrival();',start),factory=source.slice(start,end);
+const listeners=new Map(),frames=new Map(),observers=[];let top=4400,calls=0,timer,next=0;const doc={readyState,getElementById:()=>target,querySelector:()=>header},above={previousElementSibling:null},header={},target={parentElement:{},previousElementSibling:above,getBoundingClientRect:()=>({top}),scrollIntoView:()=>{calls++;top=94;}};const owner=runOracleArrivalFixture(`(${factory})();`,{location:{pathname:'/ignis/',hash:'#oracle'},document:doc,getComputedStyle:()=>({scrollMarginTop:'94px'}),window:{addEventListener:(n,f)=>listeners.set(n,f),removeEventListener:(n,f)=>{if(listeners.get(n)===f)listeners.delete(n);}},ResizeObserver:class{constructor(callback){this.callback=callback;observers.push(this);}observe(){}disconnect(){this.disconnected=true;}},requestAnimationFrame:f=>{frames.set(++next,f);return next;},cancelAnimationFrame:n=>frames.delete(n),setTimeout:f=>{timer=f;return 1;},clearTimeout:()=>{}});return{owner,doc,listeners,observers,get calls(){return calls;},set top(v){top=v;},flush(){const f=[...frames.values()];frames.clear();for(const fn of f)fn();},timeout:()=>timer()};}
+
+
+test('in-flight native fragment scroll is not interrupted by hydration',()=>{const f=oracleInitialArrivalFixture();f.owner.settle(true);f.flush();assert.equal(f.calls,0);assert.equal(f.observers.length,0);f.top=1500;f.owner.settle(true);f.flush();assert.equal(f.calls,0);});
+test('native scrollend establishes arrival then late uncompensated growth is repaired',()=>{const f=oracleInitialArrivalFixture();f.owner.settle(true);f.top=94;f.listeners.get('scrollend')();f.flush();assert.equal(f.calls,0);assert.equal(f.observers.length,1);f.top=127;f.observers[0].callback();f.flush();assert.equal(f.calls,1);f.observers[0].callback();f.flush();assert.equal(f.calls,1);});
+test('native scrollend with uncompensated target drift repairs once',()=>{const f=oracleInitialArrivalFixture();f.owner.settle(true);f.top=127;f.listeners.get('scrollend')();f.flush();assert.equal(f.calls,1);});
+test('already aligned arrival needs no scrollend and retains late growth repair',()=>{const f=oracleInitialArrivalFixture();f.top=94;f.owner.settle(true);f.flush();assert.equal(f.calls,0);assert.equal(f.observers.length,1);f.top=127;f.observers[0].callback();f.flush();assert.equal(f.calls,1);});
+test('visitor intent cancels pending native arrival and all later repair',()=>{const f=oracleInitialArrivalFixture();f.owner.settle(true);f.listeners.get('wheel')();assert.equal(f.listeners.has('scrollend'),false);f.top=127;f.owner.settle(true);f.flush();assert.equal(f.calls,0);});
+test('10 second deadline cancels pending native arrival without forcing a jump',()=>{const f=oracleInitialArrivalFixture();f.owner.settle(true);f.timeout();assert.equal(f.listeners.has('scrollend'),false);f.top=127;f.owner.settle(true);f.flush();assert.equal(f.calls,0);});
+
+test('native scrollend before slow hydration retains later uncompensated growth repair',()=>{
+  const f=oracleInitialArrivalFixture();
+  f.top=94;
+  f.listeners.get('scrollend')();
+  f.flush();
+  assert.equal(f.listeners.has('scrollend'),false);
+  assert.equal(f.observers.length,0);
+  assert.equal(f.calls,0);
+  f.top=127;
+  f.owner.settle(true);
+  f.flush();
+  assert.equal(f.observers.length,1);
+  assert.equal(f.calls,1);
+  f.owner.settle(true);
+  f.flush();
+  assert.equal(f.calls,1);
 });
