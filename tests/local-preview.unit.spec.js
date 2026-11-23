@@ -20,7 +20,7 @@ test('local preview serves indented preload headers with duplicate values and pa
   fs.writeFileSync(path.join(root,'newsletter','index.html'),'<h1>Newsletter</h1>');
   fs.writeFileSync(path.join(root,'assets','main.shell-0123456789.css'),'body{}');
   fs.writeFileSync(path.join(root,'_headers'), '# comment\r\n/*\r\n  Link: </assets/main.css>; rel=preload; as=style\r\n\tLink: <https://example.invalid/a:b>; rel=preconnect\r\n  # indented comment\r\n\r\n/sub/\r\n  Link: </assets/sub.css>; rel=preload; as=style\r\n');
-  fs.writeFileSync(path.join(root,'_redirects'),'/old/ /sub/ 301\n');
+  fs.writeFileSync(path.join(root,'_redirects'),'/old/ /sub/ 301\n/fragment/ /sub/#part 301\n/external/ https://example.invalid/ 301\n');
   fs.appendFileSync(path.join(root,'_headers'),'/news/*\n  Link: </assets/news-desk.css>; rel=preload; as=style\n');
   const child=spawn(process.execPath,[script],{cwd:root,env:{...process.env,LOCAL_PREVIEW_PORT:'0',LOCAL_PREVIEW_HOST:'127.0.0.1'},stdio:['ignore','pipe','pipe'],windowsHide:true});
   t.after(async()=>{if(child.exitCode===null){child.kill();await once(child,'exit');}fs.rmSync(root,{recursive:true,force:true});});
@@ -34,6 +34,9 @@ test('local preview serves indented preload headers with duplicate values and pa
   const shell=await fetch(origin+'/assets/main.shell-0123456789.css');assert.equal(shell.status,200);assert.equal(shell.headers.get('cache-control'),'public, max-age=31536000, immutable');
   const sub=await fetch(origin+'/sub/');assert.equal(sub.status,200);assert.match(sub.headers.get('link'),/sub\.css/);assert.match(sub.headers.get('link'),/main\.css/);
   const redirect=await fetch(origin+'/old/',{redirect:'manual'});assert.equal(redirect.status,301);assert.equal(redirect.headers.get('location'),'/sub/');
+  const query=await fetch(origin+'/old/?next=%2Fvault-member%2Fpassport%2F&ref=VaultFriend',{redirect:'manual'});assert.equal(query.headers.get('location'),'/sub/?next=%2Fvault-member%2Fpassport%2F&ref=VaultFriend');
+  const fragment=await fetch(origin+'/fragment/?via=legacy',{redirect:'manual'});assert.equal(fragment.headers.get('location'),'/sub/?via=legacy#part');
+  const external=await fetch(origin+'/external/?next=private-context',{redirect:'manual'});assert.equal(external.headers.get('location'),'https://example.invalid/','same-origin intent must not be appended to an external destination');
   const story=await fetch(origin+'/news/story/');assert.match(story.headers.get('link'),/news-desk\.css/);assert.match(story.headers.get('link'),/main\.css/);
   const newsletter=await fetch(origin+'/newsletter/');assert.doesNotMatch(newsletter.headers.get('link'),/news-desk\.css/);
 });

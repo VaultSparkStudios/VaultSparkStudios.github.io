@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import { URL } from 'node:url';
+import { redirectLocation } from '../cloudflare/pages-redirects.js';
 
 const root = process.cwd();
 const host = process.env.LOCAL_PREVIEW_HOST || '127.0.0.1';
@@ -144,10 +145,12 @@ const server = http.createServer((req, res) => {
   // the SPA's own existing bundle into a 404. Matching that precedence here is
   // the point: a rule that shadows a real page now fails in CI instead of in
   // production.
-  const requested = new URL(req.url || '/', `http://${host}:${port}`).pathname;
-  const redirect = matchRedirect(redirectRules, requested);
+  const requested = new URL(req.url || '/', `http://${host}:${port}`);
+  const redirect = matchRedirect(redirectRules, requested.pathname);
   if (redirect) {
-    res.writeHead(redirect.status, { Location: redirect.location });
+    // Keep the preview's relative Location format while using the same query
+    // placement and external-target boundary as the staging edge.
+    res.writeHead(redirect.status, { Location: redirectLocation(redirect.location, requested.search, '') });
     res.end();
     return;
   }
