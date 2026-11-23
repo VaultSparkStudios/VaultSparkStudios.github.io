@@ -238,7 +238,7 @@
   }
 
   function timelineSummary(payload, view) {
-    if (!view.count) return 'No public studio activity in the last ' + ((payload && payload.windowDays) || 7) + ' days.';
+    if (!view.count) return 'No activity recorded in this feed for the last ' + ((payload && payload.windowDays) || 7) + ' days.';
     var projects = {};
     view.groups.forEach(function (g) { g.items.forEach(function (i) { projects[i.project] = true; }); });
     var p = Object.keys(projects).length;

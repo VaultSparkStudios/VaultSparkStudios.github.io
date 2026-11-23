@@ -129,7 +129,13 @@ const view = pulse.timelineGroups(tl, NOW);
 check('timeline drops rows older than the window (viewer clock) and nameless rows', view.count === 2 && !view.groups.some((g) => g.items.some((i) => i.id === 'old' || i.id === 'anon')));
 check('timeline groups newest day first', view.groups.length === 2 && view.groups[0].items[0].id === 'c1');
 check('timeline summary counts moves + projects', pulse.timelineSummary(tl, view) === '2 moves across 2 projects in the last 7 days.');
-check('empty timeline summary is honest', pulse.timelineSummary({ windowDays: 7 }, pulse.timelineGroups({ items: [] }, NOW)) === 'No public studio activity in the last 7 days.');
+// An empty returned feed cannot establish a whole-studio absence of activity.
+for (const state of ['ok', 'partial', 'unavailable']) {
+  const payload = { windowDays: 7, sources: [{ id: 'github', label: 'Public GitHub commits', state: state, ...(state === 'ok' ? {} : { reason: 'rate-limited' }) }], items: [] };
+  check('empty ' + state + ' source stays scoped to the recorded feed', pulse.timelineSummary(payload, pulse.timelineGroups(payload, NOW)) === 'No activity recorded in this feed for the last 7 days.');
+}
+check('empty feed retains its declared custom window without a global activity claim', pulse.timelineSummary({ windowDays: 14, items: [] }, pulse.timelineGroups({ items: [] }, NOW)) === 'No activity recorded in this feed for the last 14 days.');
+check('partial-source actual moves retain their count and project denominator', pulse.timelineSummary(tl, view) === '2 moves across 2 projects in the last 7 days.');
 // A feed published before this change still carries session rows; the client
 // must refuse to render them rather than wait for the next rebuild.
 const stale = pulse.timelineGroups({

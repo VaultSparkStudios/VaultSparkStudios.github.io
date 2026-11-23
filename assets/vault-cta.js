@@ -77,11 +77,13 @@
   // Consult the edge-verified identity state. Credential persistence is never
   // treated as authentication evidence.
   function checkAndShow() {
-    function decide(identity) {
-      if (!identity) setTimeout(showCTA, 4000);
+    function decide(signedIn) {
+      if (!signedIn) setTimeout(showCTA, 4000);
     }
     if (window.VSSignedInState && window.VSSignedInState.whenReady) {
-      window.VSSignedInState.whenReady().then(decide).catch(function () { decide(null); });
+      window.VSSignedInState.whenReady().then(function (identity) {
+        decide(!!(identity && identity.userId));
+      }).catch(function () { decide(false); });
       return;
     }
     var settled = false;
@@ -90,14 +92,14 @@
       settled = true;
       clearTimeout(timer);
       document.removeEventListener('vs:session-ready', onReady);
-      decide(event && event.detail ? event.detail : null);
+      decide(!!(event && event.detail && event.detail.signedIn === true));
     }
     document.addEventListener('vs:session-ready', onReady);
     var timer = setTimeout(function () {
       if (!settled) {
         settled = true;
         document.removeEventListener('vs:session-ready', onReady);
-        decide(null);
+        decide(false);
       }
     }, 10000);
   }
