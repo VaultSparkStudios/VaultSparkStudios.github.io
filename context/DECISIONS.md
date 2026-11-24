@@ -1422,3 +1422,7 @@ Pin isolated validation to the current signed browser binary and recompute its d
 ### D-S418.4 — Membership reference correction
 
 Replace the Membership iPhone SE light reference with the previously reviewed image confirmed byte-identical to both current native diagnostic captures. Verify the resulting source with the ordinary Linux comparison.
+
+### D-S418.5 — Readable Home proof captions
+
+Use the existing theme muted text color for captions within the Home proof strip. The rendered dark theme exposed a 3.70:1 small-text contrast failure; verify all seven themes after the scoped correction.
