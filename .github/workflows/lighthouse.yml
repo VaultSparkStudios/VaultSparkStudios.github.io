@@ -32,7 +32,7 @@ jobs:
           LOCAL_PREVIEW_PORT: '4173'
 
       - name: Wait for local preview
-        run: npx --yes wait-on --timeout 30000 --interval 500 http://127.0.0.1:4173/
+        run: timeout 30 bash -c 'until curl --fail --silent --max-time 10 --connect-timeout 5 --output /dev/null http://127.0.0.1:4173/; do sleep 0.5; done'
 
       # S231: warm the preview server before auditing so the first (cold) request's
       # inflated LCP doesn't drag the homepage median. Mirrors the lighthouse-staging
@@ -120,7 +120,7 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Wait for staging reachability
-        run: npx --yes wait-on --timeout 120000 --interval 5000 https://website.staging.vaultsparkstudios.com/
+        run: timeout 120 bash -c 'until curl --fail --silent --max-time 10 --connect-timeout 5 --output /dev/null https://website.staging.vaultsparkstudios.com/; do sleep 5; done'
 
       - name: Warm up staging server
         run: >-

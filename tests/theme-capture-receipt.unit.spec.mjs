@@ -14,11 +14,11 @@ const root = path.resolve(import.meta.dirname, '..');
 function fixture() {
   const dir = fs.mkdtempSync(path.join(root, '.cache', 'theme-provenance-'));
   for (const sub of ['scripts/lib', 'assets/desk-personas', 'assets/og/news', 'api', 'raw']) fs.mkdirSync(path.join(dir, sub), { recursive: true });
-  for (const file of ['scripts/capture-theme-matrix.mjs', 'scripts/lib/visual-capture-provenance.mjs', 'scripts/lib/mobile-runtime-contract.cjs', 'scripts/lib/artifact-io.mjs']) fs.copyFileSync(path.join(root, file), path.join(dir, file));
+  for (const file of ['scripts/capture-theme-matrix.mjs', 'scripts/lib/capture-animation-state.mjs', 'scripts/lib/visual-capture-provenance.mjs', 'scripts/lib/mobile-runtime-contract.cjs', 'scripts/lib/artifact-io.mjs']) fs.copyFileSync(path.join(root, file), path.join(dir, file));
   fs.writeFileSync(path.join(dir, 'assets/style.css'), 'body{color:white}');
   fs.writeFileSync(path.join(dir, 'index.html'), '<h1>Original capture fixture</h1>');
   fs.writeFileSync(path.join(dir, 'api/candidate-artifact-manifest.json'), JSON.stringify({ candidateSha: 'a'.repeat(40), root: 'a'.repeat(64) }));
-  const files = ['assets/style.css', 'index.html', 'scripts/capture-theme-matrix.mjs', 'scripts/lib/visual-capture-provenance.mjs'];
+  const files = ['assets/style.css', 'index.html', 'scripts/capture-theme-matrix.mjs', 'scripts/lib/capture-animation-state.mjs', 'scripts/lib/visual-capture-provenance.mjs'];
   const provenance = beginVisualCapture(dir, files, 'scripts/capture-theme-matrix.mjs');
   const raw = path.join(dir, 'raw', provenance.runId); fs.mkdirSync(raw);
   const file = 'home--dark--desktop.png';
