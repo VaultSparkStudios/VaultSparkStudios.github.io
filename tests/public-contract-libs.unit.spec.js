@@ -10,6 +10,8 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import vm from 'node:vm';
+import { isDeepStrictEqual } from 'node:util';
 import {
   sanitizePublicOracleText,
   sanitizePublicOracleFeed,
@@ -219,3 +221,50 @@ test('proof manifest: diff classifies added/removed/changed, bounds output, norm
   assert.deepEqual(diffProofSourceManifests(windows, before).counts, { added: 0, removed: 0, changed: 0 });
   assert.equal(formatProofSourceDiff(diffProofSourceManifests(before, before)), 'manifest root differs without a file-level delta');
 });
+
+// Exercise the actual writer without executing the generator's project reads.
+const intelligenceOwner = fs.readFileSync(new URL('../scripts/generate-public-intelligence.mjs', import.meta.url), 'utf8');
+const intelligenceWriterStart = intelligenceOwner.indexOf('function writeIfChanged(');
+const intelligenceWriter = intelligenceOwner.slice(intelligenceWriterStart, intelligenceOwner.indexOf('\nfunction checkExact(', intelligenceWriterStart));
+const firstGeneration = '2026-11-24T08:04:21.838Z';
+const nextGeneration = '2026-11-24T08:44:59.554Z';
+const intelligenceData = {
+  generatedAt: firstGeneration,
+  catalog: [{ id: 'example', status: 'FORGE' }],
+  ciHealth: { allGreen: false, checkedAt: firstGeneration },
+  nested: { generatedAt: firstGeneration },
+};
+const publishedIntelligence = JSON.stringify(intelligenceData, null, 1) + '\r\n';
+const regeneratedIntelligence = JSON.stringify({ ...intelligenceData, generatedAt: nextGeneration }, null, 2) + '\n';
+for (const scenario of [
+  { name: 'preserves exact bytes when only generation clock changes', current: publishedIntelligence, next: regeneratedIntelligence, changed: false },
+  { name: 'preserves an already identical output', current: publishedIntelligence, next: publishedIntelligence, changed: false },
+  { name: 'preserves prior formatting and key order for equivalent data', current: publishedIntelligence, next: JSON.stringify({ nested: intelligenceData.nested, ciHealth: intelligenceData.ciHealth, catalog: intelligenceData.catalog, generatedAt: nextGeneration }), changed: false },
+  { name: 'updates changed CI health', next: JSON.stringify({ ...intelligenceData, generatedAt: nextGeneration, ciHealth: { ...intelligenceData.ciHealth, allGreen: true } }) },
+  { name: 'updates changed CI observation time', next: JSON.stringify({ ...intelligenceData, generatedAt: nextGeneration, ciHealth: { ...intelligenceData.ciHealth, checkedAt: nextGeneration } }) },
+  { name: 'updates changed nested generation time', next: JSON.stringify({ ...intelligenceData, generatedAt: nextGeneration, nested: { generatedAt: nextGeneration } }) },
+  { name: 'retains array order as semantic data', current: JSON.stringify({ ...intelligenceData, catalog: [1, 2] }), next: JSON.stringify({ ...intelligenceData, generatedAt: nextGeneration, catalog: [2, 1] }) },
+  { name: 'updates added data fields', next: JSON.stringify({ ...intelligenceData, generatedAt: nextGeneration, added: true }) },
+  { name: 'updates removed data fields', next: JSON.stringify({ generatedAt: nextGeneration, catalog: intelligenceData.catalog, nested: intelligenceData.nested }) },
+  { name: 'regenerates malformed previous output', current: '{broken', next: regeneratedIntelligence },
+  { name: 'creates missing output', current: null, next: regeneratedIntelligence },
+  { name: 'regenerates invalid previous timestamp', current: JSON.stringify({ ...intelligenceData, generatedAt: 'invalid' }), next: regeneratedIntelligence },
+  { name: 'leaves other contract writers unchanged', next: regeneratedIntelligence, target: '/context/contracts/hub.json' },
+  { name: 'writes changed array roots', current: '[1,2]', next: '[1,2,3]' },
+]) {
+  test(`public intelligence writer ${scenario.name}`, () => {
+    const current = Object.hasOwn(scenario, 'current') ? scenario.current : publishedIntelligence;
+    let bytes = current;
+    let writes = 0;
+    const sandbox = {
+      fs: { existsSync: () => bytes !== null, readFileSync: () => bytes, mkdirSync() {}, writeFileSync(_file, content) { writes++; bytes = content; } },
+      path, outputPath: '/api/public-intelligence.json', isDeepStrictEqual,
+    };
+    vm.createContext(sandbox);
+    vm.runInContext(intelligenceWriter + '\nglobalThis.write = writeIfChanged;', sandbox);
+    const changed = scenario.changed ?? true;
+    assert.equal(sandbox.write(scenario.target || sandbox.outputPath, scenario.next), changed);
+    assert.equal(writes, changed ? 1 : 0);
+    assert.equal(bytes, changed ? scenario.next : current);
+  });
+}

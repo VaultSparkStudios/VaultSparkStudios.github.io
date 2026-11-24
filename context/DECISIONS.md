@@ -1426,3 +1426,7 @@ Replace the Membership iPhone SE light reference with the previously reviewed im
 ### D-S418.5 — Readable Home proof captions
 
 Use the existing theme muted text color for captions within the Home proof strip. The rendered dark theme exposed a 3.70:1 small-text contrast failure; verify all seven themes after the scoped correction.
+
+### D-S418.6 — Reproducible public intelligence output
+
+Preserve the published public-intelligence bytes and generation time when only the generator clock changes. All content, CI health and nested timestamps remain significant; changed data still regenerates the output. This repairs build reproducibility without changing receipt qualification.

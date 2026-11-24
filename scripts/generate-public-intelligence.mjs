@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { isDeepStrictEqual } from 'node:util';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { buildPublicContracts } from './lib/public-intelligence-contracts.mjs';
@@ -375,6 +376,21 @@ function normalizeForCheck(value) {
 function writeIfChanged(filePath, content) {
   const current = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : null;
   if (current === content) return false;
+  // Retain the exact published observation bytes when only this generator's
+  // top-level clock changed. ciHealth and nested timestamps remain semantic.
+  if (filePath === outputPath && current !== null) {
+    try {
+      const previous = JSON.parse(current), next = JSON.parse(content);
+      const record = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+      const dated = value => typeof value === 'string' && Number.isFinite(Date.parse(value));
+      if (record(previous) && record(next) && dated(previous.generatedAt) && dated(next.generatedAt)) {
+        const previousData = { ...previous }, nextData = { ...next };
+        delete previousData.generatedAt;
+        delete nextData.generatedAt;
+        if (isDeepStrictEqual(previousData, nextData)) return false;
+      }
+    } catch { /* Missing/malformed previous output must be regenerated. */ }
+  }
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, content);
   return true;
