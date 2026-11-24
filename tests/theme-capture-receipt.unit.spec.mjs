@@ -1,3 +1,7 @@
+// contract-files: scripts/check-receipt-ordering.mjs scripts/lib/mobile-runtime-contract.cjs scripts/lib/visual-capture-provenance.mjs scripts/capture-theme-matrix.mjs
+import successorOs from 'node:os';
+import {createRequire as successorCreateRequire} from 'node:module';
+import * as receiptSuccessor from '../scripts/check-receipt-ordering.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -312,3 +316,41 @@ test('actual receipt-only CLI refuses missing and mismatched observed themes bef
     fs.rmSync(dir, { recursive: true, force: true });
   }
 });
+
+// Evidence-only successor regressions: isolated lexical namespace; existing cases above unchanged.
+{
+const os=successorOs, require=successorCreateRequire(import.meta.url);
+const {sourceBinding}=require('../scripts/lib/mobile-runtime-contract.cjs');
+const {isEvidencePath,proveEvidenceSuccessor,validateProofBinding}=receiptSuccessor;
+function fixture(fn, bound=['index.html']) {
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'s418-evidence-'));
+  const git=(args,input)=>{const r=spawnSync('git',args,{cwd:root,encoding:'utf8',windowsHide:true,input,timeout:10000});assert.equal(r.status,0,String(r.stderr));return r.stdout.trim();};
+  const write=(file,body)=>{fs.mkdirSync(path.dirname(path.join(root,file)),{recursive:true});fs.writeFileSync(path.join(root,file),body);};
+  const commit=()=>{git(['add','-A']);git(['commit','-q','-m','fixture']);return git(['rev-parse','HEAD']);};
+  try {
+    git(['init','-q','-b','main']);git(['config','user.name','Offline Fixture']);git(['config','user.email','fixture@example.invalid']);git(['config','core.autocrlf','false']);
+    write('index.html','actual tested source');write('docs/visual-qa/original.png','original fixture pixel bytes');write('docs/visual-qa/bound.json','bound evidence');
+    const reviewed=commit(), receipt={source:sourceBinding(root,bound),candidate:{manifest:'api/candidate-artifact-manifest.json',candidateSha:reviewed}};
+    const check=()=>validateProofBinding(receipt,{root,label:'fixture',currentCandidate:{manifest:receipt.candidate.manifest,candidateSha:git(['rev-parse','HEAD'])},proveRoutine:()=>({ok:true})});
+    fn({root,git,write,commit,reviewed,receipt,check});
+  } finally {fs.rmSync(root,{recursive:true,force:true});}
+}
+test('actual evidence-only descendant passes without changing original capture candidate or source',()=>fixture(({write,commit,receipt,check})=>{
+  const before=JSON.stringify(receipt);write('docs/visual-qa/run/capture.png','new pixels');write('docs/visual-qa/LATEST.json','new receipt');write('docs/mobile-audit/findings.jsonl','actual findings');write('docs/mobile-audit/receipt.json','actual receipt');write('docs/mobile-audit/run/capture.png','mobile pixels');commit();assert.deepEqual(check(),[]);assert.equal(JSON.stringify(receipt),before);
+}));
+for(const file of ['assets/site.js','assets/site.css','.github/workflows/e2e.yml','tests/owner.spec.js','config/settings.json','context/CURRENT_STATE.md','docs/visual-qa/note.md','docs/mobile-audit/other.json']) test('rejects non-evidence '+file,()=>fixture(({write,commit,check})=>{write(file,'changed');commit();assert.ok(check().some(e=>e.includes('candidate.candidateSha')));}));
+test('rejects code changes even if a later commit restores identical code',()=>fixture(({write,commit,check})=>{write('index.html','changed');commit();write('index.html','actual tested source');commit();assert.ok(check().some(e=>e.includes('candidate.candidateSha')));}));
+test('rejects unknown commit and foreign existing history',()=>fixture(({git,write,commit,root,reviewed})=>{
+  write('docs/visual-qa/LATEST.json','new');const head=commit();assert.equal(proveEvidenceSuccessor(root,'0'.repeat(40),head).ok,false);
+  git(['checkout','--orphan','foreign','-q']);git(['rm','-rf','.']);write('foreign.txt','foreign');const foreign=commit();git(['checkout','main','-q']);assert.equal(proveEvidenceSuccessor(root,foreign,head).ok,false);assert.notEqual(reviewed,foreign);
+}));
+test('requires candidate actual HEAD rather than merely a descendant SHA',()=>fixture(({write,commit,root,reviewed})=>{write('docs/visual-qa/LATEST.json','one');const intermediate=commit();write('docs/visual-qa/LATEST.json','two');commit();assert.equal(proveEvidenceSuccessor(root,reviewed,intermediate).ok,false);}));
+test('rejects rename rather than treating two evidence paths as content equivalence',()=>fixture(({git,commit,check})=>{git(['mv','docs/visual-qa/original.png','docs/visual-qa/renamed.png']);commit();assert.ok(check().some(e=>e.includes('candidate.candidateSha')));}));
+test('rejects symlink mode in versioned evidence without requiring Windows symlink creation',()=>fixture(({git,check})=>{const oid=git(['hash-object','-w','--stdin'],'../../index.html');git(['update-index','--add','--cacheinfo','120000,'+oid+',docs/visual-qa/link.png']);git(['commit','-q','-m','symlink fixture']);assert.ok(check().some(e=>e.includes('candidate.candidateSha')));}));
+test('rejects executable mode and deleted evidence',()=>fixture(({git,commit,check})=>{git(['update-index','--chmod=+x','docs/visual-qa/original.png']);git(['commit','-q','-m','mode fixture']);assert.ok(check().some(e=>e.includes('candidate.candidateSha')));git(['rm','docs/visual-qa/original.png']);commit();assert.ok(check().some(e=>e.includes('candidate.candidateSha')));}));
+test('bound-file and aggregate verification still reject otherwise allowed evidence changes',()=>fixture(({write,commit,check})=>{write('docs/visual-qa/bound.json','changed after review');commit();assert.ok(check().some(e=>e.includes('changed after receipt')));},['index.html','docs/visual-qa/bound.json']));
+test('unchanged per-file digests do not excuse a tampered aggregate binding',()=>fixture(({write,commit,receipt,check})=>{write('docs/visual-qa/LATEST.json','new receipt');commit();receipt.source.sha256='0'.repeat(64);assert.ok(check().some(e=>e.includes('aggregate source digest is stale')));}));
+test('rejects missing Git history without fallback',()=>{const root=fs.mkdtempSync(path.join(os.tmpdir(),'s418-no-git-'));try{assert.equal(proveEvidenceSuccessor(root,'a'.repeat(40),'b'.repeat(40)).ok,false);}finally{fs.rmSync(root,{recursive:true,force:true});}});
+test('evidence paths reject traversal, separators, suffix spoof and narratives',()=>{for(const p of ['../docs/visual-qa/x.png','docs/visual-qa/../x.png','docs/visual-qa/x.png/../y.json','docs\\visual-qa\\x.png','/docs/visual-qa/x.png','docs/visual-qa/x.png.js','docs/mobile-audit/narrative.md'])assert.equal(isEvidencePath(p),false,p);});
+
+}

@@ -439,7 +439,7 @@
     .forge-sealed-caption strong { color:#7EC9FF; font-family:Georgia,'Times New Roman',serif; font-size:1.4rem; font-weight:700; margin-right:0.25em; }
     .forge-sealed-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:0.7rem; position:relative; z-index:1; }
     @media (max-width:900px) { .forge-sealed-grid { grid-template-columns:repeat(4,1fr); } }
-    @media (max-width:520px) { .forge-sealed-grid { grid-template-columns:repeat(3,1fr); } }
+    @media (max-width:520px) { .forge-sealed-grid { grid-template-columns:repeat(auto-fit,minmax(min(100%,8rem),1fr)); } .forge-sealed-label { white-space:nowrap; } }
     .forge-sealed-tile { aspect-ratio:1/1; border-radius:14px; background:rgba(8,11,18,0.85); border:1px solid rgba(31,162,255,0.18);
       display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.45rem; color:rgba(126,201,255,0.55);
       position:relative; overflow:hidden; transition:color 0.3s ease, border-color 0.3s ease; }
@@ -449,7 +449,7 @@
     @media (prefers-reduced-motion: reduce) { .forge-sealed-tile::before { animation:none; } }
     .forge-sealed-tile:hover { color:rgba(126,201,255,0.95); border-color:rgba(31,162,255,0.45); }
     .forge-sealed-sigil { width:30px; height:30px; position:relative; z-index:1; }
-    .forge-sealed-label { font-size:0.62rem; font-weight:800; letter-spacing:0.2em; position:relative; z-index:1; }
+    .forge-sealed-label { color:var(--text); font-size:0.62rem; font-weight:800; letter-spacing:0.2em; position:relative; z-index:1; }
     .forge-sealed-foot { margin-top:1.3rem; font-size:0.85rem; color:var(--muted); position:relative; z-index:1; }
     .forge-sealed-foot a { color:var(--gold); font-weight:600; }
 
@@ -1425,7 +1425,7 @@
 <script src="/assets/studio-living.js" defer></script>
   <!-- studio-pulse-runtime:end -->
   <!-- vs-ambient:start -->
-<script src="/assets/ambient-core.shell-1393921d90.js" defer integrity="sha384-Zey3Z3oDFwPX7V3Rgyui31c4tEDXZHUAd1UA7o0U3FOujfIkNGlY+ttdm6F5kKo+" crossorigin="anonymous"></script>
+<script src="/assets/ambient-core.shell-f1b5c6ef6d.js" defer integrity="sha384-hsh2koGK2cAdx6hRV0eDMLJYQyAUQIq/zLkXQ/3Xso1R16JR06bY8NmHZKhtCdyy" crossorigin="anonymous"></script>
 <script src="/assets/ambient-feature.shell-dbfd95a4bb.js" defer></script>
 <script src="/assets/studio-pulse-live.shell-7d6ed865a8.js" defer></script>
 <!-- vs-ambient:end -->

@@ -63,7 +63,7 @@
       }
       if (proofTier) {
         proofTier.textContent = tier.name + ' tier';
-        proofTier.style.color = tier.color;
+        proofTier.style.color = 'var(--text)';
       }
     });
   }

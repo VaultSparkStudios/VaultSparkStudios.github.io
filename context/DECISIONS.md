@@ -1406,3 +1406,11 @@ Credentials are created at Obelisk; this site owns only profile completion. The 
 ## D-S417.R — preserve partial release evidence
 
 Recovery preserves all prior decisions and hold configuration. The November 20 handoff correction supersedes older statements that consent and folder pruning were not live. Baseline advancement is an audit candidate requiring source verification, not assumed intended policy. No launch, pricing, identity policy or legal decision is changed.
+
+## D-S418.1 — retain reviewed capture identity across evidence-only commits
+
+Founder approved this bounded release-check correction on November 24, 2026. A reviewed capture keeps its original candidate identity. A later candidate can use that receipt only when Git proves every intervening single-parent commit changes permitted regular screenshot or receipt files, and the existing per-file and aggregate source checks still pass. Missing history, merges, source changes, renames, deletions and nonregular evidence fail the proof. The checker reports both commit identities. Exact-current-candidate CI, staging and production verification remain required. The existing receipt suite includes 19 regression cases for this rule.
+
+## D-S418.2 — keep small labels readable in each theme
+
+Rendered mobile review found wrapped Studio sealed-card labels and insufficient contrast on Home's light-theme score-tier label. Studio uses an adaptive narrow grid and single-line labels; both labels use the existing theme text token. Decorative icon colors and score-tier calculations retain their existing behavior. Final acceptance requires fresh rendered checks after the source build.

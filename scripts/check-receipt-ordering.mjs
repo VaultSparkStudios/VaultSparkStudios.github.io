@@ -29,6 +29,44 @@ export function proveRoutineByGenerator(root) {
   return { ok: false, detail: 'generate-news-pages --check failed: ' + String(run.stderr || run.stdout || '').trim().split(/\r?\n/).pop() };
 }
 
+/** Only regular, versioned rendered evidence may follow the reviewed commit. */
+export function isEvidencePath(value) {
+  if (typeof value !== 'string' || value.includes('\\') || !value.split('/').every(part => /^[A-Za-z0-9_.-]+$/.test(part) && part !== '.' && part !== '..')) return false;
+  return /^docs\/visual-qa\/(?:[A-Za-z0-9_.-]+\/)*[A-Za-z0-9_.-]+\.(?:png|json)$/.test(value)
+    || /^docs\/mobile-audit\/(?:[A-Za-z0-9_.-]+\/)*[A-Za-z0-9_.-]+\.png$/.test(value)
+    || ['docs/mobile-audit/findings.jsonl', 'docs/mobile-audit/receipt.json'].includes(value);
+}
+
+export function proveEvidenceSuccessor(root, reviewedSha, candidateSha) {
+  const refuse = detail => ({ ok: false, detail });
+  if (![reviewedSha, candidateSha].every(sha => /^[0-9a-f]{40}$/.test(sha || ''))) return refuse('full reviewed/current SHA required');
+  const git = args => {
+    const run = spawnSync('git', args, { cwd: root, encoding: 'utf8', windowsHide: true, timeout: 10000, maxBuffer: 8 * 1024 * 1024 });
+    if (run.status !== 0 || run.error || run.signal) throw new Error('Git proof unavailable: ' + args[0]);
+    return run.stdout;
+  };
+  try {
+    if (git(['rev-parse', '--verify', 'HEAD^{commit}']).trim() !== candidateSha) return refuse('current candidate SHA is not actual HEAD');
+    for (const sha of [reviewedSha, candidateSha]) if (git(['rev-parse', '--verify', sha + '^{commit}']).trim() !== sha) return refuse('SHA is not an exact commit');
+    git(['merge-base', '--is-ancestor', reviewedSha, candidateSha]);
+    const commits = git(['rev-list', '--reverse', '--parents', reviewedSha + '..' + candidateSha]).trim().split('\n').filter(Boolean);
+    if (!commits.length) return refuse('not an evidence descendant');
+    const paths = new Set();
+    for (const line of commits) {
+      const ancestry = line.trim().split(' ');
+      if (ancestry.length !== 2) return refuse('merge history is not admitted');
+      const tokens = git(['diff-tree', '--no-commit-id', '--raw', '-z', '-r', '--find-renames', ancestry[0]]).split('\0');
+      for (let i = 0; i < tokens.length && tokens[i];) {
+        const header = tokens[i++], file = tokens[i++];
+        const parsed = /^:(\d{6}) (\d{6}) [0-9a-f]+ [0-9a-f]+ ([A-Z][0-9]*)$/.exec(header);
+        if (!parsed || !['A', 'M'].includes(parsed[3]) || !['000000', '100644'].includes(parsed[1]) || parsed[2] !== '100644' || !isEvidencePath(file)) return refuse('non-evidence path, rename, deletion or non-regular mode');
+        paths.add(file);
+      }
+    }
+    return { ok: true, reviewedSha, candidateSha, commits: commits.length, paths: [...paths].sort(), detail: 'evidence-only descendant; original capture/candidate identity retained' };
+  } catch (error) { return refuse(error.message); }
+}
+
 export function validateProofBinding(receipt, { root, label, currentCandidate = candidateBinding(root), proveRoutine = proveRoutineByGenerator, notes = [] }) {
   const errors = [];
   const files = Array.isArray(receipt?.source?.files) ? receipt.source.files : [];
@@ -111,7 +149,9 @@ export function validateProofBinding(receipt, { root, label, currentCandidate = 
       errors.push(label + ': candidate.manifest does not match the final candidate manifest');
     }
     if ((receipt.candidate.candidateSha ?? null) !== (currentCandidate.candidateSha ?? null)) {
-      errors.push(label + ': candidate.candidateSha does not match the final candidate manifest');
+      const successor = proveEvidenceSuccessor(root, receipt.candidate.candidateSha, currentCandidate.candidateSha);
+      if (!successor.ok) errors.push(label + ': candidate.candidateSha does not match the final candidate manifest (' + successor.detail + ')');
+      else notes.push(label + ': original reviewed candidate ' + successor.reviewedSha + ' retained; actual HEAD ' + successor.candidateSha + ' differs only by ' + successor.commits + ' regular evidence commit(s), paths: ' + successor.paths.join(', '));
     }
     // A receipt with no candidateSha at all predates the binding and cannot be
     // trusted to attest anything about a promotion candidate.
@@ -250,5 +290,7 @@ function liveCheck() {
     + (notes.length ? ' · ' + notes.length + ' bound article(s) carry newer routine Desk content, proven generator output' : ''));
 }
 
-if (process.argv.includes('--self-test')) selfTest();
-else liveCheck();
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  if (process.argv.includes('--self-test')) selfTest();
+  else liveCheck();
+}
