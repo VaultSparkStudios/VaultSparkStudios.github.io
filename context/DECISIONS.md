@@ -1430,3 +1430,7 @@ Use the existing theme muted text color for captions within the Home proof strip
 ### D-S418.6 — Reproducible public intelligence output
 
 Preserve the published public-intelligence bytes and generation time when only the generator clock changes. All content, CI health and nested timestamps remain significant; changed data still regenerates the output. This repairs build reproducibility without changing receipt qualification.
+
+### D-S418.7 — Readable IGNIS instrument badge
+
+Keep the orange Current IGNIS label on its dark instrument background in the light theme. The inherited white badge overlay produced 1.33:1 small-text contrast. Verify the scoped correction in rendered desktop and mobile views without changing other themes or shared badges.
