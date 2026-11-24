@@ -1418,3 +1418,7 @@ Rendered mobile review found wrapped Studio sealed-card labels and insufficient 
 ### D-S418.3 — Installed browser runtime currency
 
 Pin isolated validation to the current signed browser binary and recompute its dependent source commitments after an automatic browser update. Preserve prior proofs under their original identities. Current staging, account and production acceptance remain separately verified outcomes.
+
+### D-S418.4 — Membership reference correction
+
+Replace the Membership iPhone SE light reference with the previously reviewed image confirmed byte-identical to both current native diagnostic captures. Verify the resulting source with the ordinary Linux comparison.
