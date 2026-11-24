@@ -31,12 +31,12 @@ test.describe('Public pages load', () => {
     await expect(page.locator('.lb-table').first()).toBeVisible();
   });
 
-  // S368 retired the /journal/ index into /changelog/#stories; the story pages stay served.
-  test('Retired journal index lands on changelog stories', async ({ page }) => {
+  // The journal index now resolves to Devlog; individual story pages stay served.
+  test('Retired journal index lands on Devlog stories', async ({ page }) => {
     await page.goto(BASE + '/journal/');
-    await expect(page).toHaveURL(/\/changelog\/#stories$/);
-    await expect(page).toHaveTitle(/Changelog/i);
-    const story = page.locator('#stories .cl-story__title a').first();
+    await expect(page).toHaveURL(/\/devlog\/$/);
+    await expect(page).toHaveTitle(/Devlog/i);
+    const story = page.locator('article.entry a.entry-link').first();
     await expect(story).toBeVisible();
     await expect(story).toHaveAttribute('href', /^\/journal\/[a-z0-9-]+\/$/);
   });

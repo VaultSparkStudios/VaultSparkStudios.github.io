@@ -151,8 +151,8 @@ test.describe('Site navigation', () => {
     expect(labels.sort()).toEqual(expected);
   });
 
-  test('Create Account CTA opens free Vault Membership signup', async ({ page }) => {
-    // S409: open member signup is separate from approved investor access.
+  test('Create Account CTA opens shared signup with website availability guidance', async ({ page }) => {
+    // Shared identity setup keeps website enrollment and investor approval separate.
     await page.goto(BASE + '/');
     const joinBtn = page.locator('.nav-right a[data-vs-join]');
     await expect(joinBtn).toBeVisible();
@@ -163,7 +163,10 @@ test.describe('Site navigation', () => {
     const signup = page.locator('#obelisk-create-account');
     await expect(signup).toBeVisible();
     await expect(signup).toContainText('Create your free account');
-    await expect(page.getByText('No membership invite or payment card required.', { exact: true })).toBeVisible();
+    const availability = page.locator('#panel-register a[href="/membership/"]');
+    await expect(availability).toBeVisible();
+    await expect(availability).toHaveText('Check current website membership availability');
+    await expect(page.locator('#panel-register')).not.toContainText('No membership invite');
     await expect.poll(async () => {
       const url = new URL(await signup.getAttribute('href'), page.url());
       return { origin: url.origin, path: url.pathname, intent: url.searchParams.get('intent'), destination: url.searchParams.get('return') };

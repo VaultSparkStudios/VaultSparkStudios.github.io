@@ -33,6 +33,10 @@ jobs:
           npm ci --ignore-scripts --no-audit --no-fund
           npx playwright install --with-deps chromium
 
+      # Compile source-dependent feeds before capturing or checking this artifact.
+      - name: Build candidate artifact
+        run: npm run build
+
       - name: CSP sync check
         run: node scripts/propagate-csp.mjs --dry-run
 
@@ -183,6 +187,8 @@ jobs:
     if: ${{ vars.E2E_ENABLED != 'false' }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
@@ -192,6 +198,9 @@ jobs:
         run: |
           npm ci --ignore-scripts --no-audit --no-fund
           npx playwright install --with-deps chromium
+
+      - name: Build candidate artifact
+        run: npm run build
 
       - name: Start local preview server
         run: |
