@@ -1414,3 +1414,7 @@ Founder approved this bounded release-check correction on November 24, 2026. A r
 ## D-S418.2 — keep small labels readable in each theme
 
 Rendered mobile review found wrapped Studio sealed-card labels and insufficient contrast on Home's light-theme score-tier label. Studio uses an adaptive narrow grid and single-line labels; both labels use the existing theme text token. Decorative icon colors and score-tier calculations retain their existing behavior. Final acceptance requires fresh rendered checks after the source build.
+
+### D-S418.3 — Installed browser runtime currency
+
+Pin isolated validation to the current signed browser binary and recompute its dependent source commitments after an automatic browser update. Preserve prior proofs under their original identities. Current staging, account and production acceptance remain separately verified outcomes.
