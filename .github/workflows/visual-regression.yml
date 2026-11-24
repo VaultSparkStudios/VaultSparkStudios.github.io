@@ -85,6 +85,8 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.games_controlled_experiment == 'true'
         run: node -e 'require("node:fs").appendFileSync(process.env.GITHUB_ENV,"VS_GAMES_EXPERIMENT_STARTED_AT="+Date.now()+"\n")'
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
       - name: Admit diagnostic scope before browser setup
         env:
           DIAG_BEFORE: ${{ github.event.inputs.scene_diagnostics || 'false' }}
@@ -115,6 +117,9 @@ jobs:
       # Locked install: package-lock.json is committed and install scripts are
       # disabled, so CI resolves exactly the reviewed dependency tree.
       - run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Compile canonical local candidate
+        run: npm run build
       - name: Inspect controlled runtime admission
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.games_controlled_experiment == 'true'
         run: |

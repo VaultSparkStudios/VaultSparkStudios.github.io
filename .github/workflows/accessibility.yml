@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
@@ -26,6 +28,9 @@ jobs:
         # Locked install: package-lock.json is committed and install scripts are
         # disabled, so CI resolves exactly the reviewed dependency tree.
         run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Compile canonical local candidate
+        run: npm run build
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
