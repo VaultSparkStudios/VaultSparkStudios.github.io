@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-23T22:38:40.096Z",
+  "generatedAt": "2026-11-25T23:12:35.320Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "1d4f13846dfb7d8c9239d78cec3cf3d71bc9e432",
-    "shellVersion": "69dd71f595-b74c6d5d2a-d3784116f2-cfb67de166-a223cf3d1b-054011fd5a-e6330c4a18-1220404832-59bed42877-30b48f0ae6-4e79cfea95-6bea3d432e-04db2fa975-c2c9a3a78c-8c1f2155b5-0995bd7945-c0fddc0c73-bd7ccf3b3d-7928261818-977f649ce6-153c5cdc30-34033980bc-a2811f3789-0565eda203-c3ddf1fcd0-ea189f913d-567e4d4bd8-281c25ac75-19fe6f9313-bd0d41782d-1ffbd979e9-166b7790cf-202362ca41-ea89bed65c-64fc9a90a4-baa35696d2-001af71d31-2c3992e2b6-0c14ce1f04-f1b5c6ef6d-dbfd95a4bb-4b68e2855f-523b04a01e-b33c76422e-86897ab3de-73dd11ddde-0392b76d45-550971e267-c86a6ecc39-fef717e631-b33242e1cc-e6b0b21c77-8dd57eb3a3-9fb978eca9-bc8a879068-aadb90966d-1ddedc6d81-f058757524-91a127bb4a-6abbb39184-37d24392f4-5bafed982d-d369cfd082-0fbab844d7-a71c845b99-355aaa84cf-1af2012142-5f63b6b75a-f047c9d940-33115efcde-cb874aa5e8-7d6ed865a8-51863ec14a-d927bf3c2d-20bb2584bc-d55870922b"
+    "sha": "639bce39af5e0bd07c4a6dd3934ca1c29d6a4dfc",
+    "shellVersion": "1220404832-59bed42877-30b48f0ae6-56ae8098ff-6bea3d432e-04db2fa975-c2c9a3a78c-8c1f2155b5-0995bd7945-c0fddc0c73-bd7ccf3b3d-7928261818-977f649ce6-0007bdfdfe-34033980bc-a2811f3789-0565eda203-c3ddf1fcd0-da00f91e01-83a9a8fdda-281c25ac75-19fe6f9313-bd0d41782d-da428b9351-166b7790cf-202362ca41-0540285fff-64fc9a90a4-141c057d30-001af71d31-2c3992e2b6-7b976ad580-bc969274be-dbfd95a4bb-4b68e2855f-523b04a01e-b33c76422e-86897ab3de-3fab54aa82-0392b76d45-550971e267-c86a6ecc39-fef717e631-b33242e1cc-e6b0b21c77-8dd57eb3a3-9fb978eca9-bc8a879068-aadb90966d-1ddedc6d81-f058757524-91a127bb4a-6abbb39184-37d24392f4-6b434171f8-d369cfd082-0fbab844d7-a71c845b99-355aaa84cf-1af2012142-5f63b6b75a-f047c9d940-33115efcde-cb874aa5e8-5fc734ef84-bad58045cc-d927bf3c2d-20bb2584bc-d55870922b"
   },
   "staging": {
     "status": "yellow",
@@ -16,22 +16,18 @@
       "header-mismatch",
       "prod-forbidden",
       "shell-mismatch",
-      "staging-canonical-csp-drift",
       "status-mismatch"
     ],
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch",
-      "/:stagingCanonicalCsp",
-      "/studio-pulse/:stagingCanonicalCsp",
-      "/membership/:stagingCanonicalCsp"
+      "staging-artifact-root-mismatch"
     ],
     "candidateBuildSha": "639bce39af5e0bd07c4a6dd3934ca1c29d6a4dfc",
     "deployedBuildSha": "aa506d16fb1c9d34f008323e6db7e068b66bef22",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "7b587dbbc657c0c607641493e16fbd388e4440d78394368454ed4c86c9b57c25",
+      "candidateRoot": "cdad5418bdb1311fba4751cb1048035c7102583b3ff22007cc752a593c7d8f97",
       "candidateLeafCount": 79,
       "stagingRoot": "c4737b62d79bc67a10c961459a3fa01c16c9deac09ca5279bb913ca0a0c1d165",
       "stagingLeafCount": 79,
@@ -71,19 +67,19 @@
     "matched": 9,
     "total": 9,
     "observedAt": "2026-11-18T08:35:23.346Z",
-    "sourceContractSha256": "78b400726c9cfcf7163a28792fbcdb507a3d619e5e2672cf3563bc1c901a237e"
+    "sourceContractSha256": "1c590eda401bc569d2d336ac101ec61b41c1f31c213682e511934df8a1724d50"
   },
   "productionDeploy": {
-    "state": "stale",
-    "commitsBehind": 336,
-    "ageHours": 116.5,
-    "observedAt": "2026-11-23T05:38:52.120Z",
+    "state": "content-current",
+    "commitsBehind": 471,
+    "ageHours": 182,
+    "observedAt": "2026-11-25T23:12:35.320Z",
     "shellParity": {
-      "state": "superseded",
+      "state": "matched",
       "route": "/",
-      "observedAt": "2026-11-23T05:38:52.120Z",
+      "observedAt": "2026-11-25T23:12:35.320Z",
       "expectedFrom": "9b4ce4dca932b11f1bd681adc0de3ad1861a468ddc3c375813511ae1b9d16f51",
-      "supersededBy": "0f549480ffc2775b8f43f4bb3b26bdcd1fcfcefd53e3e7858a491c659a9ebe09",
+      "supersededBy": null,
       "ageHours": 0,
       "stale": false,
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
@@ -188,7 +184,7 @@
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
-    "productionShellParityMatched": false,
+    "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
@@ -201,7 +197,6 @@
     "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
-    "productionShellParityMatched",
     "identityMigrationVerified",
     "productionPromotionReady",
     "promotion:real-provider-e2e-pending",
