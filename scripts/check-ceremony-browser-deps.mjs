@@ -75,7 +75,7 @@ function selfTest() {
   const ceremonySource = fs.readFileSync(path.join(ROOT, 'scripts', 'run-release-ceremony.mjs'), 'utf8');
   const attentionRunner = fs.readFileSync(path.join(ROOT, 'scripts', 'run-attention-release-gate.mjs'), 'utf8');
   add('the ceremony executes the attention browser gate', ceremonySource.includes("runScript('attention-browser'"));
-  add('the ceremony validates the public attention receipt', ceremonySource.includes("'api/staging-attention-browser.json'"));
+  add('the ceremony validates the resolved attention receipt', ceremonySource.includes("artifactStep('attention-browser-receipt', ceremonyArtifactPath('staging-attention-browser')"));
   add('the attention runner is pinned to 15 cases', attentionRunner.includes('const EXPECTED_TESTS = 15'));
 
   // The live tree must be clean — this gate exists because it was not.

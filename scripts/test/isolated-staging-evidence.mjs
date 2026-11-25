@@ -11,7 +11,7 @@ import {shellPaths} from '../lib/shell-parity.mjs';
 import {createStagingDeployReceipt,validateStagingDeployReceipt} from '../lib/staging-deploy-receipt.mjs';
 import {historyRowFor,renderStagingDeployHistory,validateStagingDeployHistory} from '../lib/staging-deploy-history.mjs';
 import {buildContinuitySummary} from '../lib/staging-deploy-continuity.mjs';
-import {sha256,publisherCommitment,PRESERVATION_FLAGS,validatePublisherPolicy,validateStageNative} from '../lib/isolated-staging-contract.mjs';
+import {sha256,publisherCommitment,PRESERVATION_FLAGS,validatePublisherPolicy,validateStageNative,exactKeys} from '../lib/isolated-staging-contract.mjs';
 import {createVariantReceipt,validateInstallation,validateRequest,validateObservation,admitRuntime,findObservation,
   assertCurrentStageManifest,variantReadiness,evaluateVariantRoutes,assertAdmittedContext,canonical,runtimeContextArgs,
   githubApi,encodeMetadataPayload,decodeMetadataPayload,makeRequest,publishMetadata,observationFromProtected,findRequest,
@@ -221,18 +221,22 @@ await test('actual ceremony validator retains exactly eleven required checks',()
 });
 await test('exact runtime loader performs mandatory raw HTTPS marker verification',async()=>{
  const source=fs.readFileSync(new URL('../lib/isolated-staging-evidence.mjs',import.meta.url),'utf8');
- const start=source.indexOf('export async function loadRuntimeContext'),end=source.indexOf('export async function readBoundedResponse',start);
+ const start=source.indexOf('async function loadStageRuntimeAdmission('),end=source.indexOf('/** Pure reproduction from original stage bytes;',start);
+ assert(start>=0&&end>start,'actual stage admission, loader and raw manifest assertion required');
  const references={schemaVersion:1,sourceCommit:G,transport:{installationId:1,installationHash,requestId:2,requestHash,observationId:3,observationHash,runId:11,runAttempt:2}};
  const raw=JSON.stringify(references),files={'context.json':raw,'config/isolated-staging-admission.json':JSON.stringify(policy),
   'data/staging-deploy-history.ndjson':'','api/candidate-artifact-manifest.json':JSON.stringify(manifest)};
  let marker=stageManifestRaw,reads=0;
  const context={parseBoundedJson:(bytes,hash)=>{assert.equal(sha256(bytes),hash);return JSON.parse(bytes);},readOwned:(_root,file)=>Buffer.from(files[file]),
   exactKeys:(value,keys)=>assert.deepEqual(Object.keys(value).sort(),Array.from(keys).sort()),
-  need:(value,code)=>{if(!value)throw Error(code);},verifyFrozenSource:()=>frozen,validatePublisherPolicy,admitRuntime,
-  sha256,STAGING_ORIGIN:'https://website.staging.vaultsparkstudios.com',AbortSignal,readBoundedResponse,assertCurrentStageManifest,
+  need:(value,code)=>{if(!value)throw Error(code);},verifyFrozenSource:(_root,commit,options)=>{assert.equal(commit,G);assert.equal(options.candidateArtifact,'compiled-build');return frozen;},validatePublisherPolicy,admitRuntime,
+  sha256,Buffer,STAGING_ORIGIN:'https://website.staging.vaultsparkstudios.com',AbortSignal,readBoundedResponse,assertCurrentStageManifest,
   fetch:async(url,options)=>{reads++;assert.equal(url,'https://website.staging.vaultsparkstudios.com/api/candidate-artifact-manifest.json');assert.equal(options.redirect,'error');return new Response(marker,{status:200});}};
- vm.createContext(context);vm.runInContext(source.slice(start,end).replace('export async function ','async function '),context);
+ vm.createContext(context);vm.runInContext(source.slice(start,end).replaceAll('export async function ','async function ').replaceAll('export function ','function '),context);
  await context.loadRuntimeContext('/offline-root','context.json',sha256(raw),{api,now});assert.equal(reads,1);
+ files['api/candidate-artifact-manifest.json']=JSON.stringify({...manifest,root:h('9')});
+ await assert.rejects(()=>context.loadRuntimeContext('/offline-root','context.json',sha256(raw),{api,now}),/production-raw-manifest-bytes/);assert.equal(reads,1);
+ files['api/candidate-artifact-manifest.json']=JSON.stringify(manifest);
  marker=JSON.stringify({root:manifest.root,leafCount:79});
  await assert.rejects(()=>context.loadRuntimeContext('/offline-root','context.json',sha256(raw),{api,now}));assert.equal(reads,2);
 });
@@ -248,10 +252,12 @@ await test('raw G closure binds direct and transitive executed helper bytes',()=
  const start=source.indexOf('export function verifyFrozenSource'),end=source.indexOf('/** Relative imports',start);
  const local=new Map(blobs);
  const context={isHash:(v,n)=>new RegExp(`^[a-f0-9]{${n}}$`).test(v),need:(v,c)=>{if(!v)throw Error(c);},sha256,canonical,
-  verifierSourceClosure,readOwned:(_root,file)=>local.get(file),process,
+  exactKeys,verifierSourceClosure,readOwned:(_root,file)=>local.get(file),process,
   spawnSync:(cmd,args)=>{assert.equal(cmd,'git');return{status:0,stdout:args[0]==='rev-parse'?Buffer.from(args[1]==='HEAD'?G+'\n':tree+'\n'):blobs.get(args[2].slice(41))};}};
- vm.createContext(context);vm.runInContext(source.slice(start,end).replace('export function ','function '),context);
+ vm.createContext(context);vm.runInContext(source.slice(start,end).replaceAll('export function ','function '),context);
  assert.equal(context.verifyFrozenSource('/offline',G).sourceTreeSha,tree);
+ assert.throws(()=>context.verifyFrozenSource('/offline',G,{candidateArtifact:'unchecked'}),/source-artifact-view/);
+ assert.throws(()=>context.verifyFrozenSource('/offline',G,{skipSource:true}),/source-artifact-options/);
  local.set('scripts/lib/safe-spawn.mjs',Buffer.concat([local.get('scripts/lib/safe-spawn.mjs'),Buffer.from('\n// later source\n')]));
  assert.throws(()=>context.verifyFrozenSource('/offline',G),/later-verifier-source/);
  local.set('scripts/lib/safe-spawn.mjs',blobs.get('scripts/lib/safe-spawn.mjs'));
@@ -463,7 +469,8 @@ await test('actual finalization schema is BOT-only and distinct from prepared na
  await assert.rejects(()=>publishMetadata(async()=>{throw Error('no network');},f.policy,frozen,clone(value)));
 });
 await test('actual broker grammar and mode routing keep live operator, CI upload and finalization separate',()=>{
- const source=fs.readFileSync(new URL('../isolated-staging-evidence.mjs',import.meta.url),'utf8'),start=source.indexOf("need(['--project-install'"),end=source.indexOf('const frozen=verifyFrozenSource',start);
+ const source=fs.readFileSync(new URL('../isolated-staging-evidence.mjs',import.meta.url),'utf8'),start=source.indexOf("need(['--restore-staged-build-view'"),end=source.indexOf('const frozen=verifyFrozenSource',start);
+ assert(start>=0&&end>start,'actual broker grammar required');
  const parse=args=>{const c={args,need:(v,k)=>{if(!v)throw Error(k);},isHash:(v,n=64)=>typeof v==='string'&&new RegExp('^[a-f0-9]{'+n+'}$').test(v)};vm.createContext(c);vm.runInContext(source.slice(start,end)+'\nthis.parsed=flags;',c);return c.parsed;};
  const base=['--source-commit='+G,'--installation-deployment-id=1','--installation-payload-sha256='+nativeHash],ctx=['--isolated-staging-context=.cache/isolated-staging/context.json','--isolated-staging-context-sha256='+h('a')],worker=['--worker-upload-deployment-id=4','--worker-upload-payload-sha256='+h('b')],req=['--request-deployment-id=7','--request-payload-sha256='+h('c')];
  const good=[['--publish-worker-upload','--source-commit='+G,...ctx],['--publish-finalization','--source-commit='+G,...ctx],['--check-worker-upload',...base,...worker],['--request-production-postflight',...base,...worker,...ctx],['--receive-production-postflight',...base,...req,'--output=.cache/isolated-staging/production-postflight-context.json'],['--observe-production-postflight',...base,...req,'--channel=chrome'],['--request',...base,...worker]];

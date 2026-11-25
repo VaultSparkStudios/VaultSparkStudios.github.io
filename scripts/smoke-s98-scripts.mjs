@@ -18,6 +18,7 @@ import { spawnSync } from './lib/safe-spawn.mjs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import fs from 'node:fs';
+import os from 'node:os';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), '..');
 
@@ -29,8 +30,9 @@ function run(args, opts = {}) {
   // First element of args is the script filename; everything after is passed
   // through as argv to that script.
   const [scriptName, ...scriptArgs] = args;
-  return spawnSync(process.execPath, [path.join(ROOT, 'scripts', scriptName), ...scriptArgs], {
-    cwd: ROOT, encoding: 'utf8', timeout: 30_000, ...opts,
+  const { root = ROOT, ...processOptions } = opts;
+  return spawnSync(process.execPath, [path.join(root, 'scripts', scriptName), ...scriptArgs], {
+    cwd: root, encoding: 'utf8', timeout: 30_000, windowsHide: true, ...processOptions,
   });
 }
 
@@ -45,14 +47,60 @@ console.log('S98 scripts smoke test');
   } else pass('hash-hub-password produces pbkdf2$100000$…');
 }
 
-// 2. generate-heartbeat: writing + --check idempotent.
+// 2. Exercise the actual writer and checker in a disposable checkout.
+// Verification must leave the already-built public heartbeat untouched.
 {
-  const r1 = run(['generate-heartbeat.mjs']);
-  if (r1.status !== 0) fail('generate-heartbeat write', `exit ${r1.status}: ${r1.stderr}`);
-  else pass('generate-heartbeat write');
-  const r2 = run(['generate-heartbeat.mjs', '--check']);
-  if (r2.status !== 0) fail('generate-heartbeat --check', `exit ${r2.status}: ${r2.stderr || r2.stdout}`);
-  else pass('generate-heartbeat --check idempotent');
+  const temporaryParent = fs.realpathSync(os.tmpdir());
+  const directory = fs.mkdtempSync(path.join(temporaryParent, 'vs-heartbeat-smoke-'));
+  const initialDirectory = fs.lstatSync(directory);
+  const fixtureRoot = path.join(directory, 'project');
+  const liveFile = path.join(ROOT, 'api', 'heartbeat.json');
+  const liveBefore = fs.readFileSync(liveFile);
+  try {
+    for (const file of ['scripts/generate-heartbeat.mjs', 'scripts/lib/public-activity.mjs', 'scripts/lib/project-activity.mjs']) {
+      const target = path.join(fixtureRoot, file);
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.copyFileSync(path.join(ROOT, file), target);
+    }
+    fs.writeFileSync(path.join(fixtureRoot, 'package.json'), '{"type":"module"}\n');
+    const registry = path.join(fixtureRoot, 'studio-hub', 'src', 'data', 'studioRegistry.js');
+    fs.mkdirSync(path.dirname(registry), { recursive: true });
+    fs.writeFileSync(registry, 'export const PROJECTS = [{id:"smoke-site",name:"Smoke site",vaultStatus:"forge"}];\n');
+    const events = path.join(fixtureRoot, 'portfolio', 'events.ndjson');
+    fs.mkdirSync(path.dirname(events), { recursive: true });
+    const firstEventTime = Date.now() - 1000;
+    fs.writeFileSync(events, JSON.stringify({ slug: 'smoke-site', ts: new Date(firstEventTime).toISOString() }) + '\n');
+    const r1 = run(['generate-heartbeat.mjs'], { root: fixtureRoot });
+    if (r1.status !== 0) fail('generate-heartbeat isolated write', `exit ${r1.status}: ${r1.stderr}`);
+    else {
+      const output = JSON.parse(fs.readFileSync(path.join(fixtureRoot, 'api', 'heartbeat.json'), 'utf8'));
+      if (output.projects.length !== 1 || output.projects[0].slug !== 'smoke-site'
+          || output.projects[0].pulses7d !== 1 || output.projects[0].pulses30d !== 1) {
+        fail('generate-heartbeat isolated write', 'fixture source was not faithfully rendered');
+      } else pass('generate-heartbeat isolated write');
+    }
+    const r2 = run(['generate-heartbeat.mjs', '--check'], { root: fixtureRoot });
+    if (r2.status !== 0) fail('generate-heartbeat isolated --check', `exit ${r2.status}: ${r2.stderr || r2.stdout}`);
+    else pass('generate-heartbeat isolated --check idempotent');
+    fs.appendFileSync(events, JSON.stringify({ slug: 'smoke-site', ts: new Date(firstEventTime + 1).toISOString() }) + '\n');
+    const rejected = run(['generate-heartbeat.mjs', '--check'], { root: fixtureRoot });
+    if (rejected.status !== 1 || !/heartbeat drift/.test(rejected.stderr || '')) {
+      fail('generate-heartbeat changed-source refusal', 'checker did not reject the changed fixture');
+    } else pass('generate-heartbeat changed-source refusal');
+  } catch (error) {
+    fail('generate-heartbeat isolated fixture', error.message);
+  } finally {
+    const currentDirectory = fs.lstatSync(directory);
+    if (path.dirname(path.resolve(directory)) !== temporaryParent
+        || fs.realpathSync(directory) !== directory || currentDirectory.isSymbolicLink()
+        || currentDirectory.ino !== initialDirectory.ino || currentDirectory.dev !== initialDirectory.dev
+        || !/^vs-heartbeat-smoke-[A-Za-z0-9]+$/.test(path.basename(directory))) {
+      throw new Error('Heartbeat fixture cleanup target changed');
+    }
+    fs.rmSync(directory, { recursive: true, force: true });
+    if (!fs.readFileSync(liveFile).equals(liveBefore)) fail('generate-heartbeat isolation', 'public artifact bytes changed');
+    else pass('generate-heartbeat preserves public artifact bytes');
+  }
 }
 
 // 4. inject-early-signal: dry-run must not mutate any file.

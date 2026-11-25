@@ -33,3 +33,15 @@ test('real check mode preserves the committed artifact bytes',()=>{
  execFileSync(process.execPath,['scripts/generate-heartbeat.mjs','--check'],{windowsHide:true,stdio:'pipe'});
  assert.deepEqual(fs.readFileSync(path),before);
 });
+
+test('real S98 smoke isolates heartbeat writing and preserves the public artifact',()=>{
+ const file=new URL('../api/heartbeat.json',import.meta.url),before=fs.readFileSync(file);
+ // This CLI launches its own real node:test checks. Give that child a fresh
+ // runner context instead of inheriting this parent runner's recursion marker.
+ const childEnv={...process.env};delete childEnv.NODE_TEST_CONTEXT;
+ const output=execFileSync(process.execPath,['scripts/smoke-s98-scripts.mjs'],{windowsHide:true,encoding:'utf8',timeout:120000,env:childEnv});
+ assert.match(output,/generate-heartbeat isolated write/);
+ assert.match(output,/generate-heartbeat changed-source refusal/);
+ assert.match(output,/generate-heartbeat preserves public artifact bytes/);
+ assert.deepEqual(fs.readFileSync(file),before);
+});

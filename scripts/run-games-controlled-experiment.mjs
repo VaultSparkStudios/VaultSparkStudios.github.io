@@ -94,7 +94,7 @@ function fileHash(file,limit=536870912) {
 }
 
 function pins(cli,browser) {
-  const sources={};for(const rel of ['tests/visual-regression.spec.js','playwright.config.js','.github/workflows/visual-regression.yml','scripts/run-games-controlled-experiment.mjs','scripts/lib/safe-spawn.mjs'])sources[rel]=fileHash(path.join(ROOT,rel),2097152);
+  const sources={};for(const rel of ['tests/visual-regression.spec.js','tests/helpers/membership-raster.mjs','playwright.config.js','.github/workflows/visual-regression.yml','scripts/run-games-controlled-experiment.mjs','scripts/lib/safe-spawn.mjs'])sources[rel]=fileHash(path.join(ROOT,rel),2097152);
   const runtimeFiles={};
   for(const pkg of ['@playwright/test','playwright','playwright-core'])runtimeFiles[pkg+'/package.json']=fileHash(require.resolve(pkg+'/package.json'),2097152);
   const core=path.dirname(require.resolve('playwright-core/package.json')),pw=path.dirname(require.resolve('playwright/package.json'));

@@ -127,6 +127,9 @@ test('actual nav and visual specs audit the candidate, with an explicit visual o
     fs.mkdirSync(path.join(dir, 'scripts', 'lib'), { recursive: true });
     fs.copyFileSync(new URL('../scripts/lib/visual-scene-contract.mjs', import.meta.url),
       path.join(dir, 'scripts', 'lib', 'visual-scene-contract.mjs'));
+    fs.mkdirSync(path.join(dir, 'tests', 'helpers'));
+    fs.copyFileSync(new URL('./helpers/membership-raster.mjs', import.meta.url),
+      path.join(dir, 'tests', 'helpers', 'membership-raster.mjs'));
     fs.writeFileSync(path.join(dir, 'playwright.config.cjs'), `
       const {defineConfig}=require(${JSON.stringify(pw)});
       module.exports=defineConfig({testDir:'./tests',timeout:10000,retries:0,workers:1,
