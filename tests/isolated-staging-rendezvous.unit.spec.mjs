@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import {runWorkflowRendezvous, CONTEXT_FILE} from '../scripts/run-isolated-staging-rendezvous.mjs';
 const sha = b => crypto.createHash('sha256').update(b).digest('hex');
-const env = {GITHUB_EVENT_NAME: 'workflow_dispatch', PRODUCTION_CONFIRM: 'true', GITHUB_SHA: 'b'.repeat(40), INSTALLATION_DEPLOYMENT_ID: '123', INSTALLATION_PAYLOAD_SHA256: 'a'.repeat(64)};
+const env = {GITHUB_EVENT_NAME: 'workflow_dispatch', PRODUCTION_CONFIRM: 'true', GITHUB_SHA: 'b'.repeat(40), ORIGINAL_PUBLIC_ASSET_ID:'1', ORIGINAL_PUBLIC_ASSET_SHA256:'c'.repeat(64), ORIGINAL_PUBLIC_ASSET_BYTES:'252', INSTALLATION_DEPLOYMENT_ID: '123', INSTALLATION_PAYLOAD_SHA256: 'a'.repeat(64)};
 const context = Buffer.from(JSON.stringify({schemaVersion:1,sourceCommit:env.GITHUB_SHA,transport:{installationId:123,installationHash:'a'.repeat(64),requestId:456,requestHash:'c'.repeat(64),observationId:789,observationHash:'d'.repeat(64),runId:11,runAttempt:2}}));
 function fixture({request = {requestDeploymentId: 456, requestPayloadSha256: 'c'.repeat(64)}, result = {file: CONTEXT_FILE, sha256: sha(context)}, bytes = context} = {}) {
   const calls = [], logs = [];

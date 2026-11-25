@@ -36,6 +36,21 @@ on:
         required: false
         default: ""
         type: string
+      original_public_asset_id:
+        description: "Immutable original-public archive asset ID (complete triple required for isolated full promotion)"
+        required: false
+        default: ""
+        type: string
+      original_public_asset_sha256:
+        description: "SHA-256 of the exact original compiled public archive"
+        required: false
+        default: ""
+        type: string
+      original_public_asset_bytes:
+        description: "Exact byte size of the original compiled public archive (maximum 536870912)"
+        required: false
+        default: ""
+        type: string
       # S294 content-hotfix lane. The full interlock couples static content to
       # identity/Supabase readiness, so a broken public page could not be repaired
       # while unrelated migration work was pending. This lane rebuilds the tree
@@ -124,6 +139,9 @@ jobs:
         id: isolated-inputs
         run: node scripts/validate-isolated-staging-workflow-inputs.mjs --emit-github-output >> "$GITHUB_OUTPUT"
         env:
+          ORIGINAL_PUBLIC_ASSET_ID: ${{ inputs.original_public_asset_id }}
+          ORIGINAL_PUBLIC_ASSET_SHA256: ${{ inputs.original_public_asset_sha256 }}
+          ORIGINAL_PUBLIC_ASSET_BYTES: ${{ inputs.original_public_asset_bytes }}
           PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
           CONFIRM_CONTENT: ${{ inputs.confirm_content }}
           CONFIRM_HOTFIX: ${{ inputs.confirm_hotfix }}
@@ -183,6 +201,9 @@ jobs:
       - name: Restore exact signed staged full-build artifact view
         if: steps.isolated-staging.outputs.context_file != '' && inputs.confirm_production == true
         env:
+          ORIGINAL_PUBLIC_ASSET_ID: ${{ inputs.original_public_asset_id }}
+          ORIGINAL_PUBLIC_ASSET_SHA256: ${{ inputs.original_public_asset_sha256 }}
+          ORIGINAL_PUBLIC_ASSET_BYTES: ${{ inputs.original_public_asset_bytes }}
           GITHUB_TOKEN: ${{ github.token }}
           PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
           ISOLATED_CONTEXT: ${{ steps.isolated-staging.outputs.context_file }}
@@ -192,6 +213,9 @@ jobs:
           "--source-commit=$GITHUB_SHA"
           "--isolated-staging-context=$ISOLATED_CONTEXT"
           "--isolated-staging-context-sha256=$ISOLATED_CONTEXT_SHA256"
+          "--original-public-asset-id=$ORIGINAL_PUBLIC_ASSET_ID"
+          "--original-public-asset-sha256=$ORIGINAL_PUBLIC_ASSET_SHA256"
+          "--original-public-asset-bytes=$ORIGINAL_PUBLIC_ASSET_BYTES"
 
       - name: Authorize exact observed production candidate
         id: promotion-gate

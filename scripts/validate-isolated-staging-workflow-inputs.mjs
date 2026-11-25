@@ -4,13 +4,16 @@ import {fileURLToPath} from 'node:url';
 import {printHelpIfRequested} from './lib/cli-contract.mjs';
 
 export function validateIsolatedStagingWorkflowInputs(input) {
-  const allowed = ['event', 'confirmProduction', 'confirmContent', 'confirmHotfix', 'confirmDesk', 'installationId', 'installationHash','workerUploadId','workerUploadHash'];
+  const allowed = ['event', 'confirmProduction', 'confirmContent', 'confirmHotfix', 'confirmDesk', 'installationId', 'installationHash','workerUploadId','workerUploadHash','originalPublicAssetId','originalPublicAssetSha256','originalPublicAssetBytes'];
   if (!input || Object.keys(input).some(key => !allowed.includes(key))) throw new Error('isolated-staging-inputs:unknown-field');
   if(['workerUploadId','workerUploadHash'].some(k=>Object.hasOwn(input,k)&&input[k]!==undefined&&typeof input[k]!=='string'))throw new Error('isolated-staging-inputs:invalid-worker-type');
+  const archiveKeys=['originalPublicAssetId','originalPublicAssetSha256','originalPublicAssetBytes'];
+  if(archiveKeys.some(k=>Object.hasOwn(input,k)&&input[k]!==undefined&&typeof input[k]!=='string'))throw new Error('isolated-staging-inputs:invalid-original-public-type');
+  const archiveId=input.originalPublicAssetId??'',archiveHash=input.originalPublicAssetSha256??'',archiveBytes=input.originalPublicAssetBytes??'',archivePresent=[archiveId,archiveHash,archiveBytes].some(v=>v!=='');
   const id = input.installationId ?? '', hash = input.installationHash ?? '';
   const workerId=input.workerUploadId??'',workerHash=input.workerUploadHash??'';
   const workerPresent=workerId!==''||workerHash!=='';
-  if (id === '' && hash === '') {if(workerPresent)throw new Error('isolated-staging-inputs:worker-parent-without-installation');return {configured: false};}
+  if (id === '' && hash === '') {if(archivePresent)throw new Error('isolated-staging-inputs:original-public-without-installation');if(workerPresent)throw new Error('isolated-staging-inputs:worker-parent-without-installation');return {configured: false};}
   if (typeof id !== 'string' || !/^[1-9]\d{0,15}$/.test(id) || !Number.isSafeInteger(Number(id))
       || typeof hash !== 'string' || !/^[a-f0-9]{64}$/.test(hash)) throw new Error('isolated-staging-inputs:invalid-reference');
   if (input.event !== 'workflow_dispatch' || input.confirmProduction !== 'true') throw new Error('isolated-staging-inputs:confirmed-dispatch-required');
@@ -19,6 +22,7 @@ export function validateIsolatedStagingWorkflowInputs(input) {
   }
   if(workerPresent&&(typeof workerId!=='string'||!(/^[1-9]\d{0,15}$/.test(workerId))||!Number.isSafeInteger(Number(workerId))
     ||typeof workerHash!=='string'||!(/^[a-f0-9]{64}$/.test(workerHash))))throw new Error('isolated-staging-inputs:invalid-worker-reference');
+  if(!/^[1-9]\d{0,15}$/.test(archiveId)||!Number.isSafeInteger(Number(archiveId))||!/^[a-f0-9]{64}$/.test(archiveHash)||!/^[1-9]\d{0,8}$/.test(archiveBytes)||!Number.isSafeInteger(Number(archiveBytes))||Number(archiveBytes)>536870912)throw new Error('isolated-staging-inputs:complete-bounded-original-public-reference-required');
   return {configured: true};
 }
 
@@ -26,13 +30,13 @@ export function isolatedStagingInputsFromEnvironment(env) {
   return {event: env.GITHUB_EVENT_NAME, confirmProduction: env.PRODUCTION_CONFIRM,
     confirmContent: env.CONFIRM_CONTENT, confirmHotfix: env.CONFIRM_HOTFIX, confirmDesk: env.CONFIRM_DESK,
     installationId: env.INSTALLATION_DEPLOYMENT_ID, installationHash: env.INSTALLATION_PAYLOAD_SHA256,
-    workerUploadId:env.WORKER_UPLOAD_DEPLOYMENT_ID,workerUploadHash:env.WORKER_UPLOAD_PAYLOAD_SHA256};
+    workerUploadId:env.WORKER_UPLOAD_DEPLOYMENT_ID,workerUploadHash:env.WORKER_UPLOAD_PAYLOAD_SHA256,originalPublicAssetId:env.ORIGINAL_PUBLIC_ASSET_ID,originalPublicAssetSha256:env.ORIGINAL_PUBLIC_ASSET_SHA256,originalPublicAssetBytes:env.ORIGINAL_PUBLIC_ASSET_BYTES};
 }
 
 const direct = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (direct) {
   const args = process.argv.slice(2);
-  if (printHelpIfRequested(args, 'Validate paired isolated-staging deployment inputs. --emit-github-output reads explicit workflow environment; default is inert.')) {
+  if (printHelpIfRequested(args, 'Validate paired isolated-staging deployment and original public archive inputs. --emit-github-output reads explicit workflow environment; default is inert.')) {
     // Introspection performs no workflow environment reads or writes.
   } else if (!args.length) {
     console.log(JSON.stringify({mode: 'plan-only', network: false, executed: false}));

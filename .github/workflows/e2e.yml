@@ -6,6 +6,22 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      original_public_asset_id:
+        description: "Immutable original-public archive asset ID (complete triple required for isolated full promotion)"
+        required: false
+        default: ""
+        type: string
+      original_public_asset_sha256:
+        description: "SHA-256 of the exact original compiled public archive"
+        required: false
+        default: ""
+        type: string
+      original_public_asset_bytes:
+        description: "Exact byte size of the original compiled public archive (maximum 536870912)"
+        required: false
+        default: ""
+        type: string
 
 # Least privilege: this workflow only reads the repository.
 permissions:
@@ -150,6 +166,21 @@ jobs:
         env:
           BASE_URL: http://127.0.0.1:4173
         continue-on-error: true
+
+      # Optional transport permission probe; JSON metadata GET and HEAD only.
+      # It never fetches/parses archive bytes or authorizes promotion. Required suites remain below.
+      - name: Original public archive read-permission metadata probe
+        if: github.event_name == 'workflow_dispatch' && (inputs.original_public_asset_id != '' || inputs.original_public_asset_sha256 != '' || inputs.original_public_asset_bytes != '')
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ORIGINAL_PUBLIC_ASSET_ID: ${{ inputs.original_public_asset_id }}
+          ORIGINAL_PUBLIC_ASSET_SHA256: ${{ inputs.original_public_asset_sha256 }}
+          ORIGINAL_PUBLIC_ASSET_BYTES: ${{ inputs.original_public_asset_bytes }}
+        run: >-
+          node scripts/package-compiled-production.mjs --probe-original-public-archive
+          "--asset-id=$ORIGINAL_PUBLIC_ASSET_ID"
+          "--archive-sha256=$ORIGINAL_PUBLIC_ASSET_SHA256"
+          "--archive-bytes=$ORIGINAL_PUBLIC_ASSET_BYTES"
 
       - name: Stop local preview
         if: always()

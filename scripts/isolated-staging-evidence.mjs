@@ -18,10 +18,10 @@ if (!args.length || (args.length===1 && args[0]==='--help')) {
       const match=arg.match(/^--([a-z][a-z0-9-]*)=([^\r\n]+)$/); need(match && !flags[match[1]],'broker-argument'); flags[match[1]]=match[2];
     }
     const allowed=['source-commit','installation-deployment-id','installation-payload-sha256','request-deployment-id',
-      'request-payload-sha256','runtime-bindings','runtime-bindings-sha256','output','workflow-run-id','workflow-run-attempt','workflow-path','native-runtime','native-runtime-sha256','channel','actor-ready','isolated-staging-context','isolated-staging-context-sha256','worker-upload-deployment-id','worker-upload-payload-sha256','phase'];
+      'request-payload-sha256','runtime-bindings','runtime-bindings-sha256','output','workflow-run-id','workflow-run-attempt','workflow-path','native-runtime','native-runtime-sha256','original-public-asset-id','original-public-asset-sha256','original-public-asset-bytes','channel','actor-ready','isolated-staging-context','isolated-staging-context-sha256','worker-upload-deployment-id','worker-upload-payload-sha256','phase'];
     need(Object.keys(flags).every(k=>allowed.includes(k)),'unknown-broker-argument');
     const perMode={
-      '--restore-staged-build-view':['source-commit','isolated-staging-context','isolated-staging-context-sha256'],
+      '--restore-staged-build-view':['source-commit','isolated-staging-context','isolated-staging-context-sha256','original-public-asset-id','original-public-asset-sha256','original-public-asset-bytes'],
       '--request':['source-commit','installation-deployment-id','installation-payload-sha256',...((Object.hasOwn(flags,'worker-upload-deployment-id')||Object.hasOwn(flags,'worker-upload-payload-sha256'))?['worker-upload-deployment-id','worker-upload-payload-sha256']:[])],
       '--receive':['source-commit','installation-deployment-id','installation-payload-sha256','request-deployment-id','request-payload-sha256','output'],
       '--observe':['source-commit','installation-deployment-id','installation-payload-sha256','request-deployment-id','request-payload-sha256','runtime-bindings','runtime-bindings-sha256'],
@@ -55,8 +55,10 @@ if (!args.length || (args.length===1 && args[0]==='--help')) {
     }
     if(args[0]==='--restore-staged-build-view'){
       need(process.env.GITHUB_ACTIONS==='true'&&process.env.GITHUB_SHA===frozen.sourceCommit,'staged-build-ci-source');
-      const{getSecret}=await import('./lib/secrets.mjs');const api=githubApi(getSecret('GITHUB_TOKEN','github.api'));
-      console.log(JSON.stringify(await restoreStagedBuildView(ROOT,flags['isolated-staging-context'],flags['isolated-staging-context-sha256'],{api})));
+      const{getSecret}=await import('./lib/secrets.mjs');const archiveToken=getSecret('GITHUB_TOKEN','github.api'),api=githubApi(archiveToken);
+      const archiveTransport={assetId:flags['original-public-asset-id'],sha256:flags['original-public-asset-sha256'],bytes:flags['original-public-asset-bytes']};
+      need(/^[1-9]\d{0,15}$/.test(archiveTransport.assetId)&&Number.isSafeInteger(Number(archiveTransport.assetId))&&/^[1-9]\d*$/.test(archiveTransport.bytes)&&Number(archiveTransport.bytes)<=536870912,'original-public-transport-reference');
+      console.log(JSON.stringify(await restoreStagedBuildView(ROOT,flags['isolated-staging-context'],flags['isolated-staging-context-sha256'],{api,archiveToken,archiveTransport})));
     }else if(['--publish-worker-upload','--check-worker-upload','--request-production-postflight','--receive-production-postflight','--publish-finalization'].includes(args[0])) {
       need(process.env.GITHUB_ACTIONS==='true'&&process.env.GITHUB_SHA===frozen.sourceCommit&&Number.isSafeInteger(Number(process.env.GITHUB_RUN_ID))&&Number(process.env.GITHUB_RUN_ID)>0&&Number.isSafeInteger(Number(process.env.GITHUB_RUN_ATTEMPT))&&Number(process.env.GITHUB_RUN_ATTEMPT)>0,'ci-execution-context');
       const{getSecret}=await import('./lib/secrets.mjs');const api=githubApi(getSecret('GITHUB_TOKEN','github.api'));

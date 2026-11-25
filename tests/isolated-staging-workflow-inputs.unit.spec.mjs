@@ -9,7 +9,8 @@ import {currentCeremonyHashes} from '../scripts/run-release-ceremony.mjs';
 import {CONTRACT_FILES} from '../scripts/lib/isolated-staging-evidence.mjs';
 import {promotionMode, nativeHoldEligible} from '../scripts/check-production-promotion-gate.mjs';
 
-const good = {event: 'workflow_dispatch', confirmProduction: 'true', installationId: '123456789', installationHash: 'a'.repeat(64)};
+const originalPublic={originalPublicAssetId:'793518817',originalPublicAssetSha256:'c'.repeat(64),originalPublicAssetBytes:'252'};
+const good = {...originalPublic,event: 'workflow_dispatch', confirmProduction: 'true', installationId: '123456789', installationHash: 'a'.repeat(64)};
 test('legacy dispatch, push and content paths without isolated inputs retain their existing gate', () => {
   for (const event of ['push', 'schedule', 'workflow_dispatch']) {
     for (const confirmProduction of ['', 'false', 'true']) assert.deepEqual(validate({event, confirmProduction, confirmContent: 'true'}), {configured: false});
@@ -48,7 +49,7 @@ test('Worker-upload pair is optional for legacy/Worker-first and strict when pre
 });
 test('actual CLI refuses invalid references without echoing payload and remains inert by default', () => {
   const args = ['scripts/validate-isolated-staging-workflow-inputs.mjs'];
-  const env = {...process.env, GITHUB_EVENT_NAME: 'workflow_dispatch', PRODUCTION_CONFIRM: 'true', INSTALLATION_DEPLOYMENT_ID: '123;INVALID_MARKER', INSTALLATION_PAYLOAD_SHA256: 'a'.repeat(64)};
+  const env = {...process.env, GITHUB_EVENT_NAME: 'workflow_dispatch', PRODUCTION_CONFIRM: 'true', INSTALLATION_DEPLOYMENT_ID: '123;INVALID_MARKER', INSTALLATION_PAYLOAD_SHA256: 'a'.repeat(64),ORIGINAL_PUBLIC_ASSET_ID:originalPublic.originalPublicAssetId,ORIGINAL_PUBLIC_ASSET_SHA256:originalPublic.originalPublicAssetSha256,ORIGINAL_PUBLIC_ASSET_BYTES:originalPublic.originalPublicAssetBytes};
   const bad = spawnSync(process.execPath, [...args, '--emit-github-output'], {encoding: 'utf8', env});
   assert.equal(bad.status, 2); assert.equal(bad.stdout, ''); assert.ok(!bad.stderr.includes('INVALID_MARKER'));
   const inert = spawnSync(process.execPath, args, {encoding: 'utf8', env});
@@ -177,4 +178,30 @@ test('actual Worker rollout rechecks authenticated original Worker before upload
   assert(verification.indexOf('assertCurrentWorkerRollback(root')<verification.indexOf('scripts/smoke-live.mjs'));
   assert(!workflow.includes('--publish-production-rollback'));
   assert(!workflow.includes('WORKER_UPLOAD_DEPLOYMENT_ID:'));
+});
+
+
+test('original public archive requires complete bounded exact triple for configured isolated promotion',()=>{
+ assert.deepEqual(validate(good),{configured:true});
+ for(const key of Object.keys(originalPublic))for(const value of['',undefined,null,true,123])assert.throws(()=>validate({...good,[key]:value}));
+ for(const originalPublicAssetId of['0','01','9007199254740992','1;bad','1\n2',' 1'])assert.throws(()=>validate({...good,originalPublicAssetId}));
+ for(const originalPublicAssetSha256 of['C'.repeat(64),'c'.repeat(63),'c'.repeat(64)+'\n'])assert.throws(()=>validate({...good,originalPublicAssetSha256}));
+ for(const originalPublicAssetBytes of['0','01','536870913','9007199254740992','1e2','252\n','252;bad'])assert.throws(()=>validate({...good,originalPublicAssetBytes}));
+ assert.deepEqual(validate({...good,originalPublicAssetBytes:'536870912'}),{configured:true});
+ for(const key of Object.keys(originalPublic))assert.throws(()=>validate({event:'workflow_dispatch',confirmProduction:'true',[key]:originalPublic[key]}));
+ assert.deepEqual(validate({event:'workflow_dispatch',confirmProduction:'false',originalPublicAssetId:'',originalPublicAssetSha256:'',originalPublicAssetBytes:''}),{configured:false});
+});
+
+test('Pages forwards exact original archive inputs and E2E opt-in cannot replace its full required suites',()=>{
+ const pages=fs.readFileSync(new URL('../.github/workflows/pages-deploy.yml',import.meta.url),'utf8');
+ for(const name of['Validate isolated staging inputs','Restore exact signed staged full-build artifact view']){
+  const start=pages.indexOf('- name: '+name),end=pages.indexOf('\n      - name:',start+1),block=pages.slice(start,end);
+  for(const env of['ORIGINAL_PUBLIC_ASSET_ID','ORIGINAL_PUBLIC_ASSET_SHA256','ORIGINAL_PUBLIC_ASSET_BYTES'])assert(block.includes(env+': ${{ inputs.'));
+ }
+ for(const flag of['id','sha256','bytes'])assert(pages.includes('"--original-public-asset-'+flag+'=$ORIGINAL_PUBLIC_ASSET_'));
+ const e2e=fs.readFileSync(new URL('../.github/workflows/e2e.yml',import.meta.url),'utf8'),start=e2e.indexOf('- name: Original public archive read-permission metadata probe'),end=e2e.indexOf('\n      - name: Stop local preview',start),block=e2e.slice(start,end);
+ assert(start>e2e.indexOf('- name: Install dependencies')&&end>start);assert(block.includes("github.event_name == 'workflow_dispatch'"));
+ for(const key of['id','sha256','bytes'])assert(block.includes("inputs.original_public_asset_"+key+" != ''"));
+ assert(block.includes('--probe-original-public-archive'));assert(!block.includes('--restore-staged-build-view'));assert(!block.includes('curl'));assert(!block.includes('continue-on-error'));assert(e2e.includes('contents: read'));
+ for(const name of['Build candidate artifact','Public intelligence sync check','Mobile rendered-runtime release contract','Run compliance tests','Browser test collection'])assert(e2e.indexOf('- name: '+name)<start);
 });

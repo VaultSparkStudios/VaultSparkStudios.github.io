@@ -3,6 +3,21 @@ name: Deploy Cloudflare Worker
 on:
   workflow_dispatch:
     inputs:
+      original_public_asset_id:
+        description: "Exact original PUBLIC archive asset ID; required with isolated full promotion"
+        required: false
+        default: ""
+        type: string
+      original_public_asset_sha256:
+        description: "Reviewed SHA-256 of the original PUBLIC archive"
+        required: false
+        default: ""
+        type: string
+      original_public_asset_bytes:
+        description: "Exact bounded original PUBLIC archive byte length"
+        required: false
+        default: ""
+        type: string
       confirm_production:
         description: "Promote the current ready Worker candidate to production"
         required: true
@@ -30,6 +45,11 @@ on:
 concurrency:
   group: worker-deploy-production
   cancel-in-progress: false
+
+env:
+  ORIGINAL_PUBLIC_ASSET_ID: ${{ inputs.original_public_asset_id }}
+  ORIGINAL_PUBLIC_ASSET_SHA256: ${{ inputs.original_public_asset_sha256 }}
+  ORIGINAL_PUBLIC_ASSET_BYTES: ${{ inputs.original_public_asset_bytes }}
 
 jobs:
   deploy-worker:
@@ -118,6 +138,9 @@ jobs:
           "--source-commit=$GITHUB_SHA"
           "--isolated-staging-context=$ISOLATED_CONTEXT"
           "--isolated-staging-context-sha256=$ISOLATED_CONTEXT_SHA256"
+          "--original-public-asset-id=$ORIGINAL_PUBLIC_ASSET_ID"
+          "--original-public-asset-sha256=$ORIGINAL_PUBLIC_ASSET_SHA256"
+          "--original-public-asset-bytes=$ORIGINAL_PUBLIC_ASSET_BYTES"
 
       - name: Authorize exact observed production candidate
         id: promotion-gate

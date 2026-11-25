@@ -5,6 +5,7 @@ import { spawnSync } from './safe-spawn.mjs';
 import { randomBytes } from 'node:crypto';
 import {buildFromRepo,CORE_PATHS,OBSERVED_PATHS,shellPaths} from '../build-candidate-artifact-manifest.mjs';
 import {productionInputRows,productionInputFingerprint} from './production-input-inventory.mjs';
+import {fetchOriginalArchiveAsset,unpackOriginalPublicArchive,admitOriginalPublicArchive,installOriginalPublicFiles} from './staging-archive.mjs';
 import {buildShaPayload} from '../generate-build-sha.mjs';
 import {pathToFileURL} from 'node:url';
 import { receiptIdFor } from './build-check-evidence.mjs';
@@ -882,24 +883,28 @@ export function deriveStagedBuildView(root,sourceCommit,receipt,originalStamp){
 /** Explicit run-bound local artifact restoration, never source or receipt restamping. */
 export async function restoreStagedBuildView(root,file,expectedHash,options={}){
   need(process.env.GITHUB_ACTIONS==='true'&&process.env.GITHUB_EVENT_NAME==='workflow_dispatch'&&process.env.PRODUCTION_CONFIRM==='true','staged-build-ci-only');
+  need(options.archiveTransport&&typeof options.archiveToken==='string'&&options.archiveToken.length>0,'staged-build-original-archive-required');
   const {context,frozen}=await loadStageRuntimeAdmission(root,file,expectedHash,options);
   need(process.env.GITHUB_SHA===frozen.sourceCommit&&Number(process.env.GITHUB_RUN_ID)===context.transport.runId&&Number(process.env.GITHUB_RUN_ATTEMPT)===context.transport.runAttempt,'staged-build-ci-run');
-  const response=await fetch(STAGING_ORIGIN+'/api/build-sha.json',{redirect:'error',headers:{'cache-control':'no-cache'},signal:AbortSignal.timeout(15000)});
-  need(response.ok,'staged-build-stamp-http');const original=await readBoundedResponse(response,4096);
-  const derived=deriveStagedBuildView(root,frozen.sourceCommit,context.receipt,original);
-  const marker='api/candidate-artifact-manifest.json',stamp='api/build-sha.json',before={marker:readOwned(root,marker),stamp:readOwned(root,stamp)};
-  const proofFile=path.join(root,'.cache/isolated-staging/run-'+context.transport.runId+'-'+context.transport.runAttempt+'/STAGED_BUILD_VIEW.json');
-  fs.mkdirSync(path.dirname(proofFile),{recursive:true});need(!fs.existsSync(proofFile),'staged-build-view-already-recorded');
-  // Recheck real source and preimages immediately before the two bounded generated-file writes.
+  const response=await fetchOriginalArchiveAsset(options.archiveTransport,{token:options.archiveToken,sourceCommit:frozen.sourceCommit,fetchImpl:options.fetchImpl||fetch});
+  const members=unpackOriginalPublicArchive(response.raw,options.archiveTransport.sha256,Number(options.archiveTransport.bytes));
+  const readGit=file=>{const r=spawnSync('git',['cat-file','blob',frozen.sourceCommit+':'+file],{cwd:root,windowsHide:true,encoding:null,maxBuffer:16777216});need(r.status===0,'original-archive-raw-Git');return r.stdout;};
+  const rawSourceRows=verifierSourceClosure(readGit),policy=JSON.parse(readOwned(root,'config/served-surface.json'));
+  const admitted=admitOriginalPublicArchive(members,{frozen,receipt:context.receipt,policy,currentInputs:productionInputRows(root),readLocal:file=>readOwned(root,file,67108864),rawSourceRows});
+  const relative='.cache/isolated-staging/run-'+context.transport.runId+'-'+context.transport.runAttempt,proofFile=path.join(root,relative+'/STAGED_BUILD_VIEW.json');
+  need(!fs.existsSync(proofFile),'staged-build-view-already-recorded');
+  // Every archive member and the entire original source projection have passed before any public overwrite.
   verifyFrozenSource(root,frozen.sourceCommit,{candidateArtifact:'compiled-build'});
-  need(sha256(readOwned(root,marker))===sha256(before.marker)&&sha256(readOwned(root,stamp))===sha256(before.stamp),'staged-build-local-drift');
-  const rechecked=deriveStagedBuildView(root,frozen.sourceCommit,context.receipt,original);need(rechecked.manifest.equals(derived.manifest),'staged-build-input-drift');
-  try{fs.writeFileSync(path.join(root,stamp),derived.stamp);fs.writeFileSync(path.join(root,marker),derived.manifest);
+  const installed=installOriginalPublicFiles(root,admitted,{proofDirectory:relative+'/original-public',preApplyCheck:()=>{
+    need(JSON.stringify(productionInputRows(root))===JSON.stringify(admitted.beforeInputs),'staged-build-whole-input-preapply-CAS');
+    need(canonical(verifyFrozenSource(root,frozen.sourceCommit,{candidateArtifact:'compiled-build'}))===canonical(frozen),'staged-build-preapply-source');
+  },finalCheck:()=>{
     const after=verifyFrozenSource(root,frozen.sourceCommit,{candidateArtifact:'compiled-build'});need(canonical(after)===canonical(frozen),'staged-build-source-drift');
-    need(productionInputFingerprint(productionInputRows(root))===context.receipt.productionSource.fingerprint,'staged-build-final-input-drift');
-    fs.writeFileSync(proofFile,canonical({schemaVersion:1,sourceCommit:frozen.sourceCommit,sourceTreeSha:frozen.sourceTreeSha,verifierContractSha256:frozen.verifierContractSha256,installationHash:context.transport.installationHash,observationHash:context.transport.observationHash,originalStampSha256:sha256(original),manifestSha256:sha256(derived.manifest),before:{markerBase64:before.marker.toString('base64'),stampBase64:before.stamp.toString('base64')},originalCaptureMetadataChanged:false,localArtifactRestored:true})+'\n',{flag:'wx',mode:0o600});
-  }catch(error){for(const [name,old,newBytes]of[[marker,before.marker,derived.manifest],[stamp,before.stamp,derived.stamp]])if(sha256(readOwned(root,name))===sha256(newBytes))fs.writeFileSync(path.join(root,name),old);throw error;}
-  return {file:path.relative(root,proofFile).split(path.sep).join('/'),sha256:sha256(fs.readFileSync(proofFile)),sourceCommit:frozen.sourceCommit,manifestSha256:sha256(derived.manifest)};
+    need(JSON.stringify(productionInputRows(root))===JSON.stringify(admitted.snapshot.rows)&&productionInputFingerprint(productionInputRows(root))===context.receipt.productionSource.fingerprint,'staged-build-final-input-drift');
+    assertProductionManifestBytes(readOwned(root,'api/candidate-artifact-manifest.json'),context.receipt.productionSource);
+  }});
+  const proof={schemaVersion:1,sourceCommit:frozen.sourceCommit,sourceTreeSha:frozen.sourceTreeSha,verifierContractSha256:frozen.verifierContractSha256,installationHash:context.transport.installationHash,observationHash:context.transport.observationHash,asset:response.asset,sourceSnapshotSha256:admitted.sourceSnapshotSha256,manifestSha256:context.receipt.productionSource.rawManifestSha256,publicInventorySha256:installed.publicInventorySha256,byteInstallProof:installed.proofFile,originalCaptureMetadataChanged:false,localArtifactRestored:true,archiveCodeExecuted:false};
+  fs.writeFileSync(proofFile,canonical(proof)+'\n',{flag:'wx',mode:0o600});return {file:path.relative(root,proofFile).split(path.sep).join('/'),sha256:sha256(fs.readFileSync(proofFile)),sourceCommit:frozen.sourceCommit,manifestSha256:context.receipt.productionSource.rawManifestSha256};
 }
 
 export async function readBoundedResponse(response, maximum) {
