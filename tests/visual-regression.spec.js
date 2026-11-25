@@ -14,6 +14,7 @@
 // by separate computed-styles + accessibility specs.
 
 import { test, expect, devices } from '@playwright/test';
+import { expectReviewedMembershipRaster } from './helpers/membership-raster.mjs';
 import { createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
 import os from 'node:os';
@@ -573,11 +574,9 @@ for (const vp of VIEWPORTS) {
           }), true, () => captureFailureProbe(page, testInfo, identity, snapshotName, startedAt));
           }
         } else {
-        await expect(page).toHaveScreenshot(`${surface.name}-${vp.name}-${theme}.png`, {
-          fullPage: false,
-          maxDiffPixelRatio: PIXEL_RATIO_TOLERANCE,
-          animations: 'disabled',
-        });
+          await expectReviewedMembershipRaster({ identity, testInfo,
+            match: (name, options) => expect(page).toHaveScreenshot(name, options),
+          });
         }
         } finally {
           if (restoreNative) restoreNative();

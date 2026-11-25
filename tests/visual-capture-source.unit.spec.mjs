@@ -427,7 +427,7 @@ test('actual pure failure target selects exactly one of the existing70 matrix ca
   }
   assert.match(source,/const probeForThisCase = failureSceneDiagnostics && failureProbeTarget\(surface\.name, vp\.name, theme\);/);
   assert.match(source,/const startedAt = probeForThisCase \? testInfo\._startWallTime : null;/);
-  assert.match(source,/if \(probeForThisCase\) \{[\s\S]*?await nativeWithFailureProbe\([\s\S]*?\} else \{\s+await expect\(page\)\.toHaveScreenshot/);
+  assert.match(source,/if \(probeForThisCase\) \{[\s\S]*?await nativeWithFailureProbe\([\s\S]*?\} else \{\s+await expectReviewedMembershipRaster\(\{ identity, testInfo,\s+match: \(name, options\) => expect\(page\)\.toHaveScreenshot\(name, options\),\s+\}\);/);
 });
 
 
@@ -659,4 +659,85 @@ test('actual readiness still resets its stability window for visible geometry ch
   assert.deepEqual(witness.samples.map(sample => JSON.parse(sample.fingerprint)[3][0][3]), [10, 20, 20]);
   assert.equal(witness.reads.skipped, 0);
   assert.equal(witness.reads.visible, 3);
+});
+
+
+// Actual narrow matcher helper; mocked native matcher only, no browser/acceptance.
+async function knownMembershipWitness(overrides = {}) {
+  const { expectReviewedMembershipRaster, MEMBERSHIP_RASTER } = await import('./helpers/membership-raster.mjs');
+  const temporaryParent = fs.realpathSync(os.tmpdir());
+  const directory = fs.mkdtempSync(path.join(temporaryParent, 'vs-membership-raster-'));
+  const root = path.resolve('tests/__snapshots__/visual-regression.spec.js-snapshots');
+  const files = new Map([[MEMBERSHIP_RASTER.primary, 'membership-iphone-se-light-chromium-linux.png'],
+    [MEMBERSHIP_RASTER.alternate, 'membership-iphone-se-light-reviewed-raster-chromium-linux.png']]);
+  for (const [name, base] of files) fs.copyFileSync(path.join(root, base), path.join(directory, name));
+  const calls = [], attachments = [];
+  const identity = { surface: 'membership', viewport: 'iphone-se', theme: 'light', ...overrides.identity };
+  const testInfo = { project: { use: { browserName: overrides.browserName || 'chromium' } },
+    config: { updateSnapshots: overrides.updateSnapshots || 'none' },
+    snapshotPath: (name, options) => { assert.equal(options.kind, 'screenshot'); return path.join(directory, name); },
+    attach: async (name, data) => attachments.push({ name, data: JSON.parse(data.body.toString()) }) };
+  if (overrides.tamper) fs.appendFileSync(path.join(directory, MEMBERSHIP_RASTER[overrides.tamper]), 'changed');
+  const mismatch = Object.assign(Error('native mismatch'), { matcherResult: { name: 'toHaveScreenshot' } });
+  try {
+    const value = await expectReviewedMembershipRaster({ identity, testInfo, platform: overrides.platform || 'linux',
+      match: async (name, options) => { calls.push({ name, options });
+        if (overrides.mutateDuringMatch) fs.appendFileSync(path.join(directory, MEMBERSHIP_RASTER.primary), 'changed');
+        if (calls.length === 1 && overrides.primaryFails) throw overrides.nonMatcher ? Error('page closed') : mismatch;
+        if (calls.length === 2 && overrides.alternateFails) throw Error('alternate native mismatch');
+      } });
+    return { value, calls, attachments };
+  } catch (error) { return { error, calls, attachments }; }
+  finally {
+    assert.equal(path.dirname(path.resolve(directory)), temporaryParent);
+    assert.equal(fs.realpathSync(directory), directory);
+    assert.equal(fs.lstatSync(directory).isSymbolicLink(), false);
+    assert.match(path.basename(directory), /^vs-membership-raster-[A-Za-z0-9]+$/);
+    fs.rmSync(directory, { recursive: true, force: true });
+  }
+}
+
+test('reviewed Membership primary retains native1.5% and does not invoke alternate when it passes', async () => {
+  const r = await knownMembershipWitness(); assert.equal(r.error, undefined); assert.equal(r.value.matched, 'primary');
+  assert.deepEqual(r.calls, [{ name: 'membership-iphone-se-light.png', options: { fullPage: false, maxDiffPixelRatio: 0.015, animations: 'disabled' } }]);
+  assert.equal(r.attachments.length, 0);
+});
+test('reviewed Membership alternate uses actual native matcher with all three zero tolerances', async () => {
+  const r = await knownMembershipWitness({ primaryFails: true }); assert.equal(r.error, undefined);
+  assert.equal(r.value.matched, 'reviewed-alternate'); assert.equal(r.calls.length, 2);
+  assert.deepEqual(r.calls[1], { name: 'membership-iphone-se-light-reviewed-raster.png', options: { fullPage: false, maxDiffPixels: 0, maxDiffPixelRatio: 0, threshold: 0, animations: 'disabled' } });
+  assert.equal(r.attachments[0].data.alternateNativeExactMatch, true);
+});
+test('reviewed Membership fallback refuses drift in either fixture before any native call', async () => {
+  for (const tamper of ['primary', 'alternate']) { const r = await knownMembershipWitness({ tamper, primaryFails: true }); assert.match(r.error.message, /fixture drift/); assert.equal(r.calls.length, 0); }
+});
+test('reviewed Membership fallback refuses snapshot update modes and post-match fixture drift', async () => {
+  for (const updateSnapshots of ['all', 'changed', 'missing', 'unknown']) { const r = await knownMembershipWitness({ updateSnapshots }); assert.match(r.error.message, /updateSnapshots none or default/); assert.equal(r.calls.length, 0); }
+  const drift = await knownMembershipWitness({ mutateDuringMatch: true }); assert.match(drift.error.message, /fixture drift/); assert.equal(drift.calls.length, 1);
+});
+test('reviewed Membership fallback cannot admit unrelated page/runtime/state and retains ordinary matcher', async () => {
+  for (const options of [{ identity: { surface: 'games' } }, { identity: { viewport: 'pixel-5' } }, { identity: { theme: 'dark' } }, { browserName: 'firefox' }, { browserName: 'webkit' }, { platform: 'win32' }]) {
+    const r = await knownMembershipWitness({ ...options, primaryFails: true }); assert.ok(r.error); assert.equal(r.calls.length, 1); assert.equal(r.attachments.length, 0);
+  }
+});
+test('reviewed Membership non-matcher failure and alternate pixel mismatch stay failing', async () => {
+  const closed = await knownMembershipWitness({ primaryFails: true, nonMatcher: true }); assert.equal(closed.calls.length, 1); assert.match(closed.error.message, /page closed/);
+  const bad = await knownMembershipWitness({ primaryFails: true, alternateFails: true }); assert.equal(bad.calls.length, 2); assert.match(bad.error.message, /alternate native mismatch/); assert.equal(bad.attachments.length, 0);
+});
+
+test('reviewed Membership accepts actual Playwright default mode with pinned primary', async () => {
+  const r = await knownMembershipWitness({ updateSnapshots: 'default' });
+  assert.equal(r.error, undefined); assert.equal(r.value.matched, 'primary');
+  assert.equal(r.calls.length, 1); assert.equal(r.calls[0].options.maxDiffPixelRatio, 0.015);
+  assert.equal(r.attachments.length, 0);
+});
+test('reviewed Membership default mode still requires exact alternate native pixels and pinned fixtures', async () => {
+  const r = await knownMembershipWitness({ updateSnapshots: 'default', primaryFails: true });
+  assert.equal(r.error, undefined); assert.equal(r.value.matched, 'reviewed-alternate');
+  assert.deepEqual(r.calls[1].options, { fullPage: false, maxDiffPixels: 0, maxDiffPixelRatio: 0, threshold: 0, animations: 'disabled' });
+  assert.equal(r.attachments[0].data.alternateNativeExactMatch, true);
+  for (const tamper of ['primary', 'alternate']) {
+    const drift = await knownMembershipWitness({ updateSnapshots: 'default', tamper, primaryFails: true });
+    assert.match(drift.error.message, /fixture drift/); assert.equal(drift.calls.length, 0);
+  }
 });
