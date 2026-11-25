@@ -28,7 +28,7 @@ const MANIFEST_PATH = path.join(ROOT, 'api', 'candidate-artifact-manifest.json')
 
 const REQUIRED_WORKFLOW_STEPS = {
   '.github/workflows/pages-deploy.yml': [
-    'Build clean dist (git-tracked files only)',
+    'Build clean dist (admitted compiled artifact or legacy source)',
     'Stamp honest deployed SHA into build-sha.json',
     'Deploy to Cloudflare Pages',
     'Purge edge HTML cache',
