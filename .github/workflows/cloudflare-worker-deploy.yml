@@ -34,7 +34,7 @@ concurrency:
 jobs:
   deploy-worker:
     name: Deploy Security Headers Worker
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       deployments: write
@@ -60,6 +60,14 @@ jobs:
           PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
           INSTALLATION_DEPLOYMENT_ID: ${{ inputs.installation_deployment_id }}
           INSTALLATION_PAYLOAD_SHA256: ${{ inputs.installation_payload_sha256 }}
+
+      - name: Install isolated production build dependencies
+        if: github.event_name == 'workflow_dispatch' && inputs.confirm_production == true && steps.isolated-inputs.outputs.configured == 'true'
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Compile isolated production source before readiness
+        if: github.event_name == 'workflow_dispatch' && inputs.confirm_production == true && steps.isolated-inputs.outputs.configured == 'true'
+        run: npm run build
 
       - name: Evaluate production promotion preflight
         id: promotion-preflight
@@ -95,6 +103,19 @@ jobs:
           PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
           INSTALLATION_DEPLOYMENT_ID: ${{ inputs.installation_deployment_id }}
           INSTALLATION_PAYLOAD_SHA256: ${{ inputs.installation_payload_sha256 }}
+
+      - name: Restore exact signed staged full-build artifact view
+        if: steps.isolated-staging.outputs.context_file != '' && inputs.confirm_production == true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
+          ISOLATED_CONTEXT: ${{ steps.isolated-staging.outputs.context_file }}
+          ISOLATED_CONTEXT_SHA256: ${{ steps.isolated-staging.outputs.context_sha256 }}
+        run: >-
+          node scripts/isolated-staging-evidence.mjs --restore-staged-build-view
+          "--source-commit=$GITHUB_SHA"
+          "--isolated-staging-context=$ISOLATED_CONTEXT"
+          "--isolated-staging-context-sha256=$ISOLATED_CONTEXT_SHA256"
 
       - name: Authorize exact observed production candidate
         id: promotion-gate

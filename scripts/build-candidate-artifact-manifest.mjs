@@ -129,8 +129,8 @@ export function merkleRoot(leaves) {
   return level[0];
 }
 
-function shellPaths() {
-  const manifest = JSON.parse(fs.readFileSync(SHELL_MANIFEST, 'utf8'));
+export function shellPaths(root = ROOT) {
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'assets', 'shell-manifest.json'), 'utf8'));
   const values = [];
   const walk = (value) => {
     if (typeof value === 'string' && /^assets\/.+\.shell-[a-f0-9]{10}\.(?:css|js)$/.test(value)) values.push(value);
@@ -209,43 +209,48 @@ export function buildManifest(files, candidateSha = null, generatedAt = null, ob
  * checkout, where the older candidate commit may not be present locally; fall
  * back to the commit timestamp only for legacy receipts without generatedAt.
  */
-function commitTime(sha) {
+function commitTime(sha, root = ROOT) {
   if (!/^[0-9a-f]{40}$/i.test(sha || '')) return null;
   const result = spawnSync('git', ['show', '-s', '--format=%cI', sha], {
-    cwd: ROOT, encoding: 'utf8', windowsHide: true,
+    cwd: root, encoding: 'utf8', windowsHide: true,
   });
   if (result.status !== 0) return null;
   const stamp = (result.stdout || '').trim();
   return /^\d{4}-\d{2}-\d{2}T/.test(stamp) ? stamp : null;
 }
 
-function readBuildIdentity() {
+function readBuildIdentity(root = ROOT, buildStamp = null) {
   try {
-    const payload = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'build-sha.json'), 'utf8'));
+    const payload = JSON.parse(buildStamp ?? fs.readFileSync(path.join(root, 'api', 'build-sha.json'), 'utf8'));
     const sha = /^[0-9a-f]{40}$/i.test(payload.sha) ? payload.sha : null;
     // Never payload.builtAt — that is the wall-clock field this fix exists to remove.
-    return { sha, generatedAt: payload.generatedAt || commitTime(sha) || null };
+    return { sha, generatedAt: payload.generatedAt || commitTime(sha, root) || null };
   } catch {
     return { sha: null, generatedAt: null };
   }
 }
 
-function readAll(paths) {
+function readAll(paths, root = ROOT) {
   const files = new Map();
   for (const relative of paths) {
-    const absolute = path.resolve(ROOT, relative);
-    if (!absolute.startsWith(`${ROOT}${path.sep}`) || !fs.existsSync(absolute)) throw new Error(`critical artifact missing or outside root: ${relative}`);
+    const absolute = path.resolve(root, relative);
+    if (!absolute.startsWith(`${root}${path.sep}`) || !fs.existsSync(absolute)) throw new Error(`critical artifact missing or outside root: ${relative}`);
     files.set(relative, fs.readFileSync(absolute));
   }
   return files;
 }
 
-function buildFromRepo() {
-  const sourcePaths = [...new Set([...CORE_PATHS, ...shellPaths()])].sort();
+export function buildFromRepo(root = ROOT, buildStamp = null) {
+  const sourcePaths = [...new Set([...CORE_PATHS, ...shellPaths(root)])].sort();
   const overlap = sourcePaths.filter((relative) => OBSERVED_PATHS.includes(relative));
   if (overlap.length) throw new Error(`path is both source and observed: ${overlap.join(', ')}`);
-  const build = readBuildIdentity();
-  return buildManifest(readAll(sourcePaths), build.sha, build.generatedAt, readAll([...OBSERVED_PATHS]));
+  const build = readBuildIdentity(root, buildStamp);
+  const files = readAll(sourcePaths, root);
+  if (buildStamp !== null) {
+    if (!Buffer.isBuffer(buildStamp)) throw new Error('build stamp bytes required');
+    files.set('api/build-sha.json', buildStamp);
+  }
+  return buildManifest(files, build.sha, build.generatedAt, readAll([...OBSERVED_PATHS], root));
 }
 
 function selfTest() {

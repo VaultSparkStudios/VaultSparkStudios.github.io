@@ -395,7 +395,7 @@ export function deriveProductionJourney(obs){
 async function admitProductionBrowserRuntime(channel){
   if(path.resolve(process.cwd()).toLowerCase()!==ROOT.toLowerCase())throw Error('production owning cwd required');
   const policyFile='config/isolated-staging-admission.json',policyRaw=readOwned(ROOT,policyFile),policy=JSON.parse(policyRaw),descriptor=validateProductionProducerDescriptor(ROOT,policy.productionPostflightProducer);
-  const bindingFile='.cache/S416/native-selected-journey-v4/SOURCE_BINDINGS.json',helperFile='.cache/S416/native-selected-journey-v4/runtime-provenance.mjs';
+  const bindingFile='.cache/S418/production-runtime-only-v1/PRODUCTION_RUNTIME_BINDING.json',helperFile='.cache/S416/native-selected-journey-v4/runtime-provenance.mjs';
   const pinned=file=>{const row=descriptor.dependencyRows.find(r=>r.file===file);if(!row)throw Error('production runtime source pin missing');const raw=readOwned(ROOT,file);if(postflightHash(raw)!==row.sha256)throw Error('production runtime source pin changed');return raw;};
   const bindingRaw=pinned(bindingFile),helperRaw=pinned(helperFile),binding=JSON.parse(bindingRaw),helper=await import(pathToFileURL(path.join(ROOT,helperFile)).href),selected=channel??'chrome';
   const browserPin=helper.assertProtectedBrowserRuntime(ROOT,binding,selected),playwright=await import(pathToFileURL(path.join(ROOT,'node_modules/playwright/index.mjs')).href),owned=createRequire(import.meta.url)(path.join(ROOT,'node_modules/playwright/index.js'));
@@ -408,7 +408,7 @@ async function admitProductionBrowserRuntime(channel){
 export async function runProductionPostflight(options){
   if(!options||Object.keys(options).some(k=>!['context','channel','waitMs'].includes(k)))throw Error('production postflight factory arguments');
   const {context,channel=null,waitMs=SIGNIN_TIMEOUT_MS}=options;
-  assertProductionPostflightContext(context);const authorization=productionPostflightAuthorization(context),frozen=verifyFrozenSource(ROOT,authorization.sourceCommit);
+  assertProductionPostflightContext(context);const authorization=productionPostflightAuthorization(context),frozen=verifyFrozenSource(ROOT,authorization.sourceCommit,{candidateArtifact:'compiled-build'});
   if(process.env.NODE_OPTIONS||process.env.NODE_PATH||process.execArgv.length||!['chrome','msedge','chromium',null].includes(channel)||!Number.isFinite(waitMs)||waitMs<=0||waitMs>SIGNIN_TIMEOUT_MS)throw Error('production postflight runtime override');
   if(context.request.phase!=='production-postflight')throw Error('production postflight request phase required');
   const runtime=await admitProductionBrowserRuntime(channel);

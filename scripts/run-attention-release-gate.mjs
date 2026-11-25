@@ -2,12 +2,15 @@
 /** Fail-closed new/returning visitor attention suite for release candidates. */
 import { spawnSync } from './lib/safe-spawn.mjs';
 import { compactBrowserFailures, summarizeBrowserFailures, runBrowserFailureEvidenceSelfTest } from './lib/browser-failure-evidence.mjs';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import * as isolated from './lib/isolated-staging-evidence.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const RECEIPT_PATH = join(ROOT, 'api', 'staging-attention-browser.json');
+const isolatedArgs=isolated.runtimeContextArgs(process.argv.slice(2));
+const isolatedContext=isolatedArgs ? await isolated.loadRuntimeContext(ROOT,isolatedArgs.file,isolatedArgs.hash) : null;
+const RECEIPT_PATH = isolatedContext ? isolated.runtimeArtifactPath(ROOT,isolatedContext,'staging-attention-browser') : join(ROOT, 'api', 'staging-attention-browser.json');
 const SPEC_PATH = 'tests/attention-surfaces.spec.js';
 const CANONICAL_STAGING = 'https://website.staging.vaultsparkstudios.com';
 const EXPECTED_TESTS = 15;
@@ -128,6 +131,7 @@ const receipt = {
   schemaVersion: 1, generatedAt: new Date().toISOString(), generatedBy: 'scripts/run-attention-release-gate.mjs',
   publicSafe: true, origin: CANONICAL_STAGING, suite: SPEC_PATH, ...outcome,
 };
+if(isolatedContext){isolated.assertAdmittedContext(isolatedContext);mkdirSync(dirname(RECEIPT_PATH),{recursive:true});}
 writeFileSync(RECEIPT_PATH, `${JSON.stringify(receipt, null, 2)}\n`);
 console.log(`attention browser: ${receipt.state} · ${receipt.passed}/${receipt.expectedTests} passed · ${receipt.skipped} skipped`);
 for (const reason of receipt.reasons) console.log(`  - ${reason}`);

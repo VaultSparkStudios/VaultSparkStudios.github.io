@@ -144,7 +144,7 @@ export function validateProductionMetadataFinalization(v,request,nativeObservati
 }
 async function finalizationInputs(root,context){
  const e=await import('./isolated-staging-evidence.mjs');e.assertProductionPostflightCompletion(context);need(typeof e.productionPostflightOutputs==='function','native-output-consumer-unavailable');
- const authorization=e.productionPostflightAuthorization(context),frozen=e.verifyFrozenSource(root,authorization.sourceCommit),expected=validateProductionDeployment(context.request.productionDeployment,authorization.sourceCommit);
+ const authorization=e.productionPostflightAuthorization(context),frozen=e.verifyFrozenSource(root,authorization.sourceCommit,{candidateArtifact:'compiled-build'}),expected=validateProductionDeployment(context.request.productionDeployment,authorization.sourceCommit);
  need(process.env.GITHUB_ACTIONS==='true'&&process.env.GITHUB_SHA===authorization.sourceCommit&&Number(process.env.GITHUB_RUN_ID)===context.request.workflowRunId&&Number(process.env.GITHUB_RUN_ATTEMPT)===context.request.workflowRunAttempt,'finalization-job-owner');
  const output=postflightOutputRoot(root,{sourceCommit:authorization.sourceCommit,runId:context.request.workflowRunId,runAttempt:context.request.workflowRunAttempt}),before=JSON.parse(fs.readFileSync(path.join(output,'PAGES_INITIAL_INVENTORY.json'),'utf8'));
  need(postflightHash(canonical(before))===expected.applicationInventorySha256,'original-job-dist-inventory');
@@ -181,12 +181,12 @@ export function validateProductionPreflight(value,sourceCommit,runId,runAttempt)
 }
 /** Read actual fixed run outputs after all eleven existing steps; never public raw-G snapshots. */
 export async function captureProductionPreflight(root,context){
- const e=await import('./isolated-staging-evidence.mjs'),a=e.historicalStagePreflightAuthorization(context);e.verifyFrozenSource(root,a.sourceCommit);
+ const e=await import('./isolated-staging-evidence.mjs'),a=e.historicalStagePreflightAuthorization(context);e.verifyFrozenSource(root,a.sourceCommit,{candidateArtifact:'compiled-build'});
  const {validateReceipt,EXPECTED_STEP_IDS,currentCeremonyHashes}=await import('../run-release-ceremony.mjs');need(typeof currentCeremonyHashes==='function','ceremony-hash-producer-unavailable');
  const prefix=`.cache/isolated-staging/run-${context.request.workflowRunId}-${context.request.workflowRunAttempt}/`,proofRaw=e.readOwned(root,prefix+'release-proof.json',131072),ceremonyRaw=e.readOwned(root,prefix+'release-ceremony.json',131072),proof=JSON.parse(proofRaw),ceremony=JSON.parse(ceremonyRaw),refs=JSON.parse(e.readOwned(root,'.cache/isolated-staging/context.json',65536));
  need(refs.sourceCommit===a.sourceCommit&&Object.keys(refs.transport).length===Object.keys(context.transport).length&&Object.keys(context.transport).every(k=>refs.transport[k]===context.transport[k]),'original-preflight-context');
  need(validateReceipt(ceremony,a).length===0&&ceremony.state==='passed'&&EXPECTED_STEP_IDS.length===11&&ceremony.installationPayloadSha256===context.transport.installationHash&&ceremony.observationPayloadSha256===context.transport.observationHash,'actual-eleven-step-preflight');
- const current=currentCeremonyHashes('.cache/isolated-staging/context.json');need(ceremony.evidenceSha256===current.evidenceSha256&&ceremony.contractSha256===current.contractSha256,'actual-preflight-contract-evidence');
+ const current=currentCeremonyHashes('.cache/isolated-staging/context.json',context);need(ceremony.evidenceSha256===current.evidenceSha256&&ceremony.contractSha256===current.contractSha256,'actual-preflight-contract-evidence');
  need(proof.mode==='isolated-variant'&&proof.staging?.candidateBuildSha===a.sourceCommit&&proof.isolatedStaging?.observationSha256===context.transport.observationHash&&proof.rolloutAuthorization&&Object.keys(a).every(k=>proof.rolloutAuthorization[k]===a[k]),'actual-run-release-proof');
  const value={schemaVersion:1,sourceCommit:a.sourceCommit,sourceTreeSha:a.sourceTreeSha,workflowRunId:context.request.workflowRunId,workflowRunAttempt:context.request.workflowRunAttempt,releaseProofSha256:postflightHash(proofRaw),releaseProofGeneratedAt:proof.generatedAt,ceremonySha256:postflightHash(ceremonyRaw),ceremonyGeneratedAt:ceremony.generatedAt,installationPayloadSha256:context.transport.installationHash,observationPayloadSha256:context.transport.observationHash,passedSteps:11,checks:proof.checks,blockers:proof.blockers,productionNativePending:true,fullReleaseAccepted:false};validateProductionPreflight(value,a.sourceCommit,context.request.workflowRunId,context.request.workflowRunAttempt);preflights.set(value,postflightHash(canonical(value)));return value;
 }
@@ -205,7 +205,7 @@ export async function captureProductionRollback(root,context){
  const value={schemaVersion:1,phase:'production-rollback-before-worker',sourceCommit:a.sourceCommit,installationPayloadSha256:a.installationPayloadSha256,workflowRunId:a.workflowRunId,workflowRunAttempt:a.workflowRunAttempt,requestNonce:a.requestNonce,requestPayloadSha256:a.requestPayloadSha256,capturedAt:new Date().toISOString(),worker,pages:provider,observedPriorPair:true};rollbackPairs.set(value,postflightHash(canonical(value)));return value;
 }
 export async function assertProductionRollbackCurrent(root,context,value,{workerOnly=false}={}){
- const e=await import('./isolated-staging-evidence.mjs');e.assertAdmittedContext(context);const a=e.stageNativeAuthorization(context);e.verifyFrozenSource(root,a.sourceCommit);
+ const e=await import('./isolated-staging-evidence.mjs');e.assertAdmittedContext(context);const a=e.stageNativeAuthorization(context);e.verifyFrozenSource(root,a.sourceCommit,{candidateArtifact:'compiled-build'});
  need(canonical(value)===canonical(e.productionRollbackAuthorization(context)),'rollback-not-authenticated-root-record');
  keys(value,['schemaVersion','phase','sourceCommit','installationPayloadSha256','workflowRunId','workflowRunAttempt','requestNonce','requestPayloadSha256','capturedAt','worker','pages','observedPriorPair'],'rollback-fields');need(value.schemaVersion===1&&value.phase==='production-rollback-before-worker'&&value.sourceCommit===a.sourceCommit&&value.installationPayloadSha256===a.installationPayloadSha256&&value.workflowRunId===context.request.workflowRunId&&value.workflowRunAttempt===context.request.workflowRunAttempt&&value.requestNonce===context.request.nonce&&value.requestPayloadSha256===context.transport.requestHash&&value.observedPriorPair===true&&Number.isFinite(Date.parse(value.capturedAt))&&Date.parse(value.capturedAt)<=Date.now()&&Date.now()-Date.parse(value.capturedAt)<=600000,'rollback-association');
  const worker=await readProductionWorker(value.worker);need(canonical(worker)===canonical(value.worker),'prior-production-worker-moved');if(!workerOnly){const provider=await readProductionPages(null);need(canonical(provider)===canonical(value.pages),'prior-production-pages-moved');}return value;
@@ -213,7 +213,7 @@ export async function assertProductionRollbackCurrent(root,context,value,{worker
 export async function assertCurrentWorkerRollback(root,context,value){return assertProductionRollbackCurrent(root,context,value,{workerOnly:true});}
 /** Actual owning Pages job distribution, including its existing News/stamp finalization. */
 export async function captureProductionPagesDeployment(root,context,workerUpload){
- const {historicalStagePreflightAuthorization,verifyFrozenSource}=await import('./isolated-staging-evidence.mjs');const a=historicalStagePreflightAuthorization(context);verifyFrozenSource(root,a.sourceCommit);
+ const {historicalStagePreflightAuthorization,verifyFrozenSource}=await import('./isolated-staging-evidence.mjs');const a=historicalStagePreflightAuthorization(context);verifyFrozenSource(root,a.sourceCommit,{candidateArtifact:'compiled-build'});
  need(process.env.GITHUB_ACTIONS==='true'&&process.env.GITHUB_SHA===a.sourceCommit&&Number(process.env.GITHUB_RUN_ID)===context.request.workflowRunId&&Number(process.env.GITHUB_RUN_ATTEMPT)===context.request.workflowRunAttempt,'pages-job-owner');
  need(workerUpload?.sourceCommit===a.sourceCommit,'worker-upload-source');const budget=authReadbackBudget(),worker=await readProductionWorker(workerUpload,{budget}),provider=await readProductionPages(a.sourceCommit,{budget}),directory='/tmp/pages-dist',whole=servedInventory(directory),auth=await productionSourceInventory(root,a.sourceCommit),byPath=new Map(whole.map(x=>[x.file,x]));
  need(auth.every(r=>canonical(byPath.get(r.file))===canonical(r)),'pages-auth-inputs-source');
@@ -226,7 +226,7 @@ export function assertProductionWorkerUpload(value){need(uploads.get(value)===po
 /** Called immediately after the existing actual Wrangler upload with its fixed --outdir. */
 export async function captureProductionWorkerUpload(root,context){
  const {historicalStagePreflightAuthorization,verifyFrozenSource}=await import('./isolated-staging-evidence.mjs');
- const a=historicalStagePreflightAuthorization(context),frozen=verifyFrozenSource(root,a.sourceCommit),run={sourceCommit:a.sourceCommit,runId:context.request.workflowRunId,runAttempt:context.request.workflowRunAttempt};
+ const a=historicalStagePreflightAuthorization(context),frozen=verifyFrozenSource(root,a.sourceCommit,{candidateArtifact:'compiled-build'}),run={sourceCommit:a.sourceCommit,runId:context.request.workflowRunId,runAttempt:context.request.workflowRunAttempt};
  const directory=postflightOutputRoot(root,run),bundleDirectory=path.join(directory,'worker-build');
  const worker=await readProductionWorker({},{bundleDirectory});
  const value={schemaVersion:1,phase:'production-worker-upload',environment:'production',sourceCommit:a.sourceCommit,sourceTreeSha:frozen.sourceTreeSha,runId:run.runId,runAttempt:run.runAttempt,installationPayloadSha256:a.installationPayloadSha256,...worker,observedAt:new Date().toISOString(),workerUploadAssociated:true};

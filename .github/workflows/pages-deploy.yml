@@ -99,7 +99,7 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       deployments: write
@@ -133,6 +133,14 @@ jobs:
 
           WORKER_UPLOAD_DEPLOYMENT_ID: ${{ inputs.worker_upload_deployment_id }}
           WORKER_UPLOAD_PAYLOAD_SHA256: ${{ inputs.worker_upload_payload_sha256 }}
+
+      - name: Install isolated production build dependencies
+        if: github.event_name == 'workflow_dispatch' && inputs.confirm_production == true && steps.isolated-inputs.outputs.configured == 'true'
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Compile isolated production source before readiness
+        if: github.event_name == 'workflow_dispatch' && inputs.confirm_production == true && steps.isolated-inputs.outputs.configured == 'true'
+        run: npm run build
 
       - name: Evaluate production promotion preflight
         id: promotion-preflight
@@ -171,6 +179,19 @@ jobs:
 
           WORKER_UPLOAD_DEPLOYMENT_ID: ${{ inputs.worker_upload_deployment_id }}
           WORKER_UPLOAD_PAYLOAD_SHA256: ${{ inputs.worker_upload_payload_sha256 }}
+
+      - name: Restore exact signed staged full-build artifact view
+        if: steps.isolated-staging.outputs.context_file != '' && inputs.confirm_production == true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
+          ISOLATED_CONTEXT: ${{ steps.isolated-staging.outputs.context_file }}
+          ISOLATED_CONTEXT_SHA256: ${{ steps.isolated-staging.outputs.context_sha256 }}
+        run: >-
+          node scripts/isolated-staging-evidence.mjs --restore-staged-build-view
+          "--source-commit=$GITHUB_SHA"
+          "--isolated-staging-context=$ISOLATED_CONTEXT"
+          "--isolated-staging-context-sha256=$ISOLATED_CONTEXT_SHA256"
 
       - name: Authorize exact observed production candidate
         id: promotion-gate
@@ -215,6 +236,10 @@ jobs:
           path: |
             api/staging-release-browser.json
             api/release-ceremony.json
+            .cache/isolated-staging/run-*/staging-release-browser.json
+            .cache/isolated-staging/run-*/staging-attention-browser.json
+            .cache/isolated-staging/run-*/obelisk-redirect-readiness.json
+            .cache/isolated-staging/run-*/release-ceremony.json
           if-no-files-found: warn
           retention-days: 7
 
@@ -335,11 +360,19 @@ jobs:
           LANE_PATHS: ${{ steps.content-refs.outputs.paths }}
         run: node scripts/check-discovery-content-lane.mjs --paths "$LANE_PATHS" --json-out .cache/discovery-content-result.json
 
-      - name: Build clean dist (git-tracked files only)
+      - name: Build clean dist (admitted compiled artifact or legacy source)
         if: steps.promotion-gate.outputs.allowed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ISOLATED_CONTEXT: ${{ steps.isolated-staging.outputs.context_file }}
+          ISOLATED_CONTEXT_SHA256: ${{ steps.isolated-staging.outputs.context_sha256 }}
         run: |
-          mkdir -p /tmp/pages-dist
-          git archive HEAD | tar -x -C /tmp/pages-dist
+          if [ -n "$ISOLATED_CONTEXT" ]; then
+            node scripts/package-compiled-production.mjs --isolated-staging-context "$ISOLATED_CONTEXT:$ISOLATED_CONTEXT_SHA256"
+          else
+            mkdir -p /tmp/pages-dist
+            git archive HEAD | tar -x -C /tmp/pages-dist
+          fi
           # S300: git archive publishes the ENTIRE tracked tree — /.cache/,
           # /context/, /logs/, /scripts/ and /prompts/ all served 200 on
           # production. Prune repo-internal paths, and REFUSE the deploy if
@@ -347,7 +380,7 @@ jobs:
           node scripts/prune-served-surface.mjs --dist /tmp/pages-dist
 
       - name: Stamp honest deployed SHA into build-sha.json
-        if: steps.promotion-gate.outputs.allowed == 'true'
+        if: steps.promotion-gate.outputs.allowed == 'true' && steps.isolated-inputs.outputs.configured != 'true'
         # S219 deploy-currency honesty (CANON-031). generate-build-sha.mjs captures
         # the LOCAL HEAD at build time, but that output is then committed as a NEW
         # sha — so the committed build-sha.json is structurally always one commit

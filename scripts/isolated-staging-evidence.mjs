@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { REPOSITORY, sha256, requireFact as need, isHash, validatePublisherPolicy, parseBoundedJson } from './lib/isolated-staging-contract.mjs';
-import { canonical, readOwned, verifyFrozenSource, githubApi, validateDeployment, validateInstallation, validateRequest,
+import { canonical, readOwned, verifyFrozenSource, restoreStagedBuildView, githubApi, validateDeployment, validateInstallation, validateRequest,
   makeRequest, publishMetadata, findObservation, findRequest, admitRuntime, invokeProtectedObserver, observationFromProtected, invokeInstallProjection, invokeNativeInstallProjection, invokeNativeInstallProjectionS418, validateObserverDescriptor, validateSelectedProtectedBroker, loadRuntimeContext, loadHistoricalStageContext, makeWorkerUploadRequest, makeProductionPostflightRequest, checkProductionWorkerUpload, admitProductionPhaseRequest, invokeProductionPostflight, admitProductionPostflightObservation, makeStagingRequest, nativeObservationFromProtected, makeProductionFinalizationObservation } from './lib/isolated-staging-evidence.mjs';
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const args=process.argv.slice(2);
@@ -12,7 +12,7 @@ if (!args.length || (args.length===1 && args[0]==='--help')) {
   console.log('isolated-staging-evidence: inert. Explicit --project-install / --publish-install / --request / --receive / --observe; unresolved publisher/observer refuses.');
 } else {
   try {
-    need(['--project-install','--publish-install','--request','--receive','--observe','--find-request','--publish-install-native','--publish-install-native-s418','--publish-worker-upload','--check-worker-upload','--request-production-postflight','--receive-production-postflight','--observe-production-postflight','--publish-finalization'].includes(args[0]),'broker-mode');
+    need(['--restore-staged-build-view','--project-install','--publish-install','--request','--receive','--observe','--find-request','--publish-install-native','--publish-install-native-s418','--publish-worker-upload','--check-worker-upload','--request-production-postflight','--receive-production-postflight','--observe-production-postflight','--publish-finalization'].includes(args[0]),'broker-mode');
     const flags={};
     for (const arg of args.slice(1)) {
       const match=arg.match(/^--([a-z][a-z0-9-]*)=([^\r\n]+)$/); need(match && !flags[match[1]],'broker-argument'); flags[match[1]]=match[2];
@@ -21,6 +21,7 @@ if (!args.length || (args.length===1 && args[0]==='--help')) {
       'request-payload-sha256','runtime-bindings','runtime-bindings-sha256','output','workflow-run-id','workflow-run-attempt','workflow-path','native-runtime','native-runtime-sha256','channel','actor-ready','isolated-staging-context','isolated-staging-context-sha256','worker-upload-deployment-id','worker-upload-payload-sha256','phase'];
     need(Object.keys(flags).every(k=>allowed.includes(k)),'unknown-broker-argument');
     const perMode={
+      '--restore-staged-build-view':['source-commit','isolated-staging-context','isolated-staging-context-sha256'],
       '--request':['source-commit','installation-deployment-id','installation-payload-sha256',...((Object.hasOwn(flags,'worker-upload-deployment-id')||Object.hasOwn(flags,'worker-upload-payload-sha256'))?['worker-upload-deployment-id','worker-upload-payload-sha256']:[])],
       '--receive':['source-commit','installation-deployment-id','installation-payload-sha256','request-deployment-id','request-payload-sha256','output'],
       '--observe':['source-commit','installation-deployment-id','installation-payload-sha256','request-deployment-id','request-payload-sha256','runtime-bindings','runtime-bindings-sha256'],
@@ -43,7 +44,8 @@ if (!args.length || (args.length===1 && args[0]==='--help')) {
       if(name==='workflow-run-id'||name==='workflow-run-attempt')need(/^[1-9][0-9]*$/.test(value)&&Number.isSafeInteger(Number(value)),'argument-run-id');
     }
     if(flags.output)need(/^\.cache\/[A-Za-z0-9_/-]+[.]json$/.test(flags.output)&&!flags.output.includes('..'),'runtime-output');
-    const frozen=verifyFrozenSource(ROOT,flags['source-commit']);
+    const compiledModes=['--restore-staged-build-view','--request','--receive','--publish-worker-upload','--check-worker-upload','--request-production-postflight','--receive-production-postflight','--observe-production-postflight','--publish-finalization'];
+    const frozen=verifyFrozenSource(ROOT,flags['source-commit'],compiledModes.includes(args[0])?{candidateArtifact:'compiled-build'}:{});
     const policy=validatePublisherPolicy(JSON.parse(readOwned(ROOT,'config/isolated-staging-admission.json')));
     async function localGithub(action, callback) {
       validateSelectedProtectedBroker(ROOT,policy);
@@ -51,7 +53,11 @@ if (!args.length || (args.length===1 && args[0]==='--help')) {
       // The API and every token use remain inside the canonical signed action closure.
       return withGithubToken(action,token=>callback(githubApi(token)),{params:{repository:REPOSITORY,sourceCommit:frozen.sourceCommit}});
     }
-    if(['--publish-worker-upload','--check-worker-upload','--request-production-postflight','--receive-production-postflight','--publish-finalization'].includes(args[0])) {
+    if(args[0]==='--restore-staged-build-view'){
+      need(process.env.GITHUB_ACTIONS==='true'&&process.env.GITHUB_SHA===frozen.sourceCommit,'staged-build-ci-source');
+      const{getSecret}=await import('./lib/secrets.mjs');const api=githubApi(getSecret('GITHUB_TOKEN','github.api'));
+      console.log(JSON.stringify(await restoreStagedBuildView(ROOT,flags['isolated-staging-context'],flags['isolated-staging-context-sha256'],{api})));
+    }else if(['--publish-worker-upload','--check-worker-upload','--request-production-postflight','--receive-production-postflight','--publish-finalization'].includes(args[0])) {
       need(process.env.GITHUB_ACTIONS==='true'&&process.env.GITHUB_SHA===frozen.sourceCommit&&Number.isSafeInteger(Number(process.env.GITHUB_RUN_ID))&&Number(process.env.GITHUB_RUN_ID)>0&&Number.isSafeInteger(Number(process.env.GITHUB_RUN_ATTEMPT))&&Number(process.env.GITHUB_RUN_ATTEMPT)>0,'ci-execution-context');
       const{getSecret}=await import('./lib/secrets.mjs');const api=githubApi(getSecret('GITHUB_TOKEN','github.api'));
       const parent={id:Number(flags['installation-deployment-id']),sha256:flags['installation-payload-sha256']};

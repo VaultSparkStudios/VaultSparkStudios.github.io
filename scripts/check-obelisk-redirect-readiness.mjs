@@ -11,9 +11,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
 import { createHash } from 'node:crypto';
+import * as isolated from './lib/isolated-staging-evidence.mjs';
 
 const ROOT = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), '..');
-const OUT = path.join(ROOT, 'api', 'obelisk-redirect-readiness.json');
+const isolatedArgs=isolated.runtimeContextArgs(process.argv.slice(2));
+const isolatedContext=isolatedArgs ? await isolated.loadRuntimeContext(ROOT,isolatedArgs.file,isolatedArgs.hash) : null;
+const OUT = isolatedContext ? isolated.runtimeArtifactPath(ROOT,isolatedContext,'obelisk-redirect-readiness') : path.join(ROOT, 'api', 'obelisk-redirect-readiness.json');
 const ISSUER = String(process.env.OBELISK_ISSUER || 'https://obeliskgate.com').replace(/\/$/, '');
 const CLIENT_ID = process.env.OBELISK_CLIENT_ID || 'vaultsparkstudios-website';
 const CALLBACK = process.env.OBELISK_REDIRECT_URI || 'https://website.staging.vaultsparkstudios.com/auth/callback';
@@ -212,6 +215,7 @@ async function main() {
     return;
   }
   const value = await probe();
+  if(isolatedContext){isolated.assertAdmittedContext(isolatedContext);fs.mkdirSync(path.dirname(OUT),{recursive:true});}
   fs.writeFileSync(OUT, JSON.stringify(value, null, 2) + '\n');
   console.log(`check-obelisk-redirect-readiness: ${value.state} · exact=${value.exact.reason} · negatives=${value.negativeControls.map((item) => item.state).join('/') || 'unobserved'}`);
   if (args.has('--require-ready') && !value.ready) process.exit(1);

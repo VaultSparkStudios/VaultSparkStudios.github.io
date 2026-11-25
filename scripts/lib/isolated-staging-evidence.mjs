@@ -3,6 +3,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from './safe-spawn.mjs';
 import { randomBytes } from 'node:crypto';
+import {buildFromRepo,CORE_PATHS,OBSERVED_PATHS,shellPaths} from '../build-candidate-artifact-manifest.mjs';
+import {productionInputRows,productionInputFingerprint} from './production-input-inventory.mjs';
+import {buildShaPayload} from '../generate-build-sha.mjs';
 import {pathToFileURL} from 'node:url';
 import { receiptIdFor } from './build-check-evidence.mjs';
 import { validateStagingDeployReceipt } from './staging-deploy-receipt.mjs';
@@ -16,7 +19,7 @@ export const CONTRACT_FILES = Object.freeze([
   'scripts/lib/isolated-staging-evidence.mjs','scripts/isolated-staging-evidence.mjs',
   'scripts/lib/staging-deploy-receipt.mjs','scripts/lib/staging-deploy-history.mjs','scripts/lib/staging-deploy-continuity.mjs',
   'scripts/check-staging-deploy-receipt.mjs','scripts/check-staging-parity.mjs','scripts/build-release-proof.mjs',
-  'scripts/run-release-ceremony.mjs',
+  'scripts/run-release-ceremony.mjs','scripts/package-compiled-production.mjs',
   'scripts/build-staging-deploy-continuity.mjs','scripts/lib/build-check-evidence.mjs',
   'scripts/lib/shell-parity.mjs','config/csp-policy.mjs','scripts/lib/secrets.mjs',
   'api/candidate-artifact-manifest.json',
@@ -73,7 +76,11 @@ export function readOwned(root, file, maximum = 16 * 1024 * 1024) {
   need(stat.isFile() && stat.nlink === 1 && stat.size <= maximum, 'regular-bounded-input');
   return fs.readFileSync(cursor);
 }
-export function verifyFrozenSource(root, sourceCommit) {
+/** Raw Git remains the default; compiled view is explicit and validated, never a generic exclusion. */
+export function verifyFrozenSource(root, sourceCommit, options = {}) {
+  exactKeys(options,options.candidateArtifact === undefined ? [] : ['candidateArtifact'],'source-artifact-options');
+  const compiled=options.candidateArtifact === 'compiled-build';
+  need(options.candidateArtifact === undefined || compiled,'source-artifact-view');
   need(isHash(sourceCommit,40), 'git-source');
   const run = args => {
     const result = spawnSync('git', args, {cwd:root,windowsHide:true,encoding:null,maxBuffer:16*1024*1024,
@@ -82,8 +89,24 @@ export function verifyFrozenSource(root, sourceCommit) {
   };
   need(String(run(['rev-parse','HEAD'])).trim() === sourceCommit, 'source-ref-mismatch');
   const rows=verifierSourceClosure(file=>run(['cat-file','blob',`${sourceCommit}:${file}`]));
-  for(const row of rows)need(row.sha256===sha256(readOwned(root,row.file)),'later-verifier-source');
+  const unchanged=()=>{for(const row of rows)if(!compiled||row.file!=='api/candidate-artifact-manifest.json')need(row.sha256===sha256(readOwned(root,row.file)),'later-verifier-source');};
+  unchanged();
+  if(compiled){validateCompiledCandidate(root,sourceCommit);unchanged();}
   return {sourceCommit,sourceTreeSha:String(run(['rev-parse',`${sourceCommit}^{tree}`])).trim(),verifierContractSha256:sha256(canonical(rows))};
+}
+/** Validate only the compiled artifact view; source authority still requires verifyFrozenSource. */
+export function validateCompiledCandidate(root,sourceCommit){
+    const markerRaw=readOwned(root,'api/candidate-artifact-manifest.json'),stampRaw=readOwned(root,'api/build-sha.json');
+    const marker=JSON.parse(markerRaw),stamp=JSON.parse(stampRaw),builtAt=new Date(stamp.builtAt);
+    need(Number.isFinite(builtAt.getTime())&&builtAt.toISOString()===stamp.builtAt&&builtAt.getTime()<=Date.now(),'compiled-build-time');
+    need(stampRaw.toString()===JSON.stringify(buildShaPayload(sourceCommit,builtAt),null,2),'compiled-build-identity');
+    need(marker.candidateSha===sourceCommit,'compiled-candidate-source');
+    // Exact existing canonical producer output, including raw-byte lengths, observations and all fields.
+    for(const file of new Set([...CORE_PATHS,...OBSERVED_PATHS,...shellPaths(root)]))readOwned(root,file);
+    need(markerRaw.toString()===JSON.stringify(buildFromRepo(root),null,2)+'\n','compiled-candidate-bytes');
+    need(sha256(readOwned(root,'api/candidate-artifact-manifest.json'))===sha256(markerRaw)&&sha256(readOwned(root,'api/build-sha.json'))===sha256(stampRaw),'compiled-build-drift');
+
+  return true;
 }
 /** Relative imports are resolved from raw G; local changed import text cannot prune the closure. */
 export function verifierSourceClosure(readBlob) {
@@ -536,7 +559,7 @@ export async function loadProductionPostflightContext(root,file,expectedHash,{ap
  exactKeys(refs,['schemaVersion','phase','sourceCommit','transport'],'production-context-reference');
  need(refs.schemaVersion===2&&refs.phase==='production-postflight','production-context-reference-phase');
  exactKeys(refs.transport,['installationId','installationHash','requestId','requestHash','observationId','observationHash','runId','runAttempt'],'production-context-transport');
- const frozen=verifyFrozenSource(root,refs.sourceCommit),policy=validatePublisherPolicy(JSON.parse(readOwned(root,'config/isolated-staging-admission.json')));
+ const frozen=verifyFrozenSource(root,refs.sourceCommit,{candidateArtifact:'compiled-build'}),policy=validatePublisherPolicy(JSON.parse(readOwned(root,'config/isolated-staging-admission.json')));
  const admit=client=>admitProductionPostflightObservation({api:client,policy,frozen,...refs.transport,baseHistoryText:String(readOwned(root,'data/staging-deploy-history.ndjson')),now});
  if(api)return admit(api);
  if(process.env.GITHUB_ACTIONS==='true'){
@@ -587,7 +610,7 @@ export async function admitNativeInstallation({api,policy,frozen,installationId,
 export async function loadNativeInstallationPreflight(root,id,hash,{api}={}) {
   need(positiveInteger(id)&&isHash(hash),'native-install-reference');
   const head=spawnSync('git',['rev-parse','HEAD'],{cwd:root,windowsHide:true,encoding:'utf8',maxBuffer:1024});
-  need(head.status===0,'native-install-head');const frozen=verifyFrozenSource(root,head.stdout.trim());
+  need(head.status===0,'native-install-head');const frozen=verifyFrozenSource(root,head.stdout.trim(),{candidateArtifact:'compiled-build'});
   const policy=validatePublisherPolicy(JSON.parse(readOwned(root,'config/isolated-staging-admission.json')));
   need(policy.nativeProducer||policy.nativeSuccessor,'native-producer-unresolved');
   const runId=Number(process.env.GITHUB_RUN_ID),runAttempt=Number(process.env.GITHUB_RUN_ATTEMPT);
@@ -807,13 +830,12 @@ export async function nativeObservationFromProtected(root,api,raw,request,reques
  const result={...base,schemaVersion:2,phase:'staging-preflight',productionRollback,productionRollbackParent,envelopeCompletedAtEpochMs:Date.now()};
  validateObservation(result,request,installation,Date.now());publishable.set(result,sha256(canonical(result)));return result;
 }
-export async function loadRuntimeContext(root, file, expectedHash, {api, now = Date.now(), minimumSeconds = 0} = {}) {
+async function loadStageRuntimeAdmission(root,file,expectedHash,{api,now=Date.now(),minimumSeconds=0}={}) {
   const references=parseBoundedJson(readOwned(root,file,65536),expectedHash);
-  if(references.schemaVersion===2)return loadProductionPostflightContext(root,file,expectedHash,{api,now});
   exactKeys(references,['schemaVersion','sourceCommit','transport'],'runtime-reference-fields');
-  need(references.schemaVersion === 1,'runtime-reference-schema');
+  need(references.schemaVersion===1,'stage-context-reference-schema');
   exactKeys(references.transport,['installationId','installationHash','requestId','requestHash','observationId','observationHash','runId','runAttempt'],'runtime-reference-transport');
-  const frozen=verifyFrozenSource(root,references.sourceCommit);
+  const frozen=verifyFrozenSource(root,references.sourceCommit,{candidateArtifact:'compiled-build'});
   const policy=validatePublisherPolicy(JSON.parse(readOwned(root,'config/isolated-staging-admission.json')));
   const admit=api=>admitRuntime({api,policy,frozen,...references.transport,baseHistoryText:String(readOwned(root,'data/staging-deploy-history.ndjson')),now,minimumSeconds});
   let context;
@@ -828,13 +850,58 @@ export async function loadRuntimeContext(root, file, expectedHash, {api, now = D
     const {withGithubToken}=await import(pathToFileURL(path.resolve(root,'../vaultspark-studio-ops/scripts/lib/github-broker.mjs')).href);
     context=await withGithubToken('isolated-staging-evidence-read',token=>admit(githubApi(token)),{params:{repository:REPOSITORY,sourceCommit:frozen.sourceCommit}});
   }
-  need(sha256(readOwned(root,'api/candidate-artifact-manifest.json'))===context.receipt.productionSource.rawManifestSha256,'production-raw-manifest-bytes');
+
+  return {context,frozen};
+}
+export async function loadRuntimeContext(root,file,expectedHash,options={}) {
+  const references=parseBoundedJson(readOwned(root,file,65536),expectedHash);
+  if(references.schemaVersion===2)return loadProductionPostflightContext(root,file,expectedHash,options);
+  const {context}=await loadStageRuntimeAdmission(root,file,expectedHash,options);
+  assertProductionManifestBytes(readOwned(root,'api/candidate-artifact-manifest.json'),context.receipt.productionSource);
   const response=await fetch(`${STAGING_ORIGIN}/api/candidate-artifact-manifest.json`,{redirect:'error',
     headers:{'cache-control':'no-cache'},signal:AbortSignal.timeout(15000)});
   need(response.ok,'stage-marker-http');
   const bytes=await readBoundedResponse(response,1024*1024);
   assertCurrentStageManifest(bytes,context); return context;
 }
+/** Exact raw artifact association remains independent of canonical root validation. */
+export function assertProductionManifestBytes(raw,productionSource){
+  need(Buffer.isBuffer(raw)&&sha256(raw)===productionSource.rawManifestSha256,'production-raw-manifest-bytes');return true;
+}
+/** Pure reproduction from original stage bytes; callers still need authenticated run admission. */
+export function deriveStagedBuildView(root,sourceCommit,receipt,originalStamp){
+  need(receipt.productionSource.commitSha===sourceCommit&&receipt.copiedHistoricalBuildStamp.commitSha===sourceCommit,'staged-build-source');
+  need(Buffer.isBuffer(originalStamp)&&originalStamp.length>0&&originalStamp.length<=4096&&sha256(originalStamp)===receipt.copiedHistoricalBuildStamp.rawSha256,'staged-build-stamp-bytes');
+  const stamp=JSON.parse(originalStamp),when=new Date(stamp.builtAt);
+  need(Number.isFinite(when.getTime())&&when.toISOString()===stamp.builtAt&&when.getTime()<=Date.now()&&originalStamp.toString()===JSON.stringify(buildShaPayload(sourceCommit,when),null,2),'staged-build-stamp-owner');
+  const manifest=buildFromRepo(root,originalStamp),raw=Buffer.from(JSON.stringify(manifest,null,2)+'\n');
+  need(manifest.candidateSha===sourceCommit&&manifest.root===receipt.productionSource.artifactRoot&&manifest.leafCount===receipt.productionSource.leafCount&&sha256(raw)===receipt.productionSource.rawManifestSha256,'staged-build-exact-artifact');
+  need(productionInputFingerprint(productionInputRows(root,{candidateManifest:raw,buildStamp:originalStamp}))===receipt.productionSource.fingerprint,'staged-build-full-input-fingerprint');
+  return {stamp:originalStamp,manifest:raw};
+}
+/** Explicit run-bound local artifact restoration, never source or receipt restamping. */
+export async function restoreStagedBuildView(root,file,expectedHash,options={}){
+  need(process.env.GITHUB_ACTIONS==='true'&&process.env.GITHUB_EVENT_NAME==='workflow_dispatch'&&process.env.PRODUCTION_CONFIRM==='true','staged-build-ci-only');
+  const {context,frozen}=await loadStageRuntimeAdmission(root,file,expectedHash,options);
+  need(process.env.GITHUB_SHA===frozen.sourceCommit&&Number(process.env.GITHUB_RUN_ID)===context.transport.runId&&Number(process.env.GITHUB_RUN_ATTEMPT)===context.transport.runAttempt,'staged-build-ci-run');
+  const response=await fetch(STAGING_ORIGIN+'/api/build-sha.json',{redirect:'error',headers:{'cache-control':'no-cache'},signal:AbortSignal.timeout(15000)});
+  need(response.ok,'staged-build-stamp-http');const original=await readBoundedResponse(response,4096);
+  const derived=deriveStagedBuildView(root,frozen.sourceCommit,context.receipt,original);
+  const marker='api/candidate-artifact-manifest.json',stamp='api/build-sha.json',before={marker:readOwned(root,marker),stamp:readOwned(root,stamp)};
+  const proofFile=path.join(root,'.cache/isolated-staging/run-'+context.transport.runId+'-'+context.transport.runAttempt+'/STAGED_BUILD_VIEW.json');
+  fs.mkdirSync(path.dirname(proofFile),{recursive:true});need(!fs.existsSync(proofFile),'staged-build-view-already-recorded');
+  // Recheck real source and preimages immediately before the two bounded generated-file writes.
+  verifyFrozenSource(root,frozen.sourceCommit,{candidateArtifact:'compiled-build'});
+  need(sha256(readOwned(root,marker))===sha256(before.marker)&&sha256(readOwned(root,stamp))===sha256(before.stamp),'staged-build-local-drift');
+  const rechecked=deriveStagedBuildView(root,frozen.sourceCommit,context.receipt,original);need(rechecked.manifest.equals(derived.manifest),'staged-build-input-drift');
+  try{fs.writeFileSync(path.join(root,stamp),derived.stamp);fs.writeFileSync(path.join(root,marker),derived.manifest);
+    const after=verifyFrozenSource(root,frozen.sourceCommit,{candidateArtifact:'compiled-build'});need(canonical(after)===canonical(frozen),'staged-build-source-drift');
+    need(productionInputFingerprint(productionInputRows(root))===context.receipt.productionSource.fingerprint,'staged-build-final-input-drift');
+    fs.writeFileSync(proofFile,canonical({schemaVersion:1,sourceCommit:frozen.sourceCommit,sourceTreeSha:frozen.sourceTreeSha,verifierContractSha256:frozen.verifierContractSha256,installationHash:context.transport.installationHash,observationHash:context.transport.observationHash,originalStampSha256:sha256(original),manifestSha256:sha256(derived.manifest),before:{markerBase64:before.marker.toString('base64'),stampBase64:before.stamp.toString('base64')},originalCaptureMetadataChanged:false,localArtifactRestored:true})+'\n',{flag:'wx',mode:0o600});
+  }catch(error){for(const [name,old,newBytes]of[[marker,before.marker,derived.manifest],[stamp,before.stamp,derived.stamp]])if(sha256(readOwned(root,name))===sha256(newBytes))fs.writeFileSync(path.join(root,name),old);throw error;}
+  return {file:path.relative(root,proofFile).split(path.sep).join('/'),sha256:sha256(fs.readFileSync(proofFile)),sourceCommit:frozen.sourceCommit,manifestSha256:sha256(derived.manifest)};
+}
+
 export async function readBoundedResponse(response, maximum) {
   const reader=response.body.getReader(); const chunks=[]; let size=0;
   try {
@@ -860,7 +927,7 @@ export function runtimeContextArgs(args) {
 }
 export function runtimeArtifactPath(root, context, kind) {
   assertAdmittedContext(context);
-  need(['staging-health','release-proof','release-ceremony','staging-deploy-continuity'].includes(kind),'runtime-artifact-kind');
+  need(['staging-health','release-proof','release-ceremony','staging-deploy-continuity','staging-release-browser','staging-attention-browser','obelisk-redirect-readiness'].includes(kind),'runtime-artifact-kind');
   return path.join(root,'.cache','isolated-staging',`run-${context.request.workflowRunId}-${context.request.workflowRunAttempt}`,`${kind}.json`);
 }
 export function evaluateVariantRoutes(context, routes) {

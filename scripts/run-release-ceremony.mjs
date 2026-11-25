@@ -10,7 +10,7 @@
 import { spawnSync } from './lib/safe-spawn.mjs';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { promotionMode } from './check-production-promotion-gate.mjs';
@@ -30,6 +30,7 @@ const CANONICAL_STAGING = 'https://website.staging.vaultsparkstudios.com';
 const sha256 = (value) => createHash('sha256').update(value).digest('hex');
 const read = (path) => readFileSync(join(ROOT, path), 'utf8');
 const readJson = (path) => JSON.parse(read(path));
+export function ceremonyArtifactPath(kind,context=isolatedContext){return context ? relative(ROOT,runtimeArtifactPath(ROOT,context,kind)) : 'api/'+kind+'.json';}
 
 function argValue(name) {
   const prefix = `${name}=`;
@@ -81,9 +82,9 @@ function currentDoctorStep({ live }) {
   let releaseProof;
   try { releaseProof = isolatedContext ? JSON.parse(readFileSync(runtimeArtifactPath(ROOT,isolatedContext,'release-proof'),'utf8')) : readJson('api/release-proof.json'); } catch {}
   let browserReceipt;
-  try { browserReceipt = readJson('api/staging-release-browser.json'); } catch {}
+  try { browserReceipt = readJson(ceremonyArtifactPath('staging-release-browser')); } catch {}
   let attentionReceipt;
-  try { attentionReceipt = readJson('api/staging-attention-browser.json'); } catch {}
+  try { attentionReceipt = readJson(ceremonyArtifactPath('staging-attention-browser')); } catch {}
   return evaluateDoctorStep(score, deployCurrency, { releaseProof, browserReceipt, attentionReceipt }, Date.now() - started,isolatedContext);
 }
 
@@ -193,14 +194,14 @@ function evidenceHash(paths) {
   return sha256(parts.join('\n'));
 }
 
-function currentCeremonyHashes(contextFile=null) {
+function currentCeremonyHashes(contextFile=null,context=isolatedContext) {
   return {
 evidenceSha256:evidenceHash([
-    'api/obelisk-redirect-readiness.json',
+    ceremonyArtifactPath('obelisk-redirect-readiness',context),
     'api/staging-deploy-receipt.json',
     'api/staging-deploy-continuity.json',
-    'api/staging-release-browser.json',
-    'api/staging-attention-browser.json',
+    ceremonyArtifactPath('staging-release-browser',context),
+    ceremonyArtifactPath('staging-attention-browser',context),
     'context/PRODUCTION_PROMOTION.json',
     'context/PROJECT_STATUS.json',
     ...(contextFile ? [contextFile] : []),
@@ -332,8 +333,8 @@ if (!exactStagingOrigin(suppliedOrigin)) {
 
 const priorSha256 = priorReceiptHash();
 const steps = [];
-steps.push(runScript('redirect-readiness-probe', 'scripts/check-obelisk-redirect-readiness.mjs'));
-steps.push(artifactStep('redirect-readiness', 'api/obelisk-redirect-readiness.json', (value) => value.state === 'passed' && value.ready === true,
+steps.push(runScript('redirect-readiness-probe', 'scripts/check-obelisk-redirect-readiness.mjs',isolatedCli));
+steps.push(artifactStep('redirect-readiness', ceremonyArtifactPath('obelisk-redirect-readiness'), (value) => value.state === 'passed' && value.ready === true,
   (value) => ({ verdict: value.state || 'unavailable', contractSha256: value.contractSha256 || null })));
 steps.push(runScript('staging-deploy-lineage', 'scripts/check-staging-deploy-receipt.mjs',isolatedCli));
 // S357 — lane-held asset drift, measured at the moment it matters. The content
@@ -350,7 +351,7 @@ steps.push(runScript('staging-browser', 'scripts/run-staging-release-gate.mjs', 
 // went missing. Coverage remains total — executed + held must equal expected —
 // and the gate runner only permits a hold when the promotion actually resolves
 // as `scoped` and the contract's surface sits inside an active radius.
-steps.push(artifactStep('staging-browser-receipt', 'api/staging-release-browser.json',
+steps.push(artifactStep('staging-browser-receipt', ceremonyArtifactPath('staging-release-browser'),
   (value) => value.state === 'passed'
     && value.skipped === 0
     && value.failed === 0
@@ -368,8 +369,8 @@ steps.push(artifactStep('staging-browser-receipt', 'api/staging-release-browser.
     heldContracts: value.heldContracts ?? [],
     heldSurfaces: value.heldSurfaces ?? [],
   })));
-steps.push(runScript('attention-browser', 'scripts/run-attention-release-gate.mjs', [`--url=${CANONICAL_STAGING}`]));
-steps.push(artifactStep('attention-browser-receipt', 'api/staging-attention-browser.json',
+steps.push(runScript('attention-browser', 'scripts/run-attention-release-gate.mjs', [`--url=${CANONICAL_STAGING}`,...isolatedCli]));
+steps.push(artifactStep('attention-browser-receipt', ceremonyArtifactPath('staging-attention-browser'),
   (value) => value.state === 'passed'
     && value.origin === CANONICAL_STAGING
     && value.passed === 15

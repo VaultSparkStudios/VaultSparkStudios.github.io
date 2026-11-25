@@ -19,7 +19,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const isolatedArgs = isolated.runtimeContextArgs(process.argv.slice(2));
 const isolatedContext = isolatedArgs ? await isolated.loadRuntimeContext(ROOT,isolatedArgs.file,isolatedArgs.hash) : null;
 const nativeRuntime = isolatedContext?.installation?.schemaVersion===2 ? isolated.stageNativeAuthorization(isolatedContext) : null;
-const RECEIPT_PATH = join(ROOT, 'api', 'staging-release-browser.json');
+const RECEIPT_PATH = isolatedContext ? isolated.runtimeArtifactPath(ROOT,isolatedContext,'staging-release-browser') : join(ROOT, 'api', 'staging-release-browser.json');
 const PROMOTION_PATH = join(ROOT, 'context', 'PRODUCTION_PROMOTION.json');
 const MANIFEST_PATH = join(ROOT, 'api', 'candidate-artifact-manifest.json');
 const SPEC_PATH = 'tests/staging-release.spec.js';
